@@ -61,7 +61,7 @@
             android:maxLines="2"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_14"
-            tools:text="持家有道,赚钱有方的人都在使用蜜源，蜜源推荐～" />
+            tools:text="持家有道,赚钱有方的人都在使用马克猫，马克猫推荐～" />
         <TextView
             android:id="@+id/tv_study_num"
             android:layout_width="wrap_content"

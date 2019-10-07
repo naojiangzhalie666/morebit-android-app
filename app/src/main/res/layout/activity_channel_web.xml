@@ -35,7 +35,7 @@
             android:gravity="center_horizontal"
             android:layout_height="wrap_content">
 
-            <com.jf.my.view.AspectRatioView
+            <com.markermall.cat.view.AspectRatioView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:aspectRatio="3.47"/>

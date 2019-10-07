@@ -68,7 +68,7 @@
     <!--android:layout_marginLeft="55dp"-->
     <!--android:background="@color/color_E6E6E6"/>-->
 
-    <!--<com.jf.my.view.NoScrollViewPager-->
+    <!--<com.markermall.cat.view.NoScrollViewPager-->
     <!--android:id="@+id/viewpager"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->

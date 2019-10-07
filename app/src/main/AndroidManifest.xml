@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.jf.my">
+    package="com.markermall.cat">
 
     <!-- Required -->
     <!--   <permission
-           android:name="com.jf.my.permission.JPUSH_MESSAGE"
+           android:name="com.markermall.cat.permission.JPUSH_MESSAGE"
            android:protectionLevel="signature" />-->
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -57,7 +57,7 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
 
     <!-- Required  一些系统要求的权限，如访问网络等-->
-    <uses-permission android:name="com.jf.my.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.markermall.cat.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -84,7 +84,7 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application
-        android:name="com.jf.my.App"
+        android:name="com.markermall.cat.App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -96,7 +96,7 @@
 
 
         <activity
-            android:name="com.jf.my.Activity.AppStartActivity"
+            android:name="com.markermall.cat.Activity.AppStartActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppStart">
@@ -106,7 +106,7 @@
             </intent-filter>
             <intent-filter>
                 <data
-                    android:host="miyuan"
+                    android:host="markermall"
                     android:scheme="scheme" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -114,11 +114,11 @@
             </intent-filter>
         </activity>
         <!--<activity-alias-->
-        <!--android:name="com.jf.my.Activity.AppStartAliasActivity"-->
+        <!--android:name="com.markermall.cat.Activity.AppStartAliasActivity"-->
         <!--android:enabled="false"-->
         <!--android:icon="@mipmap/ic_launcher"-->
         <!--android:label="@string/app_name"-->
-        <!--android:targetActivity="com.jf.my.Activity.AppStartActivity">-->
+        <!--android:targetActivity="com.markermall.cat.Activity.AppStartActivity">-->
         <!--<intent-filter>-->
         <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -128,7 +128,7 @@
 
 
         <!--   <activity
-               android:name="com.jf.my.Activity.AppStartActivity"
+               android:name="com.markermall.cat.Activity.AppStartActivity"
                android:launchMode="standard"
                android:screenOrientation="portrait"
                android:theme="@style/AppTheme.NoActionBar">
@@ -160,28 +160,28 @@
 
 
         <activity
-            android:name="com.jf.my.Activity.FirstStartActivity"
+            android:name="com.markermall.cat.Activity.FirstStartActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.jf.my.Activity.StartAdActivity"
+            android:name="com.markermall.cat.Activity.StartAdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name="com.jf.my.MainActivity"
+            android:name="com.markermall.cat.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>
 
 
         <activity
-            android:name="com.jf.my.info.ui.VipActivity"
+            android:name="com.markermall.cat.info.ui.VipActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.jf.my.info.ui.VideoActivity"
+            android:name="com.markermall.cat.info.ui.VideoActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".circle.ui.VideoPlayerActivity"
+            android:name="com.markermall.cat.circle.ui.VideoPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Full"
             android:screenOrientation="portrait"/>
@@ -189,134 +189,134 @@
         <!--android:screenOrientation="landscape"-->
 
         <activity
-            android:name="com.jf.my.login.ui.LoginSinglePaneActivity"
+            android:name="com.markermall.cat.login.ui.LoginSinglePaneActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
-            android:name="com.jf.my.Activity.ModifyPasswordActivity"
+            android:name="com.markermall.cat.Activity.ModifyPasswordActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.jf.my.Activity.ModifyPhoneNumAcitivity"
+            android:name="com.markermall.cat.Activity.ModifyPhoneNumAcitivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.jf.my.Activity.EditTemplateActivity"
+            android:name="com.markermall.cat.Activity.EditTemplateActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.jf.my.Activity.GoodsDetailActivity"
+            android:name="com.markermall.cat.Activity.GoodsDetailActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.jf.my.Activity.SearchFansActivity"
+            android:name="com.markermall.cat.Activity.SearchFansActivity"
             android:screenOrientation="portrait"></activity>
 
 
         <activity
-            android:name="com.jf.my.Activity.ShareMoneyActivity"
+            android:name="com.markermall.cat.Activity.ShareMoneyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
-            android:name="com.jf.my.Activity.SearchActivity"
+            android:name="com.markermall.cat.Activity.SearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".circle.ui.SearchArticleListActitivty"
+            android:name="com.markermall.cat.circle.ui.SearchArticleListActitivty"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
-            android:name="com.jf.my.Activity.SettingActivity"
+            android:name="com.markermall.cat.Activity.SettingActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name="com.jf.my.Activity.SettingNotificationActivity"
+            android:name="com.markermall.cat.Activity.SettingNotificationActivity"
             android:screenOrientation="portrait" />
 
 
         <activity
-            android:name="com.jf.my.Activity.SearchResultActivity"
+            android:name="com.markermall.cat.Activity.SearchResultActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".circle.ui.RecommendListActivity"
+            android:name="com.markermall.cat.circle.ui.RecommendListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
 
         <activity
-            android:name="com.jf.my.Activity.ShowWebActivity"
+            android:name="com.markermall.cat.Activity.ShowWebActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".circle.ui.ReleaseManageActivity"
+            android:name="com.markermall.cat.circle.ui.ReleaseManageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".circle.ui.ReleaseGoodsActivity"
+            android:name="com.markermall.cat.circle.ui.ReleaseGoodsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
-            android:name=".info.ui.SettingWechatActivity"
+            android:name="com.markermall.cat.info.ui.SettingWechatActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.jf.my.Module.common.Activity.ImagePagerActivity"
+            android:name="com.markermall.cat.Module.common.Activity.ImagePagerActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.jf.my.Activity.CashMoneyActivity"
+            android:name="com.markermall.cat.Activity.CashMoneyActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.jf.my.login.ui.ScanQRCodeActivity"
+            android:name="com.markermall.cat.login.ui.ScanQRCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Module.common.Activity.SinglePaneActivity"
+            android:name="com.markermall.cat.Module.common.Activity.SinglePaneActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.jf.my.Activity.ConsComGoodsDeailListActivity"
+            android:name="com.markermall.cat.Activity.ConsComGoodsDeailListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.jf.my.Activity.SharePosterActivity"
+            android:name="com.markermall.cat.Activity.SharePosterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".info.ui.FansActivity"
+            android:name="com.markermall.cat.info.ui.FansActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.jf.my.Activity.OneFragmentDefaultActivity"
+            android:name="com.markermall.cat.Activity.OneFragmentDefaultActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.jf.my.info.ui.GoodsBrowsingHistoryActivity"
+            android:name="com.markermall.cat.info.ui.GoodsBrowsingHistoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.jf.my.Activity.ShortVideoPlayActivity"
+            android:name="com.markermall.cat.Activity.ShortVideoPlayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.jf.my.Module.common.Activity.OneImageShowActivity"
+            android:name="com.markermall.cat.Module.common.Activity.OneImageShowActivity"
             android:screenOrientation="portrait" />
 
 
         <activity
-            android:name="com.jf.my.goods.shopping.ui.LoadComplaintOrderActivity"
+            android:name="com.markermall.cat.goods.shopping.ui.LoadComplaintOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ChannelWebActivity"
+            android:name="com.markermall.cat.Activity.ChannelWebActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.jf.my.info.ui.LoadUserInfoActivity"
+            android:name="com.markermall.cat.info.ui.LoadUserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.jf.my.info.ui.AppFeedActivity"
+            android:name="com.markermall.cat.info.ui.AppFeedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.MyMaterialActivity"
+            android:name="com.markermall.cat.Activity.MyMaterialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".info.ui.SettingMineInfoActivity"
+            android:name="com.markermall.cat.info.ui.SettingMineInfoActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name="com.jf.my.InitializeService"></service>
+        <service android:name="com.markermall.cat.InitializeService"></service>
 
 
         <!-- **************************************************第三方的东西*******************************************************   -->
@@ -334,24 +334,24 @@
             android:screenOrientation="behind"></activity>
 
         <activity
-            android:name="com.jf.my.payment.H5PayDemoActivity"
+            android:name="com.markermall.cat.payment.H5PayDemoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"></activity>
         <activity
-            android:name="com.jf.my.payment.PayDemoActivity"
+            android:name="com.markermall.cat.payment.PayDemoActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.jf.my.goods.shopping.ui.TmallWebActivity"
+            android:name="com.markermall.cat.goods.shopping.ui.TmallWebActivity"
             android:screenOrientation="portrait"></activity>
 
         <activity
-            android:name=".login.ui.AreaCodeActivity"
+            android:name="com.markermall.cat.login.ui.AreaCodeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
 
-        <activity android:name=".main.ui.NoticeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".goods.shopping.ui.ShareMoneyGetImgActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.markermall.cat.main.ui.NoticeActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.markermall.cat.goods.shopping.ui.ShareMoneyGetImgActivity" android:screenOrientation="portrait"/>
         <!--微信分享-->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -361,7 +361,7 @@
 
         <!--华为推送接受-->
         <activity
-            android:name="com.jf.my.Module.push.JPushReceiveActivity"
+            android:name="com.markermall.cat.Module.push.JPushReceiveActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -379,7 +379,7 @@
             android:value="a35df204d7e2a887f752c730a6eda761" />
         <!--微信分享回调 以防package的name和包名不同，最好在wxapi前面加上自己的包名-->
         <activity
-            android:name="com.jf.my.wxapi.WXEntryActivity"
+            android:name="com.markermall.cat.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -426,7 +426,7 @@
         <!--兼容Android7.0以上版本 相机-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.jf.my.provider"
+            android:authorities="com.markermall.cat.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -451,7 +451,7 @@
 
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver
-            android:name="com.jf.my.Module.push.MyReceiver"
+            android:name="com.markermall.cat.Module.push.MyReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -460,15 +460,15 @@
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
                 <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="com.jf.my" />
+                <category android:name="com.markermall.cat" />
             </intent-filter>
         </receiver>
 
         <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
-        <receiver android:name="com.jf.my.Module.push.MyJPushMessageReceiver">
+        <receiver android:name="com.markermall.cat.Module.push.MyJPushMessageReceiver">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="com.jf.my"></category>
+                <category android:name="com.markermall.cat"></category>
             </intent-filter>
         </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
@@ -499,7 +499,7 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <provider
-            android:name="com.jf.my.utils.fire.BuglyFileProvider"
+            android:name="com.markermall.cat.utils.fire.BuglyFileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -510,9 +510,9 @@
 
 
         <!--app更新-->
-        <service android:name="com.jf.my.utils.appDownload.update_app.service.DownloadService" />
+        <service android:name="com.markermall.cat.utils.appDownload.update_app.service.DownloadService" />
         <provider
-            android:name="com.jf.my.utils.appDownload.update_app.UpdateFileProvider"
+            android:name="com.markermall.cat.utils.appDownload.update_app.UpdateFileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -524,7 +524,7 @@
 
         <!--选择图片-->
         <provider
-            android:name="com.jf.my.utils.fire.FeedBackFileProvider"
+            android:name="com.markermall.cat.utils.fire.FeedBackFileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -535,11 +535,11 @@
 
         <!--选择图片-->
         <!--<meta-data-->
-        <!--android:name="com.jf.my.utils.GlideConfiguration"-->
+        <!--android:name="com.markermall.cat.utils.GlideConfiguration"-->
         <!--android:value="GlideModule"/>-->
 
         <activity
-            android:name=".circle.CollegeListActivity"
+            android:name="com.markermall.cat.circle.CollegeListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
     </application>

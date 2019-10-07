@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_F5F5F5">
-    <com.jf.my.Module.common.View.ReEndlessGradListView
+    <com.markermall.cat.Module.common.View.ReEndlessGradListView
         android:id="@+id/listview_aole"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

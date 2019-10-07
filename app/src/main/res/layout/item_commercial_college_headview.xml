@@ -55,7 +55,7 @@
             app:cardElevation="0dp"
             app:cardUseCompatPadding="false">
             <!--比例702*300-->
-            <com.jf.my.view.AspectRatioView
+            <com.markermall.cat.view.AspectRatioView
                 android:id="@+id/rsv_banner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     app:delay_time="2000"
                     app:is_auto_play="true"
                     app:scroll_time="1000" />
-            </com.jf.my.view.AspectRatioView>
+            </com.markermall.cat.view.AspectRatioView>
         </android.support.v7.widget.CardView>
 
         <!--分类-->
@@ -81,7 +81,7 @@
         <!--android:layout_marginRight="2dp"-->
         <!--android:layout_marginBottom="22dp"-->
         <!--android:layout_marginTop="12dp" />-->
-        <!--蜜源资讯-->
+        <!--马克猫资讯-->
         <LinearLayout
             android:id="@+id/ll_information"
             android:layout_width="match_parent"
@@ -95,21 +95,21 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/miyuan_informaiton"
+                    android:id="@+id/markermall_informaiton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="20dp"
-                    android:text="蜜源资讯"
+                    android:text="马克猫资讯"
                     android:textColor="@color/color_1E1E1E"
                     android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/miyuan_informaiton"
+                    android:layout_alignBottom="@+id/markermall_informaiton"
                     android:layout_alignParentRight="true"
                     android:id="@+id/ll_information_more"
                     android:layout_alignParentTop="true"

@@ -3,7 +3,7 @@ ext {
     android = [
             compileSdkVersion: 26,
             buildToolsVersion: '28.0.3',
-            applicationId    : "com.jf.my",
+            applicationId    : "com.markermall.cat",
             minSdkVersion    : 19,
             targetSdkVersion : 26,
             versionCode      : 5200,

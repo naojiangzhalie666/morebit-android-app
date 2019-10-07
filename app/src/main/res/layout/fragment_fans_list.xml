@@ -18,7 +18,7 @@
             android:background="@color/color_FFD800"
             android:orientation="vertical"
             app:elevation="0dp"
-            app:layout_behavior="com.jf.my.view.FlingBehavior">
+            app:layout_behavior="com.markermall.cat.view.FlingBehavior">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -186,7 +186,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.jf.my.view.NoScrollViewPager
+            <com.markermall.cat.view.NoScrollViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

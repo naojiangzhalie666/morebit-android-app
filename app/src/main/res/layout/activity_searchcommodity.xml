@@ -164,7 +164,7 @@
                 android:layout_gravity="bottom"
                 android:background="@color/color_F5F5F5"/>
 
-            <com.jf.my.Module.common.View.ReUseListView
+            <com.markermall.cat.Module.common.View.ReUseListView
                 android:id="@+id/listview"
                 android:background="@color/color_F5F5F5"
                 android:layout_width="fill_parent"

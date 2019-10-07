@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">蜜源</string>
-    <string name="app_versionname">蜜源</string>
+    <string name="app_name">马克猫</string>
+    <string name="app_versionname">马克猫</string>
     <string name="shareapp_text">您不能不知道的淘宝天猫购物省钱内幕，薅羊毛首席攻略，惊天动地，就在这里</string>
     <string name="viewpager_indicator">%1$d/%2$d</string>
     <string name="sevice_weixin_num">mh13263</string>
@@ -204,7 +204,7 @@
     <string name="dialog_article_vip_hint">亲，升级vip会员才可以查看此内容喔</string>
     <string name="dialog_article_operator_hint">亲，运营专员才可以查看此内容喔</string>
     <string name="order_details">订单明细</string>
-    <string name="order_live">蜜源生活</string>
+    <string name="order_live">马克猫生活</string>
     <string name="live_settle">待结算</string>
     <string name="wechat_service">微信: %1$s</string>
     <string name="msg">消息</string>
@@ -331,10 +331,10 @@
     <string name="guide_circle">助你变身导购达人，佣金赚不停</string>
     <string name="guide_order">收益、订单看这里</string>
     <string name="guide_circle_sucai">一键转发吸粉素材，粉丝越多赚佣越快</string>
-    <string name="guide_circle_colleage">大咖教你玩转蜜源，吸粉赚钱</string>
+    <string name="guide_circle_colleage">大咖教你玩转马克猫，吸粉赚钱</string>
     <string name="guide_mine_invite">分享邀请码，好友注册你赚佣</string>
     <string name="guide_mine_money">查看收益，每月25号佣金开心领</string>
-    <string name="guide_mine_service">添加专属客服，找到你的蜜源领路人</string>
+    <string name="guide_mine_service">添加专属客服，找到你的马克猫领路人</string>
     <string name="open_notication_tips"> 开启通知及时收到消息动态~</string>
     <string name="zero_time">00:00:00</string>
     <string name="recommend_index">推荐指数 </string>
@@ -356,7 +356,7 @@
     <string name="college_article_recommend">为你推荐</string>
     <string name="college_article_review">预览</string>
     <string name="goods_detail">商品详情</string>
-    <string name="goods_detail_my_recommend">蜜源推荐</string>
+    <string name="goods_detail_my_recommend">马克猫推荐</string>
     <string name="goods_detail_baby">宝贝</string>
     <string name="goods_detail_recommend">推荐</string>
     <string name="goods_detail_det">详情</string>
@@ -371,7 +371,7 @@
     <string name="circle_search_hint">搜你想要</string>
     <string name="college_article_already_study">%1$s人已学</string>
     <string name="mine_info">个人信息</string>
-    <string name="mi_yuan_information">蜜源资讯</string>
+    <string name="mi_yuan_information">马克猫资讯</string>
     <string name="mi_yuan_information_read">%1$s阅读</string>
     <string name="mine_upgrade_carousel_text"><![CDATA[%1$s升级了,今日拉新人数<font color="#C56717">%2$s</font>人]]></string>
     <string name="mine_upgrade_carousel_text_one"><![CDATA[%1$s 今日拉新人数<font color="#C56717">%2$s</font>人]]></string>
@@ -389,7 +389,7 @@
     <string name="save_succeed">保存成功</string>
     <string name="order_subsidy_money">平台补贴 %1$s</string>
     <string name="college_home_change">换一换</string>
-    <string name="miyuan_recommend">精选推荐</string>
+    <string name="markermall_recommend">精选推荐</string>
     <string name="circle_my_collects">我的种草</string>
     <string name="untied_wechat_succeed">解绑成功</string>
     <string name="fans_remark">备注：%1$s</string>
@@ -397,7 +397,7 @@
     <string name="withdraw_time">每月%s号可提现上月结算收益</string>
     <string name="order_no_look">该订单不支持查看</string>
     <string name="wechat_ewm_no_empty">微信号不能为空</string>
-    <string name="gray_upgrade_title">蜜源APP内测邀请</string>
+    <string name="gray_upgrade_title">马克猫APP内测邀请</string>
     <string name="text_fans_dynmic_rank_commission_null">您团队近7日预估佣金纹丝不动\n快推荐商品福利给粉丝吧～</string>
     <string name="text_fans_dynmic_rank_new_null">您团队近7日拉新不给力哦\n快去分享邀粉秘籍给粉丝吧～</string>
     <string name="order_commission">商品佣金 %1$s</string>

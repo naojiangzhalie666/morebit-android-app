@@ -8,7 +8,7 @@
     android:orientation="vertical"
     >
 
-    <com.jf.my.view.AspectRatioView
+    <com.markermall.cat.view.AspectRatioView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:aspectRatio="0.56"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY" />
-    </com.jf.my.view.AspectRatioView>
+    </com.markermall.cat.view.AspectRatioView>
 
     <RelativeLayout
         android:id="@+id/rb_tick_rl"

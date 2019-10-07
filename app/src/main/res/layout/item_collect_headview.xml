@@ -20,7 +20,7 @@
                 android:layout_height="10dp"
                 android:visibility="invisible"/>
 
-            <com.jf.my.view.FixRecyclerView
+            <com.markermall.cat.view.FixRecyclerView
                 android:id="@+id/cll_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -205,7 +205,7 @@
         </RelativeLayout>
 
 
-        <com.jf.my.view.AspectRatioView
+        <com.markermall.cat.view.AspectRatioView
             android:id="@+id/ar_title_banner"
             android:layout_below="@+id/ll_qrcode_text"
             android:layout_marginTop="12dp"
@@ -217,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:background="@drawable/bg_goods_share_buttom"
                 android:layout_height="match_parent"/>
-        </com.jf.my.view.AspectRatioView>
+        </com.markermall.cat.view.AspectRatioView>
 
     </RelativeLayout>
 </RelativeLayout>

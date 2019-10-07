@@ -183,7 +183,7 @@
         <item name="android:maxHeight">13dip</item>
     </style>
 
-    <style name="Widget.MiYuan.CheckBox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="Widget.Markermall.CheckBox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:button">@null</item>
         <item name="android:background">@drawable/selector_checkbox</item>
     </style>

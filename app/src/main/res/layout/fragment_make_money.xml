@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <!--比例750X600-->
-                <com.jf.my.view.AspectRatioView
+                <com.markermall.cat.view.AspectRatioView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:aspectRatio="1.25">
@@ -32,7 +32,7 @@
                         android:scaleType="fitXY"
                         android:id="@+id/iv_picture"
                         android:src="@drawable/image_zhuanqianjihua"/>
-                </com.jf.my.view.AspectRatioView>
+                </com.markermall.cat.view.AspectRatioView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -41,12 +41,12 @@
                     android:layout_marginRight="12dp"
                     android:orientation="vertical">
                     <!--比例750X300-->
-                    <com.jf.my.view.AspectRatioView
+                    <com.markermall.cat.view.AspectRatioView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         app:aspectRatio="2.5">
-                    </com.jf.my.view.AspectRatioView>
+                    </com.markermall.cat.view.AspectRatioView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -303,7 +303,7 @@
                             android:layout_marginTop="10dp"
                             android:textColor="#ff999999"
                             android:textSize="12sp"
-                            tools:text="邀请好友注册成为你的下家，下家在蜜源上购买的每笔订单，你都可以获得该商品显示佣金的60%作为奖励，下家再推广邀请注册得到下家，你都可以获得显示佣金的20%作为奖励，邀请的下家满足条件还可以升级。"
+                            tools:text="邀请好友注册成为你的下家，下家在马克猫上购买的每笔订单，你都可以获得该商品显示佣金的60%作为奖励，下家再推广邀请注册得到下家，你都可以获得显示佣金的20%作为奖励，邀请的下家满足条件还可以升级。"
                             />
 
                         <TextView

@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.jf.my.payment.ExternalFragment"
+        android:name="com.markermall.cat.payment.ExternalFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 

@@ -103,7 +103,7 @@ public class LRecyclerView extends RecyclerView {
     private int mScrolledXDistance = 0;
     //scroll variables end
 
-    private boolean mIsMiyuanNoMore;
+    private boolean mIsMarkermallNoMore;
 
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
 
@@ -384,10 +384,10 @@ public class LRecyclerView extends RecyclerView {
     /**
      * 设置是否已加载全部
      *
-     * @param isMiyuanNoMore
+     * @param isMarkermallNoMore
      */
-    public void setMiyuanNoMore(boolean isMiyuanNoMore) {
-        this.mIsMiyuanNoMore = isMiyuanNoMore;
+    public void setMarkermallNoMore(boolean isMarkermallNoMore) {
+        this.mIsMarkermallNoMore = isMarkermallNoMore;
     }
 
     public void  setFootViewVisibility( int visibility){
@@ -404,8 +404,8 @@ public class LRecyclerView extends RecyclerView {
         mLoadingData = false;
         isNoMore = noMore;
         if (isNoMore) {
-            if (mIsMiyuanNoMore) {
-                mLoadMoreFooter.onMiyuanNoMore();
+            if (mIsMarkermallNoMore) {
+                mLoadMoreFooter.onMarkermallNoMore();
             } else {
                 mLoadMoreFooter.onNoMore();
             }

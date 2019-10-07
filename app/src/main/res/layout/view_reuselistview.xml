@@ -11,7 +11,7 @@
          android:layout_height="match_parent"
          android:orientation="vertical"
          android:visibility="visible">
-         <com.jf.my.Module.common.widget.SwipeRefreshLayout
+         <com.markermall.cat.Module.common.widget.SwipeRefreshLayout
              android:id="@+id/swipeList"
              android:layout_width="fill_parent"
              android:layout_height="fill_parent">
@@ -20,7 +20,7 @@
                  android:layout_width="fill_parent"
                  android:layout_height="fill_parent"
                  />
-         </com.jf.my.Module.common.widget.SwipeRefreshLayout>
+         </com.markermall.cat.Module.common.widget.SwipeRefreshLayout>
      </RelativeLayout>
 
    <!-- <LinearLayout

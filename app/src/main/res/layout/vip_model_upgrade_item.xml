@@ -28,7 +28,7 @@
                 <!--android:progress="20"-->
                 <!--android:progressDrawable="@drawable/customprogress"-->
                 <!--android:layout_gravity="center_vertical"/>-->
-            <com.jf.my.view.HorzProgressView
+            <com.markermall.cat.view.HorzProgressView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/horzProgressView"
                 android:layout_width="168dp"

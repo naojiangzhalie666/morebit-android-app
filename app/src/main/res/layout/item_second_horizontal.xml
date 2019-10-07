@@ -8,7 +8,7 @@
     android:layout_marginBottom="1dp"
    >
 
-    <com.jf.my.view.AspectRatioView
+    <com.markermall.cat.view.AspectRatioView
         android:id="@+id/secondRatioView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,5 +20,5 @@
         android:scaleType="fitXY"
         android:src="@drawable/icon_default"
         />
-    </com.jf.my.view.AspectRatioView>
+    </com.markermall.cat.view.AspectRatioView>
 </LinearLayout>

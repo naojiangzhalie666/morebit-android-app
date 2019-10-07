@@ -34,5 +34,5 @@ public interface ILoadMoreFooter {
     /**
      * 状态回调，已全部加载完成  小蜜蜂
      */
-    void onMiyuanNoMore();
+    void onMarkermallNoMore();
 }

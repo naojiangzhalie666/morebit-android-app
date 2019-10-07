@@ -26,7 +26,7 @@
                 android:textSize="@dimen/sp_14" />
 
 
-            <com.jf.my.view.ClearEditText
+            <com.markermall.cat.view.ClearEditText
                 android:id="@+id/edt_weichat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.jf.my.view.AspectRatioView
+    <com.markermall.cat.view.AspectRatioView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:aspectRatio="1.68">
@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:src="@drawable/heisebeijing" />
-    </com.jf.my.view.AspectRatioView>
+    </com.markermall.cat.view.AspectRatioView>
 
     <!--android:padding="5dp"-->
     <ImageView
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp" />
 
-        <com.jf.my.view.AspectRatioView
+        <com.markermall.cat.view.AspectRatioView
             android:id="@+id/ar_limits"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY" />
-        </com.jf.my.view.AspectRatioView>
+        </com.markermall.cat.view.AspectRatioView>
 
         <ImageView
             android:id="@+id/iv_exclusive_course"

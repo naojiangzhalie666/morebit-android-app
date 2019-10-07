@@ -34,7 +34,7 @@
             />
     </RelativeLayout>
 
-    <com.jf.my.view.MyWebView
+    <com.markermall.cat.view.MyWebView
         android:id="@+id/webViewNet"
         android:layout_below="@+id/rl_title"
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
         android:nestedScrollingEnabled="false"
         android:visibility="gone"/>
 
-    <com.jf.my.view.FixRecyclerView
+    <com.markermall.cat.view.FixRecyclerView
         android:id="@+id/imgList"
         android:layout_below="@+id/rl_title"
         android:layout_width="match_parent"

@@ -26,7 +26,7 @@ public class LoadingFooter extends RelativeLayout implements ILoadMoreFooter {
     private TextView mLoadingText;
     private TextView mNoMoreText;
     private TextView mNoNetWorkText;
-    private TextView mMiYuanNoMoreText;
+    private TextView mMarkermallNoMoreText;
     private String loadingHint;
     private String noMoreHint;
     private String noNetWorkHint;
@@ -128,8 +128,8 @@ public class LoadingFooter extends RelativeLayout implements ILoadMoreFooter {
         setState(State.NoMore);
     }
     @Override
-    public void onMiyuanNoMore() {
-        setState(State.NoMoreMiYuan);
+    public void onMarkermallNoMore() {
+        setState(State.NoMoreMarkermall);
     }
     @Override
     public View getFootView() {
@@ -217,7 +217,7 @@ public class LoadingFooter extends RelativeLayout implements ILoadMoreFooter {
                 mNoMoreText.setText(TextUtils.isEmpty(noMoreHint) ? getResources().getString(R.string.list_footer_end) : noMoreHint);
                 mNoMoreText.setTextColor(ContextCompat.getColor(getContext(), hintColor));
                 break;
-            case NoMoreMiYuan:
+            case NoMoreMarkermall:
                 setOnClickListener(null);
                 if (mLoadingView != null) {
                     mLoadingView.setVisibility(GONE);
@@ -228,15 +228,15 @@ public class LoadingFooter extends RelativeLayout implements ILoadMoreFooter {
                 }
 
                 if (mTheEndView == null) {
-                    ViewStub viewStub = (ViewStub) findViewById(R.id.end_miyuan_viewstub);
+                    ViewStub viewStub = (ViewStub) findViewById(R.id.end_markermall_viewstub);
                     mTheEndView = viewStub.inflate();
-                    mMiYuanNoMoreText = (TextView) mTheEndView.findViewById(R.id.miyuan_loading_end_text);
+                    mMarkermallNoMoreText = (TextView) mTheEndView.findViewById(R.id.markermall_loading_end_text);
 
                 } else {
                     mTheEndView.setVisibility(VISIBLE);
                 }
-                mMiYuanNoMoreText.setText(TextUtils.isEmpty(noMoreHint) ? getResources().getString(R.string.miyuan_list_footer_end) : noMoreHint);
-                mMiYuanNoMoreText.setTextColor(ContextCompat.getColor(getContext(),R.color.colcor_999999));
+                mMarkermallNoMoreText.setText(TextUtils.isEmpty(noMoreHint) ? getResources().getString(R.string.markermall_list_footer_end) : noMoreHint);
+                mMarkermallNoMoreText.setTextColor(ContextCompat.getColor(getContext(),R.color.colcor_999999));
                 mTheEndView.setVisibility(showView ? VISIBLE : GONE);
                 break;
             case NetWorkError:
@@ -271,6 +271,6 @@ public class LoadingFooter extends RelativeLayout implements ILoadMoreFooter {
         , NoMore/**加载到最底了*/
         , Loading/**加载中..*/
         , NetWorkError/**网络异常*/
-        , NoMoreMiYuan/**蜜源网络异常*/
+        , NoMoreMarkermall/**马克猫网络异常*/
     }
 }

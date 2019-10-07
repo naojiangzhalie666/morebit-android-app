@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <com.jf.my.view.AspectRatioView
+            <com.markermall.cat.view.AspectRatioView
                 android:id="@+id/ar_title_banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,12 +27,12 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 />
-            </com.jf.my.view.AspectRatioView>
+            </com.markermall.cat.view.AspectRatioView>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/color_cccccc"/>
-            <com.jf.my.view.FixListView
+            <com.markermall.cat.view.FixListView
                 android:id="@+id/list_lv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

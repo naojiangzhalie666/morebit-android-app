@@ -15,7 +15,7 @@
 
 
 
-    <com.jf.my.view.AspectRatioView
+    <com.markermall.cat.view.AspectRatioView
         android:id="@+id/ar_title_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/image_denglubeijing"/>
-    </com.jf.my.view.AspectRatioView>
+    </com.markermall.cat.view.AspectRatioView>
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/sp_15"/>
 
-            <com.jf.my.view.ClearEditText
+            <com.markermall.cat.view.ClearEditText
                 android:id="@+id/edtPhone"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -242,7 +242,7 @@
                 android:id="@+id/ll_userAgreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="《蜜源协议》"
+                android:text="《马克猫协议》"
                 android:textColor="@color/color_E18400"
                 android:textSize="@dimen/sp_12"
                 />

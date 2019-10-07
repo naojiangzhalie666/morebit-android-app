@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.jf.my.Module.common.View.ReUseListView
+        <com.markermall.cat.Module.common.View.ReUseListView
             android:id="@+id/mListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
 
-=    <com.jf.my.view.SimpleEmptyView
+=    <com.markermall.cat.view.SimpleEmptyView
         android:id="@+id/empty_view"
         tools:visibility="visible"
         android:layout_width="match_parent"

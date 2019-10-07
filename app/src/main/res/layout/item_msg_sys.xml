@@ -108,7 +108,7 @@
                 android:textSize="12sp"
                 tools:text="您因盗用他人账号，已被平台封号，改建后悔认识红丝绒见覅 " />
 
-            <com.jf.my.view.AspectRatioView
+            <com.markermall.cat.view.AspectRatioView
                 android:id="@+id/as_banner_make_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY" />
-            </com.jf.my.view.AspectRatioView>
+            </com.markermall.cat.view.AspectRatioView>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

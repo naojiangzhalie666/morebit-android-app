@@ -1,4 +1,4 @@
-#include "com_loveyou_miyuan_utils_JniUtils.h"
+#include "com_loveyou_markermall_utils_JniUtils.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -44,17 +44,17 @@ ka90VFbEYiCyQ975LT3Zb3kFaxUXaRMy7lqaPht7CFOlaAU4wKzwkQsBr8aMg1n8*crypt=ka90VFbEY
 ka90VFbEYiCyQ975LT3Zb3kFaxUXaRMy7lqaPht7CFOlaAU4wKzwkQsBr8aMg1n8*crypt=ka90VFbEYiCyQ975LT3Zb3kFaxUXaRMy7lqaPht7CFOlaAU4wKzwkQsBr8aMg1n8&noncestr=6e1ad6fa03204fe8aa78d4e847fa3fcd&timestamp=1528879372&token=zhitu_uSVnYLWLeGpk*ka90VFbEYiCyQ975LT3Zb3kFaxUXaRMy7lqaPht7CFOlaAU4wKzwkQsBr8aMg1n8
 ka90VFbEYiCyQ975LT3Zb3kFaxUXaRMy7lqaPht7CFOlaAU4wKzwkQsBr8aMg1n8*crypt=ka90VFbEYiCyQ975LT3Zb3kFaxUXaRMy7lqaPht7CFOlaAU4wKzwkQsBr8aMg1n8&noncestr=5a161b8870754682b185d24228c361ad&timestamp=1528879499&token=zhitu_uSVnYLWLeGpk*ka90VFbEYiCyQ975LT3Zb3kFaxUXaRMy7lqaPht7CFOlaAU4wKzwkQsBr8aMg1n8
 */
-JNIEXPORT jstring JNICALL Java_com_loveyou_miyuan_utils_JniUtils_getStringC
+JNIEXPORT jstring JNICALL Java_com_loveyou_markermall_utils_JniUtils_getStringC
         (JNIEnv *env, jobject obj){
     return (*env)->NewStringUTF(env,"这里是来自jni的string");
 }
 
-JNIEXPORT jstring JNICALL Java_com_loveyou_miyuan_utils_JniUtils_getToken
+JNIEXPORT jstring JNICALL Java_com_loveyou_markermall_utils_JniUtils_getToken
         (JNIEnv *env, jobject obj){
     return (*env)->NewStringUTF(env,token);
 }
 
-JNIEXPORT jstring JNICALL Java_com_loveyou_miyuan_utils_JniUtils_myEncrypt
+JNIEXPORT jstring JNICALL Java_com_loveyou_markermall_utils_JniUtils_myEncrypt
         (JNIEnv *env, jclass jclass1, jstring key1,jstring key2)
 {
     if (key1 == NULL) {
@@ -117,7 +117,7 @@ JNIEXPORT jstring JNICALL Java_com_loveyou_miyuan_utils_JniUtils_myEncrypt
     return result;
 }
 
-JNIEXPORT jstring JNICALL Java_com_loveyou_miyuan_utils_JniUtils_myOldEncrypt
+JNIEXPORT jstring JNICALL Java_com_loveyou_markermall_utils_JniUtils_myOldEncrypt
         (JNIEnv *env, jclass jclass1, jstring key1,jstring key2)
 {
     if (key1 == NULL) {
@@ -177,7 +177,7 @@ JNIEXPORT jstring JNICALL Java_com_loveyou_miyuan_utils_JniUtils_myOldEncrypt
     return result;
 }
 
-JNIEXPORT jstring JNICALL Java_com_loveyou_miyuan_utils_JniUtils_myDecrypt
+JNIEXPORT jstring JNICALL Java_com_loveyou_markermall_utils_JniUtils_myDecrypt
         (JNIEnv *env, jclass jclass1, jstring jstr)
 {
     if (jstr == NULL) {

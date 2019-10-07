@@ -7,7 +7,7 @@
 
 
 
-    <com.jf.my.view.AspectRatioView
+    <com.markermall.cat.view.AspectRatioView
         android:id="@+id/ar_title_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                 app:scroll_time="1000"/>
 
         </android.support.v7.widget.CardView>
-    </com.jf.my.view.AspectRatioView>
+    </com.markermall.cat.view.AspectRatioView>
 
 
 </RelativeLayout>

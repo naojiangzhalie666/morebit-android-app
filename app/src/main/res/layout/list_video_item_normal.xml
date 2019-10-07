@@ -11,7 +11,7 @@
     android:paddingBottom="24dp"
     android:paddingTop="20dp">
 
-    <com.jf.my.view.AspectRatioView
+    <com.markermall.cat.view.AspectRatioView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:aspectRatio="1.77">
@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/white">
                     <!--视频播放view-->
-                    <com.jf.my.player.CircleVideo
+                    <com.markermall.cat.player.CircleVideo
                         android:id="@+id/video_item_player"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -86,7 +86,7 @@
 
             </LinearLayout>
         </RelativeLayout>
-    </com.jf.my.view.AspectRatioView>
+    </com.markermall.cat.view.AspectRatioView>
 
     <TextView
         android:id="@+id/video_title"

@@ -7,7 +7,7 @@
     android:paddingRight="6dp"
     android:paddingLeft="12dp"
     android:orientation="vertical">
-    <com.jf.my.view.AspectRatioView
+    <com.markermall.cat.view.AspectRatioView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:aspectRatio="1.33">
@@ -48,7 +48,7 @@
                 />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-    </com.jf.my.view.AspectRatioView>
+    </com.markermall.cat.view.AspectRatioView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="35dp"
@@ -58,7 +58,7 @@
         android:textColor="@color/color_333333"
         android:id="@+id/tv_title"
         android:textSize="@dimen/sp_13"
-        tools:text="持家有道,赚钱有方的人都在使用蜜源后···" />
+        tools:text="持家有道,赚钱有方的人都在使用马克猫后···" />
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"

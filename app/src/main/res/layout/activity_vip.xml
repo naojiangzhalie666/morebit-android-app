@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_F5F5F5">
 
-    <com.jf.my.Module.common.widget.SwipeRefreshLayout
+    <com.markermall.cat.Module.common.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,7 +45,7 @@
                     android:layout="@layout/vip_mode_customer_service_wx" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
-    </com.jf.my.Module.common.widget.SwipeRefreshLayout>
+    </com.markermall.cat.Module.common.widget.SwipeRefreshLayout>
     <LinearLayout
         android:id="@+id/ll_bootom_upgrade"
         android:layout_width="match_parent"

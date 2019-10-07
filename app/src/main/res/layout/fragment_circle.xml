@@ -95,7 +95,7 @@
         <!--app:tl_tab_padding="12dp"-->
 
         />
-    <!--<com.jf.my.view.main.MYPagerSlidingTabStrip-->
+    <!--<com.markermall.cat.view.main.MYPagerSlidingTabStrip-->
         <!--android:id="@+id/tab"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="41dp"-->

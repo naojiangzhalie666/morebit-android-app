@@ -27,7 +27,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.jf.my.view.AspectRatioView
+                    <com.markermall.cat.view.AspectRatioView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/image_zhanbaobeijing"
@@ -106,7 +106,7 @@
                                     tools:text="活泼向日葵"/>
                             </LinearLayout>
                         </RelativeLayout>
-                    </com.jf.my.view.AspectRatioView>
+                    </com.markermall.cat.view.AspectRatioView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -225,7 +225,7 @@
                                     android:layout_height="0.5dp"
                                     android:background="@color/color_cccccc"/>
 
-                                <com.jf.my.view.FixListView
+                                <com.markermall.cat.view.FixListView
                                     android:id="@+id/list_lv"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -294,7 +294,7 @@
         </android.support.v4.widget.SwipeRefreshLayout>
 
 
-        <com.jf.my.view.UPMarqueeView
+        <com.markermall.cat.view.UPMarqueeView
             android:id="@+id/upview1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

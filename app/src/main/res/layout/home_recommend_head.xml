@@ -18,7 +18,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/white" />
 
-            <com.jf.my.view.AspectRatioView
+            <com.markermall.cat.view.AspectRatioView
                 android:id="@+id/ar_title_banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                         app:scroll_time="1000"/>
 
                 </android.support.v7.widget.CardView>
-            </com.jf.my.view.AspectRatioView>
+            </com.markermall.cat.view.AspectRatioView>
         </RelativeLayout>
 
 
@@ -69,7 +69,7 @@
         <!--楼层模块-->
         <include layout="@layout/view_layout_floor"/>
 
-        <com.jf.my.view.AspectRatioView
+        <com.markermall.cat.view.AspectRatioView
             android:id="@+id/as_banner_make_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                     app:indicator_drawable_selected="@drawable/icon_huangdian"
                     app:indicator_drawable_unselected="@drawable/icon_baidian"/>
             </android.support.v7.widget.CardView>
-        </com.jf.my.view.AspectRatioView>
+        </com.markermall.cat.view.AspectRatioView>
 
         <!--精选活动-->
         <include layout="@layout/recommend_acitivty"/>
@@ -110,7 +110,7 @@
                         android:id="@+id/recommendTitleTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/miyuan_recommend"
+                        android:text="@string/markermall_recommend"
                         android:textSize="@dimen/sp_15"
                         android:textColor="@color/color_333333"
                         android:layout_marginLeft="6dp"

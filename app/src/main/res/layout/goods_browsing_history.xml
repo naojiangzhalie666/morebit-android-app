@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.jf.my.Module.common.View.ReUseGridView
+            <com.markermall.cat.Module.common.View.ReUseGridView
                 android:id="@+id/mListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -105,7 +105,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.jf.my.Module.common.View.ReUseListView
+        <com.markermall.cat.Module.common.View.ReUseListView
             android:id="@+id/listview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"/>

@@ -55,7 +55,7 @@
         SortId="1"
         AppKey="658171043"
         AppSecret="1e7b454d93cfea4d8335c76d38a037fe"
-        RedirectUrl="http://sj.qq.com/myapp/detail.htm?apkName=com.jf.my"
+        RedirectUrl="http://sj.qq.com/myapp/detail.htm?apkName=com.markermall.cat"
         ShareByAppClient="true"
         Enable="true" />
 

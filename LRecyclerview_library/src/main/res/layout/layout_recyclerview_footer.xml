@@ -26,10 +26,10 @@
 
 
     <ViewStub
-        android:id="@+id/end_miyuan_viewstub"
+        android:id="@+id/end_markermall_viewstub"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:layout="@layout/layout_ercyclerview_footer_end_miyuan" />
+        android:layout="@layout/layout_ercyclerview_footer_end_markermall" />
 
 
 </LinearLayout>

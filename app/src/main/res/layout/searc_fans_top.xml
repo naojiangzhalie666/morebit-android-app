@@ -52,7 +52,7 @@
 
 
 
-            <com.jf.my.view.ClearEditText
+            <com.markermall.cat.view.ClearEditText
                 android:id="@+id/search_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

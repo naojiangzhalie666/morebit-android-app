@@ -28,7 +28,7 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_14" />
 
-            <com.jf.my.view.ClearEditText
+            <com.markermall.cat.view.ClearEditText
                 android:id="@+id/edt_phone_num"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -63,7 +63,7 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_14" />
 
-            <com.jf.my.view.ClearEditText
+            <com.markermall.cat.view.ClearEditText
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -98,7 +98,7 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_14" />
 
-            <com.jf.my.view.ClearEditText
+            <com.markermall.cat.view.ClearEditText
                 android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -135,7 +135,7 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_14" />
 
-            <com.jf.my.view.ClearEditText
+            <com.markermall.cat.view.ClearEditText
                 android:id="@+id/edt_new_phone_num"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
