@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_editoneline_dialog_whilebg_15dp"
+    android:orientation="vertical" >
+
+    <com.jf.my.Module.common.View.LoadingView
+        android:id="@+id/loadView"
+        android:layout_centerInParent="true"
+        android:layout_width="140dp"
+        android:layout_height="140dp"/>
+
+</LinearLayout>

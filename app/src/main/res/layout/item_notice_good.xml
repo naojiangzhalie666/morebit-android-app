@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:id="@+id/ll_root"
+    >
+
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="11dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:background="@color/white">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/imageCardView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp"
+                        app:cardUseCompatPadding="false"
+                        android:background="@color/white">
+                        <ImageView
+                            android:id="@+id/image"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/icon_default_750"
+                            android:scaleType="fitXY" />
+                    </android.support.v7.widget.CardView>
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       android:layout_marginLeft="12dp"
+                       android:layout_marginTop="6dp">
+                       <TextView
+                           android:id="@+id/title"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:text=""
+                           android:textSize="@dimen/sp_14"
+                           android:textColor="@color/color_333333"
+                           android:singleLine="true"
+                           android:ellipsize="end"
+                           android:lines="1"
+                           android:textStyle="bold"
+                           />
+                       <TextView
+                           android:id="@+id/subTitleTv"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:text=""
+                           android:textSize="@dimen/sp_12"
+                           android:textColor="@color/color_333333"
+                           android:ellipsize="end"
+                           android:lines="2"
+                           android:layout_marginTop="7dp"
+                           />
+                   </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_ECECEC"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="14dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/timeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/color_666666"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/timeTv"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="查看详情"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/color_333333"
+                        />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_notice_good_arrow"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginLeft="2dp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

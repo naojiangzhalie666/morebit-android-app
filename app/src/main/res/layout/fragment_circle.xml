@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/status_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+    <!--
+
+        pstsIndicatorColor   滑动条的颜色
+        pstsUnderlineColor 滑动条所在的那个全宽线的颜色
+        pstsDividerColor 每个标签的分割线的颜色
+        pstsIndicatorHeight    滑动条的高度
+        pstsUnderlineHeight 滑动条所在的那个全宽线的高度
+        pstsDividerPadding   分割线底部和顶部的填充宽度
+        pstsTabPaddingLeftRight  每个标签左右填充宽度
+        pstsScrollOffset
+        StateListDrawable 每个标签的背景，应该是一个
+        pstsShouldExpand    如果设置为true，每个标签是相同的控件，均匀平分整个屏幕，默认是false
+        pstsTextAllCaps   如果为true，所有标签都是大写字母，默认为true
+    -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+        <ImageView
+            android:id="@+id/myCollectIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_circle_my_collect"
+            android:paddingLeft="10dp"
+            android:layout_centerVertical="true"
+            />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="13dp"
+            android:layout_weight="1"
+            >
+            <com.flyco.tablayout.SlidingTabLayout
+                android:layout_width="wrap_content"
+                android:background="@drawable/bg_circle_title_round_30dp"
+                android:layout_height="27dp"
+                android:id="@+id/tab"
+                android:layout_gravity="center_horizontal"
+                tl:tl_bar_stroke_width="0dp"
+                tl:tl_bar_color="@color/color_F7F7F7"
+                tl:tl_indicator_color="@color/color_FFD800"
+                tl:tl_indicator_anim_enable="true"
+                tl:tl_indicator_margin_left="2dp"
+                tl:tl_indicator_margin_right="2dp"
+                tl:tl_indicator_margin_top="2dp"
+                tl:tl_indicator_margin_bottom="2dp"
+                tl:tl_tab_padding="15dp"
+                tl:tl_indicator_style="BLOCK"
+                tl:tl_indicator_bounce_enable="true"
+                tl:tl_textUnselectColor="@color/color_666666"
+                tl:tl_textSelectColor="@color/color_333333"
+                tl:tl_textsize="14sp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+        <!--app:tl_bar_color="@color/color_333333"-->
+        <!--app:tl_indicator_color="@color/color_FFD800"-->
+        <!--app:tl_tab_space_equal="true"-->
+        <!--app:tl_indicator_corner_radius="30dp"-->
+        <!--app:tl_bar_stroke_color="@color/transparent"-->
+        <!--app:tl_textSelectColor="@color/color_333333"-->
+        <!--app:tl_textUnselectColor="@color/color_999999"-->
+        <!--app:tl_textsize="@dimen/sp_14"-->
+        <!--app:tl_tab_padding="12dp"-->
+
+        />
+    <!--<com.jf.my.view.main.MYPagerSlidingTabStrip-->
+        <!--android:id="@+id/tab"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="41dp"-->
+        <!--android:textColor="@color/color_666666"-->
+        <!--android:textSize="14sp"-->
+        <!--app:pstsTabBackground="@color/transparent"-->
+        <!--app:pstsUnderlineColor="@color/transparent"-->
+        <!--app:pstsDividerColor="@color/transparent"-->
+        <!--app:pstsIndicatorColor="@color/color_ffe800"-->
+        <!--app:pstsIndicatorHeight="2dp"-->
+        <!--app:pstsDividerPadding="32dp"-->
+        <!--app:pstsShouldExpand="true"-->
+        <!--app:minusTextMultiple="0.4"-->
+        <!--app:tabTextSelectColor="@color/color_333333"/>-->
+
+    <!--<TextView  style="@style/line"/>-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

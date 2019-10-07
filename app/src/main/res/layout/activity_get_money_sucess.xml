@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_F5F5F5"
+              android:fitsSystemWindows="true"
+
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="51dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="61dp"
+        android:background="@drawable/icon_tijiaoyijian"
+        android:text=""
+        android:textColor="@color/color_666666"
+        android:textSize="19sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="提现申请成功"
+        android:textColor="@color/color_000000"
+        android:textSize="23sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:text="您将在48小时内收到款项，请留意支付宝！"
+        android:textColor="@color/color_707070"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/ok"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_000000_1dpline_yellowbg_round_5dp"
+        android:gravity="center"
+        android:text="谢主隆恩"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
+
+</LinearLayout>

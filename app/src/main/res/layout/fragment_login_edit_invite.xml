@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+                android:orientation="vertical">
+
+    <com.jf.my.login.ui.LoginHeadView
+        android:id="@+id/lh_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:isShowBack="true"
+        app:titleName="请输入邀请信息"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lh_head"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="40dp"
+            >
+
+            <com.jf.my.view.ClearEditText
+                android:id="@+id/edtInvite"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="11dp"
+                android:layout_toLeftOf="@+id/clear"
+                android:layout_toRightOf="@+id/icon_phone"
+                android:background="@null"
+                android:digits="@string/invite_digits_code"
+                android:hint="请输入邀请码或邀请人手机号"
+                android:maxLength="11"
+                android:paddingRight="30dp"
+                android:textColor="@color/color_3A3A3A"
+                android:textColorHint="@color/color_999999"
+                android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                android:textSize="14sp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_req_qr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/icon_saoyisao"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1px"
+                android:layout_alignLeft="@+id/edt_password"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_E6E6E6"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/errorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/color_E59634"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_invite"
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/btn_ffed25_whiteline_round_5dp"
+                android:gravity="center_vertical"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/iv_invite_head"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="30dp"/>
+
+                <TextView
+                    android:id="@+id/tv_invite_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
+                    android:layout_toRightOf="@+id/iv_invite_head"
+                    android:textColor="@color/color_333333"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="陶醉吟仙风"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_intro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_invite_name"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_toRightOf="@+id/iv_invite_head"
+                    android:textColor="@color/color_999999"
+                    android:textSize="13sp"
+                    tools:text="邀请您加入蜜源"
+                    />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/selector_next_button"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="下一步"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

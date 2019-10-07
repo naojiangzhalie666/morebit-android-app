@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="35dp"
+    android:orientation="vertical"
+
+    >
+
+    <com.cpiz.android.bubbleview.BubbleTextView
+        android:id="@+id/bubbleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="粘贴商品标题，领券购物更省钱"
+        android:textSize="@dimen/sp_14"
+        android:paddingLeft="15dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="30dp"
+        android:textColor="@android:color/white"
+        app:bb_arrowDirection="Up"
+        app:bb_cornerRadius="11dp"
+        app:bb_borderColor="@color/color_ff000000"
+        app:bb_borderWidth="6dp"
+       />
+      <ImageView
+          android:id="@+id/closeIv"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:src="@drawable/icon_guide_close"
+          android:layout_gravity="right|center"
+          android:paddingRight="12dp"
+          android:paddingLeft="11dp"
+          android:paddingTop="6dp"
+          />
+</FrameLayout>

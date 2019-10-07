@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 刷新动画 -->
+<animation-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+    <item android:drawable="@drawable/refresh1" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh2" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh3" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh4" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh5" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh6" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh7" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh8" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh9" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh10" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh11" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh12" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh13" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh14" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh15" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh16" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh17" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh18" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh19" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh21" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh22" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh23" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh24" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh25" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh26" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh27" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh28" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh29" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh30" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh31" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh32" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh33" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh34" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh35" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh36" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh37" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh38" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh39" android:duration="@string/refresh_duration"/>
+    <item android:drawable="@drawable/refresh40" android:duration="50"/>
+    <!--<item android:drawable="@drawable/refresh41" android:duration="50"/>-->
+    <!--<item android:drawable="@drawable/refresh42" android:duration="50"/>-->
+    <!--<item android:drawable="@drawable/refresh43" android:duration="50"/>-->
+    <!--<item android:drawable="@drawable/refresh44" android:duration="50"/>-->
+    <!--<item android:drawable="@drawable/refresh45" android:duration="50"/>-->
+
+
+</animation-list>

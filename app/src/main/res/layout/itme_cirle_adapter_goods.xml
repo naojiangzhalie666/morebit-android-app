@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:orientation="vertical">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_head"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:background="@color/white"
+        android:layout_marginRight="12dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <ImageView
+            android:id="@+id/iv_head_qg_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_80000000"
+            />
+
+        <ImageView
+            android:id="@+id/iv_head_qg"
+            android:src="@drawable/cirle_goods_itme_head_qg"
+            android:layout_width="53dp"
+            android:layout_gravity="center"
+            android:layout_height="53dp"
+            />
+
+
+        <TextView
+            android:id="@+id/markTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="7dp"
+            android:paddingLeft="7dp"
+            android:background="@drawable/bg_search_recommod_good_l"
+            android:layout_alignParentTop="true"
+            android:textSize="@dimen/sp_11"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:visibility="gone"
+            />
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_toRightOf="@id/cv_head"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/color_333333"
+        android:textSize="14sp"
+        tools:text="商品标题标题标题标题"
+        />
+
+
+    <LinearLayout
+
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@id/cv_head"
+        android:background="@drawable/bg_ffc0c0_white_round_6dp"
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+
+        <LinearLayout
+            android:layout_weight="0.335"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_coupon_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffff4141"
+                android:textSize="14sp"
+                tools:text="¥5.00"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coupon_price_text"
+                android:textColor="@color/color_333333"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+
+        <View
+            style="@style/line_vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="#FFC0C0"
+            />
+
+        <LinearLayout
+            android:layout_weight="0.335"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff4141"
+                android:textSize="14sp"
+                tools:text="¥5.00"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="券额"
+                android:textColor="@color/color_333333"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_share"
+            android:layout_width="0dp"
+            android:textSize="11sp"
+            android:layout_weight="0.29"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/icon_combined_shape"
+            android:textColor="@color/white"
+            android:paddingLeft="3dp"
+            android:gravity="center"
+            android:layout_height="58dp"
+            tools:text="分享赚\n3元"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_cot"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+
+        <TextView
+            android:id="@+id/iv_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/image_wenti"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="怎样才算邀请成功？"
+            android:textColor="#ff999999"
+            android:textSize="13sp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_arrows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/selector_make_money_issue"/>
+    </LinearLayout>
+
+    <TextView style="@style/line"/>
+
+    <TextView
+        android:id="@+id/iv_con"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="14dp"
+        android:text="答：进步空间插上科技那伤口，就会看见灰色空间没法 看时间很快就发，会计师氨基酸骷髅巨人。"
+        android:textColor="@color/color_666666"
+        android:textSize="13sp"
+        android:visibility="gone"
+        />
+</LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="12dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="10dp"
+    android:id="@+id/itemLayout"
+   >
+    <LinearLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="9dp"
+        >
+        <TextView
+            android:id="@+id/itemMainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:maxLength="5"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_333333"
+
+            android:lines="1"
+            android:singleLine="true"
+           />
+        <TextView
+            android:id="@+id/itemSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:maxEms="6"
+            android:textSize="11sp"
+            android:textColor="@color/color_666666"
+            android:singleLine="true"
+            android:ellipsize="end"/>
+
+         <TextView
+             android:id="@+id/itemLabel"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text=""
+             android:maxLength="5"
+             android:layout_marginTop="19dp"
+             style="@style/floorLabel"
+             />
+    </LinearLayout>
+     <ImageView
+         android:id="@+id/image"
+         android:layout_marginTop="5dp"
+         android:layout_alignParentRight="true"
+         android:layout_marginRight="12dp"
+         android:layout_alignTop="@id/titleLayout"
+         android:layout_width="60dp"
+         android:layout_height="60dp"
+         android:scaleType="fitXY"
+         android:src="@drawable/icon_default"/>
+
+</LinearLayout>

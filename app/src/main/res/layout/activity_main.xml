@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+    <com.jf.my.view.NoScrollViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_above="@+id/ll_tab"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_urgency_notifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            >
+
+            <RelativeLayout
+                android:id="@+id/rl_homepage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/index_bottom"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/btn_menu_home"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_home"
+                    android:layout_centerHorizontal="true"
+                    android:text="首页"
+                    android:textColor="@color/tv_index_bottom"
+                    android:textSize="10sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_shop"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/index_bottom"
+                android:gravity="center"
+                android:padding="0dip">
+
+                <ImageView
+                    android:id="@+id/iv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/btn_shopping_mall"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_category"
+                    android:layout_centerHorizontal="true"
+
+                    android:text="超级导航"
+                    android:textColor="@color/tv_index_bottom"
+                    android:textSize="10sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_college"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/index_bottom"
+                android:gravity="center"
+                android:padding="0dip">
+
+                <ImageView
+                    android:id="@+id/iv_college"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/btn_college"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_college"
+                    android:layout_centerHorizontal="true"
+                    android:text="商学院"
+                    android:textColor="@color/tv_index_bottom"
+                    android:textSize="10sp"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_community"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/index_bottom"
+                android:gravity="center"
+                android:padding="0dip">
+
+                <ImageView
+                    android:id="@+id/iv_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/btn_community"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_circle"
+                    android:layout_centerHorizontal="true"
+                    android:text="蜜粉圈"
+                    android:textColor="@color/tv_index_bottom"
+                    android:textSize="10sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_mine"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/index_bottom"
+                android:gravity="center"
+                android:padding="0dip">
+
+                <ImageView
+                    android:id="@+id/iv_mine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/btn_mine"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_mine"
+                    android:layout_centerHorizontal="true"
+                    android:text="我的"
+                    android:textColor="@color/tv_index_bottom"
+                    android:textSize="10sp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

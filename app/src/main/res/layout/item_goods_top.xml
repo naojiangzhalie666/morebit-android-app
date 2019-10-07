@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/img_rl"
+    android:layout_height="match_parent"
+  >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_default"
+            android:id="@+id/img"
+            android:scaleType="fitXY"
+            />
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/icon_tupianweixuanzhong"
+          android:layout_marginLeft="6dp"
+          android:layout_marginTop="6dp"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentTop="true"
+          android:id="@+id/select"
+          android:visibility="gone"
+          />
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_home_list_grad_img_top"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/video_play"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bofang"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/markTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="7dp"
+        android:paddingLeft="7dp"
+        android:background="@drawable/bg_search_recommod_good_l"
+        android:layout_alignParentTop="true"
+        android:textSize="@dimen/sp_11"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:visibility="gone"
+  />
+
+</RelativeLayout>

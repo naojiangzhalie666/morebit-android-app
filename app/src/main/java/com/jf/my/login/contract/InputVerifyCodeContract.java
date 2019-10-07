@@ -1,0 +1,26 @@
+package com.jf.my.login.contract;
+
+
+import com.jf.my.pojo.UserInfo;
+import com.jf.my.pojo.WeixinInfo;
+import com.trello.rxlifecycle2.components.support.RxFragment;
+
+/**
+ * Created by YangBoTian on 2018/8/8.
+ */
+public class InputVerifyCodeContract {
+    public interface View extends BaseLoginView {
+        void showData(String msg);
+        void showFinally();
+        void showFailureMessage(String errorMsg);
+        void showRegisterData(UserInfo userInfo);
+        void showRegisterFinally();
+        void showRegisterFailure(String errCode);
+    }
+
+    public interface Present extends LoginBaseSendCodePresent {
+        void register(RxFragment baseFragment,String phone, String verifyCode , String invitationCode,String areaCode);
+        void login(RxFragment baseFragment,String phone,String verifyCode);
+        void weixinRegister(RxFragment baseFragment, String s, String phone, String verifyCode, WeixinInfo weixinInfo);
+    }
+}

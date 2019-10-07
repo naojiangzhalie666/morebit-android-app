@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="0dp"
+    android:layout_marginTop="6dp"
+    android:background="@color/white"
+    android:id="@+id/cardView"
+    app:cardUseCompatPadding="false"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="13dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:src="@drawable/icon_msg_feedback" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="感谢您的反馈"
+                android:maxWidth="180dp"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"
+                tools:text="系统消息" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_999999"
+                android:textSize="10sp"
+                tools:text="2018.11.12" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/line"
+            android:layout_marginTop="2dp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@+id/line"
+            android:background="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_F3F3F3"
+                android:paddingBottom="11dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="发的所发生的发送到发斯蒂芬斯蒂芬胜多负少的防守打法"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:text="fsdfsdfsdf"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

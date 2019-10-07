@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <com.youth.banner.Banner
+                android:id="@+id/roll_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:visibility="invisible"/>
+
+            <com.jf.my.view.FixRecyclerView
+                android:id="@+id/cll_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/transparent"
+                android:dividerHeight="0dp"
+                android:visibility="gone"
+                android:background="@color/white" />
+
+          <LinearLayout
+              android:id="@+id/cll_null_ly"
+              android:layout_width="match_parent"
+              android:layout_height="300dp"
+              android:gravity="center"
+              android:layout_gravity="center"
+              android:visibility="visible"
+              android:orientation="vertical">
+          <ImageView
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:background="@drawable/ic_meiyoushoucang"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="您还没有收藏任何优惠券喔"
+               android:textColor="@color/color_999999"
+               android:textSize="13sp"/>
+          </LinearLayout>
+
+        </FrameLayout>
+               
+
+      <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="7dp"
+            android:background="@color/color_F5F5F5"
+            android:paddingBottom="7dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="50dp"
+                android:layout_height="0.5dp"
+                android:background="@color/color_cccccc"/>
+
+            <TextView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/goods_detail_cai_icon"
+                android:text=""
+                android:textColor="@color/mmhuisezi"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_2B0900"
+                android:textSize="12dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="15dp"
+                android:text="猜您喜欢" />
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="0.5dp"
+                android:background="@color/color_cccccc"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

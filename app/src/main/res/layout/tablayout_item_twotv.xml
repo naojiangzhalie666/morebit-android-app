@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/tab_box"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/selectbg_tablay_red_boxbg"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tab_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/tv_panic_buy_tab"
+            tools:text="商务车"/>
+
+        <TextView
+            android:id="@+id/tab_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:textColor="@color/tv_panic_buy_tab"
+            android:textSize="12sp"
+            tools:text="商务车"/>
+
+    </LinearLayout>
+</LinearLayout>

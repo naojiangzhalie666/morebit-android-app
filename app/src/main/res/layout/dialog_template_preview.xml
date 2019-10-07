@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="30dp"
+              android:paddingRight="30dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_editoneline_dialog_whilebg_8dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="效果预览"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_18"/>
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:textColor="@color/color_666666"
+            tools:text="k"/>
+
+
+        <TextView
+            android:id="@+id/btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_000000_1dpline_yellowbg_round_15dp"
+            android:gravity="center"
+            android:paddingBottom="11dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="11dp"
+            android:text="保存模板"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="23dp"
+        android:padding="5dp"
+        android:layout_height="wrap_content"
+      android:src="@drawable/icon_close_dialog"/>
+</LinearLayout>

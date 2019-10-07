@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="@dimen/margin_small"
+    android:paddingLeft="@dimen/margin_default"
+    android:paddingRight="@dimen/margin_default"
+    android:paddingTop="@dimen/margin_small"
+    android:gravity="center_vertical"
+    android:layout_marginTop="@dimen/margin_small"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/user_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/tv_phone"
+        android:layout_toRightOf="@+id/user_head"
+        android:textColor="@color/color_2B0900"
+        android:textSize="@dimen/small_text_size"
+        android:id="@+id/tv_name"
+        android:layout_centerVertical="true"
+        tools:text="陶醉的人"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_marginRight="@dimen/margin_medium"
+        />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/xs_text_size"
+        android:layout_centerVertical="true"
+        tools:text="138000000"/>
+</RelativeLayout>

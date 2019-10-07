@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/itemRootLayout"
+    android:layout_marginLeft="12dp"
+    >
+      <ImageView
+          android:id="@+id/image"
+          android:layout_width="87dp"
+          android:layout_height="54dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/icon_default"/>
+      <TextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="猫超包邮"
+          android:lines="1"
+          android:gravity="center"
+          android:textColor="@color/color_333333"
+          android:textSize="@dimen/sp_11"
+          android:layout_marginTop="3dp"
+          />
+</LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent">
+
+     <RelativeLayout
+         android:id="@+id/listview_rl"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical"
+         android:visibility="visible">
+         <com.jf.my.Module.common.widget.SwipeRefreshLayout
+             android:id="@+id/swipeList"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent">
+             <com.github.jdsjlzx.recyclerview.LRecyclerView
+                 android:id="@+id/mListView"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 />
+         </com.jf.my.Module.common.widget.SwipeRefreshLayout>
+     </RelativeLayout>
+
+   <!-- <LinearLayout
+        android:id="@+id/loading_ly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+        <ProgressBar
+            android:id="@+id/animProgress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/loadprogressbar_cicle_style_color"/>
+        <TextView
+            android:id="@+id/tv_error_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:lines="1"
+            android:text="正在加载..."
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/reload_ly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/loaderr_reload_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:lines="1"
+            android:text="点击重新加载"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp" />
+    </LinearLayout>-->
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_whilebg_5dp"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/icon_jinsheng" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:text="晋升任务"
+                android:textColor="@color/color_333333"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" (任务满其一即可升级)"
+                android:textColor="@color/color_333333"
+                android:textSize="11sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_vip_upgrade"
+                    android:layout_width="50dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_vip_shuoming"
+                    android:text="升级说明"
+                    android:textColor="@color/color_333333"
+                    android:textSize="9sp" />
+            </RelativeLayout>
+        </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_content"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="56dp"
+            android:layout_height="18dp"
+            android:layout_marginBottom="13dp"
+            android:background="@drawable/bg_vip_fangshi"
+            android:text="方式一"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <include
+            android:id="@+id/term_1_1"
+            layout="@layout/vip_model_upgrade_item" />
+
+        <include
+            android:id="@+id/term_1_2"
+            layout="@layout/vip_model_upgrade_item" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="14dp">
+            <Button
+                android:layout_width="56dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_vip_fangshi"
+                android:text="方式二"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+            <Button
+                android:id="@+id/btn_vip_upgrade2"
+                android:layout_width="50dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_vip_shuoming"
+                android:text="升级说明"
+                android:textColor="@color/color_333333"
+                android:textSize="9sp" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/term_2_1"
+            layout="@layout/vip_model_upgrade_item" />
+
+        <include
+            android:id="@+id/term_2_2"
+            layout="@layout/vip_model_upgrade_item" />
+
+        <include
+            android:id="@+id/term_2_3"
+            layout="@layout/vip_model_upgrade_item" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/color_333333"
+        android:text="非常抱歉，信息查询失败，请尝试返回后重新打开此页面"
+        android:id="@+id/query_failure1"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"/>
+
+</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

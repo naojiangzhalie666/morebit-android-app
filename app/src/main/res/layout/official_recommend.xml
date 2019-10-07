@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp" android:background="@color/white" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+
+         <View   android:id="@+id/officalFrameLayout" android:layout_width="match_parent" android:layout_height="25dp"  android:background="@drawable/bg_second_round" android:layout_gravity="bottom"/>
+
+        <com.jf.my.view.AspectRatioView
+            android:id="@+id/as_banner_offical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:aspectRatio="3.52">
+            <com.youth.banner.Banner
+                android:id="@+id/banner_offical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.jf.my.view.AspectRatioView>
+    </FrameLayout>
+
+
+    <!--二级模块-->
+
+    <LinearLayout
+        android:id="@+id/secondLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_second_round_lay"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="9dp"
+        android:paddingTop="8dp"
+        android:paddingRight="9dp"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_secondModule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:scrollbars="none"
+            />
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

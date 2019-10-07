@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginTop="5dp"
+    >
+
+    <TextView
+        android:id="@+id/flow_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dbdbdb_round_2dp"
+        android:text="女装"
+        android:gravity="center"
+        android:textColor="@color/color_333333"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:textSize="14sp"
+        android:singleLine="true"
+        android:lines="1"
+        android:ellipsize="end"
+        />
+
+</LinearLayout>
+
+    <ImageView
+        android:id="@+id/hotTagIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_hotkey"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="-2dp"
+        android:layout_marginRight="11dp"
+        android:visibility="gone"
+       />
+
+
+</FrameLayout>

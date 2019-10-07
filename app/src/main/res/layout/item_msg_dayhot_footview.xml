@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#F5F5F5"
+    android:gravity="center"
+    android:paddingTop="16dp"
+    >
+    <TextView
+        android:layout_width="67dp"
+        android:layout_height="1px"
+        android:background="@color/color_cccccc"
+        android:layout_marginRight="27dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="到底了"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_12"
+        />
+
+    <TextView
+        android:layout_width="67dp"
+        android:layout_height="1px"
+        android:background="@color/color_cccccc"
+        android:layout_marginLeft="27dp" />
+</LinearLayout>

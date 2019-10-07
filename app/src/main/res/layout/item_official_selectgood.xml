@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="85dp"
+    android:layout_height="85dp"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/id_index_gallery_item_image"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="fitXY" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true">
+            <!--<ImageView
+                android:id="@+id/iv_tick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/tickhuise" />-->
+        <TextView
+            android:id="@+id/del"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:background="@drawable/icon_shanchushangpin"/>
+    </RelativeLayout>
+    <!--<TextView-->
+        <!--android:id="@+id/right_boxnull"-->
+        <!--android:layout_width="10dp"-->
+        <!--android:layout_toRightOf="@+id/id_index_gallery_item_image"-->
+        <!--android:layout_height="wrap_content" />-->
+
+
+
+
+   <!-- <TextView
+        android:id="@+id/id_index_gallery_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_index_gallery_item_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:textColor="#ff0000"
+        android:text="some info"
+        android:textSize="12dp" />
+         android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+
+        -->
+
+</RelativeLayout>

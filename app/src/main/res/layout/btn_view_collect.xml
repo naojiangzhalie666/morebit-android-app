@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/collectTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_collect_normal"
+        android:drawableLeft="@drawable/icon_collect_btn_left"
+        android:drawablePadding="3dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textSize="@dimen/sp_11"
+        android:text="种草"
+        android:textColor="@color/color_333333"/>
+
+    <TextView
+        android:id="@+id/collectedTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_collected"
+        android:drawablePadding="4dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textSize="@dimen/sp_11"
+        android:text="已种草"
+        android:textColor="@color/color_999999"
+        android:visibility="gone"/>
+</FrameLayout>

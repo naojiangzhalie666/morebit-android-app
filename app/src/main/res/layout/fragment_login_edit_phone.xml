@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <com.jf.my.login.ui.LoginHeadView
+        android:id="@+id/lh_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:isShowBack="true"
+        app:titleName="请输入手机号码"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lh_head"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp">
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="请输入"
+                  android:textColor="@color/color_999999"
+                  android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/phoneTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6-12位"
+                android:textColor="@color/color_E18400"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号码"
+                android:textColor="@color/color_999999"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="70dp"
+            >
+
+            <TextView
+                android:id="@+id/area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="+86"
+                android:textColor="@color/color_666666"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/areaCodeBtn"
+                style="@style/areaCodeStyle"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                />
+
+            <com.jf.my.view.ClearEditText
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_toLeftOf="@+id/areaCodeBtn"
+                android:layout_toRightOf="@+id/area"
+                android:background="@null"
+
+                android:layout_marginLeft="11dp"
+                android:hint="请输入手机号码"
+                android:inputType="number"
+                android:maxLength="11"
+                android:paddingRight="10dp"
+                android:textColor="@color/color_3A3A3A"
+                android:textColorHint="@color/color_999999"
+                android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                android:textSize="13sp"
+                app:deleteImg="@drawable/clean_icon"/>
+
+
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1px"
+                android:layout_alignLeft="@+id/edt_password"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_E6E6E6"/>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="53dp"
+            android:background="@drawable/selector_next_button"
+            android:gravity="center"
+            android:enabled="false"
+            android:text="下一步"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp"/>
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_userAgreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="13dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="注册即代表您已同意"
+            android:textColor="@color/color_999999"
+            android:textSize="11sp"/>
+
+        <TextView
+            android:id="@+id/userAgreementTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="《蜜源用户协议》"
+            android:textColor="@color/color_E18400"
+            android:textSize="11sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="和"
+            android:textColor="@color/color_999999"
+            android:textSize="11sp"/>
+        <TextView
+            android:id="@+id/privateProtocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="《隐私政策》"
+            android:textColor="@color/color_E18400"
+            android:textSize="11sp"/>
+    </LinearLayout>
+
+</RelativeLayout>

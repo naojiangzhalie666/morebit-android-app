@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/item_banner" />
+
+    <include layout="@layout/item_category" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/horizontal_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:scrollbars="none"
+        android:paddingBottom="10dp"/>
+
+    <include layout="@layout/item_advance" />
+
+    <include layout="@layout/item_all_goods" />
+</LinearLayout>

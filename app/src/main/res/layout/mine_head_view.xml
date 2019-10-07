@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:paddingBottom="20dp">
+
+
+    <LinearLayout
+        android:id="@+id/line_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="77dp"
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="68dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/userIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="12dp"
+                android:scaleType="fitXY"
+                android:src="@color/white"
+                app:riv_border_color="@color/white"
+                app:riv_border_width="2dp"
+                app:riv_corner_radius="0dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="true" />
+
+            <FrameLayout
+                android:id="@+id/fl_share_expert"
+                android:layout_width="62dp"
+                android:layout_height="16dp"
+                android:visibility="gone"
+                android:layout_alignParentBottom="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/iv_bg_expert"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_darenbiaoqian" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/icon_darenbiaoqian_x" />
+
+                    <TextView
+                        android:id="@+id/tv_role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="分享达人"
+                        android:textColor="@color/white"
+                        android:textSize="10dp" />
+                </LinearLayout>
+            </FrameLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/color_2B0900"
+                android:textSize="@dimen/sp_18"
+                tools:text="昵称" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="3dp">
+
+                    <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginRight="42dp"-->
+                    <!--android:background="@drawable/bg_radius_yaoqingma" />-->
+
+                    <TextView
+                        android:id="@+id/invitation_code"
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_radius_yaoqingma"
+                        android:gravity="center"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/sp_15"
+                        tools:text="12345678" />
+
+                    <TextView
+                        android:id="@+id/copy_invitation_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/invitation_code"
+                        android:background="@drawable/bg_radius_yaoqingma_copy"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/copy_invitation"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_set_weixin"
+                        android:layout_width="95dp"
+                        android:layout_height="23dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_stroke_d1d1d1_solid_ffffff_30dp"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/icon_weixin"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginRight="3dp"
+                            android:src="@drawable/icon_mine_weixin" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/icon_weixin"
+                            android:text="绑定微信"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/setting"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/shezhi" />
+</RelativeLayout>
+

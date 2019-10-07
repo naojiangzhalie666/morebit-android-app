@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FB"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_actionbar_no_shadow" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:gravity="center_vertical">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/icon_head1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="3dp"
+            android:scaleType="fitXY"
+            android:src="@color/white"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="0dp"
+            app:riv_corner_radius="0dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_opinionp_reply_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_13" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    <RelativeLayout
+        android:id="@+id/rl_reply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/icon_head3"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/head_icon"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="0dp"
+            app:riv_corner_radius="0dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/tv_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/icon_head3"
+            android:background="@drawable/bg_opinionp_reply_reply"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_13" />
+    </RelativeLayout>
+</LinearLayout>

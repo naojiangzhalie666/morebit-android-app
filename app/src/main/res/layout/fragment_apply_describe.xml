@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar_actionbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/base_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/ll_user"
+                android:layout_marginTop="37dp"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="43dp"
+                    android:text="订单编号："
+                    android:textColor="@color/color_333333"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_apply_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/color_ff7200"
+                    android:textSize="14sp"
+                    tools:text="维权中"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="43dp"
+                android:layout_marginTop="30dp"
+                android:text="商家拒绝理由："
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_refuse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_top_white_round_5dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:textColor="@color/color_999999"
+                tools:text="你家的衣服质量太差了。"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="43dp"
+                android:layout_marginTop="20dp"
+                android:text="我的维权理由："
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"
+                />
+
+            <TextView
+
+                android:id="@+id/tv_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_top_white_round_5dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:textColor="@color/color_999999"
+                tools:text="你家的衣服质量太差了。"
+                />
+
+            <TextView
+                android:id="@+id/tv_ok"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="40dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="维权"
+                android:textColor="@color/color_F32F19"
+                android:textSize="16sp"/>
+
+            <include
+                layout="@layout/base_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_ok"
+                android:layout_marginTop="40dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,404 @@
+<resources>
+    <string name="app_name">蜜源</string>
+    <string name="app_versionname">蜜源</string>
+    <string name="shareapp_text">您不能不知道的淘宝天猫购物省钱内幕，薅羊毛首席攻略，惊天动地，就在这里</string>
+    <string name="viewpager_indicator">%1$d/%2$d</string>
+    <string name="sevice_weixin_num">mh13263</string>
+    <string name="appstart_adtext">购物返利 天天都是双11</string>
+    <string name="fulidingdan_rule_str">1、申请【我要福利】--进入详情页-邀请好 友支持。\n\n2、获得规定的邀请人数即可获得福利资格。\n\n3、当福利份数为50份，如已被领完了，那 么您的好友将看到【名额已满】。\n\n4、为营造一个公平公正的福利发放让更多 的用户收益，防止有几个号的用户自助式的 获得福利商品，平台规定，您名下的好友在 一定时间段内（暂定为三个月）只可以帮助 您一次。\n\n5、福利商品不允许申请退款，否则将会受 到处罚且不再享受福利资格。 </string>
+    <string name="invite_digits_code">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="pwd_digits_code">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-/:;()$&amp;@.,?![]{}#%^*+=_\|~&lt;&gt;€£¥</string>
+    <string name="awards_list_title">获奖名单</string>
+    <string name="register">注册</string>
+    <string name="msg_login">短信验证码登录</string>
+    <string name="forget_password">忘记密码?</string>
+    <string name="modify_password">修改密码</string>
+    <string name="modify_phone_num">修改手机号</string>
+    <string name="message_setting">消息设置</string>
+    <string name="message_notification">消息设置</string>
+    <string name="modify_service_wechat">专属微信</string>
+    <string name="find_password">找回密码</string>
+    <string name="edit_template">编辑模板</string>
+    <string name="edit_template_hint">请不要修改"｛｝"之间的文字哦~</string>
+    <string name="preview">预览</string>
+    <string name="save">保存</string>
+    <string name="save_img">保存图片</string>
+    <string name="explain">说明</string>
+    <string name="explain1"><![CDATA[1.{%1$s}表示商品标题，<br />2.{%2$s}表示在售价格，<br />3.{%3$s}表示券后价格，<br />4.{%4$s}表示商品推荐语，可为空<br />5.{%5$s}表示下单链接<br />6.{切换长链}用于电脑打开的用户<br />7.{切换短链}用于手机端打开的用户]]></string>
+    <string name="invitation_code">邀请码   %1$s</string>
+    <string name="copy">复制</string>
+    <string name="copy_invitation">复制邀请码</string>
+    <string name="vip">会员</string>
+    <string name="vip1">VIP</string>
+    <string name="vip2">运营专员</string>
+    <string name="bind_phone_num">绑定新手机</string>
+    <string name="bind_hind"> 如未设置密码,请先前往修改;如没有实名名称,请先前往实名支付宝!</string>
+    <string name="main_circle_hotday">每日爆款</string>
+    <string name="main_circle_adv">宣传素材</string>
+    <string name="goodsShertError">该商品已经失效,请重新选择商品</string>
+
+    <string name="coupon">¥%1$s</string>
+    <string name="coupon_add_text">券后¥%1$s</string>
+    <string name="submit">确认提交</string>
+    <string name="goods_edit_template_null">模板不能为空</string>
+    <string name="goods_edit_shao">缺少必填内容</string>
+    <string name="next_step">下一步</string>
+    <string name="income">¥%1$s</string>
+    <string name="commission">预估收益%1$s元</string>
+    <string name="upgrade_commission">升级收益</string>
+    <string name="exclusiveWechat">专属客服微信：%1$s</string>
+    <string name="recommend">推荐词</string>
+    <string name="confirm">确定</string>
+    <string name="confirm_z">朕知道啦</string>
+    <string name="loading">加载中...</string>
+    <string name="welfare_rule">福利规则</string>
+    <string name="save_img_succeed">亲爱的，图片已经保存了哦</string>
+    <string name="img_save_to">图片保存到%s 请查看</string>
+    <string name="order_audit">订单号正在审核中，请不要重复提交</string>
+    <string name="call_premission_camera">请开启相机权限</string>
+    <string name="call_premission_read_sd">请开启读写文件权限</string>
+    <string name="share_exemption">“需要邀请%1$s人注册，即可获得免单资格”</string>
+    <string name="commission_income">+%1$s</string>
+    <string name="commission_expend">-%1$s</string>
+    <string name="input_invitation_code">请输入邀请码</string>
+    <string name="skip">跳过</string>
+    <string name="please_set_password">请设置您的密码</string>
+    <string name="exclusive_wechat">您的专属客服微信</string>
+    <string name="text_exclusive_wechat">客服微信：%1$s</string>
+    <string name="text_exclusive_wechat_hint">温馨提示：您也可以在【个人中心】【专属客服】中添加专属客服微信喔~</string>
+    <string name="finish">完成</string>
+    <string name="send_msg">重新发送</string>
+    <string name="input_verifycode">请输入短信验证码</string>
+    <string name="count_down">%1$s秒后重新发送</string>
+    <string name="send_phone">验证码已发送至 +86 %1$s</string>
+    <string name="net_work_text">网络请求失败，请检查您的网络设置</string>
+    <string name="start_buy">已开抢</string>
+    <string name="next_advance">下期预告</string>
+    <string name="return_detail">返现明细</string>
+    <string name="not_perfect_order">待完善订单</string>
+    <string name="wait_audit">等待审核订单</string>
+    <string name="finish_order">完成订单</string>
+    <string name="look_order">查看订单</string>
+    <string name="rights_info">维权描述</string>
+    <string name="apply_terrce">申请平台介入</string>
+    <string name="wq">维权</string>
+    <string name="submit_text">提交</string>
+    <string name="reasons_refusal">拒绝理由：</string>
+    <string name="description">描述：</string>
+    <string name="edit_problem">请输入您遇到的问题</string>
+    <string name="order_code">订单号：%s  </string>
+    <string name="stay_perfect">待完善</string>
+    <string name="stay_audit">等待审核</string>
+    <string name="stay_pass">审核通过</string>
+    <string name="stay_reject">审核拒绝</string>
+    <string name="edit_order_success">填写订单号成功</string>
+    <string name="affirm_order_success">确定订单成功</string>
+    <string name="feedback">反馈</string>
+    <string name="shocking_price">惊爆价:%s 元</string>
+    <string name="join_number">已参加:%s人</string>
+    <string name="return_moeny">返:%s元</string>
+    <string name="cancel">取消</string>
+    <string name="hint">提示</string>
+    <string name="i_know">朕知道啦</string>
+    <string name="immediately_invited">立即邀请</string>
+    <string name="no_evaluation">未评价</string>
+    <string name="the_goods">确定收货</string>
+    <string name="edit_null">似乎没有修改什么哦</string>
+    <string name="order_form">订单</string>
+    <string name="fans">%1$s人</string>
+    <string name="orders">%1$s单</string>
+    <string name="legal_rightsing">维权中</string>
+    <string name="legal_rights_succeed">维权成功</string>
+    <string name="legal_rights_reject">维权拒绝</string>
+    <string name="legal_rights_error">维权失败</string>
+    <string name="data_null">暂无数据</string>
+    <string name="dtae_error">网络丢失</string>
+    <string name="invite_number">邀请：%1$s人</string>
+    <string name="save_to_photo">保存至相册</string>
+    <string name="coayTextSucceed">复制成功</string>
+    <string name="call_phone">拨打</string>
+    <string name="editor">管理</string>
+    <string name="delete_success">删除成功</string>
+    <string name="capy_comment">复制评论</string>
+    <string name="my_invite_code">我的邀请码: %s</string>
+    <string name="mack_step">会员权益</string>
+    <string name="mack_plan">赚钱计划</string>
+    <string name="apply_updata">申请升级</string>
+    <string name="income_earnings">今日预估收益</string>
+    <string name="e_month_earnings">本月预估收益</string>
+    <string name="contact_relation">马上联系</string>
+    <string name="choiceness">精选</string>
+    <string name="what_like">猜你喜欢</string>
+    <string name="ranking">爆款排行</string>
+    <string name="my_earnings">我的收益</string>
+    <string name="earnings">我的收益</string>
+    <string name="my_team">我的粉丝</string>
+    <string name="order_detail">订单明细</string>
+    <string name="share_friends">分享好友</string>
+    <string name="other_service">其他服务</string>
+    <string name="new_help">新人课堂</string>
+    <string name="favorite">我的收藏</string>
+    <string name="service">专属客服</string>
+    <string name="suggestion_feedback">意见反馈</string>
+    <string name="like">五星好评</string>
+    <string name="about">关于我们</string>
+    <string name="official_notice">官方公告</string>
+    <string name="attract_cooperation">招商合作</string>
+    <string name="complaint_suggestion">投诉建议</string>
+    <string name="find_splendid">发现精彩</string>
+    <string name="sales">销量：%1$s</string>
+    <string name="current_ranking">实时排行</string>
+    <string name="today_ranking">今日排行</string>
+    <string name="yuan">%1$s元券</string>
+    <string name="brand_sell">品牌特卖</string>
+    <string name="discount_coupon">优惠券：%1$s元</string>
+    <string name="check_more">查看更多</string>
+    <string name="order_a">A级</string>
+    <string name="order_b">B级</string>
+    <string name="order_c">团队</string>
+    <string name="order_all">全部</string>
+    <string name="order_play">已付款</string>
+    <string name="order_close">已结算</string>
+    <string name="order_invalid">已失效</string>
+    <string name="share_moeny">预估收益:%s元</string>
+    <string name="goods_share_moeny">分享\n（收益%s元）</string>
+    <string name="also_collect">已收藏</string>
+    <string name="collect">收藏</string>    <!--<string name="add_qrcode_hint">温馨提示：商务合作请联系官方招商部负责人\n\n\n合作商家后台管理地址：\n%1$s</string>-->
+    <string name="collect_succeed">收藏成功</string>
+    <string name="cancel_collect_succeed">取消收藏成功</string>
+    <string name="shop_no_goods">店铺没有更多商品</string>
+    <string name="coupon_price">%1$s元优惠券</string>
+    <string name="tiem_sale">每日推荐</string>
+    <string name="taoqianggou">淘抢购</string>
+    <string name="jvhuasuan">聚划算</string>
+    <string name="my_collect">我的收藏</string>
+    <string name="nine_pinkage">9块9</string>
+    <string name="seckill">限时秒杀</string>
+    <string name="bill_details">账单详情</string>
+    <string name="balance">账户余额 (元)</string>
+    <string name="withdraw">提现</string>
+    <string name="rule">规则说明</string>
+    <string name="dialog_today_money">在今日内确认收货的订单，包括上月的订单在今日确定的</string>
+    <string name="dialog_today_estimate_money">今日订单，还没确认收货的佣金</string>
+    <string name="dialog_yesterday_money">在昨日内确认收货的订单，包括上月的订单在昨日确定的</string>
+    <string name="dialog_yesterday_estimate_money">昨日订单，还没有确认收货的佣金</string>
+    <string name="dialog_month_estimate_money">在本月内确认收货的订单，包括上月的订单在本月内确认的。</string>
+    <string name="dialog_month_money">本月卖出去的所有钱（佣金）</string>
+    <string name="dialog_last__month_estimate_money">本月25号可提现金额。（如果该数据为0，即本月不可提现）</string>
+    <string name="dialog_last_month_money">上月卖出去的所有钱（佣金）</string>
+    <string name="dialog_payment_count">当日付款笔数</string>
+    <string name="tutorial">新手教程</string>
+    <string name="official_recom">官方推荐</string>
+    <string name="login_error">登录失败</string>
+    <string name="discount_stores">店铺优惠</string>
+    <string name="goods_browsing_history">足迹</string>
+    <string name="team_wechat">团队管理微信</string>
+    <string name="team_wechat_hint">便于您的粉丝和推荐人联系您</string>
+    <string name="service_text">客服</string>
+    <string name="submit_wechat_ewm">点击上传二维码</string>
+    <string name="clear">清空</string>
+    <string name="alter">修改</string>
+    <string name="wechat_ewm">微信号</string>
+    <string name="main_commercial_college">商学院</string>
+    <string name="dialog_article_drm_hint">亲！您没有权限查看此内容喔</string>
+    <string name="dialog_article_vip_hint">亲，升级vip会员才可以查看此内容喔</string>
+    <string name="dialog_article_operator_hint">亲，运营专员才可以查看此内容喔</string>
+    <string name="order_details">订单明细</string>
+    <string name="order_live">蜜源生活</string>
+    <string name="live_settle">待结算</string>
+    <string name="wechat_service">微信: %1$s</string>
+    <string name="msg">消息</string>
+    <string name="start_skip">跳过%1$s</string>
+    <string name="please_login">请先登录</string>
+    <string name="now_share">立即分享</string>
+    <string name="now_sharen">立即\n分享</string>
+    <string name="panic_buy">限时秒杀</string>
+    <string name="mini_withdraw">注：最低提现金额为1元</string>
+    <string name="accredit">授权</string>
+    <string name="detail_update">升级%s，即可获得更高佣金哦～</string>
+    <string name="automatically_redirects">自动转跳中...</string>
+    <string name="taobao_autho_retry">抱歉，备案失败\n 请点击下方按钮重试</string>
+    <string name="taobao_autho_hint">因淘宝联盟官方技术升级，需要您完成实名认证，以确保您收益不受影响。给您带来的不便敬请谅解。</string>
+    <string name="taobao_autho_loading">授权中...</string>
+    <string name="tmall_search_commission">请点击底部按钮 “搜券查收益”</string>
+    <string name="immediately_buy">立即购买</string>
+    <string name="share">分享</string>
+    <string name="search_concessional">搜券查收益</string>
+    <string name="search_no_concessional">该商品无佣金，直接购买</string>
+    <string name="search_concessional_vip">搜索查优惠券</string>
+    <string name="off">关闭</string>
+    <string name="author_hint">应淘宝官方要求，获取推广收益前需要先进行官方授权！\n\n自用省钱，分享赚钱，更安全更实惠！</string>
+    <string name="college_list">商学院列表</string>
+    <string name="earnings_day">日预估收入说明</string>
+    <string name="earnings_month">月预估收入说明</string>
+
+    <string name="earnings_day_hint_def_1">今/昨当日付款笔数</string>
+    <string name="earnings_day_hint_def_2">今/昨订单还没有确认收货的佣金</string>
+    <string name="earnings_day_hint_def_3">今/昨确认收货的订单，包括上月的订单在今/昨确定</string>
+
+    <string name="earnings_day_hint_def_1_title">1.付款笔数：</string>
+    <string name="earnings_day_hint_def_2_title">2.成交预估收入：</string>
+    <string name="earnings_day_hint_def_3_title">3.结算预估收入：</string>
+
+    <string name="earnings_month_hint_def_1_title">1.月消费预估收入：</string>
+    <string name="earnings_month_hint_def_2_title">2.本月消费结算预估收入：</string>
+    <string name="earnings_month_hint_def_3_title">3.上月消费结算预估收入：</string>
+    <string name="earnings_month_hint_def_1">本月/上月卖出去的所有佣金</string>
+    <string name="earnings_month_hint_def_2">在本月内确认收货的订单，包括上月的订单在本月内确认的</string>
+    <string name="earnings_month_hint_def_3">本月25号可提现金额。（如果该数据为0，即本月不可提现）</string>
+    <string name="earnings_day_hint_v2"><![CDATA[<font color="#333333">1.付款笔数：</font><font color="#666666">%1$s</font><br /> <br /><font color="#333333">2.成交预估收入：</font><font color="#666666">%2$s</font><br /><br /> <font color="#333333">3.结算预估收入：</font><font color="#666666">%3$s</font>]]></string>
+    <string name="earnings_month_hint_v2"><![CDATA[<font color="#333333">1.月消费预估收入：</font><font color="#666666">%1$s</font><br /> <br /><font color="#333333">2.本月消费结算预估收入：</font><font color="#666666">%2$s</font><br /><br /> <font color="#333333">3.上月消费结算预估收入：</font><font color="#666666">%3$s</font>]]></string>
+    <string name="earnings_day_hint"><![CDATA[<font color="#333333">1.付款笔数：</font><font color="#666666">今/昨当日付款笔数</font><br /> <br /><font color="#333333">2.成交预估收入：</font><font color="#666666">今/昨订单还没有确认收货的佣金</font><br /><br /> <font color="#333333">3.结算预估收入：</font><font color="#666666">今/昨确认收货的订单，包括上月的订单在今/昨确定</font>]]></string>
+    <string name="earnings_month_hint"><![CDATA[<font color="#333333">1.月消费预估收入：</font><font color="#666666">本月/上月卖出去的所有佣金</font><br /> <br /><font color="#333333">2.本月消费结算预估收入：</font> <string name="earnings_month_hint"><![CDATA[<font color="#333333">1.月消费预估收入：</font><font color="#666666">本月/上月卖出去的所有佣金</font><br /> <br /><font color="#333333">2.本月消费结算预估收入：</font><font color="#666666">在本月内确认收货的订单，包括上月的订单在本月内确认的</font><br /><br /> <font color="#333333">3.上月消费结算预估收入：</font><font color="#666666">本月25号可提现金额。（如果该数据为0，即本月不可提现）</font>]]></string>
+    <string name="mine_upgrade_text"><![CDATA[<font color="#333333">升级</font><font color="#B36224">%1$s</font><font color="#333333">购物返佣最高</font><font color="#B36224">%2$s</font>]]></string>
+    <string name="mine_upgrade_text_one"><![CDATA[<font color="#333333">您已达到</font><font color="#B36224">%1$s</font><font color="#333333">升级条件</font>]]></string>
+    <string name="mine_upgrade_text_two"><![CDATA[<font color="#333333">您已达到</font><font color="#B36224">%1$s</font><font color="#333333">升级条件， 正在审核中</font>]]></string>
+    <!--刷新动画(每帧时间)-->
+    <string name="refresh_duration">30</string>
+    <string name="switch_shore_link">切换短链</string>
+    <string name="switch_long_link">切换长链</string>
+    <string name="has_been_for_you">已为您</string>
+    <string name="capy_tkl">仅复制淘口令</string>
+    <string name="goods_poster_hint">长按识别二维码</string>
+    <string name="no_msg">暂无消息</string>
+    <string name="order_team_tb">淘宝订单</string>
+    <string name="order_team_sl">苏宁订单</string>
+    <string name="order_team_other">其他订单</string>
+
+
+    <string-array name="order_type">
+        <item>全部</item>
+        <item>已付款 </item>
+        <item>已结算</item>
+        <item>已失效</item>
+    </string-array>
+
+    <string-array name="order_live_type">
+        <item>全部</item>
+        <item>待结算 </item>
+        <item>已结算</item>
+    </string-array>
+
+    <string-array name="msg_team">
+        <item>系统消息</item>
+        <item>收益消息</item>
+        <item>粉丝消息</item>
+    </string-array>
+
+
+    <string name="searchApp">搜APP</string>
+    <string name="searchNetWork">搜全网</string>
+    <string name="guideSearch">三步轻松获取优惠券/返现</string>
+    <string name="this_only">本场仅剩</string>
+    <string name="flash_sale">限时限量 疯狂抢购</string>
+    <string name="login_input_pw">请输入登录密码</string>
+    <string name="login_display_accout">登录账号</string>
+    <string name="login_sms">验证码登录</string>
+    <string name="login_input_very_code">请您输入验证码</string>
+    <string name="very_code_sended">验证码已发送至</string>
+    <string name="login_account">密码登录</string>
+    <string name="default_template">恢复默认模版</string>
+    <string name="default_template_succeed">恢复默认模版成功</string>
+    <string name="update_vip1_earnings">即可获收益%s元</string>
+    <string name="update_vip2_earnings">最高可获收益%s元</string>
+    <string name="update_vip3_earnings">现享最高收益%s元</string>
+    <string name="estimate_earnings">收益%s元</string>
+    <string name="to_update">去升级</string>
+    <string name="update_vip">升级VIP</string>
+    <string name="immediately_buy_discounts">立即购买\n(省%s元)</string>
+    <string name="open_push_head">开启消息通知提醒</string>
+    <string name="open_push_com1">收益通知，所有收益尽在手中</string>
+    <string name="open_push_com2">每日爆款，帮你找到心仪好物</string>
+    <string name="open_push_com3">新粉丝提醒，每个粉丝都不错过</string>
+    <string name="to_open">去开启</string>
+    <string name="setting_push_msg_hint">如需修改通知，您可以在系统设置重修改</string>
+    <string name="hot_msg">每日爆款消息</string>
+    <string name="share_goods_msg">分享商品状态推送</string>
+    <string name="foreshow1">火热开抢中</string>
+    <string name="foreshow2">隔夜单</string>
+    <string name="foreshow3">活动即将开始</string>
+    <string name="open_later">后开启</string>
+    <string name="open_dot">开抢</string>
+    <string name="coming_soon">敬请期待</string>
+    <string name="hot_start_coming_soon">活动即将开始，敬请期待</string>
+    <string name="hot_end_coming_soon">活动开始啦！赶紧去”火热开抢中“抢购吧</string>
+
+    <string name="contact_he">联系他</string>
+    <string name="order_sn">订单号 %1$s</string>
+    <string name="order_type">订单类型 %1$s</string>
+    <string name="order_money">订单金额 %1$s</string>
+    <string name="order_earnings">获得收益 %1$s</string>
+    <string name="guide_circle">助你变身导购达人，佣金赚不停</string>
+    <string name="guide_order">收益、订单看这里</string>
+    <string name="guide_circle_sucai">一键转发吸粉素材，粉丝越多赚佣越快</string>
+    <string name="guide_circle_colleage">大咖教你玩转蜜源，吸粉赚钱</string>
+    <string name="guide_mine_invite">分享邀请码，好友注册你赚佣</string>
+    <string name="guide_mine_money">查看收益，每月25号佣金开心领</string>
+    <string name="guide_mine_service">添加专属客服，找到你的蜜源领路人</string>
+    <string name="open_notication_tips"> 开启通知及时收到消息动态~</string>
+    <string name="zero_time">00:00:00</string>
+    <string name="recommend_index">推荐指数 </string>
+    <string name="update_show">需要更新到新的版本,才能使用此功能!</string>
+    <string name="areacode">切换地区</string>
+    <string name="areacode_title">国家地区选择</string>
+    <string name="areacode_hint">搜索国家地区名称</string>
+    <string name="release_manage">发布管理</string>
+    <string name="check_des">查看文案</string>
+    <string name="release_goods">发布商品</string>
+    <string name="submit_goods">提交审核</string>
+    <string name="coupon_price_text">券后价</string>
+    <string name="share_price">分享收益\n %1$s元</string>
+    <string name="edit_pwd_error">密码必须是8-16位的数字、字符组合</string>
+    <string name="my_material">我的素材</string>
+
+    <string name="image_total">共%1$s张</string>
+    <string name="image_download_count">   %1$s   </string>
+    <string name="college_article_recommend">为你推荐</string>
+    <string name="college_article_review">预览</string>
+    <string name="goods_detail">商品详情</string>
+    <string name="goods_detail_my_recommend">蜜源推荐</string>
+    <string name="goods_detail_baby">宝贝</string>
+    <string name="goods_detail_recommend">推荐</string>
+    <string name="goods_detail_det">详情</string>
+    <string name="immediately_login">立即登录</string>
+    <string name="immediately_login_hint">登录领取淘宝大额优惠券</string>
+    <string name="mine_text_withdraw">可提现余额  %1$s</string>
+    <string name="circle_fack_min_text">最少输入10个字符</string>
+    <string name="fliggy_title">飞猪无返佣说明</string>
+    <string name="fliggy_content">1.未换取登机牌登机，机票订单将无返佣\n2.根据淘宝网的规定，订单在成交后产生退款，则退款的部分无返利。最终结算的佣金基数按原成交价减去买家申请维权退款时最终发起的金额计算\n3.汽车票、火车票、酒店（信用住）、无跟单，无返佣4.电脑端下单飞猪的机票订单，整单无返佣\n5.如没有收到订单返佣，请在下单后7天内到【我的】-【订单查询】找回订单</string>
+    <string name="feedback_input_text">请输入反馈意见(最多%1$s字哦)</string>
+    <string name="downloading_local">正在保存到本地...</string>
+    <string name="circle_search_hint">搜你想要</string>
+    <string name="college_article_already_study">%1$s人已学</string>
+    <string name="mine_info">个人信息</string>
+    <string name="mi_yuan_information">蜜源资讯</string>
+    <string name="mi_yuan_information_read">%1$s阅读</string>
+    <string name="mine_upgrade_carousel_text"><![CDATA[%1$s升级了,今日拉新人数<font color="#C56717">%2$s</font>人]]></string>
+    <string name="mine_upgrade_carousel_text_one"><![CDATA[%1$s 今日拉新人数<font color="#C56717">%2$s</font>人]]></string>
+    <string name="mine_day_money_up_text">今日佣金小涨，要继续努力鸭！</string>
+    <string name="mine_day_money_text">今日佣金纹丝不动，你在偷懒哦~</string>
+
+    <string name="subsidiesPrice">平台补贴%1$s元</string>
+    <string name="subsidiesTips">补贴 %1$s元</string>
+    <string name="incomeTips">佣金 %1$s元</string>
+    <string name="share_money_phone_line">手机端链接</string>
+    <string name="share_money_pc_line">PC端链接</string>
+    <string name="share_money_download">下载链接</string>
+    <string name="invitation_code_text">邀请码</string>
+    <string name="change_img">更换海报主图</string>
+    <string name="save_succeed">保存成功</string>
+    <string name="order_subsidy_money">平台补贴 %1$s</string>
+    <string name="college_home_change">换一换</string>
+    <string name="miyuan_recommend">精选推荐</string>
+    <string name="circle_my_collects">我的种草</string>
+    <string name="untied_wechat_succeed">解绑成功</string>
+    <string name="fans_remark">备注：%1$s</string>
+    <string name="binding_wechat_succeed">绑定成功</string>
+    <string name="withdraw_time">每月%s号可提现上月结算收益</string>
+    <string name="order_no_look">该订单不支持查看</string>
+    <string name="wechat_ewm_no_empty">微信号不能为空</string>
+    <string name="gray_upgrade_title">蜜源APP内测邀请</string>
+    <string name="text_fans_dynmic_rank_commission_null">您团队近7日预估佣金纹丝不动\n快推荐商品福利给粉丝吧～</string>
+    <string name="text_fans_dynmic_rank_new_null">您团队近7日拉新不给力哦\n快去分享邀粉秘籍给粉丝吧～</string>
+    <string name="order_commission">商品佣金 %1$s</string>
+</resources>

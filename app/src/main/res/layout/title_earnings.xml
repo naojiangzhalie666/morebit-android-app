@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_title_return_icon"
+            android:id="@+id/back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/earnings"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_18" />
+
+        <!--<TextView-->
+            <!--android:layout_width="71dp"-->
+            <!--android:layout_height="23dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:gravity="center"-->
+            <!--android:background="@drawable/bg_333333_round_left_30dp"-->
+            <!--android:text="@string/bill_details"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:id="@+id/bill_details"-->
+            <!--android:textSize="@dimen/sp_12" />-->
+    </RelativeLayout>
+
+</LinearLayout>

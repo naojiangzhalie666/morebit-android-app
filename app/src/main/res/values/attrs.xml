@@ -1,0 +1,339 @@
+<resources>
+    <!-- 圆图片 -->
+    <declare-styleable name="RoundedImageView">
+        <attr name="BorderThickness" format="integer"/>
+        <attr name="BorderOutsideColor" format="color"/>
+        <attr name="BorderInsideColor" format="color"/>
+    </declare-styleable>
+    <!--
+         Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels.
+    -->
+    <attr name="slideMenuStyle" format="reference"/>
+    <declare-styleable name="SlideMenu_Layout">
+        <attr name="layout_role" format="enum">
+            <enum name="content" value="0"/>
+            <enum name="primaryMenu" value="1"/>
+            <enum name="secondaryMenu" value="2"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SlideMenu">
+        <attr name="primaryShadowWidth" format="dimension"/>
+        <attr name="secondaryShadowWidth" format="dimension"/>
+        <attr name="primaryShadowDrawable" format="reference"/>
+        <attr name="sencondaryShadowDrawable" format="reference"/>
+        <attr name="slideDirection" format="flags">
+            <flag name="left" value="1"/>
+            <flag name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference"/>
+        <attr name="metaButtonBarButtonStyle" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="PullToRefresh">
+
+        <!-- A drawable to use as the background of the Refreshable View -->
+        <attr name="ptrRefreshableViewBackground" format="reference|color"/>
+
+        <!-- A drawable to use as the background of the Header and Footer Loading Views -->
+        <attr name="ptrHeaderBackground" format="reference|color"/>
+
+        <!-- Text Color of the Header and Footer Loading Views -->
+        <attr name="ptrHeaderTextColor" format="reference|color"/>
+
+        <!-- Text Color of the Header and Footer Loading Views Sub Header -->
+        <attr name="ptrHeaderSubTextColor" format="reference|color"/>
+
+        <!-- Mode of Pull-to-Refresh that should be used -->
+        <attr name="ptrMode">
+            <flag name="disabled" value="0x0"/>
+            <flag name="pullFromStart" value="0x1"/>
+            <flag name="pullFromEnd" value="0x2"/>
+            <flag name="both" value="0x3"/>
+            <flag name="manualOnly" value="0x4"/>
+
+            <!-- These last two are depreacted -->
+            <flag name="pullDownFromTop" value="0x1"/>
+            <flag name="pullUpFromBottom" value="0x2"/>
+        </attr>
+
+        <!-- Whether the Indicator overlay(s) should be used -->
+        <attr name="ptrShowIndicator" format="reference|boolean"/>
+
+        <!-- Drawable to use as Loading Indicator. Changes both Header and Footer. -->
+        <attr name="ptrDrawable" format="reference"/>
+
+        <!-- Drawable to use as Loading Indicator in the Header View. Overrides value set in ptrDrawable. -->
+        <attr name="ptrDrawableStart" format="reference"/>
+
+        <!-- Drawable to use as Loading Indicator in the Footer View. Overrides value set in ptrDrawable. -->
+        <attr name="ptrDrawableEnd" format="reference"/>
+
+        <!-- Whether Android's built-in Over Scroll should be utilised for Pull-to-Refresh. -->
+        <attr name="ptrOverScroll" format="reference|boolean"/>
+
+        <!-- Base text color, typeface, size, and style for Header and Footer Loading Views -->
+        <attr name="ptrHeaderTextAppearance" format="reference"/>
+
+        <!-- Base text color, typeface, size, and style for Header and Footer Loading Views Sub Header -->
+        <attr name="ptrSubHeaderTextAppearance" format="reference"/>
+
+        <!-- Style of Animation should be used displayed when pulling. -->
+        <attr name="ptrAnimationStyle">
+            <flag name="rotate" value="0x0"/>
+            <flag name="flip" value="0x1"/>
+        </attr>
+
+        <!-- Whether the user can scroll while the View is Refreshing -->
+        <attr name="ptrScrollingWhileRefreshingEnabled" format="reference|boolean"/>
+
+        <!--
+        	Whether PullToRefreshListView has it's extras enabled. This allows the user to be 
+        	able to scroll while refreshing, and behaves better. It acheives this by adding
+        	Header and/or Footer Views to the ListView.
+
+        -->
+        <attr name="ptrListViewExtrasEnabled" format="reference|boolean"/>
+
+        <!--
+        	Whether the Drawable should be continually rotated as you pull. This only
+        	takes effect when using the 'Rotate' Animation Style.
+
+        -->
+        <attr name="ptrRotateDrawableWhilePulling" format="reference|boolean"/>
+
+        <!-- BELOW HERE ARE DEPRECEATED. DO NOT USE. -->
+        <attr name="ptrAdapterViewBackground" format="reference|color"/>
+        <attr name="ptrDrawableTop" format="reference"/>
+        <attr name="ptrDrawableBottom" format="reference"/>
+    </declare-styleable>
+
+    <!-- Horizontal ProgressBar style. This is a horizontal progress bar. -->
+    <attr name="progressBarStyleHorizontal" format="reference"/>
+
+
+    <declare-styleable name="FlowLayout">
+        <attr name="width_space" format="dimension"/>
+        <attr name="height_space" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="clean_Edit">
+        <attr name="deleteImg" format="reference"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="NineGridView">
+        <attr name="ngv_singleImageSize" format="dimension"/>
+        <attr name="ngv_singleImageRatio" format="float"/>
+        <attr name="ngv_gridSpacing" format="dimension"/>
+        <attr name="ngv_maxSize" format="integer"/>
+        <attr name="ngv_mode" format="enum">
+            <enum name="fill" value="0"/>
+            <enum name="grid" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyPagerSlidingTabStrip1">
+        <attr name="pstsIndicatorColor" format="color"/>
+        <attr name="pstsUnderlineColor" format="color"/>
+        <attr name="pstsDividerColor" format="color"/>
+        <attr name="tabTextSelectColor" format="color"/>
+        <attr name="pstsIndicatorHeight" format="dimension"/>
+        <attr name="pstsUnderlineHeight" format="dimension"/>
+        <attr name="pstsDividerPadding" format="dimension"/>
+        <attr name="pstsTabPaddingLeftRight" format="dimension"/>
+        <attr name="pstsScrollOffset" format="dimension"/>
+        <attr name="pstsTabBackground" format="reference"/>
+        <attr name="pstsShouldExpand" format="boolean"/>
+        <attr name="pstsTextAllCaps" format="boolean"/>
+        <!--底板滑动减去滴倍数-->
+        <attr name="minusTextMultiple" format="float"/>
+    </declare-styleable>
+    <declare-styleable name="AspectRatioView">
+        <attr name="aspectRatio" format="float"/>
+        <attr name="reverse" format="boolean"/>
+    </declare-styleable>
+
+    <!--图片比例-->
+    <declare-styleable name="RatioImageView">
+        <!--宽度是否根据src图片的比例来测量（高度已知）-->
+        <attr name="is_width_fix_drawable_size_ratio" format="boolean"/>
+        <!--高度是否根据src图片的比例来测量（宽度已知）-->
+        <attr name="is_height_fix_drawable_size_ratio" format="boolean"/>
+        <!-- 高度设置，参考宽度，如0.5 , 表示 高度＝宽度×０.5 -->
+        <attr name="height_to_width_ratio" format="float"/>
+        <!-- 宽度设置，参考高度，如0.5 , 表示 宽度＝高度×０.5 -->
+        <attr name="width_to_height_ratio" format="float"/>
+
+    </declare-styleable>
+
+    <!--图片比例-->
+
+    <!--app升级-->
+    <declare-styleable name="UpdateAppNumberProgressBar">
+        <attr name="progress_current" format="integer"/>
+        <attr name="progress_max" format="integer"/>
+
+        <attr name="progress_unreached_color" format="color"/>
+        <attr name="progress_reached_color" format="color"/>
+
+        <attr name="progress_reached_bar_height" format="dimension"/>
+        <attr name="progress_unreached_bar_height" format="dimension"/>
+
+        <attr name="progress_text_size" format="dimension"/>
+        <attr name="progress_text_color" format="color"/>
+
+        <attr name="progress_text_offset" format="dimension"/>
+
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+    </declare-styleable>
+    <!--app升级-->
+
+    <!--app升级-->
+    <declare-styleable name="LoginHeadView">
+        <attr name="titleName" format="string"/>
+        <attr name="isShowBack" format="boolean"/>
+    </declare-styleable>
+    <!--app升级-->
+
+    <declare-styleable name = "ReUseGridView">
+        <attr name = "column" format = "integer" />
+    </declare-styleable>
+
+    <!--XTabLayout-->
+    <declare-styleable name="XTabLayout">
+        <attr name="xTabIndicatorHeight" format="dimension"/>
+        <attr name="xTabIndicatorWidth" format="dimension"/>
+        <attr name="xTabIndicatorColor" format="color"/>
+        <attr name="xTabPadding" format="dimension"/>
+        <attr name="xTabPaddingStart" format="dimension"/>
+        <attr name="xTabPaddingTop" format="dimension"/>
+        <attr name="xTabPaddingEnd" format="dimension"/>
+        <attr name="xTabPaddingBottom" format="dimension"/>
+        <attr name="xTabTextAppearance" format="reference"/>
+        <attr name="xTabTextColor" format="color"/>
+        <attr name="xTabSelectedTextColor" format="color"/>
+        <attr name="xTabMinWidth" format="dimension"/>
+        <attr name="xTabMaxWidth" format="dimension"/>
+        <attr name="xTabBackgroundColor" format="reference|color"/>
+        <attr name="xTabSelectedBackgroundColor" format="reference|color"/>
+        <attr name="xTabContentStart" format="dimension"/>
+        <attr name="xTabMode">
+            <enum name="scrollable" value="0x00000000" />
+            <enum name="fixed" value="0x00000001" />
+        </attr>
+        <attr name="xTabGravity" format="integer"/>
+
+        <attr name="xTabTextSize" format="dimension"/>
+        <attr name="xTabTextBold" format="boolean"/>
+        <attr name="xTabSelectedTextSize" format="dimension"/>
+        <attr name="xTabTextSelectedBold" format="boolean"/>
+        <attr name="xTabDisplayNum" format="integer"/>
+        <attr name="xTabTextAllCaps" format="boolean"/>
+
+
+        <attr name="xTabDividerHeight" format="dimension"/>
+        <attr name="xTabDividerWidth" format="dimension"/>
+        <attr name="xTabDividerWidthWidthText" format="boolean"/>
+        <attr name="xTabDividerColor" format="color"/>
+        <attr name="xTabDividerGravity">
+            <enum name="top" value="0x00000000" />
+            <enum name="center" value="0x00000001" />
+            <enum name="bottom" value="0x00000002" />
+        </attr>
+    </declare-styleable>
+    <!--XTabLayout-->
+
+    <!-- 水平进度条-->
+    <declare-styleable name="HorzProgressView">
+        <attr name="liys_progress_line_max" format="integer"/>
+        <attr name="liys_progress_line_progress" format="integer"/>
+        <attr name="liys_progress_line_outSize" format="dimension"/>
+        <attr name="liys_progress_line_inColor" format="color"/>
+        <attr name="liys_progress_line_outColor" format="color"/>
+        <attr name="liys_progress_line_inDrawable" format="reference"/>
+        <attr name="liys_progress_line_outDrawable" format="reference"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="PageGridView">
+        <!--每页大小-->
+        <attr name="pageSize" format="integer|reference" />
+        <!--是否显示指示点-->
+        <attr name="isShowIndicator" format="boolean" />
+        <!--选中指示点-->
+        <attr name="selectedIndicator" format="reference" />
+        <!--未选中指示点-->
+        <attr name="unSelectedIndicator" format="reference" />
+        <!--指示器位置-->
+        <attr name="indicatorGravity" format="enum">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+        <!--指示器左内边距-->
+        <attr name="indicatorPaddingLeft" format="dimension" />
+        <!--指示器右内边距-->
+        <attr name="indicatorPaddingRight" format="dimension" />
+        <!--指示器上内边距-->
+        <attr name="indicatorPaddingTop" format="dimension" />
+        <!--指示器下内边距-->
+        <attr name="indicatorPaddingBottom" format="dimension" />
+        <!--指示器内边距-->
+        <attr name="indicatorPadding" format="dimension" />
+        <!--指示器背景颜色-->
+        <attr name="indicatorBackground" format="color" />
+
+        <!--ViewPager背景资源-->
+        <attr name="vpBackground" format="reference|color" />
+
+        <!--ViewPager 内边距-->
+        <attr name="vpPadding" format="dimension" />
+        <!--列数-->
+        <attr name="numColumns" format="integer|reference" />
+        <!--Item布局-->
+        <attr name="itemView" format="reference" />
+
+    </declare-styleable>
+
+
+    <declare-styleable name="PerfectArcView">
+        <attr name="p_arc_startColor" format="color" />
+        <attr name="p_arc_endColor" format="color" />
+        <attr name="p_arc_showImage" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="IndexView">
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="lineSpace" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="SwipeRefresh">
+        <attr name="is_auto_refresh" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TagFlowLayout">
+        <attr name="max_select" format="integer"></attr>
+        <attr name="max_line" format="integer"></attr>
+        <attr name="tag_gravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="SearchViewLayout">
+        <attr name="s_search_hint_text" format="string" />
+        <!--<attr name="s_search_btn_bg" format="color" />-->
+    </declare-styleable>
+</resources>

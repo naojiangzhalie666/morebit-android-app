@@ -1,0 +1,62 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_medium">10dp</dimen>
+    <dimen name="margin_small">5dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="info_text_small">14sp</dimen>
+
+
+    <!-- 正文边距 -->
+    <!-- 正文内容字体大小 -->
+    <!-- 小字号 -->
+    <dimen name="small_text_size">14sp</dimen>
+
+    <dimen name="xs_text_size">12sp</dimen>
+    <!--蜜粉圈padding 计算图片宽度不要删除-->
+    <!--<dimen name="circle_list_padding">43dp</dimen>-->
+    <!--<dimen name="circle_padding">8dp</dimen>-->
+    <dimen name="circle_list_padding_left">1dp</dimen>
+    <dimen name="circle_list_padding_right">1dp</dimen>
+    <dimen name="home_homenotice_margin">12dp</dimen>
+    <dimen name="circle_padding">15dp</dimen>
+    <dimen name="circle_itme_one_img_width">145dp</dimen>
+    <dimen name="circle_itme_one_img_height">258dp</dimen>
+    <dimen name="sp_30">30sp</dimen>
+    <dimen name="login_edit_invite_anim_height">80dp</dimen>
+    <dimen name="sp_15">15sp</dimen>
+    <dimen name="camera_inner_width">220dp</dimen>
+    <dimen name="camera_margintop">200dp</dimen>
+    <dimen name="camera_text_margintop">440dp</dimen>
+    <dimen name="sp_20">20dp</dimen>
+    <dimen name="good_mall_wide">18dp</dimen>
+    <dimen name="good_mall_wide_padding">5dp</dimen>
+    <dimen name="home_search_height">40dp</dimen>
+    <dimen name="sp_13">13sp</dimen>
+    <dimen name="sp_38">38sp</dimen>
+    <dimen name="sp_19">19sp</dimen>
+    <dimen name="sp_9">9sp</dimen>
+
+    <!-- *********KeyboardUtil相关********* -->
+    <dimen name="keyboard_content_panel_max_height">120dp</dimen>
+    <dimen name="keyboard_content_panel_min_height">0dp</dimen>
+
+    <dimen name="sp_36">36sp</dimen>
+    <dimen name="grid_line">1px</dimen>
+    <dimen name="grid_line_floor_three">2px</dimen>
+    <dimen name="grid_line_6dp">6dp</dimen>
+    <dimen name="goods_consumer_itme_padding">15dp</dimen>
+    <dimen name="goods_detail_title_height">50dp</dimen>
+    <dimen name="home_menu_Horizontal">25dp</dimen>
+    <dimen name="home_menu_Vertical">17dp</dimen>
+    <dimen name="ranking_tab_one_height">40dp</dimen>
+    <dimen name="ranking_tabbar_height">40dp</dimen>
+    <dimen name="ranking_tab_child_height">35dp</dimen>
+    <dimen name="ranking_tab_child_padding_height">12dp</dimen>
+    <dimen name="ranking_tab_child_list_padding_height">10dp</dimen>
+    <dimen name="ranking_adapter_bottom_padding">14dp</dimen>
+    <dimen name="home_recommend_img_def_height">275dp</dimen>
+    <dimen name="home_recommend_item_decoration">15dp</dimen>
+</resources>

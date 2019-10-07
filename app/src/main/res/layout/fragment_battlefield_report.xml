@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_F5F5F5"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar_actionbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeList"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.jf.my.view.AspectRatioView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/image_zhanbaobeijing"
+                        app:aspectRatio="1.8">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <!--<LinearLayout-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_alignParentLeft="true"-->
+                            <!--android:layout_alignParentTop="true"-->
+                            <!--android:layout_marginLeft="15dp"-->
+                            <!--android:layout_marginTop="15dp"-->
+                            <!--android:gravity="center_vertical">-->
+
+                            <!--<com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                            <!--android:id="@+id/small_userIcon"-->
+                            <!--android:layout_width="32dp"-->
+                            <!--android:layout_height="32dp"-->
+                            <!--android:scaleType="fitXY"-->
+                            <!--android:src="@color/white"-->
+                            <!--app:riv_border_color="@color/white"-->
+                            <!--app:riv_border_width="0.5dip"-->
+                            <!--app:riv_corner_radius="0dip"-->
+                            <!--app:riv_mutate_background="true"-->
+                            <!--app:riv_oval="true" />-->
+
+                            <!--<com.gongwen.marqueen.MarqueeView-->
+                            <!--android:id="@+id/marqueeView"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:flipInterval="2500"-->
+                            <!--android:inAnimation="@anim/in_bottom"-->
+                            <!--android:outAnimation="@anim/out_top"-->
+                            <!--app:marqueeAnimDuration="2000"></com.gongwen.marqueen.MarqueeView>-->
+                            <!--</LinearLayout>-->
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                                                 android:id="@+id/userIcon"
+                                                                                 android:layout_width="80dp"
+                                                                                 android:layout_height="80dp"
+                                                                                 android:scaleType="fitXY"
+                                                                                 android:src="@color/white"
+                                                                                 app:riv_border_color="@color/white"
+                                                                                 app:riv_border_width="0.5dip"
+                                                                                 app:riv_corner_radius="0dip"
+                                                                                 app:riv_mutate_background="true"
+                                                                                 app:riv_oval="true"/>
+
+                                <TextView
+                                    android:id="@+id/user_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:textColor="@color/color_2B0900"
+                                    android:textSize="@dimen/sp_16"
+                                    tools:text="活泼向日葵"/>
+
+                                <TextView
+                                    android:id="@+id/level"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:textColor="@color/color_2B0900"
+                                    android:textSize="@dimen/sp_12"
+                                    tools:text="活泼向日葵"/>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </com.jf.my.view.AspectRatioView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="95dp"
+                        android:background="@color/white"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:id="@+id/ll_my_fans"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/my_fans"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/color_FF6C00"
+                                android:textSize="@dimen/sp_15"
+                                tools:text="活泼向日葵"/>
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="我的粉丝"
+                                android:textColor="@color/color_cccccc"
+                                android:textSize="@dimen/sp_15"
+                                />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="40dp"
+                            android:background="@color/color_AFADA6"/>
+
+                        <LinearLayout
+                            android:id="@+id/ll_my_order"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/my_order"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/color_FF6C00"
+                                android:textSize="@dimen/sp_15"
+                                tools:text="活泼向日葵"/>
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="我的订单"
+                                android:textColor="@color/color_cccccc"
+                                android:textSize="@dimen/sp_15"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/invite_friends"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:background="@drawable/bg_ffa800_corners_8dp"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="立即邀请好友加入吧"
+                        android:textColor="@color/color_35271B"
+                        android:textSize="@dimen/sp_14"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/color_FFCC00">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="45dp"
+                            android:background="@drawable/image_baikuang">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background_white_confirm"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginTop="50dp"
+                                    android:text="前10名排行榜"
+                                    android:textColor="@color/color_35271B"
+                                    android:textSize="@dimen/sp_15"/>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.5dp"
+                                    android:background="@color/color_cccccc"/>
+
+                                <com.jf.my.view.FixListView
+                                    android:id="@+id/list_lv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:divider="@color/color_cccccc"
+                                    android:dividerHeight="0.5dp"
+                                    />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/image_guanjun"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center">
+
+                            <View
+                                android:layout_width="66dp"
+                                android:layout_height="1dp"
+                                android:background="@color/color_F2D358"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:text="规则"
+                                android:textColor="@color/color_35271B"
+                                android:textSize="@dimen/sp_15"/>
+
+                            <View
+                                android:layout_width="66dp"
+                                android:layout_height="1dp"
+                                android:background="@color/color_F2D358"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/rules"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="20dp"
+                            android:text="1发生的垃圾分类是但是"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/sp_12"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        <com.jf.my.view.UPMarqueeView
+            android:id="@+id/upview1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"/>
+    </RelativeLayout>
+</LinearLayout>

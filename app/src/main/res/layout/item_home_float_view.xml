@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/floatIv"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:visibility="gone"
+    android:layout_marginRight="15dp"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentBottom="true"
+    >
+
+</ImageView>

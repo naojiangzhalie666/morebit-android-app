@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_title_return_icon"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/order_team_tb"
+            android:paddingRight="7dp"
+            android:paddingLeft="7dp"
+            android:textColor="@color/color_2B0900"
+            android:textSize="@dimen/sp_18"/>
+
+        <ImageView
+            android:id="@+id/iv_title"
+            android:layout_toRightOf="@+id/tv_title"
+            android:layout_centerVertical="true"
+
+            android:layout_width="wrap_content"
+            android:src="@drawable/icon_order_detail_button"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_dingdansearch"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_horizontal"
+        android:background="@color/white"
+        >
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/xTablayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:tl_indicator_color="@color/color_FFD800"
+            app:tl_indicator_corner_radius="2dp"
+            app:tl_indicator_height="3dp"
+            app:tl_indicator_width="14dp"
+            app:tl_tab_padding="25dp"
+            app:tl_textSelectColor="@color/color_333333"
+            app:tl_textUnselectColor="@color/color_999999"
+            app:tl_textsize="@dimen/sp_14"
+            />
+    </LinearLayout>
+
+    <com.jf.my.view.NoScrollViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_actionbar_no_shadow" />
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+       >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="103dp"
+                android:layout_height="103dp"
+                android:layout_marginRight="15dp">
+
+                <include layout="@layout/item_goods_top" />
+            </RelativeLayout>
+
+            <include
+                layout="@layout/include_release_goods_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/img_rl"
+                android:paddingRight="10dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="24dp"
+            android:text="上传素材"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_13" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_text"
+            android:background="@color/transparent"
+            android:orientation="vertical">
+
+            <com.jf.my.view.FixGridView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="6dp"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none"
+                android:layout_marginRight="15dp"
+                android:numColumns="3"
+                android:verticalSpacing="6dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="24dp"
+            android:text="推荐理由"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_13" />
+
+        <RelativeLayout
+            android:id="@+id/et_statistics_rl"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/bg_input_f5f5f5_round_10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/et_reason"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:maxLength="300"
+                android:gravity="top"
+                android:hint="请输入你的理由"
+                android:textColorHint="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                android:windowSoftInputMode="stateHidden" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="24dp"
+            android:text="选择发布模块"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_13" />
+</LinearLayout>
+        <com.jf.my.view.FixRecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerview"
+             />
+    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

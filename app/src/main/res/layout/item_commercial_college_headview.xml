@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        >
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/search"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:layout_marginRight="12dp"-->
+        <!--android:background="@drawable/commercial_college_bg_search"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="18dp"-->
+        <!--android:layout_height="18dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:src="@drawable/icon_sousuo" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/search_et"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="搜索你想要的"-->
+        <!--android:singleLine="true"-->
+        <!--android:textColor="@color/color_000000"-->
+        <!--android:textColorHint="@color/color_999999"-->
+        <!--android:textSize="14sp" />-->
+        <!--</LinearLayout>-->
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false">
+            <!--比例702*300-->
+            <com.jf.my.view.AspectRatioView
+                android:id="@+id/rsv_banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:aspectRatio="2.5">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:delay_time="2000"
+                    app:is_auto_play="true"
+                    app:scroll_time="1000" />
+            </com.jf.my.view.AspectRatioView>
+        </android.support.v7.widget.CardView>
+
+        <!--分类-->
+        <include layout="@layout/view_layout_college_category" />
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/reyclerview_study"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:layout_marginRight="2dp"-->
+        <!--android:layout_marginBottom="22dp"-->
+        <!--android:layout_marginTop="12dp" />-->
+        <!--蜜源资讯-->
+        <LinearLayout
+            android:id="@+id/ll_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/mine_bg_gridview"
+            android:orientation="vertical"
+            android:paddingBottom="12dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/miyuan_informaiton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="20dp"
+                    android:text="蜜源资讯"
+                    android:textColor="@color/color_1E1E1E"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/miyuan_informaiton"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/ll_information_more"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="更多"
+                        android:textColor="@color/color_333333"
+                        android:layout_marginRight="3dp"
+                        android:textSize="@dimen/sp_11" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_college_more_arrows"
+                        android:layout_marginRight="12dp"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:descendantFocusability="blocksDescendants"
+                android:paddingBottom="4dp">
+
+                <include layout="@layout/view_layout_hot_text" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="9dp"
+            android:background="@color/color_F8F8F8" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_commercia_recommend" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:includeFontPadding="false"
+                    android:text="为你推荐"
+                    android:textColor="@color/color_1E1E1E"
+                    android:textSize="@dimen/sp_15"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="更多"></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_commercial_youjiant" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

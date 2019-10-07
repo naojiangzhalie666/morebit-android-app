@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="264dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="申请淘宝授权"
+                android:textColor="@color/color_333333"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:drawableLeft="@drawable/check_circle_copy"
+                    android:drawablePadding="5dp"
+                    android:text="分享文案已自动复制"
+                    android:textColor="@color/color_999999"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:drawableLeft="@drawable/check_circle_copy"
+                    android:drawablePadding="5dp"
+                    android:text="图片已保存至手机相册"
+                    android:textColor="@color/color_999999"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="109dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/bg_input_f5f5f5_round_30dp"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/btn_confirm"
+                    android:layout_width="109dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/submit_buttom_feed"
+                    android:gravity="center"
+                    android:text="打开朋友圈"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_15" />
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

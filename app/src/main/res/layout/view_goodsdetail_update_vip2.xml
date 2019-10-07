@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jf.my.view.AspectRatioView xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                xmlns:tools="http://schemas.android.com/tools"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_goodsdetail_update_vip"
+                                app:aspectRatio="11.36">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_estimate_earnings"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/estimate_earnings"
+            android:textColor="@color/color_F7E0BC"
+            android:textSize="12sp"
+            android:gravity="center_vertical"
+            android:paddingRight="15dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/bg_goods_detail_update_vip_estimate"
+            />
+        <TextView
+            android:id="@+id/tv_update_earnings"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/tv_estimate_earnings"
+            android:layout_height="wrap_content"
+            android:text="@string/update_vip2_earnings"
+            android:textColor="#ff82292b"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="@string/to_update"
+            android:paddingRight="7dp"
+            android:paddingLeft="7dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_goods_detail_update_vip_updata"
+            android:textColor="@color/color_82292b"
+            android:textSize="11sp"
+            />
+    </RelativeLayout>
+
+
+</com.jf.my.view.AspectRatioView>

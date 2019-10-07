@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:id="@+id/bannerSpace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white" />
+
+            <com.jf.my.view.AspectRatioView
+                android:id="@+id/ar_title_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:aspectRatio="2.5"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                >
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:contentPadding="0dp">
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/roll_view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:delay_time="2000"
+                        app:indicator_drawable_selected="@drawable/icon_huangdian"
+                        app:indicator_drawable_unselected="@drawable/icon_baidian"
+                        app:is_auto_play="true"
+                        app:scroll_time="1000"/>
+
+                </android.support.v7.widget.CardView>
+            </com.jf.my.view.AspectRatioView>
+        </RelativeLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--分类-->
+        <include layout="@layout/view_layout_home_recommend_category"/>
+        <!-- 最火-->
+        <include layout="@layout/view_layout_hot_text"/>
+        <!--官方推荐-->
+        <include layout="@layout/official_recommend"/>
+        <!--楼层模块-->
+        <include layout="@layout/view_layout_floor"/>
+
+        <com.jf.my.view.AspectRatioView
+            android:id="@+id/as_banner_make_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:aspectRatio="3.52">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="false">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner_make_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:indicator_drawable_selected="@drawable/icon_huangdian"
+                    app:indicator_drawable_unselected="@drawable/icon_baidian"/>
+            </android.support.v7.widget.CardView>
+        </com.jf.my.view.AspectRatioView>
+
+        <!--精选活动-->
+        <include layout="@layout/recommend_acitivty"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_F8F9FB"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingBottom="5dp">
+                 <View android:layout_width="15dp" android:layout_height="1dp" android:background="@color/color_333333" />
+                    <TextView
+                        android:id="@+id/recommendTitleTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/miyuan_recommend"
+                        android:textSize="@dimen/sp_15"
+                        android:textColor="@color/color_333333"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="6dp"/>
+                 <View android:layout_width="15dp" android:layout_height="1dp" android:background="@color/color_333333" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

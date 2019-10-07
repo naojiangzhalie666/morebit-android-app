@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:background="@color/white"
+            android:padding="18dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="去朋友圈分享"
+                android:textColor="@color/color_000000"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginTop="17dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="文案已自动复制"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/dialog_share_friends_icon"
+                    android:textColor="@color/color_666666"
+                    android:textSize="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="所选图片已保存至手机相册"
+                    android:layout_marginTop="12dp"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/dialog_share_friends_icon"
+                    android:textColor="@color/color_666666"
+                    android:textSize="15dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/tv_left"
+                    android:layout_width="105dp"
+                    android:layout_height="34dp"
+                    android:gravity="center"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/bg_radius_yaoqing"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_333333"
+                    android:text="取消"/>
+
+                <TextView
+                    android:id="@+id/tv_right"
+                    android:layout_width="105dp"
+                    android:layout_height="34dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_radius_zhuanyong"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_333333"
+                    android:text="打开微信"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

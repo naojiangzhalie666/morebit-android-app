@@ -1,0 +1,318 @@
+apply plugin: 'com.android.application'
+apply plugin: 'channel'
+apply plugin: 'bugly'
+
+apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.sensorsdata.analytics.android'
+//apply plugin: 'oneapm'
+bugly {
+    appId = '3040a7dbe1' // 注册时分配的App ID
+    appKey = '291c9c4d-c3f9-4878-95ef-de58582275f6' // 注册时分配的App Key
+}
+
+
+android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            moduleName "MyEncrypt"          //生成的so名字
+            abiFilters "armeabi" //输出指定三种abi体系结构下的so库
+//            abiFilters 'armeabi', 'armeabi-v7a', 'x86', 'armv5', 'x64', 'arm64'
+        }
+        // 开启multidex
+        multiDexEnabled true
+
+        //极光推送
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "com.jf.my",
+                JPUSH_APPKEY : "8e301020b51000dcdfe45b8c", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+
+//                XIAOMI_APPKEY: "MI-5431771384274",//小米平台注册的appkey
+//                XIAOMI_APPID : "MI-2882303761517713274",//小米平台注册的appid
+//
+                HUAWEI_APPID:"100229485",//华为平台注册的appid
+
+                MEIZU_APPKEY:"MZ-9a345249ed9d42e8a7bd95402e8395fc",//魅族平台注册的appkey
+                MEIZU_APPID:"MZ-115849",//魅族平台注册的appid
+        ]
+
+
+    }
+    sourceSets.main{
+        jni.srcDirs=[]
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../signature/my.jks')
+            storePassword '123456'
+            keyAlias 'lfmy'
+            keyPassword '123456'
+        }
+    }
+
+    dexOptions {
+        jumboMode = true
+        javaMaxHeapSize "4g"
+    }
+    //greendao配置
+    greendao {
+        //版本号，升级时可配置
+        schemaVersion 4
+        daoPackage 'com.anye.greendao.gen'
+        targetGenDir 'src/main/java'
+    }
+
+
+    buildTypes {
+        release {
+            // 开启混淆
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    channel {
+        //多渠道包的输出目录，默认为new File(project.buildDir,"channel")
+        baseOutputDir = new File(project.buildDir, "apk")
+        //多渠道包的命名规则，默认为：${appName}-${versionName}-${versionCode}-${flavorName}-${buildType}
+        apkNameFormat = "miyuan2.0" + '-${versionName}-${versionCode}-${flavorName}-${buildType}'
+    }
+    flavorDimensions "cooperator"
+    productFlavors {
+        //开发环境
+        develop {
+            buildConfigField "String", "BASE_HOST", '"http://172.16.1.200"'
+            buildConfigField "int", "ENV_TYPE", "1"
+            dimension "cooperator"
+        }
+        //测试Uat环境
+        uat {
+            buildConfigField "String", "BASE_HOST", '"http://172.16.1.100"'
+            buildConfigField "int", "ENV_TYPE", "2"
+            dimension "cooperator"
+        }
+        pp {
+            buildConfigField "String", "BASE_HOST", '"http://pp.gzmiyuan.com"'
+            buildConfigField "int", "ENV_TYPE", "3"
+            dimension "cooperator"
+        }
+        //生产环境
+        product {
+            buildConfigField "String", "BASE_HOST", '"https://api.gzmiyuan.com"'
+            buildConfigField "int", "ENV_TYPE", "4"
+            dimension "cooperator"
+        }
+    }
+
+}
+
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    annotationProcessor "com.google.dagger:dagger-compiler:2.0.2"
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    testCompile 'junit:junit:4.12'
+    compile project(':LRecyclerview_library')
+    //上拉下拉列表
+    //base
+    compile rootProject.ext.dependencies["appcompat-v7"]
+    compile rootProject.ext.dependencies["design"]
+    compile rootProject.ext.dependencies["recyclerview-v7"]
+    compile rootProject.ext.dependencies["cardview-v7"]
+    compile rootProject.ext.dependencies["constraint"]
+    compile rootProject.ext.dependencies["support-v4"]
+    //base
+    //工具
+    compile files('libs/umeng-analytics-v6.1.2.jar')
+    //友盟统计
+    //极光推送
+    compile 'cn.jiguang.sdk:jpush:3.2.0'
+    // 此处以JPush 3.1.6 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.2.7'
+    // 此处以JCore 1.2.5 版本为例。
+    //    compile 'cn.jiguang.sdk.plugin:xiaomi:3.2.0' // 小米
+    compile 'cn.jiguang.sdk.plugin:huawei:3.2.0' // 华为
+    compile 'cn.jiguang.sdk.plugin:meizu:3.2.0'
+    //魅族
+    //极光推送
+    compile 'com.android.support:multidex:1.0.1'
+    // 多dex配置
+    compile rootProject.ext.dependencies["glide"]
+    compile rootProject.ext.dependencies["view-core"]
+    //viewpager 滑动
+    compile rootProject.ext.dependencies["ultimateswipetool"]
+    // 侧滑返回
+    compile rootProject.ext.dependencies["bugly"]
+    // 远程依赖集成方式（推荐）
+    compile rootProject.ext.dependencies["tinker"]
+    // 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
+    compile rootProject.ext.dependencies["rxpermissions"]
+    // rxpermissions 权限
+    compile rootProject.ext.dependencies["zxing"]
+    //二维码扫描、识别、生成
+    compile rootProject.ext.dependencies["logging"]
+    // 请求log
+    compile rootProject.ext.dependencies["eventbus"]
+    // enentBus
+    compile rootProject.ext.dependencies["dagger"]
+    //dagger2
+    compile rootProject.ext.dependencies["dagger-compiler"]
+    //dagger2
+    compile rootProject.ext.dependencies["annotation"]
+    //dagger2
+    compile rootProject.ext.dependencies["fragmentation"]
+    //dagger2
+    //工具
+    //UI
+    compile rootProject.ext.dependencies["vercodeedittext"]
+    // 验证码
+    compile rootProject.ext.dependencies["FlycoTabLayout_Lib"]
+    // 验证码
+    compile rootProject.ext.dependencies["marqueeview"]
+    // 跑马灯效果
+    compile rootProject.ext.dependencies["transformations"]
+    // 高斯模糊
+    compile rootProject.ext.dependencies["floatingactionbutton"]
+    //    compile rootProject.ext.dependencies["rxgalleryfinal"]     // 图片选择   PictureSelector 这里面有这个引用
+    compile rootProject.ext.dependencies["roundedimageview"]
+    // 圆角图片
+    compile rootProject.ext.dependencies["banner"]
+    // 轮播图
+    compile rootProject.ext.dependencies["greendao"]
+    // 轮播图
+    compile rootProject.ext.dependencies["utilcode"]
+    //工具类
+    //UI
+    //网络
+    compile rootProject.ext.dependencies["okhttp-utils"]
+    compile rootProject.ext.dependencies["okgo"]
+    //gson
+    compile rootProject.ext.dependencies["retrofit-converter-gson"]
+    compile rootProject.ext.dependencies["rxandroid"]
+    compile rootProject.ext.dependencies["rxjava"]
+    compile rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
+    compile rootProject.ext.dependencies["retrofit"]
+    //gson 数据解析适配器
+    compile rootProject.ext.dependencies["retrofit-converter-gson"]
+    compile rootProject.ext.dependencies["retrofit-converter-gson"]
+    compile rootProject.ext.dependencies["okhttp"]
+    compile rootProject.ext.dependencies["rxlifecycle"]
+    compile rootProject.ext.dependencies["rxlifecycle-android"]
+    compile rootProject.ext.dependencies["rxlifecycle-components"]
+    compile rootProject.ext.dependencies["fastjson"]
+    compile rootProject.ext.dependencies["logging"]
+    // 请求log
+    compile rootProject.ext.dependencies["stetho"]
+    //facebook 安卓调试工具
+    compile rootProject.ext.dependencies["stetho-okhttp3"]
+    compile rootProject.ext.dependencies["butterknife"]
+    // butterknife
+    compile rootProject.ext.dependencies["butterknife-compiler"]
+    //文件下载
+    compile rootProject.ext.dependencies["filedownloader"]
+    // butterknife
+    //网络
+    //支付
+    //支付宝支付
+    compile files('libs/alipaySdk-20170922.jar')
+    //阿里百川sdk---
+    //登陆
+    compile 'com.ali.auth.sdk:alibabauth_core:1.4.3@jar'
+    compile 'com.ali.auth.sdk:alibabauth_ui:1.4.3@aar'
+    compile 'com.ali.auth.sdk:alibabauth_ext:1.4.3@jar'
+    //Mtop网关
+    compile 'com.taobao.android:mtopsdk_allinone_open:1.2.2.4@jar'
+    compile 'com.alibaba.sdk.android:alibc_link_partner:1.1.0.6'
+    //UT
+    compile 'com.alibaba.mtl:app-monitor-sdk:2.5.1.3_for_bc_proguard@jar'
+    //联盟SDK
+    compile 'com.alimama.tunion.sdk:tuniontradesdk:0.3.2'
+    //电商SDK
+    compile 'com.alibaba.sdk.android:alibc_trade_common:3.1.1.206'
+    compile 'com.alibaba.sdk.android:alibc_trade_biz:3.1.1.206'
+    compile 'com.alibaba.sdk.android:alibc_trade_sdk:3.1.1.206'
+    //阿里web防火墙
+    compile(name: 'AVMPSDK-external-release-5.4.1001', ext: 'aar')
+    compile(name: 'SecurityBodySDK-external-release-5.4.28', ext: 'aar')
+    compile(name: 'SecurityGuardSDK-external-release-5.4.38', ext: 'aar')
+    //图片滑动效果
+    compile 'com.github.devlight:infinitecycleviewpager:1.0.2'
+    //支付
+    //上传图片
+    compile 'com.aliyun.dpa:oss-android-sdk:+'
+    // 选择图片
+    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    // 导航栏
+    compile 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+    //greendao升级帮助类
+    compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.1.0'
+    compile 'com.drawthink:expandable-recyclerview:0.0.3'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //
+    //    compile ("com.github.bumptech.glide:recyclerview-integration:4.4.0") {
+    //        // Excludes the support library because it's already included by Glide.
+    //         transitive = false
+    //    }
+    //RecyclerView适配器 可减少大量代码量
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //SmartRefreshLayout
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
+    //    compile 'com.shuyu:GSYVideoPlayer:7.0.0-beta1'
+    //    compile 'cn.jzvd:jiaozivideoplayer:6.4.1'
+    compile project(':player_module')
+
+    //微信
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    compile 'com.github.JuHonggang:ShadowDrawable:0.1'
+    compile 'com.github.lzyzsd:circleprogress:1.2.1'
+    //时间选择
+    compile 'com.contrarywind:Android-PickerView:4.1.8'
+
+    // compile 'com.github.cpiz:BubbleView:1.0.3'
+    compile(name: 'bubbleview', ext: 'aar')
+    compile(name: 'bigdata1.0.3', ext: 'aar')
+
+    compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+
+    //Optional: see how to use the utility.
+    compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
+
+    //Optional: see how to use the utility.
+//    compile 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
+//    compile 'com.oneapm.agent.android:agent:5.5.3.5'
+
+
+}
+// 依赖插件脚本
+//apply from: 'tinker-support.gradle'
+

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="264dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@color/white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="12dp"
+                android:text="素材下载"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="16dp"
+                android:id="@+id/ll_download"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_image_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="21dp"
+                    android:text="已下载"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_download_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="0"
+                    android:textColor="@color/color_FFD800"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="张"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                android:id="@+id/ll_download_failure"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="网络连接失败，已下载 "
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/colcor_999999"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_333333"
+                    android:text="0"
+                    android:id="@+id/tv_download_failure_count"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 张"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/colcor_999999"/>
+            </LinearLayout>
+
+
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:donut_progress="0"
+                app:donut_background_color="@color/white"
+                app:donut_finished_color="@color/color_FFD800"
+                app:donut_finished_stroke_width="4dp"
+                app:donut_circle_starting_degree="270"
+                app:donut_text_color="@color/color_333333"
+                app:donut_text_size="@dimen/sp_12"
+                app:donut_unfinished_color="@color/color_F6F6F6"
+                app:donut_unfinished_stroke_width="4dp" />
+            <TextView
+                android:id="@+id/btn_setting"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="42dp"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/submit_buttom_feed"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="去设置网络"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15" />
+            <TextView
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="42dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:background="@drawable/submit_buttom_feed"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="去相册看看"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15" />
+            <TextView
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_solid_ececec_30dp"
+                android:gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="取消"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

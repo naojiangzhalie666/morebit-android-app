@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+             android:orientation="vertical">
+
+    <com.jf.my.Module.common.View.ReUseListView
+        android:id="@+id/listview"
+        android:layout_width="fill_parent"
+        android:background="#fff7f7f7"
+        android:layout_height="fill_parent"/>
+
+
+        <LinearLayout
+            android:id="@+id/dateNullView"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/image_meiyousousuojilu"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="很抱歉，没找到相关数据哦~"
+                android:textColor="@color/color_8B8B8B"
+                android:textSize="15sp"/>
+        </LinearLayout>
+</RelativeLayout>

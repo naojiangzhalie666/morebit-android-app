@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/color_F5F5F5"
+              android:orientation="vertical">
+
+
+    <include layout="@layout/toolbar_actionbar_no_shadow"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_E5E5E5"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/search_rl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+
+                <EditText
+                    android:id="@+id/search_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_input_f5f5f5_round_left30dp"
+                    android:gravity="left|center_vertical"
+                    android:hint="搜索商品名或粘贴淘宝标题"
+                    android:imeOptions="actionSearch"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="32dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_000000"
+                    android:textColorHint="@color/color_999999"
+                    android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                    android:textSize="12sp"/>
+
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/navbar_sousuo_huise"/>
+
+                <TextView
+                    android:id="@+id/text_clear"
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/input_text_delete_icon"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/search_btn"
+                android:layout_width="62dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_input_fcdf0a_ffed68_round_right30dp"
+                android:gravity="center"
+                android:text="搜索"
+                android:textColor="@color/color_2B0900"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_tab"
+            app:tabBackground="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            >
+        </android.support.design.widget.TabLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/color_F5F5F5"/>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.jf.my.Module.common.View.ReUseListView
+            android:id="@+id/listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+
+        <LinearLayout
+            android:id="@+id/dateNullView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/dateNullView_clickbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_meiyousousuojilu"/>
+
+                <TextView
+                    android:id="@+id/dateNullView_tips_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="您暂时还没有消息哦~"
+                    android:textColor="@color/color_8B8B8B"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/selectGoodCount_ly"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_cccccc"/>
+
+            <TextView
+                android:id="@+id/selectGoodCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_chakanshangpin2"
+                android:text="查看已勾选商品(0)"
+                android:textColor="@color/color_FF2521"
+                android:textSize="13sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_cccccc"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/selectGoodList"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@color/white"
+            android:scrollbars="none"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:id="@+id/poster_share"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_FCEE8B"
+                android:gravity="center"
+                android:text="海报分享"
+                android:textColor="@color/color_2B0900"
+                android:textSize="13dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/web_list_share"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_FCDF0A"
+                android:gravity="center"
+                android:text="Web集合页"
+                android:textColor="@color/color_2B0900"
+                android:textSize="13dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

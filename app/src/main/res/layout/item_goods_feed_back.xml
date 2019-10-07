@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_F5F5F5"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp">
+
+        <ImageView
+            android:id="@+id/iv_click"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/radio_feed_back" />
+
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:text="优惠券问题"
+            android:textColor="@color/color_999999"
+            android:textSize="13sp" />
+    </LinearLayout>
+</RelativeLayout>

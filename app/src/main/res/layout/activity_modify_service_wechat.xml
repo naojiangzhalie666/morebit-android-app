@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        style="@style/TopSize">
+
+        <TextView
+            android:id="@+id/txt_head_title"
+            style="@style/TopSizeTitle"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingTop="10dp"
+            android:paddingRight="35dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                style="@style/TopSizeBack"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_com"
+            style="@style/TopSizeTitle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingTop="7dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="7dp"
+            android:text="提交"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="微信号"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_14" />
+
+
+        <com.jf.my.view.ClearEditText
+            android:id="@+id/edt_weichat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:background="@null"
+            android:hint="请输入您的微信号"
+            android:paddingRight="30dp"
+            android:textColor="@color/color_3A3A3A"
+            android:textColorHint="@color/color_cccccc"
+            android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+            android:textSize="13sp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_E6E6E6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="二维码"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/uploading_qrcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="请上传您的二维码"
+            android:textColor="@color/color_cccccc"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_qrcode"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:scaleType="fitXY" />
+
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/white"/>
+        </shape>
+    </item>
+
+    <item>
+        <bitmap
+            android:gravity="top|left"
+            android:src="@drawable/app_start_top"/>
+    </item>
+    <item android:top="120.0dip">
+        <bitmap
+
+            android:gravity="top|center"
+            android:src="@drawable/app_start_logo"/>
+    </item>
+    <item >
+        <bitmap
+            android:gravity="bottom|right"
+            android:src="@drawable/app_start_button"/>
+    </item>
+</layer-list>

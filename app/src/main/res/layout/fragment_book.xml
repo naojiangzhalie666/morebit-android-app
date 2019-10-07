@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_F5F5F5"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_bu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_F5F5F5"/>
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="100dp"
+                android:layout_height="33dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="33dp"
+                android:background="@drawable/bg_1yellowline_whitebg_round_30dp"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/color_6d6d6d"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_send"
+                android:layout_width="180dp"
+                android:layout_height="33dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="33dp"
+                android:background="@drawable/bg_000000_1dpline_yellowbg_round_30dp"
+                android:gravity="center"
+                android:text="选择发送"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                />
+        </RelativeLayout>
+
+        <com.jf.my.Module.common.View.ReUseListView
+            android:id="@+id/mListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/rl_bu"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
+

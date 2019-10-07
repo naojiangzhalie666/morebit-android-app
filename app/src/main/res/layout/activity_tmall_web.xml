@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar_actionbar_web"/>
+
+    <ProgressBar
+        android:id="@+id/pb"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:indeterminateOnly="false"
+        android:max="100"
+        android:progressDrawable="@drawable/progress_bar_webview">
+    </ProgressBar>
+
+    <TextView
+        android:id="@+id/tv_earnings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFECB6"
+        android:gravity="center"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:text="@string/tmall_search_commission"
+        android:textSize="12sp"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_bottom_view"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:paddingBottom="10dp"
+            android:paddingLeft="38dp"
+            android:paddingRight="38dp"
+            android:paddingTop="10dp">
+
+            <RelativeLayout
+                android:id="@+id/re_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/submit_buttom_feed"
+
+                >
+
+                <TextView
+                    android:id="@+id/tv_search_concessional"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/icon_anniusousuo"
+                    android:text="@string/search_concessional"
+                    android:textColor="#333333"
+                    android:textSize="15sp"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/buyRl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_buttom_direct"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:id="@+id/directBuyTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
+                    android:text="@string/search_no_concessional"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/show_commission"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rl_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.39"
+                    android:background="@drawable/bg_yellow_ffd800_round_left_30dp">
+
+                    <TextView
+                        android:id="@+id/shareTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/share"
+                        android:drawablePadding="5dp"
+                        android:textColor="#333333"
+                        android:textSize="12sp"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="0.61"
+                    android:background="@drawable/bg_goods_detail_to_taobao"
+                    android:gravity="center"
+                    android:text="@string/immediately_buy"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.jf.my.view.AspectRatioView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:aspectRatio="1.68">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/heisebeijing" />
+    </com.jf.my.view.AspectRatioView>
+
+    <!--android:padding="5dp"-->
+    <ImageView
+        android:id="@+id/bnt_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="34dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="15dp"
+        android:paddingRight="35dp"
+        android:paddingBottom="15dp"
+        android:src="@drawable/icon_return_baise1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/userIcon"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:scaleType="fitXY"
+            android:src="@color/white"
+            app:riv_border_color="@color/color_b49ea0"
+            app:riv_border_width="0dp"
+            app:riv_corner_radius="0dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            tools:text="等风来" />
+
+        <ImageView
+            android:id="@+id/level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" />
+
+        <com.jf.my.view.AspectRatioView
+            android:id="@+id/ar_limits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginRight="12dp"
+            app:aspectRatio="1">
+
+            <ImageView
+                android:id="@+id/iv_limits"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+        </com.jf.my.view.AspectRatioView>
+
+        <ImageView
+            android:id="@+id/iv_exclusive_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="29dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/zhuanchengkechenganniu"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

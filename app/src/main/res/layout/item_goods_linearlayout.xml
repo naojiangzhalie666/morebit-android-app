@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/iten_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/item_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_EDEDED"
+        android:orientation="horizontal"
+        android:paddingRight="0dp">
+
+        <RelativeLayout
+            android:layout_width="125dp"
+            android:layout_height="125dp">
+
+            <include layout="@layout/item_goods_top" />
+        </RelativeLayout>
+
+        <include
+            layout="@layout/item_goods_line_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_rl"
+            android:paddingRight="10dp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

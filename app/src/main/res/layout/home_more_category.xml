@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:id="@+id/rl_root">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bootom__white_corners_5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="26dp"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="13dp"
+                android:text="全部频道"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_14" />
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/color_E6E6E6" />-->
+
+
+            <com.jf.my.view.FixGridView
+                android:id="@+id/fl_gView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:listSelector="@color/transparent"
+                android:nestedScrollingEnabled="false"
+                android:numColumns="4"
+                android:paddingBottom="40dp"
+                android:verticalSpacing="13dp" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

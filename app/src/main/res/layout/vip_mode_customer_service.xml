@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_whilebg_5dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/userIcon"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_below="@+id/btn_customer_service"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="53dp"
+            android:scaleType="fitXY"
+            android:src="@color/white"
+            app:riv_border_color="@color/color_FFED25"
+            app:riv_border_width="1dp"
+            app:riv_corner_radius="0dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp"
+            android:text="名字"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_stroke_ffd800_15dp"
+            android:gravity="center"
+            android:paddingBottom="9dp"
+            android:paddingLeft="34dp"
+            android:paddingRight="34dp"
+            android:paddingTop="9dp"
+            android:text="联系我们"
+            android:textColor="@color/color_333333"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_customer_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_customer_service" />
+</RelativeLayout>

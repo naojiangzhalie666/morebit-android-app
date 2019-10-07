@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jf.my.view.AspectRatioView xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                xmlns:tools="http://schemas.android.com/tools"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_goodsdetail_update_vip3"
+                                app:aspectRatio="11.36">
+
+    <TextView
+        android:id="@+id/tv_estimate_earnings"
+        android:drawableLeft="@drawable/bg_goodsdetail_update_vip3_zuanshi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="6dp"
+        android:layout_marginLeft="12dp"
+        android:text="@string/update_vip3_earnings"
+        android:textColor="#fffff1c0"
+        android:textSize="12sp"
+        />
+
+</com.jf.my.view.AspectRatioView>

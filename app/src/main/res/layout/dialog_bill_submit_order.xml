@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_editoneline_dialog_whilebg_8dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:padding="12dp"
+        android:text="提示"
+        android:textColor="@color/color_000000"
+        android:textSize="18sp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="订单号:"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_marginRight="40dp"
+            android:layout_height="45dp">
+
+            <EditText
+                android:id="@+id/ed_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:hint="请输入订单号"
+                android:inputType="number"
+                android:maxLength="25"
+                android:paddingLeft="5dp"
+                android:paddingRight="20dp"
+                android:singleLine="true"
+                android:textColor="@color/color_666666"
+                android:textColorHint="@color/color_cccccc"
+                android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                style="@style/line"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+            />
+
+        <TextView
+            android:id="@+id/iv_text"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/color_333333"
+            android:textSize="12sp"
+            tools:text="呵护男性健康专业用药，男人的救命稻草，sssssssssssss女人的福音"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_F6F4F5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_editoneline_dialog_btnbg_8dp_left"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/color_808080"
+            android:textSize="14sp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/huise_jiben"/>
+
+        <TextView
+            android:id="@+id/ok"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_editoneline_dialog_btnbg_8dp_right"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/color_ff5050"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

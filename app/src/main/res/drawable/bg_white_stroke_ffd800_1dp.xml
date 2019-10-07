@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="false">
+        <shape>
+            <stroke android:width="1dp" android:color="#FFD800" /><!--边框颜色-->
+            <solid android:color="@color/white" /><!--填充色-->
+            <corners  android:topLeftRadius="15dp" android:topRightRadius="0dp" android:bottomLeftRadius="15dp" android:bottomRightRadius="0dp"
+                />
+        </shape>
+    </item>
+
+</selector>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/white"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:id="@+id/group" >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:textSize="@dimen/sp_14"
+    android:textColor="@color/color_333333"
+    android:textStyle="bold"
+    android:id="@+id/tv_one_title"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_xiangshang"
+       android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_arrow"/>
+
+</RelativeLayout>

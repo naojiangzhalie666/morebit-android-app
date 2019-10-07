@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <!--比例750×200-->
+    <com.jf.my.view.AspectRatioView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="3dp"
+        app:aspectRatio="2.333333">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false">
+            <!--比例702*300-->
+            <com.jf.my.view.AspectRatioView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:aspectRatio="2.34">
+            <com.youth.banner.Banner
+                android:id="@+id/roll_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+            </com.jf.my.view.AspectRatioView>
+
+        </android.support.v7.widget.CardView>
+    </com.jf.my.view.AspectRatioView>
+
+    <LinearLayout
+        android:id="@+id/ll_fix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.jf.my.view.FixGridView
+            android:id="@+id/fl_gView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@color/transparent"
+            android:numColumns="5"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:verticalSpacing="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_F5F5F5"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_jhs"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_jhs"/>
+
+        <ImageView
+            android:id="@+id/iv_hq"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_ht"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_F5F5F5"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingTop="2dp"
+
+        >
+
+        <ImageView
+            android:id="@+id/iv_xs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/white"
+            android:scaleType="centerCrop"
+            android:src="@drawable/main_xs"/>
+
+        <ImageView
+            android:id="@+id/iv_99"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_9_9"/>
+
+        <ImageView
+            android:id="@+id/iv_md"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/white"
+            android:scaleType="centerCrop"
+            android:src="@drawable/main_md"/>
+    </LinearLayout>
+
+    <!--比例750×200-->
+    <com.jf.my.view.AspectRatioView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        app:aspectRatio="3.75">
+
+        <com.youth.banner.Banner
+            android:id="@+id/recom_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.jf.my.view.AspectRatioView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/color_F5F5F5"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="每日排行榜"
+                android:textColor="@color/color_2B0900"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:id="@+id/drankMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="查看全部"
+                    android:textColor="@color/color_999999"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="6dp"
+                    android:layout_height="11dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ic_arrow_right"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/drankList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:scrollbars="none"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_F5F5F5"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/shangpintuijian"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="热门商品推荐"
+            android:textColor="@color/color_2B0900"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_F5F5F5"/>
+
+
+</LinearLayout>

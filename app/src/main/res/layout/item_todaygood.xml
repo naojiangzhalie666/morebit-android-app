@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/todayRootLayout"
+    >
+
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/bg_search_todaygood_top">
+
+
+               <android.support.v7.widget.CardView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   app:cardCornerRadius="5dp"
+                   app:cardElevation="0dp"
+                   app:cardUseCompatPadding="false"
+                   >
+               <FrameLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <ImageView
+                       android:id="@+id/ImageGoodPic"
+                       android:layout_width="168dp"
+                       android:layout_height="168dp"
+                       android:layout_gravity="center_horizontal"
+                       android:scaleType="fitXY"
+                       android:src="@drawable/icon_default"
+                       />
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/icon_today_coupon"
+                       android:layout_marginLeft="6dp"
+                       android:layout_marginTop="8dp"
+                       android:paddingBottom="4dp"
+                       android:id="@+id/couponRL"
+                       >
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="优惠券"
+                             android:layout_alignParentTop="true"
+                             android:textSize="10sp"
+                             android:textColor="@color/white"
+                             android:layout_centerHorizontal="true"
+                             android:layout_marginTop="2dp"/>
+
+                       <TextView
+                           android:id="@+id/couponTv"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text=""
+                           android:layout_alignParentBottom="true"
+                           android:textSize="12sp"
+                           android:textColor="@color/white"
+                           android:layout_centerHorizontal="true"
+                           android:layout_marginLeft="7dp"
+                           android:layout_marginRight="7dp"/>
+                   </RelativeLayout>
+               </FrameLayout>
+               </android.support.v7.widget.CardView>
+               </LinearLayout>
+                     <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:orientation="vertical"
+                         android:paddingTop="6dp"
+                         android:paddingLeft="8dp"
+                         android:paddingRight="8dp"
+                         android:paddingBottom="8dp"
+                         android:background="@drawable/bg_search_todaygood"
+                        >
+                           <TextView
+                               android:id="@+id/goodTitle"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:singleLine="true"
+                               android:lines="1"
+                               android:ellipsize="end"
+                               android:textSize="@dimen/sp_13"
+                               android:textColor="@color/color_333333"
+                               />
+                            <TextView
+                                android:id="@+id/incomeTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_commission"
+                                android:text=""
+                                android:textSize="@dimen/sp_10"
+                                android:textColor="@color/color_333333"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="6dp"
+                                android:paddingRight="6dp"
+                                android:lines="1"
+                                android:layout_marginTop="4dp"
+                                />
+
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="4dp">
+                               <TextView
+                                   android:id="@+id/textview_original"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:textColor="@color/color_ff1726"
+                                   android:textSize="18sp"
+                                   />
+                           </LinearLayout>
+                         <LinearLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:orientation="horizontal"
+                             >
+                             <TextView
+                                 android:id="@+id/text_two"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:textColor="@color/color_999999"
+                                 android:textSize="12sp"
+                                 android:layout_marginTop="1dp"
+                                 />
+
+                             <TextView
+                                 android:id="@+id/subsidiesPriceTv"
+                                 android:text=""
+                                 style="@style/subsidiesPriceItem"
+                                 android:visibility="gone"
+                                 android:layout_marginLeft="8dp"
+                                 android:paddingTop="0dp"
+                                 android:paddingBottom="0dp"
+                                 android:paddingLeft="5dp"
+                                 android:paddingRight="5dp"
+                                 />
+                         </LinearLayout>
+                     </LinearLayout>
+
+
+           </LinearLayout>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/room_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F8F8F8">
+
+        <View android:id="@+id/perfectArcBg" android:layout_width="match_parent" android:layout_height="300dp" android:background="@color/white"/>
+        <com.jf.my.view.PerfectArcView
+            android:id="@+id/arcBgView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:p_arc_showImage="false"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                />
+
+
+            <LinearLayout
+                android:id="@+id/ll_home_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <!--比例750×88-->
+
+                <include
+                    android:id="@+id/searchLayout"
+                    layout="@layout/home_search"/>
+            </LinearLayout>
+
+            <!--比例750×99-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                >
+
+                <com.jf.my.main.ui.myview.xtablayout.XTabLayout
+                    android:id="@+id/xTablayout"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    app:xTabDisplayNum="8"
+                    app:xTabIndicatorColor="@color/color_D82020"
+                    app:xTabIndicatorHeight="3dp"
+                    app:xTabIndicatorWidth="15dp"
+                    app:xTabMode="scrollable"
+                    app:xTabSelectedTextColor="@color/color_D92020"
+                    app:xTabSelectedTextSize="@dimen/sp_15"
+                    app:xTabTextColor="@color/color_2B2B2B"
+                    app:xTabTextSize="@dimen/sp_15"/>
+                <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/white"-->
+                <!--android:gravity="center_vertical">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="1dp"-->
+                <!--android:src="@drawable/icon_yingcangkou" />-->
+
+
+                <LinearLayout
+                    android:id="@+id/categoryLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    >
+
+                    <android.support.v7.widget.AppCompatImageButton
+                        android:id="@+id/more_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:src="@drawable/icon_quanbu"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="13dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--</LinearLayout>-->
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/home_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <!--<LinearLayout-->
+                <!--android:id="@+id/ll_more_ategory"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@color/color_80000000"-->
+                <!--android:visibility="gone">-->
+
+                <!--<include layout="@layout/home_more_category" />-->
+                <!--</LinearLayout>-->
+            </RelativeLayout>
+            <!--<android.support.v7.widget.AppCompatButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:text="出错啦~~"-->
+            <!--android:id="@+id/btn_error"-->
+            <!--android:visibility="gone"-->
+            <!--/>-->
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_urgency_notifi"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

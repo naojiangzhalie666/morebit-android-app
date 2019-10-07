@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="102dp"
+            android:layout_height="102dp">
+
+            <ImageView
+                android:id="@+id/iv_icon_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_default" />
+
+            <ImageView
+                android:id="@+id/has_gone"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/image_yiqiangguang"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_count_down"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_60000000"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_naozhong" />
+
+                <TextView
+                    android:id="@+id/count_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="23:00:12"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_no_start"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_60000000"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/image_huodongkaishi" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/color_2B0900"
+                android:textSize="@dimen/sp_14"
+                tools:text="天猫天发送到水电费水电费水电费发送的方式防守打法" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title">
+
+                <LinearLayout
+                    android:id="@+id/ll_return_cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_fanxian" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_fanxianyoubian"
+                        android:gravity="center"
+                        android:textColor="@color/color_FF3535"
+                        android:id="@+id/return_cash"
+                        android:textSize="@dimen/sp_10"
+                        tools:text="100元" />
+                </LinearLayout>
+
+                <ProgressBar
+                    style="@style/tallerBarStyle"
+                    android:layout_width="match_parent"
+                    android:id="@+id/pb_com"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toLeftOf="@+id/total"
+                    android:layout_toRightOf="@+id/ll_return_cash"
+                    android:progress="30"
+                    android:progressDrawable="@drawable/progressbar_bg_ffe200" />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/color_2B0900"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="250人" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="$60"
+                    android:textColor="@color/color_F32F19"
+                    android:textSize="@dimen/sp_16" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/jion_num"
+                    android:layout_toRightOf="@+id/price"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/icon_xiaobaojin"
+                        android:drawablePadding="8dp"
+                        android:text="消保金"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/sp_10" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/jion_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="已参加：250人"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_10" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_cccccc" />
+</LinearLayout>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginTop="12dp"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/line"
+        android:background="@color/white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="103dp"
+                    android:layout_height="103dp"
+                    android:layout_marginRight="15dp">
+
+                    <include layout="@layout/item_goods_top" />
+                </RelativeLayout>
+
+
+                <include
+                    layout="@layout/include_release_goods_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img_rl"
+                    android:paddingRight="10dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_F5F5F5"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_12"
+                tools:text="发布专题：蜜粉圈/一级类别,一级类别/二级类别"
+                android:id="@+id/tv_type"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_F5F5F5"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll_time"
+                android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical"
+
+              >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/icon_shjian"
+                    android:id="@+id/icon_shjian"/>
+                   <RelativeLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_toRightOf="@+id/icon_shjian"
+                       android:layout_marginTop="4dp"
+                       android:layout_marginBottom="5dp"
+                       >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/sp_10"
+                        tools:text="发布时间：2018-12-12 12:22:11"
+                        android:id="@+id/tv_apply_time"
+                        android:layout_alignParentTop="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/sp_10"
+                        tools:text="发布时间：2018-12-12 12:22:11"
+                        android:id="@+id/tv_audit_time"
+                        android:layout_alignParentBottom="true"/>
+                   </RelativeLayout>
+            </RelativeLayout>
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_F5F5F5"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:id="@+id/line"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_11"
+                android:layout_marginBottom="13dp"
+                tools:text="发布时间：2018-12-12 12:22:11"
+                android:id="@+id/tv_remark"
+                android:visibility="gone"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_11"
+                    android:layout_centerVertical="true"
+                    tools:text="发布时间：2018-12-12 12:22:11"
+                    android:id="@+id/tv_release_time"/>
+                <TextView
+                    android:layout_width="63dp"
+                    android:layout_height="21dp"
+                    android:textColor="@color/color_333333"
+                    android:layout_toLeftOf="@+id/tv_delete"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:paddingBottom="1dp"
+                    android:text="查看文案"
+                    android:id="@+id/tv_see_copywriter"
+                    android:background="@drawable/bg_ffd800_corners_5dp"/>
+                <TextView
+                    android:layout_width="63dp"
+                    android:layout_height="21dp"
+                    android:textColor="@color/color_666666"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_centerVertical="true"
+                    android:text="删除"
+                    android:id="@+id/tv_delete"
+                    android:background="@drawable/bg_white_stroke_dcdcdc_5dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

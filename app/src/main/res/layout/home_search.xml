@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/home_search_height"
+    android:layout_gravity="center_vertical"
+
+    >
+
+    <ImageView
+        android:id="@+id/iv_hongbao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:src="@drawable/navbar_hongbao"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/search_rl"
+        android:layout_width="0dp"
+        android:layout_height="29dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_input_white_trans_30dp">
+
+        <TextView
+            android:id="@+id/searchTv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:text="搜索商品名或粘贴淘宝标题"
+            android:paddingLeft="31dp"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/searchIconIv"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/icon_home_top_search" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="12dp">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/btn_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="14dp"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_home_service" />
+
+        <ImageView
+            android:id="@+id/home_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@+id/btn_service"
+            android:src="@drawable/icon_xiaoxi" />
+        <!--   <android.support.v7.widget.CardView
+               android:id="@+id/dot"
+               android:layout_width="6dp"
+               android:layout_height="6dp"
+               android:layout_marginTop="2dp"
+               android:layout_marginRight="2dp"
+
+               android:layout_alignParentRight="true"
+               android:layout_alignParentTop="true"
+               app:cardCornerRadius="3dp">
+               <View
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:background="@color/color_FF2B33"
+                   />
+           </android.support.v7.widget.CardView>-->
+    </RelativeLayout>
+
+</LinearLayout>

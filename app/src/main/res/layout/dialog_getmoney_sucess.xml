@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_editoneline_dialog_whilebg_8dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="规则说明"
+        android:textSize="18sp"
+        android:background="@drawable/bg_red_ff758c_topround_8dp"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:scaleType="fitXY"
+            android:layout_marginTop="10dp"
+            android:background="@null"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="请留意支付宝账号明细"
+            android:textSize="15sp"
+            android:textColor="@color/color_000000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跳转中"
+            android:textSize="15sp"
+            android:textColor="@color/color_000000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="5dp"
+            android:text=""
+            android:textSize="15sp"
+            android:textColor="@color/color_000000"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        android:background="@color/color_F6F4F5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_editoneline_dialog_btnbg_8dp_leftright"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="取消"
+            android:textSize="14sp"
+            android:textColor="@color/color_808080"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@color/huise_jiben"/>
+        <TextView
+            android:id="@+id/ok"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@drawable/bg_editoneline_dialog_btnbg_8dp_right"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="确定"
+            android:textSize="14sp"
+            android:textColor="@color/color_808080"/>
+
+    </LinearLayout>
+
+</LinearLayout>

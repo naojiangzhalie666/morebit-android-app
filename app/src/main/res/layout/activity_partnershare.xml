@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/room_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F5F5"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/top" />
+
+        <ImageView
+            android:id="@+id/reward_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+
+            android:src="@drawable/icon_guizeshuoming_h" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@drawable/share_bar_invite"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/iv_code"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_f8caae_leftround_30dp"
+                    android:gravity="center"
+                    android:text="邀请码: "
+                    android:textColor="@color/color_2B0900"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/iv_code_copybtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_ffffff_rightround_30dp"
+                    android:gravity="center"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:text="复制邀请码"
+                    android:textColor="@color/color_2B0900"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/buildPoster"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/btn_yellowline_whitebg_round_5dp"
+            android:gravity="center"
+            android:text="生成推广海报"
+            android:textColor="@color/color_2B0900"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/tv_share_url"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/btn_yellowline_whitebg_round_5dp"
+            android:gravity="center"
+            android:text="分享好友链接"
+            android:textColor="@color/color_2B0900"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/tv_share_txl"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/btn_yellowline_whitebg_round_5dp"
+            android:gravity="center"
+            android:text="推荐通讯录好友"
+            android:textColor="@color/color_2B0900"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/ic_goods_make_qrcode_kuang">
+
+
+            <ImageView
+                android:id="@+id/qrcode_img"
+                android:layout_width="102dp"
+                android:layout_height="102dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/service_person_qrcode" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/qrcode_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-5dp"
+            android:text="面对面分享"
+            android:textColor="@color/color_666666"
+            android:textSize="12dp" />
+
+
+    </LinearLayout>
+</LinearLayout>

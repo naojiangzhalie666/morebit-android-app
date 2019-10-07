@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_35271B"
+        android:textSize="@dimen/sp_12"
+        android:id="@+id/order"
+        android:layout_marginLeft="20dp"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/userIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/head_icon"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="0.5dip"
+            app:riv_corner_radius="0dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_35271B"
+            android:textSize="@dimen/sp_10"
+            android:id="@+id/user_name"
+            android:layout_marginLeft="20dp" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_35271B"
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/invite_num"
+        android:layout_marginRight="10dp"/>
+</LinearLayout>
+</LinearLayout>

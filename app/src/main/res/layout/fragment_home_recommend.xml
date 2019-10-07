@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<View-->
+        <!--android:id="@+id/status_bar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:background="@color/color_FFE21D"/>-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/color_FFE21D"-->
+        <!--android:orientation="vertical"-->
+        <!--&gt;-->
+
+        <!--&lt;!&ndash;比例750×88&ndash;&gt;-->
+
+        <!--<include layout="@layout/home_search"/>-->
+    <!--</LinearLayout>-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.jf.my.Module.common.View.ReUseStaggeredView
+                android:id="@+id/mListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                android:scrollbars="none"
+                />
+            <include layout="@layout/item_go_top"/>
+            <include layout="@layout/item_go_recommond" />
+            <include layout="@layout/item_home_float_view" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

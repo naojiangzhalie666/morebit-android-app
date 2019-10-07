@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_gravity="center_horizontal"
+                app:tl_indicator_color="@color/color_FFD800"
+
+                app:tl_indicator_corner_radius="2dp"
+                app:tl_indicator_height="3dp"
+                app:tl_indicator_width="14dp"
+                app:tl_tab_padding="15dp"
+                app:tl_textSelectColor="@color/color_333333"
+                app:tl_textUnselectColor="@color/color_999999"
+                app:tl_textsize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/categoryLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/more_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="13dp"
+                android:background="@color/transparent"
+                android:src="@drawable/icon_circle_category_down" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!--搜索-->
+
+    <include
+        android:id="@+id/searchLayout"
+        layout="@layout/common_search_layout_bgwhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
