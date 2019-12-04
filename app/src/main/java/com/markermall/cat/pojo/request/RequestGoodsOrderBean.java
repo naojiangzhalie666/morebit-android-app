@@ -4,7 +4,7 @@ public class RequestGoodsOrderBean extends RequestBaseBean {
 
     private int orderStatus;
     private int page;
-    private int type;//订单类型：1：淘宝，2：京东，3：苏宁，
+    private int type;//订单类型：1：淘宝，2：京东，3：苏宁，4: 优选
 
     public int getOrderStatus() {
         return orderStatus;

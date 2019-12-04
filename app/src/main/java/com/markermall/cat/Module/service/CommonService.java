@@ -247,7 +247,6 @@ public interface CommonService {
     public Observable<BaseResponse<List<FloorInfo>>> getFloor();
 
 
-
     /**
      * 分类信息(一级分类)/2.超级分类信息(三级分类)
      *
@@ -257,7 +256,7 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/goods/getGoodsListByCategoryId")
     public Observable<BaseResponse<List<ShopGoodInfo>>> getGoodsListByCategoryId(
-            @Body  RequestGoodsListByIdBean requestBean);
+            @Body RequestGoodsListByIdBean requestBean);
 //            @Field("type") int type,
 //            @Field("categoryId") String categoryId,
 //            @Field("keyword") String keyword,
@@ -267,6 +266,7 @@ public interface CommonService {
 
     /**
      * 0:限时抢购时间,1:淘抢购时间
+     *
      * @return
      */
     @POST("/api/system/getRushHour")
@@ -281,7 +281,7 @@ public interface CommonService {
      */
     @POST("/api/goods/list")
     public Observable<BaseResponse<List<ShopGoodInfo>>> findTypeByGoodList(
-            @Body  RequestByGoodList requestBean);
+            @Body RequestByGoodList requestBean);
 
 
     /**
@@ -305,9 +305,9 @@ public interface CommonService {
             @Body RequestSearchBean requestBody);
 
 
-
     /**
      * 我的团队A级别/我的团队B级别/我的团队C级别
+     *
      * @return
      */
 //    @FormUrlEncoded
@@ -483,6 +483,7 @@ public interface CommonService {
 //            @Field("type") String type,
 //            @Field("os") int os,
 //            @Field("sign") String sign);
+
     /**
      * 反馈标题
      *
@@ -552,7 +553,6 @@ public interface CommonService {
 //            @Field("sign") String sign);
 
 
-
     /**
      * 注册后设置密码
      *
@@ -607,7 +607,7 @@ public interface CommonService {
             @Body RequestWeixiLoginBean requestBean
 //            @Field("oauthWx") String oauthWx,
 //            @Field("sign") String sign
-            );
+    );
 
     /**
      * 超级分类
@@ -643,6 +643,7 @@ public interface CommonService {
 //            @Field("type") int type,
 //            @Field("page") int page
     );
+
     /**
      * 获取个人素材
      *
@@ -787,7 +788,6 @@ public interface CommonService {
     );
 
 
-
     /**
      * 绑定微信
      *
@@ -836,7 +836,6 @@ public interface CommonService {
     Observable<BaseResponse<GrayUpgradeInfo>> getGrayAppVersion(
             @Body RequestOsBean os
     );
-
 
 
     /**
@@ -1118,7 +1117,6 @@ public interface CommonService {
     );
 
 
-
     /**
      * 三级分类
      *
@@ -1162,6 +1160,7 @@ public interface CommonService {
             //            @Field("shopId") String shopId
             @Body RequestShopId requestShopId
     );
+
     /**
      * 超值大牌活动商品列表
      *
@@ -1173,7 +1172,7 @@ public interface CommonService {
     );
 
     /**
-     *第三方活动-预告单
+     * 第三方活动-预告单
      *
      * @return
      */
@@ -1181,8 +1180,9 @@ public interface CommonService {
     Observable<BaseResponse<List<ShopGoodInfo>>> getHandanku(
             @Body RequestByGoodList requestShopId
     );
+
     /**
-     *第三方活动-预告单
+     * 第三方活动-预告单
      *
      * @return
      */
@@ -1192,7 +1192,7 @@ public interface CommonService {
     );
 
     /**
-     *会场，一元购，五折，精选爆款
+     * 会场，一元购，五折，精选爆款
      *
      * @return
      */
@@ -1259,7 +1259,8 @@ public interface CommonService {
      * @return
      */
     @POST("/api/user/findWechatInfo")
-    public Observable<BaseResponse<AccountDestroy>> getAccountDestroyHint( );
+    public Observable<BaseResponse<AccountDestroy>> getAccountDestroyHint();
+
     /**
      * 注销用户提示
      *
@@ -1267,7 +1268,7 @@ public interface CommonService {
      * @return
      */
     @POST("/api/user/logout/rtnInfo")
-    public Observable<BaseResponse<HotKeywords>> getRtnInfo( );
+    public Observable<BaseResponse<HotKeywords>> getRtnInfo();
 
     /**
      * 注销用户
@@ -1291,19 +1292,17 @@ public interface CommonService {
     );
 
 
-
-
     /**
+     * 获取商学院学习等级模块
      *
-     *   获取商学院学习等级模块
      * @return
      */
     @POST("/api/system/commercial/module")
     public Observable<BaseResponse<List<StudyRank>>> getStudyRank();
 
     /**
+     * 获取商学院学模块文章列表
      *
-     *   获取商学院学模块文章列表
      * @return
      */
     @POST("/api/system/commercial/getModuleArticleList")
@@ -1311,8 +1310,8 @@ public interface CommonService {
             @Body RequestTwoLevel requestTwoLevel);
 
     /**
+     * 搜索商学院学模块文章列表
      *
-     *   搜索商学院学模块文章列表
      * @return
      */
     @POST("/api/system/commercial/search")
@@ -1320,14 +1319,12 @@ public interface CommonService {
             @Body SearchArticleBody body);
 
     /**
+     * 获取商学院推荐文章列表
      *
-     *   获取商学院推荐文章列表
      * @return
      */
     @POST("/api/system/commercial/recommendList")
     public Observable<BaseResponse<List<Article>>> getRecommendArticleList(@Body RequestListBody body);
-
-
 
 
     /**
@@ -1369,26 +1366,32 @@ public interface CommonService {
     @POST("/api/system/systemNotice")
     public Observable<BaseResponse<List<EarningsMsg>>> getMsg(
 
-             );
+    );
 
 
-    /** * 显示未读数
+    /**
+     * 显示未读数
+     *
      * @param action
      * @return
      */
     @POST("/api/system/countNoticeByReadStatus")
     public Observable<BaseResponse<UserscoreBean>> getNoreadCount(
     );
+
     /**
      * 标记已读
-     *@param
-     *@param
+     *
+     * @param
+     * @param
      */
     @POST("/api/system/updateBatchNoticeStatus")
     public Observable<BaseResponse<String>> setReadNotice(
             @Body RequestBaseTypeBean bean
     );
+
     /**
+     *
      */
     @POST("/api/system/updateNoticeStatus")
     public Observable<BaseResponse<String>> updateNoticeStatus(
@@ -1404,6 +1407,7 @@ public interface CommonService {
 
     /**
      * app闪屏页点击统计
+     *
      * @param acition
      * @return
      */
@@ -1411,14 +1415,17 @@ public interface CommonService {
     public Observable<BaseResponse> statisticsStartAdOnclick(@Body RequestSplashStatistics requestSplashStatistics);
 
     /**
-     *  vip个人中心
+     * vip个人中心
+     *
      * @param requestBean
      * @return
      */
     @POST("/api/user/userApplyToUpgrade/list")
     public Observable<BaseResponse<VipUseInfoBean>> getVipUserInfo();
+
     /**
-     *  vip个人中心
+     * vip个人中心
+     *
      * @return
      */
     @POST("/api/user/userApplyToUpgrade/up")
@@ -1426,67 +1433,77 @@ public interface CommonService {
 
     /**
      * 用户升级说明
+     *
      * @return
      */
     @POST("/api/user/UpgradeInstructions")
     public Observable<BaseResponse<String>> upgradeInstructions(
-                                        @Body RequestGradeUrlBean bean );
+            @Body RequestGradeUrlBean bean);
+
     /**
      * 用户升级说明(2019-03-18) 弹框
+     *
      * @return
      */
     @POST("/api/system/getMakeMoneyPlanPopup")
     public Observable<BaseResponse<UpgradeInstructions>> upgradeInstructions2(
-                                        @Body RequestGradeBean bean);
+            @Body RequestGradeBean bean);
 
     /**
      * 获取后台appkey
+     *
      * @return
      */
     @POST("/api/user/getAllianceAppKey")
     public Observable<BaseResponse<String>> getAllianceAppKey(
-            @Body RequestBaseBean bean );
-
+            @Body RequestBaseBean bean);
 
 
     /**
      * 传code给后台
+     *
      * @return
      */
     @POST("/api/user/bandingAliRelation")
     public Observable<BaseResponse<BandingAliRelationBean>> senALiCode(
-            @Body RequestALiCodeBean bean );
+            @Body RequestALiCodeBean bean);
 
     /**
      * 上传错误日志
+     *
      * @return
      */
     @POST("/api/user/getErroLogInfo")
     public Observable<BaseResponse<String>> sendMyServerLog(
-            @Body RequestPutErrorBean bean );
+            @Body RequestPutErrorBean bean);
+
     /**
      * 获取活动生成链接
+     *
      * @return
      */
     @POST("/api/marketing/official/getGenerateActivityLink")
     public Observable<BaseResponse<TmallActivityBean>> getGenerateActivityLink(
-            @Body RequestTmallActivityLinkBean bean );
+            @Body RequestTmallActivityLinkBean bean);
+
     /**
      * 查找佣金
+     *
      * @return
      */
     @POST("/api/marketing/official/getItemDetails")
     public Observable<BaseResponse<ShopGoodInfo>> getItemByItemSourceId(
-            @Body ByItemSourceIdBean bean );
+            @Body ByItemSourceIdBean bean);
 
     /**
      * 开/关 粉丝推送
+     *
      * @return
      */
 //    @POST("/api/manage/push/generalPush/fansJpush")
     @POST("/api/user/labelAffiliation/pushMessage/edit")
     Observable<BaseResponse<String>> editJpush(
-            @Body RequestPushBean bean );
+            @Body RequestPushBean bean);
 
 //    /**
 //     * 开/关 收益推送
@@ -1498,6 +1515,7 @@ public interface CommonService {
 
     /**
      * 获取推送消息开关
+     *
      * @return
      */
 //    @POST("/api/manage/businessConfig/laserPushSetting/phonePushSystem")
@@ -1506,6 +1524,7 @@ public interface CommonService {
 
     /**
      * vip页面, 三条课程
+     *
      * @return
      */
     @POST("/api/system/commercial/myCurriculum")
@@ -1513,15 +1532,15 @@ public interface CommonService {
 
     /**
      * vip页面,浏览视频
+     *
      * @return
      */
     @POST("/api/system/commercial/updateVideoClicks")
     Observable<BaseResponse<String>> mp4Browse(
-            @Body RequestVideoId bean            );
+            @Body RequestVideoId bean);
 
 
     /**
-     *
      * 获取二级分类下的文章视频列表
      *
      * @return
@@ -1540,10 +1559,12 @@ public interface CommonService {
 
     @POST("/api/user/checkWithdrawTime")
     public Observable<BaseResponse<String>> checkWithdrawTime();
+
     Observable<BaseResponse<List<Article>>> getCollegeListData();
+
     /**
-     *
      * 获取系统提示消息
+     *
      * @return
      */
     @POST("/api/system/getMainPageNotice")
@@ -1556,6 +1577,7 @@ public interface CommonService {
      */
     @POST("/api/system/commercial/more")
     Observable<BaseResponse<List<RequestModelIdData>>> getNewCollegeListData();
+
     /**
      * 获取新手教程模块下面的所有二级分类
      *
@@ -1565,9 +1587,9 @@ public interface CommonService {
     Observable<BaseResponse<List<ImageInfo>>> getSysNotification();
 
 
-
     /**
      * 搜索统计
+     *
      * @return
      */
     @POST("/api/system/searchStatistics")
@@ -1575,6 +1597,7 @@ public interface CommonService {
 
     /**
      * 首页马克猫热门搜索统计
+     *
      * @return
      */
     @POST("/api/system/clickStatistics")
@@ -1592,6 +1615,7 @@ public interface CommonService {
 
     /**
      * 查询粉丝信息
+     *
      * @return
      */
 //    @FormUrlEncoded
@@ -1601,6 +1625,7 @@ public interface CommonService {
 
     /**
      * 搜索团队粉丝
+     *
      * @return
      */
 //    @FormUrlEncoded
@@ -1609,7 +1634,8 @@ public interface CommonService {
             @Body RequestFansInfoBean requestBody);
 
     /**
-     *联系客服地址
+     * 联系客服地址
+     *
      * @return
      */
 //    @FormUrlEncoded
@@ -1617,7 +1643,7 @@ public interface CommonService {
     public Observable<BaseResponse<String>> getCustomService();
 
     /**
-     *用户反馈回复消息
+     * 用户反馈回复消息
      *
      * @return
      */
@@ -1631,8 +1657,8 @@ public interface CommonService {
     );
 
     /**
+     * 获取发布管理列表数据
      *
-     *   获取发布管理列表数据
      * @return
      */
     @POST("/api/system/sharerange/getReleaseManage")
@@ -1641,45 +1667,48 @@ public interface CommonService {
 
 
     /**
+     * 蜜粉圈商品专题列表接口
      *
-     *   蜜粉圈商品专题列表接口
      * @return
      */
     @POST("/api/system/sharerange/getShareRangCategory")
     public Observable<BaseResponse<List<CategoryListDtos>>> getShareRangCategory(@Body RequestReleaseCategory body);
 
     /**
+     * 蜜粉圈商品专题提交审核接口
      *
-     *   蜜粉圈商品专题提交审核接口
      * @return
      */
     @POST("/api/system/sharerange/save/user/application")
-    public Observable<BaseResponse<String>> submitReleaseGoods( @Body RequestReleaseGoods releaseGoods);
+    public Observable<BaseResponse<String>> submitReleaseGoods(@Body RequestReleaseGoods releaseGoods);
 
     /**
+     * 获取商品发布管理列表
      *
-     *   获取商品发布管理列表
      * @return
      */
     @POST("/api/system/commercial/recommendList")
     public Observable<BaseResponse<List<Article>>> getRecommendMoreList(@Body RequestListBody body);
+
     /**
+     * 发布的商品删除
      *
-     *   发布的商品删除
      * @return
      */
     @POST("/api/system/sharerange/del/release")
     public Observable<BaseResponse<String>> getReleaseGoodsDelete(@Body RequestReleaseGoodsDelete body);
+
     /**
+     * 检查商品是否有权限发布
      *
-     *   检查商品是否有权限发布
      * @return
      */
     @POST("/api/system/sharerange/getReleaseAddPermissions")
     public Observable<BaseResponse<ReleaseGoodsPermission>> checkPermission(@Body RequestReleaseGoods body);
+
     /**
+     * 检查商品是否有权限发布
      *
-     *   检查商品是否有权限发布
      * @return
      */
     @POST("/api/goods/tlj/sendUrl")
@@ -1689,7 +1718,6 @@ public interface CommonService {
 
     @POST("/api/system/graphicInfo/sorting/linkList")
     Observable<BaseResponse<List<String>>> getTaobaoLink();
-
 
 
     /**
@@ -1714,6 +1742,7 @@ public interface CommonService {
     Observable<BaseResponse<List<ShopGoodInfo>>> getRecommendItemsById(
             @Body RequestGoodsLike body
     );
+
     /**
      * 爆款排行_类目
      */
@@ -1749,6 +1778,7 @@ public interface CommonService {
     @POST("/api/goods/getNewRecommend")
     public Observable<BaseResponse<NewRecommendBean>> getNewRecommend(
             @Body RequestRecommendBean requestBean);
+
     /**
      * 查询页面底部通知
      *
@@ -1756,6 +1786,7 @@ public interface CommonService {
      */
     @POST("/api/system/listBottomNotification")
     public Observable<BaseResponse<List<ImageInfo>>> getListBottomNotification();
+
     /**
      * 商学院文字走马灯
      *
@@ -1766,6 +1797,7 @@ public interface CommonService {
 
     /**
      * 商学院反馈意见
+     *
      * @param picture 反馈图片地址(多张图片请使用，隔开)
      * @param message 反馈文本
      * @return
@@ -1776,8 +1808,8 @@ public interface CommonService {
             @Body RequestCircleFeedBackBean requestBean);
 
     /**
+     * 获取商学院预览功能
      *
-     *   获取商学院预览功能
      * @return
      */
     @POST("/api/system/commercial/preview")
@@ -1816,11 +1848,13 @@ public interface CommonService {
      */
     @POST("/api/goods/getItemDetailPictureCode")
     Observable<BaseResponse<List<String>>> getItemDetailPictureCode(@Body RequestBody route);
+
     /**
      * 解析商品详情图片
      */
     @POST("/api/goods/parse/mtopjsonp")
     Observable<BaseResponse<List<String>>> getMtopjsonp(@Body RequestMtopJsonpBean body);
+
     /**
      * 收益说明
      */
@@ -1829,24 +1863,20 @@ public interface CommonService {
 
 
     /**
-     *
-     *
      * @return
      */
     @POST("/api/user/getUpgradeCarousel")
     public Observable<BaseResponse<List<UpgradeCarousel>>> getUpgradeCarousel();
 
     /**
-     *
-     *
      * @return
      */
     @POST("/api/user/getIsUpgrade")
     public Observable<BaseResponse<UpgradeCarousel>> getIsUpgrade();
 
     /**
+     * 获取商学院首页
      *
-     *   获取商学院首页
      * @return
      */
     @POST("/api/system/commercial/getPageAggregationList")
@@ -1871,7 +1901,7 @@ public interface CommonService {
      */
 //    @FormUrlEncoded
     @POST("/api/system/commercial/forChange")
-    public Observable<BaseResponse<List<Article>>> forChange( @Body RequestArticleBean requestBean);
+    public Observable<BaseResponse<List<Article>>> forChange(@Body RequestArticleBean requestBean);
 
     /**
      * 商学院意见返回信息
@@ -1881,6 +1911,7 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/system/commercial/getUserFeedback")
     public Observable<BaseResponse<UserFeedback>> getUserFeedback(@Body RequestReplyBean bean);
+
     /**
      * 商学院首页马克猫资讯点击上报
      *
@@ -1888,7 +1919,8 @@ public interface CommonService {
      */
 //    @FormUrlEncoded
     @POST("/api/system/commercial/updateThemeClicks")
-    public Observable<BaseResponse<String>> updateThemeClicks( @Body RequestVideoId bean );
+    public Observable<BaseResponse<String>> updateThemeClicks(@Body RequestVideoId bean);
+
     /**
      * 商学院热门关键字
      *
@@ -1951,7 +1983,7 @@ public interface CommonService {
      * @return
      */
     @POST("/api/user/untied/wechat")
-    public Observable<BaseResponse<String>> untiedWechat( );
+    public Observable<BaseResponse<String>> untiedWechat();
 
 
     /**
@@ -1985,6 +2017,7 @@ public interface CommonService {
 
     /**
      * 我的粉丝动态排行
+     *
      * @return
      */
 //    @FormUrlEncoded

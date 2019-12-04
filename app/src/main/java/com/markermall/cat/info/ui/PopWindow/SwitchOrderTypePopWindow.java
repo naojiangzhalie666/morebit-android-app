@@ -25,8 +25,8 @@ import java.util.ArrayList;
 
 
 /**
- * @author YangBoTian
- * @date 2019/8/30
+ * @author liuhaiping
+ * @date 2019/12/01
  * @des
  */
 
@@ -77,7 +77,9 @@ public class SwitchOrderTypePopWindow extends PopupWindow {
     ArrayList<TextView> arrayList = new ArrayList<>();
 
     private void initView() {
-        String[] titles = new String[]{mContext.getString(R.string.order_team_tb), mContext.getString(R.string.order_team_sl), mContext.getString(R.string.order_team_other)};
+        //modify by lhp
+//        String[] titles = new String[]{mContext.getString(R.string.order_team_tb), mContext.getString(R.string.order_team_sl), mContext.getString(R.string.order_team_other)};
+        String[] titles = new String[]{mContext.getString(R.string.order_team_tb), mContext.getString(R.string.order_team_yx)};
         for (int i = 0; i < titles.length; i++) {
             String title = titles[i];
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mTextHeight);

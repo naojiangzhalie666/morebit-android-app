@@ -264,7 +264,7 @@
     <string name="order_team_tb">淘宝订单</string>
     <string name="order_team_sl">苏宁订单</string>
     <string name="order_team_other">其他订单</string>
-
+    <string name="order_team_yx">优选订单</string>
 
     <string-array name="order_type">
         <item>全部</item>

@@ -7,7 +7,7 @@ public class C {
 
     // api
 //    public static final String BASE_YUMIN = "https://api.gzmiyuan.com";
-    public static final String BASE_YUMIN = "http://app-api.hzcat.com";
+    public static final String BASE_YUMIN = "http://api.markermall.com";
     // pp
 //    public static final String BASE_YUMIN = "http://pp.gzmiyuan.com";
 
@@ -523,8 +523,9 @@ public class C {
 
     public static class OrderType{
         public static final int TAOBAO = 0;
-        public static final int SUNING = 3;
-        public static final int OTHER = 1;
+//        public static final int SUNING = 3;
+//        public static final int OTHER = 1;
+        public static final int YUXUAN = 5;
     }
 }
 

@@ -65,7 +65,8 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     private CategoryAdapter mAdapter;
     private ConsCommissionRuleDialog consCommissionRuleDialog;
     private String mTotalMoney = "";
-    String[] tagTitle = new String[]{"淘宝","苏宁","其他"};
+//    String[] tagTitle = new String[]{"淘宝","苏宁","其他"};
+    String[] tagTitle = new String[]{"淘宝","优选"};
     private List<EarningDetailFragment> fragments = null;
     private int currentTab = 0;
 
@@ -88,14 +89,14 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         initBundle();
         EarningDetailFragment taobaoFragment = EarningDetailFragment.newInstance(C.OrderType.TAOBAO);
         taobaoFragment.setEarningBalanceCallback(callback);
-        EarningDetailFragment suningFragment = EarningDetailFragment.newInstance(C.OrderType.SUNING);
-        suningFragment.setEarningBalanceCallback(callback);
-        EarningDetailFragment otherFragment = EarningDetailFragment.newInstance(C.OrderType.OTHER);
-        otherFragment.setEarningBalanceCallback(callback);
+        EarningDetailFragment yuxuanFragment = EarningDetailFragment.newInstance(C.OrderType.YUXUAN);
+        yuxuanFragment.setEarningBalanceCallback(callback);
+//        EarningDetailFragment otherFragment = EarningDetailFragment.newInstance(C.OrderType.OTHER);
+//        otherFragment.setEarningBalanceCallback(callback);
         fragments = new ArrayList<>();
         fragments.add(taobaoFragment);
-        fragments.add(suningFragment);
-        fragments.add(otherFragment);
+        fragments.add(yuxuanFragment);
+//        fragments.add(otherFragment);
         swipeList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -253,7 +254,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     private void setupViewPager(String[] tagTitle) {
 
         mAdapter = new CategoryAdapter(getChildFragmentManager(), tagTitle);
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mAdapter);
         mTablayout.setViewPager(mViewPager);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
