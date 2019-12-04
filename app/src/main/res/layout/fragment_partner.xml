@@ -265,7 +265,7 @@
 
 
                     </LinearLayout>
-                    <com.markermall.cat.view.AspectRatioView
+                    <com.zjzy.morebit.view.AspectRatioView
                         android:id="@+id/ar_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -280,7 +280,7 @@
                             android:id="@+id/roll_view_pager"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
-                    </com.markermall.cat.view.AspectRatioView>
+                    </com.zjzy.morebit.view.AspectRatioView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

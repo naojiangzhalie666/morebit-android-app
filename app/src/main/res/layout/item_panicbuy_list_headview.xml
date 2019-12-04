@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.markermall.cat.view.AspectRatioView
+    <com.zjzy.morebit.view.AspectRatioView
         android:id="@+id/as_iv_banner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"/>
-    </com.markermall.cat.view.AspectRatioView>
+    </com.zjzy.morebit.view.AspectRatioView>
 
 
     <LinearLayout

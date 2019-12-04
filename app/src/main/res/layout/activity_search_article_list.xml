@@ -6,11 +6,11 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.markermall.cat.view.SearchViewLayout
+    <com.zjzy.morebit.view.SearchViewLayout
         android:id="@+id/searchViewLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:s_search_hint_text="我想学什么？">
-    </com.markermall.cat.view.SearchViewLayout>
+    </com.zjzy.morebit.view.SearchViewLayout>
 
 </LinearLayout>

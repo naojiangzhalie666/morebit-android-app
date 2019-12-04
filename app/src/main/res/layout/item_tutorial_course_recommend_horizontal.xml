@@ -7,7 +7,7 @@
     android:paddingRight="6dp"
     android:paddingLeft="12dp"
     android:orientation="vertical">
-    <com.markermall.cat.view.AspectRatioView
+    <com.zjzy.morebit.view.AspectRatioView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:aspectRatio="1.33">
@@ -48,7 +48,7 @@
                 />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-    </com.markermall.cat.view.AspectRatioView>
+    </com.zjzy.morebit.view.AspectRatioView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="35dp"

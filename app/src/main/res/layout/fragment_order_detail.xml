@@ -70,7 +70,7 @@
             />
     </LinearLayout>
 
-    <com.markermall.cat.view.NoScrollViewPager
+    <com.zjzy.morebit.view.NoScrollViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

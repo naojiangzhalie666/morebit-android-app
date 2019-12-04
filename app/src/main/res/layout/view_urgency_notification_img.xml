@@ -4,7 +4,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-    <com.markermall.cat.view.AspectRatioView
+    <com.zjzy.morebit.view.AspectRatioView
         android:id="@+id/as_banner_make_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:scaleType="fitXY"
         android:id="@+id/iv_icon"
         />
-    </com.markermall.cat.view.AspectRatioView>
+    </com.zjzy.morebit.view.AspectRatioView>
 
 
     <ImageView

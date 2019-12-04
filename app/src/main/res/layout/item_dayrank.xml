@@ -19,7 +19,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <com.markermall.cat.view.AspectRatioView
+        <com.zjzy.morebit.view.AspectRatioView
             android:id="@+id/as_banner_make_money"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon_default"/>
-        </com.markermall.cat.view.AspectRatioView>
+        </com.zjzy.morebit.view.AspectRatioView>
 
         <TextView
             android:id="@+id/title"

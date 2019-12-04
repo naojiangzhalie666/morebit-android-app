@@ -39,7 +39,7 @@
                     app:stl_underlineThickness="0dp" />
             </RelativeLayout>
 
-            <com.markermall.cat.view.NoScrollViewPager
+            <com.zjzy.morebit.view.NoScrollViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

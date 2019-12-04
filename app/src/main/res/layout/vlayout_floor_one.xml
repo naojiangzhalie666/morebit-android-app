@@ -55,13 +55,13 @@
                     android:ellipsize="end"/>
             </LinearLayout>
 
-             <com.markermall.cat.view.CustomRecyclerView
+             <com.zjzy.morebit.view.CustomRecyclerView
                  android:id="@+id/bannerRv"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:overScrollMode="never">
 
-             </com.markermall.cat.view.CustomRecyclerView>
+             </com.zjzy.morebit.view.CustomRecyclerView>
 
         </LinearLayout>
             <!--为你推荐-->

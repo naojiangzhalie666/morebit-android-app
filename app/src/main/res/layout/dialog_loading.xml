@@ -5,7 +5,7 @@
     android:background="@drawable/bg_editoneline_dialog_whilebg_15dp"
     android:orientation="vertical" >
 
-    <com.markermall.cat.Module.common.View.LoadingView
+    <com.zjzy.morebit.Module.common.View.LoadingView
         android:id="@+id/loadView"
         android:layout_centerInParent="true"
         android:layout_width="140dp"

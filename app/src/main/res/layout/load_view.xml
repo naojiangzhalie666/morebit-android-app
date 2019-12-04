@@ -11,7 +11,7 @@
         android:gravity="center">
 
 
-        <com.markermall.cat.Module.common.View.ShapeLoadingView
+        <com.zjzy.morebit.Module.common.View.ShapeLoadingView
             android:id="@+id/shapeLoadingView"
             android:layout_width="35dp"
             android:layout_height="35dp"

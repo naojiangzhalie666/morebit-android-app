@@ -28,13 +28,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.markermall.cat.view.AspectRatioView
+                    <com.zjzy.morebit.view.AspectRatioView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:aspectRatio="1">
 
                         <include layout="@layout/item_goods_top" />
-                    </com.markermall.cat.view.AspectRatioView>
+                    </com.zjzy.morebit.view.AspectRatioView>
 
                     <include layout="@layout/item_goods_bottom" />
 

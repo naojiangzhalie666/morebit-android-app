@@ -57,7 +57,7 @@
             android:textSize="@dimen/sp_14" />
 
 
-        <com.markermall.cat.view.ClearEditText
+        <com.zjzy.morebit.view.ClearEditText
             android:id="@+id/edt_weichat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

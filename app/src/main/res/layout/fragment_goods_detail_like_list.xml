@@ -33,7 +33,7 @@
             />
     </RelativeLayout>
 
-    <com.markermall.cat.view.FixRecyclerView
+    <com.zjzy.morebit.view.FixRecyclerView
         android:id="@+id/rl_list"
         android:layout_below="@+id/rl_title"
         android:nestedScrollingEnabled="false"

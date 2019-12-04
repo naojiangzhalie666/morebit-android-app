@@ -11,7 +11,7 @@
     android:paddingBottom="24dp"
     android:paddingTop="20dp">
 
-    <com.markermall.cat.view.AspectRatioView
+    <com.zjzy.morebit.view.AspectRatioView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:aspectRatio="1.77">
@@ -84,7 +84,7 @@
 
             </LinearLayout>
         </RelativeLayout>
-    </com.markermall.cat.view.AspectRatioView>
+    </com.zjzy.morebit.view.AspectRatioView>
 
     <TextView
         android:id="@+id/title"

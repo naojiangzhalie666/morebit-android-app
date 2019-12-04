@@ -16,7 +16,7 @@
 
          <View   android:id="@+id/officalFrameLayout" android:layout_width="match_parent" android:layout_height="25dp"  android:background="@drawable/bg_second_round" android:layout_gravity="bottom"/>
 
-        <com.markermall.cat.view.AspectRatioView
+        <com.zjzy.morebit.view.AspectRatioView
             android:id="@+id/as_banner_offical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                 android:id="@+id/banner_offical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </com.markermall.cat.view.AspectRatioView>
+        </com.zjzy.morebit.view.AspectRatioView>
     </FrameLayout>
 
 

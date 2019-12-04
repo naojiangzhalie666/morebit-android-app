@@ -26,7 +26,7 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingBottom="15dp">
-            <com.markermall.cat.view.AspectRatioView
+            <com.zjzy.morebit.view.AspectRatioView
                 android:id="@+id/as_banner_make_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                     android:src="@drawable/icon_default_750"
                     android:scaleType="fitXY" />
             </android.support.v7.widget.CardView>
-            </com.markermall.cat.view.AspectRatioView>
+            </com.zjzy.morebit.view.AspectRatioView>
 
             <TextView
                 android:id="@+id/title"

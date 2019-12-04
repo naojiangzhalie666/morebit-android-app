@@ -28,7 +28,7 @@
             app:cardElevation="2dp">
 
 
-            <com.markermall.cat.view.FixWidthRoundedImageView
+            <com.zjzy.morebit.view.FixWidthRoundedImageView
                 android:id="@+id/iv_poter_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -4,7 +4,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-    <com.markermall.cat.view.AspectRatioView
+    <com.zjzy.morebit.view.AspectRatioView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:aspectRatio="6">
@@ -58,6 +58,6 @@
                 android:layout_weight="0.064"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-    </com.markermall.cat.view.AspectRatioView>
+    </com.zjzy.morebit.view.AspectRatioView>
 
 </RelativeLayout>

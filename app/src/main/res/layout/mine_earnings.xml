@@ -174,7 +174,7 @@
                 android:visibility="gone"
                 android:padding="4dp">
 
-                <com.markermall.cat.view.UPMarqueeView
+                <com.zjzy.morebit.view.UPMarqueeView
                     android:id="@+id/upview"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

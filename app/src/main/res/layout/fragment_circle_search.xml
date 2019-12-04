@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".fragment.CircleSearchFragment">
 
-     <com.markermall.cat.view.SearchViewLayout
+     <com.zjzy.morebit.view.SearchViewLayout
          android:id="@+id/searchViewLayout"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          app:s_search_hint_text="@string/circle_search_hint">
-     </com.markermall.cat.view.SearchViewLayout>
+     </com.zjzy.morebit.view.SearchViewLayout>
 
 </FrameLayout>

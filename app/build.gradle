@@ -97,7 +97,7 @@ android {
         //多渠道包的输出目录，默认为new File(project.buildDir,"channel")
         baseOutputDir = new File(project.buildDir, "apk")
         //多渠道包的命名规则，默认为：${appName}-${versionName}-${versionCode}-${flavorName}-${buildType}
-        apkNameFormat = "markermall1.0" + '-${versionName}-${versionCode}-${flavorName}-${buildType}'
+        apkNameFormat = "morebit1.0" + '-${versionName}-${versionCode}-${flavorName}-${buildType}'
     }
     flavorDimensions "cooperator"
     productFlavors {

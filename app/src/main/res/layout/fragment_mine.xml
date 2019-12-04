@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.markermall.cat.Module.common.widget.SwipeRefreshLayout
+    <com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout
         android:id="@+id/swipeList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -159,7 +159,7 @@
                     android:scrollbars="none"
                     app:layoutManager="android.support.v7.widget.GridLayoutManager"
                     app:spanCount="2"/>
-                <com.markermall.cat.view.AspectRatioView
+                <com.zjzy.morebit.view.AspectRatioView
                     android:id="@+id/as_banner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
                     </android.support.v7.widget.CardView>
-                </com.markermall.cat.view.AspectRatioView>
+                </com.zjzy.morebit.view.AspectRatioView>
                 <!-- 其他服务-->
                 <include layout="@layout/view_layout_my_tools" />
 
@@ -191,5 +191,5 @@
                 <include layout="@layout/item_gridview_category" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
-    </com.markermall.cat.Module.common.widget.SwipeRefreshLayout>
+    </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
 </RelativeLayout>

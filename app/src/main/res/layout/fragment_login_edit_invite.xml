@@ -9,7 +9,7 @@
     android:paddingRight="15dp"
                 android:orientation="vertical">
 
-    <com.markermall.cat.login.ui.LoginHeadView
+    <com.zjzy.morebit.login.ui.LoginHeadView
         android:id="@+id/lh_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_marginTop="40dp"
             >
 
-            <com.markermall.cat.view.ClearEditText
+            <com.zjzy.morebit.view.ClearEditText
                 android:id="@+id/edtInvite"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

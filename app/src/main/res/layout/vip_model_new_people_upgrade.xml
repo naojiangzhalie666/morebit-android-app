@@ -126,7 +126,7 @@
             android:paddingRight="5dp"
             android:paddingBottom="12dp">
 
-            <com.markermall.cat.view.AspectRatioView
+            <com.zjzy.morebit.view.AspectRatioView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -153,9 +153,9 @@
                         android:layout_centerInParent="true"
                         android:visibility="gone"/>
                 </RelativeLayout>
-            </com.markermall.cat.view.AspectRatioView>
+            </com.zjzy.morebit.view.AspectRatioView>
 
-            <com.markermall.cat.view.AspectRatioView
+            <com.zjzy.morebit.view.AspectRatioView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -179,9 +179,9 @@
                         android:layout_centerInParent="true"
                         android:visibility="gone"/>
                 </RelativeLayout>
-            </com.markermall.cat.view.AspectRatioView>
+            </com.zjzy.morebit.view.AspectRatioView>
 
-            <com.markermall.cat.view.AspectRatioView
+            <com.zjzy.morebit.view.AspectRatioView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -206,7 +206,7 @@
                         android:layout_centerInParent="true"
                         android:visibility="gone"/>
                 </RelativeLayout>
-            </com.markermall.cat.view.AspectRatioView>
+            </com.zjzy.morebit.view.AspectRatioView>
         </LinearLayout>
         <!--<ImageView-->
             <!--android:id="@+id/btn_customer_service"-->

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.markermall.cat.Module.common.widget.SwipeRefreshLayout
+    <com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never" />
-    </com.markermall.cat.Module.common.widget.SwipeRefreshLayout>
+    </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
 
     <include layout="@layout/item_stick" />
 </RelativeLayout>

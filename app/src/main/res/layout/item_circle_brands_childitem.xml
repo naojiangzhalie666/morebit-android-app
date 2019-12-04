@@ -66,12 +66,12 @@
            android:layout_marginLeft="9dp"
            android:layout_marginRight="9dp"
            />
-        <com.markermall.cat.view.CollectBtn
+        <com.zjzy.morebit.view.CollectBtn
             android:id="@+id/collectBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp">
-        </com.markermall.cat.view.CollectBtn>
+        </com.zjzy.morebit.view.CollectBtn>
    </LinearLayout>
 
 </RelativeLayout>

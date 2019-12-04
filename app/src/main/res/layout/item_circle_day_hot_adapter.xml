@@ -67,7 +67,7 @@
                     android:layout_toLeftOf="@+id/tv_shart"
                     android:layout_toRightOf="@+id/userIcon"
                     android:orientation="horizontal">
-                    <com.markermall.cat.view.CopyTextView
+                    <com.zjzy.morebit.view.CopyTextView
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                         android:textSize="14sp"
                         android:text="马克猫分享用户"/>
 
-                    <com.markermall.cat.view.CollectBtn
+                    <com.zjzy.morebit.view.CollectBtn
                         android:id="@+id/collectBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <com.markermall.cat.view.CopyTextView
+                    <com.zjzy.morebit.view.CopyTextView
                         android:id="@+id/tv_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                 </LinearLayout>
 
 
-                <com.markermall.cat.view.FixRecyclerView
+                <com.zjzy.morebit.view.FixRecyclerView
                     android:id="@+id/mListView11"
                     android:layout_below="@+id/contentLayout"
                     android:layout_width="match_parent"
@@ -198,7 +198,7 @@
 
                     />
 
-                <com.markermall.cat.view.FixRecyclerView
+                <com.zjzy.morebit.view.FixRecyclerView
                     android:id="@+id/mListViewGoods"
                     android:layout_below="@+id/mListView11"
                     android:layout_width="match_parent"

@@ -380,7 +380,7 @@
                 android:background="@color/color_EDEDED"/>
 
 
-            <com.markermall.cat.view.FixRecyclerView
+            <com.zjzy.morebit.view.FixRecyclerView
                 android:id="@+id/imgList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

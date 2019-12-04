@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:paddingBottom="10dp">
 
-        <com.markermall.cat.view.AspectRatioView
+        <com.zjzy.morebit.view.AspectRatioView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_transparent_round_5dp"
@@ -29,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon_default" />
-        </com.markermall.cat.view.AspectRatioView>
+        </com.zjzy.morebit.view.AspectRatioView>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_activity"

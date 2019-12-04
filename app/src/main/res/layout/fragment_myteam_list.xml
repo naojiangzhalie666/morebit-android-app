@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <com.markermall.cat.Module.common.View.ReUseListView
+            <com.zjzy.morebit.Module.common.View.ReUseListView
                 android:id="@+id/listview_aole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

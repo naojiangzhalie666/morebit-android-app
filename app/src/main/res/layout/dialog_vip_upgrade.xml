@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_editoneline_dialog_whilebg_8dp"
         android:orientation="vertical">
-        <com.markermall.cat.view.AspectRatioView
+        <com.zjzy.morebit.view.AspectRatioView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -25,7 +25,7 @@
                 android:src="@color/color_F1F1F1"
                 android:scaleType="centerCrop"
                 app:riv_corner_radius="8dp"/>
-        </com.markermall.cat.view.AspectRatioView>
+        </com.zjzy.morebit.view.AspectRatioView>
 
         <TextView
             android:id="@+id/tv_title"

@@ -17,7 +17,7 @@
         android:paddingTop="10dp"
         android:src="@drawable/btn_title_return_icon"/>
 
-    <com.markermall.cat.main.ui.myview.xtablayout.XTabLayout
+    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
         android:id="@+id/searchTab"
         android:layout_width="150dp"
         android:layout_height="wrap_content"

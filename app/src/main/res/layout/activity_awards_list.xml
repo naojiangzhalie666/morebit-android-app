@@ -26,7 +26,7 @@
     <!--</RelativeLayout>-->
     <include layout="@layout/top" />
 
-    <com.markermall.cat.Module.common.View.ReUseListView
+    <com.zjzy.morebit.Module.common.View.ReUseListView
         android:id="@+id/recycler_awards_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -47,7 +47,7 @@
                 <!--app:mvTextColor="@color/color_666666"-->
                 <!--app:mvTextSize="@dimen/sp_12"-->
                 <!--app:mvSingleLine="true"/>-->
-            <com.markermall.cat.view.UPMarqueeView
+            <com.zjzy.morebit.view.UPMarqueeView
                 android:id="@+id/upview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

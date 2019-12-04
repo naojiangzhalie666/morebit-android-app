@@ -33,7 +33,7 @@
             <!--android:background="@color/color_E6E6E6" />-->
 
 
-            <com.markermall.cat.view.FixGridView
+            <com.zjzy.morebit.view.FixGridView
                 android:id="@+id/fl_gView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
