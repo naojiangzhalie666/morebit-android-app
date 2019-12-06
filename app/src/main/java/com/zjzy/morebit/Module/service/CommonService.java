@@ -632,7 +632,7 @@ public interface CommonService {
 
 
     /**
-     * 获取蜜粉圈数据
+     * 获取发圈数据
      *
      * @return
      */
@@ -1667,7 +1667,7 @@ public interface CommonService {
 
 
     /**
-     * 蜜粉圈商品专题列表接口
+     * 发圈商品专题列表接口
      *
      * @return
      */
@@ -1675,7 +1675,7 @@ public interface CommonService {
     public Observable<BaseResponse<List<CategoryListDtos>>> getShareRangCategory(@Body RequestReleaseCategory body);
 
     /**
-     * 蜜粉圈商品专题提交审核接口
+     * 发圈商品专题提交审核接口
      *
      * @return
      */
@@ -1932,7 +1932,7 @@ public interface CommonService {
 
 
     /**
-     * 蜜粉圈收藏
+     * 发圈收藏
      *
      * @return
      */
@@ -1942,7 +1942,7 @@ public interface CommonService {
     );
 
     /**
-     * 蜜粉圈取消收藏
+     * 发圈取消收藏
      *
      * @return
      */
@@ -1952,7 +1952,7 @@ public interface CommonService {
     );
 
     /**
-     * 蜜粉圈收藏列表
+     * 发圈收藏列表
      *
      * @return
      */
@@ -1961,7 +1961,7 @@ public interface CommonService {
 
 
     /**
-     * 蜜粉圈搜索
+     * 发圈搜索
      *
      * @return
      */
@@ -1970,7 +1970,7 @@ public interface CommonService {
 
 
     /**
-     * 蜜粉圈猜你喜欢
+     * 发圈猜你喜欢
      *
      * @return
      */

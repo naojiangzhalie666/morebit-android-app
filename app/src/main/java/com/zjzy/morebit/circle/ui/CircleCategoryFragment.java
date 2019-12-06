@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * Created by YangBoTian on 2019/6/11.
- * 蜜粉圈二级分类
+ * 发圈二级分类
  */
 
 public class CircleCategoryFragment extends BaseFragment implements View.OnClickListener {
@@ -58,10 +58,10 @@ public class CircleCategoryFragment extends BaseFragment implements View.OnClick
             mView = inflater.inflate(R.layout.fragment_circle_category, container, false);
             initView();
         }
-        ViewGroup parent = (ViewGroup) mView.getParent();
-        if (parent != null) {
-            parent.removeView(mView);
-        }
+//        ViewGroup parent = (ViewGroup) mView.getParent();
+//        if (parent != null) {
+//            parent.removeView(mView);
+//        }
         return mView;
     }
 

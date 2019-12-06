@@ -20,6 +20,7 @@ import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.CircleCategoryFragment;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
+import com.zjzy.morebit.main.ui.fragment.HomeCollegeFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
@@ -40,7 +41,7 @@ import butterknife.ButterKnife;
 
 
 /**
- * 首页分类-马克猫圈
+ * 首页分类-发圈
  */
 public class CircleFragment extends BaseMainFragmeng {
     @BindView(R.id.tab)
@@ -134,11 +135,18 @@ public class CircleFragment extends BaseMainFragmeng {
         if (mFragments.size() != 0) {
             return;
         }
-        mTitles = new String[data.size()];
-        for (int i = 0; i < data.size(); i++) {
+        Integer size = data.size();
+        mTitles = new String[size];
+
+        for (int i = 0; i < size; i++) {
+            String title = data.get(i).getTitle();
             if (data.get(i).getChild() == null || data.get(i).getChild().size() == 0) {
-                CategoryListDtos categoryDtos = data.get(i);
-                mFragments.add(CircleDayHotFragment.newInstance(categoryDtos,data.get(i).getTitle()));
+                if ("商学院".equals(title)){
+                    mFragments.add(new HomeCollegeFragment());
+                }else{
+                    CategoryListDtos categoryDtos = data.get(i);
+                    mFragments.add(CircleDayHotFragment.newInstance(categoryDtos,data.get(i).getTitle()));
+                }
             } else {
                 mFragments.add(CircleCategoryFragment.newInstance(data.get(i).getChild(), data.get(i).getId(), data.get(i).getTitle()));
             }

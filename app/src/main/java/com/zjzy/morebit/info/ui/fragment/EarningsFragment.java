@@ -26,6 +26,7 @@ import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.payment.PayDemoActivity;
 import com.zjzy.morebit.pojo.DayEarnings;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
@@ -188,7 +189,9 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
                 getActivity().finish();
                 break;
             case R.id.tv_rule:    //规则说明
-                getRule();
+                Intent communityIt11 = new Intent(getActivity(), PayDemoActivity.class);
+                startActivity(communityIt11);
+//                getRule();
                 break;
 
         }

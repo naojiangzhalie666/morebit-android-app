@@ -93,7 +93,7 @@ public class MarkermallCirleItmeAdapter extends RecyclerView.Adapter {
                 holder1.iv_icon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"蜜粉圈",position,circleItemInfo.getItemSourceId(),circleItemInfo.getItemTitle(),"","",circleItemInfo.getPicture(),circleItemInfo.getItemTitle(),"",0,"");
+//                        SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"发圈",position,circleItemInfo.getItemSourceId(),circleItemInfo.getItemTitle(),"","",circleItemInfo.getPicture(),circleItemInfo.getItemTitle(),"",0,"");
                         if (!StringsUtils.isEmpty(circleItemInfo.getItemVideoid())) {  //视频
                             ShortVideoPlayActivity.start((Activity) mContext,1,circleItemInfo.getItemVideoid());
                         } else if (!TextUtils.isEmpty(circleItemInfo.getItemSourceId())) { //商品

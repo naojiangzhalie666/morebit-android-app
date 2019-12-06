@@ -87,7 +87,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rl_college"
+                android:id="@+id/rl_number"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_college"
                     android:layout_centerHorizontal="true"
-                    android:text="商学院"
+                    android:text="会员"
                     android:textColor="@color/tv_index_bottom"
                     android:textSize="10sp"/>
             </RelativeLayout>
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_circle"
                     android:layout_centerHorizontal="true"
-                    android:text="蜜粉圈"
+                    android:text="发圈"
                     android:textColor="@color/tv_index_bottom"
                     android:textSize="10sp"/>
             </RelativeLayout>

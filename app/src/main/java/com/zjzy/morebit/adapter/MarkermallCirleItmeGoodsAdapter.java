@@ -92,7 +92,7 @@ public class MarkermallCirleItmeGoodsAdapter extends BaseMYShareAdapter<Markerma
                     return;
                 }
                 List<ShopGoodInfo> osgData = GoodsUtil.CirleInfoToGoodInfo(mDatas);
-//                SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"蜜粉圈",position,info.getItemSourceId(),info.getItemTitle(),"","",info.getPicture(),info.getItemTitle(),"",2,"");
+//                SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"发圈",position,info.getItemSourceId(),info.getItemTitle(),"","",info.getPicture(),info.getItemTitle(),"",2,"");
                 if (osgData != null) {
                     GoodsDetailActivity.start(mContext, osgData.get(position));
                 }
@@ -101,7 +101,7 @@ public class MarkermallCirleItmeGoodsAdapter extends BaseMYShareAdapter<Markerma
         holder.tv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"蜜粉圈",position,info.getItemSourceId(),info.getItemTitle(),"","",info.getPicture(),info.getItemTitle(),"",2,"");
+//                SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"发圈",position,info.getItemSourceId(),info.getItemTitle(),"","",info.getPicture(),info.getItemTitle(),"",2,"");
                 if (!LoginUtil.checkIsLogin((Activity) mContext)) return;
                 if (TaobaoUtil.isAuth()) {   //淘宝授权
                     TaobaoUtil.getAllianceAppKey((BaseActivity) mContext);

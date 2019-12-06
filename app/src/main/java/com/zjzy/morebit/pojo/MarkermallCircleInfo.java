@@ -26,13 +26,13 @@ public class MarkermallCircleInfo {
      * picture :
      * goods : [{"taobao":2315770603,"title":"AiSleep/睡眠博士慢回弹记忆枕太空颈椎枕头 脖子护颈枕单人枕芯","picture":"https://img.alicdn.com/imgextra/i2/857030436/TB2qWFjtStYBeNjSspaXXaOOFXa_!!857030436.jpg_200x200.jpg","price":"159.90","coupon_url":"173b6964d0974c59979865e2a5de7c06","voucher_price":"129.90","details":null,"commission":22.99,"coupon_price":"30.00"},{"taobao":2776988304,"title":"比度克祛痘产品前五强祛痘膏男女士痘痘去青春痘学生去痘印淡印霜","picture":"http://img.alicdn.com/imgextra/i1/255391319/TB254pMkDTI8KJjSsphXXcFppXa_!!255391319.jpg_200x200.jpg","price":"68.00","coupon_url":"af132f31a25f49c09f7cf8f4870b805b","voucher_price":"28.00","details":null,"commission":7.39,"coupon_price":"40.00"}]
      */
-    /**蜜粉圈id*/
+    /**发圈id*/
     private int id;
     /**数据创建时间*/
     private String createTime="";
     /**分享次数*/
     private int shareCount;
-    /**蜜粉圈内容*/
+    /**发圈内容*/
     private String content="";
     /**标题*/
     private String name="";
@@ -52,7 +52,7 @@ public class MarkermallCircleInfo {
     private List<MarkermallCircleItemInfo> shareRangItems;
     private List<MarkermallCircleInfo> circleBrands;
     private int isCollection;
-    private List<String> pictureList; //蜜粉圈为你推荐
+    private List<String> pictureList; //发圈为你推荐
     private String collectionId;
     private String labelName;
     private String labelPic;

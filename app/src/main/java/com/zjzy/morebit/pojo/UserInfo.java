@@ -45,14 +45,14 @@ public class UserInfo implements Serializable {
     private String userType; // partner  是判断角色字段  0 消费者 1代理商  2运营专员
     private String calculationRate = "";// 是佣金计算比例
     private String gradename = "";// 用户等级名称
-    private  int releasePermission;    //蜜粉圈发布管理权限 0 :否  1:有
+    private  int releasePermission;    //发圈发布管理权限 0 :否  1:有
     private int qr_code_show  ;//  微信二维码显示位置 全部 1，我的团队2，客服3
     private String relationIdName;//渠道id名称
     private String pidName;//pid名称
     private String relationId; // 渠道id
     private String spliceIdsName; //relationId名称和渠道id拼接
-    private String label= ""; //蜜粉圈标签
-    private String labelPicture= ""; //蜜粉圈标签图片
+    private String label= ""; //发圈标签
+    private String labelPicture= ""; //发圈标签图片
     private String id = "";
 
     private String birthDate;// 生日

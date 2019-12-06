@@ -34,7 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- - @Description:  蜜粉圈搜索，商学院搜索
+ - @Description:  发圈搜索，商学院搜索
  - @Author:  wuchaowen
  - @Time:  2019/8/29 17:17
  **/

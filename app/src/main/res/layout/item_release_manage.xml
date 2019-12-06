@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12"
-                tools:text="发布专题：蜜粉圈/一级类别,一级类别/二级类别"
+                tools:text="发布专题：发圈/一级类别,一级类别/二级类别"
                 android:id="@+id/tv_type"/>
             <View
                 android:layout_width="match_parent"

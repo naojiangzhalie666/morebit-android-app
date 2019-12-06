@@ -81,7 +81,7 @@
         <!--android:layout_marginRight="2dp"-->
         <!--android:layout_marginBottom="22dp"-->
         <!--android:layout_marginTop="12dp" />-->
-        <!--马克猫资讯-->
+        <!--优选资讯-->
         <LinearLayout
             android:id="@+id/ll_information"
             android:layout_width="match_parent"
@@ -102,7 +102,7 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="20dp"
-                    android:text="马克猫资讯"
+                    android:text="优选资讯"
                     android:textColor="@color/color_1E1E1E"
                     android:textSize="16sp" />
 

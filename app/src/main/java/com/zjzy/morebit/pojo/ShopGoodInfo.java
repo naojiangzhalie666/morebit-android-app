@@ -62,7 +62,7 @@ public class ShopGoodInfo implements Serializable {
     private int analysisFlag = 0;
 
 
-    private int isExpire; // 蜜粉圈是否过期 1：是 0：否
+    private int isExpire; // 发圈是否过期 1：是 0：否
      private String createTime;   //收藏时间
     //预告单
     private int countDown;// 倒计时，分钟 60

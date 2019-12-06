@@ -61,7 +61,7 @@ import butterknife.ButterKnife;
 /**
  */
 public class MarkermallCircleAdapter extends BaseMYShareAdapter<MarkermallCircleAdapter.CommonViewHolder> {
-    public static final int DISPLAY_CIRCLE_INFO = 0; //显示蜜粉圈
+    public static final int DISPLAY_CIRCLE_INFO = 0; //显示发圈
     public static final int DISPLAY_RECOMMOND = 1; //1/显示为你推荐
     private final int mLoadType;
     private LayoutInflater mInflater;
@@ -392,7 +392,7 @@ public class MarkermallCircleAdapter extends BaseMYShareAdapter<MarkermallCircle
 //                            //TODO
 //                            share(item, mLoadType);
 //                        } else {
-//                        SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"蜜粉圈",position,"","","","","","","",1,"");
+//                        SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"发圈",position,"","","","","","","",1,"");
                         showChoosePicDialog((Activity) mContext, item);
 //                        }
                     }

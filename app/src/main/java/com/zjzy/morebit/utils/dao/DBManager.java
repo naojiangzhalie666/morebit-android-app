@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class DBManager {
-    private final static String dbName = "markermall";
+    private final static String dbName = "morebit";
     private static DBManager mInstance;
     private DaoMaster.DevOpenHelper openHelper;
     private Context context;

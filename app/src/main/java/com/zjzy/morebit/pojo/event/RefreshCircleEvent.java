@@ -3,7 +3,7 @@ package com.zjzy.morebit.pojo.event;
 import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 
 /**
- - @Description:  刷新蜜粉圈
+ - @Description:  刷新发圈
  - @Author:
  - @Time:  2019/9/18 17:30
  **/

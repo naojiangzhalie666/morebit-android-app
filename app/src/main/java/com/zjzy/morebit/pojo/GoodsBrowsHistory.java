@@ -52,7 +52,7 @@ public class GoodsBrowsHistory {
 	private List<String> itemBanner;
 	@Convert(/**指定转换器 **/converter = GoodsImgDetailBeanConverter.class,/**指定数据库中的列字段**/columnType =String.class )
 	private GoodsImgDetailBean picUrls;
-	private int isExpire; // 蜜粉圈是否过期
+	private int isExpire; // 发圈是否过期
 	private String phone = "";
 	private Long browse_time; // 浏览时间   yyyy-MM-dd HH:mm
 	private String  subsidiesPrice; //补贴金额

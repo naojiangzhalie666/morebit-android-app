@@ -133,7 +133,7 @@ public class MyReceiver extends BroadcastReceiver {
             case C.Push.homePage://首页
             case C.Push.fenlei://分类
             case C.Push.partner://我的
-            case C.Push.circle://蜜粉圈
+            case C.Push.circle://发圈
                 it = new Intent(context, MainActivity.class);
                 break;
             case C.Push.moenyMsg://提现消息

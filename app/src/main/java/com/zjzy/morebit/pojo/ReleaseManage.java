@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class ReleaseManage implements Serializable {
-    private int id;  //蜜粉圈id
+    private int id;  //发圈id
     private String name;   //用户昵称
     private String icon;   //用户头像
     private String content; //文字介绍，推荐理由

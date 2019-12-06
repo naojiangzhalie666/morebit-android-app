@@ -543,7 +543,7 @@ public class CircleDayHotFragment extends BaseFragment {
 
     private Observable<BaseResponse<List<CircleBrand>>> getBransObservable() {
         RequestCircleBransBean requestBean = new RequestCircleBransBean();
-        requestBean.setType("0"); //0：用户可选 1：蜜粉圈上架
+        requestBean.setType("0"); //0：用户可选 1：发圈上架
         return RxHttp.getInstance().getSysteService()
                 .getCircleGuessList(requestBean)
                 .compose(RxUtils.<BaseResponse<List<CircleBrand>>>switchSchedulers())
@@ -630,7 +630,7 @@ public class CircleDayHotFragment extends BaseFragment {
                     @Override
                     public void OnBannerClick(int position) {
                         ImageInfo imageInfo = data.get(position);
-//                        SensorsDataUtil.getInstance().advClickTrack(imageInfo.getId()+"",level,level2,imageInfo.getOpen()+"","蜜粉圈",position,imageInfo.getTitle(),imageInfo.getClassId()+"",imageInfo.getUrl(),"");
+//                        SensorsDataUtil.getInstance().advClickTrack(imageInfo.getId()+"",level,level2,imageInfo.getOpen()+"","发圈",position,imageInfo.getTitle(),imageInfo.getClassId()+"",imageInfo.getUrl(),"");
                         BannerInitiateUtils.gotoAction(activity, imageInfo);
                     }
                 })

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @Author: wuchaowen
- * @Description:  蜜粉圈的品牌推荐
+ * @Description:  发圈的品牌推荐
  * @Time: $date$ $time$
  **/
 public class CircleBrand implements Serializable {

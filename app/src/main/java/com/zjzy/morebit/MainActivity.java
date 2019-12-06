@@ -28,6 +28,7 @@ import com.zjzy.morebit.adapter.MarkermallCircleAdapter;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.CircleFragment;
 import com.zjzy.morebit.fragment.MineFragment;
+import com.zjzy.morebit.fragment.NumberFragment;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.home.contract.MainContract;
 import com.zjzy.morebit.home.presenter.MainPresenter;
@@ -84,12 +85,13 @@ import io.reactivex.functions.Consumer;
 public class MainActivity extends MvpActivity<MainPresenter> implements View.OnClickListener, MainContract.View {
     private static final String TAG = "MainActivity";
     public static boolean isNetwork = true;
-    private RelativeLayout rl_mine, rl_community, rl_homepage, rl_shop, rl_college;
+    private RelativeLayout rl_mine, rl_community, rl_homepage, rl_shop, rl_number;
     //Fragment
     HomeFragment homePageFragment;
     BaseMainFragmeng superNavigationFragment;
     BaseMainFragmeng circleFragment;
-    BaseMainFragmeng collegeFragment;
+//    BaseMainFragmeng collegeFragment;
+    BaseMainFragmeng numberFragment;
     BaseMainFragmeng partnerFragment;
     // 底部界面集合
     private ArrayList<RelativeLayout> menuList = new ArrayList<>();
@@ -282,7 +284,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         if (mSysNotificationData == null || mSysNotificationData.size() == 0) return;
         for (int i = 0; i < mSysNotificationData.size(); i++) {
             final ImageInfo imageInfo = mSysNotificationData.get(i);
-            //1【首页】、2【商品详情页】、3【分类】、4【蜜粉圈】、5【我的】
+            //1【首页】、2【商品详情页】、3【分类】、4【发圈】、5【我的】
             if (curPosition == C.mainPage.HOME) {
                 sysNotificationpos = 1;
             } else if (curPosition == C.mainPage.SUPER_NAVIGATION) {
@@ -360,7 +362,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 case C.Push.partner://我的
                     onClick(rl_mine);
                     break;
-                case C.Push.circle://蜜粉圈
+                case C.Push.circle://发圈
                     onClick(rl_community);
                     break;
                 default:
@@ -388,15 +390,15 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         rl_community = (RelativeLayout) findViewById(R.id.rl_community);
         rl_homepage = (RelativeLayout) findViewById(R.id.rl_homepage);
         rl_shop = (RelativeLayout) findViewById(R.id.rl_shop);
-        rl_college = (RelativeLayout) findViewById(R.id.rl_college);
+        rl_number = (RelativeLayout) findViewById(R.id.rl_number);
         rl_mine.setOnClickListener(this);
         rl_community.setOnClickListener(this);
         rl_homepage.setOnClickListener(this);
         rl_shop.setOnClickListener(this);
-        rl_college.setOnClickListener(this);
+        rl_number.setOnClickListener(this);
         menuList.add(rl_homepage);
         menuList.add(rl_shop);
-        menuList.add(rl_college);
+        menuList.add(rl_number);
         menuList.add(rl_community);
         menuList.add(rl_mine);
         rl_homepage.setSelected(true);
@@ -404,12 +406,14 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         mViewPager = (NoScrollViewPager) findViewById(R.id.viewPager);
         homePageFragment = new HomeFragment();
         superNavigationFragment = new SuperNavigationFragment();
-        collegeFragment = new HomeCollegeFragment();
+//        collegeFragment = new HomeCollegeFragment();
+        numberFragment = new NumberFragment();
         circleFragment = new CircleFragment();
         partnerFragment = new MineFragment();
         fragments.add(homePageFragment);
         fragments.add(superNavigationFragment);
-        fragments.add(collegeFragment);
+        fragments.add(numberFragment);
+//        fragments.add(collegeFragment);
         fragments.add(circleFragment);
         fragments.add(partnerFragment);
 
@@ -440,8 +444,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             mPresenter.getSysNotification(this, true);
 
         } else if (event.getAction().equals(EventBusAction.ACTION_SCHOOL)) {
-            //打开商学院首页
-            onClick(rl_college);
+            //打开会员首页
+            onClick(rl_number);
         }
     }
 
@@ -503,14 +507,15 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 superNavigationFragment.onResume();
                 setSysNotificationView();
                 break;
-            case R.id.rl_college:
-                //商学院
+            case R.id.rl_number:
+                //会员
                 mViewPager.setCurrentItem(2, false);
-                curPosition = C.mainPage.COLLEGE;
-                collegeFragment.onResume();
+                curPosition = C.mainPage.NUMBER;
+//                collegeFragment.onResume();
+                numberFragment.onResume();
                 setSysNotificationView();
                 break;
-            case R.id.rl_community: //蜜粉圈
+            case R.id.rl_community: //发圈
                 mViewPager.setCurrentItem(3, false);
                 curPosition = C.mainPage.CIRCLE;
                 setSysNotificationView();
@@ -657,13 +662,13 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
 
     @Override
     public void onBackPressed() {
-        if (collegeFragment != null) {
-            MyLog.i("test", "((CircleFragment)circleFragment).onBackPressed(): ");
-//            if (((HomeCollegeFragment) collegeFragment).onBackPressed()) {
-//                keyBackClickCount = 0;
-//                return;
-//            }
-        }
+//        if (numberFragment != null) {
+//            MyLog.i("test", "((CircleFragment)circleFragment).onBackPressed(): ");
+////            if (((HomeCollegeFragment) collegeFragment).onBackPressed()) {
+////                keyBackClickCount = 0;
+////                return;
+////            }
+//        }
 
         switch (keyBackClickCount++) {
             case 0:
@@ -691,8 +696,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
 
 
     public void showGuideCollege() {
-        if (null != rl_college) {
-            GuideViewUtil.showGuideView(this, rl_college, GuideViewUtil.GUIDE_HOME_COLLEGE, 0, null, new GuideViewUtil.GuideCallback() {
+        if (null != rl_number) {
+            GuideViewUtil.showGuideView(this, rl_number, GuideViewUtil.GUIDE_HOME_COLLEGE, 0, null, new GuideViewUtil.GuideCallback() {
                 @Override
                 public void onDissmiss() {
                     showGuideOrder();

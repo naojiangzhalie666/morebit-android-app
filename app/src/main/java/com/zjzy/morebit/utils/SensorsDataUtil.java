@@ -130,7 +130,7 @@ public class SensorsDataUtil {
 
     }
     /**
-     * 蜜粉圈广告位
+     * 发圈广告位
      */
     public void advClickTrack(String clickId, String level_1, String level_2, String type, String model, int position, String title, String classId, String url, String subTitle) {
         if (isPust()) {
@@ -194,7 +194,7 @@ public class SensorsDataUtil {
 
 
     /**
-     * 蜜粉圈-item/分享点击
+     * 发圈-item/分享点击
      *
      * @param title
      */

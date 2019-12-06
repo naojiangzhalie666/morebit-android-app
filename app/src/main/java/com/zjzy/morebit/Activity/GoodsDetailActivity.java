@@ -928,7 +928,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         if (mSysNotificationData == null || mSysNotificationData.size() == 0) return;
         for (int i = 0; i < mSysNotificationData.size(); i++) {
             final ImageInfo imageInfo = mSysNotificationData.get(i);
-            //1【首页】、2【商品详情页】、3【分类】、4【蜜粉圈】、5【我的】
+            //1【首页】、2【商品详情页】、3【分类】、4【发圈】、5【我的】
             if (2 == imageInfo.getDisplayPage()) {
                 SysNotificationView sysNotificationView = new SysNotificationView();
                 sysNotificationView.addSysNotificationView(this, rl_urgency_notifi, imageInfo);

@@ -14,6 +14,7 @@
     <string name="forget_password">忘记密码?</string>
     <string name="modify_password">修改密码</string>
     <string name="modify_phone_num">修改手机号</string>
+    <string name="my_goods_address">我的收货地址</string>
     <string name="message_setting">消息设置</string>
     <string name="message_notification">消息设置</string>
     <string name="modify_service_wechat">专属微信</string>
@@ -401,4 +402,6 @@
     <string name="text_fans_dynmic_rank_commission_null">您团队近7日预估佣金纹丝不动\n快推荐商品福利给粉丝吧～</string>
     <string name="text_fans_dynmic_rank_new_null">您团队近7日拉新不给力哦\n快去分享邀粉秘籍给粉丝吧～</string>
     <string name="order_commission">商品佣金 %1$s</string>
+    <!--收货地址-->
+    <string name="add_goods_address">添加收货地址</string>
 </resources>

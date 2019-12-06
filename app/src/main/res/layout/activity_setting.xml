@@ -240,6 +240,7 @@
                 </LinearLayout>
             </RelativeLayout>
 
+            <View style="@style/line_f1f1f1"/>
 
             <LinearLayout
                 android:id="@+id/ll_weichat"
@@ -302,6 +303,46 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
+            <View style="@style/line_f1f1f1"/>
+
+            <!--我的收货地址 -->
+            <RelativeLayout
+                android:id="@+id/my_goods_address"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/btn_item_color_white_gray">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/my_goods_address"
+                        android:textColor="@color/color_333333"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="17dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/youjiantou" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -480,14 +521,6 @@
                     android:layout_alignParentRight="true"
                     android:gravity="center"
                     android:orientation="horizontal">
-
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginRight="8dp"-->
-                    <!--android:text="修改"-->
-                    <!--android:textColor="@color/color_999999"-->
-                    <!--android:textSize="13sp" />-->
 
                     <ImageView
                         android:layout_width="17dp"

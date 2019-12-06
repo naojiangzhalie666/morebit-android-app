@@ -376,7 +376,7 @@ public class C {
         public static final String isShortLink = Setting.appName + "isShortLink"; //  是否短链，1-短链；2-长链；0-默认值
         public static final String isOpenHotMsgPush = Setting.appName + "isOpenHotMsgPush"; //  是否热门消息推送
         public static final String isShowGuide = Setting.appName + "isShowGuide"; //  是否显示首页的新手引导
-        public static final String isShowGuideCircle = Setting.appName + "isShowGuideCircle"; //  是否显示蜜粉圈的新手引导
+        public static final String isShowGuideCircle = Setting.appName + "isShowGuideCircle"; //  是否显示发圈的新手引导
         public static final String isShowGuideMine = Setting.appName + "isShowGuideMine"; //  是否显示个人中心新手引导
         public static final String isShowMsgNotication = Setting.appName + "isShowMsgNotication"; //  是否显示消息首页的通知提示
         public static final String CACHE_AREA_CODE = Setting.appName + "areacode"; //  地区列表
@@ -386,16 +386,16 @@ public class C {
         public static final String TAOBAO_LINK_CACHE = Setting.appName + "taobao_link"; //  淘宝跳转缓存
         public static final String CLESE_RECOMMEND_GOODS= Setting.appName + "CLESE_RECOMMEND_GOODS"; //  关闭推荐商品
         public static final String RANKING_CATEGORY = Setting.appName + "RANKING_CATEGORY"; //  排行榜二级标题数据
-        public static final String CIRCLE_SEARCH_HISTORY = Setting.appName + "circle_search_history";  // 蜜粉圈历史搜索
+        public static final String CIRCLE_SEARCH_HISTORY = Setting.appName + "circle_search_history";  // 发圈历史搜索
         public static final String SHARE_MOENY_IS_INVITECODE = Setting.appName + "SHARE_MOENY_IS_INVITECODE";  // 是否需要邀请码 0 否 1是
         public static final String SHARE_MOENY_IS_DOWNLOAD_URL = Setting.appName + "SHARE_MOENY_IS_DOWNLOAD_URL ";  // 是否需要下载链接 0 否 1是
 
 
         public static final String COLLEGE_SEARCH_HISTORY = Setting.appName + "college_search_history";  // 商学院历史搜索
         public static final String APPSTART_POPUPTYPE = Setting.appName + "APPSTART_POPUPTYPE";  //广告页面
-        public static final String CIRCLE_LOAD_DATA_TYPE = Setting.appName + "CIRCLE_LOAD_DATA_TYPE";  //蜜粉圈加载数据type
-        public static final String CIRCLE_SEARCH_NAME = Setting.appName + "CIRCLE_SEARCH_NAME ";  //蜜粉圈搜索内容
-        public static final String CIRCLE_SEARCH_TITLE = Setting.appName + "CIRCLE_SEARCH_TITLE ";  //蜜粉圈 title
+        public static final String CIRCLE_LOAD_DATA_TYPE = Setting.appName + "CIRCLE_LOAD_DATA_TYPE";  //发圈加载数据type
+        public static final String CIRCLE_SEARCH_NAME = Setting.appName + "CIRCLE_SEARCH_NAME ";  //发圈搜索内容
+        public static final String CIRCLE_SEARCH_TITLE = Setting.appName + "CIRCLE_SEARCH_TITLE ";  //发圈 title
         public static final String DIALOG_USER_IS_UPGRADE= Setting.appName + "DIALOG_USER_IS_UPGRADE";  //是否已弹出用户升级提示
         public static final String DIALOG_USER_IS_UPGRADE_TIME= Setting.appName + "DIALOG_USER_IS_UPGRADE_TIME";  //用户升级dialog弹出的时间
     }
@@ -408,7 +408,7 @@ public class C {
 
     public static class Push {
         /**
-         * "1":"首页","2":"分类","3":"收藏","4":"个人中心","5":"蜜粉圈","6":"奖励消息",
+         * "1":"首页","2":"分类","3":"收藏","4":"个人中心","5":"发圈","6":"奖励消息",
          * "7":"系统消息","8":"提现管理","9":"商品推送","10":"超级划算","11":"品牌爆款"}
          * 等于9的时候有一个字段goods_id是淘宝商品的ID
          * 等于9的时候有一个字段goods_id是淘宝商品的ID.   内容就是content字段当标题
@@ -417,7 +417,7 @@ public class C {
         public final static int fenlei = 2;//分类
         public final static int collect = 3;//收藏
         public final static int partner = 4;//我的
-        public final static int circle = 5;//蜜粉圈
+        public final static int circle = 5;//发圈
         public final static int awardMsg = 6;//奖励消息
         public final static int sysMsg = 7;//系统消息
         public final static int moenyMsg = 8;//提现消息
@@ -515,7 +515,8 @@ public class C {
     public static class mainPage{
         public static final int HOME = 0;
         public static final int SUPER_NAVIGATION = 1;
-        public static final int COLLEGE = 2;
+        //修改为会员页面
+        public static final int NUMBER = 2;
         public static final int CIRCLE = 3;
         public static final int MINE = 4;
 

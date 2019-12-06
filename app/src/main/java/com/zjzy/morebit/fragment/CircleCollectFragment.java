@@ -15,7 +15,7 @@ import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.view.ToolbarHelper;
 
 /**
- - @Description:  蜜粉圈收藏
+ - @Description:  发圈收藏
  - @Author:
  - @Time:  2019/9/4 14:21
  **/

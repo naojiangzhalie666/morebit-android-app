@@ -94,7 +94,7 @@
         <!--app:tl_textsize="@dimen/sp_14"-->
         <!--app:tl_tab_padding="12dp"-->
 
-        />
+<!--        />-->
     <!--<com.markermall.cat.view.main.MYPagerSlidingTabStrip-->
         <!--android:id="@+id/tab"-->
         <!--android:layout_width="match_parent"-->

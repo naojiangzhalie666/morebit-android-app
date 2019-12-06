@@ -87,6 +87,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.item11_rl).setOnClickListener(this);
         findViewById(R.id.rl_wx).setOnClickListener(this);
         findViewById(R.id.message_notification).setOnClickListener(this);
+        findViewById(R.id.my_goods_address).setOnClickListener(this);
         item_tv1 = (TextView) findViewById(R.id.item_tv1);
         item_tv8 = (TextView) findViewById(R.id.item_tv8);
         item_tv9 = (TextView) findViewById(R.id.item_tv9);
@@ -211,6 +212,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.message_notification: //消息通知
                 startActivity(new Intent(this, SettingNotificationActivity.class));
                 break;
+            case R.id.my_goods_address:// 我的收货地址
+
             case R.id.item10_rl: //清理缓存
                 openCleanDataDialog();
                 break;

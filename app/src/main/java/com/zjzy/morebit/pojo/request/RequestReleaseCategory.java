@@ -5,7 +5,7 @@ package com.zjzy.morebit.pojo.request;
  */
 
 public class RequestReleaseCategory extends RequestBaseBean {
-    private int type; // 0：用户可选 1：蜜粉圈上架
+    private int type; // 0：用户可选 1：发圈上架
 
     public int getType() {
         return type;

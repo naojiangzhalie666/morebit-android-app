@@ -27,7 +27,7 @@ public class ImageInfo implements Serializable {
     private String backgroundImage ; // 二级商品列表 背景图
     //二级商品列表
     //系统通知用到
-    private int displayPage ; //展示页面：1【首页】、2【商品详情页】、3【分类】、4【蜜粉圈】、5【我的】
+    private int displayPage ; //展示页面：1【首页】、2【商品详情页】、3【分类】、4【发圈】、5【我的】
     private String digest ; // 内容
     //系统通知用到
     private int mediaType ; // 0 图片 1视频
