@@ -37,7 +37,10 @@
     <dimen name="sp_13">13sp</dimen>
     <dimen name="sp_38">38sp</dimen>
     <dimen name="sp_19">19sp</dimen>
+    <dimen name="sp_22">22sp</dimen>
     <dimen name="sp_9">9sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_32">32sp</dimen>
 
     <!-- *********KeyboardUtil相关********* -->
     <dimen name="keyboard_content_panel_max_height">120dp</dimen>
@@ -59,4 +62,5 @@
     <dimen name="ranking_adapter_bottom_padding">14dp</dimen>
     <dimen name="home_recommend_img_def_height">275dp</dimen>
     <dimen name="home_recommend_item_decoration">15dp</dimen>
+
 </resources>

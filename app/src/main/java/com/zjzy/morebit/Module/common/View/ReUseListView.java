@@ -157,6 +157,9 @@ public class ReUseListView extends LinearLayout{
         }
         mRecyclerView.setAdapter(lRecyclerViewAdapter);
     }
+    public void setLayoutManager(RecyclerView.LayoutManager layout){
+        mRecyclerView.setLayoutManager(layout);
+    }
     public LRecyclerViewAdapter getlRecyclerViewAdapter() {
         return lRecyclerViewAdapter;
     }

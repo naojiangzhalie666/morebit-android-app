@@ -2,15 +2,20 @@ package com.zjzy.morebit.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.utils.MyLog;
 
 import org.greenrobot.eventbus.EventBus;
+
+import butterknife.BindView;
 
 /**
  * 主页面中的会员页面
@@ -24,6 +29,11 @@ public class NumberFragment extends BaseMainFragmeng {
     private boolean isUserHint = true;
     private boolean isVisible;
 
+    @BindView(R.id.mListView)
+    ReUseListView mReUseListView;
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +43,11 @@ public class NumberFragment extends BaseMainFragmeng {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_number, container, false);
+//        mReUseListView.setLayoutManager(new GridLayoutManager(getActivity(),3));
         return mView;
+
+
+//        mReUseListView.setAdapterAndHeadView();
     }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -56,4 +70,5 @@ public class NumberFragment extends BaseMainFragmeng {
         super.onDestroy();
 //        EventBus.getDefault().unregister(this);
     }
+
 }

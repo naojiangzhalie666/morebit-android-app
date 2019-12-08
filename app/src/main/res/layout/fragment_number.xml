@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
+    <include
+        layout="@layout/fragment_number_top"/>
     <com.zjzy.morebit.Module.common.View.ReUseListView
         android:id="@+id/listview"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:background="#fff7f7f7"
-        android:layout_height="fill_parent"/>
+        android:layout_height="match_parent"
+        />
 
 
     <LinearLayout
@@ -35,10 +38,5 @@
             android:textColor="@color/color_8B8B8B"
             android:textSize="15sp"/>
     </LinearLayout>
-<!--    <com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/swipeList"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="fill_parent">-->
 
-<!--    </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>-->
-</RelativeLayout>
+</LinearLayout>

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -74,6 +75,7 @@ public class ConsComDetailListFragment extends BaseFragment {
     public void inview(View view) {
         mRecyclerView = (ReUseListView) view.findViewById(R.id.listview);
         consComDetailAdapter = new ConsComDetailAdapter(getActivity(), listArray);
+
         mRecyclerView.setAdapter(consComDetailAdapter);
         mRecyclerView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override

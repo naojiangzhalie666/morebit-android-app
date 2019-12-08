@@ -404,4 +404,11 @@
     <string name="order_commission">商品佣金 %1$s</string>
     <!--收货地址-->
     <string name="add_goods_address">添加收货地址</string>
+
+    <string name="number_welcome_hint">获取多豆可享受多项VIP会员权益</string>
+    <string name="vip_welcome_hint">获取多豆可享受多项V团队长权益</string>
+    <string name="tuandui_welcome_hint">获取多豆可享受多项团队长权益</string>
+    <!--会员商品价格-->
+    <string name="number_goods_price">￥%1$s</string>
+    <string name="number_give_more_corn">送%1$s多豆</string>
 </resources>
