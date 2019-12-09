@@ -19,7 +19,7 @@ import io.reactivex.functions.Action;
 
 public class OrderListPresenter extends MvpPresenter<InfoModel, OrderListContract.View> implements OrderListContract.Present {
     private static int taobaoOrder = 1;//：1表示淘宝订单
-    private static int MYOrder = 2;//2表示马克猫生活订单
+    private static int MYOrder = 2;//2表示多点优选生活订单
 
     @Override
     public void getGoodsOrder(RxFragment rxFragment, int teamType, int order_type, int page) {

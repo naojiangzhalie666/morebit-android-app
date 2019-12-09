@@ -458,7 +458,7 @@ public class C {
         public final static String ID_SEARCH = "40";
         public final static String TYPE_SEARCH = "3";
 
-        //马克猫热门
+        //多点优选热门
         public final static String TYPE_HOME_HOT = "1";
     }
 

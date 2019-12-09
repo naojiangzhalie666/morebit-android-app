@@ -118,7 +118,7 @@
                     android:layout_toRightOf="@+id/iv_invite_head"
                     android:textColor="@color/color_999999"
                     android:textSize="13sp"
-                    tools:text="邀请您加入马克猫"
+                    tools:text="邀请您加入多点优选"
                     />
             </RelativeLayout>
 

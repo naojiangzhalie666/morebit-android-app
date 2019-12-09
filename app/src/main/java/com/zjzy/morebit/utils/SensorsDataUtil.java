@@ -159,7 +159,7 @@ public class SensorsDataUtil {
 
     }
     /**
-     * 首页-马克猫热门
+     * 首页-多点优选热门
      *
      * @param title
      */

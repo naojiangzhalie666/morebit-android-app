@@ -28,7 +28,7 @@ public class WechatUtil {
         if (!TextUtils.isEmpty(imageInfo.getDesc())) {
             userName =imageInfo.getDesc();
         } else {
-            //默认马克猫优选
+            //默认多点优选优选
             userName ="gh_f8d561cd1942";
         }
         // 填Android应用AppId

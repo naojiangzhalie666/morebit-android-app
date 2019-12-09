@@ -25,7 +25,7 @@ public class ConsComGoodsInfo  implements Serializable{
     private String itemImg = "";//商品主图
     private String itemId;//商品ID
     private String paymentAmount = "";//付款金额
-    private String status; // 马克猫订单是:付款1，成功2，结算3，失效4    马克猫生活订单是:1.全部; 2.待结算; 3.已结算;
+    private String status; // 多点优选订单是:付款1，成功2，结算3，失效4    多点优选生活订单是:1.全部; 2.待结算; 3.已结算;
     private String orderType = "";//订单类型：（1）淘宝（2）天猫
     private String createTime = "";//订单创建时间
     private String couponUrl;//优惠券链接

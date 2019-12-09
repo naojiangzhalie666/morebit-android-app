@@ -329,7 +329,7 @@ public class BannerInitiateUtils {
             activity.startActivity(aboutIt);
         } else if (type == C.BannerIntentionType.suggest) {// "投诉建议",
             showWebIntent(activity, info);
-        } else if (type == C.BannerIntentionType.life) {//马克猫生活
+        } else if (type == C.BannerIntentionType.life) {//多点优选生活
             showWebIntent(activity, info);
         } else if (type == C.BannerIntentionType.Ranking) {
             Bundle bundle = new Bundle();

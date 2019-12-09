@@ -12,7 +12,7 @@ public class Logger {
 
     //设为false关闭日志
     private static final boolean LOG_ENABLE = BuildConfig.DEBUG;
-    private static final String TAG = "打印信息 马克猫---->>>";
+    private static final String TAG = "打印信息 多点优选---->>>";
 
     public static void i(String tag, String msg) {
         if (LOG_ENABLE) {

@@ -34,7 +34,7 @@ public class SearchStatisticsModel extends MvpModel {
     }
 
     /**
-     * 马克猫热门
+     * 多点优选热门
      * @param activity
      * @param id
      * @param type

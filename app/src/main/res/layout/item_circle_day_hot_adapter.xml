@@ -75,7 +75,7 @@
                         android:maxLines="1"
                         android:textColor="#333333"
                         android:textSize="14sp"
-                        android:text="马克猫分享用户"/>
+                        android:text="多点优选分享用户"/>
 
                     <com.zjzy.morebit.view.CollectBtn
                         android:id="@+id/collectBtn"

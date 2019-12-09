@@ -35,7 +35,7 @@
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="还没有粉丝呢，快邀请好友使用马克猫吧！\n 好友下单，你也有机会获取佣金哦"
+           android:text="还没有粉丝呢，快邀请好友使用多点优选吧！\n 好友下单，你也有机会获取佣金哦"
            android:gravity="center_horizontal"
            android:id="@+id/tv_hint"
            android:layout_marginTop="29dp"

@@ -715,7 +715,7 @@ public class MineFragment extends BaseMainFragmeng {
      * @param datas
      */
     private void setHotView(final List<UpgradeCarousel> datas) {
-        //马克猫热门
+        //多点优选热门
         if (datas == null || datas.size() == 0) {
             iv_mine_up_marquee_arrows.setVisibility(View.GONE);
             mHotviews.clear();

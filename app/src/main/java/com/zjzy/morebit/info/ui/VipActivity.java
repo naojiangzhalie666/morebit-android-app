@@ -371,19 +371,19 @@ public class VipActivity extends MvpActivity<VipPresenter> implements VipContrac
                 CollegeListActivity.start(this, "我的课程", "0", CollegeListActivity.NEW_COURSE);
                 break;
             case R.id.iv_new_people1: // 我的课堂1
-//                startWeb("了解马克猫", "https://api.gzmiyuan.com/api/h5/businessSchool/#/detail?id=18");
+//                startWeb("了解多点优选", "https://api.gzmiyuan.com/api/h5/businessSchool/#/detail?id=18");
                 if (classroomList.size() > 0) {
                     clickClassrooms(classroomList.get(0));
                 }
                 break;
             case R.id.iv_new_people2: //我的课堂2
-//                startWeb("马克猫的优势", "https://api.gzmiyuan.com/api/h5/businessSchool/#/detail?id=19");
+//                startWeb("多点优选的优势", "https://api.gzmiyuan.com/api/h5/businessSchool/#/detail?id=19");
                 if (classroomList.size() > 1) {
                     clickClassrooms(classroomList.get(1));
                 }
                 break;
             case R.id.iv_new_people3: // 我的课堂3
-//                startWeb("如何使用马克猫", "https://api.gzmiyuan.com/api/h5/businessSchool/#/detail?id=20");
+//                startWeb("如何使用多点优选", "https://api.gzmiyuan.com/api/h5/businessSchool/#/detail?id=20");
                 if (classroomList.size() > 2) {
                     clickClassrooms(classroomList.get(2));
                 }

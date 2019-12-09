@@ -166,7 +166,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
                     baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            SensorsDataUtil.getInstance().browseProductTrack("马克猫推荐",baseViewHolder.getPosition(),item.getItemSourceId(),item.getTitle(),item.getPrice(),"","","","");
+                            SensorsDataUtil.getInstance().browseProductTrack("多点优选推荐",baseViewHolder.getPosition(),item.getItemSourceId(),item.getTitle(),item.getPrice(),"","","","");
                             GoodsDetailActivity.start(mContext, item);
                         }
                     });

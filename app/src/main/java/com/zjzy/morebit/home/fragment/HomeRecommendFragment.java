@@ -633,7 +633,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         if (null != recommendTitleTv && recommendTitleTv.getLocalVisibleRect(rectRecommendTitleTv) && !(boolean) recommendTitleTv.getTag()) {
             if (rectRecommendTitleTv.top == 0) {
             } else {
-                MyLog.i("test", "马克猫推荐");
+                MyLog.i("test", "多点优选推荐");
                 recommendTitleTv.setTag(true);
                 SensorsDataUtil.getInstance().exposureViewTrack(getString(R.string.markermall_recommend));
             }
@@ -761,7 +761,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     }
 
     private void setHotView(final List<ImageInfo> datas) {
-        //马克猫热门
+        //多点优选热门
         if (datas == null || datas.size() == 0) {
             return;
         }

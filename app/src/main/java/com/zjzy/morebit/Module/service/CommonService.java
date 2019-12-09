@@ -655,7 +655,7 @@ public interface CommonService {
     );
 
     /**
-     * 马克猫圈列表 分享+1
+     * 多点优选圈列表 分享+1
      *
      * @return
      */
@@ -1338,7 +1338,7 @@ public interface CommonService {
 
 
     /**
-     * 查询订单列表(马克猫生活的订单)
+     * 查询订单列表(多点优选生活的订单)
      *
      * @param acition
      * @return
@@ -1596,7 +1596,7 @@ public interface CommonService {
     Observable<BaseResponse<String>> searchStatistics(@Body RequestSearchStatistics requestBody);
 
     /**
-     * 首页马克猫热门搜索统计
+     * 首页多点优选热门搜索统计
      *
      * @return
      */
@@ -1913,7 +1913,7 @@ public interface CommonService {
     public Observable<BaseResponse<UserFeedback>> getUserFeedback(@Body RequestReplyBean bean);
 
     /**
-     * 商学院首页马克猫资讯点击上报
+     * 商学院首页多点优选资讯点击上报
      *
      * @return
      */

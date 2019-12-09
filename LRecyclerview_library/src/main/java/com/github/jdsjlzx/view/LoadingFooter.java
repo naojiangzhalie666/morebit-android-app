@@ -271,6 +271,6 @@ public class LoadingFooter extends RelativeLayout implements ILoadMoreFooter {
         , NoMore/**加载到最底了*/
         , Loading/**加载中..*/
         , NetWorkError/**网络异常*/
-        , NoMoreMarkermall/**马克猫网络异常*/
+        , NoMoreMarkermall/**多点优选网络异常*/
     }
 }

@@ -21,7 +21,7 @@
             android:maxLines="1"
             android:maxLength="19"
             android:textColor="@color/color_333333"
-            tools:text="你还不知道马克猫？那你的损失可就大了！"
+            tools:text="你还不知道多点优选？那你的损失可就大了！"
             android:id="@+id/tv_title"/>
         <ImageView
             android:layout_width="wrap_content"

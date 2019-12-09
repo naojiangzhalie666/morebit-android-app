@@ -369,7 +369,7 @@ public class CommercialCollegeFragment extends MvpFragment<CommercialCollegePres
 
 
     private void setHotView(final List<MarkermallInformation> datas) {
-        //马克猫热门
+        //多点优选热门
         if (datas == null || datas.size() == 0) {
             return;
         }

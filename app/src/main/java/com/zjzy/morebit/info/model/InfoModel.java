@@ -154,7 +154,7 @@ public class InfoModel extends MvpModel {
 
 
     /**
-     * 获取订单列表(马克猫生活的订单)
+     * 获取订单列表(多点优选生活的订单)
      *
      * @param rxFragment
      */
