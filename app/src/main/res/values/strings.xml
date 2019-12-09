@@ -411,4 +411,7 @@
     <!--会员商品价格-->
     <string name="number_goods_price">￥%1$s</string>
     <string name="number_give_more_corn">送%1$s多豆</string>
+    <string name="number_give_more_corn_1">购买即送%1$s多豆</string>
+    <string name="number_update_vip">现在升级VIP,可赚更高佣金</string>
+    <string name="number_update_vip_hint">立即升级</string>
 </resources>
