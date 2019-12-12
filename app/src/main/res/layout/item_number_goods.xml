@@ -28,12 +28,14 @@
         android:layout_below="@id/number_goods_desc"
         >
         <TextView
+            android:id="@+id/number_goods_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/number_goods_price"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"/>
         <TextView
+            android:id="@+id/txt_morebit_corn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/number_give_more_corn"

@@ -356,10 +356,12 @@ public class BrandSellFragment extends MvpFragment<BrandSellPresenter> implement
             });
         }
 
+
         @Override
         protected View onCreateView(LayoutInflater layoutInflater, ViewGroup parent, int viewType) {
             return layoutInflater.inflate(R.layout.item_brand_sell_goods, parent, false);
         }
+
     }
 
 }

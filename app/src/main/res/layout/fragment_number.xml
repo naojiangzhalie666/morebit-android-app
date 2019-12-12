@@ -4,14 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/color_333333"
     android:orientation="vertical">
+    <TextView
+            android:id="@+id/status_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     <include
         layout="@layout/fragment_number_top"/>
+
     <com.zjzy.morebit.Module.common.View.ReUseListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:background="#fff7f7f7"
+        android:background="@color/color_333333"
         android:layout_height="match_parent"
         />
 
@@ -38,5 +44,4 @@
             android:textColor="@color/color_8B8B8B"
             android:textSize="15sp"/>
     </LinearLayout>
-
 </LinearLayout>

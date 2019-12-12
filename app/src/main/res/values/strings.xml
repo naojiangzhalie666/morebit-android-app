@@ -415,4 +415,6 @@
     <string name="number_update_vip">现在升级VIP,可赚更高佣金</string>
     <string name="number_update_vip_hint">立即升级</string>
     <string name="number_goods_count">X%1$s</string>
+    <string name="number_invite_code">邀请码：%1$s</string>
+
 </resources>

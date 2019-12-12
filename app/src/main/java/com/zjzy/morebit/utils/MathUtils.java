@@ -11,7 +11,10 @@ import java.math.BigDecimal;
  */
 
 public class MathUtils {
-
+    /**
+     * 多豆比例
+     */
+    public static final int CORN_RATION=10;
 
     /**
      * 转换两位数小时
@@ -84,6 +87,8 @@ public class MathUtils {
     }
 
 
+
+
     /**
      *   计算平台补贴+佣金
      * @param ratioComPrice  佣金
@@ -148,6 +153,27 @@ public class MathUtils {
 
         double v = mul(dRatio,getdRatioComPrice);
         return v / 100;
+    }
+
+    /**
+     * 会员商品展示的多豆金额
+     * @param price
+     * @return
+     */
+    public static String getMorebitCorn(String price){
+        if (TextUtils.isEmpty(price)){
+            return "0";
+        }
+        double corn = 0;
+        try{
+            corn = Double.parseDouble(price)*CORN_RATION;
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtils.e("MathUtils","价格转换非法");
+        }
+
+        return String.valueOf(corn);
+
     }
 
     /**

@@ -63,6 +63,7 @@ import com.zjzy.morebit.pojo.login.InviteUserInfoBean;
 import com.zjzy.morebit.pojo.myInfo.ApplyUpgradeBean;
 import com.zjzy.morebit.pojo.myInfo.MakeMoenyBean;
 import com.zjzy.morebit.pojo.myInfo.OssKeyBean;
+import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
 import com.zjzy.morebit.pojo.request.RequestAppFeedBackBean;
@@ -1053,6 +1054,18 @@ public interface CommonService {
     //    @FormUrlEncoded
     @POST("/api/goods/getBrandItems")
     Observable<BaseResponse<List<BrandSell>>> getBrandSellGoodsList(
+            //            @Field("page") int page
+
+            @Body RequestPage requestPage
+    );
+    /**
+     * 会员商品
+     *
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/goods/getNumberList")
+    Observable<BaseResponse<List<NumberGoods>>> getNumberGoodsList(
             //            @Field("page") int page
 
             @Body RequestPage requestPage

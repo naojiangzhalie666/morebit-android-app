@@ -63,4 +63,7 @@
     <dimen name="home_recommend_img_def_height">275dp</dimen>
     <dimen name="home_recommend_item_decoration">15dp</dimen>
 
+    <dimen name="toolbar_padLeft">10dp</dimen>
+
+
 </resources>

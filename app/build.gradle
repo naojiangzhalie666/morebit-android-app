@@ -307,6 +307,8 @@ dependencies {
     //Optional: see how to use the utility.
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
 
+    compile 'com.github.donkingliang:LabelsView:1.2.0'
+
     //Optional: see how to use the utility.
 //    compile 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
 //    compile 'com.oneapm.agent.android:agent:5.5.3.5'

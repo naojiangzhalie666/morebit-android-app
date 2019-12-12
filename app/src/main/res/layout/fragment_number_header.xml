@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colcor_black_333333"
+    android:orientation="vertical"
     >
     <RelativeLayout
         android:id="@+id/rl_number_header1"
@@ -126,7 +127,6 @@
         android:layout_marginTop="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_below="@id/rl_number_header1"
         android:orientation="horizontal"
         >
         <ImageView
@@ -156,7 +156,6 @@
         android:id="@+id/ll_more_corn_priority"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@id/rl_more_xuyouxuan_jingcai"
         android:orientation="horizontal"
         >
         <TextView
@@ -175,7 +174,6 @@
         android:id="@+id/rl_welcome_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_more_corn_priority"
         >
     <TextView
         android:id="@+id/txt_number_welcome_hint"
@@ -204,7 +202,6 @@
         android:id="@+id/rl_grade_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl_welcome_txt"
         >
         <!--vip可享特权-->
         <RelativeLayout
@@ -393,7 +390,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/color_FFFFFF"
-        android:layout_below="@id/rl_grade_content"
         >
         <TextView
             android:layout_width="match_parent"
@@ -410,5 +406,5 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>
 

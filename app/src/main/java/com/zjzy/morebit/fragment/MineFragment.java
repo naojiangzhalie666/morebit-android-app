@@ -270,7 +270,7 @@ public class MineFragment extends BaseMainFragmeng {
         }
 
 
-        mInvitationCode.setText(info.getInviteCode());
+        mInvitationCode.setText(getResources().getString(R.string.number_invite_code,info.getInviteCode()));
         mUserName.setText(info.getNickName());
 //        mUserLevel.setText(info.getGradename());
         if (C.UserType.member.equals(info.getPartner())) {

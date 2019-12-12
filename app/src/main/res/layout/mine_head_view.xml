@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/color_2B0900"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_18"
                 tools:text="昵称" />
 
@@ -102,29 +102,36 @@
                     <!--android:layout_height="match_parent"-->
                     <!--android:layout_marginRight="42dp"-->
                     <!--android:background="@drawable/bg_radius_yaoqingma" />-->
-
+<!--                    android:background="@drawable/bg_radius_yaoqingma"-->
                     <TextView
                         android:id="@+id/invitation_code"
-                        android:layout_width="75dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/bg_radius_yaoqingma"
-                        android:gravity="center"
-                        android:textColor="@color/color_333333"
-                        android:textSize="@dimen/sp_15"
-                        tools:text="12345678" />
-
-                    <TextView
-                        android:id="@+id/copy_invitation_code"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/invitation_code"
-                        android:background="@drawable/bg_radius_yaoqingma_copy"
                         android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="@string/copy_invitation"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_12" />
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="@dimen/sp_15"
+                        android:text="@string/number_invite_code" />
+                    <ImageView
+                        android:id="@+id/copy_invitation_code"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:src="@mipmap/bg_copy_invite_code"
+                        android:scaleType="centerInside"
+                        android:layout_toRightOf="@+id/invitation_code"
+                        />
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/copy_invitation_code"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_toRightOf="@+id/invitation_code"-->
+<!--                        android:background="@drawable/bg_radius_yaoqingma_copy"-->
+<!--                        android:gravity="center"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingRight="10dp"-->
+<!--                        android:text="@string/number_copy_invitation"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="@dimen/sp_12" />-->
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -172,6 +179,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="13dp"
         android:layout_marginTop="40dp"
-        android:src="@drawable/shezhi" />
+        android:src="@mipmap/white_setting_icon" />
 </RelativeLayout>
 
