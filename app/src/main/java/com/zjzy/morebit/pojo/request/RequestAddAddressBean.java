@@ -6,13 +6,91 @@ import com.zjzy.morebit.address.AddressInfo;
  * Created by haiping.liu on 2019-12-12.
  */
 public class RequestAddAddressBean extends RequestBaseBean {
-    private AddressInfo addressInfo;
+    private Integer id;
+    /**
+     * 用户名称
+     */
+    private  String name ;
+    /**
+     * 是否默认(true:默认 false:否)
+     */
+    private boolean isDefault;
+    /**
+     * 手机号
+     */
+    private String tel;
 
-    public AddressInfo getAddressInfo() {
-        return addressInfo;
+    private String province;
+
+    private String city;
+
+    private String district;
+    /**
+     * 地址详细地址
+     */
+    private String detailAddress;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setAddressInfo(AddressInfo addressInfo) {
-        this.addressInfo = addressInfo;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
     }
 }

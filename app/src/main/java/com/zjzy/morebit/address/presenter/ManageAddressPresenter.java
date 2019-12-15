@@ -26,7 +26,7 @@ import java.util.List;
 public class ManageAddressPresenter extends MvpPresenter<ManageAddressModel, ManageAddressContract.View>implements ManageAddressContract.Present {
 
     @Override
-    public void deleteAddress(BaseActivity rxActivity, String addressId) {
+    public void deleteAddress(BaseActivity rxActivity, String addressId, final int position) {
         mModel.deleteAdddress(rxActivity,addressId)
                 .subscribe(new DataObserver<Boolean>() {
                     @Override
@@ -36,7 +36,7 @@ public class ManageAddressPresenter extends MvpPresenter<ManageAddressModel, Man
 
                     @Override
                     protected void onSuccess(Boolean isSuccess) {
-                        getIView().onDeleteSuccessful(isSuccess);
+                        getIView().onDeleteSuccessful(isSuccess,position);
                     }
                 });
     }

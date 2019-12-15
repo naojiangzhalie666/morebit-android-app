@@ -18,7 +18,7 @@ public class ManageAddressContract {
 
         void onDeleteError();
 
-        void onDeleteSuccessful(Boolean isSuccess);
+        void onDeleteSuccessful(Boolean isSuccess,int position);
 
         void onAddressListError();
 
@@ -32,7 +32,7 @@ public class ManageAddressContract {
          * @param rxActivity
          * @param AddressId
          */
-        void deleteAddress(BaseActivity rxActivity, String AddressId);
+        void deleteAddress(BaseActivity rxActivity, String AddressId,int position);
 
         /**
          * 编辑地址

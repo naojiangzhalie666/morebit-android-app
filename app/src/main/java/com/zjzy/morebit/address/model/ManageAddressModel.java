@@ -29,7 +29,7 @@ public class ManageAddressModel extends MvpModel {
      */
     public Observable<BaseResponse<Boolean>> deleteAdddress(BaseActivity rxActivity, String addressId) {
         RequestDeleteAddressIdBean bean = new RequestDeleteAddressIdBean();
-        bean.setAddressId(addressId);
+        bean.setId(addressId);
         return RxHttp.getInstance().getGoodsService().deleteAddress(bean)
                 .compose(RxUtils.<BaseResponse<Boolean>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<Boolean>>bindToLifecycle());

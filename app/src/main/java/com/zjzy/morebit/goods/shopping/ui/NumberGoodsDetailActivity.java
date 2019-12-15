@@ -1,11 +1,14 @@
 package com.zjzy.morebit.goods.shopping.ui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,6 +17,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sendtion.xrichtext.RichTextView;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 import com.zjzy.morebit.Activity.ChannelWebActivity;
@@ -28,6 +32,8 @@ import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.StringUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.goods.GoodSizePopupwindow;
@@ -37,12 +43,20 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 会员商品详情
  * Created by haiping.liu on 2019-12-10.
  */
 public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPresenter> implements View.OnClickListener, NumberGoodsDetailContract.View  {
+    private static final String TAG = NumberGoodsDetailActivity.class.getSimpleName();
 
     @BindView(R.id.as_banner)
     AspectRatioView mAsBanner;
@@ -62,10 +76,15 @@ public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPre
     @BindView(R.id.room_view)
     View room_view;
 
-    @BindView(R.id.number_goods_detail_content)
-            TextView txtDetailContent;
+//    @BindView(R.id.number_goods_detail_content)
+//            TextView txtDetailContent;
 
     TextView addCartNumTv;
+    /**
+     * 商品详情
+     */
+    @BindView(R.id.number_goods_detail_content)
+    RichTextView detailContent;
     /**
      * 商品轮播图
      */
@@ -90,6 +109,10 @@ public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPre
 
     private GoodsOrderInfo mGoodsOrderInfo;
 
+    private ProgressDialog loadingDialog;
+
+    private Disposable mDisposable;
+
     public static void start(Activity activity, String goodsId) {
         if (TextUtils.isEmpty(goodsId)) {
             return;
@@ -112,7 +135,10 @@ public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPre
     }
 
     private void initView(){
-
+        loadingDialog = new ProgressDialog(this);
+        loadingDialog.setMessage("数据加载中...");
+        loadingDialog.setCanceledOnTouchOutside(false);
+        loadingDialog.show();
 
     }
     @OnClick({R.id.btn_back,R.id.btn_goods_buy_action})
@@ -144,7 +170,13 @@ public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPre
         mAsBanner.setVisibility(View.VISIBLE);
         setBanner(imgs, mBanner, mAsBanner);
         if (mGoodsOrderInfo != null){
-            txtDetailContent.setText(Html.fromHtml(mGoodsInfo.getDetail()));
+//            txtDetailContent.setText(Html.fromHtml(mGoodsInfo.getDetail()));
+            detailContent.post(new Runnable() {
+                @Override
+                public void run() {
+                    dealWithContent(mGoodsInfo.getDetail());
+                }
+            });
         }
         double price = mGoodsInfo.getRetailPrice();
         goodsPrice.setText(getResources().getString(R.string.number_goods_price,String.valueOf(price)));
@@ -153,6 +185,87 @@ public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPre
 
 
     }
+
+    private void dealWithContent(String detail){
+
+        detailContent.clearAllLayout();
+        showDataSync(detail);
+
+
+    }
+    /**
+     * 异步方式显示数据
+     */
+    private void showDataSync(final String html){
+
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) {
+                showEditData(emitter, html);
+            }
+        })
+                //.onBackpressureBuffer()
+                .subscribeOn(Schedulers.io())//生产事件在io
+                .observeOn(AndroidSchedulers.mainThread())//消费事件在UI线程
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onComplete() {
+                        if (loadingDialog != null){
+                            loadingDialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (loadingDialog != null){
+                            loadingDialog.dismiss();
+                        }
+//                        showToast("解析错误：图片不存在或已损坏");
+                        MyLog.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mDisposable = d;
+                    }
+
+                    @Override
+                    public void onNext(String text) {
+                        try {
+                            if (detailContent !=null) {
+                                if (text.contains("<img") && text.contains("src=")) {
+                                    //imagePath可能是本地路径，也可能是网络地址
+                                    String imagePath = StringUtils.getImgSrc(text);
+                                    detailContent.addImageViewAtIndex(detailContent.getLastIndex(), imagePath);
+                                } else {
+                                    detailContent.addTextViewAtIndex(detailContent.getLastIndex(), text);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+    }
+
+    /**
+     * 显示数据
+     */
+    private void showEditData(ObservableEmitter<String> emitter, String html) {
+        try {
+            List<String> textList = StringUtils.cutStringByImgTag(html);
+            for (int i = 0; i < textList.size(); i++) {
+                String text = textList.get(i);
+                emitter.onNext(text);
+            }
+            emitter.onComplete();
+        } catch (Exception e){
+            e.printStackTrace();
+            emitter.onError(e);
+        }
+    }
+
     /**
      * 设置轮播图
      *
@@ -302,5 +415,11 @@ public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPre
         getWindow().setAttributes(lp);
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mDisposable != null && !mDisposable.isDisposed()){
+            mDisposable.dispose();
+        }
+    }
 }

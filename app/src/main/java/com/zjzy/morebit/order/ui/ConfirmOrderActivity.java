@@ -260,7 +260,7 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
                         //创建订单
                         mPresenter.createOrderForVip(ConfirmOrderActivity.this,
                                 mAddressInfo.getId(),mGoodsOrderInfo.getGoodsId(),
-                                mGoodsOrderInfo.getCount(),mGoodsOrderInfo.getGoodsTotalPrice(),
+                                mGoodsOrderInfo.getCount(),mGoodsOrderInfo.getPrice(),
                                 mGoodsOrderInfo.getPayPrice()
                                 );
                     }

@@ -77,8 +77,12 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
     }
 
     @Override
-    public void onDeleteSuccessful(Boolean isSuccess) {
+    public void onDeleteSuccessful(Boolean isSuccess,int position) {
 
+        List<AddressInfo> infos = manageAdressAdapter.getItems();
+        infos.remove(position);
+        manageAdressAdapter.notifyItemRemoved(position);
+        manageAdressAdapter.notifyItemRangeChanged(position,infos.size()-position);
     }
 
     @Override
@@ -180,7 +184,7 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
 
         }
 
-        private void bindItemAddressInfoHolder(ItemAddressInfoHolder holder, int position) {
+        private void bindItemAddressInfoHolder(ItemAddressInfoHolder holder, final int position) {
             final AddressInfo item =  getItem(position);
             String name = item.getName();
             if (!TextUtils.isEmpty(name)){
@@ -218,6 +222,7 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
 
                 @Override
                 public void onClick(View v) {
+
                     AddModifyAddressActivity.start(ManageGoodsAddressActivity.this,
                             item,C.Address.UPDATE_TYPE);
                 }
@@ -226,8 +231,10 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
             holder.txtDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     mPresenter.deleteAddress(ManageGoodsAddressActivity.this,
-                            item.getId().toString());
+                            item.getId().toString(),position);
+
                 }
             });
 

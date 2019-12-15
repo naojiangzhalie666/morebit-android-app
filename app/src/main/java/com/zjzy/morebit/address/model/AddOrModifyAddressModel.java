@@ -34,7 +34,14 @@ public class AddOrModifyAddressModel extends MvpModel {
      */
     public Observable<BaseResponse<Boolean>> addAdddress(BaseActivity rxActivity, AddressInfo info) {
         RequestAddAddressBean bean = new RequestAddAddressBean();
-        bean.setAddressInfo(info);
+        bean.setName(info.getName());
+        bean.setCity(info.getCity());
+        bean.setDefault(info.isDefault());
+        bean.setDetailAddress(info.getDetailAddress());
+        bean.setDistrict(info.getDistrict());
+        bean.setProvince(info.getProvince());
+        bean.setTel(info.getTel());
+
         return RxHttp.getInstance().getGoodsService().addAddress(bean)
                 .compose(RxUtils.<BaseResponse<Boolean>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<Boolean>>bindToLifecycle());
@@ -44,7 +51,14 @@ public class AddOrModifyAddressModel extends MvpModel {
      */
     public Observable<BaseResponse<Boolean>> updateAddress(BaseActivity rxActivity, AddressInfo info) {
         RequestUpdateAddressBean bean = new RequestUpdateAddressBean();
-        bean.setAddressInfo(info);
+        bean.setName(info.getName());
+        bean.setCity(info.getCity());
+        bean.setDefault(info.isDefault());
+        bean.setDetailAddress(info.getDetailAddress());
+        bean.setDistrict(info.getDistrict());
+        bean.setProvince(info.getProvince());
+        bean.setTel(info.getTel());
+        bean.setId(info.getId());
         return RxHttp.getInstance().getGoodsService().updateAddress(bean)
                 .compose(RxUtils.<BaseResponse<Boolean>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<Boolean>>bindToLifecycle());

@@ -137,16 +137,29 @@
             >
         </TextView>
     </RelativeLayout>
-    <TextView
+<!--    <TextView-->
+<!--        android:id="@+id/number_goods_detail_content"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:text="商品详情内容"-->
+<!--        android:textSize="@dimen/sp_15"-->
+<!--        android:textColor="@color/color_333333"-->
+<!--        android:layout_below="@id/rl_number_goods_title"-->
+        />
+
+    <com.sendtion.xrichtext.RichTextView
         android:id="@+id/number_goods_detail_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
         android:text="商品详情内容"
-        android:textSize="@dimen/sp_15"
-        android:textColor="@color/color_333333"
-        android:layout_below="@id/rl_number_goods_title"
-        />
+        app:rt_view_text_line_space="6dp"
+        app:rt_view_image_height="0"
+        app:rt_view_image_bottom="10"
+        app:rt_view_text_size="16sp"
+        app:rt_view_text_color="@color/color_333333"
+        android:layout_below="@id/rl_number_goods_title"/>
+
     <TextView
         android:id="@+id/btn_goods_buy_action"
         android:layout_width="match_parent"

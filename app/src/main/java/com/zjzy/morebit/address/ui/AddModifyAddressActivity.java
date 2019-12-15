@@ -85,7 +85,7 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     private String mCity;
 
     private String mDistinct;
-
+    private int mAddressId;
     private String mName;
     private String mPhone;
     private String mDetail;
@@ -209,7 +209,18 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
             }else{
                 swtichAddressDefault.setChecked(false);
             }
-            mPresenter.updateAddress(AddModifyAddressActivity.this,mAddressInfo);
+            userName.setText(mAddressInfo.getName());
+            phone.setText(mAddressInfo.getTel());
+            mAddressId = mAddressInfo.getId();
+            mName = mAddressInfo.getName();
+            mPhone = mAddressInfo.getTel();
+            mProvice = mAddressInfo.getProvince();
+            mCity = mAddressInfo.getCity();
+            mDistinct = mAddressInfo.getDistrict();
+            mDetail = mAddressInfo.getDetailAddress();
+            proviceCityDist.setText(mAddressInfo.getProvince()+mAddressInfo.getCity()+mAddressInfo.getDistrict());
+            editDetail.setText(mAddressInfo.getDetailAddress());
+
         }else{
             mDefaultFlag= swtichAddressDefault.isChecked();
         }
@@ -230,10 +241,19 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
                 finish();
                 break;
             case R.id.btn_save:
-                mAddressInfo = createAddressInfo(mName,mPhone,mProvice,mCity,mDistinct,mDetail);
-                if (mAddressInfo != null){
-                    mPresenter.addAddress(AddModifyAddressActivity.this,mAddressInfo);
+                if (type == C.Address.UPDATE_TYPE){
+                    mAddressInfo = createAddressInfo();
+                    if (mAddressInfo != null){
+                        mAddressInfo.setId(mAddressId);
+                        mPresenter.updateAddress(AddModifyAddressActivity.this,mAddressInfo);
+                    }
+                }else{
+                    mAddressInfo = createAddressInfo();
+                    if (mAddressInfo != null){
+                        mPresenter.addAddress(AddModifyAddressActivity.this,mAddressInfo);
+                    }
                 }
+
                 break;
             case R.id.rl_select_area:
                 if (dialog != null) {
@@ -270,7 +290,7 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "请输入手机号");
             return checkFlag;
         }
-        if (TextUtils.isEmpty(mProvice)||TextUtils.isEmpty(mCity)||TextUtils.isEmpty(mDistinct)){
+        if (TextUtils.isEmpty(mProvice)&&TextUtils.isEmpty(mCity)&&TextUtils.isEmpty(mDistinct)){
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "请选择所在地区");
             return checkFlag;
         }
@@ -286,18 +306,18 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     /**
      * 创建地址信息
      */
-    private AddressInfo createAddressInfo(String name ,String phone,String provice,String city,
-                                          String distinct,String detail){
+    private AddressInfo createAddressInfo(){
         if (!checkInfo()){
             return null;
         }
             AddressInfo info = new AddressInfo();
-            info.setName(name);
-            info.setTel(phone);
-            info.setProvince(provice);
-            info.setCity(city);
-            info.setDistrict(distinct);
-            info.setDetailAddress(detail);
+
+            info.setName(mName);
+            info.setTel(mPhone);
+            info.setProvince(mProvice);
+            info.setCity(mCity);
+            info.setDistrict(mDistinct);
+            info.setDetailAddress(mDetail);
             info.setDefault(mDefaultFlag);
             return info;
     }
