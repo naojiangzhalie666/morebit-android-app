@@ -52,7 +52,7 @@ public class ReturnCashModel extends MvpModel {
     }
 
     public Observable<String> getprofileUrlObservable(RxFragment fragment, String url) {
-        return RxWXHttp.getInstance().getService(C.BASE_YUMIN).profilePicture(url)
+        return RxWXHttp.getInstance().getService(C.BASE_MOREBIT).profilePicture(url)
                 .compose(fragment.<String>bindToLifecycle());
     }
 

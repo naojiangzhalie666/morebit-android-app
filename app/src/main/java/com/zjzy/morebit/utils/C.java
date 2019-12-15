@@ -7,7 +7,7 @@ public class C {
 
     // api
 //    public static final String BASE_YUMIN = "https://api.gzmiyuan.com";
-    public static final String BASE_YUMIN = "http://api.markermall.com";
+    public static final String BASE_MOREBIT = "http://api.markermall.com";
     // pp
 //    public static final String BASE_YUMIN = "http://pp.gzmiyuan.com";
 
@@ -23,17 +23,17 @@ public class C {
 
     public static class UrlV2 {
         //用户模块调用
-        public static final String USERS = BASE_YUMIN;
+        public static final String USERS = BASE_MOREBIT;
         //商品模块调用
-        public static final String GOODS = BASE_YUMIN;
+        public static final String GOODS = BASE_MOREBIT;
         //系统模块
-        public static final String SYSTE = BASE_YUMIN;
+        public static final String SYSTE = BASE_MOREBIT;
         //订单模块
-        public static final String ORDERS = BASE_YUMIN;
+        public static final String ORDERS = BASE_MOREBIT;
     }
 
     public static class Setting {
-        public static final String appName = "markermall_";
+        public static final String appName = "morebit_";
         public static String user_agent = "";//手机型号
         public static String device_id = "";//设备号
         public static String app_version = "";//app版本号
@@ -57,6 +57,34 @@ public class C {
 
     public static class Result {  //返回值
         public static final int shareMoneyToEditTemplateCoad = 1001;
+    }
+
+    /**
+     * 更新或者增加地址。
+     */
+    public static class Address{
+        public static final int ADD_TYPE = 0;
+        public static final int UPDATE_TYPE = 1;
+    }
+
+    /**
+     * 更新或者增加地址。
+     */
+    public static class UserGrade{
+
+        /**
+         * 会员
+         */
+        public static final int NUMBER=0;
+        /**
+         * Vip会员
+         */
+        public static final int VIP_NUMBER=1;
+        /**
+         * 团队长
+         */
+        public static final int SENIOR_LEADER = 2;
+
     }
 
     /**
@@ -96,6 +124,15 @@ public class C {
         public static final String COUNTRY = "country"; //   country
         public static final String POSTER_URL = "POSTER_URL"; //   海报
         public static final String POSTER_POS = "POSTER_POS"; //   海报 选择位置
+
+        //会员商品订单
+        public static final String GOODS_ORDER_INFO= "GOODS_ORDER_INFO";
+        //收货地址
+        public static final String GOODS_ADDRESS_INFO= "GOODS_ADDRESS_INFO";
+        //增加或者更新地址
+        public static final String TYPE_ADDRESS= "UPDATE_ADDRESS";
+
+
 
     }
 
@@ -398,6 +435,7 @@ public class C {
         public static final String CIRCLE_SEARCH_TITLE = Setting.appName + "CIRCLE_SEARCH_TITLE ";  //发圈 title
         public static final String DIALOG_USER_IS_UPGRADE= Setting.appName + "DIALOG_USER_IS_UPGRADE";  //是否已弹出用户升级提示
         public static final String DIALOG_USER_IS_UPGRADE_TIME= Setting.appName + "DIALOG_USER_IS_UPGRADE_TIME";  //用户升级dialog弹出的时间
+        public static final String SAVED_DB_FOR_ADDRESS= Setting.appName + "SAVED_DB_FOR_ADDRESS";  //地址保存到db
     }
 
     public static class requestType {

@@ -4,8 +4,8 @@ import android.webkit.WebView;
 
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-import com.sensorsdata.analytics.android.sdk.util.JsUtil;
+//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+//import com.sensorsdata.analytics.android.sdk.util.JsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  **/
 public class SensorsDataUtil {
     private static final String TAG = "SensorsDataAPI";
-    private static SensorsDataAPI sensorsDataAPI = null;
+//    private static SensorsDataAPI sensorsDataAPI = null;
     private static SensorsDataUtil sensorsDataUtil = null;
     private static boolean initSDk = false;
 
@@ -26,9 +26,9 @@ public class SensorsDataUtil {
                 if (sensorsDataUtil == null) {
                     sensorsDataUtil = new SensorsDataUtil();
                 }
-                if (sensorsDataAPI == null) {
-                    sensorsDataAPI = SensorsDataAPI.sharedInstance();
-                }
+//                if (sensorsDataAPI == null) {
+//                    sensorsDataAPI = SensorsDataAPI.sharedInstance();
+//                }
 
             }
         }
@@ -41,14 +41,14 @@ public class SensorsDataUtil {
     public static void initBidDataAPI() {
         initSDk = true;
         try {
-            SensorsDataAPI.sharedInstance(App.getAppContext(), "");
-            List<SensorsDataAPI.AutoTrackEventType> eventTypeList = new ArrayList<>();
-            eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_START);
-            eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_END);
-            eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_VIEW_SCREEN);
-            eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_CLICK);
-            SensorsDataAPI.sharedInstance(App.getAppContext()).enableAutoTrack(eventTypeList);
-            SensorsDataAPI.sharedInstance(App.getAppContext()).enableLog(true);
+//            SensorsDataAPI.sharedInstance(App.getAppContext(), "");
+//            List<SensorsDataAPI.AutoTrackEventType> eventTypeList = new ArrayList<>();
+//            eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_START);
+//            eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_END);
+//            eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_VIEW_SCREEN);
+//            eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_CLICK);
+//            SensorsDataAPI.sharedInstance(App.getAppContext()).enableAutoTrack(eventTypeList);
+//            SensorsDataAPI.sharedInstance(App.getAppContext()).enableLog(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,7 +58,7 @@ public class SensorsDataUtil {
     public void catalogClickTrack(String userId, String catalogId, String catalogName) {
         if (isPust()) {
             try {
-                sensorsDataAPI.catalogClickTrack("", catalogId, catalogName);
+//                sensorsDataAPI.catalogClickTrack("", catalogId, catalogName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -73,7 +73,7 @@ public class SensorsDataUtil {
     public void dialogSearch(String searchKey) {
         if (isPust()) {
             try {
-                sensorsDataAPI.dialogSearch(UserLocalData.getUser().getId(), searchKey, UserLocalData.getUser().getPhone());
+//                sensorsDataAPI.dialogSearch(UserLocalData.getUser().getId(), searchKey, UserLocalData.getUser().getPhone());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -90,7 +90,7 @@ public class SensorsDataUtil {
     public void searchKeyTrack(String searchKey, int type) {
         if (isPust()) {
             try {
-                sensorsDataAPI.searchKeyTrack(UserLocalData.getUser().getId(), searchKey, type);
+//                sensorsDataAPI.searchKeyTrack(UserLocalData.getUser().getId(), searchKey, type);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -104,8 +104,8 @@ public class SensorsDataUtil {
     public void advClickTrack(String title, String clickId, String type, String model, int position, String classId, String url) {
         if (isPust()) {
             try {
-                sensorsDataAPI.advClickTrack(UserLocalData.getUser().getId(), title, UserLocalData.getUser().getPhone(),
-                        clickId, type, model, position + 1, "", url);
+//                sensorsDataAPI.advClickTrack(UserLocalData.getUser().getId(), title, UserLocalData.getUser().getPhone(),
+//                        clickId, type, model, position + 1, "", url);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -121,8 +121,8 @@ public class SensorsDataUtil {
         if (isPust()) {
             try {
 
-                sensorsDataAPI.exposureViewTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),
-                        UserLocalData.getUser().getToken(),model);
+//                sensorsDataAPI.exposureViewTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),
+//                        UserLocalData.getUser().getToken(),model);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -135,8 +135,8 @@ public class SensorsDataUtil {
     public void advClickTrack(String clickId, String level_1, String level_2, String type, String model, int position, String title, String classId, String url, String subTitle) {
         if (isPust()) {
             try {
-                sensorsDataAPI.advClickTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),
-                        UserLocalData.getUser().getToken(),clickId, level_1,level_2,type, model, position + 1, title, classId,url,subTitle);
+//                sensorsDataAPI.advClickTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),
+//                        UserLocalData.getUser().getToken(),clickId, level_1,level_2,type, model, position + 1, title, classId,url,subTitle);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -150,8 +150,8 @@ public class SensorsDataUtil {
 
         if (isPust()) {
             try {
-                sensorsDataAPI.advClickTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),
-                        clickId, type, model, position + 1, title,classId, url,subTitle);
+//                sensorsDataAPI.advClickTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),
+//                        clickId, type, model, position + 1, title,classId, url,subTitle);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -166,7 +166,7 @@ public class SensorsDataUtil {
     public void hotClick(String title) {
         if (isPust()) {
             try {
-                sensorsDataAPI.hotClick(UserLocalData.getUser().getId(), title, UserLocalData.getUser().getPhone());
+//                sensorsDataAPI.hotClick(UserLocalData.getUser().getId(), title, UserLocalData.getUser().getPhone());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -184,7 +184,7 @@ public class SensorsDataUtil {
         if (isPust()) {
             try {
 
-                sensorsDataAPI.mifenClickTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),UserLocalData.getUser().getToken(),level_1,level_2,model,position+1,productId,productName,type,classId,url,title,clickId);
+//                sensorsDataAPI.mifenClickTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),UserLocalData.getUser().getToken(),level_1,level_2,model,position+1,productId,productName,type,classId,url,title,clickId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -201,8 +201,8 @@ public class SensorsDataUtil {
     public void mifenClickTrack( String level_1, String level_2, String model, int position, String productId, String productName, String type, String classId, String url, String title, String subTitle, int shareClick, String clickId) {
         if (isPust()) {
             try {
-                sensorsDataAPI.mifenClickTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),UserLocalData.getUser().getToken(),
-                        level_1,level_2,model,position,productId,productName,type,classId,url,title,subTitle,shareClick,clickId);
+//                sensorsDataAPI.mifenClickTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),UserLocalData.getUser().getToken(),
+//                        level_1,level_2,model,position,productId,productName,type,classId,url,title,subTitle,shareClick,clickId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -212,7 +212,7 @@ public class SensorsDataUtil {
     public void setUserInfo() {
         if (isPust()) {
             try {
-                sensorsDataAPI.setUserInfo(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(), UserLocalData.getToken());
+//                sensorsDataAPI.setUserInfo(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(), UserLocalData.getToken());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -229,7 +229,7 @@ public class SensorsDataUtil {
     public void setSuggestionTrack(String userId, String suggestion) {
         if (isPust()) {
             try {
-                sensorsDataAPI.setSuggestionTrack(userId, suggestion);
+//                sensorsDataAPI.setSuggestionTrack(userId, suggestion);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -242,7 +242,7 @@ public class SensorsDataUtil {
     public void browseProductTrack(String userId, String productId) {
         if (isPust()) {
             try {
-                sensorsDataAPI.browseProductTrack(userId, productId);
+//                sensorsDataAPI.browseProductTrack(userId, productId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -256,8 +256,8 @@ public class SensorsDataUtil {
     public void browseProductTrack(String model, int position, String productId, String productName, String productPrice, String type, String classId, String url, String title){
         if (isPust()) {
             try {
-                sensorsDataAPI.browseProductTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),UserLocalData.getUser().getToken(),
-                        model,position,productId,productName,productPrice,type,classId,url,title);
+//                sensorsDataAPI.browseProductTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(),UserLocalData.getUser().getToken(),
+//                        model,position,productId,productName,productPrice,type,classId,url,title);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -270,7 +270,7 @@ public class SensorsDataUtil {
     public void collectProductTrack(String userId, String productId, String productName, String productPrice) {
         if (isPust()) {
             try {
-                sensorsDataAPI.collectProductTrack(userId, productId, productName, productPrice);
+//                sensorsDataAPI.collectProductTrack(userId, productId, productName, productPrice);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -283,7 +283,7 @@ public class SensorsDataUtil {
     public void buy(String userId, String couponsId, String productId, String productName, String productPrice) {
         if (isPust()) {
             try {
-                sensorsDataAPI.buy(userId, couponsId, productId, productName, productPrice);
+//                sensorsDataAPI.buy(userId, couponsId, productId, productName, productPrice);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -297,7 +297,7 @@ public class SensorsDataUtil {
     public void showUpWebView(WebView webView, boolean isSupportJellyBean) {
         if (isPust()) {
             try {
-                sensorsDataAPI.showUpWebView(webView, isSupportJellyBean);
+//                sensorsDataAPI.showUpWebView(webView, isSupportJellyBean);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -310,7 +310,7 @@ public class SensorsDataUtil {
     public void setAcitivityClickTrack(String userId, String activityId) {
         if (isPust()) {
             try {
-                sensorsDataAPI.setAcitivityClickTrack(userId, activityId);
+//                sensorsDataAPI.setAcitivityClickTrack(userId, activityId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -323,7 +323,7 @@ public class SensorsDataUtil {
     public void injectJsSdk(WebView view) {
         if (isPust()&&view!=null) {
             try {
-                JsUtil.injectJsSdk(view);
+//                JsUtil.injectJsSdk(view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -336,8 +336,8 @@ public class SensorsDataUtil {
     public void exposureViewTrack(String model, String type, String classId, String url, String title,String clickId) {
         if (isPust()) {
             try {
-                sensorsDataAPI.exposureViewTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(), UserLocalData.getUser().getToken(),
-                        model,type,classId,url,title,clickId);
+//                sensorsDataAPI.exposureViewTrack(UserLocalData.getUser().getId(), UserLocalData.getUser().getPhone(), UserLocalData.getUser().getToken(),
+//                        model,type,classId,url,title,clickId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -348,7 +348,7 @@ public class SensorsDataUtil {
      * 是否上传
      */
     public boolean isPust() {
-        return initSDk && sensorsDataAPI != null;
+        return initSDk ;//&& sensorsDataAPI != null;
     }
 
 }

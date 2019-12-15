@@ -68,7 +68,7 @@ public class RxHttp {
 
 
     public CommonService getCommonService() {
-        return getRetrofit(C.BASE_YUMIN).create(CommonService.class);
+        return getRetrofit(C.BASE_MOREBIT).create(CommonService.class);
     }
 
     public CommonService getCommonService(String url) {

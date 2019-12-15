@@ -14,6 +14,7 @@ import android.util.Log;
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 import com.facebook.stetho.Stetho;
+//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.adapter.MarkermallCircleAdapter;
 import com.zjzy.morebit.network.BaseResponse;
@@ -29,7 +30,7 @@ import com.zjzy.morebit.utils.encrypt.EncryptUtlis;
 import com.zjzy.morebit.utils.fire.BuglyUtils;
 import com.zjzy.morebit.utils.fire.DeviceIDUtils;
 import com.mob.tools.proguard.ProtectedMemberKeeper;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.shuyu.gsyvideoplayer.player.PlayerFactory;
 import com.shuyu.gsyvideoplayer.player.SystemPlayerManager;
 import com.tencent.bugly.Bugly;
@@ -400,14 +401,14 @@ public class App extends Application implements ProtectedMemberKeeper {
      * 埋点sdk初始化
      */
     private void initBidDataAPI() {
-        SensorsDataAPI.sharedInstance(this, "");
-        List<SensorsDataAPI.AutoTrackEventType> eventTypeList = new ArrayList<>();
-        eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_START);
-        eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_END);
-        eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_VIEW_SCREEN);
-        eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_CLICK);
-        SensorsDataAPI.sharedInstance(this).enableAutoTrack(eventTypeList);
-        SensorsDataAPI.sharedInstance(App.getAppContext()).enableLog(BuildConfig.DEBUG == true? true:false);
+//        SensorsDataAPI.sharedInstance(this, "");
+//        List<SensorsDataAPI.AutoTrackEventType> eventTypeList = new ArrayList<>();
+//        eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_START);
+//        eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_END);
+//        eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_VIEW_SCREEN);
+//        eventTypeList.add(SensorsDataAPI.AutoTrackEventType.APP_CLICK);
+//        SensorsDataAPI.sharedInstance(this).enableAutoTrack(eventTypeList);
+//        SensorsDataAPI.sharedInstance(App.getAppContext()).enableLog(BuildConfig.DEBUG == true? true:false);
     }
 
 

@@ -1051,7 +1051,7 @@ public class GoodsUtil {
     public static Observable<String> getGoodsData(final RxAppCompatActivity context, final String string) {
         MyLog.d("Thread  + " + Thread.currentThread().getName());
 
-        return RxWXHttp.getInstance().getService(C.BASE_YUMIN).profilePicture(string)
+        return RxWXHttp.getInstance().getService(C.BASE_MOREBIT).profilePicture(string)
                 .compose(RxUtils.<String>switchSchedulers())
                 .compose(context.<String>bindToLifecycle());
 

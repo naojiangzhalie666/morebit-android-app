@@ -3,7 +3,7 @@ apply plugin: 'channel'
 apply plugin: 'bugly'
 
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'com.sensorsdata.analytics.android'
+//apply plugin: 'com.sensorsdata.analytics.android'
 //apply plugin: 'oneapm'
 bugly {
     appId = '3040a7dbe1' // 注册时分配的App ID
@@ -300,14 +300,14 @@ dependencies {
 
     // compile 'com.github.cpiz:BubbleView:1.0.3'
     compile(name: 'bubbleview', ext: 'aar')
-    compile(name: 'bigdata1.0.3', ext: 'aar')
+//    compile(name: 'bigdata1.0.3', ext: 'aar')
 
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
 
     //Optional: see how to use the utility.
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
+    implementation project(path: ':Address_library')
 
-    compile 'com.github.donkingliang:LabelsView:1.2.0'
 
     //Optional: see how to use the utility.
 //    compile 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'

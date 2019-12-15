@@ -17,7 +17,7 @@
     <com.zjzy.morebit.Module.common.View.ReUseListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:background="@color/color_333333"
+        android:background="@color/color_FFFFFF"
         android:layout_height="match_parent"
         />
 

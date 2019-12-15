@@ -1,9 +1,11 @@
 package com.zjzy.morebit.main.model;
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.Logger;
+import com.zjzy.morebit.address.AllRegionInfoList;
 import com.zjzy.morebit.main.ui.CollectFragment2;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
@@ -235,6 +237,17 @@ public class MainModel extends MvpModel {
         return RxHttp.getInstance().getGoodsService().getRankingNews(bean)
                 .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
                 .compose(rxFragmen.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
+    }
+
+    /**
+     * 获取所有区域内容
+     *
+     * @return
+     */
+    public Observable<BaseResponse<AllRegionInfoList>> getAllRegionInfoList(RxAppCompatActivity rxActivity) {
+        return RxHttp.getInstance().getUsersService().getAllRegions()
+                .compose(RxUtils.<BaseResponse<AllRegionInfoList>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<AllRegionInfoList>>bindToLifecycle());
     }
 
 

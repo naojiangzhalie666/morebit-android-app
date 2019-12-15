@@ -99,7 +99,7 @@
                             android:drawableRight="@drawable/icon_gengduo_white"
                             android:gravity="center_vertical"
                             android:text="累计收益"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_845802"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -108,7 +108,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_845802"
+                        android:text="0.0"
                         android:textSize="26dp" />
                 </LinearLayout>
 
@@ -131,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="17dp"
                         android:text="今日预估收入（元）"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_845802"
                         android:textSize="12sp" />
 
                     <TextView
@@ -140,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:text="0"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_845802"
                         android:textSize="18sp" />
 
                     <TextView
@@ -148,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
                         android:text="本月预估收入（元）"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_845802"
                         android:textSize="12sp" />
 
                     <TextView
@@ -157,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:text="0"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_845802"
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>

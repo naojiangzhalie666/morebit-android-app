@@ -51,6 +51,7 @@
                     android:textColor="@color/color_6D4426"
                     android:textSize="14sp"/>
                 <TextView
+                    android:id="@+id/goods_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -58,7 +59,7 @@
                     android:layout_alignTop="@id/txt_selected_goods"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="商品题目"
+                    android:text="商品名称"
                     android:textColor="@color/color_333333"
                     android:textSize="14sp"/>
             </RelativeLayout>
@@ -68,6 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/number_goods_pic"
                 android:layout_marginLeft="@dimen/toolbar_padLeft"
                 android:layout_width="100dp"
                 android:layout_height="110dp"
@@ -194,6 +196,7 @@
         android:layout_marginRight="10dp">
 
         <TextView
+            android:id="@+id/goods_buy_action"
             android:gravity="center"
             android:background="@drawable/bg_selected_goods_btn"
             android:layout_width="0dp"
@@ -201,7 +204,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="确定"
+            android:text="确认"
             android:textStyle="bold"
             android:textSize="@dimen/sp_16"
             android:textColor="@color/color_FFFFFF"

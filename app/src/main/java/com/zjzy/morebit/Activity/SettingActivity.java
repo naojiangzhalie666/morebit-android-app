@@ -18,6 +18,7 @@ import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.UnBingdingWechatDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.address.ui.ManageGoodsAddressActivity;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.contact.SdDirPath;
 import com.zjzy.morebit.info.model.WechatModel;
@@ -213,7 +214,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(this, SettingNotificationActivity.class));
                 break;
             case R.id.my_goods_address:// 我的收货地址
-
+                ManageGoodsAddressActivity.start(SettingActivity.this);
+                break;
             case R.id.item10_rl: //清理缓存
                 openCleanDataDialog();
                 break;

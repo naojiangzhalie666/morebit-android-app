@@ -28,6 +28,7 @@ public class UserLocalData {
     public static Bitmap mMyHeadBitmap;
     public static String mPhone = "";
     public static String sToken = "";
+    public static boolean isUpdateAllRegion;
 
     /**
      * 获取User信息
@@ -173,5 +174,23 @@ public class UserLocalData {
     public static boolean isShowGuideMine(){
         boolean isshow = (boolean) SharedPreferencesUtils.get(App.getAppContext(), C.sp.isShowGuideMine, false);
         return isshow;
+    }
+
+    /**
+     * 获取savedFlag
+     */
+    public static boolean getSavedRegionFlag() {
+            boolean savedFlag = (boolean) SharedPreferencesUtils.get(App.getAppContext(), C.sp.SAVED_DB_FOR_ADDRESS, false);
+            return savedFlag;
+
+
+    }
+
+    /**
+     * savedFlag
+     */
+    public static void setSavedRegionFlag(boolean savedFlag) {
+        SharedPreferencesUtils.put(App.getAppContext(), C.sp.SAVED_DB_FOR_ADDRESS, savedFlag);
+
     }
 }

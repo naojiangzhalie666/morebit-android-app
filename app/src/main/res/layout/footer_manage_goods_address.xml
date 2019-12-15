@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_manage_add_address"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/bg_manage_address_btn">
+    <TextView
+        android:id="@+id/manage_add_address"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/add_goods_address"
+        android:gravity="center"
+        android:textColor="@color/color_FFFFFF"
+        android:textSize="@dimen/sp_15"
+        android:layout_centerInParent="true"
+        />
+</RelativeLayout>

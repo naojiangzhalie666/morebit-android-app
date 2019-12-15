@@ -7,7 +7,10 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 
+import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
+import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestPage;
 
 import java.util.List;
@@ -24,10 +27,24 @@ public class NumberGoodsModel extends MvpModel {
      * @param fragment
      * @return
      */
-    public Observable<BaseResponse<List<NumberGoods>>> getNumberGoodsList(RxFragment fragment, int page) {
+    public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(RxFragment fragment, int page) {
 
         return RxHttp.getInstance().getGoodsService().getNumberGoodsList(new RequestPage().setPage(page))
-                .compose(RxUtils.<BaseResponse<List<NumberGoods>>>switchSchedulers())
-                .compose(fragment.<BaseResponse<List<NumberGoods>>>bindToLifecycle());
+                .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
+                .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
     }
+    /**
+     * 用户等级升级
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxFragment fragment,int userGrade) {
+        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
+        updateUserBean.setUserType(userGrade);
+        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
+                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
+    }
+
 }

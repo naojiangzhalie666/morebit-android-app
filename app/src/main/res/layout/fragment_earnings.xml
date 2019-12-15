@@ -37,7 +37,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/color_FFE200"
+                    android:background="@drawable/bg_earning_header"
                     android:orientation="vertical"
                     android:paddingBottom="8dp">
 
@@ -80,7 +80,7 @@
                                     android:id="@+id/balance"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/color_333333"
+                                    android:textColor="@color/color_FFFFFF"
                                     android:textSize="@dimen/sp_38" />
 
                                 <TextView
@@ -88,10 +88,10 @@
                                     android:layout_width="71dp"
                                     android:layout_height="23dp"
                                     android:layout_marginTop="3dp"
-                                    android:background="@drawable/bg_border_333333"
+                                    android:background="@drawable/bg_border_white"
                                     android:gravity="center"
                                     android:text="@string/bill_details"
-                                    android:textColor="@color/color_333333"
+                                    android:textColor="@color/color_FFFFFF"
                                     android:textSize="@dimen/sp_12" />
 
                                   <LinearLayout

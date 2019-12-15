@@ -2,10 +2,14 @@ package com.zjzy.morebit.home.presenter;
 
 import android.text.TextUtils;
 
+import com.smarttop.library.db.manager.AddressDictManager;
+import com.smarttop.library.widget.AddressSelector;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.Logger;
+import com.zjzy.morebit.address.AllRegionInfoList;
 import com.zjzy.morebit.home.contract.MainContract;
 import com.zjzy.morebit.main.model.MainModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
@@ -27,6 +31,7 @@ import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LogUtils;
 import com.zjzy.morebit.utils.LoginUtil;
+import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.NetWorkUtil;
 import com.zjzy.morebit.utils.action.ACache;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -39,6 +44,7 @@ import java.util.List;
 
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import mtopsdk.common.util.LocalConfig;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -392,5 +398,46 @@ public class MainPresenter extends MvpPresenter<MainModel, MainContract.View> im
             }
         }
 
+    }
+
+    /**
+     - @Description:  灰度升级
+     - @Author:
+     - @Time:  2019/9/8 10:33
+     **/
+    @Override
+    public void getAllRegion(final RxAppCompatActivity rxActivity) {
+
+        mModel.getAllRegionInfoList(rxActivity)
+                .compose(RxUtils.<BaseResponse<AllRegionInfoList>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<AllRegionInfoList>>bindToLifecycle())
+                .subscribe(new DataObserver<AllRegionInfoList>() {
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        //拉取失败
+                        MyLog.e("mainlhp","error："+errCode+"msg："+errorMsg);
+                        UserLocalData.setSavedRegionFlag(false);
+                    }
+
+                    @Override
+                    protected void onSuccess(AllRegionInfoList data) {
+//                        checkGrayUpgrade(data,appUpgradeInfo,rxActivity);
+//                        UserLocalData.setSavedRegionFlag(true);
+                        MyLog.d("mainlhp","请求成功-allRegions");
+                        if (data == null){
+                            return;
+                        }
+                        int size = data.getList().size();
+                        if (size == 0){
+                            return;
+                        }
+//                        AddressDictManager addressDictManager = new AddressDictManager(rxActivity);                        addressDictManager.deleteAll();
+//                        MyLog.d("mainlhp","开始拉取地区数据");
+//                        addressDictManager.insertAddress(d());
+//                        UserLocalData.setSavedRegionFlag(true);
+//                        MyLog.d("mainlhp","结束拉取地区数据");
+                    }
+                });
     }
 }

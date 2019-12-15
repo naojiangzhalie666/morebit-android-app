@@ -4,41 +4,49 @@
     android:layout_height="match_parent"
     android:background="@color/color_F5F5F5"
     android:orientation="vertical">
-    <include layout="@layout/top" />
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        style="@style/TopSize">
+
+        <TextView
+            android:id="@+id/txt_head_title"
+            style="@style/TopSizeTitle"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingTop="10dp"
+            android:paddingRight="35dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                style="@style/TopSizeBack"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true" />
+        </LinearLayout>
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <com.zjzy.morebit.Module.common.View.ReUseListView
-            android:id="@+id/mListView"
+        <LinearLayout
+            android:id="@+id/ll_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <com.zjzy.morebit.Module.common.View.ReUseListView
+                android:id="@+id/mListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_manage_add_address"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/mListView">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_goods_address"
-                android:textSize="12sp"
-                android:layout_centerInParent="true"/>
-
-            <ImageView
-                android:id="@+id/manage_address_arrow"
-                android:layout_width="17dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/youjiantou"/>
-
-        </RelativeLayout>
 
     </LinearLayout>
 

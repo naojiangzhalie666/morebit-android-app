@@ -57,6 +57,15 @@ public class UserInfo implements Serializable {
 
     private String birthDate;// 生日
     private int sex;//0未知，1男，2女
+    private Integer moreCoin;//多豆
+
+    public Integer getMoreCoin() {
+        return moreCoin;
+    }
+
+    public void setMoreCoin(Integer moreCoin) {
+        this.moreCoin = moreCoin;
+    }
 
     public String getId() {
         return id;

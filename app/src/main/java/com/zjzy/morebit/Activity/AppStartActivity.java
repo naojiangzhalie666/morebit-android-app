@@ -309,8 +309,8 @@ public class AppStartActivity extends RxAppCompatActivity {
     private void switchIcon(int useCode) {
         try {
             //要跟manifest的activity-alias 的name保持一致
-            String icon_tag = "com.markermall.cat.default";
-            String icon_tag_1212 = "com.markermall.cat.login1";
+            String icon_tag = "com.zjzy.morebit.default";
+            String icon_tag_1212 = "com.zjzy.morebit.login1";
 
             if (useCode != 3) {
                 PackageManager pm = getPackageManager();

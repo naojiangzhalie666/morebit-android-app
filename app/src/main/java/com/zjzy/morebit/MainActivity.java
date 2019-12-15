@@ -48,6 +48,7 @@ import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.LogoutEvent;
 import com.zjzy.morebit.pojo.event.OpenCategoryEvent;
+import com.zjzy.morebit.pojo.event.OpenNumberEvent;
 import com.zjzy.morebit.pojo.request.RequestSplashStatistics;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -145,6 +146,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             getHomeRedPackageData();
             mPresenter.getTaobaoLink(this);
             ConfigListUtlis.getConfigList(this, ConfigListUtlis.getConfigAllKey(), null);
+//            if (!UserLocalData.getSavedRegionFlag()){
+//                mPresenter.getAllRegion(this);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -477,6 +481,16 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         }, 500);
 
     }
+    @Subscribe
+    public void onEventMainThread(OpenNumberEvent event) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                rl_number.performClick();
+            }
+        }, 500);
+
+    }
 
     //重置菜单状态
     private void resetMenuStatus(View view) {
@@ -508,6 +522,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 setSysNotificationView();
                 break;
             case R.id.rl_number:
+                if (!LoginUtil.checkIsLogin(MainActivity.this)) {
+                    return;
+                }
                 //会员
                 mViewPager.setCurrentItem(2, false);
                 curPosition = C.mainPage.NUMBER;

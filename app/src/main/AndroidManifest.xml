@@ -210,6 +210,7 @@
             android:screenOrientation="portrait"></activity>
 
 
+
         <activity
             android:name="com.zjzy.morebit.Activity.ShareMoneyActivity"
             android:screenOrientation="portrait"
@@ -226,9 +227,21 @@
 
         <activity
             android:name="com.zjzy.morebit.Activity.SettingActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
 
-        </activity>
+        <activity
+            android:name="com.zjzy.morebit.address.ui.ManageGoodsAddressActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.zjzy.morebit.address.ui.AddModifyAddressActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.zjzy.morebit.order.ui.ConfirmOrderActivity"
+            android:screenOrientation="portrait"/>
+
+
 
         <activity
             android:name="com.zjzy.morebit.Activity.SettingNotificationActivity"
@@ -315,6 +328,22 @@
         <activity
             android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"
             android:screenOrientation="portrait" />
+<!--        <activity-->
+<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+
 
         <service android:name="com.zjzy.morebit.InitializeService"></service>
 
@@ -347,6 +376,10 @@
 
         <activity
             android:name="com.zjzy.morebit.login.ui.AreaCodeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name="com.zjzy.morebit.goods.shopping.ui.NumberGoodsDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
 

@@ -42,9 +42,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
-            <Button
+            <TextView
+                android:id="@+id/btn_order_detail"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
+                android:gravity="center"
                 android:text="查看订单"
                 android:layout_weight="1"
                 android:textSize="@dimen/sp_12"
@@ -53,10 +55,12 @@
                 android:layout_marginLeft="40dp"
 
                 />
-            <Button
+            <TextView
+                android:id="@+id/btn_goods_list"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="继续购物"
                 android:textSize="@dimen/sp_12"
                 android:textColor="@color/color_FFFFFF"

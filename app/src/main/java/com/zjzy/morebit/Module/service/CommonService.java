@@ -1,6 +1,10 @@
 package com.zjzy.morebit.Module.service;
 
+import com.zjzy.morebit.address.AddressInfo;
+import com.zjzy.morebit.address.AddressInfoList;
+import com.zjzy.morebit.address.AllRegionInfoList;
 import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.order.ResponseOrderInfo;
 import com.zjzy.morebit.pojo.AccountDestroy;
 import com.zjzy.morebit.pojo.AgentDetailList;
 import com.zjzy.morebit.pojo.AppUpgradeInfo;
@@ -63,9 +67,13 @@ import com.zjzy.morebit.pojo.login.InviteUserInfoBean;
 import com.zjzy.morebit.pojo.myInfo.ApplyUpgradeBean;
 import com.zjzy.morebit.pojo.myInfo.MakeMoenyBean;
 import com.zjzy.morebit.pojo.myInfo.OssKeyBean;
+import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
+import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
+import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
+import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
 import com.zjzy.morebit.pojo.request.RequestAppFeedBackBean;
 import com.zjzy.morebit.pojo.request.RequestArticleBean;
 import com.zjzy.morebit.pojo.request.RequestAuthCodeBean;
@@ -84,6 +92,8 @@ import com.zjzy.morebit.pojo.request.RequestCircleShareCountBean;
 import com.zjzy.morebit.pojo.request.RequestCollectionListBean;
 import com.zjzy.morebit.pojo.request.RequestConfigKeyBean;
 import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
+import com.zjzy.morebit.pojo.request.RequestCreateOrderBean;
+import com.zjzy.morebit.pojo.request.RequestDeleteAddressIdBean;
 import com.zjzy.morebit.pojo.request.RequestFansInfoBean;
 import com.zjzy.morebit.pojo.request.RequestFeedBackTypeBean;
 import com.zjzy.morebit.pojo.request.RequestGoodsCollectBean;
@@ -101,6 +111,8 @@ import com.zjzy.morebit.pojo.request.RequestMarkermallCircleBean;
 import com.zjzy.morebit.pojo.request.RequestMtopJsonpBean;
 import com.zjzy.morebit.pojo.request.RequestNickNameBean;
 import com.zjzy.morebit.pojo.request.RequestNoticeListBean;
+import com.zjzy.morebit.pojo.request.RequestNumberGoodsDetailBean;
+import com.zjzy.morebit.pojo.request.RequestOrderDetailBean;
 import com.zjzy.morebit.pojo.request.RequestPanicBuyTabBean;
 import com.zjzy.morebit.pojo.request.RequestPopupBean;
 import com.zjzy.morebit.pojo.request.RequestPushBean;
@@ -127,8 +139,10 @@ import com.zjzy.morebit.pojo.request.RequestTKLBean;
 import com.zjzy.morebit.pojo.request.RequestTeanmListBean;
 import com.zjzy.morebit.pojo.request.RequestTmallActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestUpPasswordBean;
+import com.zjzy.morebit.pojo.request.RequestUpdateAddressBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateHeadPortraitBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateNewPhoneBean;
+import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.request.RequestUserInfoBean;
 import com.zjzy.morebit.pojo.request.RequestVaultListBean;
 import com.zjzy.morebit.pojo.request.RequestVideoId;
@@ -353,6 +367,120 @@ public interface CommonService {
 //            @Field("sign") String sign
     );
 
+
+    /**
+     * 会员商品详情
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/order/goodsDetail")
+    public Observable<BaseResponse<NumberGoodsInfo>> getNumberGoodsDetail(
+            @Body RequestNumberGoodsDetailBean requestBean
+    );
+
+    /**
+     * 获取收货地址列表
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/user/getAllAddresses")
+    public Observable<BaseResponse<AddressInfoList>>  getAddressList();
+
+    /**
+     * 获取默认收货地址
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/user/getDefaultAddresses")
+    public Observable<BaseResponse<AddressInfo>>  getDefaultAddresses();
+
+    /**
+     * 删除用户收货地址
+     * @param requestBean
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/user/deleteAddress")
+    public Observable<BaseResponse<Boolean>>  deleteAddress(
+            @Body RequestDeleteAddressIdBean requestBean);
+
+    /**
+     * 更新收货地址
+     * @param requestBean
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/user/updateAddress")
+    public Observable<BaseResponse<Boolean>>  updateAddress(
+            @Body RequestUpdateAddressBean requestBean);
+
+    /**
+     * 添加收货地址
+     * @param requestBean
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/user/addAddress")
+    public Observable<BaseResponse<Boolean>>  addAddress(
+            @Body RequestAddAddressBean requestBean);
+
+    /**
+     * 获取所有行政区域
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/user/getAllRegions")
+    public Observable<BaseResponse<AllRegionInfoList>>  getAllRegions();
+
+    /**
+     * 创建会员商品订单
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/order/createOrderForVip")
+    public Observable<BaseResponse<ResponseOrderInfo>>   createOrderForVip(
+            @Body RequestCreateOrderBean requestBean);
+
+
+    /**
+     * 取消订单(会员商品)
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/order/cancelOrder")
+    public Observable<BaseResponse<Integer>>   cancelOrder(
+            @Body RequestOrderDetailBean requestBean);
+
+    /**
+     * 订单详情(会员商品)
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/order/orderDetail")
+    public Observable<BaseResponse<Integer>>   orderDetail(
+            @Body RequestOrderDetailBean requestBean);
+
+    /**
+     * 重新支付(会员商品)
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/order/payAgain")
+    public Observable<BaseResponse<ResponseOrderInfo>>   rePay(
+            @Body RequestOrderDetailBean requestBean);
+
+    /**
+     * 确认收货（会员商品）
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/order/confirmOrder")
+    public Observable<BaseResponse<Integer>>   confirmOrderGoods(
+            @Body RequestOrderDetailBean requestBean);
+
     /**
      * 生成淘口令
      *
@@ -418,6 +546,14 @@ public interface CommonService {
      */
     @POST("/api/user/getUserInfo")
     public Observable<BaseResponse<UserInfo>> getUserInfo();
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    @POST("/api/manage/user/agent/upgradeUser")
+    public Observable<BaseResponse<Boolean>> upgradeUser();
 
 
     /**
@@ -1064,10 +1200,9 @@ public interface CommonService {
      * @return
      */
     //    @FormUrlEncoded
-    @POST("/api/goods/getNumberList")
-    Observable<BaseResponse<List<NumberGoods>>> getNumberGoodsList(
+    @POST("/api/goods/listGoodsFromLitemall")
+    Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(
             //            @Field("page") int page
-
             @Body RequestPage requestPage
     );
 
@@ -2037,4 +2172,14 @@ public interface CommonService {
     @POST("/api/user/userScore/teamRanking")
     public Observable<BaseResponse<List<TeamInfo>>> getTeamRanking(
             @Body RequestTeanmListBean requestBody);
+
+    /**
+     * 用户升级
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/manage/user/agent/upgradeUser")
+    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(
+            @Body RequestUpdateUserBean requestBody);
 }

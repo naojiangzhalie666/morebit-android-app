@@ -85,7 +85,7 @@ public class GoodsDetailModel extends MvpModel {
     }
 
     public Observable<String> getprofileUrlObservable(BaseActivity rxActivity, String url) {
-        return RxWXHttp.getInstance().getService(C.BASE_YUMIN).profilePicture(url)
+        return RxWXHttp.getInstance().getService(C.BASE_MOREBIT).profilePicture(url)
                 .compose(RxUtils.<String>switchSchedulers())
                 .compose(rxActivity.<String>bindToLifecycle());
     }

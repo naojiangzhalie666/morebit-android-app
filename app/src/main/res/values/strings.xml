@@ -251,7 +251,7 @@
     <string name="earnings_month_hint_v2"><![CDATA[<font color="#333333">1.月消费预估收入：</font><font color="#666666">%1$s</font><br /> <br /><font color="#333333">2.本月消费结算预估收入：</font><font color="#666666">%2$s</font><br /><br /> <font color="#333333">3.上月消费结算预估收入：</font><font color="#666666">%3$s</font>]]></string>
     <string name="earnings_day_hint"><![CDATA[<font color="#333333">1.付款笔数：</font><font color="#666666">今/昨当日付款笔数</font><br /> <br /><font color="#333333">2.成交预估收入：</font><font color="#666666">今/昨订单还没有确认收货的佣金</font><br /><br /> <font color="#333333">3.结算预估收入：</font><font color="#666666">今/昨确认收货的订单，包括上月的订单在今/昨确定</font>]]></string>
     <string name="earnings_month_hint"><![CDATA[<font color="#333333">1.月消费预估收入：</font><font color="#666666">本月/上月卖出去的所有佣金</font><br /> <br /><font color="#333333">2.本月消费结算预估收入：</font> <string name="earnings_month_hint"><![CDATA[<font color="#333333">1.月消费预估收入：</font><font color="#666666">本月/上月卖出去的所有佣金</font><br /> <br /><font color="#333333">2.本月消费结算预估收入：</font><font color="#666666">在本月内确认收货的订单，包括上月的订单在本月内确认的</font><br /><br /> <font color="#333333">3.上月消费结算预估收入：</font><font color="#666666">本月25号可提现金额。（如果该数据为0，即本月不可提现）</font>]]></string>
-    <string name="mine_upgrade_text"><![CDATA[<font color="#333333">升级</font><font color="#B36224">%1$s</font><font color="#333333">购物返佣最高</font><font color="#B36224">%2$s</font>]]></string>
+    <string name="mine_upgrade_text"><![CDATA[<font color="#333333">团队长享受更多团队</font><font color="#ffdb493e">管理收益</font>]]></string>
     <string name="mine_upgrade_text_one"><![CDATA[<font color="#333333">您已达到</font><font color="#B36224">%1$s</font><font color="#333333">升级条件</font>]]></string>
     <string name="mine_upgrade_text_two"><![CDATA[<font color="#333333">您已达到</font><font color="#B36224">%1$s</font><font color="#333333">升级条件， 正在审核中</font>]]></string>
     <!--刷新动画(每帧时间)-->
@@ -416,5 +416,13 @@
     <string name="number_update_vip_hint">立即升级</string>
     <string name="number_goods_count">X%1$s</string>
     <string name="number_invite_code">邀请码：%1$s</string>
+    <string name="number_goods_yugushouyi">预估收益%1$s元</string>
+    <string name="number_order_number">订单编号：%1$s</string>
+    <string name="number_order_create_time">创建时间：%1$s</string>
+    <string name="number_order_total_price">合计：￥%1$s（包邮）</string>
+    <string name="number_alipay_order_number">支付宝交易号：%1$s</string>
+    <string name="number_order_pay_time">付款时间：%1$s</string>
+    <string name="number_fahuo_time">发货时间：%1$s</string>
+    <string name="number_chengjiao_time">成交时间：%1$s</string>
 
 </resources>

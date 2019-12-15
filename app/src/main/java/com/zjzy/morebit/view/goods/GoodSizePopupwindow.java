@@ -21,7 +21,7 @@ public class GoodSizePopupwindow extends PopupWindow {
     private Context mContext;
     private View view;
 
-    GoodSizePopupwindow(Context mContext,View.OnClickListener itemsOnClick) {
+    public GoodSizePopupwindow(Context mContext,View.OnClickListener itemsOnClick) {
         this.view = LayoutInflater.from(mContext).inflate(R.layout.popupwindow_number_goods_rule, null);
         minusView = view.findViewById(R.id.goodsRule_minusRelative);
         addView = view.findViewById(R.id.goodsRule_addRelative);

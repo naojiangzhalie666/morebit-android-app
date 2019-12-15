@@ -3,7 +3,7 @@ package com.zjzy.morebit.pojo.number;
 import java.io.Serializable;
 
 /**
- * 会员商品item
+ * 列表中会员商品item
  * Created by haiping.liu on 2019-12-11.
  */
 
@@ -13,17 +13,23 @@ public class NumberGoods implements Serializable {
      */
     private int id;
     /**
+     *
+     */
+
+    private String name;
+
+    /**
      * 商品图片
      */
-    private String img;
+    private String picUrl;
     /**
      * 商品描述
      */
-    private String desc;
+    private String brief;
     /**
-     * 商品价格
+     * 商品销售价格
      */
-    private String price;
+    private String retailPrice;
 
     public int getId() {
         return id;
@@ -33,27 +39,35 @@ public class NumberGoods implements Serializable {
         this.id = id;
     }
 
-    public String getImg() {
-        return img;
+    public String getName() {
+        return name;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPrice() {
-        return price;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getBrief() {
+        return brief;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
+    public String getRetailPrice() {
+        return retailPrice;
+    }
+
+    public void setRetailPrice(String retailPrice) {
+        this.retailPrice = retailPrice;
     }
 }

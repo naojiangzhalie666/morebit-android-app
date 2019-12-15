@@ -1,6 +1,7 @@
 package com.zjzy.morebit.home.contract;
 
 
+import com.zjzy.morebit.address.AllRegionInfoList;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.pojo.AppUpgradeInfo;
@@ -32,6 +33,8 @@ public class MainContract {
         void saveTaobaoLinkData(List<String> data);
 
         void showGrayUpgradeView(GrayUpgradeInfo upgradeInfo);
+
+
     }
 
     public interface Present extends BasePresenter {
@@ -67,5 +70,10 @@ public class MainContract {
          * @param data  原有版本更新的信息,用于比较创建时间
          */
         void getGrayUpgradeInfo(RxAppCompatActivity rxActivity,AppUpgradeInfo data);
+
+        /**
+         * 获取所有区域的数据
+         */
+        void getAllRegion(RxAppCompatActivity rxActivity);
     }
 }

@@ -4,10 +4,8 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,35 +15,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.App;
+import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.goods.shopping.ui.NumberGoodsDetailActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.adapter.ConsComGoodsDetailAdapter;
 import com.zjzy.morebit.adapter.SimpleAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
-import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsListContract;
 import com.zjzy.morebit.goods.shopping.presenter.NumberGoodsListPresenter;
-import com.zjzy.morebit.goods.shopping.ui.fragment.BrandSellFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
-import com.zjzy.morebit.pojo.BrandSell;
-import com.zjzy.morebit.pojo.ConsComGoodsInfo;
-import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
+import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
+import com.zjzy.morebit.utils.GuideViewUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
-
-import org.greenrobot.eventbus.EventBus;
+import com.zjzy.morebit.utils.action.MyAction;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 主页面中的会员页面
@@ -71,12 +69,16 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
     LinearLayout mDateNullView;
 
 
+    TextView updateVip;
+
+    RoundedImageView mUserIcon;
+
+
     View headView;
 
     NumberGoodsAdapter mNumberGoodsAdapter;
-    List<NumberGoods> mListArray = new ArrayList<>();
-
-
+//    List<NumberGoods> mListArray = new ArrayList<>();
+    private boolean isShowGuide = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +93,7 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
     @Override
     protected void initView(View view) {
 
-        mNumberGoodsAdapter = new NumberGoodsAdapter(getActivity(), mListArray);
+        mNumberGoodsAdapter = new NumberGoodsAdapter(getActivity());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //处理全屏显示
@@ -103,7 +105,13 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
 
         headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number_header, null);
 
+        updateVip = headView.findViewById(R.id.btn_number_update_vip);
+        updateVip.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
         mReUseListView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -127,6 +135,24 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
 
     }
 
+
+    private void updataUser() {
+        UserInfo usInfo = UserLocalData.getUser(getActivity());
+        if (usInfo != null) {
+            initViewData(usInfo);
+        }
+
+    }
+    private void initViewData(UserInfo info) {
+
+
+        if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
+            mUserIcon.setImageResource(R.drawable.logo);
+        } else {
+            LoadImgUtils.setImgCircle(getActivity(), mUserIcon, info.getHeadImg(), R.drawable.logo);
+        }
+    }
+
     @Override
     protected int getViewLayout() {
         return R.layout.fragment_number;
@@ -147,12 +173,6 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
 
     }
 
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        if (isVisible ) {
-//            initData();
-//        }
-//    }
 
     @Override
     protected void initData() {
@@ -160,6 +180,7 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
     }
 
     private void refreshData() {
+
         page = 1;
         mReUseListView.getListView().setNoMore(false);
         mReUseListView.getSwipeList().setRefreshing(true);
@@ -177,29 +198,32 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
     }
 
     @Override
-    public void showSuccessful(List<NumberGoods> datas) {
-        MyLog.i("test", ""+ datas.size());
-        if (datas.size() == 0) {
+    public void showSuccessful(NumberGoodsList datas) {
+        List<NumberGoods> list = datas.getList();
+        MyLog.i("test", ""+ list.size());
+        if (list.size() == 0) {
             mDateNullView.setVisibility(View.VISIBLE);
             mReUseListView.setVisibility(View.GONE);
             return;
         }
         if (page == 1) {
-            mListArray.clear();
-            mListArray.addAll(datas);
+            mNumberGoodsAdapter.clear();
+//            mListArray.addAll(list);
+            mNumberGoodsAdapter.add(list);
             mDateNullView.setVisibility(View.GONE);
             mReUseListView.setVisibility(View.VISIBLE);
         } else {
-            if (datas.size() == 0) {
+            if (list.size() == 0) {
                 mReUseListView.getListView().setNoMore(true);
             } else {
-                mListArray.addAll(datas);
+                mNumberGoodsAdapter.add(list);
+//                mListArray.addAll(list);
             }
 
         }
         page++;
-        mNumberGoodsAdapter.setData(mListArray);
-        mReUseListView.notifyDataSetChanged();
+//        mNumberGoodsAdapter.setData(mListArray);
+        mNumberGoodsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -222,26 +246,36 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
         mReUseListView.getListView().refreshComplete(REQUEST_COUNT);
     }
 
+    @Override
+    public void onGradeSuccess(UpdateInfoBean info) {
+        if (info != null){
+            UserInfo userInfo = UserLocalData.getUser();
+        }
+
+
+
+    }
+
     /**
      * 会员商品适配器
      */
     class NumberGoodsAdapter extends SimpleAdapter<NumberGoods, SimpleViewHolder> {
 
-        List<NumberGoods> datas;
+//        List<NumberGoods> datas;
         Context mContext;
 
-        public NumberGoodsAdapter(Context context,List<NumberGoods> datas) {
+        public NumberGoodsAdapter(Context context) {
             super(context);
-            this.datas = datas;
+//            this.datas = datas;
             mContext = context;
 
         }
-        public void setData(List<NumberGoods> datas) {
-            this.datas.clear();
-            if (datas != null && datas.size() > 0) {
-                this.datas.addAll(datas);
-            }
-        }
+//        public void setData(List<NumberGoods> datas) {
+//            this.datas.clear();
+//            if (datas != null && datas.size() > 0) {
+//                this.datas.addAll(datas);
+//            }
+//        }
         @Override
         public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
             if (holder instanceof NumberGoodsHolder ){
@@ -252,23 +286,24 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
 
         private void bindNumberGoodsHolder(NumberGoodsHolder holder, int position) {
             final NumberGoods goods =  getItem(position);
-            String img = goods.getImg();
+            String img = goods.getPicUrl();
             if (!TextUtils.isEmpty(img)) {
                 LoadImgUtils.setImg(mContext, holder.pic, img);
             }
-            holder.desc.setText(goods.getDesc());
-            String price = goods.getPrice();
+            holder.desc.setText(goods.getName());
+            String price = goods.getRetailPrice();
             if (TextUtils.isEmpty(price)){
                 holder.price.setText(getResources().getString(R.string.number_goods_price,"0"));
             }else{
                 holder.price.setText(getResources().getString(R.string.number_goods_price,price));
             }
-            holder.morebitCorn.setText(MathUtils.getMorebitCorn(price));
+            String moreCoin = MathUtils.getMorebitCorn(price);
+            holder.morebitCorn.setText(getResources().getString(R.string.number_give_more_corn,moreCoin));
             holder.itemView.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
-
+                    NumberGoodsDetailActivity.start(getActivity(),String.valueOf(goods.getId()));
                 }
             });
 
@@ -298,5 +333,7 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
             }
         }
     }
+
+
 
 }

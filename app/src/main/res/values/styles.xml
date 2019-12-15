@@ -297,4 +297,11 @@
         <item name="android:windowEnterAnimation">@anim/pop_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/pop_exit_anim</item>
     </style>
+
+    <style name="SwitchCompat">
+    <item name="colorControlActivated">#00d</item>
+    <item name="colorSwitchThumbNormal">#00d8a0</item>
+    <item name="android:colorForeground">#d2f</item>
+    </style>
+
 </resources>

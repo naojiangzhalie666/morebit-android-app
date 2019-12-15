@@ -107,6 +107,7 @@
 
                 <!--显示晋升按钮-->
                 <TextView
+                    android:id="@+id/btn_number_update_vip"
                     android:layout_width="100dp"
                     android:layout_height="25dp"
                     android:textSize="@dimen/sp_16"
