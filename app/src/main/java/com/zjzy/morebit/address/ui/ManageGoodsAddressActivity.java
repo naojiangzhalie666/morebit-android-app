@@ -19,18 +19,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.transition.Transition;
-import com.zjzy.morebit.Module.common.View.ReUseListView;
-import com.zjzy.morebit.adapter.AreaCodeAdapter;
-import com.zjzy.morebit.adapter.SimpleAdapter;
-import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
+import com.zjzy.morebit.R;
 import com.zjzy.morebit.address.AddressInfo;
 import com.zjzy.morebit.address.AddressInfoList;
 import com.zjzy.morebit.address.contract.ManageAddressContract;
 import com.zjzy.morebit.address.presenter.ManageAddressPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
-import com.zjzy.morebit.R;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
@@ -48,7 +43,8 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
     private static final String TAG = ManageGoodsAddressActivity.class.getSimpleName();
 
     private static final int REQUEST_ADDRESS_CODE =100;
-
+    public static final int REQUEST_ADD_ADDRESS_CODE =101;
+    public static final int REQUEST_UPDATE_ADDRESS_CODE =102;
     @BindView(R.id.txt_head_title)
     TextView headTitle;
 
@@ -168,27 +164,16 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
             }
         });
         recyclerView.setAdapter(manageAdressAdapter);
-//        recyclerView.setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                refreshData();
-//
-//            }
-//        });
-//        footerView = LayoutInflater.from(this).inflate(R.layout.footer_manage_goods_address, null);
-
-//        mReUseListView.setAdapterAndFootView(footerView,manageAdressAdapter);
-//        mReUseListView.getListView().setNoMore(true);
-//        rlManageAddAddress = (RelativeLayout)footerView.findViewById(R.id.rl_manage_add_address);
-//        rlManageAddAddress.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                AddModifyAddressActivity.start(ManageGoodsAddressActivity.this,null, C.Address.ADD_TYPE);
-//            }
-//        });
-
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ADD_ADDRESS_CODE || requestCode == REQUEST_UPDATE_ADDRESS_CODE) {
+            refreshData();
+        }
+    }
+
     private void refreshData(){
         swipeRefreshLayout.setRefreshing(true);
 //        mReUseListView.getSwipeList().setRefreshing(true);

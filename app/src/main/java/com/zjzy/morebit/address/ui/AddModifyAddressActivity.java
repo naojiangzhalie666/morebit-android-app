@@ -101,6 +101,7 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     private int countyPosition;
     private int streetPosition;
 
+    private int mAddressPosition;
 
 
     /**
@@ -119,7 +120,18 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
                 bundle.putSerializable(C.Extras.GOODS_ADDRESS_INFO,info);
             }
             it.putExtras(bundle);
-        activity.startActivity(it);
+            switch (type){
+                case C.Address.UPDATE_TYPE:
+                    activity.startActivityForResult(it,ManageGoodsAddressActivity.REQUEST_UPDATE_ADDRESS_CODE);
+                    break;
+                case C.Address.ADD_TYPE:
+                    activity.startActivityForResult(it,ManageGoodsAddressActivity.REQUEST_ADD_ADDRESS_CODE);
+                    break;
+                    default:
+                        break;
+            }
+
+
     }
 
     @Override
@@ -137,6 +149,7 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
         }else{
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "添加失败");
         }
+        setResult(Activity.RESULT_OK);
         finish();
 
     }
@@ -148,6 +161,8 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
         }else{
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "更新地址失败");
         }
+
+        setResult(Activity.RESULT_OK);
         finish();
     }
 
@@ -172,6 +187,11 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
 
     private void initView(){
         type = getIntent().getIntExtra(C.Extras.TYPE_ADDRESS,0);
+        if (type == C.Address.UPDATE_TYPE){
+            mAddressPosition = getIntent().getExtras().getInt("addressPosition");
+        }
+
+
         swtichAddressDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
 
             @Override
