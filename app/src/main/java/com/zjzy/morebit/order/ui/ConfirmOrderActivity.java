@@ -162,10 +162,12 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        ViewShowUtils.showShortToast(ConfirmOrderActivity.this,"支付成功");
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        Toast.makeText(ConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        ViewShowUtils.showShortToast(ConfirmOrderActivity.this,"支付失败");
+//                        Toast.makeText(ConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 }
@@ -187,14 +189,6 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
         activity.startActivity(it);
     }
 
-    /**
-     * 收货地址管理页面
-     * @param context
-     */
-    public static void addressStart(Activity context){
-        Intent intent = new Intent(context, ManageGoodsAddressActivity.class);
-        context.startActivityForResult(intent, REQUEST_ADDRESS_CODE);
-    }
 
 
     @Override
@@ -229,7 +223,7 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
 
                 @Override
                 public void onClick(View v) {
-                    ManageGoodsAddressActivity.start(ConfirmOrderActivity.this);
+                    ManageGoodsAddressActivity.addressStart(ConfirmOrderActivity.this);
                 }
             });
         }
@@ -250,7 +244,7 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
         mPresenter.getDefaultAddress(ConfirmOrderActivity.this);
     }
 
-    @OnClick({R.id.txt_confirm_order_goods_real_pay_action,R.id.img_add_address})
+    @OnClick({R.id.txt_confirm_order_goods_real_pay_action,R.id.goods_confirm_order_address,R.id.goods_confirm_order_add_address})
     @Override
     public void onClick(View v) {
             switch (v.getId()){
@@ -266,9 +260,10 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
                     }
 
                     break;
-                case R.id.img_add_address:
+                case R.id.goods_confirm_order_address:
+                case R.id.goods_confirm_order_add_address:
                     //跳转到收货管理地址页面
-                    addressStart(ConfirmOrderActivity.this);
+                    ManageGoodsAddressActivity.addressStart(ConfirmOrderActivity.this);
                     break;
 
                 default:
@@ -340,7 +335,8 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ADDRESS_CODE ){
-            AddressInfo info = (AddressInfo) getIntent().getSerializableExtra(C.Extras.GOODS_ADDRESS_INFO);
+            AddressInfo info = (AddressInfo) data.getExtras().get(C.Extras.GOODS_ADDRESS_INFO);
+//            AddressInfo info = (AddressInfo) getIntent().getSerializableExtra(C.Extras.GOODS_ADDRESS_INFO);
             if (info == null){
                 MyLog.d(TAG,"从管理收货地址页面返回为空");
             }else{
@@ -362,26 +358,29 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
         }else{
             rlAddAddress.setVisibility(View.GONE);
             GoodsAddress.setVisibility(View.VISIBLE);
+            //是否默认地址
+            if (mAddressInfo.isDefault()){
+                defaultFlagView.setVisibility(View.VISIBLE);
+            }else{
+                defaultFlagView.setVisibility(View.GONE);
+            }
+            //姓名
+            nameView.setText(mAddressInfo.getName());
+            //
+            phoneView.setText(mAddressInfo.getTel());
+            String address = mAddressInfo.getProvince()+mAddressInfo.getCity()
+                    +mAddressInfo.getDistrict()+mAddressInfo.getDetailAddress();
+            addressDetailView.setText(address);
         }
-        //是否默认地址
-        if (mAddressInfo.isDefault()){
-            defaultFlagView.setVisibility(View.VISIBLE);
-        }else{
-            defaultFlagView.setVisibility(View.GONE);
-        }
-        //姓名
-        nameView.setText(mAddressInfo.getName());
-        //
-        phoneView.setText(mAddressInfo.getTel());
-        String address = mAddressInfo.getProvince()+mAddressInfo.getCity()
-                +mAddressInfo.getDistrict()+mAddressInfo.getDetailAddress();
-        addressDetailView.setText(address);
+
     }
 
 
     @Override
     public void onDefaultAddressError() {
-        ViewShowUtils.showShortToast(ConfirmOrderActivity.this, "获取收货地址失败，请稍后重试");
+        rlAddAddress.setVisibility(View.VISIBLE);
+        GoodsAddress.setVisibility(View.GONE);
+//        ViewShowUtils.showShortToast(ConfirmOrderActivity.this, "获取收货地址失败，请稍后重试");
     }
 
 }

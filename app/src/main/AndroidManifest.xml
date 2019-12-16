@@ -328,6 +328,9 @@
         <activity
             android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zjzy.morebit.order.ui.PayOrderSuccessActivity"
+            android:screenOrientation="portrait" />
 <!--        <activity-->
 <!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
 <!--            android:screenOrientation="portrait" />-->

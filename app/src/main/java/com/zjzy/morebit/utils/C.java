@@ -131,7 +131,8 @@ public class C {
         public static final String GOODS_ADDRESS_INFO= "GOODS_ADDRESS_INFO";
         //增加或者更新地址
         public static final String TYPE_ADDRESS= "UPDATE_ADDRESS";
-
+        //从订单确认页面跳转
+        public static final String SELECTED_ADDRESS_FROM_CONFIRM_ORDER= "SELECT_ADDRESS_FROM_CONFIRM_ORDER";
 
 
     }

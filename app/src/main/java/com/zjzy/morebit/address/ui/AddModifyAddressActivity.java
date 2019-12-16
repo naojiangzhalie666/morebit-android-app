@@ -133,21 +133,24 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     @Override
     public void onAddSuccessful(Boolean isSuccess) {
         if (isSuccess){
-            ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "添加成功");
+            ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "收货地址添加成功");
         }else{
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "添加失败");
         }
+        finish();
 
     }
 
     @Override
     public void onUpdateSuccessful(Boolean isSuccess) {
         if (isSuccess){
-            ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "更新成功");
+            ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "收货地址更新成功");
         }else{
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "更新地址失败");
         }
+        finish();
     }
+
      @Override
     public void onUpdateError() {
          ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "更新失败");
