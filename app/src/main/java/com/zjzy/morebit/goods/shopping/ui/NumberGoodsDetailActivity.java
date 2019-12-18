@@ -186,6 +186,11 @@ public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPre
 
     }
 
+    @Override
+    public void onError() {
+
+    }
+
     private void dealWithContent(String detail){
 
         detailContent.clearAllLayout();

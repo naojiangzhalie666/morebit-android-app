@@ -74,16 +74,16 @@ public class C {
         /**
          * 未支付的订单状态
          */
-        public static final int WAIT_PAY_ORDER_STATUS = 0;
+        public static final int WAIT_PAY_ORDER_STATUS = 1;
 
         /**
          * 订单完成（已支付，已发货，未确认收货状态）
          */
-        public static final int SUCCESS_ORDER_STATUS = 1;
+        public static final int SUCCESS_ORDER_STATUS = 2;
         /**
          * 订单关闭（已经确认收货（或者系统自动确认收货））
          */
-        public static final int RECEIVED_ORDER_STATUS = 2;
+        public static final int RECEIVED_ORDER_STATUS = 3;
     }
 
     /**
@@ -143,6 +143,8 @@ public class C {
         public static final String COUNTRY = "country"; //   country
         public static final String POSTER_URL = "POSTER_URL"; //   海报
         public static final String POSTER_POS = "POSTER_POS"; //   海报 选择位置
+
+        public static final String GOODS_CONTENTS = "GOODS_CONTENTS"; //   内容
 
         //会员商品订单
         public static final String GOODS_ORDER_INFO= "GOODS_ORDER_INFO";

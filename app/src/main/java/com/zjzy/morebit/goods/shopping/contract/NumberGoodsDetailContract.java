@@ -26,6 +26,8 @@ public class NumberGoodsDetailContract {
 
         void showSuccessful(NumberGoodsInfo goodsInfo);
 
+        void onError();
+
     }
 
     public interface Present extends BasePresenter {

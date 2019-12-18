@@ -206,6 +206,9 @@
             android:name="com.zjzy.morebit.Activity.GoodsDetailActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name="com.zjzy.morebit.goods.shopping.ui.NumberGoodsDetailsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.zjzy.morebit.Activity.SearchFansActivity"
             android:screenOrientation="portrait"></activity>
 

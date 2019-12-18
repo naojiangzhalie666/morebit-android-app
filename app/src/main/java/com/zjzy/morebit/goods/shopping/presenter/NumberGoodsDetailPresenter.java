@@ -59,6 +59,10 @@ public class NumberGoodsDetailPresenter extends MvpPresenter<NumberGoodsDetailMo
     public void getGoodsDetail(BaseActivity rxActivity,String goodsId) {
         mModel.getNumberGoodsDetail(rxActivity,goodsId)
                 .subscribe(new DataObserver<NumberGoodsInfo>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().onError();
+                    }
 
                     @Override
                     protected void onSuccess(NumberGoodsInfo data) {

@@ -1,12 +1,13 @@
 package com.zjzy.morebit.pojo.number;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by haiping.liu on 2019-12-12.
  */
-public class NumberGoodsInfo {
+public class NumberGoodsInfo implements Serializable {
     /**
      * 商品编号
      */

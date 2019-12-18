@@ -26,6 +26,7 @@ import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsListContract;
 import com.zjzy.morebit.goods.shopping.presenter.NumberGoodsListPresenter;
 import com.zjzy.morebit.goods.shopping.ui.NumberGoodsDetailActivity;
+import com.zjzy.morebit.goods.shopping.ui.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.pojo.UserInfo;
@@ -513,7 +514,8 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
 
                 @Override
                 public void onClick(View v) {
-                    NumberGoodsDetailActivity.start(getActivity(),String.valueOf(goods.getId()));
+//                    NumberGoodsDetailActivity.start(getActivity(),String.valueOf(goods.getId()));
+                    NumberGoodsDetailsActivity.start(getActivity(),String.valueOf(goods.getId()));
                 }
             });
 
