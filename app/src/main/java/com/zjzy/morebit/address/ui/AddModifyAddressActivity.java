@@ -89,7 +89,7 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     private String mName;
     private String mPhone;
     private String mDetail;
-    private boolean mDefaultFlag = false;
+    private int mDefaultFlag = 0;
 
 
     private String provinceCode;
@@ -197,10 +197,10 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    mDefaultFlag = true;
+                    mDefaultFlag = 1;
                     swtichAddressDefault.setChecked(true);
                 }else{
-                    mDefaultFlag = false;
+                    mDefaultFlag = 0;
                     swtichAddressDefault.setChecked(false);
                 }
             }
@@ -226,8 +226,8 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
                 MyLog.e(TAG,"更新地址，没有传递地址信息");
                 return;
             }
-            mDefaultFlag = mAddressInfo.isDefault();
-            if (mDefaultFlag ){
+            mDefaultFlag = mAddressInfo.getIsDefault();
+            if (mDefaultFlag == 1 ){
                 swtichAddressDefault.setChecked(true);
             }else{
                 swtichAddressDefault.setChecked(false);
@@ -245,7 +245,7 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
             editDetail.setText(mAddressInfo.getDetailAddress());
 
         }else{
-            mDefaultFlag= swtichAddressDefault.isChecked();
+            mDefaultFlag= (swtichAddressDefault.isChecked()? 1:0);
         }
 //        AddressSelector selector = new AddressSelector(this);
 //        AddressDictManager addressDictManager = selector.getAddressDictManager();
@@ -341,7 +341,7 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
             info.setCity(mCity);
             info.setDistrict(mDistinct);
             info.setDetailAddress(mDetail);
-            info.setDefault(mDefaultFlag);
+            info.setIsDefault(mDefaultFlag);
             return info;
     }
 

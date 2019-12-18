@@ -6,13 +6,13 @@ package com.zjzy.morebit.pojo.request;
  */
 public class RequestUpdateUserBean extends RequestBaseBean{
 
-    private  Integer userType;
+    private  Integer type;
 
-    public Integer getUserType() {
-        return userType;
+    public Integer getType() {
+        return type;
     }
 
-    public void setUserType(Integer userType) {
-        this.userType = userType;
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

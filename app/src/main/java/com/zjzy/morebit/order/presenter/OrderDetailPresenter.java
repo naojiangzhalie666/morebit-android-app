@@ -4,49 +4,98 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.order.OrderDetailInfo;
+import com.zjzy.morebit.order.OrderSyncResult;
 import com.zjzy.morebit.order.ResponseOrderInfo;
 import com.zjzy.morebit.order.contract.ConfirmOrderContract;
+import com.zjzy.morebit.order.contract.OrderDetailContract;
 import com.zjzy.morebit.order.model.ConfirmOrderModel;
+import com.zjzy.morebit.order.model.OrderDetailModel;
 
 /**
  * Created by fengrs on 2018/11/3.
  */
 
-public class OrderDetailPresenter extends MvpPresenter<ConfirmOrderModel, ConfirmOrderContract.View> implements ConfirmOrderContract.Present {
+public class OrderDetailPresenter extends MvpPresenter<OrderDetailModel, OrderDetailContract.View> implements OrderDetailContract.Present {
 
+
+    /**
+     * 取消订单
+     * @param activity
+     * @param orderId
+     */
     @Override
-    public void getDefaultAddress(BaseActivity activity) {
-        mModel.getdefaultAddress(activity)
-                .subscribe(new DataObserver<AddressInfo>() {
+    public void cancelOrder(BaseActivity activity, String orderId) {
+        mModel.cancelOrder(activity,orderId)
+                .subscribe(new DataObserver<Integer>() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        getIView().onDefaultAddressError();
+                        getIView().onCancelOrderError();
                     }
 
                     @Override
-                    protected void onSuccess(AddressInfo data) {
-                        getIView().onDefaultAddressSuccess(data);
+                    protected void onSuccess(Integer result) {
+                        getIView().onCancelOrderSuccess();
                     }
                 });
     }
 
+    /**
+     * 去支付
+     * @param activity
+     * @param orderId
+     */
     @Override
-    public void createOrderForVip(BaseActivity rxActivity, int addressId, int goodsId, int goodsNum, String goodsPrice, String totalPrice) {
-        mModel.createOrderForVip(rxActivity,addressId,goodsId,goodsNum,goodsPrice,totalPrice)
+    public void payForOrder(BaseActivity activity, String orderId) {
+        mModel.rePayByOrderId(activity,orderId)
                 .subscribe(new DataObserver<ResponseOrderInfo>() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        getIView().onCreateError();
+                        getIView().onRePayError();
                     }
 
                     @Override
                     protected void onSuccess(ResponseOrderInfo data) {
-                        getIView().onCreateOrderSuccess(data);
+                        getIView().onRePaySuccess(data);
                     }
                 });
     }
 
+    /**
+     * 订单详情
+     * @param activity
+     * @param orderId
+     */
+    @Override
+    public void getOrderDetail(BaseActivity activity, String orderId) {
+        mModel.getOrderDetail(activity,orderId)
+                .subscribe(new DataObserver<OrderDetailInfo>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().onOrderDetailError();
+                    }
 
+                    @Override
+                    protected void onSuccess(OrderDetailInfo data) {
+                        getIView().onOrderDetailSuccess(data);
+                    }
+                });
+    }
 
+    @Override
+    public void syncPayResult(BaseActivity rxActivity, String orderId, int payStatus) {
+        mModel.syncPayStatus(rxActivity,orderId,payStatus)
+                .subscribe(new DataObserver<OrderSyncResult>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().onSyncPayResultError();
+                    }
+
+                    @Override
+                    protected void onSuccess(OrderSyncResult data) {
+                        getIView().onSyncPayResultSuccess(data);
+                    }
+                });
+    }
 
 }

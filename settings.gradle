@@ -1,4 +1,4 @@
-include ':app', ':player_module', ':Address_library'
+include ':app', ':player_module', ':Address_library', ':adlibrary'
 include ':LRecyclerview_library'
 //include ':banner'
 

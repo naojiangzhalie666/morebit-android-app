@@ -61,11 +61,13 @@
                     android:layout_below="@id/userName"
                     android:layout_alignLeft="@id/userName">
                     <RelativeLayout
+                        android:id="@+id/progress_100"
                         android:layout_width="180dp"
                         android:layout_height="5dp"
                         android:background="@drawable/progress_bar_bg_gray"
                         />
                     <RelativeLayout
+                        android:id="@+id/process_my_corn"
                         android:layout_width="40dp"
                         android:layout_height="5dp"
                         android:background="@drawable/progress_bar_bg_gold"/>
@@ -90,7 +92,7 @@
                         tools:text="多豆：" />
 
                     <TextView
-                        android:id="@+id/copy_invitation_code"
+                        android:id="@+id/more_corn_biaozhun"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/lb_more_corn"
@@ -258,6 +260,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:id="@+id/grade_hint1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colcor_gold"
@@ -278,6 +281,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:id="@+id/grade_hint2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colcor_gold"
@@ -299,6 +303,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:id="@+id/grade_hint3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colcor_gold"
@@ -329,6 +334,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:id="@+id/grade_hint4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colcor_gold"
@@ -351,6 +357,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:id="@+id/grade_hint5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colcor_gold"
@@ -373,6 +380,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:id="@+id/grade_hint6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colcor_gold"

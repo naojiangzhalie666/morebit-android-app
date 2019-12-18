@@ -83,7 +83,7 @@ public class OrderDetailFragment extends BaseFragment {
                                 }  else if (getActivity().getString(R.string.order_team_sl).equals(arg)) {
                                     mTeamType = 3;
                                 } else if (getActivity().getString(R.string.order_team_yx).equals(arg)) {
-                                    mTeamType = 5;
+                                    mTeamType = 10;
                                 }else {
                                     mTeamType = 1;
                                 }

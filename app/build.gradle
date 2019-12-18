@@ -311,6 +311,7 @@ dependencies {
     implementation ('com.github.sendtion:XRichText:1.9.4') {
         exclude group: 'com.android.support'
     }
+    implementation project(path: ':adlibrary')
     //Optional: see how to use the utility.
 //    compile 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
 //    compile 'com.oneapm.agent.android:agent:5.5.3.5'

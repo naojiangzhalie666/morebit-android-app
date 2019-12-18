@@ -5,6 +5,7 @@ import com.zjzy.morebit.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.order.OrderDetailInfo;
+import com.zjzy.morebit.order.OrderSyncResult;
 import com.zjzy.morebit.order.ResponseOrderInfo;
 
 /**
@@ -47,15 +48,44 @@ public class OrderDetailContract {
          * 订单详情失败
          */
         void onOrderDetailError();
+
+        /**
+         * 支付结果同步成功
+         */
+        void onSyncPayResultSuccess(OrderSyncResult result);
+
+        /**
+         * 支付结果失败
+         */
+        void onSyncPayResultError();
+
     }
 
     public interface Present extends BasePresenter {
-        void getDefaultAddress(BaseActivity activity);
 
-        void createOrderForVip(BaseActivity rxActivity, int addressId,
-                               int goodsId,
-                               int goodsNum,
-                               String goodsPrice,
-                               String totalPrice);
+        /**
+         * 取消订单
+         */
+        void cancelOrder(BaseActivity activity,String orderId);
+
+        /**
+         * 去支付未支付的订单
+         */
+        void payForOrder(BaseActivity activity,String orderId);
+
+        /**
+         * 获取订单详情
+         * @param activity
+         */
+        void getOrderDetail(BaseActivity activity,String orderId);
+
+        /**
+         * 同步支付结果
+         * @param rxActivity
+         * @param orderId
+         * @param payStatus
+         */
+        void syncPayResult(BaseActivity rxActivity,String orderId,int payStatus);
+
     }
 }

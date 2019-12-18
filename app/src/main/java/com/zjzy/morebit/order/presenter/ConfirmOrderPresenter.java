@@ -11,6 +11,7 @@ import com.zjzy.morebit.goods.shopping.model.NumberGoodsDetailModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
 import com.zjzy.morebit.network.CallBackObserver;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.order.OrderSyncResult;
 import com.zjzy.morebit.order.ResponseOrderInfo;
 import com.zjzy.morebit.order.contract.ConfirmOrderContract;
 import com.zjzy.morebit.order.model.ConfirmOrderModel;
@@ -54,7 +55,21 @@ public class ConfirmOrderPresenter extends MvpPresenter<ConfirmOrderModel, Confi
                 });
     }
 
+    @Override
+    public void syncPayResult(BaseActivity rxActivity, String orderId, int payStatus) {
+        mModel.syncPayStatus(rxActivity,orderId,payStatus)
+                .subscribe(new DataObserver<OrderSyncResult>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().onSyncPayResultError();
+                    }
 
+                    @Override
+                    protected void onSuccess(OrderSyncResult data) {
+                        getIView().onSyncPayResultSuccess(data);
+                    }
+                });
+    }
 
 
 }

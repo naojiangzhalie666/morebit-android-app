@@ -42,7 +42,7 @@ public class UserInfo implements Serializable {
     private String qrCode = "";// 微信二维码
     private String wxNumber;// 微信号
     private String inviteCode = "";//邀请码
-    private String userType; // partner  是判断角色字段  0 消费者 1代理商  2运营专员
+    private String userType; // partner  是判断角色字段  0 会员 1：vip会员 2团队长
     private String calculationRate = "";// 是佣金计算比例
     private String gradename = "";// 用户等级名称
     private  int releasePermission;    //发圈发布管理权限 0 :否  1:有
@@ -57,13 +57,13 @@ public class UserInfo implements Serializable {
 
     private String birthDate;// 生日
     private int sex;//0未知，1男，2女
-    private Integer moreCoin;//多豆
+    private Long moreCoin;//多豆
 
-    public Integer getMoreCoin() {
+    public Long getMoreCoin() {
         return moreCoin;
     }
 
-    public void setMoreCoin(Integer moreCoin) {
+    public void setMoreCoin(Long moreCoin) {
         this.moreCoin = moreCoin;
     }
 
@@ -168,6 +168,10 @@ public class UserInfo implements Serializable {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getUserType() {
+        return userType;
     }
 
     public String getAgent_money() {

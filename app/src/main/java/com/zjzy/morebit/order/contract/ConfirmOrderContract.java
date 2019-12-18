@@ -6,6 +6,7 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
+import com.zjzy.morebit.order.OrderSyncResult;
 import com.zjzy.morebit.order.ResponseOrderInfo;
 import com.zjzy.morebit.pojo.BrandSell;
 
@@ -38,6 +39,15 @@ public class ConfirmOrderContract {
          */
         void onDefaultAddressError();
 
+        /**
+         * 支付结果同步成功
+         */
+        void onSyncPayResultSuccess(OrderSyncResult result);
+
+        /**
+         * 支付结果失败
+         */
+        void onSyncPayResultError();
     }
 
     public interface Present extends BasePresenter {
@@ -48,5 +58,9 @@ public class ConfirmOrderContract {
                                int goodsNum,
                                String goodsPrice,
                                String totalPrice);
+
+        void syncPayResult(BaseActivity rxActivity,String orderId,int payStatus);
+
+
     }
 }

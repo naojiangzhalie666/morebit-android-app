@@ -1,5 +1,7 @@
 package com.zjzy.morebit.pojo.myInfo;
 
+import com.zjzy.morebit.utils.LoadImgUtils;
+
 import java.io.Serializable;
 
 /**
@@ -14,7 +16,7 @@ public class UpdateInfoBean implements Serializable {
     /**
      * 当前用户的剩余多豆
      */
-    private Integer moreCoin;
+    private Long moreCoin;
 
     public Integer getUserType() {
         return userType;
@@ -24,11 +26,11 @@ public class UpdateInfoBean implements Serializable {
         this.userType = userType;
     }
 
-    public Integer getMoreCoin() {
+    public Long getMoreCoin() {
         return moreCoin;
     }
 
-    public void setMoreCoin(Integer moreCoin) {
+    public void setMoreCoin(Long moreCoin) {
         this.moreCoin = moreCoin;
     }
 }

@@ -76,16 +76,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/color_FFFFFF"
+                    android:textSize="@dimen/sp_18"
+                    tools:text="昵称" />
 
-            <TextView
-                android:id="@+id/userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/sp_18"
-                tools:text="昵称" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_set_weixin"
+                    android:layout_width="95dp"
+                    android:layout_height="23dp"
+                    android:layout_alignTop="@id/userName"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_stroke_d1d1d1_solid_ffffff_30dp"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/icon_weixin"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginRight="3dp"
+                        android:src="@drawable/icon_mine_weixin" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/icon_weixin"
+                        android:text="绑定微信"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/sp_12" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,37 +167,7 @@
 <!--                        android:textSize="@dimen/sp_12" />-->
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp">
 
-                    <RelativeLayout
-                        android:id="@+id/rl_set_weixin"
-                        android:layout_width="95dp"
-                        android:layout_height="23dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/bg_stroke_d1d1d1_solid_ffffff_30dp"
-                        android:gravity="center"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:id="@+id/icon_weixin"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_marginRight="3dp"
-                            android:src="@drawable/icon_mine_weixin" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/icon_weixin"
-                            android:text="绑定微信"
-                            android:textColor="@color/color_333333"
-                            android:textSize="@dimen/sp_12" />
-                    </RelativeLayout>
-                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
 

@@ -14,9 +14,9 @@ public class AddressInfo implements Serializable {
      */
     private  String name ;
     /**
-     * 是否默认(true:默认 false:否)
+     * 是否默认(1:默认 0:否)
      */
-    private boolean isDefault;
+    private int isDefault;
     /**
      * 手机号
      */
@@ -48,12 +48,12 @@ public class AddressInfo implements Serializable {
         this.name = name;
     }
 
-    public boolean isDefault() {
+    public int getIsDefault() {
         return isDefault;
     }
 
-    public void setDefault(boolean aDefault) {
-        isDefault = aDefault;
+    public void setIsDefault(int isDefault) {
+        this.isDefault = isDefault;
     }
 
     public String getTel() {

@@ -41,7 +41,7 @@ public class NumberGoodsModel extends MvpModel {
      */
     public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxFragment fragment,int userGrade) {
         RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
-        updateUserBean.setUserType(userGrade);
+        updateUserBean.setType(userGrade);
         return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
                 .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());

@@ -369,7 +369,8 @@ public class NumberGoodsDetailActivity  extends MvpActivity<NumberGoodsDetailPre
 
                     sizePopWin.dismiss();
                     ConfirmOrderActivity.start(NumberGoodsDetailActivity.this,mGoodsOrderInfo);
-//                    finish();
+                    finish();
+
                 }
             });
 

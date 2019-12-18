@@ -36,7 +36,7 @@ public class AddOrModifyAddressModel extends MvpModel {
         RequestAddAddressBean bean = new RequestAddAddressBean();
         bean.setName(info.getName());
         bean.setCity(info.getCity());
-        bean.setDefault(info.isDefault());
+        bean.setIsDefault(info.getIsDefault());
         bean.setDetailAddress(info.getDetailAddress());
         bean.setDistrict(info.getDistrict());
         bean.setProvince(info.getProvince());
@@ -53,7 +53,7 @@ public class AddOrModifyAddressModel extends MvpModel {
         RequestUpdateAddressBean bean = new RequestUpdateAddressBean();
         bean.setName(info.getName());
         bean.setCity(info.getCity());
-        bean.setDefault(info.isDefault());
+        bean.setIsDefault(info.getIsDefault());
         bean.setDetailAddress(info.getDetailAddress());
         bean.setDistrict(info.getDistrict());
         bean.setProvince(info.getProvince());

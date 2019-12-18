@@ -7,9 +7,12 @@ import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.order.OrderDetailInfo;
+import com.zjzy.morebit.order.OrderSyncResult;
 import com.zjzy.morebit.order.ResponseOrderInfo;
 import com.zjzy.morebit.pojo.request.RequestCreateOrderBean;
 import com.zjzy.morebit.pojo.request.RequestOrderDetailBean;
+import com.zjzy.morebit.pojo.request.RequestSyncPayResultResultBean;
 
 import io.reactivex.Observable;
 
@@ -51,6 +54,42 @@ public class OrderDetailModel extends MvpModel {
                 .compose(rxActivity.<BaseResponse<ResponseOrderInfo>>bindToLifecycle());
     }
 
+
+    /**
+     * 订单详情
+     * @param rxActivity
+     * @param orderId
+     * @return
+     */
+    public Observable<BaseResponse<OrderDetailInfo>> getOrderDetail(BaseActivity rxActivity,
+                                                                    String orderId
+    ) {
+        RequestOrderDetailBean bean = new RequestOrderDetailBean();
+        bean.setOrderId(orderId);
+
+        return RxHttp.getInstance().getCommonService().getOrderDetail(bean)
+                .compose(RxUtils.<BaseResponse<OrderDetailInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<OrderDetailInfo>>bindToLifecycle());
+    }
+
+    /**
+     * 同步支付结果
+     * @param rxActivity
+     * @param orderId
+     * @param payStatus
+     * @return
+     */
+    public Observable<BaseResponse<OrderSyncResult>> syncPayStatus(BaseActivity rxActivity, String orderId,
+                                                                   int payStatus
+
+    ) {
+        RequestSyncPayResultResultBean requestBean = new RequestSyncPayResultResultBean();
+        requestBean.setOrderId(orderId);
+        requestBean.setPayStatus(payStatus);
+        return RxHttp.getInstance().getCommonService().syncPayResult(requestBean)
+                .compose(RxUtils.<BaseResponse<OrderSyncResult>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<OrderSyncResult>>bindToLifecycle());
+    }
 
 
 

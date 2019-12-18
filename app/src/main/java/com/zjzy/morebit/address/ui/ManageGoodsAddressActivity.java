@@ -269,7 +269,7 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
             }else{
                 holder.txtAddressDetail.setText("");
             }
-            if (item.isDefault()){
+            if (item.getIsDefault()==1){
                 holder.addressdefault.setVisibility(View.VISIBLE);
             }else{
                 holder.addressdefault.setVisibility(View.GONE);

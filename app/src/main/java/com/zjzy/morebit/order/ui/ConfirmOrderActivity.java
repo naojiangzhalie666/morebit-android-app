@@ -21,6 +21,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.order.OrderSyncResult;
 import com.zjzy.morebit.order.ResponseOrderInfo;
 import com.zjzy.morebit.order.contract.ConfirmOrderContract;
 import com.zjzy.morebit.order.presenter.ConfirmOrderPresenter;
@@ -145,7 +146,11 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
 
     private static final int REQUEST_ADDRESS_CODE =100;
 
-    Handler mHandler = new Handler() {
+    private String mOrderId;
+    private int payStatus;
+
+     Handler mHandler = new Handler() {
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -161,20 +166,30 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
+                        payStatus =0;
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
 //                        Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         ViewShowUtils.showShortToast(ConfirmOrderActivity.this,"支付成功");
+
+
                     } else {
+                        payStatus =1;
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         ViewShowUtils.showShortToast(ConfirmOrderActivity.this,"支付失败");
+
 //                        Toast.makeText(ConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+
                     }
+                    mPresenter.syncPayResult(ConfirmOrderActivity.this,mOrderId,payStatus);
                     break;
                 }
             }
 
         }
     };
+
+
+
 
 
     public static void start(Activity activity, GoodsOrderInfo info) {
@@ -202,6 +217,13 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
     @Override
     public BaseView getBaseView() {
         return this;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //移除所有的handler消息
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -301,6 +323,7 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
     @Override
     public void onCreateOrderSuccess(ResponseOrderInfo orderInfo) {
        final String orderInfoBody =  orderInfo.getBody();
+       mOrderId = orderInfo.getOrderId();
         Runnable payRunnable = new Runnable() {
 
             @Override
@@ -359,7 +382,7 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
             rlAddAddress.setVisibility(View.GONE);
             GoodsAddress.setVisibility(View.VISIBLE);
             //是否默认地址
-            if (mAddressInfo.isDefault()){
+            if (mAddressInfo.getIsDefault()==1){
                 defaultFlagView.setVisibility(View.VISIBLE);
             }else{
                 defaultFlagView.setVisibility(View.GONE);
@@ -381,6 +404,27 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
         rlAddAddress.setVisibility(View.VISIBLE);
         GoodsAddress.setVisibility(View.GONE);
 //        ViewShowUtils.showShortToast(ConfirmOrderActivity.this, "获取收货地址失败，请稍后重试");
+    }
+
+
+
+    @Override
+    public void onSyncPayResultSuccess(OrderSyncResult result) {
+        if (result == null){
+            MyLog.e(TAG,"同步结果成功，返回结果为空");
+            return;
+        }
+        if (result.getPayStatus() == 0){
+            PayOrderSuccessActivity.start(ConfirmOrderActivity.this,result.getOrderId());
+        }else{
+            NumberOrderDetailActivity.startOrderDetailActivity(ConfirmOrderActivity.this,result.getOrderId());
+        }
+        finish();
+    }
+
+    @Override
+    public void onSyncPayResultError() {
+        ViewShowUtils.showShortToast(ConfirmOrderActivity.this,"同步结果失败");
     }
 
 }

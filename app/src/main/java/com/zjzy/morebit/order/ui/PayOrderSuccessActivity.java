@@ -33,9 +33,12 @@ public class PayOrderSuccessActivity extends BaseActivity {
     @BindView(R.id.btn_goods_list)
     TextView btnGoodsList;
 
-    public static void start(Activity activity) {
+    private String mOrderId;
+
+    public static void start(Activity activity,String orderId) {
         //跳转到订单成功页面
         Intent it = new Intent(activity, PayOrderSuccessActivity.class);
+        it.putExtra("orderId",orderId);
         activity.startActivity(it);
     }
 
@@ -49,12 +52,13 @@ public class PayOrderSuccessActivity extends BaseActivity {
 
 
     private void initView(){
+        mOrderId = getIntent().getStringExtra("orderId");
         btnOrderDetail.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PayOrderSuccessActivity.this,NumberOrderDetailActivity.class);
-                startActivity(intent);
+                NumberOrderDetailActivity.startOrderDetailActivity(PayOrderSuccessActivity.this,mOrderId);
+                finish();
             }
         });
         btnGoodsList.setOnClickListener(new View.OnClickListener(){

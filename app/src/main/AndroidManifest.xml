@@ -92,7 +92,7 @@
         android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup">
+        tools:replace="android:allowBackup,android:name">
 
 
         <activity
@@ -331,6 +331,11 @@
         <activity
             android:name="com.zjzy.morebit.order.ui.PayOrderSuccessActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.zjzy.morebit.order.ui.NumberOrderDetailActivity"
+            android:screenOrientation="portrait" />
+
 <!--        <activity-->
 <!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
 <!--            android:screenOrientation="portrait" />-->

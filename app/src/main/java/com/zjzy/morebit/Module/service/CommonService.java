@@ -4,6 +4,8 @@ import com.zjzy.morebit.address.AddressInfo;
 import com.zjzy.morebit.address.AddressInfoList;
 import com.zjzy.morebit.address.AllRegionInfoList;
 import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.order.OrderDetailInfo;
+import com.zjzy.morebit.order.OrderSyncResult;
 import com.zjzy.morebit.order.ResponseOrderInfo;
 import com.zjzy.morebit.pojo.AccountDestroy;
 import com.zjzy.morebit.pojo.AgentDetailList;
@@ -68,7 +70,6 @@ import com.zjzy.morebit.pojo.myInfo.ApplyUpgradeBean;
 import com.zjzy.morebit.pojo.myInfo.MakeMoenyBean;
 import com.zjzy.morebit.pojo.myInfo.OssKeyBean;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
-import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
@@ -134,6 +135,7 @@ import com.zjzy.morebit.pojo.request.RequestSearchStatistics;
 import com.zjzy.morebit.pojo.request.RequestSetAlipayBean;
 import com.zjzy.morebit.pojo.request.RequestSetPasswordBean;
 import com.zjzy.morebit.pojo.request.RequestSplashStatistics;
+import com.zjzy.morebit.pojo.request.RequestSyncPayResultResultBean;
 import com.zjzy.morebit.pojo.request.RequestSystemNoticeBean;
 import com.zjzy.morebit.pojo.request.RequestTKLBean;
 import com.zjzy.morebit.pojo.request.RequestTeanmListBean;
@@ -460,7 +462,7 @@ public interface CommonService {
      */
     //    @FormUrlEncoded
     @POST("/api/order/orderDetail")
-    public Observable<BaseResponse<Integer>>   orderDetail(
+    public Observable<BaseResponse<OrderDetailInfo>>   getOrderDetail(
             @Body RequestOrderDetailBean requestBean);
 
     /**
@@ -472,6 +474,14 @@ public interface CommonService {
     public Observable<BaseResponse<ResponseOrderInfo>>   rePay(
             @Body RequestOrderDetailBean requestBean);
 
+    /**
+     * 重新支付(会员商品)
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/order/syncPayResult")
+    public Observable<BaseResponse<OrderSyncResult>>   syncPayResult(
+            @Body RequestSyncPayResultResultBean requestBean);
     /**
      * 确认收货（会员商品）
      * @return
@@ -547,13 +557,13 @@ public interface CommonService {
     @POST("/api/user/getUserInfo")
     public Observable<BaseResponse<UserInfo>> getUserInfo();
 
-    /**
-     * 获取用户信息
-     *
-     * @return
-     */
-    @POST("/api/manage/user/agent/upgradeUser")
-    public Observable<BaseResponse<Boolean>> upgradeUser();
+//    /**
+//     * 获取用户信息
+//     *
+//     * @return
+//     */
+//    @POST("/api/openapi/user/agent/upgradeUser")
+//    public Observable<BaseResponse<UpdateInfoBean>> upgradeUser();
 
 
     /**
@@ -2179,7 +2189,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/manage/user/agent/upgradeUser")
+    @POST("/api/openapi/user/agent/upgradeUser")
     public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(
             @Body RequestUpdateUserBean requestBody);
 }

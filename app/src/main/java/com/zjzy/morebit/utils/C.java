@@ -68,6 +68,25 @@ public class C {
     }
 
     /**
+     * 订单状态
+     */
+    public static class OrderStatus{
+        /**
+         * 未支付的订单状态
+         */
+        public static final int WAIT_PAY_ORDER_STATUS = 0;
+
+        /**
+         * 订单完成（已支付，已发货，未确认收货状态）
+         */
+        public static final int SUCCESS_ORDER_STATUS = 1;
+        /**
+         * 订单关闭（已经确认收货（或者系统自动确认收货））
+         */
+        public static final int RECEIVED_ORDER_STATUS = 2;
+    }
+
+    /**
      * 更新或者增加地址。
      */
     public static class UserGrade{
@@ -236,8 +255,11 @@ public class C {
      * 类型：0是消费者，1是代理商，2是运营专员
      */
     public static class UserType {
+        //会员
         public static final String member = "0";
+        //vip会员
         public static final String vipMember = "1";
+        //团队长
         public static final String operator = "2";
 
     }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,20 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
-import com.zjzy.morebit.goods.shopping.ui.NumberGoodsDetailActivity;
+import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
+import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsListContract;
 import com.zjzy.morebit.goods.shopping.presenter.NumberGoodsListPresenter;
+import com.zjzy.morebit.goods.shopping.ui.NumberGoodsDetailActivity;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.pojo.UserInfo;
@@ -33,14 +33,12 @@ import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
-import com.zjzy.morebit.utils.GuideViewUtil;
+import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
-import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
-import com.zjzy.morebit.utils.action.MyAction;
+import com.zjzy.morebit.utils.ViewShowUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,6 +49,8 @@ import butterknife.BindView;
  * Created by haiping.liu on 2019-12-04.
  */
 public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implements NumberGoodsListContract.View {
+    private static final String TAG = NumberFragment.class.getSimpleName();
+
     private static final int REQUEST_COUNT = 10;
     private int page = 1;
     private View mView;
@@ -68,6 +68,12 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
     @BindView(R.id.dateNullView)
     LinearLayout mDateNullView;
 
+    @BindView(R.id.my_more_corn)
+    TextView myCornView;
+
+
+    TextView myGradedView;
+
 
     TextView updateVip;
 
@@ -77,6 +83,28 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
     View headView;
 
     NumberGoodsAdapter mNumberGoodsAdapter;
+
+    UserInfo mUserInfo;
+
+
+//    TextView number_grade_name
+
+    TextView numberGradeName;
+
+    TextView gradeHint1;
+    TextView gradeHint2;
+    TextView gradeHint3;
+    TextView gradeHint4;
+    TextView gradeHint5;
+    TextView gradeHint6;
+
+    TextView moreCoinBiaozhun;
+
+    RelativeLayout processCornAll;
+
+    RelativeLayout processMyCorn;
+
+
 //    List<NumberGoods> mListArray = new ArrayList<>();
     private boolean isShowGuide = false;
     @Override
@@ -105,13 +133,23 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
 
         headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number_header, null);
 
-        updateVip = headView.findViewById(R.id.btn_number_update_vip);
-        updateVip.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
+        myGradedView = (TextView)headView.findViewById(R.id.lb_user_grade);
+        numberGradeName = (TextView)headView.findViewById(R.id.number_grade_name);
+        moreCoinBiaozhun = (TextView)headView.findViewById(R.id.more_corn_biaozhun);
 
-            }
-        });
+        gradeHint1 = (TextView)headView.findViewById(R.id.grade_hint1);
+        gradeHint2 = (TextView)headView.findViewById(R.id.grade_hint2);
+        gradeHint3 = (TextView)headView.findViewById(R.id.grade_hint3);
+        gradeHint4 = (TextView)headView.findViewById(R.id.grade_hint4);
+        gradeHint5 = (TextView)headView.findViewById(R.id.grade_hint5);
+        gradeHint6 = (TextView)headView.findViewById(R.id.grade_hint6);
+
+        processCornAll = (RelativeLayout)headView.findViewById(R.id.progress_100);
+        processMyCorn = (RelativeLayout)headView.findViewById(R.id.process_my_corn);
+
+        updateVip = headView.findViewById(R.id.btn_number_update_vip);
+
+
         mReUseListView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -131,15 +169,70 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
         });
 
         mReUseListView.setAdapterAndHeadView(headView, mNumberGoodsAdapter);
+        //更新用户信息
+        updataUser();
 
+    }
+
+    /**
+     * 升级vip的弹框
+     */
+    private void updateGrade(){
+
+        NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(getActivity(),R.style.dialog);
+        leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
+
+            @Override
+            public void onClick(int type) {
+                //vip ==1
+                if (type == 1){
+//                    Long coin = mUserInfo.getMoreCoin();
+//                    if (coin == null || (coin != null && coin < 3600)){
+//                        ViewShowUtils.showShortToast(getActivity(),"多豆不足20000，请积累多豆再试哦");
+//                        return;
+//                    }
+                    mPresenter.updateGrade(NumberFragment.this,Integer.parseInt(C.UserType.vipMember));
+                }else if (type ==2){
+//                    Long coin = mUserInfo.getMoreCoin();
+//                    if (coin == null || (coin != null && coin < 20000)){
+//                        ViewShowUtils.showShortToast(getActivity(),"多豆不足20000，请积累多豆再试哦");
+//                        return;
+//                    }
+                    mPresenter.updateGrade(NumberFragment.this,Integer.parseInt(C.UserType.operator));
+                }
+            }
+
+        });
+        leaderUpgradeDialog.show();
+    }
+
+    /**
+     * 升级团队长的弹框
+     */
+    private void updateGradeForLeader(){
+        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(getActivity(),R.style.dialog);
+        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener(){
+
+            @Override
+            public void onClick(){
+                Long coin = mUserInfo.getMoreCoin();
+//                if (coin == null || (coin != null && coin < 20000)){
+//                    ViewShowUtils.showShortToast(getActivity(),"多豆不足20000，请积累多豆再试哦");
+//                    return;
+//                }
+                mPresenter.updateGrade(NumberFragment.this,Integer.parseInt(C.UserType.operator));
+            }
+
+        });
+        vipUpgradeDialog.show();
 
     }
 
 
     private void updataUser() {
-        UserInfo usInfo = UserLocalData.getUser(getActivity());
-        if (usInfo != null) {
-            initViewData(usInfo);
+         mUserInfo = UserLocalData.getUser(getActivity());
+        if (mUserInfo != null) {
+            initViewData(mUserInfo);
         }
 
     }
@@ -147,10 +240,98 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
 
 
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
-            mUserIcon.setImageResource(R.drawable.logo);
+            mUserIcon.setImageResource(R.drawable.head_icon);
         } else {
-            LoadImgUtils.setImgCircle(getActivity(), mUserIcon, info.getHeadImg(), R.drawable.logo);
+            LoadImgUtils.setImgCircle(getActivity(), mUserIcon, info.getHeadImg(), R.drawable.head_icon);
         }
+        refreshUserInfo(info);
+        String userType = info.getUserType();
+        if (C.UserType.operator.equals(userType)){
+            updateVip.setVisibility(View.GONE);
+        }else{
+            updateVip.setVisibility(View.VISIBLE);
+            updateVip.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if (mUserInfo != null){
+                        if (C.UserType.member.equals(mUserInfo.getUserType())){
+                            updateGrade();
+
+
+                        }else if (C.UserType.vipMember.equals(mUserInfo.getUserType())){
+                            updateGradeForLeader();
+
+                        }
+                    }
+
+                }
+            });
+        }
+    }
+
+
+    /**
+     * vip的view
+     */
+    private void gradeForNumberView(){
+
+        gradeHint1.setText("购物更省钱");
+        gradeHint1.setText("分享奖励高" );
+        gradeHint1.setText("可申请团队长");
+        gradeHint1.setText("大咖辅导");
+        gradeHint1.setText("数据化运营");
+        gradeHint1.setText("六位邀请码");
+    }
+
+    /**
+     * vip的view
+     */
+    private void gradeForVipView(){
+
+        gradeHint1.setText("购物更省钱");
+        gradeHint1.setText("分享奖励高" );
+        gradeHint1.setText("团队奖不停");
+        gradeHint1.setText("大咖辅导");
+        gradeHint1.setText("数据化运营");
+        gradeHint1.setText("六位邀请码");
+    }
+
+    /**
+     * 团队长的view
+     */
+    private void gradeForLeaderView(){
+
+        gradeHint1.setText("购物更省钱");
+        gradeHint1.setText("分享奖励高");
+        gradeHint1.setText("团队奖不停");
+        gradeHint1.setText("大咖辅导");
+        gradeHint1.setText("专属后台运营");
+        gradeHint1.setText("靓号邀请码");
+    }
+
+    private void displayProgress(UserInfo info){
+        if (info == null){
+            MyLog.d(TAG,"用户信息为空");
+        }
+        Long corn = info.getMoreCoin();
+        double rate = 0;
+        if (corn == null){
+            rate = 0/20000;
+        }else{
+            rate = corn/20000;
+        }
+
+//        dip2px
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) processCornAll.getLayoutParams();
+        RelativeLayout.LayoutParams myCornparams = (RelativeLayout.LayoutParams) processMyCorn.getLayoutParams();
+        myCornparams.width = (int)rate*params.width;
+
+        processMyCorn.setLayoutParams(myCornparams);
+
+
+
+
+
     }
 
     @Override
@@ -184,6 +365,7 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
         page = 1;
         mReUseListView.getListView().setNoMore(false);
         mReUseListView.getSwipeList().setRefreshing(true);
+        updataUser();
         getData();
     }
     private void getData() {
@@ -208,7 +390,7 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
         }
         if (page == 1) {
             mNumberGoodsAdapter.clear();
-//            mListArray.addAll(list);
+
             mNumberGoodsAdapter.add(list);
             mDateNullView.setVisibility(View.GONE);
             mReUseListView.setVisibility(View.VISIBLE);
@@ -250,9 +432,37 @@ public class NumberFragment extends MvpFragment<NumberGoodsListPresenter> implem
     public void onGradeSuccess(UpdateInfoBean info) {
         if (info != null){
             UserInfo userInfo = UserLocalData.getUser();
+            userInfo.setUserType(String.valueOf(info.getUserType()));
+            userInfo.setMoreCoin(info.getMoreCoin());
+            UserLocalData.setUser(getActivity(),userInfo);
+            refreshUserInfo(userInfo);
+        }else{
+            MyLog.d(TAG,"用户信息为空");
         }
 
+    }
 
+    private void refreshUserInfo(UserInfo info){
+        displayProgress(info);
+        if (C.UserType.vipMember.equals(info.getUserType())){
+            myGradedView.setText("VIP会员");
+            numberGradeName.setText("团队长");
+            gradeForVipView();
+        }else if (C.UserType.operator.equals(info.getUserType())) {
+            myGradedView.setText("团队长");
+            numberGradeName.setText("团队长");
+            gradeForLeaderView();
+        }else{
+            myGradedView.setText("会员");
+            numberGradeName.setText("VIP会员");
+            gradeForNumberView();
+        }
+        Long coin = info.getMoreCoin();
+        if (coin == null){
+            myCornView.setText("0");
+        }else{
+            myCornView.setText(String.valueOf(info.getMoreCoin()));
+        }
 
     }
 

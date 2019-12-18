@@ -266,7 +266,7 @@ public class MineFragment extends BaseMainFragmeng {
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
             mUserIcon.setImageResource(R.drawable.logo);
         } else {
-            LoadImgUtils.setImgCircle(getActivity(), mUserIcon, info.getHeadImg(), R.drawable.logo);
+            LoadImgUtils.setImgCircle(getActivity(), mUserIcon, info.getHeadImg(), R.drawable.head_icon);
         }
 
 
