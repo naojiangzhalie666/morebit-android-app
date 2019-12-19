@@ -266,7 +266,7 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
         mPresenter.getDefaultAddress(ConfirmOrderActivity.this);
     }
 
-    @OnClick({R.id.txt_confirm_order_goods_real_pay_action,R.id.goods_confirm_order_address,R.id.goods_confirm_order_add_address})
+    @OnClick({R.id.btn_back,R.id.txt_confirm_order_goods_real_pay_action,R.id.goods_confirm_order_address,R.id.goods_confirm_order_add_address})
     @Override
     public void onClick(View v) {
             switch (v.getId()){
@@ -287,7 +287,9 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
                     //跳转到收货管理地址页面
                     ManageGoodsAddressActivity.addressStart(ConfirmOrderActivity.this);
                     break;
-
+                case R.id.btn_back:
+                    finish();
+                    break;
                 default:
                     break;
             }
@@ -375,7 +377,8 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
      */
     private void fillDataForAddress(AddressInfo addressInfo){
         mAddressInfo = addressInfo;
-        if (mAddressInfo == null ){
+        if (mAddressInfo == null ||
+                (mAddressInfo != null && mAddressInfo.getId() == null) ){
             rlAddAddress.setVisibility(View.VISIBLE);
             GoodsAddress.setVisibility(View.GONE);
         }else{

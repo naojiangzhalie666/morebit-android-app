@@ -56,9 +56,9 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('../signature/forever.keystore')
+            storeFile file('../signature/morebit.keystore')
             storePassword 'qweasd123*'
-            keyAlias 'forever'
+            keyAlias 'morebit.keystore'
             keyPassword 'qweasd123*'
         }
     }
@@ -80,7 +80,7 @@ android {
         release {
             // 开启混淆
             buildConfigField "boolean", "LOG_DEBUG", "true"
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release

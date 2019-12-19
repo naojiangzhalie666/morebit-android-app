@@ -151,7 +151,7 @@
                 android:textSize="15sp"
                 android:maxLines="3"
                 android:maxLength="50"
-                android:text="一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十"
+                android:text=""
                 android:hint="请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元室"
                 android:gravity="left|center_vertical"
                 android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
