@@ -157,7 +157,8 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="商品题目商品题目商品题目商品题目商品题目商品题目商品题目"
-                android:lines="2"
+                android:lines="4"
+                android:maxWidth="40dp"
                 android:layout_toRightOf="@id/img_confirm_order_goods"
                 android:layout_marginLeft="10dp"
                 android:layout_alignTop="@id/img_confirm_order_goods"
@@ -181,7 +182,7 @@
                 android:text="@string/number_goods_price"
                 android:textSize="@dimen/sp_16"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="10dp"
                 android:layout_alignTop="@id/img_confirm_order_goods"/>
             <TextView
                 android:id="@+id/txt_confirm_order_goods_count"

@@ -123,8 +123,9 @@
 
                                 <ImageView
                                     android:id="@+id/btn_number_update_vip"
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:padding="5dp"
                                     android:src="@mipmap/youjiantou_org"
                                     android:layout_centerVertical="true"
                                     android:layout_marginRight="20dp"

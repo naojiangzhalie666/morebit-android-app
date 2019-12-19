@@ -85,7 +85,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     @Override
     protected void initView(View view) {
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);
-
+        consComGoodsDetailAdapter.setTeamType(mTeamType);
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -104,6 +104,18 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
 
         mDateNullViewRecommend.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         mDateNullViewRecommend.getPaint().setAntiAlias(true);//抗锯齿
+        consComGoodsDetailAdapter.setOnSelfOrderClickListener(new ConsComGoodsDetailAdapter.OnSelfOrderClickListener() {
+            @Override
+            public void onReceiveGoods(String orderId, int position) {
+                mPresenter.ConfirmReceiveGoods(OrderListFragment.this,mListArray.get(position).getOrderSn());
+            }
+
+            @Override
+            public void onShip(String orderId, int position) {
+                //调用查看物流接口
+
+            }
+        });
         consComGoodsDetailAdapter.setOnAdapterClickListener(new ConsComGoodsDetailAdapter.OnAdapterClickListener() {
             @Override
             public void onItem(int position) {
@@ -113,6 +125,8 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                     ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                 }
             }
+
+
         });
     }
 
@@ -205,6 +219,11 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     @Override
     public void onCheckGoodsSuccessFul(ShopGoodInfo data) {
         GoodsDetailActivity.start(getActivity(), data);
+    }
+
+    @Override
+    public void onReceiveGoodsSuccessFul(Boolean data) {
+        ViewShowUtils.showShortToast(getActivity(),"确认收货成功！");
     }
 
     // 更新信息

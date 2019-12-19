@@ -27,14 +27,14 @@ public class OrderDetailPresenter extends MvpPresenter<OrderDetailModel, OrderDe
     @Override
     public void cancelOrder(BaseActivity activity, String orderId) {
         mModel.cancelOrder(activity,orderId)
-                .subscribe(new DataObserver<Integer>() {
+                .subscribe(new DataObserver<Boolean>() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
                         getIView().onCancelOrderError();
                     }
 
                     @Override
-                    protected void onSuccess(Integer result) {
+                    protected void onSuccess(Boolean result) {
                         getIView().onCancelOrderSuccess();
                     }
                 });

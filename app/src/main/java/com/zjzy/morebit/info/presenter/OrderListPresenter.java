@@ -92,4 +92,15 @@ public class OrderListPresenter extends MvpPresenter<InfoModel, OrderListContrac
                     }
                 });
     }
+
+    @Override
+    public void ConfirmReceiveGoods(RxFragment rxFragment, String orderId) {
+        mModel.confirmOrder(rxFragment,orderId)
+                .subscribe(new DataObserver<Boolean>() {
+                    @Override
+                    protected void onSuccess(Boolean data) {
+                        getIView().onReceiveGoodsSuccessFul(data);
+                    }
+                });
+    }
 }

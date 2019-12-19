@@ -174,11 +174,23 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     TaobaoUtil.authTaobao(new AlibcLoginCallback() {
                         @Override
-                        public void onSuccess(int i) {
+                        public void onSuccess(int loginResult, String openId, String userNick) {
+                            // 参数说明：
+                            // loginResult(0--登录初始化成功；1--登录初始化完成；2--登录成功)
+                            // openId：用户id
+                            // userNick: 用户昵称
                             //授权成功回调
                             item_tabao_tv.setText("已授权");
                             ToastUtils.showShort("淘宝授权成功");
+
                         }
+
+//                        @Override
+//                        public void onSuccess(int i) {
+//                            //授权成功回调
+//                            item_tabao_tv.setText("已授权");
+//                            ToastUtils.showShort("淘宝授权成功");
+//                        }
 
                         @Override
                         public void onFailure(int code, String msg) {
@@ -359,11 +371,23 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             public void onClick(View view, String text) {
                 TaobaoUtil.logoutTaobao(new AlibcLoginCallback() {
                     @Override
-                    public void onSuccess(int i) { //取消授权成功
+                    public void onSuccess(int loginResult, String openId, String userNick) {
+                        // 参数说明：
+                        // loginResult(0--登录初始化成功；1--登录初始化完成；2--登录成功)
+                        // openId：用户id
+                        // userNick: 用户昵称
+                        //授权成功回调
                         item_tabao_tv.setText("未授权");
                         ToastUtils.showShort("淘宝授权退出成功");
 
                     }
+
+//                    @Override
+//                    public void onSuccess(int i) { //取消授权成功
+//                        item_tabao_tv.setText("未授权");
+//                        ToastUtils.showShort("淘宝授权退出成功");
+//
+//                    }
 
                     @Override
                     public void onFailure(int i, String s) {

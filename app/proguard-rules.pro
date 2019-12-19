@@ -89,32 +89,59 @@
 -dontwarn **.R$*
 
 #### 阿里百川 sdk
- -keepattributes Signature
-    -keep class sun.misc.Unsafe { *; }
-    -keep class com.alibaba.** {*;}
-    -dontwarn com.alibaba.**
-    -keep class com.alipay.** {*;}
-    -dontwarn com.alipay.**
-    -keep class com.taobao.** {*;}
-    -dontwarn com.taobao.**
-    -keep class com.ut.** {*;}
-    -dontwarn com.ut.**
-    -keep class com.ta.** {*;}
-    -dontwarn com.ta.**
-    -keep class mtopsdk.** {*;}
-    -dontwarn mtopsdk.**
-    -keep class org.json.** {*;}
-    -keep class com.ali.auth.**  {*;}
-    -dontwarn com.alimama.**
-    -keep class com.alimama.** {*;}
-    -keeppackagenames com.alimama.tunion.sdk.**
-    -keeppackagenames com.alimama.tunion.sdk.**
-    -keep class com.alimama.tunion.sdk.** {
-        public <fields>;
-        public <methods>;
-    }
+-keepattributes Signature
+-ignorewarnings
+-keep class javax.ws.rs.** { *; }
+-keep class com.alibaba.fastjson.** { *; }
+-dontwarn com.alibaba.fastjson.**
+-keep class sun.misc.Unsafe { *; }
+-dontwarn sun.misc.**
+-keep class com.taobao.** {*;}
+-keep class com.alibaba.** {*;}
+-keep class com.alipay.** {*;}
+-dontwarn com.taobao.**
+-dontwarn com.alibaba.**
+-dontwarn com.alipay.**
+-keep class com.ut.** {*;}
+-dontwarn com.ut.**
+-keep class com.ta.** {*;}
+-dontwarn com.ta.**
+-keep class org.json.** {*;}
+-keep class com.ali.auth.** {*;}
+-dontwarn com.ali.auth.**
+-keep class com.taobao.securityjni.** {*;}
+-keep class com.taobao.wireless.security.** {*;}
+-keep class com.taobao.dp.**{*;}
+-keep class com.alibaba.wireless.security.**{*;}
+-keep interface mtopsdk.mtop.global.init.IMtopInitTask {*;}
+-keep class * implements mtopsdk.mtop.global.init.IMtopInitTask {*;}
+# -keepattributes Signature
+#    -keep class sun.misc.Unsafe { *; }
+#    -keep class com.alibaba.** {*;}
+#    -dontwarn com.alibaba.**
+#    -keep class com.alipay.** {*;}
+#    -dontwarn com.alipay.**
+#    -keep class com.taobao.** {*;}
+#    -dontwarn com.taobao.**
+#    -keep class com.ut.** {*;}
+#    -dontwarn com.ut.**
+#    -keep class com.ta.** {*;}
+#    -dontwarn com.ta.**
+#    -keep class mtopsdk.** {*;}
+#    -dontwarn mtopsdk.**
+#    -keep class org.json.** {*;}
+#    -keep class com.ali.auth.**  {*;}
+#    -dontwarn com.alimama.**
+#    -keep class com.alimama.** {*;}
+#    -keeppackagenames com.alimama.tunion.sdk.**
+#    -keeppackagenames com.alimama.tunion.sdk.**
+#    -keep class com.alimama.tunion.sdk.** {
+#        public <fields>;
+#        public <methods>;
+#    }
 
-####支付宝支付
+
+###支付宝支付
 -keep class com.alipay.android.app.IAlixPay{*;}
 -keep class com.alipay.android.app.IAlixPay$Stub{*;}
 -keep class com.alipay.android.app.IRemoteServiceCallback{*;}
@@ -409,3 +436,22 @@ public static java.lang.String TABLENAME;
 -keepattributes InnerClasses
 -keepattributes SourceFile
 -keepattributes LineNumberTable
+
+-keep public class com.null.test.ui.fragment.** {*;}
+
+-keep public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(***);
+    *** get* ();
+}
+-dontwarn android.support.v4.**
+-dontwarn **CompatHoneycomb
+-dontwarn **CompatHoneycombMR2
+-dontwarn **CompatCreatorHoneycombMR2
+-keep interface android.support.v4.app.** { *; }
+-keep class android.support.v4.** { *; }
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.app.Fragment
+-keep class com.scwang.smartrefresh.layout.** { *; }

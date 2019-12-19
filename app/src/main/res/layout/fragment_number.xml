@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_333333"
+    android:background="@color/transparent"
     android:orientation="vertical">
     <TextView
             android:id="@+id/status_bar"
@@ -12,36 +12,35 @@
             android:layout_height="wrap_content"/>
 
     <include
-        layout="@layout/fragment_number_top"/>
+          layout="@layout/fragment_number_top"/>
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="300dp"-->
+<!--            android:background="@color/color_333333"/>-->
 
-    <com.zjzy.morebit.Module.common.View.ReUseListView
-        android:id="@+id/listview"
+
+<!--        <com.zjzy.morebit.Module.common.View.ReUseNumberGoodsView-->
+<!--            android:id="@+id/mListView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:focusableInTouchMode="true"-->
+<!--            android:focusable="true"-->
+<!--            android:scrollbars="none"-->
+<!--            />-->
+<!--        <include layout="@layout/item_go_top"/>-->
+<!--    </RelativeLayout>-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:background="@color/color_FFFFFF"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
+<!--        <FrameLayout-->
+<!--            android:id="@+id/fl_goodslist"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            />-->
 
-
-    <LinearLayout
-        android:id="@+id/dateNullView"
-        android:layout_width="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/image_meiyousousuojilu"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="很抱歉，没找到相关数据哦~"
-            android:textColor="@color/color_8B8B8B"
-            android:textSize="15sp"/>
-    </LinearLayout>
 </LinearLayout>

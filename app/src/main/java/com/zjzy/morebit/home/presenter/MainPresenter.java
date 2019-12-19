@@ -44,7 +44,7 @@ import java.util.List;
 
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import mtopsdk.common.util.LocalConfig;
+
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;

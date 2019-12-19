@@ -225,6 +225,15 @@ public interface CommonService {
     @POST("/api/order/getOrderIncomeMonthByJdSn")
     public Observable<BaseResponse<MonthEarnings>> getPlatformMonthIncome(@Body RequestIncomeBean requestBean);
 
+    /**
+     * 京东、苏宁、拼多多收益-月
+     *
+     * @return
+     */
+    @POST("/api/order/confirmOrder")
+    public Observable<BaseResponse<Boolean>> confirmOrder(@Body RequestOrderDetailBean requestBean);
+
+
 
     /**
      * 精品推荐
@@ -453,7 +462,7 @@ public interface CommonService {
      */
     //    @FormUrlEncoded
     @POST("/api/order/cancelOrder")
-    public Observable<BaseResponse<Integer>>   cancelOrder(
+    public Observable<BaseResponse<Boolean>>   cancelOrder(
             @Body RequestOrderDetailBean requestBean);
 
     /**
@@ -1769,6 +1778,8 @@ public interface CommonService {
      */
     @POST("/api/goods/getItemDetailByItemSourceId")
     public Observable<BaseResponse<ShopGoodInfo>> onCheckGoods(@Body RequestCheckGoodsBean requestBody);
+
+
 
 
     /**

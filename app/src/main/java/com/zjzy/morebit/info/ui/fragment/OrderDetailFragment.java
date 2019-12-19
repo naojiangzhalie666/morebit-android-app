@@ -1,10 +1,14 @@
 package com.zjzy.morebit.info.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +23,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.info.ui.PopWindow.SwitchOrderTypePopWindow;
 import com.zjzy.morebit.pojo.event.OrderLoadDataEvent;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.view.NoScrollViewPager;
@@ -78,12 +83,15 @@ public class OrderDetailFragment extends BaseFragment {
                             if (!TextUtils.isEmpty(arg)) {
                                 if (getActivity().getString(R.string.order_team_tb).equals(arg)) {
                                     mTeamType = 1;
+                                    mTablayout.setViewPager(mViewPager);
                                 } else if (getActivity().getString(R.string.order_team_other).equals(arg)) {
                                     mTeamType = 2;
                                 }  else if (getActivity().getString(R.string.order_team_sl).equals(arg)) {
                                     mTeamType = 3;
                                 } else if (getActivity().getString(R.string.order_team_yx).equals(arg)) {
                                     mTeamType = 10;
+
+                                    mTablayout.setViewPager(mViewPager);
                                 }else {
                                     mTeamType = 1;
                                 }
@@ -120,6 +128,7 @@ public class OrderDetailFragment extends BaseFragment {
     private void setupViewPager(final List<String> homeColumns) {
         adapter = new OrderAdapter(getChildFragmentManager(), homeColumns);
         mViewPager.setAdapter(adapter);
+
         mTablayout.setViewPager(mViewPager);
 
     }
@@ -156,8 +165,12 @@ public class OrderDetailFragment extends BaseFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            ;
-            return homeColumns.get(position);
+            String title = homeColumns.get(position);
+
+            if (mTeamType == 10 && title.equals("已失效")){
+                return "已关闭";
+            }
+            return title;
         }
 
     }

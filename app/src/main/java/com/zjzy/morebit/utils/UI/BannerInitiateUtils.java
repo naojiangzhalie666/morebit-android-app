@@ -418,9 +418,19 @@ public class BannerInitiateUtils {
             if (!AlibcLogin.getInstance().isLogin()) {
                 TaobaoUtil.authTaobao(new AlibcLoginCallback() {
                     @Override
-                    public void onSuccess(int i) {
+                    public void onSuccess(int loginResult, String openId, String userNick) {
+                        // 参数说明：
+                        // loginResult(0--登录初始化成功；1--登录初始化完成；2--登录成功)
+                        // openId：用户id
+                        // userNick: 用户昵称
+                        //授权成功回调
                         getGenerateActivityLink((BaseActivity) activity, info);
                     }
+
+//                    @Override
+//                    public void onSuccess(int i) {
+//                        getGenerateActivityLink((BaseActivity) activity, info);
+//                    }
 
                     @Override
                     public void onFailure(int i, String s) {

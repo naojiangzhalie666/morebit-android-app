@@ -272,8 +272,8 @@
         <item>已付款 </item>
         <item>已结算</item>
         <item>已失效</item>
-    </string-array>
 
+    </string-array>
     <string-array name="order_live_type">
         <item>全部</item>
         <item>待结算 </item>

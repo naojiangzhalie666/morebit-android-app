@@ -1,5 +1,7 @@
 package com.zjzy.morebit.pojo.number;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 
 /**
@@ -7,7 +9,7 @@ import java.io.Serializable;
  * Created by haiping.liu on 2019-12-11.
  */
 
-public class NumberGoods implements Serializable {
+public class NumberGoods implements Serializable, MultiItemEntity {
     /**
      * 商品Id
      */
@@ -69,5 +71,10 @@ public class NumberGoods implements Serializable {
 
     public void setRetailPrice(String retailPrice) {
         this.retailPrice = retailPrice;
+    }
+
+    @Override
+    public int getItemType() {
+        return 0;
     }
 }

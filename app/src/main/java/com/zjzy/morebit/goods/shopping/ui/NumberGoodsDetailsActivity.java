@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -37,12 +38,15 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
+import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
+import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.ReleaseGoodsActivity;
 import com.zjzy.morebit.contact.EventBusAction;
+import com.zjzy.morebit.fragment.NumberSubFragment;
 import com.zjzy.morebit.goods.shopping.contract.GoodsDetailContract;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsDetailContract;
 import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailPresenter;
@@ -55,6 +59,9 @@ import com.zjzy.morebit.main.model.SearchStatisticsModel;
 import com.zjzy.morebit.main.ui.fragment.GoodsDetailLikeFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.order.ui.ConfirmOrderActivity;
 import com.zjzy.morebit.order.ui.NumberOrderDetailActivity;
@@ -69,9 +76,13 @@ import com.zjzy.morebit.pojo.goods.ConsumerProtectionBean;
 import com.zjzy.morebit.pojo.goods.EvaluatesBean;
 import com.zjzy.morebit.pojo.goods.GoodsImgDetailBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
+import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
+import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
+import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestPage;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GlideImageLoader;
@@ -100,6 +111,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
 /**
@@ -142,6 +154,9 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     @BindView(R.id.btn_goods_buy_action)
     TextView btnBuy;
+
+    @BindView(R.id.btn_number_update_vip)
+    ImageView updateVipTv;
 
     TextView addCartNumTv;
 
@@ -407,45 +422,6 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     private boolean isTitleBarSetBg = true;
     private boolean isContinueScrollTabChange = false;
 
-//    /**
-//     * 初始化界面数据
-//     *
-//     * @param Info
-//     * @param Info
-//     */
-//    private void initViewData(final ShopGoodInfo Info) {
-//        if (Info == null) {
-//            return;
-//        }
-//
-//
-//
-//
-//
-//
-//
-//    }
-
-
-
-
-    /**
-     * 显示详情页数据
-     *
-     * @param Info
-     * @param isSeavDao
-     * @param isRefresh
-     */
-//    @Override
-//    public void showDetailsView(ShopGoodInfo Info, boolean isSeavDao, boolean isRefresh) {
-//        if (Info == null) {
-//            return;
-//        }
-//        initViewData(Info);
-//
-//        getViewLocationOnScreen();
-//    }
-
 
 
 
@@ -457,41 +433,6 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
      */
 
     private void setGoodsAdImg() {
-        //如果没有轮播图,初始化默认商品logo图
-        //头顶图片填充数据
-//        if (info == null) {
-//            return;
-//        }
-//        if (mBannerList.size() <= 1) {
-//            indexbannerdataArray.clear();
-//            List<String> getBanner = info.getItemBanner();
-//
-//            if (getBanner == null || getBanner.size() == 0) {
-//                if (!TextUtils.isEmpty(mGoodsInfo.getPicture())) {
-//                    getBanner = new ArrayList<>();
-//                    getBanner.add(StringsUtils.checkHttp(mGoodsInfo.getPicture()));
-//                } else {
-//                    return;
-//                }
-//            } else {
-//                if (!TextUtils.isEmpty(mGoodsInfo.getPicture())) {
-//                    getBanner.add(0, StringsUtils.checkHttp(mGoodsInfo.getPicture()));
-//                }
-//                mGoodsInfo.setBanner(getBanner);
-//            }
-//            for (int i = 0; i < getBanner.size(); i++) {
-//                String s = StringsUtils.checkHttp(getBanner.get(i));
-//                if (TextUtils.isEmpty(s)) return;
-//                if (LoadImgUtils.isPicture(s)) {
-//                    ImageInfo imageInfo = new ImageInfo();
-//                    imageInfo.setThumb(getBanner.get(i));
-//                    indexbannerdataArray.add(imageInfo);
-//                }
-//            }
-//            for (int i = 0; i < indexbannerdataArray.size(); i++) {
-//                if (!mBannerList.contains(indexbannerdataArray.get(i).getThumb()))
-//                    mBannerList.add(indexbannerdataArray.get(i).getThumb());
-//            }
 
             //简单使用
             mRollViewPager.setImages(mBannerList)
@@ -515,6 +456,59 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 //        }
     }
 
+    /**
+     * 升级vip的弹框
+     */
+    private void updateGrade(){
+
+        NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(NumberGoodsDetailsActivity.this,R.style.dialog);
+        leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
+
+            @Override
+            public void onClick(int type) {
+                //vip ==1
+                if (type == 1){
+                    Long coin = UserLocalData.getUser().getMoreCoin();
+                    if (coin == null || (coin != null && coin < 3600)){
+                        ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"多豆不足20000，请积累多豆再试哦");
+                        return;
+                    }
+                    updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.vipMember));
+                }else if (type ==2){
+                    Long coin = UserLocalData.getUser().getMoreCoin();
+                    if (coin == null || (coin != null && coin < 20000)){
+                        ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"多豆不足20000，请积累多豆再试哦");
+                        return;
+                    }
+                    updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.operator));
+                }
+            }
+
+        });
+        leaderUpgradeDialog.show();
+    }
+
+    /**
+     * 升级团队长的弹框
+     */
+    private void updateGradeForLeader(){
+        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(NumberGoodsDetailsActivity.this,R.style.dialog);
+        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener(){
+
+            @Override
+            public void onClick(){
+                Long coin = UserLocalData.getUser().getMoreCoin();
+                if (coin == null || (coin != null && coin < 20000)){
+                    ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"多豆不足20000，请积累多豆再试哦");
+                    return;
+                }
+                updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.operator));
+            }
+
+        });
+        vipUpgradeDialog.show();
+
+    }
 
 
 
@@ -525,7 +519,8 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
 
-    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action})
+
+    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action,R.id.btn_number_update_vip})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
@@ -536,6 +531,16 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                 break;
             case R.id.btn_goods_buy_action:
                 showPopupwindow();
+                break;
+            case R.id.btn_number_update_vip:
+                if (UserLocalData.getUser() != null){
+                    if (C.UserType.member.equals(UserLocalData.getUser().getUserType())){
+                        updateGrade();
+
+                    }else if (C.UserType.vipMember.equals(UserLocalData.getUser().getUserType())){
+                        updateGradeForLeader();
+                    }
+                }
                 break;
             default:
                 break;
@@ -698,5 +703,73 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
+    }
+
+
+
+    /**
+     * 升级
+     * @param fragment
+     * @param userType
+     */
+    public void updateGradePresenter(BaseActivity fragment, int userType) {
+        updateUserGrade(fragment, userType)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+
+
+                    }
+                })
+                .subscribe(new DataObserver<UpdateInfoBean>() {
+                    @Override
+                    protected void onDataListEmpty() {
+
+                    }
+                    @Override
+                    protected void onSuccess(UpdateInfoBean data) {
+                        onGradeSuccess(data);
+                    }
+                });
+    }
+
+    public void onGradeSuccess(UpdateInfoBean info) {
+        if (info != null){
+            UserInfo userInfo = UserLocalData.getUser();
+            userInfo.setUserType(String.valueOf(info.getUserType()));
+            userInfo.setMoreCoin(info.getMoreCoin());
+            UserLocalData.setUser(NumberGoodsDetailsActivity.this,userInfo);
+            if (C.UserType.vipMember.equals(info.getUserType())){
+                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"Vip升级成功");
+            }else if (C.UserType.operator.equals(info.getUserType())){
+                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"团队长升级成功");
+            }
+
+        }else{
+            MyLog.d("test","用户信息为空");
+        }
+
+    }
+
+
+    public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(BaseActivity fragment, int page) {
+
+        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(new RequestPage().setPage(page))
+                .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
+                .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
+    }
+    /**
+     * 用户等级升级
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(BaseActivity fragment,int userGrade) {
+        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
+        updateUserBean.setType(userGrade);
+        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
+                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
     }
 }

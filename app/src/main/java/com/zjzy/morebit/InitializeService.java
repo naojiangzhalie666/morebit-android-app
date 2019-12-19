@@ -55,7 +55,7 @@ public class InitializeService extends IntentService {
     private void toInIt() {
         initImageLoader(getApplicationContext());
 //        MobSDK.init(this.getApplicationContext(), "23e1e9104c75c", "a35df204d7e2a887f752c730a6eda761"); //sharesdk注册
-        MobSDK.init(this.getApplicationContext(), "23e1e9104c75c", "a35df204d7e2a887f752c730a6eda761"); //sharesdk注册
+        MobSDK.init(this.getApplicationContext(), "2d86eb4d8569c", "27c32388045b05e37dfcfd1ab2d41a75"); //sharesdk注册
 		JPushInterface.setDebugMode(!BuildConfig.DEBUG); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this.getApplicationContext());            // 初始化 JPush
 //		AlibcTradeCommon.turnOnDebug();
@@ -71,7 +71,7 @@ public class InitializeService extends IntentService {
         MobclickAgent.setDebugMode(!BuildConfig.DEBUG);
         MobclickAgent.setCatchUncaughtExceptions(!BuildConfig.DEBUG); //是否需要错误统计功能
         MobclickAgent.startWithConfigure(
-                new MobclickAgent.UMAnalyticsConfig(this.getApplicationContext(), "5b37a472b27b0a5eb100003a", channel,
+                new MobclickAgent.UMAnalyticsConfig(this.getApplicationContext(), "5dfa0f350cafb28e86000fb7", channel,
                         MobclickAgent.EScenarioType.E_UM_NORMAL));
 
 //		try {

@@ -117,6 +117,11 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
     }
 
     @Override
+    public void onReceiveGoodsSuccessFul(Boolean data) {
+
+    }
+
+    @Override
     protected void initData() {
         //虚拟键盘回车键监听
         search_et.setOnKeyListener(new View.OnKeyListener() {

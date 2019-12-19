@@ -28,13 +28,13 @@ public class OrderDetailModel extends MvpModel {
      * @param orderId
      * @return
      */
-    public Observable<BaseResponse<Integer>> cancelOrder(BaseActivity rxActivity,
+    public Observable<BaseResponse<Boolean>> cancelOrder(BaseActivity rxActivity,
                                                                          String orderId){
         RequestOrderDetailBean bean = new RequestOrderDetailBean();
         bean.setOrderId(orderId);
         return RxHttp.getInstance().getCommonService().cancelOrder(bean)
-                .compose(RxUtils.<BaseResponse<Integer>>switchSchedulers())
-                .compose(rxActivity.<BaseResponse<Integer>>bindToLifecycle());
+                .compose(RxUtils.<BaseResponse<Boolean>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<Boolean>>bindToLifecycle());
     }
 
     /**

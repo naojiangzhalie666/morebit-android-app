@@ -589,7 +589,7 @@ public class C {
         public static final int TAOBAO = 0;
 //        public static final int SUNING = 3;
 //        public static final int OTHER = 1;
-        public static final int YUXUAN = 5;
+        public static final int YUXUAN = 10;
     }
 }
 

@@ -76,29 +76,29 @@ public class NumberGoodsDetailImgFragment extends MvpFragment<NumberGoodsDetailI
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            webViewNet.setNestedScrollingEnabled(false);
-        }
-        webViewNet.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false;
-            }
-        });
-        webViewNet.setWebChromeClient(new WebChromeClient() {
-
-            @Override
-            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                callback.invoke(origin, true, false);
-                super.onGeolocationPermissionsShowPrompt(origin, callback);
-            }
-
-            public void onProgressChanged(WebView view, int newProgress) {
-                EventBus.getDefault().post(new GoodsHeightUpdateEvent());
-                super.onProgressChanged(view, newProgress);
-            }
-        });
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//
+//            webViewNet.setNestedScrollingEnabled(false);
+//        }
+//        webViewNet.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+//                return false;
+//            }
+//        });
+//        webViewNet.setWebChromeClient(new WebChromeClient() {
+//
+//            @Override
+//            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+//                callback.invoke(origin, true, false);
+//                super.onGeolocationPermissionsShowPrompt(origin, callback);
+//            }
+//
+//            public void onProgressChanged(WebView view, int newProgress) {
+//                EventBus.getDefault().post(new GoodsHeightUpdateEvent());
+//                super.onProgressChanged(view, newProgress);
+//            }
+//        });
 
 
 

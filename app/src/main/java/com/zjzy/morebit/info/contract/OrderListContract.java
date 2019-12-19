@@ -20,11 +20,13 @@ public class OrderListContract {
         void onFailure( );
         void onFinally();
         void onCheckGoodsSuccessFul(ShopGoodInfo data);
+        void onReceiveGoodsSuccessFul(Boolean data);
     }
 
     public interface Present extends BasePresenter {
         void getGoodsOrder(RxFragment rxFragment,int teamType,int order_type,int page);
         void searchGoodsOrder(RxFragment rxFragment, String orderSn, int type,int page);
         void onCheckGoods(RxFragment rxFragment, String itemSourceId);
+        void ConfirmReceiveGoods(RxFragment rxFragment,String orderId);
     }
 }

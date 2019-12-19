@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebViewClient;
 
 import com.ali.auth.third.core.model.Session;
 import com.alibaba.baichuan.android.trade.AlibcTrade;
 import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
 import com.alibaba.baichuan.android.trade.model.OpenType;
-import com.alibaba.baichuan.android.trade.page.AlibcPage;
+import com.alibaba.baichuan.trade.biz.core.taoke.AlibcTaokeParams;
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
 import com.zjzy.morebit.Activity.ChannelWebActivity;
@@ -64,11 +66,23 @@ public class TaobaoUtil {
                     ShowWebActivity.start(activity, url, "粉丝福利购");
                 }
             } else {
-                AlibcShowParams alibcShowParams = new AlibcShowParams(OpenType.Native, false);
+                //阿里百川4.0升级修改---开始
+                AlibcShowParams alibcShowParams = new AlibcShowParams();
+                alibcShowParams.setOpenType(OpenType.Native);
+                AlibcTaokeParams taokeParams = new AlibcTaokeParams("", "", "");
+                //taokeParams.setPid("mm_112883640_11584347_72287650277");
+                //taokeParams.setAdzoneid("72287650277");
+                //adzoneid是需要taokeAppkey参数才可以转链成功&店铺页面需要卖家id（sellerId），具体设置方式如下：
+                //taokeParams.extraParams.put("taokeAppkey", "xxxxx");
+                //taokeParams.extraParams.put("sellerId", "xxxxx");
                 HashMap exParams = new HashMap<>();
                 exParams.put("isv_code", "appisvcode");
                 exParams.put("alibaba", "阿里巴巴");//自定义参数部分，可任意增删改
-                AlibcTrade.show(activity, new AlibcPage(url), alibcShowParams, null, exParams, new DemoTradeCallback());
+                AlibcTrade.openByUrl(activity, "", url, null,
+                        new WebViewClient(), new WebChromeClient(), alibcShowParams,
+                        taokeParams, exParams, new DemoTradeCallback());
+//                AlibcTrade.show(activity, new AlibcPage(url), alibcShowParams, null, exParams, new DemoTradeCallback());
+                // 阿里百川4.0升级修改---结束
                 BuglyUtils.setUserSceneTag(activity, C.SceneTag.goTaobaoTag);
 
             }
@@ -81,12 +95,20 @@ public class TaobaoUtil {
     public static void authTaobao(final Activity activity, final String client_id) {
         final AlibcLogin alibcLogin = AlibcLogin.getInstance();
         alibcLogin.showLogin(new AlibcLoginCallback() {
-
             @Override
-            public void onSuccess(int i) {
-                MyLog.i("test", "onSuccess: " + alibcLogin.getSession().toString());
+            public void onSuccess(int loginResult, String openId, String userNick) {
+                // 参数说明：
+                // loginResult(0--登录初始化成功；1--登录初始化完成；2--登录成功)
+                // openId：用户id
+                // userNick: 用户昵称
                 ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://127.0.0.1:12345/error&state=1212&view=wap");
             }
+
+//            @Override
+//            public void onSuccess(int i) {
+//                MyLog.i("test", "onSuccess: " + alibcLogin.getSession().toString());
+//                ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://127.0.0.1:12345/error&state=1212&view=wap");
+//            }
 
             @Override
             public void onFailure(int code, String msg) {
@@ -125,10 +147,12 @@ public class TaobaoUtil {
         if (alibcLoginCallback == null) {
             alibcLogin.logout(new AlibcLoginCallback() {
                 @Override
-                public void onSuccess(int i) {
-
+                public void onSuccess(int loginResult, String openId, String userNick) {
+                    // 参数说明：
+                    // loginResult(0--登录初始化成功；1--登录初始化完成；2--登录成功)
+                    // openId：用户id
+                    // userNick: 用户昵称
                 }
-
                 @Override
                 public void onFailure(int i, String s) {
 

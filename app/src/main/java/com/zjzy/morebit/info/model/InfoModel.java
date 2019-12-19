@@ -21,6 +21,7 @@ import com.zjzy.morebit.pojo.request.RequestCheckGoodsBean;
 import com.zjzy.morebit.pojo.request.RequestGoodsOrderBean;
 import com.zjzy.morebit.pojo.request.RequestIncomeBean;
 import com.zjzy.morebit.pojo.request.RequestListBody;
+import com.zjzy.morebit.pojo.request.RequestOrderDetailBean;
 import com.zjzy.morebit.pojo.request.RequestSearchOrderBean;
 import com.zjzy.morebit.pojo.request.RequestSystemNoticeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestConfirmUpgradeData;
@@ -318,6 +319,20 @@ public class InfoModel extends MvpModel {
         return RxHttp.getInstance().getUsersService().getEarningsExplain()
                 .compose(RxUtils.<BaseResponse<EarningExplainBean>>switchSchedulers())
                 .compose(rxFragment.<BaseResponse<EarningExplainBean>>bindToLifecycle());
+    }
+
+    /**
+     * 确认收货
+     * @param rxFragment
+     * @param OrderId
+     * @return
+     */
+    public Observable<BaseResponse<Boolean>> confirmOrder(RxFragment rxFragment,String OrderId) {
+        RequestOrderDetailBean bean = new RequestOrderDetailBean();
+        bean.setOrderId(OrderId);
+        return RxHttp.getInstance().getCommonService().confirmOrder(bean)
+                .compose(RxUtils.<BaseResponse<Boolean>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<Boolean>>bindToLifecycle());
     }
 
 

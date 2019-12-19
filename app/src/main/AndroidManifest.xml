@@ -92,7 +92,8 @@
         android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup,android:name">
+        tools:replace="android:allowBackup,android:name"
+        android:hardwareAccelerated="false">
 
 
         <activity
