@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="所在地区"
+            android:text="配送至"
             android:textColor="#000000"
             android:textSize="14sp" />
 
@@ -26,7 +26,7 @@
             android:src="@drawable/icon_close" />
     </RelativeLayout>
 
-    <View style="@style/view_line" />
+<!--    <View style="@style/view_line" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -65,10 +65,10 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#e8e8e8" />
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:background="#e8e8e8" />-->
 
     <FrameLayout
         android:layout_width="match_parent"

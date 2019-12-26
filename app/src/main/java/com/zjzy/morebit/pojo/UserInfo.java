@@ -163,7 +163,7 @@ public class UserInfo implements Serializable {
     }
 
     public String getPartner() {
-        return userType;// partner  是判断角色字段  0 消费者 1代理商  2运营专员
+        return userType;// partner  是判断角色字段  0 会员 1vip会员  2团队长
     }
 
     public void setUserType(String userType) {

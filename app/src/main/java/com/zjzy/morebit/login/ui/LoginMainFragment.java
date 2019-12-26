@@ -2,12 +2,14 @@ package com.zjzy.morebit.login.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +51,15 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
    ClearEditText edtPhone;
    @BindView(R.id.areaCodeTv)
    TextView areaCodeTv;
+
+   @BindView(R.id.ll_weixin_btn)
+    LinearLayout llWeixinBtn;
+
+   @BindView(R.id.ll_mobile_register)
+   LinearLayout llMobileRegister;
+
    LoginNotRegeditDialog mDialog;
+
    private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86"; //默认是中国的86
     private AreaCodeBean mAreaCode;
@@ -78,8 +88,10 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(checkPhone()){
                     next_login.setEnabled(true);
+                    next_login.setTextColor(Color.parseColor("#FFFFFF"));
                 }else{
                     next_login.setEnabled(false);
+                    next_login.setTextColor(Color.parseColor("#333333"));
                 }
             }
 
@@ -101,13 +113,13 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     }
 
 
-    @OnClick({R.id.iv_back, R.id.forget_password, R.id.weixin_login,R.id.next_login,R.id.ll_userAgreement,R.id.areaCodeBtn,R.id.privateProtocol})
+    @OnClick({R.id.iv_back, R.id.ll_mobile_register, R.id.ll_weixin_btn,R.id.next_login,R.id.ll_userAgreement,R.id.areaCodeBtn,R.id.privateProtocol})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 getActivity().finish();
                 break;
-            case R.id.forget_password:
+            case R.id.ll_mobile_register:
                 //aaaa
 //                ModifyPasswordActivity.start(this, ModifyPasswordActivity.FIND_PASSWORD, "");
 
@@ -116,7 +128,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 //            case R.id.login:
 //                LoginPasswordFragment.start(getActivity());
 //                break;
-            case R.id.weixin_login:
+            case R.id.ll_weixin_btn:
                 if (AppUtil.isFastClick(1000)) {
                     return;
                 }

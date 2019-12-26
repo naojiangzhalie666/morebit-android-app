@@ -33,6 +33,51 @@ public class ConsComGoodsInfo  implements Serializable{
     private String itemVoucherPrice;//券后价
     private String commission;//佣金
     private String subsidy; //补贴
+    private String shipUrl;//物流信息
+    private String hasConfirm;//0:未收货，1：已收货。
+    private String goodsNum;//购买数量
+    private String unit;//规格
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getGoodsNum() {
+        return goodsNum;
+    }
+
+    public void setGoodsNum(String goodsNum) {
+        this.goodsNum = goodsNum;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getHasConfirm() {
+        return hasConfirm;
+    }
+
+    public void setHasConfirm(String hasConfirm) {
+        this.hasConfirm = hasConfirm;
+    }
+
+    public String getShipUrl() {
+        return shipUrl;
+    }
+
+    public void setShipUrl(String shipUrl) {
+        this.shipUrl = shipUrl;
+    }
 
     public String getSubsidy() {
         return subsidy;

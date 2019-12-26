@@ -131,6 +131,26 @@ public class ShowWebActivity extends BaseActivity {
         activity.startActivity(it);
     }
 
+    /**
+     * 物流信息
+     * @param activity
+     * @param url
+     * @param title
+     */
+    public static void startForShip(Activity activity, String url, String title) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+
+        //跳转到网页
+        Intent it = new Intent(activity, ShowWebActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putString("url", url);
+        it.putExtras(bundle);
+        activity.startActivity(it);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,4 @@
-package com.zjzy.morebit.address;
-
-import com.smarttop.library.bean.AdressBean;
+package com.zjzy.morebit.pojo.address;
 
 import java.util.List;
 

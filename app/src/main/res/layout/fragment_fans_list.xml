@@ -222,7 +222,7 @@
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
             android:text=""
-            android:textColor="@color/color_B4791D"
+            android:textColor="@color/color_666666"
             android:textSize="12sp" />
     </LinearLayout>
 </RelativeLayout>

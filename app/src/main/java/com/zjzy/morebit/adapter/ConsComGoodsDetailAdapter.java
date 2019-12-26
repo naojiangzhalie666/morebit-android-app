@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -40,12 +42,17 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             mDatas.addAll(datas);
         }
     }
-    public void setTeamType(int teamType){
-        this.teamType = teamType;
-    }
+//    public void setTeamType(int teamType){
+//        this.teamType = teamType;
+//    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.item_conscomgoods_detail, parent, false));
+        if (viewType == 0){
+            return new ViewHolder(mInflater.inflate(R.layout.item_conscomgoods_detail, parent, false));
+        }else {
+            return new SelfViewHolder(mInflater.inflate(R.layout.item_order_goods_detail, parent, false));
+        }
     }
 
     public void setData(List<ConsComGoodsInfo> datas) {
@@ -55,10 +62,186 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         }
     }
 
+
+    @Override
+    public int getItemViewType(int position) {
+        ConsComGoodsInfo info = mDatas.get(position);
+         if (info.getType()==10){
+             return 1;
+         }
+         return 0;
+
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+       if (holder instanceof  ViewHolder ){
+           taoBaoViewHolder((ViewHolder) holder,position);
+       }else if (holder instanceof SelfViewHolder){
+           selfViewHolder((SelfViewHolder)holder,position);
+       }
+    }
+    private void selfViewHolder(SelfViewHolder viewHolder,final int position){
         final ConsComGoodsInfo info = mDatas.get(position);
-        ViewHolder viewHolder = (ViewHolder) holder;
+        if (TextUtils.isEmpty(info.getItemImg())) {
+            viewHolder.pic.setImageResource(R.drawable.icon_default);
+        } else {
+            LoadImgUtils.setImg(mContext, viewHolder.pic, info.getItemImg());
+        }
+
+
+        try {
+            viewHolder.title.setText(info.getItemName());
+            if (!TextUtils.isEmpty(info.getCreateTime()) && !"0".equals(info.getCreateTime())) {
+                viewHolder.createDay.setText("创建: " + info.getCreateTime());
+            } else {
+                viewHolder.createDay.setText("");
+            }
+            String goodsPrice = info.getPaymentAmount();
+            if (!TextUtils.isEmpty(goodsPrice)){
+                viewHolder.goods_price.setText(goodsPrice);
+            }else{
+                viewHolder.goods_price.setText("");
+            }
+            String goodsNum = info.getGoodsNum();
+            if (!TextUtils.isEmpty(goodsNum)){
+                viewHolder.order_googs_num.setText(mContext.getResources().getString(R.string.number_goods_count,goodsNum));
+            }else{
+                viewHolder.order_googs_num.setText(mContext.getResources().getString(R.string.number_goods_count,"0"));
+            }
+            String unit = info.getUnit();
+            if (!TextUtils.isEmpty(goodsNum)){
+                viewHolder.order_goods_unit.setText(unit);
+            }else{
+                viewHolder.order_goods_unit.setText("");
+            }
+            //佣金
+            String commission = info.getCommission();
+            if (!TextUtils.isEmpty(commission) && !commission.equals("0") &&  !commission.equals("null")){
+                viewHolder.number_yongjin_tv.setVisibility(View.VISIBLE);
+                viewHolder.number_yongjin_tv.setText(mContext.getResources().getString(R.string.number_yujin,commission));
+            }else{
+                viewHolder.number_yongjin_tv.setText("");
+                viewHolder.number_yongjin_tv.setVisibility(View.GONE);
+            }
+
+            //订单
+            String orderNo = info.getOrderSn();
+            if (!TextUtils.isEmpty(orderNo)){
+                viewHolder.tv_order_no.setText(mContext.getResources().getString(R.string.number_order_no,orderNo));
+            }else{
+                viewHolder.tv_order_no.setText("");
+            }
+
+            viewHolder.tv_copy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtil.coayText((Activity) mContext,info.getOrderSn());
+                    ViewShowUtils.showShortToast(mContext,mContext.getString(R.string.coayTextSucceed));
+                }
+            });
+
+
+            if ("4".equals(info.getStatus())){//已关闭
+                viewHolder.tv_order_status.setText("已关闭");
+                viewHolder.shipGoodsTv.setVisibility(View.GONE);
+                viewHolder.go_goods_detail_tv.setVisibility(View.VISIBLE);
+                viewHolder.go_goods_detail_tv.setText("重新购买");
+                viewHolder.go_goods_detail_tv.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        //重新购买，商品详情
+                        NumberGoodsDetailsActivity.start((Activity) mContext,info.getItemId());
+                    }
+                });
+                viewHolder.receiverGoodsTv.setVisibility(View.GONE);
+                viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
+
+            }else if ("3".equals(info.getStatus())){//已结算
+                viewHolder.tv_order_status.setText("已结算");
+                viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
+                viewHolder.shipGoodsTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(onSelfOrderClickListener!=null){
+                            onSelfOrderClickListener.onShip(info.getOrderSn(),position);
+                        }
+                    }
+                });
+                viewHolder.go_goods_detail_tv.setVisibility(View.VISIBLE);
+                viewHolder.go_goods_detail_tv.setText("再次购买");
+                viewHolder.go_goods_detail_tv.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        //重新购买，商品详情
+                        NumberGoodsDetailsActivity.start((Activity) mContext,info.getItemId());
+                    }
+                });
+                viewHolder.receiverGoodsTv.setVisibility(View.GONE);
+                viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
+
+            }else if ("1".equals(info.getStatus())){//已支付
+                viewHolder.tv_order_status.setText("已支付");
+                viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
+                viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
+                viewHolder.shipGoodsTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(onSelfOrderClickListener!=null){
+                            onSelfOrderClickListener.onShip(info.getOrderSn(),position);
+                        }
+                    }
+                });
+                //确认收货
+                if ("1".equals(info.getHasConfirm())){
+                    viewHolder.receiverGoodsTv.setVisibility(View.GONE);
+                }else{
+                    viewHolder.receiverGoodsTv.setVisibility(View.VISIBLE);
+                }
+
+                viewHolder.receiverGoodsTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(onSelfOrderClickListener!=null){
+                            onSelfOrderClickListener.onReceiveGoods(info.getOrderSn(),position);
+                        }
+                    }
+                });
+                viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
+
+            }else if ("2".equals(info.getStatus())){//待支付
+                viewHolder.tv_order_status.setText("待支付");
+                viewHolder.shipGoodsTv.setVisibility(View.GONE);
+                viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
+                viewHolder.receiverGoodsTv.setVisibility(View.GONE);
+                viewHolder.go_goods_pay_tv.setVisibility(View.VISIBLE);
+                viewHolder.go_goods_pay_tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //再次支付
+                        onSelfOrderClickListener.onPay(info.getOrderSn(),position);
+                    }
+                });
+            }
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        viewHolder.iten_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onAdapterClickListener!=null){
+                    onAdapterClickListener.onItem(position);
+                }
+            }
+        });
+    }
+
+    private void taoBaoViewHolder(ViewHolder viewHolder, final int position){
+        final ConsComGoodsInfo info = mDatas.get(position);
+
 
         if (TextUtils.isEmpty(info.getItemImg())) {
             viewHolder.pic.setImageResource(R.drawable.icon_default);
@@ -88,6 +271,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.subsidiesPriceTv.setVisibility(View.GONE);
                 viewHolder.subsidiesPriceTv.setText("");
             }
+
             if ("4".equals(info.getStatus())) {//失效4
                 if (teamType == 10){
                     viewHolder.jiesuanDay.setText("已关闭");
@@ -100,7 +284,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.jiesuanDay_date.setVisibility(View.GONE);
                 viewHolder.yjyugu_tv.setBackgroundResource(R.drawable.bg_commission_n);
                 viewHolder.yjyugu_tv.setTextColor(ContextCompat.getColor(mContext,R.color.color_666666));
-                viewHolder.receiverGoodsTv.setVisibility(View.GONE);
+
             } else {
 
                 if ("3".equals(info.getStatus())) {  //已结算
@@ -113,22 +297,10 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                         viewHolder.jiesuanDay.setText("");
                     }
                 } else {
-                    if (teamType == 10){
-                        //确认收货
-                        viewHolder.receiverGoodsTv.setVisibility(View.VISIBLE);
-                        viewHolder.receiverGoodsTv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if(onSelfOrderClickListener!=null){
-                                    onSelfOrderClickListener.onReceiveGoods(info.getOrderSn(),position);
-                                }
-                            }
-                        });
-                    }
+
                     viewHolder.jiesuanDay.setText("已付款");
                     viewHolder.jiesuanDay.setTextColor(ContextCompat.getColor(mContext, R.color.color_4FCC84));
                     viewHolder.jiesuanDay_date.setVisibility(View.GONE);
-                    viewHolder.receiverGoodsTv.setVisibility(View.GONE);
                 }
                 viewHolder.yjyugu_tv.getPaint().setFlags(0); //还原
                 viewHolder.yjyugu_tv.getPaint().setAntiAlias(true);//抗锯齿
@@ -136,23 +308,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.yjyugu_tv.setBackgroundResource(R.drawable.bg_commission);
                 viewHolder.yjyugu_tv.setTextColor(ContextCompat.getColor(mContext,R.color.color_333333));
             }
-            if (teamType == 10 ){
-                viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
 
-                //查看物流
-                viewHolder.shipGoodsTv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(onSelfOrderClickListener!=null){
-                            onSelfOrderClickListener.onShip(info.getOrderSn(),position);
-                        }
-                    }
-                });
-
-            }else{
-                viewHolder.shipGoodsTv.setVisibility(View.GONE);
-
-            }
             viewHolder.tv_order.setText("订单单号: " + info.getOrderSn());
             viewHolder.tv_copy.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -167,9 +323,9 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         viewHolder.iten_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 if(onAdapterClickListener!=null){
-                     onAdapterClickListener.onItem(position);
-                 }
+                if(onAdapterClickListener!=null){
+                    onAdapterClickListener.onItem(position);
+                }
             }
         });
     }
@@ -185,7 +341,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         TextView title, createDay, jiesuanDay, xfyugu_tv, yjyugu_tv, tv_order, jiesuanDay_date;
         View bottomLine;
         LinearLayout iten_rl;
-        TextView subsidiesPriceTv,tv_copy,shipGoodsTv,receiverGoodsTv;
+        TextView subsidiesPriceTv,tv_copy;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -201,9 +358,37 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             bottomLine = (View) itemView.findViewById(R.id.bottomLine);
             subsidiesPriceTv = itemView.findViewById(R.id.subsidiesPriceTv);
             tv_copy = itemView.findViewById(R.id.tv_copy);
+        }
+    }
+    //自营商品
+    private class SelfViewHolder extends RecyclerView.ViewHolder {
+        ImageView pic;
+        TextView title, createDay,  tv_order_status, goods_price, order_googs_num,order_goods_unit,number_yongjin_tv;
+
+        LinearLayout iten_rl;
+        TextView tv_copy,shipGoodsTv,receiverGoodsTv,go_goods_detail_tv,go_goods_pay_tv,tv_order_no;
+        RelativeLayout rl_receiver_ggods;
+
+        public SelfViewHolder(View itemView) {
+            super(itemView);
+            iten_rl = (LinearLayout) itemView.findViewById(R.id.iten_rl);
+            pic = (ImageView) itemView.findViewById(R.id.pic);
+            title = (TextView) itemView.findViewById(R.id.title);
+            createDay = (TextView) itemView.findViewById(R.id.createDay);
+            tv_order_status = (TextView)itemView.findViewById(R.id.tv_order_status);
+            goods_price = (TextView)itemView.findViewById(R.id.goods_price);
+            order_googs_num = (TextView)itemView.findViewById(R.id.order_googs_num);
+            order_goods_unit = (TextView)itemView.findViewById(R.id.order_goods_unit);
+            //赚取佣金 会员没有佣金，可以不显示
+            number_yongjin_tv = (TextView)itemView.findViewById(R.id.number_yongjin_tv);
+            tv_order_no = (TextView)itemView.findViewById(R.id.tv_order_no);
+
+            tv_copy = itemView.findViewById(R.id.tv_copy);
             shipGoodsTv = (TextView) itemView.findViewById(R.id.ship_goods_tv);
             receiverGoodsTv = (TextView) itemView.findViewById(R.id.receiver_goods_tv);
-
+            rl_receiver_ggods = (RelativeLayout)itemView.findViewById(R.id.rl_receiver_ggods);
+            go_goods_detail_tv = (TextView)itemView.findViewById(R.id.go_goods_detail_tv);
+            go_goods_pay_tv = (TextView)itemView.findViewById(R.id.go_goods_pay_tv);
         }
     }
 
@@ -213,6 +398,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
 
         public void onReceiveGoods(String orderId,int position);
         public void onShip(String orderId,int position);
+        public void onPay(String orderId,int position);
     }
 
     public void setOnSelfOrderClickListener(OnSelfOrderClickListener listener) {

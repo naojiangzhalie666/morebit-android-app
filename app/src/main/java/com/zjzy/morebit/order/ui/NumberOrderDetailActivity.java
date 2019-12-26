@@ -3,8 +3,10 @@ package com.zjzy.morebit.order.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -15,19 +17,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
-import com.nostra13.universalimageloader.utils.L;
+import com.zjzy.morebit.Activity.ShowWebActivity;
+import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
+import com.zjzy.morebit.LocalData.CommonLocalData;
+import com.zjzy.morebit.fragment.BindZhiFuBaoFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
-import com.zjzy.morebit.order.OrderDetailInfo;
-import com.zjzy.morebit.order.OrderSyncResult;
-import com.zjzy.morebit.order.ResponseOrderInfo;
+import com.zjzy.morebit.pojo.order.OrderDetailInfo;
+import com.zjzy.morebit.pojo.order.OrderSyncResult;
+import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
 import com.zjzy.morebit.order.contract.OrderDetailContract;
 import com.zjzy.morebit.order.presenter.OrderDetailPresenter;
 
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.payment.PayResult;
-import com.zjzy.morebit.pojo.number.NumberGoods;
+import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
@@ -44,6 +50,9 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
     private static final String TAG = NumberOrderDetailActivity.class.getSimpleName();
 
+    @BindView(R.id.btn_back)
+    LinearLayout btnBack;
+
     @BindView(R.id.txt_head_title)
     TextView headTitle;
     /**
@@ -58,6 +67,8 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     @BindView(R.id.number_order_detail_status)
     TextView orderDetailTxtView;
 
+    @BindView(R.id.tv_daojishi_time)
+    TextView tvDaojishiTime;
     /**
      * 物流信息
      */
@@ -117,6 +128,11 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
     @BindView(R.id.order_info_ordersn)
     TextView orderInfoOrderSnView;
+    /**
+     * 订单号的copy
+     */
+    @BindView(R.id.order_info_copy)
+    TextView orderInfoCopyTv;
 
     @BindView(R.id.order_create_time)
     TextView orderCreateTimeView;
@@ -132,6 +148,11 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
      */
     @BindView(R.id.order_success_info_ordersn)
     TextView orderSuccessInfoOrderSn;
+    /**
+     * 订单成功的订单号copy
+     */
+    @BindView(R.id.order_success_info_copy)
+    TextView orderSuccessInfoCopyTv;
 
     @BindView(R.id.order_success_create_time)
     TextView  orderSuccessCreateTime;
@@ -188,6 +209,10 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
     private int payStatus =0;
 
+    private Counter mTimer;
+
+
+    private OrderDetailInfo mInfo;
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -247,6 +272,10 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     protected void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
     }
 
     @Override
@@ -257,6 +286,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     @Override
     public void onCancelOrderSuccess() {
         ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,"取消订单成功！");
+        finish();
     }
 
     @Override
@@ -298,6 +328,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
             MyLog.e(TAG,"订单详情信息为空");
             return ;
         }
+        mInfo = info;
             int status = info.getOrderStatus();
             switch (status){
                 case C.OrderStatus.WAIT_PAY_ORDER_STATUS:
@@ -347,6 +378,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
     }
     private void initOrderStatusSuccess(OrderDetailInfo info){
+        tvDaojishiTime.setVisibility(View.GONE);
         orderDetailView.setImageResource(R.mipmap.order_success);
         orderDetailTxtView.setText("已完成");
         llRealPayInfo.setVisibility(View.VISIBLE);
@@ -355,12 +387,35 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
         //物流信息
         orderSuccessWuluView.setVisibility(View.VISIBLE);
+         String shipUrl = info.getShipUrl();
+        final String shipUrlWithParm = shipUrl+"?orderId="+info.getOrderId();
+        orderSuccessWuluView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(shipUrlWithParm)){
+                    if (TextUtils.isEmpty(shipUrlWithParm)) return;
+                    ShowWebActivity.start(NumberOrderDetailActivity.this,shipUrlWithParm,"物流信息");
+                }
+            }
+        });
 
         //订单信息
         cardOrderCloseWaitPay.setVisibility(View.GONE);
         cardOrderSuccess.setVisibility(View.VISIBLE);
         orderSuccessInfoOrderSn.setText(getResources().getString(R.string.number_order_number,
                 info.getOrderId()));
+        final String orderId = info.getOrderId();
+
+        orderSuccessInfoCopyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtil.coayText(NumberOrderDetailActivity.this,orderId);
+                ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,getResources().getString(R.string.coayTextSucceed));
+            }
+        });
+
+
+
         orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
                 info.getCreateTime()));
 
@@ -393,6 +448,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
     }
     private void initOrderStatusClose(OrderDetailInfo info){
+        tvDaojishiTime.setVisibility(View.GONE);
         orderDetailView.setImageResource(R.mipmap.order_finish);
         orderDetailTxtView.setText("已关闭");
         //物流信息
@@ -402,23 +458,31 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
         cardOrderCloseWaitPay.setVisibility(View.VISIBLE);
         cardOrderSuccess.setVisibility(View.GONE);
-        orderInfoOrderSnView.setText(info.getOrderId());
-        orderCreateTimeView.setText(info.getCreateTime());
+        orderInfoOrderSnView.setText(getResources().getString(R.string.number_order_number,info.getOrderId()));
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,info.getCreateTime()));
 
         llOrderCancelRePay.setVisibility(View.GONE);
         orderFinishRebuyLlView.setVisibility(View.VISIBLE);
         btnTotalPayPrice.setText(getResources().getString(R.string.number_order_total_price,
                 String.valueOf(info.getActualPrice())));
+        final String goodsId = info.getGoodsId();
         btnReBuyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo:跳转到商品列表
+                //todo:跳转到商品详情页面
+                if (!TextUtils.isEmpty(goodsId)){
+                    NumberGoodsDetailsActivity.start(NumberOrderDetailActivity.this,goodsId);
+                }else{
+                    MyLog.d(TAG,"商品Id为空");
+                }
+
 
             }
         });
 
     }
     private void initOrderStatusUnPay(OrderDetailInfo info){
+        tvDaojishiTime.setVisibility(View.GONE);
         orderDetailView.setImageResource(R.mipmap.order_wait_pay);
         orderDetailTxtView.setText("待付款");
         //物流信息
@@ -429,8 +493,18 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         //订单信息
         cardOrderCloseWaitPay.setVisibility(View.VISIBLE);
         cardOrderSuccess.setVisibility(View.GONE);
-        orderInfoOrderSnView.setText(info.getOrderId());
-        orderCreateTimeView.setText(info.getCreateTime());
+        final String orderId = info.getOrderId();
+        orderInfoOrderSnView.setText(getResources().getString(R.string.number_order_number,orderId));
+
+        orderInfoCopyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtil.coayText(NumberOrderDetailActivity.this,orderId);
+                ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,getResources().getString(R.string.coayTextSucceed));
+            }
+        });
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
+                DateTimeUtils.getYmdhhmmss(info.getCreateTime())));
 
         llOrderCancelRePay.setVisibility(View.VISIBLE);
         orderFinishRebuyLlView.setVisibility(View.GONE);
@@ -453,6 +527,26 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
                 mPresenter.payForOrder(NumberOrderDetailActivity.this,mOrderId);
             }
         });
+        String createTime = info.getCreateTime();
+        if (isNumeric(createTime)){
+
+
+            long orderTime = Long.parseLong(createTime);
+            MyLog.d("test","订单创建时间:"+DateTimeUtils.getYmdhhmmss(String.valueOf(orderTime)));
+            long time = CommonLocalData.syncServiceTime() - orderTime;
+            if (time/1000 < 1800){
+                tvDaojishiTime.setVisibility(View.VISIBLE);
+                Counter counter = new Counter(time, 1000);
+                counter.start();
+            }
+            else{
+                tvDaojishiTime.setVisibility(View.GONE);
+                MyLog.d("test","订单与客户端本地时间差异:"+time+"毫秒");
+            }
+        }
+
+//        Counter counter = new Counter(60 * 1000, 1000); // 第一个参数是倒计时时间，后者为计时间隔，单位毫秒，这里是倒计时
+//        counter.start();
 
     }
 
@@ -484,11 +578,56 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     private void initView(){
         mOrderId = getIntent().getStringExtra("orderId");
         headTitle.setText("订单详情");
+        //返回按钮
+        btnBack.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
     }
 
     private void initData(){
         mPresenter.getOrderDetail(NumberOrderDetailActivity.this,mOrderId);
+    }
+
+    class Counter extends CountDownTimer {
+
+        public Counter(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            try {
+//                tv_yanzhengma.setEnabled(true);
+//                tv_yanzhengma.setText("重新获取");
+//                tv_yanzhengma.setBackgroundResource(R.drawable.bg_ffe10a_rightround_2dp);
+//                tv_yanzhengma.setTextColor(getResources().getColor(R.color.color_000000));
+
+                initOrderStatusClose(mInfo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if(!NumberOrderDetailActivity.this.isFinishing()){
+                // TODO
+                String dataTime = DateTimeUtils.getHHmmss(millisUntilFinished);
+                tvDaojishiTime.setText("剩余 "+dataTime);
+            }
+            // 获取当前时间总秒数
+//            first = millisUntilFinished / 1000;
+//            if (first <= SECONDS) { // 小于一分钟 只显示秒
+//                tv_yanzhengma.setText((first < 10 ? "0" + first : first) + " 秒后再试");
+//            }
+
+        }
+
     }
 }

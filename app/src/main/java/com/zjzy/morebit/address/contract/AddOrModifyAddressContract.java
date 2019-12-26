@@ -1,10 +1,9 @@
 package com.zjzy.morebit.address.contract;
 
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.address.AddressInfo;
+import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
-import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 
 /**
  *

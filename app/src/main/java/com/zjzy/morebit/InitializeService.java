@@ -30,7 +30,7 @@ import cn.jpush.android.api.JPushInterface;
 
 public class InitializeService extends IntentService {
 
-    private static final String ACTION_INIT_WHEN_APP_CREATE = "com.markermalll.cat.service.action.INIT";
+    private static final String ACTION_INIT_WHEN_APP_CREATE = "com.zjzy.morebit.service.action.INIT";
 
     public InitializeService() {
         super("InitializeService");

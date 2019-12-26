@@ -2,15 +2,13 @@ package com.zjzy.morebit.order.model;
 
 
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
-import com.zjzy.morebit.order.OrderDetailInfo;
-import com.zjzy.morebit.order.OrderSyncResult;
-import com.zjzy.morebit.order.ResponseOrderInfo;
-import com.zjzy.morebit.pojo.request.RequestCreateOrderBean;
+import com.zjzy.morebit.pojo.order.OrderDetailInfo;
+import com.zjzy.morebit.pojo.order.OrderSyncResult;
+import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
 import com.zjzy.morebit.pojo.request.RequestOrderDetailBean;
 import com.zjzy.morebit.pojo.request.RequestSyncPayResultResultBean;
 

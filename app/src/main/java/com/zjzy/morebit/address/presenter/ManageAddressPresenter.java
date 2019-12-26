@@ -1,24 +1,11 @@
 package com.zjzy.morebit.address.presenter;
 
-import com.smarttop.library.db.AssetsDatabaseManager;
-import com.smarttop.library.db.manager.AddressDictManager;
-import com.smarttop.library.widget.AddressSelector;
-import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.address.AddressInfo;
-import com.zjzy.morebit.address.AddressInfoList;
-import com.zjzy.morebit.address.AllRegionInfoList;
-import com.zjzy.morebit.address.contract.AddOrModifyAddressContract;
+import com.zjzy.morebit.pojo.address.AddressInfoList;
 import com.zjzy.morebit.address.contract.ManageAddressContract;
-import com.zjzy.morebit.address.model.AddOrModifyAddressModel;
 import com.zjzy.morebit.address.model.ManageAddressModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
-import com.zjzy.morebit.network.BaseResponse;
-import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
-import com.zjzy.morebit.utils.MyLog;
-
-import java.util.List;
 
 /**
  * Created by haiping.liu on 2019-12-14.

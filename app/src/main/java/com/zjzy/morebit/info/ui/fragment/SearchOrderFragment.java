@@ -142,7 +142,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
         if (bundle != null) {
             type = bundle.getInt(C.Extras.order_type, 1);
         }
-        if(1 != type){
+        if(1 != type && 10 != type){
             type = 3;
         }
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);

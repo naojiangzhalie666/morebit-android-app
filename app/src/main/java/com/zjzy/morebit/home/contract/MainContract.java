@@ -1,7 +1,6 @@
 package com.zjzy.morebit.home.contract;
 
 
-import com.zjzy.morebit.address.AllRegionInfoList;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.pojo.AppUpgradeInfo;
@@ -49,6 +48,14 @@ public class MainContract {
          * @param rxActivity
          */
         void getAppInfo(RxAppCompatActivity rxActivity);
+
+        /**
+         *  获取服务端的时间
+         * @param rxActivity
+         */
+        void getServerTime(RxAppCompatActivity rxActivity);
+
+
         /**
          * 心跳接口
          */

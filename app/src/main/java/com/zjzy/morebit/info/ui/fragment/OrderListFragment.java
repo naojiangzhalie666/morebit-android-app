@@ -2,6 +2,7 @@ package com.zjzy.morebit.info.ui.fragment;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.ShowWebActivity;
+import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ConsComGoodsDetailAdapter;
@@ -17,6 +20,7 @@ import com.zjzy.morebit.info.contract.OrderListContract;
 import com.zjzy.morebit.info.presenter.OrderListPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
+import com.zjzy.morebit.order.ui.NumberOrderDetailActivity;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.event.OrderLoadDataEvent;
@@ -85,7 +89,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     @Override
     protected void initView(View view) {
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);
-        consComGoodsDetailAdapter.setTeamType(mTeamType);
+//        consComGoodsDetailAdapter.setTeamType(mTeamType);
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -107,13 +111,26 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
         consComGoodsDetailAdapter.setOnSelfOrderClickListener(new ConsComGoodsDetailAdapter.OnSelfOrderClickListener() {
             @Override
             public void onReceiveGoods(String orderId, int position) {
-                mPresenter.ConfirmReceiveGoods(OrderListFragment.this,mListArray.get(position).getOrderSn());
+                //再次购买
+                mPresenter.ConfirmReceiveGoods(OrderListFragment.this,orderId);
             }
 
             @Override
             public void onShip(String orderId, int position) {
                 //调用查看物流接口
+                String originUrl = mListArray.get(position).getShipUrl();
+                if (!TextUtils.isEmpty(originUrl)){
+                    originUrl = originUrl+"?orderId="+orderId;
+                    ShowWebActivity.start(getActivity(),originUrl,"物流信息");
+                }else{
+                    MyLog.d("test","物流url为空");
+                }
+            }
 
+            @Override
+            public void onPay(String orderId, int position) {
+                //去支付或者取消
+                NumberOrderDetailActivity.startOrderDetailActivity(getActivity(),orderId);
             }
         });
         consComGoodsDetailAdapter.setOnAdapterClickListener(new ConsComGoodsDetailAdapter.OnAdapterClickListener() {
@@ -163,6 +180,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     @Override
     public void onSuccessful(List<ConsComGoodsInfo> datas) {
         MyLog.i("test", "sn: " + datas.get(0).getOrderSn());
+//        consComGoodsDetailAdapter.setTeamType(mTeamType);
         if (datas.size() == 0) {
             mDateNullView.setVisibility(View.VISIBLE);
             mReUseListView.setVisibility(View.GONE);

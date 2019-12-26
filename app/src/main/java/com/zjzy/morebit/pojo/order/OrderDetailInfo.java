@@ -1,4 +1,4 @@
-package com.zjzy.morebit.order;
+package com.zjzy.morebit.pojo.order;
 
 import java.io.Serializable;
 
@@ -11,6 +11,10 @@ public class OrderDetailInfo implements Serializable {
      * 支付宝单号
      */
     private String payId;
+    /**
+     * 商品id
+     */
+    private String goodsId;
     /**
      * 商品名称
      *
@@ -25,6 +29,7 @@ public class OrderDetailInfo implements Serializable {
      * 支付时间
      */
     private String payTime;
+
     /**
      * 发货时间
      */
@@ -82,6 +87,26 @@ public class OrderDetailInfo implements Serializable {
      * 商品图片
      */
     private String goodsUrl;
+    /**
+     * 物流url（传token和orderId）
+     */
+    private String shipUrl;
+
+    public String getShipUrl() {
+        return shipUrl;
+    }
+
+    public void setShipUrl(String shipUrl) {
+        this.shipUrl = shipUrl;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
 
 
     public String getPayId() {

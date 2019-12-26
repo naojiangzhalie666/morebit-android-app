@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:id="@+id/pop_layout"
+    android:background="@color/transparent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -57,7 +58,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/txt_selected_goods"
                     android:layout_alignTop="@id/txt_selected_goods"
-                    android:maxLines="1"
+                    android:maxLines="2"
+                    android:lines="2"
                     android:ellipsize="end"
                     android:text="商品名称"
                     android:textColor="@color/color_333333"
@@ -74,7 +76,7 @@
                 android:layout_width="100dp"
                 android:layout_height="110dp"
                 android:src="@drawable/icon_default"
-                android:scaleType="centerCrop"/>
+                android:scaleType="fitCenter"/>
         </RelativeLayout>
     </RelativeLayout>
 
@@ -110,6 +112,7 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/sp_12"
                     android:background="@drawable/bg_selected_goods_rule"
+                    android:layout_marginBottom="10dp"
                     />
 
             <TextView
@@ -187,13 +190,12 @@
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
-        android:background="@color/color_FFFFFF"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             android:id="@+id/goods_buy_action"

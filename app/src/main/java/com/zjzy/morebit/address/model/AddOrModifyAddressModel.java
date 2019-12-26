@@ -1,22 +1,16 @@
 package com.zjzy.morebit.address.model;
 
 
-import com.trello.rxlifecycle2.components.RxActivity;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.address.AddressInfo;
-import com.zjzy.morebit.address.AllRegionInfoList;
+import com.zjzy.morebit.pojo.address.AddressInfo;
+import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
-import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateAddressBean;
-import com.zjzy.morebit.pojo.requestbodybean.RequestPage;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 

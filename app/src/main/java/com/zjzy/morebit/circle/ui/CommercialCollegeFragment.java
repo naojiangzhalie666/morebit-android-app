@@ -108,7 +108,7 @@ public class CommercialCollegeFragment extends MvpFragment<CommercialCollegePres
 
     private void initRecyclerView() {
         mReUseListView =mView.findViewById(R.id.mListView);
-//        mReUseListView.getSwipeList().setOnRefreshListener(new com.markermall.cat.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+//        mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
 //               if(mReUseListView.getSwipeList().isRefreshing()){

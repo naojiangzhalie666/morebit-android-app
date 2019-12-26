@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
@@ -15,6 +16,7 @@ import android.webkit.WebViewClient;
 
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.GoodDeImgAdapter;
+import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.goods.shopping.contract.GoodsDetailImgContract;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsDetailImgContract;
 import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailImgPresenter;
@@ -48,61 +50,33 @@ import butterknife.BindView;
  * 详情图片
  */
 
-public class NumberGoodsDetailImgFragment extends MvpFragment<NumberGoodsDetailImgPresenter> implements NumberGoodsDetailImgContract.View {
+public class NumberGoodsDetailImgFragment extends BaseMainFragmeng  {
 
     @BindView(R.id.webViewNet)
     MyWebView webViewNet;
 
-    private String htmlData;
-
+    View mView;
 
     @Override
-    protected int getViewLayout() {
-        return R.layout.fragment_number_goods_detail_img;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_number_goods_detail_img, container, false);
+        initView(mView);
+        return mView;
     }
+
+
 
     public static NumberGoodsDetailImgFragment newInstance() {
         NumberGoodsDetailImgFragment fragment = new NumberGoodsDetailImgFragment();
-//        Bundle args = new Bundle();
-//        args.putSerializable(C.Extras.GOODS_CONTENTS, htmlData);
-//        fragment.setArguments(args);
         return fragment;
     }
 
-    @Override
+
     protected void initView(View view) {
 
         if (webViewNet == null ) {
             return;
         }
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//
-//            webViewNet.setNestedScrollingEnabled(false);
-//        }
-//        webViewNet.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-//                return false;
-//            }
-//        });
-//        webViewNet.setWebChromeClient(new WebChromeClient() {
-//
-//            @Override
-//            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-//                callback.invoke(origin, true, false);
-//                super.onGeolocationPermissionsShowPrompt(origin, callback);
-//            }
-//
-//            public void onProgressChanged(WebView view, int newProgress) {
-//                EventBus.getDefault().post(new GoodsHeightUpdateEvent());
-//                super.onProgressChanged(view, newProgress);
-//            }
-//        });
-
-
-
-
     }
 
     public void loadHtmlData(String htmlData){
@@ -121,24 +95,6 @@ public class NumberGoodsDetailImgFragment extends MvpFragment<NumberGoodsDetailI
         });
         EventBus.getDefault().post(new GoodsHeightUpdateEvent());
     }
-
-
-
-
-
-
-
-    @Override
-    protected void initData() {
-    }
-
-
-
-    @Override
-    public BaseView getBaseView() {
-        return this;
-    }
-
 
     @Override
     public void onDestroy() {

@@ -13,7 +13,7 @@
     <color name="index_bottom_pressed">#FFFFFF</color>
     <!-- 主题色：红色 -->
 
-    <color name="top_head">#FFE10A</color>
+    <color name="top_head">#EE403A</color>
     <color name="home_bg">#f8f9fb</color>
 
     <!--MotherSelectedFragment-->
@@ -41,9 +41,10 @@
 
 
     <color name="color_666666">#666666</color>
-    <color name="color_FFED25">#FFED25</color>
-    <color name="color_ffe800">#ffe800</color>
-    <color name="color_ffd506">#ffd506</color>
+    //主色调
+    <color name="color_FFED25">#EE403A</color>
+    <color name="color_ffe800">#EE403A</color>
+    <color name="color_ffd506">#FF645B</color>
     <color name="color_000000">#000000</color>
     <color name="color_EDEDED">#EDEDED</color>
     <color name="color_E5E5E5">#E5E5E5</color>
@@ -111,14 +112,15 @@
     <color name="color_D7BC99">#D7BC99</color>
     <color name="color_D7B17F">#D7B17F</color>
     <color name="color_FF2B33">#FF2B33</color>
-    <color name="color_FFD800">#FFD800</color>
+    //修改为优先主色
+    <color name="color_FFD800">#EE403A</color>
     <color name="color_FE3B64">#FE3B64</color>
     <color name="color_EB1719">#EB1719</color>
     <color name="color_A24DE3">#A24DE3</color>
     <color name="color_FFE100">#FFE100</color>
     <color name="color_F8F8F8">#F8F8F8</color>
     <color name="color_80000000">#80000000</color>
-    <color name="color_FFECB6">#FFECB6</color>
+    <color name="color_FFECB6">#FF645B</color>
     <color name="color_B4791D">#B4791D</color>
     <color name="color_CA8C1A">#CA8C1A</color>
     <color name="color_FFF3DD">#FFF3DD</color>
@@ -235,5 +237,11 @@
     <color name="color_845802">#845802</color>
     <color name="color_EE403A">#EE403A</color>
     <color name="color_885A3D">#885A3D</color>
+    <color name="color_1afd5212">#1afd5212</color>
+    <color name="color_F55454">#F55454</color>
+    <color name="color_ffea993e">#ffea993e</color>
+
+
+
 
 </resources>

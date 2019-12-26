@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Created by fengrs on 2018/7/6.
@@ -164,9 +166,9 @@ public class MathUtils {
         if (TextUtils.isEmpty(price)){
             return "0";
         }
-        double corn = 0;
+        long corn = 0;
         try{
-            corn = Double.parseDouble(price)*CORN_RATION;
+            corn = (long)(Double.parseDouble(price)*CORN_RATION);
         }catch (Exception e){
             e.printStackTrace();
             LogUtils.e("MathUtils","价格转换非法");
@@ -388,5 +390,16 @@ public class MathUtils {
         BigDecimal bd1 = new BigDecimal(Double.toString(d1));
         BigDecimal bd2 = new BigDecimal(Double.toString(d2));
         return bd1.multiply(bd2).doubleValue();
+    }
+
+    /**
+     * 两位小数点格式化
+     * @param price
+     * @return
+     */
+    public static String formatMoney(double price){
+        NumberFormat format =  new DecimalFormat("######0.00");
+        return format.format(price);
+
     }
 }

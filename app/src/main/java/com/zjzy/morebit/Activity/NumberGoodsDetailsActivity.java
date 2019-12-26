@@ -1,15 +1,12 @@
-package com.zjzy.morebit.goods.shopping.ui;
+package com.zjzy.morebit.Activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -24,39 +21,19 @@ import android.widget.TextView;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
-import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
-import com.zjzy.morebit.Activity.GoodsDetailActivity;
-import com.zjzy.morebit.Activity.ShareMoneyActivity;
-import com.zjzy.morebit.Activity.ShortVideoPlayActivity;
-import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
-import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
-import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
-import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
-import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.circle.ui.ReleaseGoodsActivity;
-import com.zjzy.morebit.contact.EventBusAction;
-import com.zjzy.morebit.fragment.NumberSubFragment;
-import com.zjzy.morebit.goods.shopping.contract.GoodsDetailContract;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsDetailContract;
-import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailPresenter;
 import com.zjzy.morebit.goods.shopping.presenter.NumberGoodsDetailPresenter;
-import com.zjzy.morebit.goods.shopping.ui.fragment.GoodsDetailImgFragment;
 import com.zjzy.morebit.goods.shopping.ui.fragment.NumberGoodsDetailImgFragment;
-import com.zjzy.morebit.goods.shopping.ui.view.GoodsDetailUpdateView;
-import com.zjzy.morebit.info.ui.AppFeedActivity;
-import com.zjzy.morebit.main.model.SearchStatisticsModel;
-import com.zjzy.morebit.main.ui.fragment.GoodsDetailLikeFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
 import com.zjzy.morebit.network.BaseResponse;
@@ -64,44 +41,23 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.order.ui.ConfirmOrderActivity;
-import com.zjzy.morebit.order.ui.NumberOrderDetailActivity;
-import com.zjzy.morebit.pojo.ImageInfo;
-import com.zjzy.morebit.pojo.MessageEvent;
-import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
-import com.zjzy.morebit.pojo.ReleaseManage;
-import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
-import com.zjzy.morebit.pojo.goods.ConsumerProtectionBean;
-import com.zjzy.morebit.pojo.goods.EvaluatesBean;
-import com.zjzy.morebit.pojo.goods.GoodsImgDetailBean;
-import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
-import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
-import com.zjzy.morebit.pojo.requestbodybean.RequestPage;
+import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GlideImageLoader;
-import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
-import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
-import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
-import com.zjzy.morebit.utils.SensorsDataUtil;
-import com.zjzy.morebit.utils.StringsUtils;
-import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
-import com.zjzy.morebit.utils.action.MyAction;
-import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
-import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.goods.GoodSizePopupwindow;
-import com.zjzy.morebit.view.main.SysNotificationView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -658,14 +614,15 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
                 sizePopWin.dismiss();
                 ConfirmOrderActivity.start(NumberGoodsDetailsActivity.this,mGoodsOrderInfo);
-                finish();
+
 
             }
         });
 
         txtGoodsName.setText(mGoodsInfo.getName());
         txtGoodsRule.setText(mGoodsInfo.getUnit());
-        selectedGoodsPrice.setText(String.valueOf(mGoodsInfo.getRetailPrice()));
+        selectedGoodsPrice.setText(getResources().getString(R.string.number_goods_price,
+                String.valueOf(mGoodsInfo.getRetailPrice())));
 
         LoadImgUtils.setImg(NumberGoodsDetailsActivity.this, goodsPicView, mGoodsInfo.getPicUrl());
 
@@ -690,11 +647,18 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         mGoodsOrderInfo.setGoodsId(Integer.parseInt(mGoodsId));
         mGoodsOrderInfo.setImage(mGoodsInfo.getPicUrl());
         int count = mGoodsOrderInfo.getCount();
-        double totalPrice = count* mGoodsInfo.getRetailPrice();
-        mGoodsOrderInfo.setPrice(String.valueOf(mGoodsInfo.getRetailPrice()));
-        mGoodsOrderInfo.setPayPrice(String.valueOf(mGoodsInfo.getRetailPrice()));
-        mGoodsOrderInfo.setGoodsTotalPrice(String.valueOf(totalPrice));
-        mGoodsOrderInfo.setPayPrice(String.valueOf(totalPrice));
+
+        String formatPrice = MathUtils.formatMoney(mGoodsInfo.getRetailPrice());
+
+        mGoodsOrderInfo.setPrice(formatPrice);
+        mGoodsOrderInfo.setPayPrice(formatPrice);
+
+        double totalPrice = MathUtils.mul(count, mGoodsInfo.getRetailPrice());
+
+        String formatTotalPrice = MathUtils.formatMoney(totalPrice);
+
+        mGoodsOrderInfo.setGoodsTotalPrice(formatTotalPrice);
+        mGoodsOrderInfo.setPayPrice(formatTotalPrice);
         mGoodsOrderInfo.setSpec(mGoodsInfo.getUnit());
         mGoodsOrderInfo.setTitle(mGoodsInfo.getName());
     }
@@ -754,8 +718,10 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
     public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(BaseActivity fragment, int page) {
-
-        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(new RequestPage().setPage(page))
+        RequestNumberGoodsList bean = new RequestNumberGoodsList();
+        bean.setLimit(10);
+        bean.setPage(page);
+        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
                 .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
                 .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
     }

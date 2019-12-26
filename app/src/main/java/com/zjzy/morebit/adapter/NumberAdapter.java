@@ -1,40 +1,21 @@
 package com.zjzy.morebit.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.zjzy.morebit.Activity.GoodsDetailActivity;
-import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
-import com.zjzy.morebit.goods.shopping.ui.NumberGoodsDetailsActivity;
-import com.zjzy.morebit.pojo.HomeRecommendGoods;
-import com.zjzy.morebit.pojo.ImageInfo;
-import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.pojo.number.NumberGoods;
-import com.zjzy.morebit.utils.AppUtil;
-import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
-import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
-import com.zjzy.morebit.utils.SensorsDataUtil;
-import com.zjzy.morebit.utils.StringsUtils;
-import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
-import com.zjzy.morebit.view.AspectRatioView;
 
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * Created by YangBoTian on 2018/8/22.

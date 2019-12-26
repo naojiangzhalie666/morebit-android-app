@@ -40,7 +40,7 @@
             tl:tl_textSelectColor="@color/color_333333"
             tl:tl_textsize="14sp"
             tl:tl_tab_space_equal="true"/>
-        <!--<com.markermall.cat.main.ui.myview.xtablayout.XTabLayout-->
+        <!--<com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout-->
             <!--android:id="@+id/xTablayout"-->
             <!--android:layout_width="0dp"-->
             <!--android:layout_height="40dp"-->

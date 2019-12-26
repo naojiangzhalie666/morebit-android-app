@@ -158,9 +158,11 @@
     <string name="order_b">B级</string>
     <string name="order_c">团队</string>
     <string name="order_all">全部</string>
+    <string name="order_wait_pay">待支付</string>
     <string name="order_play">已付款</string>
     <string name="order_close">已结算</string>
     <string name="order_invalid">已失效</string>
+    <string name="order_closed">已关闭</string>
     <string name="share_moeny">预估收益:%s元</string>
     <string name="goods_share_moeny">分享\n（收益%s元）</string>
     <string name="also_collect">已收藏</string>
@@ -254,6 +256,9 @@
     <string name="mine_upgrade_text"><![CDATA[<font color="#333333">团队长享受更多团队</font><font color="#ffdb493e">管理收益</font>]]></string>
     <string name="mine_upgrade_text_one"><![CDATA[<font color="#333333">您已达到</font><font color="#B36224">%1$s</font><font color="#333333">升级条件</font>]]></string>
     <string name="mine_upgrade_text_two"><![CDATA[<font color="#333333">您已达到</font><font color="#B36224">%1$s</font><font color="#333333">升级条件， 正在审核中</font>]]></string>
+    <string name="mine_grade_text"><![CDATA[<font color="#333333">升级</font><font color="#845802">VIP</font><font color="#333333">购物享更高反佣</font>]]></string>
+    <string name="mine_grade_vip_text"><![CDATA[<font color="#333333">升级</font><font color="#845802">团队长</font><font color="#333333">享受更多专属权益</font>]]></string>
+    <string name="mine_grade_leader_text"><![CDATA[<font color="#F55454">团队长专属权益享不停</font>]]></string>
     <!--刷新动画(每帧时间)-->
     <string name="refresh_duration">30</string>
     <string name="switch_shore_link">切换短链</string>
@@ -267,11 +272,19 @@
     <string name="order_team_other">其他订单</string>
     <string name="order_team_yx">优选订单</string>
 
-    <string-array name="order_type">
+    <string-array name="taobao_order_type">
         <item>全部</item>
         <item>已付款 </item>
         <item>已结算</item>
         <item>已失效</item>
+
+    </string-array>
+    <string-array name="self_order_type">
+        <item>全部</item>
+        <item>待支付 </item>
+        <item>已付款 </item>
+        <item>已结算</item>
+        <item>已关闭</item>
 
     </string-array>
     <string-array name="order_live_type">
@@ -410,11 +423,11 @@
     <string name="tuandui_welcome_hint">获取多豆可享受多项团队长权益</string>
     <!--会员商品价格-->
     <string name="number_goods_price">￥%1$s</string>
-    <string name="number_give_more_corn">送%1$s多豆</string>
-    <string name="number_give_more_corn_1">购买即送%1$s多豆</string>
+    <string name="number_give_more_corn">送%1$s</string>
+    <string name="number_give_more_corn_1">购买即送%1$s</string>
     <string name="number_update_vip">现在升级VIP,可赚更高佣金</string>
     <string name="number_update_vip_hint">立即升级</string>
-    <string name="number_goods_count">X%1$s</string>
+    <string name="number_goods_count">x%1$s</string>
     <string name="number_invite_code">邀请码：%1$s</string>
     <string name="number_goods_yugushouyi">预估收益%1$s元</string>
     <string name="number_order_number">订单编号：%1$s</string>
@@ -424,5 +437,6 @@
     <string name="number_order_pay_time">付款时间：%1$s</string>
     <string name="number_fahuo_time">发货时间：%1$s</string>
     <string name="number_chengjiao_time">成交时间：%1$s</string>
-
+    <string name="number_order_no">订单编号：%1$s</string>
+    <string name="number_yujin">赚取佣金%1$s元</string>
 </resources>

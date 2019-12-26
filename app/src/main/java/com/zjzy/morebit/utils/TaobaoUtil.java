@@ -218,7 +218,8 @@ public class TaobaoUtil {
                         subscribe(new DataObserver<String>() {
                             @Override
                             protected void onSuccess(String data) {
-                                TaobaoUtil.authTaobao(activity, data);
+                                String data1 = "28224017";
+                                TaobaoUtil.authTaobao(activity, data1);
                             }
                         });
             }

@@ -8,7 +8,7 @@
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ll_bootom_upgrade">
+        >
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -20,46 +20,46 @@
 
                 <include layout="@layout/vip_head" />
 
-                <ViewStub
-                    android:id="@+id/upgrade"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout="@layout/vip_model_upgrade" />
+<!--                <ViewStub-->
+<!--                    android:id="@+id/upgrade"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout="@layout/vip_model_upgrade" />-->
 
-                <ViewStub
-                    android:id="@+id/common_member"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout="@layout/vip_model_new_people_upgrade" />
+<!--                <ViewStub-->
+<!--                    android:id="@+id/common_member"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout="@layout/vip_model_new_people_upgrade" />-->
 
-                <ViewStub
-                    android:id="@+id/company_service"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout="@layout/vip_mode_customer_service" />
+<!--                <ViewStub-->
+<!--                    android:id="@+id/company_service"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout="@layout/vip_mode_customer_service" />-->
 
-                <ViewStub
-                    android:id="@+id/operator_service"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout="@layout/vip_mode_customer_service_wx" />
+<!--                <ViewStub-->
+<!--                    android:id="@+id/operator_service"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout="@layout/vip_mode_customer_service_wx" />-->
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
-    <LinearLayout
-        android:id="@+id/ll_bootom_upgrade"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:visibility="gone"
-        android:gravity="center">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_bootom_upgrade"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="49dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:background="@color/white"-->
+<!--        android:visibility="gone"-->
+<!--        android:gravity="center">-->
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:layout_marginTop="6dp"
-            android:src="@drawable/shengqingshengjianniu" />
-    </LinearLayout>
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="6dp"-->
+<!--            android:layout_marginTop="6dp"-->
+<!--            android:src="@drawable/shengqingshengjianniu" />-->
+<!--    </LinearLayout>-->
 </RelativeLayout>

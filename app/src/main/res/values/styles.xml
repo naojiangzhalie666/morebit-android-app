@@ -303,5 +303,13 @@
     <item name="colorSwitchThumbNormal">#00d8a0</item>
     <item name="android:colorForeground">#d2f</item>
     </style>
+    <style name="AlibcLoginTheme" parent="android:Theme.NoTitleBar.Fullscreen">
+
+        <item name="android:windowIsTranslucent">false</item>
+
+        <item name="android:windowDisablePreview">true</item>
+
+    </style>
+
 
 </resources>

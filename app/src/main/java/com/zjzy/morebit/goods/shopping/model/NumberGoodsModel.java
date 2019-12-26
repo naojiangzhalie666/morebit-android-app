@@ -11,6 +11,7 @@ import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.pojo.requestbodybean.RequestPage;
 
 import java.util.List;
@@ -28,8 +29,10 @@ public class NumberGoodsModel extends MvpModel {
      * @return
      */
     public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(RxFragment fragment, int page) {
-
-        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(new RequestPage().setPage(page))
+        RequestNumberGoodsList bean = new RequestNumberGoodsList();
+        bean.setLimit(10);
+        bean.setPage(page);
+        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
                 .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
                 .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
     }

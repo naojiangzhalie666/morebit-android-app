@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Administrator on 2017/10/16.
@@ -35,6 +36,24 @@ public class DateTimeUtils {
     public static String getYmd1(String time) {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date d1 = new Date(Long.parseLong(time));
+            String t1 = format.format(d1);
+            return t1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * 转换PHP返回的时间戳
+     * yyyy-MM-dd HH:mm:ss
+     *
+     * @return
+     */
+    public static String getYmdhhmmss(String time) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date d1 = new Date(Long.parseLong(time));
             String t1 = format.format(d1);
             return t1;
@@ -334,6 +353,20 @@ public class DateTimeUtils {
             e.printStackTrace();
             return "";
         }
+    }
+
+    /**
+     * 转换为hh：mm：ss展示
+     * @param ms
+     * @return
+     */
+    public static String getHHmmss(long ms){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+        String hms = formatter.format(ms);
+        return hms;
+
+
     }
 
     public static String getDatetoString(String time) {

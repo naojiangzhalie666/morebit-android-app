@@ -1,21 +1,13 @@
 package com.zjzy.morebit.order.presenter;
 
-import android.os.Message;
-import android.provider.ContactsContract;
-
-import com.trello.rxlifecycle2.components.RxActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.address.AddressInfo;
-import com.zjzy.morebit.goods.shopping.contract.NumberGoodsDetailContract;
-import com.zjzy.morebit.goods.shopping.model.NumberGoodsDetailModel;
+import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
-import com.zjzy.morebit.network.CallBackObserver;
 import com.zjzy.morebit.network.observer.DataObserver;
-import com.zjzy.morebit.order.OrderSyncResult;
-import com.zjzy.morebit.order.ResponseOrderInfo;
+import com.zjzy.morebit.pojo.order.OrderSyncResult;
+import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
 import com.zjzy.morebit.order.contract.ConfirmOrderContract;
 import com.zjzy.morebit.order.model.ConfirmOrderModel;
-import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 
 /**
  * Created by fengrs on 2018/11/3.

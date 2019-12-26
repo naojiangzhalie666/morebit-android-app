@@ -1,4 +1,4 @@
-package com.zjzy.morebit.order;
+package com.zjzy.morebit.pojo.order;
 
 import java.io.Serializable;
 

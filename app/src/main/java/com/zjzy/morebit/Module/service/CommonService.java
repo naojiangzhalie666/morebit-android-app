@@ -1,12 +1,12 @@
 package com.zjzy.morebit.Module.service;
 
-import com.zjzy.morebit.address.AddressInfo;
-import com.zjzy.morebit.address.AddressInfoList;
-import com.zjzy.morebit.address.AllRegionInfoList;
+import com.zjzy.morebit.pojo.address.AddressInfo;
+import com.zjzy.morebit.pojo.address.AddressInfoList;
+import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.network.BaseResponse;
-import com.zjzy.morebit.order.OrderDetailInfo;
-import com.zjzy.morebit.order.OrderSyncResult;
-import com.zjzy.morebit.order.ResponseOrderInfo;
+import com.zjzy.morebit.pojo.order.OrderDetailInfo;
+import com.zjzy.morebit.pojo.order.OrderSyncResult;
+import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
 import com.zjzy.morebit.pojo.AccountDestroy;
 import com.zjzy.morebit.pojo.AgentDetailList;
 import com.zjzy.morebit.pojo.AppUpgradeInfo;
@@ -167,6 +167,7 @@ import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
 import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestModelId;
 import com.zjzy.morebit.pojo.requestbodybean.RequestModelIdData;
+import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.pojo.requestbodybean.RequestOfficialNoticeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestOfficialRecommend;
 import com.zjzy.morebit.pojo.requestbodybean.RequestOsBean;
@@ -1222,7 +1223,7 @@ public interface CommonService {
     @POST("/api/goods/listGoodsFromLitemall")
     Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(
             //            @Field("page") int page
-            @Body RequestPage requestPage
+            @Body RequestNumberGoodsList requestPage
     );
 
     /**
@@ -1389,6 +1390,16 @@ public interface CommonService {
 
             @Body RequestItemSourceId requestItemSourceId
     );
+
+    /**
+     * 获取oss秘钥
+     *
+     * @return
+     */
+    @POST("api/system/time/getSystemTime")
+    Observable<BaseResponse<Long>> getServerTime();
+
+
 
     /**
      * 商品详情信息

@@ -9,8 +9,8 @@
     >
     <RelativeLayout
         android:id="@+id/dailog_vip_grade_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="340dp"
+        android:layout_height="370dp">
         <ImageView
             android:id="@+id/img_upgrade_bg"
             android:layout_width="340dp"
@@ -24,7 +24,7 @@
             android:layout_marginLeft="30dp"
             android:layout_alignLeft="@id/img_upgrade_bg"
             android:layout_alignBottom="@id/img_upgrade_bg"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="80dp"
             >
 
                 <LinearLayout
@@ -55,11 +55,12 @@
 
     <ImageView
         android:id="@+id/iv_close"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/dailog_vip_grade_container"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
+        android:layout_below="@id/dailog_vip_grade_container"
+        android:layout_marginTop="5dp"
         android:padding="10dp"
+        android:scaleType="centerInside"
         android:src="@mipmap/update_grade_close" />
 </RelativeLayout>

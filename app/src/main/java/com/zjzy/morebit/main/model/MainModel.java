@@ -5,7 +5,7 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.Logger;
-import com.zjzy.morebit.address.AllRegionInfoList;
+import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.main.ui.CollectFragment2;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
@@ -248,6 +248,17 @@ public class MainModel extends MvpModel {
         return RxHttp.getInstance().getUsersService().getAllRegions()
                 .compose(RxUtils.<BaseResponse<AllRegionInfoList>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<AllRegionInfoList>>bindToLifecycle());
+    }
+
+    /**
+     * 获取服务端的时间
+     *
+     * @return
+     */
+    public Observable<BaseResponse<Long>> getServertime(RxAppCompatActivity rxActivity) {
+        return RxHttp.getInstance().getGoodsService().getServerTime()
+                .compose(RxUtils.<BaseResponse<Long>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<Long>>bindToLifecycle());
     }
 
 

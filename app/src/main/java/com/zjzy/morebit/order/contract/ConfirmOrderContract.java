@@ -1,16 +1,11 @@
 package com.zjzy.morebit.order.contract;
 
-import com.trello.rxlifecycle2.components.RxActivity;
-import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.address.AddressInfo;
+import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
-import com.zjzy.morebit.order.OrderSyncResult;
-import com.zjzy.morebit.order.ResponseOrderInfo;
-import com.zjzy.morebit.pojo.BrandSell;
-
-import java.util.List;
+import com.zjzy.morebit.pojo.order.OrderSyncResult;
+import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
 
 /**
  * 确认定单接口

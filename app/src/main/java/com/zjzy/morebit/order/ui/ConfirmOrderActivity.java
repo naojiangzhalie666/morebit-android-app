@@ -13,16 +13,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.zjzy.morebit.address.ui.ManageGoodsAddressActivity;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.address.AddressInfo;
+import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
-import com.zjzy.morebit.order.OrderSyncResult;
-import com.zjzy.morebit.order.ResponseOrderInfo;
+import com.zjzy.morebit.pojo.order.OrderSyncResult;
+import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
 import com.zjzy.morebit.order.contract.ConfirmOrderContract;
 import com.zjzy.morebit.order.presenter.ConfirmOrderPresenter;
 import com.zjzy.morebit.payment.PayResult;
@@ -360,12 +359,17 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ADDRESS_CODE ){
-            AddressInfo info = (AddressInfo) data.getExtras().get(C.Extras.GOODS_ADDRESS_INFO);
-//            AddressInfo info = (AddressInfo) getIntent().getSerializableExtra(C.Extras.GOODS_ADDRESS_INFO);
-            if (info == null){
-                MyLog.d(TAG,"从管理收货地址页面返回为空");
-            }else{
-                fillDataForAddress(info);
+            if (data != null){
+                Bundle bundle = data.getExtras();
+                AddressInfo info = null;
+                if (bundle != null){
+                    info= (AddressInfo) bundle.get(C.Extras.GOODS_ADDRESS_INFO);
+                }
+                if (info == null){
+                    MyLog.d(TAG,"从管理收货地址页面返回为空");
+                }else{
+                    fillDataForAddress(info);
+                }
             }
 
         }

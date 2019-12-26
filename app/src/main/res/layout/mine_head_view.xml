@@ -97,6 +97,7 @@
                     android:layout_alignTop="@id/userName"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_stroke_d1d1d1_solid_ffffff_30dp"
                     android:gravity="center"
                     android:visibility="gone">
@@ -144,13 +145,17 @@
                         android:textColor="@color/color_FFFFFF"
                         android:textSize="@dimen/sp_15"
                         android:text="@string/number_invite_code" />
-                    <ImageView
+                    <TextView
                         android:id="@+id/copy_invitation_code"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
-                        android:src="@mipmap/bg_copy_invite_code"
-                        android:scaleType="centerInside"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="@mipmap/bg_copy"
                         android:layout_toRightOf="@+id/invitation_code"
+                        android:text="复制"
+                        android:gravity="center"
+                        android:textColor="@color/color_FFFFFF"
                         />
 
 <!--                    <TextView-->

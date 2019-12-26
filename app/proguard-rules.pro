@@ -201,14 +201,17 @@
 -keep class org.fmod.** { *; }
 -keep class jp.radiumsoftware.unitywebviewexample.** { *; }
 
-#-keep class com.markermall.cat.UnityPlayerActivity {*;}
-#-keep class com.markermall.cat.UnityPlayerNativeActivity {*;}
-#-keep class com.markermall.cat.UnityPlayerProxyActivity {*;}
+#-keep class com.zjzy.morebit.UnityPlayerActivity {*;}
+#-keep class com.zjzy.morebit.UnityPlayerNativeActivity {*;}
+#-keep class com.zjzy.morebit.UnityPlayerProxyActivity {*;}
+
 
 ##### App自身包
--keep class com.markermall.cat.pojo.** { *; }
--keep class com.markermall.cat.goods.shopping.bean.** { *; }
-#-keep class com.markermall.cat.pullrefresh.** { *; }
+-dontwarn com.zjzy.morebit.mvp.**
+-keep class com.zjzy.morebit.mvp.** { *; }
+-keep class com.zjzy.morebit.pojo.** { *; }
+-keep class com.zjzy.morebit.goods.shopping.bean.** { *; }
+#-keep class com.zjzy.morebit.pullrefresh.** { *; }
 -keep class uk.co.senab.**{*;}
 -keep class com.jeremyfeinstein.**{*;}
 -dontwarn om.jeremyfeinstein.**
@@ -220,7 +223,7 @@
 -keepclassmembers class * {
     public <init> (org.json.JSONObject);
 }
--keep public class com.markermall.cat.R$*{
+-keep public class com.zjzy.morebit.R$*{
     public static final int *;
 }
 -keepclassmembers enum * {

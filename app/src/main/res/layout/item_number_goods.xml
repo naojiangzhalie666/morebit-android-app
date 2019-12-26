@@ -9,8 +9,8 @@
         android:id="@+id/number_goods_pic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:src="@drawable/icon_default"
+        android:layout_margin="10dp"
         android:scaleType="centerInside"
         />
     <TextView
@@ -20,13 +20,20 @@
         android:layout_gravity="center"
         android:textSize="@dimen/sp_12"
         android:textColor="@color/color_333333"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+
         android:layout_below="@id/number_goods_pic"
         android:layout_alignLeft="@id/number_goods_pic"
-        android:text="商品简介"/>
+        android:text="商品简介商品简介商品简介"
+        android:maxLines="2"
+        android:lines="2"
+        android:maxLength="40"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_below="@id/number_goods_desc"
         >
         <TextView
@@ -37,8 +44,19 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/sp_16"
+            android:textSize="@dimen/sp_14"
             android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/img_morebit_corn"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:text="@string/number_give_more_corn"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/more_corn_icon"
+            android:scaleType="fitCenter"
+            />
         <TextView
             android:id="@+id/txt_morebit_corn"
             android:layout_width="wrap_content"
@@ -46,11 +64,14 @@
             android:text="@string/number_give_more_corn"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:padding="3dp"
             android:gravity="center"
+            android:paddingRight="15dp"
+            android:paddingLeft="5dp"
             android:textSize="@dimen/sp_12"
-            android:textColor="@color/color_EE403A"
-            android:background="@drawable/bg_red_morecoin"/>
+            android:textColor="@color/color_ffea993e"
+            android:background="@drawable/bg_red_morecoin"
+            />
+
     </RelativeLayout>
 
 

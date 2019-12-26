@@ -1,4 +1,4 @@
-package com.zjzy.morebit.address;
+package com.zjzy.morebit.pojo.address;
 
 import java.util.List;
 

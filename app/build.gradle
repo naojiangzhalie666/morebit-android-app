@@ -80,12 +80,17 @@ android {
         release {
             // 开启混淆
             buildConfigField "boolean", "LOG_DEBUG", "true"
-            minifyEnabled false
+            minifyEnabled true
+            debuggable true
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
+            minifyEnabled false
+            debuggable true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }

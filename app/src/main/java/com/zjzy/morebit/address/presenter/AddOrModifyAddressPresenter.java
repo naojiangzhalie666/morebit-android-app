@@ -1,22 +1,18 @@
 package com.zjzy.morebit.address.presenter;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import com.smarttop.library.bean.AdressBean;
-import com.smarttop.library.db.DBUtils;
 import com.smarttop.library.db.manager.AddressDictManager;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.address.AddressInfo;
-import com.zjzy.morebit.address.AllRegionInfoList;
-import com.zjzy.morebit.address.RegionInfo;
+import com.zjzy.morebit.pojo.address.AddressInfo;
+import com.zjzy.morebit.pojo.address.AllRegionInfoList;
+import com.zjzy.morebit.pojo.address.RegionInfo;
 import com.zjzy.morebit.address.contract.AddOrModifyAddressContract;
 import com.zjzy.morebit.address.model.AddOrModifyAddressModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
-import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.utils.MyLog;
 
 import java.util.ArrayList;

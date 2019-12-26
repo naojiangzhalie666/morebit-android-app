@@ -383,7 +383,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
 
 //        //精品推荐（上下刷新列表）
-//        mReUseListView.getSwipeList().setOnRefreshListener(new com.markermall.cat.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+//        mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
 //

@@ -405,6 +405,10 @@ public class C {
 
 
     }
+    public static class syncTime{
+        public static final String SERVER_TIME="SERVER_TIME";
+        public static final String CLIENT_TIME="CLIENT_TIME";
+    }
 
     public static class sp {
         public static final String token = Setting.appName + "token";
@@ -462,6 +466,8 @@ public class C {
         public static final String DIALOG_USER_IS_UPGRADE_TIME= Setting.appName + "DIALOG_USER_IS_UPGRADE_TIME";  //用户升级dialog弹出的时间
         public static final String SAVED_DB_FOR_ADDRESS= Setting.appName + "SAVED_DB_FOR_ADDRESS";  //地址保存到db
     }
+
+
 
     public static class requestType {
         public static final int initData = 0; // 第一次 ,刷新

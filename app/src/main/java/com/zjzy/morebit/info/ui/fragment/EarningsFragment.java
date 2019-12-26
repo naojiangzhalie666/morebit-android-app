@@ -189,9 +189,9 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
                 getActivity().finish();
                 break;
             case R.id.tv_rule:    //规则说明
-                Intent communityIt11 = new Intent(getActivity(), PayDemoActivity.class);
-                startActivity(communityIt11);
-//                getRule();
+//                Intent communityIt11 = new Intent(getActivity(), PayDemoActivity.class);
+//                startActivity(communityIt11);
+                getRule();
                 break;
 
         }

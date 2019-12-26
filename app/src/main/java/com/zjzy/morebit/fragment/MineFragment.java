@@ -1,6 +1,7 @@
 package com.zjzy.morebit.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,12 +23,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.EarningsHintDialog;
+import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
+import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.UpgradeUserDialog;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
@@ -49,6 +53,7 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.order.ui.OrderTeamActivity;
 import com.zjzy.morebit.pojo.DayEarnings;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
@@ -56,7 +61,9 @@ import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.pojo.ProtocolRuleBean;
 import com.zjzy.morebit.pojo.UpgradeCarousel;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
+import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -71,6 +78,7 @@ import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
+import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.UPMarqueeView;
@@ -87,6 +95,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
 /**
@@ -113,6 +122,10 @@ public class MineFragment extends BaseMainFragmeng {
     TextView mUserName;
     @BindView(R.id.upgrade_text)
     TextView upgrade_text;
+
+    @BindView(R.id.btn_upgrade_tv)
+    TextView btnUpgradetv;
+
     @BindView(R.id.as_banner)
     AspectRatioView mAsBanner;
     @BindView(R.id.banner)
@@ -139,6 +152,9 @@ public class MineFragment extends BaseMainFragmeng {
     TextView tv_balance;
     @BindView(R.id.rl_upgrade)
     RelativeLayout rl_upgrade;
+
+    @BindView(R.id.ll_grade_txt)
+    LinearLayout llGradeTxt;
     @BindView(R.id.recyclerView_recommend)
     RecyclerView recyclerView_recommend;
     @BindView(R.id.fl_share_expert)
@@ -272,22 +288,19 @@ public class MineFragment extends BaseMainFragmeng {
 
         mInvitationCode.setText(getResources().getString(R.string.number_invite_code,info.getInviteCode()));
         mUserName.setText(info.getNickName());
-//        mUserLevel.setText(info.getGradename());
+
         if (C.UserType.member.equals(info.getPartner())) {
-            mUserLevel.setImageResource(R.drawable.icon_member);
-//            rl_upgrade.setVisibility(View.VISIBLE);
+            mUserLevel.setImageResource(R.mipmap.my_number_icon);
+
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
             ll_up_marquee.setVisibility(View.GONE);
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
-            mUserLevel.setImageResource(R.drawable.icon_vip);
-//            rl_upgrade.setVisibility(View.VISIBLE);
+            mUserLevel.setImageResource(R.mipmap.my_vip_icon);
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
             ll_up_marquee.setVisibility(View.GONE);
         } else if (C.UserType.operator.equals(info.getPartner())) {
-            rl_upgrade.setVisibility(View.GONE);
-            mUserLevel.setImageResource(R.drawable.icon_operator);
+            mUserLevel.setImageResource(R.mipmap.my_leader_icon);
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings);
-//            ll_up_marquee.setVisibility(View.VISIBLE);
         }
         if (TextUtils.isEmpty(info.getWxNumber())) {
             rl_set_weixin.setVisibility(View.VISIBLE);
@@ -366,7 +379,7 @@ public class MineFragment extends BaseMainFragmeng {
 
     @OnClick({R.id.copy_invitation_code, R.id.my_earnings, R.id.rl_set_weixin,
             R.id.my_team, R.id.order_detail, R.id.share_friends, R.id.setting, R.id.tv_y, R.id.iv_wenhao,
-            R.id.rl_upgrade,R.id.tv_withdraw,R.id.ll_earnings,R.id.userIcon})
+            R.id.rl_upgrade,R.id.tv_withdraw,R.id.ll_earnings,R.id.userIcon,R.id.ll_grade_txt})
     public void onClick(View v) {
         switch (v.getId()) {  //复制邀请码
             case R.id.copy_invitation_code:
@@ -394,7 +407,8 @@ public class MineFragment extends BaseMainFragmeng {
 //                openUpgradeUserDialog();
                 break;
             case R.id.order_detail:   //订单明细
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), OrderDetailFragment.class.getName(), new Bundle());
+                OrderTeamActivity.start(getActivity());
+//                OpenFragmentUtils.goToSimpleFragment(getActivity(), OrderDetailFragment.class.getName(), new Bundle());
 //                OpenFragmentUtils.goToSimpleFragment(getActivity(), OrderFragment.class.getName(), new Bundle());
 //                TaobaoUtil.authTaobao(getActivity(), "25107719");
                 break;
@@ -413,7 +427,30 @@ public class MineFragment extends BaseMainFragmeng {
                 SettingWechatActivity.start(getActivity(), 0);
                 break;
             case R.id.rl_upgrade:   //会员升级
-                VipActivity.start(getActivity());
+            case R.id.ll_grade_txt:
+                if(C.UserType.member.equals(UserLocalData.getUser().getPartner())){
+                    NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(getActivity(),R.style.dialog);
+                    leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
+
+                        @Override
+                        public void onClick(int type) {
+                            //vip ==1
+                            if (type == 1){
+                                updateGradePresenter(MineFragment.this,Integer.parseInt(C.UserType.vipMember));
+                            }else if (type ==2){
+                                updateGradePresenter(MineFragment.this,Integer.parseInt(C.UserType.operator));
+                            }
+                        }
+
+                    });
+                    leaderUpgradeDialog.show();
+
+                }else if (C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())){
+                    updateGradeForLeader();
+                }else if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())){
+                    VipActivity.start(getActivity());
+                }
+
                 break;
             case R.id.tv_withdraw: //提现
                 if (TaobaoUtil.isAuth()) {   //淘宝授权
@@ -635,53 +672,27 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
     /**
-     * 升级运营商弹窗提示
+     *
      */
     public void getIsUpgrade() {
-        mInfoModel.getIsUpgrade(this)
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        String s = "";
-                        if(mIsUpgrade == 1){
-                            if(C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())){
-                                s = getString(R.string.mine_upgrade_text_one,"运营专员");
-                            } else if(C.UserType.member.equals(UserLocalData.getUser().getPartner())){
-                                s = getString(R.string.mine_upgrade_text_one,"VIP会员");
-                            }
-                        } else if(mIsUpgrade == 2){
-                            if(C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())){
-                                s = getString(R.string.mine_upgrade_text_two,"运营专员");
-                            } else if(C.UserType.member.equals(UserLocalData.getUser().getPartner())){
-                                s = getString(R.string.mine_upgrade_text_two,"VIP会员");
-                            }
-                        } else {
-                            if(C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())){
-                                s = getString(R.string.mine_upgrade_text,"运营专员","90%");
-                            } else if(C.UserType.member.equals(UserLocalData.getUser().getPartner())){
-                                s = getString(R.string.mine_upgrade_text,"VIP会员","60%");
-                            }
-                        }
-                        upgrade_text.setText(Html.fromHtml(s));
-                        rl_upgrade.setVisibility(View.VISIBLE);
-                    }
-                })
-                .subscribe(new DataObserver<UpgradeCarousel>(false) {
-                    @Override
-                    protected void onSuccess(UpgradeCarousel data) {
-                        mIsUpgrade = data.getIsUpgrade();
-                        if(data.getIsUpgrade()==1){
+        String s = "";
+        if(C.UserType.member.equals(UserLocalData.getUser().getPartner())){
+            s = getString(R.string.mine_upgrade_text);
+            btnUpgradetv.setText("去升级");
+            btnUpgradetv.setTextColor(Color.parseColor("#F55454"));
+        }else if (C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())){
+            s = getString(R.string.mine_grade_vip_text);
+            btnUpgradetv.setText("去升级");
+            btnUpgradetv.setTextColor(Color.parseColor("#F55454"));
+        }else if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())){
+            s = getString(R.string.mine_grade_leader_text);
+            btnUpgradetv.setText("查看");
+            btnUpgradetv.setTextColor(Color.parseColor("#845802"));
+        }
 
-                            if(DateTimeUtils.isToday()) {
-                                MyLog.i("test","isLogin: " +isLogin);
-                                isLogin = true;
-                                openUpgradeUserDialog();
-                            }
+        upgrade_text.setText(Html.fromHtml(s));
+        rl_upgrade.setVisibility(View.VISIBLE);
 
-                        }
-
-                    }
-                });
     }
 
     /**
@@ -1026,5 +1037,91 @@ public class MineFragment extends BaseMainFragmeng {
     protected void onInvisible() {
         super.onInvisible();
         isShowGuide = false;
+    }
+
+
+    /**
+     * 升级团队长的弹框
+     */
+    private void updateGradeForLeader(){
+        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(getActivity(),R.style.dialog);
+        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener(){
+
+            @Override
+            public void onClick(){
+                updateGradePresenter(MineFragment.this,Integer.parseInt(C.UserType.operator));
+            }
+
+        });
+        vipUpgradeDialog.show();
+
+    }
+
+
+
+    /**
+     * 升级
+     * @param fragment
+     * @param userType
+     */
+    public void updateGradePresenter(RxFragment fragment, int userType) {
+        updateUserGrade(fragment, userType)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<UpdateInfoBean>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+
+                        showError(errCode,errorMsg);
+                    }
+
+                    @Override
+                    protected void onDataListEmpty() {
+
+                    }
+                    @Override
+                    protected void onSuccess(UpdateInfoBean data) {
+                        onGradeSuccess(data);
+                    }
+                });
+    }
+    public void showError(String errorNo,String msg) {
+        MyLog.i("test", "onFailure: " + this);
+        if ("B1100007".equals(errorNo)
+                ||"B1100008".equals(errorNo)
+                ||"B1100009".equals(errorNo)
+                || "B1100010".equals(errorNo)) {
+            ViewShowUtils.showShortToast(getActivity(),msg);
+        }
+
+    }
+    public void onGradeSuccess(UpdateInfoBean info) {
+        if (info != null){
+            UserInfo userInfo = UserLocalData.getUser();
+            userInfo.setUserType(String.valueOf(info.getUserType()));
+            userInfo.setMoreCoin(info.getMoreCoin());
+            UserLocalData.setUser(getActivity(),userInfo);
+            updataUser();
+        }else{
+            MyLog.d("test","用户信息为空");
+        }
+
+    }
+
+    /**
+     * 用户等级升级
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxFragment fragment, int userGrade) {
+        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
+        updateUserBean.setType(userGrade);
+        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
+                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
     }
 }

@@ -12,7 +12,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.leon.channel:plugin:1.0.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
         // 只需配置tinker-support插件依赖，无需再依赖tinker插件

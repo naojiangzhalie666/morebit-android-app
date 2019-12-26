@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="100dp">
 
 
@@ -23,6 +24,7 @@
             android:id="@+id/main_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/color_FFFFFF"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             >
@@ -30,6 +32,7 @@
                 android:id="@+id/txt_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="@dimen/sp_16"
                 android:textColor="@color/color_333333"
@@ -71,7 +74,7 @@
                 android:text="18610905394"
                 />
             <TextView
-                android:layout_width="1px"
+                android:layout_width="1dp"
                 android:layout_height="30dp"
                 android:background="@color/color_F8F8F8"
                 android:layout_centerVertical="true"

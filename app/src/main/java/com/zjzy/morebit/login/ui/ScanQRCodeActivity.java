@@ -216,7 +216,7 @@ public class ScanQRCodeActivity extends BaseActivity {
                 break;
             case R.id.iv_back:
                 finish();
-//                getInviteCode("http://a.app.qq.com/o/simple.jsp?pkgname=com.markermall.cat&inviteCode=ljxnbq&invite=ljxnbq&token=zhitu_uSVnYLWLeGpk");
+//                getInviteCode("http://a.app.qq.com/o/simple.jsp?pkgname=com.zjzy.morebit&inviteCode=ljxnbq&invite=ljxnbq&token=zhitu_uSVnYLWLeGpk");
                 break;
         }
     }

@@ -2,14 +2,12 @@ package com.zjzy.morebit.home.presenter;
 
 import android.text.TextUtils;
 
-import com.smarttop.library.db.manager.AddressDictManager;
-import com.smarttop.library.widget.AddressSelector;
 import com.zjzy.morebit.App;
+import com.zjzy.morebit.LocalData.CommonLocalData;
 import com.zjzy.morebit.LocalData.UserLocalData;
-import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.Logger;
-import com.zjzy.morebit.address.AllRegionInfoList;
+import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.home.contract.MainContract;
 import com.zjzy.morebit.main.model.MainModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
@@ -108,6 +106,26 @@ public class MainPresenter extends MvpPresenter<MainModel, MainContract.View> im
                     @Override
                     protected void onSuccess(AppUpgradeInfo data) {
                         checkAppUpgrade(data,rxActivity);
+                    }
+                });
+    }
+
+    @Override
+    public void getServerTime(RxAppCompatActivity rxActivity) {
+        mModel.getServertime(rxActivity)
+                .compose(RxUtils.<BaseResponse<Long>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<Long>>bindToLifecycle())
+                .subscribe(new DataObserver<Long>() {
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                    }
+
+                    @Override
+                    protected void onSuccess(Long data) {
+                        MyLog.d("test","服务器当前时间:"+DateTimeUtils.getYmdhhmmss(String.valueOf(data)));
+                        CommonLocalData.saveServiceTime(data);
+                        CommonLocalData.saveClientTime();
                     }
                 });
     }

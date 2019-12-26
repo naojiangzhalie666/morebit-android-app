@@ -1,4 +1,4 @@
-//package com.markermall.cat.utils;
+//package com.zjzy.morebit.utils;
 //
 //import android.content.Context;
 //import android.graphics.Bitmap;
@@ -19,10 +19,10 @@
 //import com.bumptech.glide.request.target.SimpleTarget;
 //import com.bumptech.glide.request.target.Target;
 //import com.bumptech.glide.request.target.ViewTarget;
-//import com.markermall.cat.R;
-//import com.markermall.cat.utils.UI.CornerTransform;
-//import com.markermall.cat.utils.UI.GlideCircleTransform;
-//import com.markermall.cat.utils.action.MyAction;
+//import com.zjzy.morebit.R;
+//import com.zjzy.morebit.utils.UI.CornerTransform;
+//import com.zjzy.morebit.utils.UI.GlideCircleTransform;
+//import com.zjzy.morebit.utils.action.MyAction;
 //
 //import java.util.concurrent.ExecutionException;
 //

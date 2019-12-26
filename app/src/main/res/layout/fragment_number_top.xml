@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:text="优选会员"
             android:textStyle="bold"
-            android:textSize="@dimen/sp_22"
+            android:textSize="@dimen/sp_18"
             android:textColor="@color/item_view_normal_color"
             android:layout_centerInParent="true"/>
 
@@ -36,12 +36,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="20000"
-                android:textSize="@dimen/sp_22"
+                android:text="0"
+                android:textSize="@dimen/sp_18"
                 android:textColor="@color/colcor_gold"/>
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/more_corn_icon"
                 android:layout_toLeftOf="@id/my_more_corn"

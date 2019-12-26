@@ -91,16 +91,29 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
-                                    android:padding="5dp"
+                                    android:paddingRight="20dp"
+                                    android:paddingLeft="10dp"
+                                    android:paddingBottom="5dp"
+                                    android:paddingTop="5dp"
                                     android:layout_toRightOf="@id/number_goods_price"
                                     android:layout_centerVertical="true"
                                     android:text="@string/number_give_more_corn_1"
-                                    android:textStyle="bold"
-                                    android:textSize="@dimen/sp_15"
+                                    android:textSize="@dimen/sp_14"
                                     android:textColor="@color/color_F5AB6D"
                                     android:background="@drawable/lb_give_corn">
 
                                 </TextView>
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:layout_toRightOf="@id/number_goods_corns"
+                                    android:layout_alignBottom="@id/number_goods_corns"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_marginLeft="-20dp"
+
+                                    android:src="@mipmap/more_corn_icon"
+                                    android:scaleType="centerInside"
+                                    />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -265,7 +278,7 @@
         <LinearLayout
             android:id="@+id/bottomLy"
             android:layout_width="match_parent"
-            android:layout_height="49dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             android:orientation="horizontal"

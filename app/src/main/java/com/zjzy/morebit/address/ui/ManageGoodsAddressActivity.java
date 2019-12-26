@@ -20,8 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.address.AddressInfo;
-import com.zjzy.morebit.address.AddressInfoList;
+import com.zjzy.morebit.pojo.address.AddressInfo;
+import com.zjzy.morebit.pojo.address.AddressInfoList;
 import com.zjzy.morebit.address.contract.ManageAddressContract;
 import com.zjzy.morebit.address.presenter.ManageAddressPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
@@ -156,7 +156,7 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ManageGoodsAddressActivity.this));
         recyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(ManageGoodsAddressActivity.this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(ManageGoodsAddressActivity.this,LinearLayoutManager.VERTICAL));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(ManageGoodsAddressActivity.this,LinearLayoutManager.VERTICAL));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

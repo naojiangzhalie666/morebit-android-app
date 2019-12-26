@@ -1,15 +1,12 @@
 package com.zjzy.morebit.order.presenter;
 
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
-import com.zjzy.morebit.address.AddressInfo;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
 import com.zjzy.morebit.network.observer.DataObserver;
-import com.zjzy.morebit.order.OrderDetailInfo;
-import com.zjzy.morebit.order.OrderSyncResult;
-import com.zjzy.morebit.order.ResponseOrderInfo;
-import com.zjzy.morebit.order.contract.ConfirmOrderContract;
+import com.zjzy.morebit.pojo.order.OrderDetailInfo;
+import com.zjzy.morebit.pojo.order.OrderSyncResult;
+import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
 import com.zjzy.morebit.order.contract.OrderDetailContract;
-import com.zjzy.morebit.order.model.ConfirmOrderModel;
 import com.zjzy.morebit.order.model.OrderDetailModel;
 
 /**

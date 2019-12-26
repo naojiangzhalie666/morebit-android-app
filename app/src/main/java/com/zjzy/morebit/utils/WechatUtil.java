@@ -32,7 +32,7 @@ public class WechatUtil {
             userName ="gh_f8d561cd1942";
         }
         // 填Android应用AppId
-        String appId = "wx92f654d146c13d44";
+        String appId = "wx0d185820ca66c15b";
         final IWXAPI iwxapi = WXAPIFactory.createWXAPI(App.getAppContext(), appId);
         iwxapi.registerApp(appId);
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();

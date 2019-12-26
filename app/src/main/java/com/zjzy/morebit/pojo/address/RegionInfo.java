@@ -1,4 +1,4 @@
-package com.zjzy.morebit.address;
+package com.zjzy.morebit.pojo.address;
 
 /**
  * Created by haiping.liu on 2019-12-12.

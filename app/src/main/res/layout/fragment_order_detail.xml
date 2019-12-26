@@ -30,13 +30,13 @@
             android:textColor="@color/color_2B0900"
             android:textSize="@dimen/sp_18"/>
 
-        <ImageView
-            android:id="@+id/iv_title"
-            android:layout_toRightOf="@+id/tv_title"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:src="@drawable/icon_order_detail_button"
-            android:layout_height="wrap_content"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_title"-->
+<!--            android:layout_toRightOf="@+id/tv_title"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:src="@drawable/icon_order_detail_button"-->
+<!--            android:layout_height="wrap_content"/>-->
 
         <ImageView
             android:id="@+id/search"
@@ -56,7 +56,7 @@
 
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/xTablayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:tl_indicator_color="@color/color_FFD800"
             app:tl_indicator_corner_radius="2dp"

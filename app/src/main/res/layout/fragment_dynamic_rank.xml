@@ -50,14 +50,14 @@
             android:layout_width="match_parent"
             android:layout_height="26dp"
             android:layout_alignParentBottom="true"
-            android:background="#FCEDB5">
+            android:background="#FF645B">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="提示：活跃为实时更新，近七日预估佣金和拉新数据统计至昨日"
-                android:textColor="#D58900"
+                android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_11" />
         </LinearLayout>
     </RelativeLayout>
