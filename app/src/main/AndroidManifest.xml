@@ -400,6 +400,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
 
+        <activity android:name="com.zjzy.morebit.Activity.WebViewActivity"></activity>
+
         <activity android:name="com.zjzy.morebit.main.ui.NoticeActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.zjzy.morebit.goods.shopping.ui.ShareMoneyGetImgActivity" android:screenOrientation="portrait"/>
         <!--微信分享-->

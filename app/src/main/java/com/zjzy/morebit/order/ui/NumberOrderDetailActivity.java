@@ -536,7 +536,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
             long time = CommonLocalData.syncServiceTime() - orderTime;
             if (time/1000 < 1800){
                 tvDaojishiTime.setVisibility(View.VISIBLE);
-                Counter counter = new Counter(time, 1000);
+                Counter counter = new Counter(1800*1000-time, 1000);
                 counter.start();
             }
             else{

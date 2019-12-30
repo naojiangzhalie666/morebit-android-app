@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ali.auth.third.ui.context.CallbackContext;
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
 import com.blankj.utilcode.util.ToastUtils;
@@ -36,6 +37,7 @@ import com.zjzy.morebit.utils.CleanSdUtil;
 import com.zjzy.morebit.utils.FileSizeUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
+import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PageToUtil;
 import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
@@ -179,6 +181,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                             // loginResult(0--登录初始化成功；1--登录初始化完成；2--登录成功)
                             // openId：用户id
                             // userNick: 用户昵称
+                            MyLog.d("test","loginresult:"+loginResult+"openId:"+openId+"userNick:"+userNick);
                             //授权成功回调
                             item_tabao_tv.setText("已授权");
                             ToastUtils.showShort("淘宝授权成功");
@@ -407,4 +410,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public boolean isShowAllSeek() {
         return false;
     }
+
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        CallbackContext.onActivityResult(requestCode, resultCode, data);
+//    }
 }

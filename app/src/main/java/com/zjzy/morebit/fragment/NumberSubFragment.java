@@ -583,8 +583,13 @@ public class NumberSubFragment extends BaseFragment {
         switch (event.getAction()) {
             case EventBusAction.LOGINA_SUCCEED:
                 initData();
-
-
+            case EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA:
+                mUserInfo = UserLocalData.getUser();
+                if ("null".equals(mUserInfo.getHeadImg()) || "NULL".equals(mUserInfo.getHeadImg()) || TextUtils.isEmpty(mUserInfo.getHeadImg())) {
+                    mUserIcon.setImageResource(R.drawable.head_icon);
+                } else {
+                    LoadImgUtils.setImgCircle(getActivity(), mUserIcon, mUserInfo.getHeadImg(), R.drawable.head_icon);
+                }
                 break;
         }
     }

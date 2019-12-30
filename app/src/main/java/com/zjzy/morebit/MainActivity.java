@@ -146,6 +146,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             getHomeRedPackageData();
             mPresenter.getTaobaoLink(this);
             ConfigListUtlis.getConfigList(this, ConfigListUtlis.getConfigAllKey(), null);
+            mPresenter.getServerTime(this);
 //            if (!UserLocalData.getSavedRegionFlag()){
 //                mPresenter.getAllRegion(this);
 //            }

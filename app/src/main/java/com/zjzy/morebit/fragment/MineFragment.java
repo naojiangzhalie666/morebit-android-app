@@ -1,5 +1,6 @@
 package com.zjzy.morebit.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -91,6 +92,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -108,23 +111,25 @@ public class MineFragment extends BaseMainFragmeng {
     RoundedImageView mUserIcon;
     @BindView(R.id.swipeList)
     SwipeRefreshLayout mSwipeList;
-    @BindView(R.id.userLevel)
-    ImageView mUserLevel;
+//    @BindView(R.id.userLevel)
+//    ImageView mUserLevel;
     @BindView(R.id.invitation_code)
     TextView mInvitationCode;
     @BindView(R.id.tv_remainder)
     TextView tv_remainder;
-    @BindView(R.id.day_price)
-    TextView day_price;
-    @BindView(R.id.month_price)
-    TextView month_price;
+//    @BindView(R.id.day_price)
+//    TextView day_price;
+//    @BindView(R.id.month_price)
+//    TextView month_price;
     @BindView(R.id.userName)
     TextView mUserName;
-    @BindView(R.id.upgrade_text)
-    TextView upgrade_text;
-
-    @BindView(R.id.btn_upgrade_tv)
-    TextView btnUpgradetv;
+    @BindView(R.id.tv_user_type)
+    TextView tvUserType;
+//    @BindView(R.id.upgrade_text)
+//    TextView upgrade_text;
+//
+//    @BindView(R.id.btn_upgrade_tv)
+//    TextView btnUpgradetv;
 
     @BindView(R.id.as_banner)
     AspectRatioView mAsBanner;
@@ -146,15 +151,15 @@ public class MineFragment extends BaseMainFragmeng {
     NestedScrollView nestedScrollView;
     @BindView(R.id.rl_set_weixin)
     RelativeLayout rl_set_weixin;
-    @BindView(R.id.rl_balance)
-    RelativeLayout rl_balance;
-    @BindView(R.id.tv_balance)
-    TextView tv_balance;
-    @BindView(R.id.rl_upgrade)
-    RelativeLayout rl_upgrade;
-
-    @BindView(R.id.ll_grade_txt)
-    LinearLayout llGradeTxt;
+//    @BindView(R.id.rl_balance)
+//    RelativeLayout rl_balance;
+//    @BindView(R.id.tv_balance)
+//    TextView tv_balance;
+//    @BindView(R.id.rl_upgrade)
+//    RelativeLayout rl_upgrade;
+//
+//    @BindView(R.id.ll_grade_txt)
+//    LinearLayout llGradeTxt;
     @BindView(R.id.recyclerView_recommend)
     RecyclerView recyclerView_recommend;
     @BindView(R.id.fl_share_expert)
@@ -163,12 +168,35 @@ public class MineFragment extends BaseMainFragmeng {
     ImageView iv_bg_expert;
     @BindView(R.id.tv_role)
     TextView tv_role;
-    @BindView(R.id.ll_up_marquee)
-    LinearLayout ll_up_marquee;
-    @BindView(R.id.upview)
-    UPMarqueeView upview;
-    @BindView(R.id.iv_mine_up_marquee_arrows)
-    ImageView iv_mine_up_marquee_arrows;
+
+    @BindView(R.id.tv_withdraw)
+    TextView tvWithDraw;
+
+
+    @BindView(R.id.tv_today_money)
+            TextView tv_today_money;
+    @BindView(R.id.tv_yesterday_estimate_money)
+            TextView tv_yesterday_estimate_money;
+    @BindView(R.id.tv_this_month_estimate_money)
+            TextView tv_this_month_estimate_money;
+    @BindView(R.id.tv_prev_month_estimate_oney)
+            TextView tv_prev_month_estimate_oney;
+//    @BindView(R.id.ll_up_marquee)
+//    LinearLayout ll_up_marquee;
+//    @BindView(R.id.upview)
+//    UPMarqueeView upview;
+//    @BindView(R.id.iv_mine_up_marquee_arrows)
+    @BindView(R.id.my_publish)
+LinearLayout my_publish;
+    @BindView(R.id.order_search)
+    LinearLayout order_search;
+    @BindView(R.id.my_footmarker)
+    LinearLayout my_footmarker;
+    @BindView(R.id.my_favorite)
+    LinearLayout my_favorite;
+
+
+//    ImageView iv_mine_up_marquee_arrows;
 
 
     ToolsAdapter mAdapter;
@@ -188,8 +216,10 @@ public class MineFragment extends BaseMainFragmeng {
     private boolean isShowGuide = false;
     boolean isleft = false;
     List<View> mHotviews = new ArrayList<>();
-    private  boolean isLogin;
+    private boolean isLogin;
     private int mIsUpgrade;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -238,10 +268,10 @@ public class MineFragment extends BaseMainFragmeng {
             refreshData();
             isUserHint = false;
         }
-        MyLog.i("test","isLogin: " +isLogin);
-        if(isVisibleToUser&&isLogin){
-            MyLog.i("test1","isLogin: " +isLogin);
-            isLogin =false;
+        MyLog.i("test", "isLogin: " + isLogin);
+        if (isVisibleToUser && isLogin) {
+            MyLog.i("test1", "isLogin: " + isLogin);
+            isLogin = false;
             openUpgradeUserDialog();
         }
 
@@ -286,20 +316,22 @@ public class MineFragment extends BaseMainFragmeng {
         }
 
 
-        mInvitationCode.setText(getResources().getString(R.string.number_invite_code,info.getInviteCode()));
+        mInvitationCode.setText(getResources().getString(R.string.number_invite_code, info.getInviteCode()));
         mUserName.setText(info.getNickName());
 
         if (C.UserType.member.equals(info.getPartner())) {
-            mUserLevel.setImageResource(R.mipmap.my_number_icon);
-
+//            mUserLevel.setImageResource(R.mipmap.my_number_icon);
+            tvUserType.setText("会员");
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
-            ll_up_marquee.setVisibility(View.GONE);
+//            ll_up_marquee.setVisibility(View.GONE);
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
-            mUserLevel.setImageResource(R.mipmap.my_vip_icon);
+//            mUserLevel.setImageResource(R.mipmap.my_vip_icon);
+            tvUserType.setText("VIP");
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
-            ll_up_marquee.setVisibility(View.GONE);
+//            ll_up_marquee.setVisibility(View.GONE);
         } else if (C.UserType.operator.equals(info.getPartner())) {
-            mUserLevel.setImageResource(R.mipmap.my_leader_icon);
+            tvUserType.setText("团队长");
+//            mUserLevel.setImageResource(R.mipmap.my_leader_icon);
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings);
         }
         if (TextUtils.isEmpty(info.getWxNumber())) {
@@ -307,12 +339,12 @@ public class MineFragment extends BaseMainFragmeng {
         } else {
             rl_set_weixin.setVisibility(View.GONE);
         }
-        if(UserLocalData.getUser().getReleasePermission() == 1){
+        if (UserLocalData.getUser().getReleasePermission() == 1) {
             fl_share_expert.setVisibility(View.VISIBLE);
-            if(!TextUtils.isEmpty(UserLocalData.getUser().getLabelPicture())){
-                LoadImgUtils.setImg(getActivity(),iv_bg_expert,UserLocalData.getUser().getLabelPicture());
+            if (!TextUtils.isEmpty(UserLocalData.getUser().getLabelPicture())) {
+                LoadImgUtils.setImg(getActivity(), iv_bg_expert, UserLocalData.getUser().getLabelPicture());
             }
-            if (!TextUtils.isEmpty(UserLocalData.getUser().getLabel())){
+            if (!TextUtils.isEmpty(UserLocalData.getUser().getLabel())) {
                 tv_role.setText(UserLocalData.getUser().getLabel());
             }
         } else {
@@ -357,10 +389,10 @@ public class MineFragment extends BaseMainFragmeng {
         getFindSplendidList();
         getDayIncome();
         getMonthIncome();
-        if(!C.UserType.operator.equals(UserLocalData.getUser().getPartner())){
+        if (!C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
 
 //            boolean isShow = (boolean) SharedPreferencesUtils.get(App.getAppContext(),C.sp.DIALOG_USER_IS_UPGRADE,false);
-            getIsUpgrade();
+//            getIsUpgrade();
         }
 
 //        getAccumulatedAmount();
@@ -379,7 +411,7 @@ public class MineFragment extends BaseMainFragmeng {
 
     @OnClick({R.id.copy_invitation_code, R.id.my_earnings, R.id.rl_set_weixin,
             R.id.my_team, R.id.order_detail, R.id.share_friends, R.id.setting, R.id.tv_y, R.id.iv_wenhao,
-            R.id.rl_upgrade,R.id.tv_withdraw,R.id.ll_earnings,R.id.userIcon,R.id.ll_grade_txt})
+             R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon,R.id.my_publish,R.id.order_search,R.id.my_footmarker,R.id.my_favorite})
     public void onClick(View v) {
         switch (v.getId()) {  //复制邀请码
             case R.id.copy_invitation_code:
@@ -416,6 +448,38 @@ public class MineFragment extends BaseMainFragmeng {
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
 //                PartnerShareActivity.start(getActivity());
                 break;
+            case R.id.my_publish:
+                ImageInfo publish = mLocalData.get("1");
+                if (publish == null){
+                    ViewShowUtils.showShortToast(getActivity(),"没有发布管理权限");
+                }else{
+                    BannerInitiateUtils.gotoAction(getActivity(), publish);
+                }
+                break;
+            case R.id.order_search:
+                ImageInfo orderSearch = mLocalData.get("2");
+                if (orderSearch == null){
+                    ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
+                }else{
+                    BannerInitiateUtils.gotoAction(getActivity(), orderSearch);
+                }
+                break;
+            case R.id.my_footmarker:
+                ImageInfo footMarker = mLocalData.get("3");
+                if (footMarker == null){
+                    ViewShowUtils.showShortToast(getActivity(),"没有足迹浏览");
+                }else{
+                    BannerInitiateUtils.gotoAction(getActivity(), footMarker);
+                }
+                break;
+            case R.id.my_favorite:
+                ImageInfo favorite = mLocalData.get("4");
+                if (favorite == null){
+                    ViewShowUtils.showShortToast(getActivity(),"没有收藏权限");
+                }else{
+                    BannerInitiateUtils.gotoAction(getActivity(), favorite);
+                }
+                break;
             case R.id.setting: //设置
                 Intent in = new Intent(getActivity(), SettingActivity.class);
                 startActivity(in);
@@ -426,38 +490,43 @@ public class MineFragment extends BaseMainFragmeng {
             case R.id.rl_set_weixin:
                 SettingWechatActivity.start(getActivity(), 0);
                 break;
-            case R.id.rl_upgrade:   //会员升级
-            case R.id.ll_grade_txt:
-                if(C.UserType.member.equals(UserLocalData.getUser().getPartner())){
-                    NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(getActivity(),R.style.dialog);
-                    leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
-
-                        @Override
-                        public void onClick(int type) {
-                            //vip ==1
-                            if (type == 1){
-                                updateGradePresenter(MineFragment.this,Integer.parseInt(C.UserType.vipMember));
-                            }else if (type ==2){
-                                updateGradePresenter(MineFragment.this,Integer.parseInt(C.UserType.operator));
-                            }
-                        }
-
-                    });
-                    leaderUpgradeDialog.show();
-
-                }else if (C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())){
-                    updateGradeForLeader();
-                }else if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())){
-                    VipActivity.start(getActivity());
-                }
-
-                break;
+//            case R.id.rl_upgrade:   //会员升级
+//            case R.id.ll_grade_txt:
+//                if (C.UserType.member.equals(UserLocalData.getUser().getPartner())) {
+//                    NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(getActivity(), R.style.dialog);
+//                    leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener() {
+//
+//                        @Override
+//                        public void onClick(int type) {
+//                            //vip ==1
+//                            if (type == 1) {
+//                                updateGradePresenter(MineFragment.this, Integer.parseInt(C.UserType.vipMember));
+//                            } else if (type == 2) {
+//                                updateGradePresenter(MineFragment.this, Integer.parseInt(C.UserType.operator));
+//                            }
+//                        }
+//
+//                    });
+//                    leaderUpgradeDialog.show();
+//
+//                } else if (C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())) {
+//                    updateGradeForLeader();
+//                } else if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
+//                    VipActivity.start(getActivity());
+//                }
+//
+//                break;
             case R.id.tv_withdraw: //提现
-                if (TaobaoUtil.isAuth()) {   //淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
+                if(Double.parseDouble(mTotalMoney)<1){
+                    ViewShowUtils.showShortToast(getActivity(),"不足1元，无法提现");
                 } else {
-                    AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
+                    if (TaobaoUtil.isAuth()) {   //淘宝授权
+                        TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
+                    } else {
+                        AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
+                    }
                 }
+
                 break;
             case R.id.userIcon: //个人设置
                 // 个人
@@ -515,7 +584,7 @@ public class MineFragment extends BaseMainFragmeng {
 //                            }
 //                            setBanner(data, mRedPackagesBanner, mRedPackages);
 //                            mRedPackages.setVisibility(View.VISIBLE);
-                        } else if(C.UIShowType.PERSONAL_FUNCTION==back){
+                        } else if (C.UIShowType.PERSONAL_FUNCTION == back) {
 
                             setPersonalFunction(data);
                         } else if (C.UIShowType.Personal == back) {
@@ -550,12 +619,41 @@ public class MineFragment extends BaseMainFragmeng {
                                 return;
                             }
                             ll_my_tootls.setVisibility(View.VISIBLE);
+                            //过滤掉一部分固定的项目
+                            filterMyTools(list);
                             mAdapter.replace(list);
                             mAdapter.notifyDataSetChanged();
                         }
 
                     }
                 });
+    }
+
+    private void filterMyTools(List<ImageInfo> list){
+        if (list != null && list.size() > 0){
+            int size = list.size();
+            Iterator it = list.iterator();
+            while(it.hasNext()){
+                ImageInfo x =(ImageInfo) it.next();
+                if(x.getTitle().equals("我的收藏")){
+                    mLocalData.put("4",x);
+                    it.remove();
+                }
+                if(x.getTitle().equals("发布管理")){
+                    mLocalData.put("1",x);
+                    it.remove();
+                }
+                if(x.getTitle().equals("足迹")){
+                    mLocalData.put("3",x);
+                    it.remove();
+                }
+
+            }
+//            for (int i = 0; i<size; i++){
+//                if ()
+//            }
+        }
+
     }
 
     /**
@@ -634,7 +732,7 @@ public class MineFragment extends BaseMainFragmeng {
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
-                        if(C.UserType.operator.equals(UserLocalData.getUser().getPartner())){
+                        if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
                             getUpgradeCarousel();
                         }
 
@@ -648,14 +746,12 @@ public class MineFragment extends BaseMainFragmeng {
                         mDayEarnings = data;
                         mTotalMoney = MathUtils.getMoney(data.getTotalMoney());
                         tv_remainder.setText(MathUtils.getMoney(data.getAccumulatedAmount()));
-                        day_price.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
+//                        day_price.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
+                        tv_today_money.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
+                        tv_yesterday_estimate_money.setText(MathUtils.getMoney(data.getYesterdayEstimateMoney()));
                         checkWithdrawTime();
-//                        if(Double.parseDouble(mTotalMoney)<1){
-//                            rl_balance.setVisibility(View.GONE);
-//                        } else {
-//                            tv_balance.setText(getString(R.string.mine_text_withdraw,mTotalMoney));
-//                            rl_balance.setVisibility(View.VISIBLE);
-//                        }
+//                        tvWithDraw
+
                     }
                 });
     }
@@ -666,34 +762,36 @@ public class MineFragment extends BaseMainFragmeng {
                     @Override
                     protected void onSuccess(MonthEarnings data) {
                         mMonthEarnings = data;
-                        month_price.setText(MathUtils.getMoney(data.getThisMonthEstimateMoney()));
+//                        month_price.setText(MathUtils.getMoney(data.getThisMonthEstimateMoney()));
+                        tv_this_month_estimate_money.setText(MathUtils.getMoney(data.getThisMonthEstimateMoney()));
+                        tv_prev_month_estimate_oney.setText(MathUtils.getMoney(data.getPrevMonthEstimateMoney()));
                     }
                 });
     }
 
-    /**
-     *
-     */
-    public void getIsUpgrade() {
-        String s = "";
-        if(C.UserType.member.equals(UserLocalData.getUser().getPartner())){
-            s = getString(R.string.mine_upgrade_text);
-            btnUpgradetv.setText("去升级");
-            btnUpgradetv.setTextColor(Color.parseColor("#F55454"));
-        }else if (C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())){
-            s = getString(R.string.mine_grade_vip_text);
-            btnUpgradetv.setText("去升级");
-            btnUpgradetv.setTextColor(Color.parseColor("#F55454"));
-        }else if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())){
-            s = getString(R.string.mine_grade_leader_text);
-            btnUpgradetv.setText("查看");
-            btnUpgradetv.setTextColor(Color.parseColor("#845802"));
-        }
-
-        upgrade_text.setText(Html.fromHtml(s));
-        rl_upgrade.setVisibility(View.VISIBLE);
-
-    }
+//    /**
+//     *
+//     */
+//    public void getIsUpgrade() {
+//        String s = "";
+//        if (C.UserType.member.equals(UserLocalData.getUser().getPartner())) {
+//            s = getString(R.string.mine_upgrade_text);
+//            btnUpgradetv.setText("去升级");
+//            btnUpgradetv.setTextColor(Color.parseColor("#F55454"));
+//        } else if (C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())) {
+//            s = getString(R.string.mine_grade_vip_text);
+//            btnUpgradetv.setText("去升级");
+//            btnUpgradetv.setTextColor(Color.parseColor("#F55454"));
+//        } else if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
+//            s = getString(R.string.mine_grade_leader_text);
+//            btnUpgradetv.setText("查看");
+//            btnUpgradetv.setTextColor(Color.parseColor("#845802"));
+//        }
+//
+//        upgrade_text.setText(Html.fromHtml(s));
+//        rl_upgrade.setVisibility(View.VISIBLE);
+//
+//    }
 
     /**
      * 升级运营商弹窗提示
@@ -703,19 +801,19 @@ public class MineFragment extends BaseMainFragmeng {
                 .subscribe(new DataObserver<List<UpgradeCarousel>>(false) {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        if(StringsUtils.isDataEmpty(errCode)){
-                            ll_up_marquee.setVisibility(View.VISIBLE);
-                            setHotView(null);
-                        }  else {
-                            ll_up_marquee.setVisibility(View.GONE);
+                        if (StringsUtils.isDataEmpty(errCode)) {
+//                            ll_up_marquee.setVisibility(View.VISIBLE);
+//                            setHotView(null);
+                        } else {
+//                            ll_up_marquee.setVisibility(View.GONE);
                         }
                     }
 
                     @Override
                     protected void onSuccess(List<UpgradeCarousel> data) {
-                        if(data.size()>0){
-                            ll_up_marquee.setVisibility(View.VISIBLE);
-                            setHotView(data);
+                        if (data.size() > 0) {
+//                            ll_up_marquee.setVisibility(View.VISIBLE);
+//                            setHotView(data);
                         }
                     }
                 });
@@ -723,83 +821,85 @@ public class MineFragment extends BaseMainFragmeng {
 
     /**
      * 设置下线升级拉新轮播
+     *
      * @param datas
      */
-    private void setHotView(final List<UpgradeCarousel> datas) {
-        //多点优选热门
-        if (datas == null || datas.size() == 0) {
-            iv_mine_up_marquee_arrows.setVisibility(View.GONE);
-            mHotviews.clear();
-            LinearLayout moreView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_hot_text, null);
-            TextView tv = (TextView) moreView.findViewById(R.id.title);
-            if(mDayEarnings!=null){
-                try {
-                    double dayMoney = Double.parseDouble(MathUtils.getMoney(mDayEarnings.getTodayEstimateMoney()));
-                    if(dayMoney>0){
-                        tv.setText(R.string.mine_day_money_up_text);
-                    } else {
-                        tv.setText(R.string.mine_day_money_text);
-                    }
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            } else {
-                tv.setText(R.string.mine_day_money_text);
-            }
-            mHotviews.add(tv);
-        } else {
-            iv_mine_up_marquee_arrows.setVisibility(View.VISIBLE);
-            ll_up_marquee.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FansActivity.start(getActivity());
-                }
-            });
-            mHotviews.clear();
-            for (int i = 0; i < datas.size(); i++) {
-                //设置滚动的单个布局
-                LinearLayout moreView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_hot_text, null);
-                TextView tv = (TextView) moreView.findViewById(R.id.title);
-                ImageView iv_head = (ImageView) moreView.findViewById(R.id.iv_head);
-                iv_head.setVisibility(View.VISIBLE);
-                String s ="";
-                if(datas.get(i).getIsUpgrade()==1){
-                    s= getString(R.string.mine_upgrade_carousel_text,datas.get(i).getNickname(),datas.get(i).getNewUsers()+"");
-                } else {
-                    s = getString(R.string.mine_upgrade_carousel_text_one,datas.get(i).getNickname(),+datas.get(i).getNewUsers()+"");
-                }
-                if(TextUtils.isEmpty(datas.get(i).getHeadImg())){
-                    iv_head.setImageResource(R.drawable.head_icon);
-                } else {
-                    LoadImgUtils.setImgHead(getActivity(),iv_head,datas.get(i).getHeadImg());
-                }
-                //进行对控件赋值
-                tv.setText(Html.fromHtml(s));
-                //添加到循环滚动数组里面去
-                mHotviews.add(moreView);
-            }
-        }
+//    private void setHotView(final List<UpgradeCarousel> datas) {
+//        //多点优选热门
+//        if (datas == null || datas.size() == 0) {
+//            iv_mine_up_marquee_arrows.setVisibility(View.GONE);
+//            mHotviews.clear();
+//            LinearLayout moreView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_hot_text, null);
+//            TextView tv = (TextView) moreView.findViewById(R.id.title);
+//            if (mDayEarnings != null) {
+//                try {
+//                    double dayMoney = Double.parseDouble(MathUtils.getMoney(mDayEarnings.getTodayEstimateMoney()));
+//                    if (dayMoney > 0) {
+//                        tv.setText(R.string.mine_day_money_up_text);
+//                    } else {
+//                        tv.setText(R.string.mine_day_money_text);
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            } else {
+//                tv.setText(R.string.mine_day_money_text);
+//            }
+//            mHotviews.add(tv);
+//        } else {
+//            iv_mine_up_marquee_arrows.setVisibility(View.VISIBLE);
+//            ll_up_marquee.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    FansActivity.start(getActivity());
+//                }
+//            });
+//            mHotviews.clear();
+//            for (int i = 0; i < datas.size(); i++) {
+//                //设置滚动的单个布局
+//                LinearLayout moreView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_hot_text, null);
+//                TextView tv = (TextView) moreView.findViewById(R.id.title);
+//                ImageView iv_head = (ImageView) moreView.findViewById(R.id.iv_head);
+//                iv_head.setVisibility(View.VISIBLE);
+//                String s = "";
+//                if (datas.get(i).getIsUpgrade() == 1) {
+//                    s = getString(R.string.mine_upgrade_carousel_text, datas.get(i).getNickname(), datas.get(i).getNewUsers() + "");
+//                } else {
+//                    s = getString(R.string.mine_upgrade_carousel_text_one, datas.get(i).getNickname(), +datas.get(i).getNewUsers() + "");
+//                }
+//                if (TextUtils.isEmpty(datas.get(i).getHeadImg())) {
+//                    iv_head.setImageResource(R.drawable.head_icon);
+//                } else {
+//                    LoadImgUtils.setImgHead(getActivity(), iv_head, datas.get(i).getHeadImg());
+//                }
+//                //进行对控件赋值
+//                tv.setText(Html.fromHtml(s));
+//                //添加到循环滚动数组里面去
+//                mHotviews.add(moreView);
+//            }
+//        }
+//
+//
+//        upview.setViews(mHotviews);
+//        upview.setOnItemClickListener(new UPMarqueeView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position, View view) {
+//                FansActivity.start(getActivity());
+//            }
+//
+//            /**
+//             * 滚动监听
+//             *
+//             * @param tag
+//             * @param view
+//             */
+//            @Override
+//            public void onAnimationListener(Object tag, View view) {
+//
+//            }
+//        });
+//    }
 
-
-        upview.setViews(mHotviews);
-        upview.setOnItemClickListener(new UPMarqueeView.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view) {
-                FansActivity.start(getActivity());
-            }
-
-            /**
-             * 滚动监听
-             *
-             * @param tag
-             * @param view
-             */
-            @Override
-            public void onAnimationListener(Object tag, View view) {
-
-            }
-        });
-    }
     /**
      * 设置发现精彩
      */
@@ -812,22 +912,33 @@ public class MineFragment extends BaseMainFragmeng {
         mAdapterSplendid.replace(datas);
         mAdapterSplendid.notifyDataSetChanged();
     }
+
     /**
      * 设置推荐
      */
+    //本地数据
+    HashMap<String ,ImageInfo> mLocalData = new HashMap<String,ImageInfo>();
     private void setPersonalFunction(List<ImageInfo> datas) {
-        recyclerView_recommend.setVisibility(View.VISIBLE);
-        if(datas.size()>2){
-            datas =  datas.subList(0,2);
+//        recyclerView_recommend.setVisibility(View.VISIBLE);
+//        if (datas.size() > 2) {
+//            datas = datas.subList(0, 2);
+//        }
+        int size = datas.size();
+        for(int i = 0; i < size; i++ ){
+            if ("订单查询".equals(datas.get(i).getTitle())){
+                mLocalData.put("2",datas.get(i));
+                break;
+            }
         }
-        //分类数据
-        if (mPersonFunctionAdapter == null) {
-            mPersonFunctionAdapter = new PersonFunctionAdapter(getActivity());
-            recyclerView_recommend.setAdapter(mPersonFunctionAdapter);
-        }
-        mPersonFunctionAdapter.replace(datas);
-        mPersonFunctionAdapter.notifyDataSetChanged();
+//        //分类数据
+//        if (mPersonFunctionAdapter == null) {
+//            mPersonFunctionAdapter = new PersonFunctionAdapter(getActivity());
+//            recyclerView_recommend.setAdapter(mPersonFunctionAdapter);
+//        }
+//        mPersonFunctionAdapter.replace(datas);
+//        mPersonFunctionAdapter.notifyDataSetChanged();
     }
+
     private void openDialog(String title, String content) {  //收益说明dialog
         if (mDialog == null) {
             mDialog = new EarningsHintDialog(getActivity(), R.style.dialog, title, content);
@@ -843,6 +954,7 @@ public class MineFragment extends BaseMainFragmeng {
             mDialog.show();
         }
     }
+
     private void openUpgradeUserDialog() {  //收益说明dialog
         if (mUpgradeUserDialog == null) {
             mUpgradeUserDialog = new UpgradeUserDialog(getActivity());
@@ -862,7 +974,7 @@ public class MineFragment extends BaseMainFragmeng {
         }
 
 
-        if (!mUpgradeUserDialog.isShowing()&&!isLogin) {
+        if (!mUpgradeUserDialog.isShowing() && !isLogin) {
 //            SharedPreferencesUtils.put(App.getAppContext(),C.sp.DIALOG_USER_IS_UPGRADE,true);
             mUpgradeUserDialog.show();
 
@@ -879,7 +991,7 @@ public class MineFragment extends BaseMainFragmeng {
 //                    }
 //                });
 //    }
-    public void checkWithdrawTime (){
+    public void checkWithdrawTime() {
         if (AppUtil.isFastClick(500)) return;
         mInfoModel.checkWithdrawTime(this)
                 .subscribe(new DataObserver<String>(false) {
@@ -890,30 +1002,34 @@ public class MineFragment extends BaseMainFragmeng {
 
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        MyLog.i("test","errCode: " +errCode);
+                        MyLog.i("test", "errCode: " + errCode);
                         double money = 0;
                         try {
-                            money  = Double.parseDouble(mTotalMoney);
-                        } catch (Exception e){
+                            money = Double.parseDouble(mTotalMoney);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
-                        if(!C.requestCode.B10301.equals(errCode)&&money>=1){//因为成功的话data会为空，所以判断下
-                            tv_balance.setText(getString(R.string.mine_text_withdraw,mTotalMoney));
-                            rl_balance.setVisibility(View.VISIBLE);
+                        if (!C.requestCode.B10301.equals(errCode) && money >= 1) {//因为成功的话data会为空，所以判断下
+//                            ViewShowUtils.showShortToast(getActivity(),);
+                            MyLog.d("test","提现报错：B10301：不在提现时间");
+//                            tv_balance.setText(getString(R.string.mine_text_withdraw, mTotalMoney));
+//                            rl_balance.setVisibility(View.VISIBLE);
 //                        }  else {
 //                            withdrawErrorDialog(errorMsg);
                         } else {
-                            rl_balance.setVisibility(View.GONE);
+//                            rl_balance.setVisibility(View.GONE);
                         }
 
                     }
                 });
     }
+
     WithdrawErrorDialog withdrawErrorDialog;
+
     private void withdrawErrorDialog(String title) {  //淘宝取消授权弹框
-        if(withdrawErrorDialog==null){
-            withdrawErrorDialog =new WithdrawErrorDialog(getActivity(), R.style.dialog, "温馨提示", title);
+        if (withdrawErrorDialog == null) {
+            withdrawErrorDialog = new WithdrawErrorDialog(getActivity(), R.style.dialog, "温馨提示", title);
             withdrawErrorDialog.setmOkListener(new WithdrawErrorDialog.OnOkListener() {
                 @Override
                 public void onClick(View view) {
@@ -921,7 +1037,7 @@ public class MineFragment extends BaseMainFragmeng {
             });
         }
 
-        if(!withdrawErrorDialog.isShowing()){
+        if (!withdrawErrorDialog.isShowing()) {
             withdrawErrorDialog.show();
         }
 
@@ -1043,13 +1159,13 @@ public class MineFragment extends BaseMainFragmeng {
     /**
      * 升级团队长的弹框
      */
-    private void updateGradeForLeader(){
-        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(getActivity(),R.style.dialog);
-        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener(){
+    private void updateGradeForLeader() {
+        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(getActivity(), R.style.dialog);
+        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener() {
 
             @Override
-            public void onClick(){
-                updateGradePresenter(MineFragment.this,Integer.parseInt(C.UserType.operator));
+            public void onClick() {
+                updateGradePresenter(MineFragment.this, Integer.parseInt(C.UserType.operator));
             }
 
         });
@@ -1058,9 +1174,9 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
 
-
     /**
      * 升级
+     *
      * @param fragment
      * @param userType
      */
@@ -1075,38 +1191,41 @@ public class MineFragment extends BaseMainFragmeng {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
 
-                        showError(errCode,errorMsg);
+                        showError(errCode, errorMsg);
                     }
 
                     @Override
                     protected void onDataListEmpty() {
 
                     }
+
                     @Override
                     protected void onSuccess(UpdateInfoBean data) {
                         onGradeSuccess(data);
                     }
                 });
     }
-    public void showError(String errorNo,String msg) {
+
+    public void showError(String errorNo, String msg) {
         MyLog.i("test", "onFailure: " + this);
         if ("B1100007".equals(errorNo)
-                ||"B1100008".equals(errorNo)
-                ||"B1100009".equals(errorNo)
+                || "B1100008".equals(errorNo)
+                || "B1100009".equals(errorNo)
                 || "B1100010".equals(errorNo)) {
-            ViewShowUtils.showShortToast(getActivity(),msg);
+            ViewShowUtils.showShortToast(getActivity(), msg);
         }
 
     }
+
     public void onGradeSuccess(UpdateInfoBean info) {
-        if (info != null){
+        if (info != null) {
             UserInfo userInfo = UserLocalData.getUser();
             userInfo.setUserType(String.valueOf(info.getUserType()));
             userInfo.setMoreCoin(info.getMoreCoin());
-            UserLocalData.setUser(getActivity(),userInfo);
+            UserLocalData.setUser(getActivity(), userInfo);
             updataUser();
-        }else{
-            MyLog.d("test","用户信息为空");
+        } else {
+            MyLog.d("test", "用户信息为空");
         }
 
     }
@@ -1124,4 +1243,10 @@ public class MineFragment extends BaseMainFragmeng {
                 .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
     }
+
+
+
+
+
+
 }

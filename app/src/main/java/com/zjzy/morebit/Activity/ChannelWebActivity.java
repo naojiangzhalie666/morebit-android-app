@@ -15,7 +15,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.baichuan.android.trade.AlibcTrade;
+import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
+import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
+import com.alibaba.baichuan.android.trade.model.OpenType;
+import com.alibaba.baichuan.trade.biz.context.AlibcTradeResult;
+import com.alibaba.baichuan.trade.biz.core.taoke.AlibcTaokeParams;
+import com.alibaba.baichuan.trade.common.utils.AlibcLogger;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -31,6 +39,9 @@ import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.UI.WebViewUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.view.ToolbarHelper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -85,6 +96,7 @@ public class ChannelWebActivity extends BaseActivity {
     }
 
     private void initView() {
+
         new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.accredit));
         mUrl = getIntent().getStringExtra("url");
         if (TextUtils.isEmpty(mUrl)) return;
@@ -98,50 +110,121 @@ public class ChannelWebActivity extends BaseActivity {
                 MyLog.i("test", "onError");
             }
         });//http://127.0.0.1:12345/error?code=Q8IlEnPxRM5maJaop2swBBGD13117303&state=1212
-        mWebview.loadUrl(mUrl);
-        mWebview.setWebChromeClient(new WebChromeClient() {
+//        mWebview.loadUrl(mUrl);
+//        mWebview.setWebChromeClient(new WebChromeClient() {
+//
+//
+//            public void onProgressChanged(WebView view, int newProgress) {
+//                if (pb != null) {
+//                    pb.setProgress(newProgress);
+//                    if (newProgress == 100) {
+//                        pb.setVisibility(View.GONE);
+//                    }
+//                }
+//                super.onProgressChanged(view, newProgress);
+//            }
+//
+//
+//        });
+//        mWebview.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+//                super.onPageStarted(view, url, favicon);
+//                MyLog.i("test", "url   " + url);
+//                if (url.contains("code=")) {
+//                    try {
+//                        String[] temp = url.split("code=");
+//                        if (temp != null && temp.length >= 2) {
+//                            String code = temp[1].substring(0, temp[1].indexOf("&"));
+//                            MyLog.i("test", "code: " + code);
+//                            sendCode(code);
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    showIVContentVisibility(ChannelWebActivity.AUTHO_LOADING,"");
+//                    mWebview.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onPageFinished(WebView view, String url) {
+//                super.onPageFinished(view, url);
+//            }
+//
+//
+//        });
+        openByUrl(mUrl);
+    }
+    private void openByUrl(String url) {
+        AlibcShowParams showParams = new AlibcShowParams();
+        showParams.setOpenType(OpenType.Native);
+//        showParams.setClientType("taobao");
+        showParams.setBackUrl("");
 
+//        showParams.setNativeOpenFailedMode(AlibcFailModeType.AlibcNativeFailModeJumpH5);
+        AlibcTaokeParams taokeParams = new AlibcTaokeParams("", "", "");
+//        taokeParams.setPid("mm_740610175_1169000036_109904850188");
+//        taokeParams.setAdzoneid("29932014");
+        Map<String, String> trackParams = new HashMap<>();
 
-            public void onProgressChanged(WebView view, int newProgress) {
-                if (pb != null) {
-                    pb.setProgress(newProgress);
-                    if (newProgress == 100) {
-                        pb.setVisibility(View.GONE);
-                    }
-                }
-                super.onProgressChanged(view, newProgress);
-            }
-
-
-        });
-        mWebview.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                MyLog.i("test", "url   " + url);
-                if (url.contains("code=")) {
-                    try {
-                        String[] temp = url.split("code=");
-                        if (temp != null && temp.length >= 2) {
-                            String code = temp[1].substring(0, temp[1].indexOf("&"));
-                            MyLog.i("test", "code: " + code);
-                            sendCode(code);
+        AlibcTrade.openByUrl(ChannelWebActivity.this, "", url, mWebview,
+                new WebViewClient() {
+                    @Override
+                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                        super.onPageStarted(view, url, favicon);
+                        MyLog.i("test", "url   " + url);
+                        if (url.contains("code=")) {
+                            try {
+                                String[] temp = url.split("code=");
+                                if (temp != null && temp.length >= 2) {
+                                    String code = temp[1].substring(0, temp[1].indexOf("&"));
+                                    MyLog.i("test", "code: " + code);
+                                    sendCode(code);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            showIVContentVisibility(ChannelWebActivity.AUTHO_LOADING,"");
+                            mWebview.setVisibility(View.GONE);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-                    showIVContentVisibility(ChannelWebActivity.AUTHO_LOADING,"");
-                    mWebview.setVisibility(View.GONE);
-                }
-            }
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-            }
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        super.onPageFinished(view, url);
+                    }
 
 
-        });
+                }, new WebChromeClient() {
+
+
+                    public void onProgressChanged(WebView view, int newProgress) {
+                        if (pb != null) {
+                            pb.setProgress(newProgress);
+                            if (newProgress == 100) {
+                                pb.setVisibility(View.GONE);
+                            }
+                        }
+                        super.onProgressChanged(view, newProgress);
+                    }
+
+
+                },
+                showParams, taokeParams, trackParams, new AlibcTradeCallback() {
+                    @Override
+                    public void onTradeSuccess(AlibcTradeResult tradeResult) {
+                        AlibcLogger.i("WebViewActivity", "request success");
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        AlibcLogger.e("WebViewActivity", "code=" + code + ", msg=" + msg);
+                        if (code == -1) {
+                            Toast.makeText(ChannelWebActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     /**
@@ -240,4 +323,6 @@ public class ChannelWebActivity extends BaseActivity {
                 break;
         }
     }
+
+
 }

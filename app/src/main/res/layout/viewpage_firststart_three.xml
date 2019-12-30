@@ -2,7 +2,7 @@
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:src="@drawable/guide_3"
+    android:src="@mipmap/guide_3"
     android:scaleType="fitXY"
    >
 

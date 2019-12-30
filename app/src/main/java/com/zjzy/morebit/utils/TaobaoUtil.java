@@ -18,7 +18,9 @@ import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
 import com.zjzy.morebit.Activity.ChannelWebActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
+import com.zjzy.morebit.Activity.WebViewActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.AuthorDialog;
 import com.zjzy.morebit.network.BaseResponse;
@@ -101,7 +103,13 @@ public class TaobaoUtil {
                 // loginResult(0--登录初始化成功；1--登录初始化完成；2--登录成功)
                 // openId：用户id
                 // userNick: 用户昵称
-                ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://127.0.0.1:12345/error&state=1212&view=wap");
+                MyLog.d("test","loginresult:"+loginResult+"openId:"+openId+"userNick:"+userNick);
+//                Intent intent = new Intent(activity, WebViewActivity.class);
+//                intent.putExtra("url", "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://127.0.0.1:12345/error&state=1212&view=wap");
+//                activity.startActivity(intent);
+//                ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://127.0.0.1:12345/error&state=1212&view=wap");
+                ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://tkzs.jrsqrj.com/api/oauth&state=1212&view=wap");
+//
             }
 
 //            @Override
@@ -116,6 +124,7 @@ public class TaobaoUtil {
             }
         });
     }
+
 
     /**
      * 是否需要授权  false 否,true是
@@ -218,8 +227,8 @@ public class TaobaoUtil {
                         subscribe(new DataObserver<String>() {
                             @Override
                             protected void onSuccess(String data) {
-                                String data1 = "28224017";
-                                TaobaoUtil.authTaobao(activity, data1);
+//                                String data1 = "28224017";
+                                TaobaoUtil.authTaobao(activity, data);
                             }
                         });
             }

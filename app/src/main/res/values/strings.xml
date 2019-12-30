@@ -136,6 +136,12 @@
     <string name="my_team">我的粉丝</string>
     <string name="order_detail">订单明细</string>
     <string name="share_friends">分享好友</string>
+
+    <string name="my_publish">发布管理</string>
+    <string name="order_search">订单查询</string>
+    <string name="my_footmarker">足迹</string>
+    <string name="my_favorite">我的收藏</string>
+
     <string name="other_service">其他服务</string>
     <string name="new_help">新人课堂</string>
     <string name="favorite">我的收藏</string>
