@@ -462,10 +462,10 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             return;
         }
         setGoodsAdImg(Info);
-        if(!TextUtils.isEmpty(Info.getComeFrom())){
+        if (!TextUtils.isEmpty(Info.getComeFrom())) {
             mGoodsInfo.setComeFrom(Info.getComeFrom());
         }
-        if(!TextUtils.isEmpty(Info.getItemSource())){
+        if (!TextUtils.isEmpty(Info.getItemSource())) {
             mGoodsInfo.setItemSource(Info.getItemSource());
         }
         if (!StringsUtils.isEmpty(Info.getTitle())) {
@@ -538,15 +538,15 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             mGoodsInfo.setCouponPrice(Info.getCouponPrice());
             arv_prise.setVisibility(View.VISIBLE);
             coupon_prise.setText(getString(R.string.coupon_price, MathUtils.getCouponPrice(Info.getCouponPrice())));
-            setBuyText(Info.getCommission(), Info.getCouponPrice(),Info.getSubsidiesPrice());
+            setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
         }
 
-        if(!TextUtils.isEmpty(Info.getSubsidiesPrice())){
+        if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
             mGoodsInfo.setSubsidiesPrice(Info.getSubsidiesPrice());
             tv_Share_the_money.setText(getString(R.string.now_share));
         }
 
-        if(!TextUtils.isEmpty(Info.getCommission())){
+        if (!TextUtils.isEmpty(Info.getCommission())) {
             mGoodsInfo.setCommission(Info.getCommission());
         }
 
@@ -558,12 +558,12 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 if (getString(R.string.now_share).equals(tv_Share_the_money.getText())) {
                     mGoodsInfo.setCommission(Info.getCommission());
                     String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(GoodsDetailActivity.this).getCalculationRate(), Info.getCommission());
-                    setBuyText(Info.getCommission(), Info.getCouponPrice(),Info.getSubsidiesPrice());
+                    setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
                     if (!TextUtils.isEmpty(muRatioComPrice)) {
-                        String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(GoodsDetailActivity.this).getCalculationRate(),Info.getSubsidiesPrice());
-                        String totalSubside = MathUtils.getTotleSubSidies(muRatioComPrice,getRatioSubside);
+                        String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(GoodsDetailActivity.this).getCalculationRate(), Info.getSubsidiesPrice());
+                        String totalSubside = MathUtils.getTotleSubSidies(muRatioComPrice, getRatioSubside);
                         tv_Share_the_money.setText(getString(R.string.goods_share_moeny, totalSubside));
-                        setAllIncomeData(muRatioComPrice,getRatioSubside);
+                        setAllIncomeData(muRatioComPrice, getRatioSubside);
                     }
                     setEstimateData();
                     setUPdateData();
@@ -597,14 +597,14 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     }
 
     //设置补贴+总佣金
-    private void setAllIncomeData(String ratioComPrice,String subsidiesPrice){
+    private void setAllIncomeData(String ratioComPrice, String subsidiesPrice) {
         StringBuilder incomeBuild = new StringBuilder();
-        if(!TextUtils.isEmpty(subsidiesPrice) && !TextUtils.isEmpty(ratioComPrice)){
-            incomeBuild.append(getString(R.string.subsidiesTips, subsidiesPrice)+" + ");
+        if (!TextUtils.isEmpty(subsidiesPrice) && !TextUtils.isEmpty(ratioComPrice)) {
+            incomeBuild.append(getString(R.string.subsidiesTips, subsidiesPrice) + " + ");
             incomeBuild.append(getString(R.string.incomeTips, ratioComPrice));
             allIncomeTv.setVisibility(View.VISIBLE);
             allIncomeTv.setText(incomeBuild.toString());
-        }else{
+        } else {
             allIncomeTv.setVisibility(View.GONE);
         }
 
@@ -614,7 +614,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
      * @param commission  总佣金
      * @param couponPrice 优惠券金额
      */
-    private void setBuyText(String commission, String couponPrice,String subsidiesPrice) {
+    private void setBuyText(String commission, String couponPrice, String subsidiesPrice) {
         UserInfo user = UserLocalData.getUser();
         boolean isLogin = LoginUtil.checkIsLogin(this, false);
         boolean invalidMoney = MathUtils.checkoutInvalidMoney(couponPrice);// 是否有券
@@ -625,8 +625,8 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         } else {
             double allDiscountsMoney = MathUtils.allDiscountsMoney(user.getCalculationRate(), commission, couponPrice);
             String discountsMoneyStr = MathUtils.formatTo2Decimals(allDiscountsMoney + "");
-            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(user.getCalculationRate(),subsidiesPrice);
-            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr,getRatioSubside);
+            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(user.getCalculationRate(), subsidiesPrice);
+            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
             tv_buy.setText(getString(R.string.immediately_buy_discounts, allDiscountsMoneyStr));
         }
     }
@@ -916,8 +916,8 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     public void setModuleDescUrl(ShopGoodInfo data, String moduleDescUrl) {
         mGoodsInfo.moduleDescUrl = moduleDescUrl;
         if (mDetailImgFragment != null) {
-            GoodsImgDetailBean goodsImgDetailBean = mDetailImgFragment.setModuleDescUrlData(data.getPicUrls(), mGoodsInfo,data.getAnalysisFlag());
-            if (goodsImgDetailBean!=null){
+            GoodsImgDetailBean goodsImgDetailBean = mDetailImgFragment.setModuleDescUrlData(data.getPicUrls(), mGoodsInfo, data.getAnalysisFlag());
+            if (goodsImgDetailBean != null) {
                 mGoodsInfo.setPicUrls(goodsImgDetailBean);
             }
         }
@@ -998,11 +998,12 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                         return;
                     }
                     if (!TextUtils.isEmpty(mGoodsInfo.material) || "11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) { // 物料商品跳转
-                        if("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())){
+                        if ("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) {
                             mGoodsInfo.material = mGoodsInfo.getComeFrom();
                         }
                         mPresenter.materialLinkList(GoodsDetailActivity.this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
                     } else {
+//                        TaobaoUtil.showByItemId(GoodsDetailActivity.this,mGoodsInfo.getItemSourceId());
                         GoodsUtil.getCouponInfo(GoodsDetailActivity.this, mGoodsInfo);
                     }
                 }
@@ -1136,7 +1137,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 !LoginUtil.checkIsLogin(this, false) ||
                 TextUtils.isEmpty(mGoodsInfo.getTitle()) ||
                 TaobaoUtil.isAuth()
-               ) {
+        ) {
             return;
         }
         GoodsUtil.getGetTkLObservable(this, mGoodsInfo)

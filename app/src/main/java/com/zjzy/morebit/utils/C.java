@@ -6,10 +6,8 @@ package com.zjzy.morebit.utils;
 public class C {
 
     // api
-//    public static final String BASE_YUMIN = "https://api.gzmiyuan.com";
-    public static final String BASE_MOREBIT = "http://api.markermall.com";
-    // pp
-//    public static final String BASE_YUMIN = "http://pp.gzmiyuan.com";
+;
+    public static final String BASE_MOREBIT = "https://api.morebit.com.cn";
 
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;
@@ -66,6 +64,7 @@ public class C {
         public static final int ADD_TYPE = 0;
         public static final int UPDATE_TYPE = 1;
     }
+}
 
     /**
      * 订单状态

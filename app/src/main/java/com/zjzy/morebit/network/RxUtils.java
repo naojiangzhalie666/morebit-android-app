@@ -11,7 +11,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by YangBoTian on 2018/6/7 14:39
+ * Created by liuhaiping on 2019/12/7 14:39
  */
 
 public class RxUtils {

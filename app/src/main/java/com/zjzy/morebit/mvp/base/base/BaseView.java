@@ -1,8 +1,8 @@
 package com.zjzy.morebit.mvp.base.base;
 
 /**
- * Created by fengrs
- * Data: 2018/8/4.
+ * Created by liuhaiping
+ * Data: 2019/12/4.
  */
 public interface BaseView {
 }

@@ -2,11 +2,13 @@ package com.zjzy.morebit.pojo;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.io.Serializable;
+
 /**
  * Created by YangBoTian on 2019/7/12.
  */
 
-public class HomeRecommendGoods implements MultiItemEntity {
+public class HomeRecommendGoods implements MultiItemEntity, Serializable {
     public static final int TYPE_AD = 1;
     public static final int TYPE_GOODS= 2;
     private ShopGoodInfo shopGoodInfo;

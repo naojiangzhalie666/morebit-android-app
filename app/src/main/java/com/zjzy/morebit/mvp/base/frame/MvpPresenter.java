@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference;
 
 
 /**
- * Created by fengrs
+ * Created by liuhaiping
  * Data: 2018/8/4.
  */
 public class MvpPresenter <M extends MvpModel, V extends BaseView> {

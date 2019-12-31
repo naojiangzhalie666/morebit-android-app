@@ -30,7 +30,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 /**
- * Created by YangBoTian on 2018/6/7 11:35
+ * Created by liuhaiping on 2019/12/7 11:35
  */
 
 public class CommonParamsInterceptor implements Interceptor {

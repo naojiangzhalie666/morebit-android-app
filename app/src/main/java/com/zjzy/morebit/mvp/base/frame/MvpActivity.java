@@ -8,8 +8,8 @@ import com.zjzy.morebit.mvp.base.base.BaseView;
 
 
 /**
- * Created by fengrs
- * Data: 2018/8/4.
+ * Created by liuhaiping
+ * Data: 2019/12/4.
  */
 public abstract class MvpActivity<P extends MvpPresenter> extends BaseActivity implements MvpView {
     public P mPresenter;

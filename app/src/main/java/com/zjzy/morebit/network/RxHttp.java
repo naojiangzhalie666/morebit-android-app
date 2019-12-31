@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
- * Created by YangBoTian on 2018/6/6 20:54
+ * Created by liuhaiping on 2019/12/6 20:54
  */
 
 public class RxHttp {

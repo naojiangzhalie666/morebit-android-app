@@ -14,7 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 
 
 /**
- * Created by fengrs
+ * Created by liuhaiping
  * Data: 2018/8/4.
  */
 public abstract class MvpFragment<P extends MvpPresenter> extends BaseMainFragmeng implements MvpView {

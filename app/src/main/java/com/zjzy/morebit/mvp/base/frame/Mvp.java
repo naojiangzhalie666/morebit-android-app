@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by fengrs
- * Data: 2018/8/4.
+ * Created by liuhaiping
+ * Data: 2019/8/4.
  * <p>
  * 相同类型的实例只维护一个，M 和 P的实例第一次创建后会一直复用，V 的实例会更新到最近使用的实例
  */

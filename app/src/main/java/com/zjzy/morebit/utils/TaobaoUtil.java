@@ -13,6 +13,9 @@ import com.ali.auth.third.core.model.Session;
 import com.alibaba.baichuan.android.trade.AlibcTrade;
 import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
 import com.alibaba.baichuan.android.trade.model.OpenType;
+import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
+import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
+import com.alibaba.baichuan.trade.biz.AlibcConstants;
 import com.alibaba.baichuan.trade.biz.core.taoke.AlibcTaokeParams;
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
@@ -32,6 +35,7 @@ import com.zjzy.morebit.pojo.request.RequestBaseBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.fire.BuglyUtils;
 
+import java.sql.ClientInfoStatus;
 import java.util.HashMap;
 
 /**
@@ -71,7 +75,10 @@ public class TaobaoUtil {
                 //阿里百川4.0升级修改---开始
                 AlibcShowParams alibcShowParams = new AlibcShowParams();
                 alibcShowParams.setOpenType(OpenType.Native);
+                alibcShowParams.setClientType("taobao");
+                alibcShowParams.setBackUrl("alisdk://");
                 AlibcTaokeParams taokeParams = new AlibcTaokeParams("", "", "");
+
                 //taokeParams.setPid("mm_112883640_11584347_72287650277");
                 //taokeParams.setAdzoneid("72287650277");
                 //adzoneid是需要taokeAppkey参数才可以转链成功&店铺页面需要卖家id（sellerId），具体设置方式如下：
@@ -92,6 +99,26 @@ public class TaobaoUtil {
             e.printStackTrace();
             ShowWebActivity.start(activity, url, "粉丝福利购");
         }
+    }
+
+    public static void showByItemId(Activity activity,String itemId){
+        AlibcBasePage page = new AlibcDetailPage(itemId);
+
+        AlibcShowParams alibcShowParams = new AlibcShowParams();
+        alibcShowParams.setOpenType(OpenType.Native);
+        alibcShowParams.setClientType("taobao");
+        alibcShowParams.setBackUrl("alisdk://");
+        AlibcTaokeParams taokeParams = new AlibcTaokeParams("", "", "");
+        taokeParams.setPid("mm_16333633_323700308_99561650135");
+        taokeParams.setAdzoneid("99561650135");
+        HashMap exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+        exParams.put(AlibcConstants.TAOKE_APPKEY, "25606252");
+        exParams.put("alibaba", "阿里巴巴");//自定义参数部分，可任意增删改
+        AlibcTrade.openByBizCode(activity, page, null, new WebViewClient(),
+                new WebChromeClient(), "detail", alibcShowParams, taokeParams,
+                exParams, new DemoTradeCallback());
+        BuglyUtils.setUserSceneTag(activity, C.SceneTag.goTaobaoTag);
     }
 
     public static void authTaobao(final Activity activity, final String client_id) {

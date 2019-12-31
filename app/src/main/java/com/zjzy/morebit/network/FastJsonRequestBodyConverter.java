@@ -9,7 +9,7 @@ import okhttp3.RequestBody;
 import retrofit2.Converter;
 
 /**
- * Created by YangBoTian on 2018/6/6 21:01
+ * Created by liuhaiping on 2019/12/6 21:01
  */
 
 final class FastJsonRequestBodyConverter<T> implements Converter<T, RequestBody> {

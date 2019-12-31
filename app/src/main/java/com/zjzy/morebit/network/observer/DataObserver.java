@@ -18,7 +18,7 @@ import java.util.List;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by YangBoTian on 2018/7/4.
+ * Created by liuhaiping on 2019/12/4.
  */
 
 public abstract class DataObserver<T> extends BaseDataObserver<T> {

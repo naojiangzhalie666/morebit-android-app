@@ -9,7 +9,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 /**
- * Created by YangBoTian on 2018/6/6 21:00
+ * Created by liuhaiping on 2019/12/6 21:00
  */
 
 public class FastJsonConverterFactory extends Converter.Factory {

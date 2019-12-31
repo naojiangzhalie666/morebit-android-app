@@ -22,7 +22,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
 /**
- * Created by YangBoTian on 2018/9/25.
+ * Created by liuhaiping on 2019/12/25.
  */
 
 public class CommonEmpty {

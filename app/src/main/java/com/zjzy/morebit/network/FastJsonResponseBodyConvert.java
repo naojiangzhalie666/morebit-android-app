@@ -13,7 +13,7 @@ import okio.Okio;
 import retrofit2.Converter;
 
 /**
- * Created by YangBoTian on 2018/6/6 21:01
+ * Created by liuhaiping on 2019/12/6 21:01
  */
 
 final class FastJsonResponseBodyConvert<T> implements Converter<ResponseBody, T> {

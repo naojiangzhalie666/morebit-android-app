@@ -17,7 +17,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 
 /**
- * Created by YangBoTian on 2018/6/6 20:54
+ * Created by liuhaiping on 2019/12/6 20:54
  */
 
 public class RxWXHttp {

@@ -278,60 +278,11 @@ public class NumberSubFragment extends BaseFragment {
         }
     }
     protected void initData() {
-//        LoginUtil.getUserInfo((RxAppCompatActivity) getActivity(), false, new MyAction.OnResultFinally<UserInfo>() {
-//            /**
-//             * 结束
-//             */
-//            @Override
-//            public void onFinally() {
-//                if (mReUseListView.getSwipeList() != null) {
-//                    mReUseListView.getSwipeList().setRefreshing(false);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void invoke(UserInfo arg) {
-//                page = 1;
-//                mReUseListView.getSwipeList().setRefreshing(true);
-//                updataUser();
-//
-//            }
-//
-//            @Override
-//            public void onError() {
-//            }
-//        });
         updataUser();
         getData();
     }
 
     private void refreshData() {
-//        LoginUtil.getUserInfo((RxAppCompatActivity) getActivity(), false, new MyAction.OnResultFinally<UserInfo>() {
-//            /**
-//             * 结束
-//             */
-//            @Override
-//            public void onFinally() {
-//                if (mReUseListView.getSwipeList() != null) {
-//                    mReUseListView.getSwipeList().setRefreshing(false);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void invoke(UserInfo arg) {
-//                page = 1;
-////                mReUseListView.getListView().setNoMore(false);
-//                mReUseListView.getSwipeList().setRefreshing(true);
-//                updataUser();
-//
-//            }
-//
-//            @Override
-//            public void onError() {
-//            }
-//        });
         updataUser();
         getData();
     }

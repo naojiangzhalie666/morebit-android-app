@@ -9,7 +9,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by YangBoTian on 2018/7/4.
+ * Created by liuhaiping on 2019/12/4.
  */
 
 public abstract class BaseDataObserver<T> implements Observer<BaseResponse<T>>, IDataSubscriber<T> {

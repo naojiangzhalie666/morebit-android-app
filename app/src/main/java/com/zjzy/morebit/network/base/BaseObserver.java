@@ -10,7 +10,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by YangBoTian on 2018/7/3.
+ * Created by liuhaiping on 2019/12/3.
  */
 
 public abstract class BaseObserver<T> implements Observer<T>, ISubscriber<T> {

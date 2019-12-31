@@ -22,7 +22,7 @@ import java.text.ParseException;
 import retrofit2.HttpException;
 
 /**
- * Created by YangBoTian on 2018/7/3.
+ * Created by liuhaiping on 2019/12/3.
  * 异常类型
  */
 
