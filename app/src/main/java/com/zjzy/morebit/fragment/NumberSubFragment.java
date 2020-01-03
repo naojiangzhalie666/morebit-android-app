@@ -325,7 +325,7 @@ public class NumberSubFragment extends BaseFragment {
         gradeHint1.setText("团队奖不停");
         gradeHint1.setText("大咖辅导");
         gradeHint1.setText("专属后台运营");
-        gradeHint1.setText("靓号邀请码");
+        gradeHint1.setText("六位邀请码");
     }
 
 

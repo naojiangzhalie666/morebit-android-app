@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_F8F9FB"
-    android:orientation="vertical">
-
+    >
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:background="@drawable/bg_earning_header"/>-->
     <com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout
         android:id="@+id/swipeList"
         android:layout_width="match_parent"
         app:is_auto_refresh="false"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <ScrollView
             android:layout_width="match_parent"
@@ -73,7 +77,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
                                     android:text="@string/balance"
-                                    android:textColor="@color/color_333333"
+                                    android:textColor="@color/color_FFFFFF"
                                     android:textSize="@dimen/sp_13" />
 
                                 <TextView
@@ -105,15 +109,16 @@
                                       android:layout_marginTop="12dp"
                                       android:gravity="center">
                                       <ImageView
-                                          android:layout_width="wrap_content"
-                                          android:layout_height="wrap_content"
-                                          android:src="@drawable/icon_income_notice"/>
+                                          android:layout_width="20dp"
+                                          android:layout_height="20dp"
+                                          android:src="@drawable/icon_income_notice"
+                                          android:scaleType="fitCenter"/>
                                       <TextView
                                           android:id="@+id/withDrawTimeTv"
                                           android:layout_width="wrap_content"
                                           android:layout_height="wrap_content"
                                           android:text=""
-                                          android:textColor="@color/color_333333"
+                                          android:textColor="@color/color_FFFFFF"
                                           android:textSize="@dimen/sp_12"
                                           android:layout_marginLeft="5dp"
                                           />
@@ -128,10 +133,10 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="29dp"
-                                android:background="@drawable/bg_333333_corners_30dp"
+                                android:background="@drawable/bg_ffffff_corners_30dp"
                                 android:gravity="center"
                                 android:text="@string/withdraw"
-                                android:textColor="@color/white"
+                                android:textColor="#FC6428"
                                 android:textSize="@dimen/sp_14" />
                         </RelativeLayout>
 
@@ -153,11 +158,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_height="40dp"
-                                app:tl_indicator_width="14dp"
-                                app:tl_indicator_height="3dp"
+                                app:tl_indicator_width="20dp"
+                                app:tl_indicator_height="4dp"
                                 app:tl_indicator_margin_bottom="5dp"
                                 app:tl_indicator_corner_radius="2dp"
-                                app:tl_indicator_color="@color/color_FFD800"
+                                app:tl_indicator_color="@color/color_fffc672a"
                                 app:tl_textSelectColor="@color/color_333333"
                                 app:tl_textUnselectColor="@color/color_666666"
                                 app:tl_textsize="@dimen/sp_16"
@@ -184,10 +189,10 @@
                     android:layout_marginTop="4dp"
                     android:gravity="right"
                     android:text="@string/rule"
-                    android:textColor="@color/color_EEBD5A"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_13" />
             </LinearLayout>
         </ScrollView>
 
     </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
-</LinearLayout>
+</RelativeLayout>

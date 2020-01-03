@@ -49,9 +49,9 @@ public class NumberAdapter extends BaseMultiItemQuickAdapter<NumberGoods, Number
         holder.desc.setText(goods.getName());
         String price = goods.getRetailPrice();
         if (TextUtils.isEmpty(price)){
-            holder.price.setText(mContext.getResources().getString(R.string.number_goods_price,"0"));
+            holder.price.setText("0");
         }else{
-            holder.price.setText(mContext.getResources().getString(R.string.number_goods_price,price));
+            holder.price.setText(price);
         }
         String moreCoin = MathUtils.getMorebitCorn(price);
         holder.morebitCorn.setText(mContext.getResources().getString(R.string.number_give_more_corn,moreCoin));

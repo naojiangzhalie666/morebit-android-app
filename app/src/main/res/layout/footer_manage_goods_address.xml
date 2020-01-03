@@ -4,6 +4,7 @@
     android:id="@+id/rl_manage_add_address"
     android:layout_width="match_parent"
     android:layout_height="45dp"
+    android:layout_marginTop="60dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:background="@drawable/bg_manage_address_btn">

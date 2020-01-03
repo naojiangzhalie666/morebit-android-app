@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -424,18 +425,12 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
             public void onClick(int type) {
                 //vip ==1
                 if (type == 1){
-                    Long coin = UserLocalData.getUser().getMoreCoin();
-                    if (coin == null || (coin != null && coin < 3600)){
-                        ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"多豆不足20000，请积累多豆再试哦");
-                        return;
-                    }
+//                    Long coin = UserLocalData.getUser().getMoreCoin();
+
                     updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.vipMember));
                 }else if (type ==2){
-                    Long coin = UserLocalData.getUser().getMoreCoin();
-                    if (coin == null || (coin != null && coin < 20000)){
-                        ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"多豆不足20000，请积累多豆再试哦");
-                        return;
-                    }
+//                    Long coin = UserLocalData.getUser().getMoreCoin();
+
                     updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.operator));
                 }
             }
@@ -454,10 +449,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
             @Override
             public void onClick(){
                 Long coin = UserLocalData.getUser().getMoreCoin();
-                if (coin == null || (coin != null && coin < 20000)){
-                    ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"多豆不足20000，请积累多豆再试哦");
-                    return;
-                }
+
                 updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.operator));
             }
 
@@ -551,7 +543,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
             }
         }
         double price = mGoodsInfo.getRetailPrice();
-        goodsPrice.setText(getResources().getString(R.string.number_goods_price,String.valueOf(price)));
+        goodsPrice.setText(String.valueOf(price));
         int moreCorn = (int)price*10;
         morebitCorn.setText(getResources().getString(R.string.number_give_more_corn_1,String.valueOf(moreCorn)));
         srl_view.setRefreshing(false);
@@ -621,8 +613,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
         txtGoodsName.setText(mGoodsInfo.getName());
         txtGoodsRule.setText(mGoodsInfo.getUnit());
-        selectedGoodsPrice.setText(getResources().getString(R.string.number_goods_price,
-                String.valueOf(mGoodsInfo.getRetailPrice())));
+        selectedGoodsPrice.setText(String.valueOf(mGoodsInfo.getRetailPrice()));
 
         LoadImgUtils.setImg(NumberGoodsDetailsActivity.this, goodsPicView, mGoodsInfo.getPicUrl());
 
@@ -687,6 +678,12 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                     }
                 })
                 .subscribe(new DataObserver<UpdateInfoBean>() {
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+
+                        showError(errCode,errorMsg);
+                    }
                     @Override
                     protected void onDataListEmpty() {
 
@@ -696,6 +693,17 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                         onGradeSuccess(data);
                     }
                 });
+    }
+
+    public void showError(String errorNo,String msg) {
+        MyLog.i("test", "onFailure: " + this);
+        if ("B1100007".equals(errorNo)
+                ||"B1100008".equals(errorNo)
+                ||"B1100009".equals(errorNo)
+                || "B1100010".equals(errorNo)) {
+            ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,msg);
+        }
+
     }
 
     public void onGradeSuccess(UpdateInfoBean info) {

@@ -3,19 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="10dp">
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp">
+        android:paddingLeft="5dp"
+        >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/btn_title_return_icon"
+            android:scaleType="fitCenter"
+            android:src="@drawable/zuojiantou_white"
             android:id="@+id/back"/>
 
         <TextView
@@ -23,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/earnings"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/color_FFFFFF"
             android:textSize="@dimen/sp_18" />
 
         <!--<TextView-->

@@ -134,8 +134,8 @@ public class TaobaoUtil {
 //                Intent intent = new Intent(activity, WebViewActivity.class);
 //                intent.putExtra("url", "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://127.0.0.1:12345/error&state=1212&view=wap");
 //                activity.startActivity(intent);
-//                ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://127.0.0.1:12345/error&state=1212&view=wap");
-                ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://tkzs.jrsqrj.com/api/oauth&state=1212&view=wap");
+                ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://127.0.0.1:12345/error&state=1212&view=wap");
+//                ChannelWebActivity.start(activity, "https://oauth.taobao.com/authorize?response_type=code&client_id=" + client_id + "&redirect_uri=http://tkzs.jrsqrj.com/api/oauth&state=1212&view=wap");
 //
             }
 

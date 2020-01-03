@@ -6,18 +6,12 @@ package com.zjzy.morebit.utils;
 public class C {
 
     // api
-;
+
     public static final String BASE_MOREBIT = "https://api.morebit.com.cn";
 
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;
 
-    // uat02
-//    public static final String BASE_YUMIN = "http://uat02.gzmiyuan.com:9006";
-    // dev
-//    public static final String BASE_YUMIN = "http://172.16.1.200";
-    // uat01
-//    public static final String BASE_YUMIN = "http://uat01.gzmiyuan.com:9005";
 
     public static class UrlV2 {
         //用户模块调用
@@ -64,7 +58,7 @@ public class C {
         public static final int ADD_TYPE = 0;
         public static final int UPDATE_TYPE = 1;
     }
-}
+
 
     /**
      * 订单状态

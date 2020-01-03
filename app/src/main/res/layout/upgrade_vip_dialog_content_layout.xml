@@ -57,8 +57,8 @@
                 android:id="@+id/update_vip_grade"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:background="@mipmap/grade_update_bg">

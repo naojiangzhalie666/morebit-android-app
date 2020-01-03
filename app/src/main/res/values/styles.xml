@@ -299,9 +299,9 @@
     </style>
 
     <style name="SwitchCompat">
-    <item name="colorControlActivated">#00d</item>
-    <item name="colorSwitchThumbNormal">#00d8a0</item>
-    <item name="android:colorForeground">#d2f</item>
+    <item name="colorControlActivated">#FFFF645B</item>
+    <item name="colorSwitchThumbNormal">@color/color_F3F3F3</item>
+    <item name="android:colorForeground">#D3D3D3</item>
     </style>
     <style name="AlibcLoginTheme" parent="android:Theme.NoTitleBar.Fullscreen">
 

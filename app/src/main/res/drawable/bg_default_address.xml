@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!-- rectangle表示为矩形 -->
-    <solid android:color="#1afd5e22" />
-    <corners android:radius="12dp" />
+    <solid android:color="@color/color_1AFD5E22" />
+    <corners android:radius="6dp" />
 </shape>

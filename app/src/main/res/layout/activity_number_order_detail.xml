@@ -160,17 +160,28 @@
                         android:text="商品标题"
                         android:layout_toRightOf="@id/img_goods"
                         android:layout_alignTop="@id/img_goods"/>
-                    <TextView
-                        android:id="@+id/gogds_price"
+                    <LinearLayout
+                        android:id="@+id/ll_goods_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/number_goods_price"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
                         android:layout_alignTop="@id/goods_title"
-                        android:textColor="@color/color_FD5212"
-                        android:textSize="@dimen/sp_16"
-                        />
+                        android:layout_marginRight="10dp">
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/money_red"/>
+                        <TextView
+                            android:id="@+id/gogds_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/number_goods_price"
+                            android:textColor="@color/color_FD5212"
+                            android:textSize="@dimen/sp_16"
+                            />
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/goods_count"
                         android:layout_width="wrap_content"
@@ -180,7 +191,7 @@
                         android:layout_marginRight="10dp"
                         android:text="@string/number_goods_count"
                         android:textSize="@dimen/sp_12"
-                        android:layout_below="@id/gogds_price"/>
+                        android:layout_below="@id/ll_goods_price"/>
                     <TextView
                         android:id="@+id/goods_yugushouyi"
                         android:layout_width="wrap_content"
@@ -212,15 +223,26 @@
                     android:textColor="@color/color_666666"
                     android:text="商品总价"
                     android:textSize="@dimen/sp_15"/>
-                    <TextView
-                        android:id="@+id/goods_total_price"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/color_666666"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
-                        android:layout_centerVertical="true"
-                        android:text="@string/number_goods_price"/>
+                        android:layout_centerVertical="true">
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:scaleType="fitCenter"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/money_black"/>
+                        <TextView
+                            android:id="@+id/goods_total_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_666666"
+                            android:text="@string/number_goods_price"/>
+                    </LinearLayout>
+
                 </RelativeLayout>
                 <!--运费-->
                 <RelativeLayout
@@ -266,17 +288,27 @@
                             android:text="实付款"
                             android:textStyle="bold"
                             android:textSize="@dimen/sp_18"/>
-                        <TextView
-                            android:id="@+id/goods_real_price"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/color_FD5212"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="10dp"
-                            android:layout_centerVertical="true"
-                            android:text="@string/number_goods_price"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/sp_18"/>
+                            android:layout_centerVertical="true">
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:scaleType="fitCenter"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/money_red"/>
+                            <TextView
+                                android:id="@+id/goods_real_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/color_FD5212"
+                                android:text="@string/number_goods_price"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/sp_18"/>
+                        </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -325,10 +357,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:paddingRight="8dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
                 android:layout_alignTop="@id/order_info_ordersn"
                 android:layout_toRightOf="@id/order_info_ordersn"
                 android:text="复制"
@@ -390,10 +420,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
                     android:layout_alignTop="@id/order_success_info_ordersn"
                     android:layout_toRightOf="@id/order_success_info_ordersn"
                     android:text="复制"

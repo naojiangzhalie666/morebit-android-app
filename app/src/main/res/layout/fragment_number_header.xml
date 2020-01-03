@@ -84,7 +84,7 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/horzProgressView"
                     android:layout_width="168dp"
-                    android:layout_height="7dp"
+                    android:layout_height="2dp"
                     android:layout_marginTop="10dp"
                     app:liys_progress_line_max="100"
                     app:liys_progress_line_progress="0"

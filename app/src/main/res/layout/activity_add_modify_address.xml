@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:textSize="@dimen/sp_12"
-            android:gravity="center"
+            android:gravity="right|center_vertical"
             android:text="保存"
             android:textColor="@color/color_FD4804"
             android:layout_alignParentRight="true" />
@@ -49,12 +49,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <EditText
                 android:id="@+id/edt_address_user_name"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:paddingLeft="10dp"
                 android:background="@color/white"
                 android:textSize="15sp"
@@ -102,7 +103,6 @@
             android:id="@+id/rl_add_address_region"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:background="@color/color_FFFFFF"
             >
@@ -180,7 +180,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:text="设为默认地址"
-                android:theme="@style/AppTheme"
+                android:theme="@style/SwitchCompat"
                 android:textSize="16sp"
                 app:switchPadding="50dp"/>
 
