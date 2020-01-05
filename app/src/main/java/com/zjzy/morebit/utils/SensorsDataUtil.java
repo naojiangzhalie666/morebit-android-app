@@ -251,7 +251,7 @@ public class SensorsDataUtil {
 
 
     /**
-     * 首页蜜粉推荐 浏览商品
+     * 首页多点粉推荐 浏览商品
      */
     public void browseProductTrack(String model, int position, String productId, String productName, String productPrice, String type, String classId, String url, String title){
         if (isPust()) {

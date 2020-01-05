@@ -72,7 +72,7 @@
                 tl:tl_indicator_style="BLOCK"
                 tl:tl_indicator_bounce_enable="true"
                 tl:tl_textUnselectColor="@color/color_666666"
-                tl:tl_textSelectColor="@color/color_333333"
+                tl:tl_textSelectColor="@color/color_FFFFFF"
                 tl:tl_textsize="14sp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"

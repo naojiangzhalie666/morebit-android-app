@@ -8,10 +8,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/color_333333"/>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="300dp"-->
+<!--                android:background="@color/color_333333"/>-->
 
 
             <com.zjzy.morebit.Module.common.View.ReUseNumberGoodsView
@@ -21,9 +21,8 @@
                 android:focusableInTouchMode="true"
                 android:focusable="true"
                 android:scrollbars="none"
-                android:background="@color/color_EDEDED"
                 />
         </RelativeLayout>
-
+    
 
 </RelativeLayout>

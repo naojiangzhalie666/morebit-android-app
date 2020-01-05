@@ -104,6 +104,7 @@
                 android:paddingRight="20dp"
                 android:textSize="@dimen/sp_14"
                 android:text="提现"
+                android:textColor="@color/color_B27D17"
                 android:background="@drawable/bg_my_tixian"
                 android:layout_marginRight="10dp"
                 android:layout_gravity="center_vertical"

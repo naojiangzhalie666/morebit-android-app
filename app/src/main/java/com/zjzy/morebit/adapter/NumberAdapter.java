@@ -14,8 +14,11 @@ import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.StringUtils;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by YangBoTian on 2018/8/22.
@@ -48,9 +51,15 @@ public class NumberAdapter extends BaseMultiItemQuickAdapter<NumberGoods, Number
         }
         holder.desc.setText(goods.getName());
         String price = goods.getRetailPrice();
+
+
+        double  pricedouble  = Double.parseDouble(price);
+
+
         if (TextUtils.isEmpty(price)){
             holder.price.setText("0");
         }else{
+//            holder.price.setText(String.valueOf(((Number)pricedouble).longValue()));
             holder.price.setText(price);
         }
         String moreCoin = MathUtils.getMorebitCorn(price);
@@ -89,7 +98,14 @@ public class NumberAdapter extends BaseMultiItemQuickAdapter<NumberGoods, Number
 
 
 
-
+    public boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if (!isNum.matches()) {
+            return false;
+        }
+        return true;
+    }
 
 
 }

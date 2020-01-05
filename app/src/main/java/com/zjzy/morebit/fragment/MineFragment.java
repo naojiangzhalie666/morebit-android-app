@@ -135,10 +135,10 @@ public class MineFragment extends BaseMainFragmeng {
     AspectRatioView mAsBanner;
     @BindView(R.id.banner)
     Banner mBanner;
-    @BindView(R.id.ll_category)
-    LinearLayout mLLFindSplendid;
-    @BindView(R.id.mRv_gView)
-    RecyclerView mRv_gView;
+//    @BindView(R.id.ll_category)
+//    LinearLayout mLLFindSplendid;
+//    @BindView(R.id.mRv_gView)
+//    RecyclerView mRv_gView;
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerview;
     @BindView(R.id.ll_my_tootls)
@@ -160,8 +160,8 @@ public class MineFragment extends BaseMainFragmeng {
 //
 //    @BindView(R.id.ll_grade_txt)
 //    LinearLayout llGradeTxt;
-    @BindView(R.id.recyclerView_recommend)
-    RecyclerView recyclerView_recommend;
+//    @BindView(R.id.recyclerView_recommend)
+//    RecyclerView recyclerView_recommend;
     @BindView(R.id.fl_share_expert)
     FrameLayout fl_share_expert;
     @BindView(R.id.iv_bg_expert)
@@ -285,7 +285,7 @@ LinearLayout my_publish;
                 refreshData();
             }
         });
-        mLLFindSplendid.setVisibility(View.GONE);
+//        mLLFindSplendid.setVisibility(View.GONE);
         mAdapter = new ToolsAdapter(getActivity());
         mRecyclerview.setAdapter(mAdapter);
 
@@ -386,7 +386,7 @@ LinearLayout my_publish;
 //        getBannerData(C.UIShowType.Welfare);   //福利津贴
         getBannerData(C.UIShowType.myTool);   //福利津贴
         getBannerData(C.UIShowType.PERSONAL_FUNCTION);   //功能区
-        getFindSplendidList();
+//        getFindSplendidList();
         getDayIncome();
         getMonthIncome();
         if (!C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
@@ -563,7 +563,7 @@ LinearLayout my_publish;
                                 ll_my_tootls.setVisibility(View.GONE);
                                 break;
                             case C.UIShowType.PERSONAL_FUNCTION:
-                                recyclerView_recommend.setVisibility(View.GONE);
+//                                recyclerView_recommend.setVisibility(View.GONE);
                                 break;
 
                         }
@@ -660,31 +660,31 @@ LinearLayout my_publish;
      * 获取发现精彩列表
      */
 
-    private void getFindSplendidList() {
-        LoginUtil.getSystemStaticPage((RxAppCompatActivity) getActivity(), C.ProtocolType.wonderful)
-                .subscribe(new DataObserver<List<ProtocolRuleBean>>(false) {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        mLLFindSplendid.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    protected void onDataListEmpty() {
-                        mLLFindSplendid.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    protected void onSuccess(List<ProtocolRuleBean> data) {
-                        if (data.size() == 0) {
-                            mLLFindSplendid.setVisibility(View.GONE);
-                        } else {
-                            mLLFindSplendid.setVisibility(View.VISIBLE);
-                            setFindSplendid(data);
-                        }
-
-                    }
-                });
-    }
+//    private void getFindSplendidList() {
+//        LoginUtil.getSystemStaticPage((RxAppCompatActivity) getActivity(), C.ProtocolType.wonderful)
+//                .subscribe(new DataObserver<List<ProtocolRuleBean>>(false) {
+//                    @Override
+//                    protected void onError(String errorMsg, String errCode) {
+//                        mLLFindSplendid.setVisibility(View.GONE);
+//                    }
+//
+//                    @Override
+//                    protected void onDataListEmpty() {
+//                        mLLFindSplendid.setVisibility(View.GONE);
+//                    }
+//
+//                    @Override
+//                    protected void onSuccess(List<ProtocolRuleBean> data) {
+//                        if (data.size() == 0) {
+//                            mLLFindSplendid.setVisibility(View.GONE);
+//                        } else {
+//                            mLLFindSplendid.setVisibility(View.VISIBLE);
+//                            setFindSplendid(data);
+//                        }
+//
+//                    }
+//                });
+//    }
 
     /**
      * 设置轮播图
@@ -907,7 +907,7 @@ LinearLayout my_publish;
         //分类数据
         if (mAdapterSplendid == null) {
             mAdapterSplendid = new ToolsSplendidAdapter(getActivity());
-            mRv_gView.setAdapter(mAdapterSplendid);
+//            mRv_gView.setAdapter(mAdapterSplendid);
         }
         mAdapterSplendid.replace(datas);
         mAdapterSplendid.notifyDataSetChanged();

@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/color_fff8f8f8"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -27,6 +28,7 @@
                 android:orientation="vertical"
                 android:paddingBottom="10dp">
 
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -45,20 +47,25 @@
                     <include layout="@layout/mine_earnings" />
                     </LinearLayout>
                 </RelativeLayout>
+
                 <!-- 分类-->
+
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:layout_marginLeft="9dp"
-                    android:layout_marginRight="9dp"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="0dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFFF"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp"
                     app:cardUseCompatPadding="false">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
                         android:orientation="vertical">
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -173,7 +180,7 @@
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:src="@mipmap/icon_wodeshouyi" />
+                                    android:src="@mipmap/icon_publish" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -195,7 +202,7 @@
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:src="@mipmap/icon_dingdanmingxi" />
+                                    android:src="@mipmap/icon_order_search" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -217,7 +224,7 @@
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:src="@mipmap/icon_wodetuandui" />
+                                    android:src="@mipmap/icon_footmark" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -253,16 +260,16 @@
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView_recommend"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:scrollbars="none"
-                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                    app:spanCount="2"/>
+<!--                <android.support.v7.widget.RecyclerView-->
+<!--                    android:id="@+id/recyclerView_recommend"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:nestedScrollingEnabled="false"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:layout_marginRight="5dp"-->
+<!--                    android:scrollbars="none"-->
+<!--                    app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+<!--                    app:spanCount="2"/>-->
                 <com.zjzy.morebit.view.AspectRatioView
                     android:id="@+id/as_banner"
                     android:layout_width="match_parent"
@@ -291,8 +298,8 @@
                 <!-- 其他服务-->
                 <include layout="@layout/view_layout_my_tools" />
 
-                <!--发现精彩-->
-                <include layout="@layout/item_gridview_category" />
+<!--                &lt;!&ndash;发现精彩&ndash;&gt;-->
+<!--                <include layout="@layout/item_gridview_category" />-->
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>

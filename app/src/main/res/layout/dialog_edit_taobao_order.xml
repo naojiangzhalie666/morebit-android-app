@@ -91,7 +91,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="提交"
-                android:textColor="@color/color_FCDF0A"/>
+                android:textColor="@color/color_FFD800"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

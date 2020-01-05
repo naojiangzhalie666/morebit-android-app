@@ -87,7 +87,7 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
     TextView addressDetailView;
 
     @BindView(R.id.ll_address_manage)
-    LinearLayout llAddressManage;
+    RelativeLayout llAddressManage;
     /**
      * 商品图片
      */

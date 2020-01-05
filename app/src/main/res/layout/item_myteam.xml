@@ -137,7 +137,7 @@
         android:gravity="center"
         android:text="填写备注"
         android:id="@+id/input_remark"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_FFFFFF"
         android:textSize="@dimen/sp_11" />
 </RelativeLayout></android.support.v7.widget.CardView><!--<View--><!--android:id="@+id/bottomLine"--><!--android:layout_width="match_parent"--><!--android:layout_height="5dp"--><!--android:layout_below="@+id/item_ly"--><!--android:background="@color/color_F5F5F5"/>-->
 

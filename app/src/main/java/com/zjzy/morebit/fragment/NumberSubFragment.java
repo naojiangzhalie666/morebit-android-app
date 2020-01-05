@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -111,6 +112,7 @@ public class NumberSubFragment extends BaseFragment {
     TextView userName;
 
     NumberAdapter mNumberGoodsAdapter;
+    LRecyclerViewAdapter lRecyclerViewAdapter;
     List<NumberGoods> numberGoodsList = new ArrayList<NumberGoods>();
     UserInfo mUserInfo;
     private int page = 1;
@@ -295,11 +297,11 @@ public class NumberSubFragment extends BaseFragment {
     private void gradeForNumberView(){
 
         gradeHint1.setText("购物更省钱");
-        gradeHint1.setText("分享奖励高" );
-        gradeHint1.setText("可申请团队长");
-        gradeHint1.setText("大咖辅导");
-        gradeHint1.setText("数据化运营");
-        gradeHint1.setText("六位邀请码");
+        gradeHint2.setText("分享奖励高" );
+        gradeHint3.setText("可申请团队长");
+        gradeHint4.setText("大咖辅导");
+        gradeHint5.setText("数据化运营");
+        gradeHint6.setText("六位邀请码");
     }
 
     /**
@@ -308,11 +310,11 @@ public class NumberSubFragment extends BaseFragment {
     private void gradeForVipView(){
 
         gradeHint1.setText("购物更省钱");
-        gradeHint1.setText("分享奖励高" );
-        gradeHint1.setText("团队奖不停");
-        gradeHint1.setText("大咖辅导");
-        gradeHint1.setText("数据化运营");
-        gradeHint1.setText("六位邀请码");
+        gradeHint2.setText("分享奖励高" );
+        gradeHint3.setText("团队奖不停");
+        gradeHint4.setText("大咖辅导");
+        gradeHint5.setText("数据化运营");
+        gradeHint6.setText("六位邀请码");
     }
 
     /**
@@ -321,17 +323,18 @@ public class NumberSubFragment extends BaseFragment {
     private void gradeForLeaderView(){
 
         gradeHint1.setText("购物更省钱");
-        gradeHint1.setText("分享奖励高");
-        gradeHint1.setText("团队奖不停");
-        gradeHint1.setText("大咖辅导");
-        gradeHint1.setText("专属后台运营");
-        gradeHint1.setText("六位邀请码");
+        gradeHint2.setText("分享奖励高");
+        gradeHint3.setText("团队奖不停");
+        gradeHint4.setText("大咖辅导");
+        gradeHint5.setText("专属后台运营");
+        gradeHint6.setText("六位邀请码");
     }
 
 
 
 
     public void showSuccessful(NumberGoodsList datas) {
+
         mReUseListView.getSwipeList().setRefreshing(false);
         mNumberGoodsAdapter.setEnableLoadMore(true);
         List<NumberGoods> list = datas.getList();
@@ -409,6 +412,8 @@ public class NumberSubFragment extends BaseFragment {
             leader_icon.setVisibility(View.GONE);
             myGradedView.setText("VIP会员");
             numberGradeName.setText("团队长");
+            String coin1 = "多豆：" +info.getMoreCoin()+"/20000";
+            moreCoinBiaozhun.setText(coin1);
 
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
@@ -426,6 +431,8 @@ public class NumberSubFragment extends BaseFragment {
             }else{
                 mHorzProgressView.setCurrentNum(0);
             }
+            String coin1 = "多豆：" +info.getMoreCoin()+"/20000";
+            moreCoinBiaozhun.setText(coin1);
 
             leader_icon.setVisibility(View.GONE);
             myGradedView.setText("会员");

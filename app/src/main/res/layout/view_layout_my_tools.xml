@@ -4,7 +4,7 @@
               android:id="@+id/ll_my_tootls"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="12dp"
+              android:layout_marginTop="10dp"
               android:background="@drawable/mine_bg_gridview"
               android:orientation="vertical">
 
@@ -23,14 +23,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:descendantFocusability="blocksDescendants">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:background="#ffffff"
             android:nestedScrollingEnabled="false"
             android:paddingLeft="10dp"

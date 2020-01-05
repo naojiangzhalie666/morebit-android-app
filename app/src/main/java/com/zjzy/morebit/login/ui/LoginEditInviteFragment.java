@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -172,6 +173,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
             errorTv.setText("");
             errorTv.setVisibility(View.GONE);
             tv_next.setEnabled(false);
+            tv_next.setTextColor(Color.parseColor("#333333"));
             if (!mIsAnimInTop) {
                 mIsAnimInTop = true;
                 hideAnim(rl_invite);
@@ -207,6 +209,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                 }
             } else {
                 tv_next.setEnabled(false);
+                tv_next.setTextColor(Color.parseColor("#333333"));
                 if (!mIsAnimInTop) {
                     mIsAnimInTop = true;
                     hideAnim(rl_invite);
@@ -275,6 +278,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
     @Override
     public void loginError(String code) {
         tv_next.setEnabled(false);
+        tv_next.setTextColor(Color.parseColor("#333333"));
         if (!mIsAnimInTop) {
             hideAnim(rl_invite);
             TranslateTopAnim(tv_next);
@@ -313,7 +317,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         }
         this.mInviteUserInfoBean = data;
         tv_next.setEnabled(true);
-
+        tv_next.setTextColor(Color.parseColor("#FFFFFF"));
         if (!TextUtils.isEmpty(data.getUserhead())) {
             LoadImgUtils.setImgCircle(getActivity(), iv_invite_head, data.getUserhead());
         } else {

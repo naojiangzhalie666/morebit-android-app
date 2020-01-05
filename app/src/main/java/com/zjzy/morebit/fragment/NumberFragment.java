@@ -37,8 +37,8 @@ public class NumberFragment extends BaseMainFragmeng  {
 
     private View mView;
 
-    @BindView(R.id.status_bar)
-    View status_bar;
+//    @BindView(R.id.status_bar)
+//    View status_bar;
 
 
     @BindView(R.id.my_more_corn)
@@ -72,13 +72,13 @@ public class NumberFragment extends BaseMainFragmeng  {
         ViewPager viewPager = view.findViewById(R.id.viewPager);
 
         mFragments.add(NumberSubFragment.newInstance());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //处理全屏显示
-            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
-            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
-            status_bar.setLayoutParams(viewParams);
-            status_bar.setBackgroundResource(R.color.color_333333);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            //处理全屏显示
+//            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
+//            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
+//            status_bar.setLayoutParams(viewParams);
+//            status_bar.setBackgroundResource(R.color.color_333333);
+//        }
         viewPager.setAdapter(new NumbersGoodsAdapter(getChildFragmentManager()));
     }
 

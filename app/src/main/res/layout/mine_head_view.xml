@@ -4,7 +4,6 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
                 android:background="@color/color_333333"
                 android:paddingBottom="20dp">
 
@@ -23,7 +22,8 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="68dp">
+                android:layout_height="68dp"
+                android:layout_marginLeft="10dp">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/userIcon"
@@ -152,7 +152,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:textColor="@color/color_FFFFFF"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_12"
                             android:text="@string/number_invite_code" />
                         <TextView
                             android:id="@+id/copy_invitation_code"
@@ -163,6 +163,7 @@
                             android:background="@mipmap/bg_copy"
                             android:layout_toRightOf="@+id/invitation_code"
                             android:text="复制"
+                            android:textSize="@dimen/sp_12"
                             android:gravity="center"
                             android:textColor="@color/color_FFFFFF"
                             />

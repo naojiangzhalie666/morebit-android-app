@@ -2,80 +2,92 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fpi="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ad_root_content"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:clickable="true"
     >
     <RelativeLayout
         android:id="@+id/dailog_vip_grade_container"
-        android:layout_width="340dp"
-        android:layout_height="370dp">
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:background="@mipmap/bg_vip_upgrade">
+
         <ImageView
-            android:id="@+id/img_upgrade_bg"
-            android:layout_width="340dp"
-            android:layout_height="370dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/bg_vip_upgrade"
+            android:id="@+id/bg_img"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@mipmap/bg_leader_upgrade"
             android:scaleType="fitCenter"/>
         <LinearLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/img_upgrade_bg"
-            android:layout_alignBottom="@id/img_upgrade_bg"
-            android:layout_marginBottom="80dp"
-            android:layout_marginLeft="30dp"
+            android:layout_alignBottom="@id/bg_img"
+            android:layout_marginBottom="40dp"
             android:orientation="horizontal"
             >
 
             <LinearLayout
                 android:id="@+id/update_leader_grade"
-                android:layout_width="80dp"
+                android:layout_width="0dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="30dp"
                 android:layout_weight="1"
-                android:background="@mipmap/grade_update_bg"
+
                 android:gravity="center"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/grade_update_bg"
                     android:layout_gravity="center_horizontal"
-                    android:text="升级团队长"
-                    android:textStyle="bold"
-                    android:textSize="12dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="升级团队长"
+                        android:textStyle="bold"
+                        android:textSize="12dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="20000豆"
+                        android:textColor="@color/color_885A3D"
+                        android:textSize="12dp"/>
 
-                    android:text="20000豆"
-                    android:textColor="@color/color_885A3D"
-                    android:textSize="12dp"/>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/update_vip_grade"
-                android:layout_width="80dp"
+                android:layout_width="0dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:background="@mipmap/grade_update_bg">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                >
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/grade_update_bg"
                     android:layout_gravity="center_horizontal"
-                    android:text="升级VIP"
-                    android:textStyle="bold"
-                    android:textSize="12dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="(3600豆)"
-                    android:textColor="@color/color_885A3D"
-                    android:textSize="12dp"/>
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="升级VIP"
+                        android:textStyle="bold"
+                        android:textSize="12dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="(3600豆)"
+                        android:textColor="@color/color_885A3D"
+                        android:textSize="12dp"/>
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -83,7 +95,7 @@
 
 
     <RelativeLayout
-        android:layout_width="310dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/dailog_vip_grade_container">

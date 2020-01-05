@@ -3,6 +3,7 @@ package com.zjzy.morebit.Module.common.Dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -190,6 +191,7 @@ public class DownloadDialog extends Dialog {
                       btn_cancel.setBackgroundResource(R.drawable.submit_buttom_feed);
                       mBtnConfirm.setBackgroundResource(R.drawable.bg_solid_ececec_30dp);
                       btn_cancel.setText("完成");
+                      btn_cancel.setTextColor(Color.parseColor("#FFFFFF"));
                       mBtnConfirm.setVisibility(View.VISIBLE);
                       progress.setVisibility(View.GONE);
                   } else {
@@ -222,6 +224,7 @@ public class DownloadDialog extends Dialog {
                 if(mDownloadCount>0){
                     mBtnConfirm.setVisibility(View.VISIBLE);
                     mBtnConfirm.setBackgroundResource(R.drawable.submit_buttom_feed);
+                    mBtnConfirm.setTextColor(Color.parseColor("#FFFFFF"));
                 }
                 ll_download.setVisibility(View.GONE);
                 ll_download_failure.setVisibility(View.VISIBLE);

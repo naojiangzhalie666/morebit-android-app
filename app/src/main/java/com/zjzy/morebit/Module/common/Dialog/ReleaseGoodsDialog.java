@@ -2,6 +2,7 @@ package com.zjzy.morebit.Module.common.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -77,6 +78,7 @@ public class ReleaseGoodsDialog extends Dialog {
         if(mType==EDIT){
             btn_cancel.setBackgroundResource(R.drawable.bg_solid_ececec_30dp);
             mBtnConfirm.setBackgroundResource(R.drawable.submit_buttom_feed);
+            mBtnConfirm.setTextColor(Color.parseColor("#FFFFFF"));
         }
     }
 

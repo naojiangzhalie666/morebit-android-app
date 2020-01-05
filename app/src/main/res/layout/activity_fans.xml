@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/btn_title_return_icon" />
+            android:src="@drawable/btn_title_return_icon_white" />
 
 
         <com.flyco.tablayout.SlidingTabLayout
@@ -44,7 +44,7 @@
             tl:tl_indicator_margin_top="2dp"
             tl:tl_indicator_style="BLOCK"
             tl:tl_tab_padding="15dp"
-            tl:tl_textSelectColor="@color/color_333333"
+            tl:tl_textSelectColor="@color/color_FFFFFF"
             tl:tl_textUnselectColor="@color/color_666666"
             tl:tl_textsize="14sp" />
 
@@ -56,7 +56,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:src="@drawable/icon_college_search" />
+            android:src="@drawable/icon_college_search_white" />
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager

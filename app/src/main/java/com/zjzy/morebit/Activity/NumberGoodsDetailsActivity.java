@@ -545,7 +545,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         double price = mGoodsInfo.getRetailPrice();
         goodsPrice.setText(String.valueOf(price));
         int moreCorn = (int)price*10;
-        morebitCorn.setText(getResources().getString(R.string.number_give_more_corn_1,String.valueOf(moreCorn)));
+        morebitCorn.setText(getResources().getString(R.string.number_give_more_corn,String.valueOf(moreCorn)));
         srl_view.setRefreshing(false);
     }
 

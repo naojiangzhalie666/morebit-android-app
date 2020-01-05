@@ -107,7 +107,7 @@
         android:background="@drawable/submit_buttom_feed"
         android:gravity="center"
         android:text="@string/submit_text"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_FFFFFF"
         android:textSize="15sp" />
 </LinearLayout>
 

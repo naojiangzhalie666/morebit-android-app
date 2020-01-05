@@ -42,7 +42,7 @@
 
     <color name="color_666666">#666666</color>
     //主色调
-    <color name="color_FFED25">#EE403A</color>
+    <color name="color_FFED25">#FF645B</color>
     <color name="color_ffe800">#EE403A</color>
     <color name="color_ffd506">#FF645B</color>
     <color name="color_000000">#000000</color>
@@ -113,7 +113,7 @@
     <color name="color_D7B17F">#D7B17F</color>
     <color name="color_FF2B33">#FF2B33</color>
     //修改为优先主色
-    <color name="color_FFD800">#EE403A</color>
+    <color name="color_FFD800">#FF645B</color>
     <color name="color_FE3B64">#FE3B64</color>
     <color name="color_EB1719">#EB1719</color>
     <color name="color_A24DE3">#A24DE3</color>
@@ -244,5 +244,7 @@
     <color name="color_FF635D">#FF635D</color>
     <color name="color_1AFD5E22">#1AFD5E22</color>
     <color name="color_fffc672a">#fffc672a</color>
+    <color name="color_B27D17">#B27D17</color>
+    <color name="color_fff8f8f8">#fff8f8f8</color>
 
 </resources>

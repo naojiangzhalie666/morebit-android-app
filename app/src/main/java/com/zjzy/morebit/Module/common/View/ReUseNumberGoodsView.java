@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +20,8 @@ import android.widget.LinearLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
+
+import com.zjzy.morebit.Module.common.widget.NumberSwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.utils.HomeSpaceItemDecoration;
 import com.zjzy.morebit.utils.MyLog;
@@ -29,7 +31,7 @@ import com.zjzy.morebit.utils.MyLog;
  */
 
 public class ReUseNumberGoodsView extends LinearLayout {
-    private SwipeRefreshLayout refreshLayout;
+    private NumberSwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private BaseQuickAdapter mAdapter;
     private ImageView stick;
@@ -60,13 +62,15 @@ public class ReUseNumberGoodsView extends LinearLayout {
 
     private void init(Context context) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.common_recycler_view, null);
+        View view = inflater.inflate(R.layout.number_recycler_view, null);
         addView(view, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         initView(context);
     }
 
     private void initView(Context context) {
         refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
         recyclerView = findViewById(R.id.recyclerView);
         stick = findViewById(R.id.stick);
@@ -190,7 +194,7 @@ public class ReUseNumberGoodsView extends LinearLayout {
         void onRefresh(@NonNull RefreshLayout refreshLayout);
     }
 
-    public SwipeRefreshLayout getSwipeList(){
+    public NumberSwipeRefreshLayout getSwipeList(){
         return refreshLayout;
     }
     /**

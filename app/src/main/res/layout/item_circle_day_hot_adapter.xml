@@ -57,7 +57,7 @@
                     android:paddingBottom="2dp"
                     android:textSize="@dimen/sp_11"
                     android:text="1.5w"
-                    android:textColor="@color/color_333333"/>
+                    android:textColor="@color/color_FFFFFF"/>
 
                 <LinearLayout
                     android:id="@+id/titleLayout"

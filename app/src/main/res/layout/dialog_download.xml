@@ -132,7 +132,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:text="去设置网络"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_15" />
             <TextView
                 android:id="@+id/btn_confirm"
@@ -145,7 +145,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:text="去相册看看"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_15" />
             <TextView
                 android:id="@+id/btn_cancel"

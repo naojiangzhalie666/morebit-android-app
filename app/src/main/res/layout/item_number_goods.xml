@@ -6,24 +6,55 @@
     android:paddingRight="6dp"
     android:paddingTop="14dp"
     android:orientation="vertical"
-
+    android:background="@color/color_EDEDED"
     >
     <RelativeLayout
-        android:layout_width="180dp"
+        android:layout_width="match_parent"
         android:layout_height="250dp"
         android:background="@color/color_FFFFFF"
         >
-        <ImageView
-            android:id="@+id/number_goods_pic"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_default" />
+        <RelativeLayout
+            android:id="@+id/rl_number_goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/number_goods_pic"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_default" />
+
+
+            <TextView
+                android:id="@+id/txt_morebit_corn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_duodou_number"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="15dp"
+                android:text="@string/number_give_more_corn"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/sp_10" />
+                <ImageView
+                    android:id="@+id/img_morebit_corn"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="-12dp"
+                    android:layout_alignBottom="@id/txt_morebit_corn"
+                    android:layout_marginBottom="2dp"
+                    android:layout_toRightOf="@id/txt_morebit_corn"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/more_corn_icon"
+                    />
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/number_goods_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/number_goods_pic"
+            android:layout_below="@id/rl_number_goods_price"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
@@ -67,32 +98,7 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-            <ImageView
-                android:id="@+id/img_morebit_corn"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignBottom="@id/ll_number_goods_price"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="25dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/more_corn_icon"
-                android:text="@string/number_give_more_corn" />
 
-            <TextView
-                android:id="@+id/txt_morebit_corn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/bg_red_morecoin"
-                android:layout_alignBottom="@id/ll_number_goods_price"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="15dp"
-                android:text="@string/number_give_more_corn"
-                android:textColor="@color/color_ffea993e"
-                android:textSize="@dimen/sp_10" />
 
         </RelativeLayout>
 

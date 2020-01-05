@@ -58,7 +58,6 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-
                 >
                 <!--姓名-->
             <TextView
@@ -66,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="姓名"
                 android:textSize="@dimen/sp_16"
                 android:textColor="@color/color_333333"/>
@@ -108,7 +108,7 @@
                 android:maxLength="40"
                 android:ellipsize="end"
                 android:text="浙江省 杭州市 萧山区 1234567890123456789012345678901234567890"/>
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_address_manage"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -118,11 +118,13 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
                         android:src="@drawable/youjiantou"
                         android:scaleType="centerInside"
                         />
-                </LinearLayout>
+                </RelativeLayout>
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -133,17 +135,19 @@
         android:id="@+id/goods_confirm_order_goods_info"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="@color/white"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="7.5dp"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false">
         <RelativeLayout
             android:id="@+id/rl_confirm_goods_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             >
             <ImageView
                 android:id="@+id/img_confirm_order_goods"
@@ -154,13 +158,14 @@
                 android:scaleType="centerInside"/>
             <TextView
                 android:id="@+id/txt_confirm_order_goods_title"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="商品题目商品题目商品题目商品题目商品题目商品题目商品题目"
                 android:maxLines="4"
-                android:maxWidth="40dp"
+                android:maxWidth="150dp"
                 android:layout_toRightOf="@id/img_confirm_order_goods"
                 android:layout_marginLeft="10dp"
+
                 android:layout_alignTop="@id/img_confirm_order_goods"
                 />
             <TextView
@@ -182,17 +187,17 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp">
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:scaleType="centerInside"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/money_red"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical|right"/>
                 <TextView
                     android:id="@+id/txt_confirm_order_goods_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_FD5212"
-                    android:text="@string/number_goods_price"
+                    android:text="0.00"
                     android:layout_gravity="center_vertical"
                     android:textSize="@dimen/sp_16"
                     />
@@ -216,11 +221,11 @@
         android:id="@+id/goods_confirm_order_goods_pay_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:background="@color/white"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="7.5dp"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false">
         <LinearLayout
@@ -231,7 +236,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="match_parent"
@@ -304,7 +309,7 @@
                     android:textColor="@color/color_999999"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_gravity="center_vertical"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_12"
@@ -323,7 +328,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="match_parent"
@@ -343,7 +348,7 @@
                     android:textColor="@color/color_999999"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_gravity="center_vertical"
                     android:textStyle="bold"
                     android:textSize="@dimen/sp_12"
