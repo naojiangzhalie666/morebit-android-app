@@ -81,7 +81,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by YangBoTian on 2018/9/13.
+ * Created by liuhaiping on 2019/1/05.
  */
 
 public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> implements HomeRecommentContract.View, View.OnClickListener {

@@ -2,81 +2,49 @@ package com.zjzy.morebit.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
+import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
-import com.zjzy.morebit.Module.common.View.ReUseGridView;
-import com.zjzy.morebit.Module.common.View.ReUseListView;
-import com.zjzy.morebit.Module.common.View.ReUseNumberGoodsView;
-import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
+import com.zjzy.morebit.Module.common.Utils.LoadingView;
+import com.zjzy.morebit.Module.common.View.NumberReUseGridView;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.adapter.MarkermallCircleAdapter;
-import com.zjzy.morebit.adapter.NumberAdapter;
+import com.zjzy.morebit.adapter.SimpleAdapter;
+import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
-import com.zjzy.morebit.pojo.CategoryListChildDtos;
-import com.zjzy.morebit.pojo.CategoryListDtos;
-import com.zjzy.morebit.pojo.CircleBrand;
-import com.zjzy.morebit.pojo.ImageInfo;
-import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
-import com.zjzy.morebit.pojo.event.CirleUpdataShareCountEvent;
-import com.zjzy.morebit.pojo.event.LoginSucceedEvent;
-import com.zjzy.morebit.pojo.event.LogoutEvent;
 import com.zjzy.morebit.pojo.event.MyMoreCoinEvent;
-import com.zjzy.morebit.pojo.event.RefreshCircleEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
-import com.zjzy.morebit.pojo.request.RequestCircleBransBean;
-import com.zjzy.morebit.pojo.request.RequestCircleCollectBean;
-import com.zjzy.morebit.pojo.request.RequestMarkermallCircleBean;
-import com.zjzy.morebit.pojo.request.RequestRemoveCircleCollectBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
-import com.zjzy.morebit.pojo.requestbodybean.RequestPage;
 import com.zjzy.morebit.utils.C;
-import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.LoadImgUtils;
-import com.zjzy.morebit.utils.LogUtils;
-import com.zjzy.morebit.utils.LoginUtil;
-import com.zjzy.morebit.utils.MyGsonUtils;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
-import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
-import com.zjzy.morebit.utils.action.MyAction;
-import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.HorzProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -88,19 +56,22 @@ import io.reactivex.functions.Action;
  */
 public class NumberSubFragment extends BaseFragment {
 
+    private static final int REQUEST_COUNT = 10;
     View mView;
-    ReUseNumberGoodsView mReUseListView;
+
+    NumberReUseGridView mReUseGridView;
 
 
-    TextView gradeHint1;
-    TextView gradeHint2;
-    TextView gradeHint3;
-    TextView gradeHint4;
-    TextView gradeHint5;
-    TextView gradeHint6;
+
+//    TextView gradeHint1;
+//    TextView gradeHint2;
+//    TextView gradeHint3;
+//    TextView gradeHint4;
+//    TextView gradeHint5;
+//    TextView gradeHint6;
     RoundedImageView mUserIcon;
     TextView myGradedView;
-    TextView numberGradeName;
+//    TextView numberGradeName;
     TextView moreCoinBiaozhun;
 
     HorzProgressView mHorzProgressView;
@@ -111,13 +82,17 @@ public class NumberSubFragment extends BaseFragment {
     View headView ;
     TextView userName;
 
-    NumberAdapter mNumberGoodsAdapter;
-    LRecyclerViewAdapter lRecyclerViewAdapter;
-    List<NumberGoods> numberGoodsList = new ArrayList<NumberGoods>();
+    SubNumberAdapter mAdapter;
+    RoundedImageView cardNumber;
+    RoundedImageView cardVip;
+    RoundedImageView cardLeader;
+
+
+
     UserInfo mUserInfo;
     private int page = 1;
 
-    private boolean isLoadData = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,30 +124,51 @@ public class NumberSubFragment extends BaseFragment {
 
 
     public void initView(View view) {
+        mReUseGridView = (NumberReUseGridView)view.findViewById(R.id.mListView);
 
-        mReUseListView = (ReUseNumberGoodsView) view.findViewById(R.id.mListView);
-        mNumberGoodsAdapter = new NumberAdapter(getActivity(),numberGoodsList);
-        mNumberGoodsAdapter.addHeaderView(headView);
-
-        mReUseListView.setAdapter(mNumberGoodsAdapter, new ReUseNumberGoodsView.RefreshAndLoadMoreListener() {
+//        mReUseGridView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.NumberSwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                page = 1;
+//                refreshData();
+//            }
+//        });
+        mReUseGridView.setOnReLoadListener(new NumberReUseGridView.OnReLoadListener() {
             @Override
-            public void onLoadMoreRequested() {
-//                if (!mReUseListView.getSwipeList().isRefreshing())
-                MyLog.i("test", "setRecommendData1");
-                getData();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                isLoadData = true;
+            public void onReload() {
                 page = 1;
-                mReUseListView.getSwipeList().setRefreshing(true);
-                mNumberGoodsAdapter.setEnableLoadMore(false);
-
-                MyLog.i("test", "refreshData");
                 refreshData();
             }
+
+            @Override
+            public void onLoadMore() {
+                getData();
+            }
         });
+
+        mAdapter = new SubNumberAdapter(getActivity());
+
+        mReUseGridView.setAdapterAndHeadView(headView,mAdapter);
+
+//        mReUseListView.setAdapter(mNumberGoodsAdapter, new ReUseNumberGoodsView.RefreshAndLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+////                if (!mReUseListView.getSwipeList().isRefreshing())
+//                MyLog.i("test", "setRecommendData1");
+//                getData();
+//            }
+//
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                isLoadData = true;
+//                page = 1;
+//                mReUseListView.getSwipeList().setRefreshing(true);
+//                mNumberGoodsAdapter.setEnableLoadMore(false);
+//
+//                MyLog.i("test", "refreshData");
+//                refreshData();
+//            }
+//        });
 
     }
 
@@ -180,15 +176,17 @@ public class NumberSubFragment extends BaseFragment {
         userName = (TextView)headView.findViewById(R.id.user_name);
         mUserIcon = (RoundedImageView)headView.findViewById(R.id.userIcon);
         myGradedView = (TextView)headView.findViewById(R.id.lb_user_grade);
-        numberGradeName = (TextView)headView.findViewById(R.id.number_grade_name);
+//        numberGradeName = (TextView)headView.findViewById(R.id.number_grade_name);
         moreCoinBiaozhun = (TextView)headView.findViewById(R.id.more_corn_biaozhun);
-
-        gradeHint1 = (TextView)headView.findViewById(R.id.grade_hint1);
-        gradeHint2 = (TextView)headView.findViewById(R.id.grade_hint2);
-        gradeHint3 = (TextView)headView.findViewById(R.id.grade_hint3);
-        gradeHint4 = (TextView)headView.findViewById(R.id.grade_hint4);
-        gradeHint5 = (TextView)headView.findViewById(R.id.grade_hint5);
-        gradeHint6 = (TextView)headView.findViewById(R.id.grade_hint6);
+        cardNumber = (RoundedImageView)headView.findViewById(R.id.card_number);
+        cardVip = (RoundedImageView)headView.findViewById(R.id.card_vip);
+        cardLeader = (RoundedImageView)headView.findViewById(R.id.card_leader);
+//        gradeHint1 = (TextView)headView.findViewById(R.id.grade_hint1);
+//        gradeHint2 = (TextView)headView.findViewById(R.id.grade_hint2);
+//        gradeHint3 = (TextView)headView.findViewById(R.id.grade_hint3);
+//        gradeHint4 = (TextView)headView.findViewById(R.id.grade_hint4);
+//        gradeHint5 = (TextView)headView.findViewById(R.id.grade_hint5);
+//        gradeHint6 = (TextView)headView.findViewById(R.id.grade_hint6);
         mHorzProgressView = (HorzProgressView)headView.findViewById(R.id.horzProgressView);
         rl_duodou_progress = (RelativeLayout)headView.findViewById(R.id.rl_duodou_progress);
         leader_icon = (ImageView)headView.findViewById(R.id.leader_icon);
@@ -296,38 +294,45 @@ public class NumberSubFragment extends BaseFragment {
      */
     private void gradeForNumberView(){
 
-        gradeHint1.setText("购物更省钱");
-        gradeHint2.setText("分享奖励高" );
-        gradeHint3.setText("可申请团队长");
-        gradeHint4.setText("大咖辅导");
-        gradeHint5.setText("数据化运营");
-        gradeHint6.setText("六位邀请码");
+          cardNumber.setVisibility(View.VISIBLE);
+          cardVip.setVisibility(View.GONE);
+          cardLeader.setVisibility(View.GONE);
+//        gradeHint1.setText("购物更省钱");
+//        gradeHint2.setText("分享奖励高" );
+//        gradeHint3.setText("可申请团队长");
+//        gradeHint4.setText("大咖辅导");
+//        gradeHint5.setText("数据化运营");
+//        gradeHint6.setText("六位邀请码");
     }
 
     /**
      * vip的view
      */
     private void gradeForVipView(){
-
-        gradeHint1.setText("购物更省钱");
-        gradeHint2.setText("分享奖励高" );
-        gradeHint3.setText("团队奖不停");
-        gradeHint4.setText("大咖辅导");
-        gradeHint5.setText("数据化运营");
-        gradeHint6.setText("六位邀请码");
+        cardVip.setVisibility(View.VISIBLE);
+        cardNumber.setVisibility(View.GONE);
+        cardLeader.setVisibility(View.GONE);
+//        gradeHint1.setText("购物更省钱");
+//        gradeHint2.setText("分享奖励高" );
+//        gradeHint3.setText("团队奖不停");
+//        gradeHint4.setText("大咖辅导");
+//        gradeHint5.setText("数据化运营");
+//        gradeHint6.setText("六位邀请码");
     }
 
     /**
      * 团队长的view
      */
     private void gradeForLeaderView(){
-
-        gradeHint1.setText("购物更省钱");
-        gradeHint2.setText("分享奖励高");
-        gradeHint3.setText("团队奖不停");
-        gradeHint4.setText("大咖辅导");
-        gradeHint5.setText("专属后台运营");
-        gradeHint6.setText("六位邀请码");
+        cardNumber.setVisibility(View.GONE);
+        cardVip.setVisibility(View.GONE);
+        cardLeader.setVisibility(View.VISIBLE);
+//        gradeHint1.setText("购物更省钱");
+//        gradeHint2.setText("分享奖励高");
+//        gradeHint3.setText("团队奖不停");
+//        gradeHint4.setText("大咖辅导");
+//        gradeHint5.setText("专属后台运营");
+//        gradeHint6.setText("六位邀请码");
     }
 
 
@@ -335,30 +340,42 @@ public class NumberSubFragment extends BaseFragment {
 
     public void showSuccessful(NumberGoodsList datas) {
 
-        mReUseListView.getSwipeList().setRefreshing(false);
-        mNumberGoodsAdapter.setEnableLoadMore(true);
+//        mReUseListView.getSwipeList().setRefreshing(false);
+//        mNumberGoodsAdapter.setEnableLoadMore(true);
+//        List<NumberGoods> list = datas.getList();
+//        if (list == null || (list != null && list.size() == 0)) {
+//            mNumberGoodsAdapter.loadMoreEnd();
+//            return;
+//        }
+//        mNumberGoodsAdapter.loadMoreComplete();
+//        if (page == 1) {
+//            mNumberGoodsAdapter.setNewData(list);
+//        } else {
+//            List<NumberGoods> newList = new ArrayList<>();
+//            newList.addAll(list);
+//            mNumberGoodsAdapter.addData(newList);
+//        }
+//        page++;
+//        if (mReUseListView.getSwipeList() != null) {
+//            mReUseListView.getSwipeList().setRefreshing(false);
+//        }
         List<NumberGoods> list = datas.getList();
         if (list == null || (list != null && list.size() == 0)) {
-            mNumberGoodsAdapter.loadMoreEnd();
+            mReUseGridView.getListView().setNoMore(true);
             return;
         }
-        mNumberGoodsAdapter.loadMoreComplete();
         if (page == 1) {
-//            if (list.size() % 2 != 0) {   //第一页也可能有奇数
-//                list.remove(list.size() - 1);
-//            }
-            mNumberGoodsAdapter.setNewData(list);
+            mAdapter.replace(list);
         } else {
-            List<NumberGoods> newList = new ArrayList<>();
-            newList.addAll(list);
-            mNumberGoodsAdapter.addData(newList);
+            if (list.size() == 0) {
+                mReUseGridView.getListView().setNoMore(true);
+            } else {
+                mAdapter.add(list);
+            }
+
         }
         page++;
-        if (mReUseListView.getSwipeList() != null) {
-            mReUseListView.getSwipeList().setRefreshing(false);
-        }
-
-
+        mAdapter.notifyDataSetChanged();
     }
 
 
@@ -370,12 +387,14 @@ public class NumberSubFragment extends BaseFragment {
         || "B1100010".equals(errorNo)) {
             ViewShowUtils.showShortToast(getActivity(),msg);
         }
+        if (page != 1)
+            mReUseGridView.getListView().setNoMore(true);
 
-        mNumberGoodsAdapter.loadMoreEnd();
-
-        if (mReUseListView.getSwipeList() != null) {
-            mReUseListView.getSwipeList().setRefreshing(false);
-        }
+//        mNumberGoodsAdapter.loadMoreEnd();
+//
+//        if (mReUseListView.getSwipeList() != null) {
+//            mReUseListView.getSwipeList().setRefreshing(false);
+//        }
 
 
 
@@ -383,6 +402,9 @@ public class NumberSubFragment extends BaseFragment {
 
 
     public void showFinally() {
+        LoadingView.dismissDialog();
+        mReUseGridView.getSwipeList().setRefreshing(false);
+        mReUseGridView.getListView().refreshComplete(REQUEST_COUNT);
     }
 
 
@@ -411,14 +433,14 @@ public class NumberSubFragment extends BaseFragment {
             mHorzProgressView.setCurrentNum(info.getMoreCoin());
             leader_icon.setVisibility(View.GONE);
             myGradedView.setText("VIP会员");
-            numberGradeName.setText("团队长");
+//            numberGradeName.setText("团队长");
             String coin1 = "多豆：" +info.getMoreCoin()+"/20000";
             moreCoinBiaozhun.setText(coin1);
 
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
             myGradedView.setText("团队长");
-            numberGradeName.setText("团队长");
+//            numberGradeName.setText("团队长");
             rl_duodou_progress.setVisibility(View.GONE);
             leader_icon.setVisibility(View.VISIBLE);
             gradeForLeaderView();
@@ -436,7 +458,7 @@ public class NumberSubFragment extends BaseFragment {
 
             leader_icon.setVisibility(View.GONE);
             myGradedView.setText("会员");
-            numberGradeName.setText("VIP会员");
+//            numberGradeName.setText("VIP会员");
             gradeForNumberView();
         }
         Long coin = info.getMoreCoin();
@@ -468,9 +490,9 @@ public class NumberSubFragment extends BaseFragment {
 
                     @Override
                     protected void onDataListEmpty() {
-                if (mReUseListView.getSwipeList() != null) {
-                    mReUseListView.getSwipeList().setRefreshing(false);
-                }
+    //                if (mReUseListView.getSwipeList() != null) {
+    //                    mReUseListView.getSwipeList().setRefreshing(false);
+    //                }
 
                     }
                     @Override
@@ -557,5 +579,57 @@ public class NumberSubFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(NumberSubFragment.this);
+    }
+
+
+    class SubNumberAdapter extends SimpleAdapter<NumberGoods, SimpleViewHolder> {
+
+        private Activity mContext;
+
+        public SubNumberAdapter(Activity context) {
+            super(context);
+            mContext = context;
+        }
+
+        @Override
+        public void onBindViewHolder(SimpleViewHolder holder, int position) {
+           final NumberGoods goods = getItem(position);
+            RoundedImageView pic = holder.viewFinder().view(R.id.number_goods_pic);
+            TextView desc = holder.viewFinder().view(R.id.number_goods_desc);
+            TextView tvPrice = holder.viewFinder().view(R.id.number_goods_price);
+            TextView morebitCorn = holder.viewFinder().view(R.id.txt_morebit_corn);
+
+            String img = goods.getPicUrl();
+            if (!TextUtils.isEmpty(img)) {
+                LoadImgUtils.setImg(mContext, pic, img);
+            }
+            desc.setText(goods.getName());
+            String price = goods.getRetailPrice();
+            double  pricedouble  = Double.parseDouble(price);
+
+
+            if (TextUtils.isEmpty(price)){
+                tvPrice.setText("0");
+            }else{
+                //            holder.price.setText(String.valueOf(((Number)pricedouble).longValue()));
+                tvPrice.setText(price);
+            }
+            String moreCoin = MathUtils.getMorebitCorn(price);
+            morebitCorn.setText(mContext.getResources().getString(R.string.number_give_more_corn,moreCoin));
+            holder.itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    NumberGoodsDetailsActivity.start(mContext,String.valueOf(goods.getId()));
+                }
+            });
+
+        }
+
+        @Override
+        protected View onCreateView(LayoutInflater layoutInflater, ViewGroup parent, int viewType) {
+            return layoutInflater.inflate(R.layout.item_number_goods, parent, false);
+        }
+
     }
 }

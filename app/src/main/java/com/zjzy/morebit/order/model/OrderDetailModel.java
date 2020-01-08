@@ -1,6 +1,7 @@
 package com.zjzy.morebit.order.model;
 
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
@@ -87,6 +88,20 @@ public class OrderDetailModel extends MvpModel {
         return RxHttp.getInstance().getCommonService().syncPayResult(requestBean)
                 .compose(RxUtils.<BaseResponse<OrderSyncResult>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<OrderSyncResult>>bindToLifecycle());
+    }
+
+    /**
+     * 确认收货
+     * @param rxFragment
+     * @param OrderId
+     * @return
+     */
+    public Observable<BaseResponse<Boolean>> confirmOrder(BaseActivity rxFragment, String OrderId) {
+        RequestOrderDetailBean bean = new RequestOrderDetailBean();
+        bean.setOrderId(OrderId);
+        return RxHttp.getInstance().getCommonService().confirmOrder(bean)
+                .compose(RxUtils.<BaseResponse<Boolean>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<Boolean>>bindToLifecycle());
     }
 
 

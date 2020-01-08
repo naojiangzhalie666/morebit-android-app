@@ -67,16 +67,26 @@ public class C {
         /**
          * 未支付的订单状态
          */
-        public static final int WAIT_PAY_ORDER_STATUS = 1;
+        public static final int WAIT_PAY_ORDER_STATUS = 2;
 
         /**
-         * 订单完成（已支付，已发货，未确认收货状态）
+         * 订单已支付（已支付，已发货，未确认收货状态）
          */
-        public static final int SUCCESS_ORDER_STATUS = 2;
+        public static final int SUCCESS_ORDER_STATUS = 1;
+        /**
+         * 已结算状态
+         */
+        public static final int SETTLE_ORDER_STATUS = 3;
+
         /**
          * 订单关闭（已经确认收货（或者系统自动确认收货））
          */
-        public static final int RECEIVED_ORDER_STATUS = 3;
+        public static final int CLOSE_ORDER_STATUS = 4;
+
+        /**
+         * 待收货状态
+         */
+        public static final int RECEIVE_GOODS_ORDER_STATUS = 6;
     }
 
     /**

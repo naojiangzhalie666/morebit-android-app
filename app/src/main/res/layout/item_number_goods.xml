@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="6dp"
-    android:paddingRight="6dp"
-    android:paddingTop="14dp"
-    android:orientation="vertical"
-    android:background="@color/color_EDEDED"
-    >
-    <RelativeLayout
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/color_FFFFFF"
-        >
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:cardCornerRadius="5dp"
+        android:layout_margin="5dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false"
+        app:cardBackgroundColor="@color/color_FFFFFF">
+
         <RelativeLayout
-            android:id="@+id/rl_number_goods_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/number_goods_pic"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon_default" />
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
 
-
-            <TextView
-                android:id="@+id/txt_morebit_corn"
+            >
+            <RelativeLayout
+                android:id="@+id/rl_number_goods_price"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_duodou_number"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="15dp"
-                android:text="@string/number_give_more_corn"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/sp_10" />
+                android:layout_height="wrap_content">
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/number_goods_pic"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_default"
+                    app:riv_corner_radius="5dp"/>
+                <TextView
+                    android:id="@+id/txt_morebit_corn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_duodou_number"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="15dp"
+                    android:text="@string/number_give_more_corn"
+                    android:textColor="@color/color_FFFFFF"
+                    android:textSize="@dimen/sp_10" />
                 <ImageView
                     android:id="@+id/img_morebit_corn"
                     android:layout_width="10dp"
@@ -48,63 +49,60 @@
                     android:src="@mipmap/more_corn_icon"
                     />
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/number_goods_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_number_goods_price"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:lines="2"
-            android:maxLength="40"
-            android:maxLines="2"
-            android:text="商品简介商品简介商品简介"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/sp_12" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/number_goods_desc"
-            android:layout_marginTop="5dp">
-
-
-            <LinearLayout
-                android:id="@+id/ll_number_goods_price"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/number_goods_desc"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/rl_number_goods_price"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
-                android:orientation="horizontal">
+                android:layout_marginRight="5dp"
+                android:lines="2"
+                android:maxLength="40"
+                android:maxLines="2"
+                android:text="商品简介商品简介商品简介"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_12" />
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="bottom"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/money_black" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/number_goods_desc"
+                android:layout_marginTop="5dp">
 
-                <TextView
-                    android:id="@+id/number_goods_price"
+
+                <LinearLayout
+                    android:id="@+id/ll_number_goods_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/number_goods_price"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="bottom"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/money_black" />
+
+                    <TextView
+                        android:id="@+id/number_goods_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/number_goods_price"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
 
 
         </RelativeLayout>
-
-
-    </RelativeLayout>
-
-
-
-</LinearLayout>
+    </android.support.v7.widget.CardView>

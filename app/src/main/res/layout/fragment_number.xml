@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
+    android:background="@color/color_F5F5F5"
     android:orientation="vertical">
 <!--    <TextView-->
 <!--            android:id="@+id/status_bar"-->
@@ -18,7 +18,7 @@
 <!--        android:layout_height="match_parent">-->
 <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="300dp"-->
+<!--            android:layout_height="200dp"-->
 <!--            android:background="@color/color_333333"/>-->
 
 
@@ -37,6 +37,7 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+<!--    </RelativeLayout>-->
 <!--        <FrameLayout-->
 <!--            android:id="@+id/fl_goodslist"-->
 <!--            android:layout_width="match_parent"-->

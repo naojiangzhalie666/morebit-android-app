@@ -111,34 +111,19 @@ public class MineFragment extends BaseMainFragmeng {
     RoundedImageView mUserIcon;
     @BindView(R.id.swipeList)
     SwipeRefreshLayout mSwipeList;
-//    @BindView(R.id.userLevel)
-//    ImageView mUserLevel;
     @BindView(R.id.invitation_code)
     TextView mInvitationCode;
     @BindView(R.id.tv_remainder)
     TextView tv_remainder;
-//    @BindView(R.id.day_price)
-//    TextView day_price;
-//    @BindView(R.id.month_price)
-//    TextView month_price;
     @BindView(R.id.userName)
     TextView mUserName;
     @BindView(R.id.tv_user_type)
     TextView tvUserType;
-//    @BindView(R.id.upgrade_text)
-//    TextView upgrade_text;
-//
-//    @BindView(R.id.btn_upgrade_tv)
-//    TextView btnUpgradetv;
 
     @BindView(R.id.as_banner)
     AspectRatioView mAsBanner;
     @BindView(R.id.banner)
     Banner mBanner;
-//    @BindView(R.id.ll_category)
-//    LinearLayout mLLFindSplendid;
-//    @BindView(R.id.mRv_gView)
-//    RecyclerView mRv_gView;
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerview;
     @BindView(R.id.ll_my_tootls)
@@ -151,17 +136,7 @@ public class MineFragment extends BaseMainFragmeng {
     NestedScrollView nestedScrollView;
     @BindView(R.id.rl_set_weixin)
     RelativeLayout rl_set_weixin;
-//    @BindView(R.id.rl_balance)
-//    RelativeLayout rl_balance;
-//    @BindView(R.id.tv_balance)
-//    TextView tv_balance;
-//    @BindView(R.id.rl_upgrade)
-//    RelativeLayout rl_upgrade;
-//
-//    @BindView(R.id.ll_grade_txt)
-//    LinearLayout llGradeTxt;
-//    @BindView(R.id.recyclerView_recommend)
-//    RecyclerView recyclerView_recommend;
+
     @BindView(R.id.fl_share_expert)
     FrameLayout fl_share_expert;
     @BindView(R.id.iv_bg_expert)
@@ -181,13 +156,8 @@ public class MineFragment extends BaseMainFragmeng {
             TextView tv_this_month_estimate_money;
     @BindView(R.id.tv_prev_month_estimate_oney)
             TextView tv_prev_month_estimate_oney;
-//    @BindView(R.id.ll_up_marquee)
-//    LinearLayout ll_up_marquee;
-//    @BindView(R.id.upview)
-//    UPMarqueeView upview;
-//    @BindView(R.id.iv_mine_up_marquee_arrows)
     @BindView(R.id.my_publish)
-LinearLayout my_publish;
+    LinearLayout my_publish;
     @BindView(R.id.order_search)
     LinearLayout order_search;
     @BindView(R.id.my_footmarker)
@@ -195,8 +165,6 @@ LinearLayout my_publish;
     @BindView(R.id.my_favorite)
     LinearLayout my_favorite;
 
-
-//    ImageView iv_mine_up_marquee_arrows;
 
 
     ToolsAdapter mAdapter;
@@ -490,32 +458,7 @@ LinearLayout my_publish;
             case R.id.rl_set_weixin:
                 SettingWechatActivity.start(getActivity(), 0);
                 break;
-//            case R.id.rl_upgrade:   //会员升级
-//            case R.id.ll_grade_txt:
-//                if (C.UserType.member.equals(UserLocalData.getUser().getPartner())) {
-//                    NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(getActivity(), R.style.dialog);
-//                    leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener() {
-//
-//                        @Override
-//                        public void onClick(int type) {
-//                            //vip ==1
-//                            if (type == 1) {
-//                                updateGradePresenter(MineFragment.this, Integer.parseInt(C.UserType.vipMember));
-//                            } else if (type == 2) {
-//                                updateGradePresenter(MineFragment.this, Integer.parseInt(C.UserType.operator));
-//                            }
-//                        }
-//
-//                    });
-//                    leaderUpgradeDialog.show();
-//
-//                } else if (C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())) {
-//                    updateGradeForLeader();
-//                } else if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
-//                    VipActivity.start(getActivity());
-//                }
-//
-//                break;
+
             case R.id.tv_withdraw: //提现
                 if(Double.parseDouble(mTotalMoney)<1){
                     ViewShowUtils.showShortToast(getActivity(),"不足1元，无法提现");
@@ -649,42 +592,10 @@ LinearLayout my_publish;
                 }
 
             }
-//            for (int i = 0; i<size; i++){
-//                if ()
-//            }
         }
 
     }
 
-    /**
-     * 获取发现精彩列表
-     */
-
-//    private void getFindSplendidList() {
-//        LoginUtil.getSystemStaticPage((RxAppCompatActivity) getActivity(), C.ProtocolType.wonderful)
-//                .subscribe(new DataObserver<List<ProtocolRuleBean>>(false) {
-//                    @Override
-//                    protected void onError(String errorMsg, String errCode) {
-//                        mLLFindSplendid.setVisibility(View.GONE);
-//                    }
-//
-//                    @Override
-//                    protected void onDataListEmpty() {
-//                        mLLFindSplendid.setVisibility(View.GONE);
-//                    }
-//
-//                    @Override
-//                    protected void onSuccess(List<ProtocolRuleBean> data) {
-//                        if (data.size() == 0) {
-//                            mLLFindSplendid.setVisibility(View.GONE);
-//                        } else {
-//                            mLLFindSplendid.setVisibility(View.VISIBLE);
-//                            setFindSplendid(data);
-//                        }
-//
-//                    }
-//                });
-//    }
 
     /**
      * 设置轮播图
@@ -769,30 +680,6 @@ LinearLayout my_publish;
                 });
     }
 
-//    /**
-//     *
-//     */
-//    public void getIsUpgrade() {
-//        String s = "";
-//        if (C.UserType.member.equals(UserLocalData.getUser().getPartner())) {
-//            s = getString(R.string.mine_upgrade_text);
-//            btnUpgradetv.setText("去升级");
-//            btnUpgradetv.setTextColor(Color.parseColor("#F55454"));
-//        } else if (C.UserType.vipMember.equals(UserLocalData.getUser().getPartner())) {
-//            s = getString(R.string.mine_grade_vip_text);
-//            btnUpgradetv.setText("去升级");
-//            btnUpgradetv.setTextColor(Color.parseColor("#F55454"));
-//        } else if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
-//            s = getString(R.string.mine_grade_leader_text);
-//            btnUpgradetv.setText("查看");
-//            btnUpgradetv.setTextColor(Color.parseColor("#845802"));
-//        }
-//
-//        upgrade_text.setText(Html.fromHtml(s));
-//        rl_upgrade.setVisibility(View.VISIBLE);
-//
-//    }
-
     /**
      * 升级运营商弹窗提示
      */
@@ -819,99 +706,8 @@ LinearLayout my_publish;
                 });
     }
 
-    /**
-     * 设置下线升级拉新轮播
-     *
-     * @param datas
-     */
-//    private void setHotView(final List<UpgradeCarousel> datas) {
-//        //多点优选热门
-//        if (datas == null || datas.size() == 0) {
-//            iv_mine_up_marquee_arrows.setVisibility(View.GONE);
-//            mHotviews.clear();
-//            LinearLayout moreView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_hot_text, null);
-//            TextView tv = (TextView) moreView.findViewById(R.id.title);
-//            if (mDayEarnings != null) {
-//                try {
-//                    double dayMoney = Double.parseDouble(MathUtils.getMoney(mDayEarnings.getTodayEstimateMoney()));
-//                    if (dayMoney > 0) {
-//                        tv.setText(R.string.mine_day_money_up_text);
-//                    } else {
-//                        tv.setText(R.string.mine_day_money_text);
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            } else {
-//                tv.setText(R.string.mine_day_money_text);
-//            }
-//            mHotviews.add(tv);
-//        } else {
-//            iv_mine_up_marquee_arrows.setVisibility(View.VISIBLE);
-//            ll_up_marquee.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    FansActivity.start(getActivity());
-//                }
-//            });
-//            mHotviews.clear();
-//            for (int i = 0; i < datas.size(); i++) {
-//                //设置滚动的单个布局
-//                LinearLayout moreView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_hot_text, null);
-//                TextView tv = (TextView) moreView.findViewById(R.id.title);
-//                ImageView iv_head = (ImageView) moreView.findViewById(R.id.iv_head);
-//                iv_head.setVisibility(View.VISIBLE);
-//                String s = "";
-//                if (datas.get(i).getIsUpgrade() == 1) {
-//                    s = getString(R.string.mine_upgrade_carousel_text, datas.get(i).getNickname(), datas.get(i).getNewUsers() + "");
-//                } else {
-//                    s = getString(R.string.mine_upgrade_carousel_text_one, datas.get(i).getNickname(), +datas.get(i).getNewUsers() + "");
-//                }
-//                if (TextUtils.isEmpty(datas.get(i).getHeadImg())) {
-//                    iv_head.setImageResource(R.drawable.head_icon);
-//                } else {
-//                    LoadImgUtils.setImgHead(getActivity(), iv_head, datas.get(i).getHeadImg());
-//                }
-//                //进行对控件赋值
-//                tv.setText(Html.fromHtml(s));
-//                //添加到循环滚动数组里面去
-//                mHotviews.add(moreView);
-//            }
-//        }
-//
-//
-//        upview.setViews(mHotviews);
-//        upview.setOnItemClickListener(new UPMarqueeView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position, View view) {
-//                FansActivity.start(getActivity());
-//            }
-//
-//            /**
-//             * 滚动监听
-//             *
-//             * @param tag
-//             * @param view
-//             */
-//            @Override
-//            public void onAnimationListener(Object tag, View view) {
-//
-//            }
-//        });
-//    }
 
-    /**
-     * 设置发现精彩
-     */
-    private void setFindSplendid(final List<ProtocolRuleBean> datas) {
-        //分类数据
-        if (mAdapterSplendid == null) {
-            mAdapterSplendid = new ToolsSplendidAdapter(getActivity());
-//            mRv_gView.setAdapter(mAdapterSplendid);
-        }
-        mAdapterSplendid.replace(datas);
-        mAdapterSplendid.notifyDataSetChanged();
-    }
+
 
     /**
      * 设置推荐
@@ -919,10 +715,6 @@ LinearLayout my_publish;
     //本地数据
     HashMap<String ,ImageInfo> mLocalData = new HashMap<String,ImageInfo>();
     private void setPersonalFunction(List<ImageInfo> datas) {
-//        recyclerView_recommend.setVisibility(View.VISIBLE);
-//        if (datas.size() > 2) {
-//            datas = datas.subList(0, 2);
-//        }
         int size = datas.size();
         for(int i = 0; i < size; i++ ){
             if ("订单查询".equals(datas.get(i).getTitle())){
@@ -930,13 +722,7 @@ LinearLayout my_publish;
                 break;
             }
         }
-//        //分类数据
-//        if (mPersonFunctionAdapter == null) {
-//            mPersonFunctionAdapter = new PersonFunctionAdapter(getActivity());
-//            recyclerView_recommend.setAdapter(mPersonFunctionAdapter);
-//        }
-//        mPersonFunctionAdapter.replace(datas);
-//        mPersonFunctionAdapter.notifyDataSetChanged();
+
     }
 
     private void openDialog(String title, String content) {  //收益说明dialog
@@ -981,16 +767,6 @@ LinearLayout my_publish;
 
         }
     }
-
-    //    public void getAccumulatedAmount() {
-//        mInfoModel.getAccumulatedAmount(this)
-//                .subscribe(new DataObserver<String>(false) {
-//                    @Override
-//                    protected void onSuccess(String data) {
-//                        tv_remainder.setText(data+"");
-//                    }
-//                });
-//    }
     public void checkWithdrawTime() {
         if (AppUtil.isFastClick(500)) return;
         mInfoModel.checkWithdrawTime(this)
@@ -1011,15 +787,10 @@ LinearLayout my_publish;
                         }
 
                         if (!C.requestCode.B10301.equals(errCode) && money >= 1) {//因为成功的话data会为空，所以判断下
-//                            ViewShowUtils.showShortToast(getActivity(),);
                             MyLog.d("test","提现报错：B10301：不在提现时间");
-//                            tv_balance.setText(getString(R.string.mine_text_withdraw, mTotalMoney));
-//                            rl_balance.setVisibility(View.VISIBLE);
-//                        }  else {
-//                            withdrawErrorDialog(errorMsg);
-                        } else {
-//                            rl_balance.setVisibility(View.GONE);
-                        }
+                            } else {
+
+                            }
 
                     }
                 });

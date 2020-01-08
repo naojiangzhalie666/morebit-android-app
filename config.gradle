@@ -4,7 +4,7 @@ ext {
             compileSdkVersion: 26,
             buildToolsVersion: '28.0.3',
             applicationId    : "com.zjzy.morebit",
-            minSdkVersion    : 19,
+            minSdkVersion    : 21,
             targetSdkVersion : 26,
             versionCode      : 1000,
             versionName      : "1.0.0"

@@ -89,7 +89,6 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     @Override
     protected void initView(View view) {
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);
-//        consComGoodsDetailAdapter.setTeamType(mTeamType);
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -111,7 +110,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
         consComGoodsDetailAdapter.setOnSelfOrderClickListener(new ConsComGoodsDetailAdapter.OnSelfOrderClickListener() {
             @Override
             public void onReceiveGoods(String orderId, int position) {
-                //再次购买
+                //确认收货
                 mPresenter.ConfirmReceiveGoods(OrderListFragment.this,orderId);
             }
 
@@ -139,7 +138,9 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                 if (mTeamType == 1){
                     mPresenter.onCheckGoods(OrderListFragment.this, mListArray.get(position).getItemId());
                 }else{
-                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
+//                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
+                    NumberOrderDetailActivity.startOrderDetailActivity(getActivity(),
+                            mListArray.get(position).getOrderSn());
                 }
             }
 

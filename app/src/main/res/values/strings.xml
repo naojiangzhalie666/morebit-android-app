@@ -166,6 +166,7 @@
     <string name="order_all">全部</string>
     <string name="order_wait_pay">待支付</string>
     <string name="order_play">已付款</string>
+    <string name="order_receive_goods">待收货</string>
     <string name="order_close">已结算</string>
     <string name="order_invalid">已失效</string>
     <string name="order_closed">已关闭</string>
@@ -289,6 +290,7 @@
         <item>全部</item>
         <item>待支付 </item>
         <item>已付款 </item>
+        <item>待收货 </item>
         <item>已结算</item>
         <item>已关闭</item>
 
@@ -438,7 +440,7 @@
     <string name="number_goods_yugushouyi">预估收益%1$s元</string>
     <string name="number_order_number">订单编号：%1$s</string>
     <string name="number_order_create_time">创建时间：%1$s</string>
-    <string name="number_order_total_price">合计：￥%1$s（包邮）</string>
+    <string name="number_order_total_price">%1$s（包邮）</string>
     <string name="number_alipay_order_number">支付宝交易号：%1$s</string>
     <string name="number_order_pay_time">付款时间：%1$s</string>
     <string name="number_fahuo_time">发货时间：%1$s</string>

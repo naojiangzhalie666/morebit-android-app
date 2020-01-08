@@ -1,5 +1,6 @@
 package com.zjzy.morebit.order.contract;
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
@@ -58,6 +59,12 @@ public class OrderDetailContract {
          */
         void onSyncPayResultError();
 
+        /**
+         * 收货成功
+         * @param data
+         */
+        void onReceiveGoodsSuccessFul(Boolean data);
+
     }
 
     public interface Present extends BasePresenter {
@@ -85,6 +92,13 @@ public class OrderDetailContract {
          * @param payStatus
          */
         void syncPayResult(BaseActivity rxActivity,String orderId,int payStatus);
+
+        /**
+         * 待收货
+         * @param rxFragment
+         * @param orderId
+         */
+        void ConfirmReceiveGoods(BaseActivity rxFragment, String orderId);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.zjzy.morebit.order.presenter;
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
 import com.zjzy.morebit.network.observer.DataObserver;
@@ -91,6 +92,17 @@ public class OrderDetailPresenter extends MvpPresenter<OrderDetailModel, OrderDe
                     @Override
                     protected void onSuccess(OrderSyncResult data) {
                         getIView().onSyncPayResultSuccess(data);
+                    }
+                });
+    }
+
+    @Override
+    public void ConfirmReceiveGoods(BaseActivity rxFragment, String orderId) {
+        mModel.confirmOrder(rxFragment,orderId)
+                .subscribe(new DataObserver<Boolean>() {
+                    @Override
+                    protected void onSuccess(Boolean data) {
+                        getIView().onReceiveGoodsSuccessFul(data);
                     }
                 });
     }

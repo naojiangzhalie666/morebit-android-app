@@ -21,6 +21,7 @@ import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.LocalData.CommonLocalData;
 import com.zjzy.morebit.fragment.BindZhiFuBaoFragment;
+import com.zjzy.morebit.info.ui.fragment.OrderListFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
@@ -137,6 +138,9 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     @BindView(R.id.order_create_time)
     TextView orderCreateTimeView;
 
+    @BindView(R.id.order_success_alipay_id)
+    TextView orderAlipayId;
+
     /**
      * 订单完成的布局
      * @return
@@ -199,6 +203,9 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
      */
     @BindView(R.id.total_pay_price)
     TextView btnTotalPayPrice;
+
+    @BindView(R.id.btn_confirm_goods)
+    TextView btnConfirmGoods;
 
     private String mOrderId;
 
@@ -337,9 +344,15 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
                 case C.OrderStatus.SUCCESS_ORDER_STATUS:
                     initOrderStatusSuccess(info);
                     break;
-                case C.OrderStatus.RECEIVED_ORDER_STATUS:
+                case C.OrderStatus.SETTLE_ORDER_STATUS:
+                    initOrderStatusSettle(info);
+                    break;
+
+                case C.OrderStatus.CLOSE_ORDER_STATUS:
                     initOrderStatusClose(info);
                     break;
+                case C.OrderStatus.RECEIVE_GOODS_ORDER_STATUS:
+                    initOrderStatusReceiveGoods(info);
                 default:
                     break;
 
@@ -377,10 +390,177 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
 
     }
+
+    /**
+     * 待收货状态
+     * @param info
+     */
+    private void initOrderStatusReceiveGoods(OrderDetailInfo info){
+        tvDaojishiTime.setVisibility(View.GONE);
+        orderDetailView.setImageResource(R.mipmap.order_success);
+
+        orderDetailTxtView.setText("待收货");
+
+
+        llRealPayInfo.setVisibility(View.VISIBLE);
+        goodsRealPriceView.setText(getResources().getString(R.string.number_goods_price,
+                String.valueOf(info.getActualPrice())));
+
+        //物流信息
+        orderSuccessWuluView.setVisibility(View.VISIBLE);
+        String shipUrl = info.getShipUrl();
+        final String shipUrlWithParm = shipUrl+"?orderId="+info.getOrderId();
+        orderSuccessWuluView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(shipUrlWithParm)){
+                    if (TextUtils.isEmpty(shipUrlWithParm)) return;
+                    ShowWebActivity.start(NumberOrderDetailActivity.this,shipUrlWithParm,"物流信息");
+                }
+            }
+        });
+
+        //订单信息
+        cardOrderCloseWaitPay.setVisibility(View.GONE);
+        cardOrderSuccess.setVisibility(View.VISIBLE);
+        orderSuccessInfoOrderSn.setText(getResources().getString(R.string.number_order_number,
+                info.getOrderId()));
+        final String orderId = info.getOrderId();
+
+        orderSuccessInfoCopyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtil.coayText(NumberOrderDetailActivity.this,orderId);
+                ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,getResources().getString(R.string.coayTextSucceed));
+            }
+        });
+
+        //支付宝交易号
+        orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
+        //创建时间
+        orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
+                info.getCreateTime()));
+        //支付时间
+        String payTime = info.getPayTime();
+        if (TextUtils.isEmpty(payTime)){
+            orderSuccessPayTime.setText("");
+        }else{
+            orderSuccessPayTime.setText(payTime);
+        }
+
+        //发货时间
+        String deliveryTime = info.getShipTime();
+        if (TextUtils.isEmpty(deliveryTime)){
+            orderSuccessDeliveryTime.setText("");
+        }else{
+            orderSuccessDeliveryTime.setText(deliveryTime);
+        }
+        //确认收货：
+        btnConfirmGoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //确认收货
+                mPresenter.ConfirmReceiveGoods(NumberOrderDetailActivity.this,orderId);
+            }
+        });
+        orderSuccessDealTimeView.setVisibility(View.GONE);
+
+        llOrderCancelRePay.setVisibility(View.GONE);
+        orderFinishRebuyLlView.setVisibility(View.GONE);
+
+    }
+
+    /**
+     * 已结算
+     * @param info
+     */
+    private void initOrderStatusSettle(OrderDetailInfo info){
+        tvDaojishiTime.setVisibility(View.GONE);
+        orderDetailView.setImageResource(R.mipmap.order_success);
+
+        orderDetailTxtView.setText("已结算");
+
+
+        llRealPayInfo.setVisibility(View.VISIBLE);
+        goodsRealPriceView.setText(getResources().getString(R.string.number_goods_price,
+                String.valueOf(info.getActualPrice())));
+
+        //物流信息
+        orderSuccessWuluView.setVisibility(View.VISIBLE);
+        String shipUrl = info.getShipUrl();
+        final String shipUrlWithParm = shipUrl+"?orderId="+info.getOrderId();
+        orderSuccessWuluView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(shipUrlWithParm)){
+                    if (TextUtils.isEmpty(shipUrlWithParm)) return;
+                    ShowWebActivity.start(NumberOrderDetailActivity.this,shipUrlWithParm,"物流信息");
+                }
+            }
+        });
+
+        //订单信息
+        cardOrderCloseWaitPay.setVisibility(View.GONE);
+        cardOrderSuccess.setVisibility(View.VISIBLE);
+        orderSuccessInfoOrderSn.setText(getResources().getString(R.string.number_order_number,
+                info.getOrderId()));
+        final String orderId = info.getOrderId();
+
+        orderSuccessInfoCopyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtil.coayText(NumberOrderDetailActivity.this,orderId);
+                ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,getResources().getString(R.string.coayTextSucceed));
+            }
+        });
+
+
+        //支付宝交易号
+        orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
+
+        //创建时间
+        orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
+                info.getCreateTime()));
+
+        //支付时间
+        String payTime = info.getPayTime();
+        if (TextUtils.isEmpty(payTime)){
+            orderSuccessPayTime.setText("");
+        }else{
+            orderSuccessPayTime.setText(getResources().getString(R.string.number_order_pay_time,payTime));
+        }
+
+        //发货时间
+        String deliveryTime = info.getShipTime();
+        if (TextUtils.isEmpty(deliveryTime)){
+            orderSuccessDeliveryTime.setText("");
+        }else{
+            orderSuccessDeliveryTime.setText(deliveryTime);
+        }
+
+        //成交时间：
+
+        orderSuccessDealTimeView.setVisibility(View.VISIBLE);
+        String dealTime = info.getFinalTime();
+        if (TextUtils.isEmpty(dealTime)){
+            orderSuccessDealTimeView.setText("");
+        }else{
+            orderSuccessDealTimeView.setText(dealTime);
+        }
+
+
+        llOrderCancelRePay.setVisibility(View.GONE);
+        orderFinishRebuyLlView.setVisibility(View.GONE);
+
+    }
+
     private void initOrderStatusSuccess(OrderDetailInfo info){
         tvDaojishiTime.setVisibility(View.GONE);
         orderDetailView.setImageResource(R.mipmap.order_success);
-        orderDetailTxtView.setText("已完成");
+
+        orderDetailTxtView.setText("已支付");
+
+
         llRealPayInfo.setVisibility(View.VISIBLE);
         goodsRealPriceView.setText(getResources().getString(R.string.number_goods_price,
                 String.valueOf(info.getActualPrice())));
@@ -413,9 +593,9 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
                 ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,getResources().getString(R.string.coayTextSucceed));
             }
         });
-
-
-
+        //支付宝交易号
+        orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
+        //创建时间
         orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
                 info.getCreateTime()));
 
@@ -423,24 +603,25 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         if (TextUtils.isEmpty(payTime)){
             orderSuccessPayTime.setText("");
         }else{
-            orderSuccessPayTime.setText(payTime);
+            orderSuccessPayTime.setText(getResources().getString(R.string.number_order_pay_time,payTime));
         }
 
-
-        String deliveryTime = info.getShipTime();
-        if (TextUtils.isEmpty(deliveryTime)){
-            orderSuccessDeliveryTime.setText("");
-        }else{
-            orderSuccessDeliveryTime.setText(deliveryTime);
-        }
-
-
-        String dealTime = info.getFinalTime();
-        if (TextUtils.isEmpty(dealTime)){
-            orderSuccessDealTimeView.setText("");
-        }else{
-            orderSuccessDealTimeView.setText(dealTime);
-        }
+        orderSuccessDeliveryTime.setVisibility(View.GONE);
+        orderSuccessDealTimeView.setVisibility(View.GONE);
+//        String deliveryTime = info.getShipTime();
+//        if (TextUtils.isEmpty(deliveryTime)){
+//            orderSuccessDeliveryTime.setText("");
+//        }else{
+//            orderSuccessDeliveryTime.setText(deliveryTime);
+//        }
+//
+//        orderSuccessDealTimeView.setVisibility(View.VISIBLE);
+//        String dealTime = info.getFinalTime();
+//        if (TextUtils.isEmpty(dealTime)){
+//            orderSuccessDealTimeView.setText("");
+//        }else{
+//            orderSuccessDealTimeView.setText(dealTime);
+//        }
 
 
         llOrderCancelRePay.setVisibility(View.GONE);
@@ -573,6 +754,11 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     @Override
     public void onSyncPayResultError() {
         ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,"支付同步结果失败");
+    }
+
+    @Override
+    public void onReceiveGoodsSuccessFul(Boolean data) {
+        ViewShowUtils.showShortToast(this,"确认收货成功！");
     }
 
     private void initView(){

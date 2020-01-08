@@ -92,17 +92,7 @@
                     app:liys_progress_line_outColor="@color/colcor_FFAC00"
                     app:liys_progress_line_inDrawable="@drawable/vip_progress_bg"/>
 
-<!--                <TextView-->
-<!--                    android:id="@+id/lb_more_corn"-->
-<!--                    android:layout_width="50dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_below="@id/horzProgressView"-->
-<!--                    android:layout_alignLeft="@id/horzProgressView"-->
-<!--                    android:gravity="center"-->
-<!--                    android:textColor="@color/colcor_D3D3D3"-->
-<!--                    android:textSize="@dimen/sp_12"-->
-<!--                    tools:text="多豆：" />-->
+
 
                 <TextView
                     android:id="@+id/more_corn_biaozhun"
@@ -120,23 +110,15 @@
 
         </LinearLayout>
 
-
-
-
-
-
-
-
-
                 <!--显示晋升按钮-->
                 <TextView
                     android:id="@+id/btn_number_update_vip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:textSize="@dimen/sp_16"
                     android:text="立即晋升"
                     android:textStyle="bold"
@@ -226,216 +208,241 @@
                  android:layout_centerVertical="true"
                  android:src="@mipmap/number_tuiguang"/>
          </RelativeLayout>
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        app:cardBackgroundColor="#363636"
-        app:cardCornerRadius="7.5dp"
-        app:cardElevation="20dp"
-        >
+<!--    <android.support.v7.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginRight="10dp"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        app:cardBackgroundColor="#363636"-->
+<!--        app:cardCornerRadius="7.5dp"-->
+<!--        app:cardElevation="20dp"-->
+<!--        >-->
          <!--VIP、团队长、团队长最终可享特权-->
          <RelativeLayout
              android:id="@+id/rl_grade_content"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_marginTop="10dp"
-             android:layout_marginBottom="10dp"
+             android:layout_marginLeft="10dp"
+             android:layout_marginRight="10dp"
+             android:layout_marginBottom="20dp"
              >
              <!--vip可享特权-->
-             <RelativeLayout
-                 android:id="@+id/rl_grade_name"
+<!--             <RelativeLayout-->
+<!--                 android:id="@+id/rl_grade_name"-->
+<!--                 android:layout_width="match_parent"-->
+<!--                 android:layout_height="50dp"-->
+
+<!--                 >-->
+<!--                 <RelativeLayout-->
+<!--                     android:layout_width="wrap_content"-->
+<!--                     android:layout_height="wrap_content"-->
+<!--                     android:layout_centerInParent="true"-->
+<!--                     >-->
+<!--                     <TextView-->
+<!--                         android:id="@+id/number_grade_name"-->
+<!--                         android:layout_width="wrap_content"-->
+<!--                         android:layout_height="wrap_content"-->
+<!--                         android:layout_centerVertical="true"-->
+<!--                         android:text="团队长"-->
+<!--                         android:textStyle="bold"-->
+<!--                         android:textSize="@dimen/sp_22"-->
+<!--                         android:textColor="@color/colcor_gold"-->
+<!--                         />-->
+<!--                     <TextView-->
+<!--                         android:layout_width="wrap_content"-->
+<!--                         android:layout_height="wrap_content"-->
+<!--                         android:textSize="@dimen/sp_15"-->
+<!--                         android:textColor="@color/colcor_gold"-->
+<!--                         android:text="可享特权"-->
+<!--                         android:layout_toRightOf="@id/number_grade_name"-->
+<!--                         android:layout_alignBottom="@id/number_grade_name"/>-->
+<!--                 </RelativeLayout>-->
+<!--             </RelativeLayout>-->
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/card_number"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:riv_corner_radius="5dp"
+                android:src="@drawable/card_number"
+                android:scaleType="fitCenter"
+                />
+             <com.makeramen.roundedimageview.RoundedImageView
+                 android:id="@+id/card_vip"
                  android:layout_width="match_parent"
-                 android:layout_height="50dp"
-
-                 >
-                 <RelativeLayout
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_centerInParent="true"
-                     >
-                     <TextView
-                         android:id="@+id/number_grade_name"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:layout_centerVertical="true"
-                         android:text="团队长"
-                         android:textStyle="bold"
-                         android:textSize="@dimen/sp_22"
-                         android:textColor="@color/colcor_gold"
-                         />
-                     <TextView
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:textSize="@dimen/sp_15"
-                         android:textColor="@color/colcor_gold"
-                         android:text="可享特权"
-                         android:layout_toRightOf="@id/number_grade_name"
-                         android:layout_alignBottom="@id/number_grade_name"/>
-                 </RelativeLayout>
-             </RelativeLayout>
-
-
-             <!--1～3 三个特性-->
-             <LinearLayout
-                 android:id="@+id/number_grade_13"
+                 android:layout_height="200dp"
+                 app:riv_corner_radius="5dp"
+                 android:src="@drawable/card_vip"
+                 android:scaleType="fitCenter"
+                 android:visibility="gone"/>
+             <com.makeramen.roundedimageview.RoundedImageView
+                 android:id="@+id/card_leader"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="horizontal"
-                 android:layout_below="@id/rl_grade_name">
-                 <LinearLayout
-                     android:layout_width="80dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:orientation="vertical"
-                     android:layout_margin="10dp">
-                     <ImageView
-                         android:layout_width="15dp"
-                         android:layout_height="15dp"
-                         android:src="@mipmap/number_sheng"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_marginBottom="10dp"/>
-                     <TextView
-                         android:id="@+id/grade_hint1"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:textColor="@color/colcor_gold"
-                         android:textSize="@dimen/sp_12"
-                         android:text="购物更省钱"
-                         android:layout_gravity="center_horizontal"/>
-                 </LinearLayout>
-                 <LinearLayout
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:orientation="vertical"
-                     android:layout_margin="10dp">
-                     <ImageView
-                         android:layout_width="15dp"
-                         android:layout_height="15dp"
-                         android:src="@mipmap/number_share"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_marginBottom="10dp"/>
-                     <TextView
-                         android:id="@+id/grade_hint2"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:textColor="@color/colcor_gold"
-                         android:textSize="@dimen/sp_12"
-                         android:text="分享奖励高"
-                         android:layout_gravity="center_horizontal"/>
+                 android:layout_height="200dp"
+                 app:riv_corner_radius="5dp"
+                 android:src="@drawable/card_leader"
+                 android:scaleType="fitCenter"
+                 android:visibility="gone"/>
 
-                 </LinearLayout>
-                 <LinearLayout
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:orientation="vertical"
-                     android:layout_margin="10dp">
-                     <ImageView
-                         android:layout_width="15dp"
-                         android:layout_height="15dp"
-                         android:src="@mipmap/number_tuan"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_marginBottom="10dp"/>
-                     <TextView
-                         android:id="@+id/grade_hint3"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:textColor="@color/colcor_gold"
-                         android:textSize="@dimen/sp_12"
-                         android:text="团队奖不停"
-                         android:layout_gravity="center_horizontal"/>
+<!--             &lt;!&ndash;1～3 三个特性&ndash;&gt;-->
+<!--             <LinearLayout-->
+<!--                 android:id="@+id/number_grade_13"-->
+<!--                 android:layout_width="match_parent"-->
+<!--                 android:layout_height="wrap_content"-->
+<!--                 android:orientation="horizontal"-->
+<!--                 android:layout_below="@id/rl_grade_name">-->
+<!--                 <LinearLayout-->
+<!--                     android:layout_width="80dp"-->
+<!--                     android:layout_height="wrap_content"-->
+<!--                     android:layout_weight="1"-->
+<!--                     android:orientation="vertical"-->
+<!--                     android:layout_margin="10dp">-->
+<!--                     <ImageView-->
+<!--                         android:layout_width="15dp"-->
+<!--                         android:layout_height="15dp"-->
+<!--                         android:src="@mipmap/number_sheng"-->
+<!--                         android:layout_gravity="center_horizontal"-->
+<!--                         android:layout_marginBottom="10dp"/>-->
+<!--                     <TextView-->
+<!--                         android:id="@+id/grade_hint1"-->
+<!--                         android:layout_width="wrap_content"-->
+<!--                         android:layout_height="wrap_content"-->
+<!--                         android:textColor="@color/colcor_gold"-->
+<!--                         android:textSize="@dimen/sp_12"-->
+<!--                         android:text="购物更省钱"-->
+<!--                         android:layout_gravity="center_horizontal"/>-->
+<!--                 </LinearLayout>-->
+<!--                 <LinearLayout-->
+<!--                     android:layout_width="wrap_content"-->
+<!--                     android:layout_height="wrap_content"-->
+<!--                     android:layout_weight="1"-->
+<!--                     android:orientation="vertical"-->
+<!--                     android:layout_margin="10dp">-->
+<!--                     <ImageView-->
+<!--                         android:layout_width="15dp"-->
+<!--                         android:layout_height="15dp"-->
+<!--                         android:src="@mipmap/number_share"-->
+<!--                         android:layout_gravity="center_horizontal"-->
+<!--                         android:layout_marginBottom="10dp"/>-->
+<!--                     <TextView-->
+<!--                         android:id="@+id/grade_hint2"-->
+<!--                         android:layout_width="wrap_content"-->
+<!--                         android:layout_height="wrap_content"-->
+<!--                         android:textColor="@color/colcor_gold"-->
+<!--                         android:textSize="@dimen/sp_12"-->
+<!--                         android:text="分享奖励高"-->
+<!--                         android:layout_gravity="center_horizontal"/>-->
 
-                 </LinearLayout>
-             </LinearLayout>
+<!--                 </LinearLayout>-->
+<!--                 <LinearLayout-->
+<!--                     android:layout_width="wrap_content"-->
+<!--                     android:layout_height="wrap_content"-->
+<!--                     android:layout_weight="1"-->
+<!--                     android:orientation="vertical"-->
+<!--                     android:layout_margin="10dp">-->
+<!--                     <ImageView-->
+<!--                         android:layout_width="15dp"-->
+<!--                         android:layout_height="15dp"-->
+<!--                         android:src="@mipmap/number_tuan"-->
+<!--                         android:layout_gravity="center_horizontal"-->
+<!--                         android:layout_marginBottom="10dp"/>-->
+<!--                     <TextView-->
+<!--                         android:id="@+id/grade_hint3"-->
+<!--                         android:layout_width="wrap_content"-->
+<!--                         android:layout_height="wrap_content"-->
+<!--                         android:textColor="@color/colcor_gold"-->
+<!--                         android:textSize="@dimen/sp_12"-->
+<!--                         android:text="团队奖不停"-->
+<!--                         android:layout_gravity="center_horizontal"/>-->
 
-             <!--4～6 三个特性-->
-             <LinearLayout
-                 android:id="@+id/number_grade_46"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="horizontal"
-                 android:layout_below="@id/number_grade_13">
-                 <LinearLayout
-                     android:layout_width="80dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:orientation="vertical"
-                     android:layout_margin="10dp">
-                     <ImageView
-                         android:layout_width="15dp"
-                         android:layout_height="15dp"
-                         android:src="@mipmap/number_daka"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_marginBottom="10dp"/>
-                     <TextView
-                         android:id="@+id/grade_hint4"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:textColor="@color/colcor_gold"
-                         android:textSize="@dimen/sp_12"
-                         android:text="大咖辅导"
-                         android:layout_gravity="center_horizontal"/>
+<!--                 </LinearLayout>-->
+<!--             </LinearLayout>-->
 
-
-                 </LinearLayout>
-                 <LinearLayout
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:orientation="vertical"
-                     android:layout_margin="10dp">
-                     <ImageView
-                         android:layout_width="15dp"
-                         android:layout_height="15dp"
-                         android:src="@mipmap/number_yunying"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_marginBottom="10dp"/>
-                     <TextView
-                         android:id="@+id/grade_hint5"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:textColor="@color/colcor_gold"
-                         android:textSize="@dimen/sp_12"
-                         android:text="专属后台运营"
-                         android:layout_gravity="center_horizontal"/>
+<!--             &lt;!&ndash;4～6 三个特性&ndash;&gt;-->
+<!--             <LinearLayout-->
+<!--                 android:id="@+id/number_grade_46"-->
+<!--                 android:layout_width="match_parent"-->
+<!--                 android:layout_height="wrap_content"-->
+<!--                 android:orientation="horizontal"-->
+<!--                 android:layout_below="@id/number_grade_13">-->
+<!--                 <LinearLayout-->
+<!--                     android:layout_width="80dp"-->
+<!--                     android:layout_height="wrap_content"-->
+<!--                     android:layout_weight="1"-->
+<!--                     android:orientation="vertical"-->
+<!--                     android:layout_margin="10dp">-->
+<!--                     <ImageView-->
+<!--                         android:layout_width="15dp"-->
+<!--                         android:layout_height="15dp"-->
+<!--                         android:src="@mipmap/number_daka"-->
+<!--                         android:layout_gravity="center_horizontal"-->
+<!--                         android:layout_marginBottom="10dp"/>-->
+<!--                     <TextView-->
+<!--                         android:id="@+id/grade_hint4"-->
+<!--                         android:layout_width="wrap_content"-->
+<!--                         android:layout_height="wrap_content"-->
+<!--                         android:textColor="@color/colcor_gold"-->
+<!--                         android:textSize="@dimen/sp_12"-->
+<!--                         android:text="大咖辅导"-->
+<!--                         android:layout_gravity="center_horizontal"/>-->
 
 
-                 </LinearLayout>
-                 <LinearLayout
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:orientation="vertical"
-                     android:layout_margin="10dp">
-                     <ImageView
-                         android:layout_width="15dp"
-                         android:layout_height="15dp"
-                         android:src="@mipmap/number_good_invited"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_marginBottom="10dp"/>
-                     <TextView
-                         android:id="@+id/grade_hint6"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:textColor="@color/colcor_gold"
-                         android:textSize="@dimen/sp_12"
-                         android:text="靓号邀请码"
-                         android:layout_gravity="center_horizontal"/>
-                 </LinearLayout>
-             </LinearLayout>
+<!--                 </LinearLayout>-->
+<!--                 <LinearLayout-->
+<!--                     android:layout_width="wrap_content"-->
+<!--                     android:layout_height="wrap_content"-->
+<!--                     android:layout_weight="1"-->
+<!--                     android:orientation="vertical"-->
+<!--                     android:layout_margin="10dp">-->
+<!--                     <ImageView-->
+<!--                         android:layout_width="15dp"-->
+<!--                         android:layout_height="15dp"-->
+<!--                         android:src="@mipmap/number_yunying"-->
+<!--                         android:layout_gravity="center_horizontal"-->
+<!--                         android:layout_marginBottom="10dp"/>-->
+<!--                     <TextView-->
+<!--                         android:id="@+id/grade_hint5"-->
+<!--                         android:layout_width="wrap_content"-->
+<!--                         android:layout_height="wrap_content"-->
+<!--                         android:textColor="@color/colcor_gold"-->
+<!--                         android:textSize="@dimen/sp_12"-->
+<!--                         android:text="专属后台运营"-->
+<!--                         android:layout_gravity="center_horizontal"/>-->
+
+
+<!--                 </LinearLayout>-->
+<!--                 <LinearLayout-->
+<!--                     android:layout_width="wrap_content"-->
+<!--                     android:layout_height="wrap_content"-->
+<!--                     android:layout_weight="1"-->
+<!--                     android:orientation="vertical"-->
+<!--                     android:layout_margin="10dp">-->
+<!--                     <ImageView-->
+<!--                         android:layout_width="15dp"-->
+<!--                         android:layout_height="15dp"-->
+<!--                         android:src="@mipmap/number_good_invited"-->
+<!--                         android:layout_gravity="center_horizontal"-->
+<!--                         android:layout_marginBottom="10dp"/>-->
+<!--                     <TextView-->
+<!--                         android:id="@+id/grade_hint6"-->
+<!--                         android:layout_width="wrap_content"-->
+<!--                         android:layout_height="wrap_content"-->
+<!--                         android:textColor="@color/colcor_gold"-->
+<!--                         android:textSize="@dimen/sp_12"-->
+<!--                         android:text="靓号邀请码"-->
+<!--                         android:layout_gravity="center_horizontal"/>-->
+<!--                 </LinearLayout>-->
+<!--             </LinearLayout>-->
 
          </RelativeLayout>
 
 
-   </android.support.v7.widget.CardView>
+<!--   </android.support.v7.widget.CardView>-->
 
 
 
 
 </LinearLayout>
-

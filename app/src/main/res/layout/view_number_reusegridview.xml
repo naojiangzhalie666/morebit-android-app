@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/listview_rl"
+                android:background="@color/transparent"
+                android:orientation="vertical">
+
+    <com.zjzy.morebit.Module.common.widget.NumberSwipeRefreshLayout
+        android:id="@+id/swipeList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.jdsjlzx.recyclerview.LuRecyclerView
+            android:id="@+id/mListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            />
+    </com.zjzy.morebit.Module.common.widget.NumberSwipeRefreshLayout>
+
+    <include layout="@layout/item_go_top"/>
+
+
+</RelativeLayout>

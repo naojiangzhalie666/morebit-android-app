@@ -76,34 +76,7 @@ public class OrderDetailFragment extends BaseFragment {
             case R.id.back:
                 getActivity().finish();
                 break;
-//            case R.id.iv_title:
-//                if (mPopWindow == null) {
-//                    mPopWindow = new SwitchOrderTypePopWindow(getActivity(), new MyAction.One<String>() {
-//                        @Override
-//                        public void invoke(String arg) {
-//                            if (!TextUtils.isEmpty(arg)) {
-//                                if (getActivity().getString(R.string.order_team_tb).equals(arg)) {
-//                                    mTeamType = 1;
-//                                    mTablayout.setViewPager(mViewPager);
-//                                } else if (getActivity().getString(R.string.order_team_other).equals(arg)) {
-//                                    mTeamType = 2;
-//                                }  else if (getActivity().getString(R.string.order_team_sl).equals(arg)) {
-//                                    mTeamType = 3;
-//                                } else if (getActivity().getString(R.string.order_team_yx).equals(arg)) {
-//                                    mTeamType = 10;
-//
-//                                    mTablayout.setViewPager(mViewPager);
-//                                }else {
-//                                    mTeamType = 1;
-//                                }
-//                                EventBus.getDefault().post(new OrderLoadDataEvent(mTeamType));
-//                                mTvTitle.setText(arg);
-//                            }
-//                        }
-//                    });
-//                }
-//                mPopWindow.showAsDropDown(mRlTitle);
-//                break;
+
             default:
         }
     }
@@ -131,7 +104,7 @@ public class OrderDetailFragment extends BaseFragment {
         }else{
             mTvTitle.setText("优选订单");
             titles = getResources().getStringArray(R.array.self_order_type);
-            mTablayout.setTabPadding(15);
+            mTablayout.setTabPadding(10);
         }
 
         for (int i = 0; i < titles.length; i++) {
@@ -165,6 +138,8 @@ public class OrderDetailFragment extends BaseFragment {
                 return OrderListFragment.newInstance(2, mTeamType);
             } else if (getString(R.string.order_play).equals(homeColumns.get(position))) {
                 return OrderListFragment.newInstance(1, mTeamType);
+            }else if (getString(R.string.order_receive_goods).equals(homeColumns.get(position))){
+                return OrderListFragment.newInstance(6, mTeamType);
             } else if (getString(R.string.order_close).equals(homeColumns.get(position))) {
                 return OrderListFragment.newInstance(3, mTeamType);
             } else if (getString(R.string.order_invalid).equals(homeColumns.get(position))
@@ -184,10 +159,6 @@ public class OrderDetailFragment extends BaseFragment {
         @Override
         public CharSequence getPageTitle(int position) {
             String title = homeColumns.get(position);
-
-//            if (mTeamType == 10 && title.equals("已失效")){
-//                return "已关闭";
-//            }
             return title;
         }
 

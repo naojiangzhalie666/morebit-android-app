@@ -180,36 +180,60 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.receiverGoodsTv.setVisibility(View.GONE);
                 viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
 
-            }else if ("1".equals(info.getStatus())){//已支付
+            }else if ("1".equals(info.getStatus())) {//已支付
                 viewHolder.tv_order_status.setText("已支付");
-                viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
-                viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
-                viewHolder.shipGoodsTv.setOnClickListener(new View.OnClickListener() {
+                viewHolder.shipGoodsTv.setVisibility(View.GONE);
+                viewHolder.receiverGoodsTv.setVisibility(View.GONE);
+                viewHolder.go_goods_detail_tv.setVisibility(View.VISIBLE);
+                viewHolder.go_goods_detail_tv.setText("再次购买");
+                viewHolder.go_goods_detail_tv.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        if(onSelfOrderClickListener!=null){
-                            onSelfOrderClickListener.onShip(info.getOrderSn(),position);
-                        }
+                        //重新购买，商品详情
+                        NumberGoodsDetailsActivity.start((Activity) mContext,info.getItemId());
                     }
                 });
-                //确认收货
-                if ("1".equals(info.getHasConfirm())){
-                    viewHolder.receiverGoodsTv.setVisibility(View.GONE);
-                }else{
-                    viewHolder.receiverGoodsTv.setVisibility(View.VISIBLE);
-                }
+//                viewHolder.shipGoodsTv.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (onSelfOrderClickListener != null) {
+//                            onSelfOrderClickListener.onShip(info.getOrderSn(), position);
+//                        }
+//                    }
+//                });
 
+                //确认收货
+//                if ("1".equals(info.getHasConfirm())) {
+//                    viewHolder.receiverGoodsTv.setVisibility(View.GONE);
+//                } else {
+//                    viewHolder.receiverGoodsTv.setVisibility(View.VISIBLE);
+//                }
+
+//                viewHolder.receiverGoodsTv.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (onSelfOrderClickListener != null) {
+//                            onSelfOrderClickListener.onReceiveGoods(info.getOrderSn(), position);
+//                        }
+//                    }
+//                });
+                viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
+            }else if ("6".equals(info.getStatus())){
+                viewHolder.tv_order_status.setText("待收货");
+                viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
+                viewHolder.receiverGoodsTv.setVisibility(View.VISIBLE);
+                viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
                 viewHolder.receiverGoodsTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(onSelfOrderClickListener!=null){
-                            onSelfOrderClickListener.onReceiveGoods(info.getOrderSn(),position);
+                        if (onSelfOrderClickListener != null) {
+                            onSelfOrderClickListener.onReceiveGoods(info.getOrderSn(), position);
                         }
                     }
                 });
-                viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
 
             }else if ("2".equals(info.getStatus())){//待支付
+
                 viewHolder.tv_order_status.setText("待支付");
                 viewHolder.shipGoodsTv.setVisibility(View.GONE);
                 viewHolder.go_goods_detail_tv.setVisibility(View.GONE);

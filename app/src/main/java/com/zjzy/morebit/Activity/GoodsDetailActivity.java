@@ -59,6 +59,7 @@ import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -1059,6 +1060,14 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             return;
         }
         LoadingView.showDialog(GoodsDetailActivity.this);
+        //todo：修复从足迹到收藏报错
+        String couponEndTime = mGoodsInfo.getCouponEndTime();
+
+        if (couponEndTime != null && couponEndTime.length() > 5){
+            couponEndTime = DateTimeUtils.toMMdd(couponEndTime);
+            mGoodsInfo.setCouponEndTime(couponEndTime);
+        }
+
         mPresenter.switchCollect(this, mGoodsInfo);
     }
 
