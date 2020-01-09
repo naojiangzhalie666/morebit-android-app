@@ -5,7 +5,7 @@
         <shape>
             <solid android:color="#EE403A" /><!--填充色-->
             <corners
-                android:radius="30dp"
+                android:radius="10dp"
                 />
         </shape>
     </item>

@@ -1,6 +1,7 @@
 package com.zjzy.morebit.login.ui;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -128,15 +129,19 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
         if(!TextUtils.isEmpty(areaCode) && "86".equals(areaCode)){
             if (mEdtPhoneText != null && mEdtPasswordText != null && mEdtPhoneText.length() == phoneLength && mEdtPasswordText.length() > 1) {
                 login.setEnabled(true);
+                login.setTextColor(Color.parseColor("#FFFFFF"));
             } else {
                 login.setEnabled(false);
+                login.setTextColor(Color.parseColor("#333333"));
             }
         }else{
             //海外手机
             if (mEdtPhoneText != null && mEdtPasswordText != null &&  mEdtPasswordText.length() > 1) {
                 login.setEnabled(true);
+                login.setTextColor(Color.parseColor("#FFFFFF"));
             } else {
                 login.setEnabled(false);
+                login.setTextColor(Color.parseColor("#333333"));
             }
         }
     }

@@ -65,11 +65,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingBottom="10dp">
+                            >
                             <RelativeLayout
                                 android:id="@+id/rl_number_update_vip"
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="40dp"
                                 android:background="@color/color_333333"
                                 android:layout_below="@id/rl_number_goods_price"
                                 >
@@ -111,7 +111,7 @@
                             <RelativeLayout
                                 android:id="@+id/rl_number_goods_price"
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="40dp"
                                 android:background="@color/color_FFFFFF"
                                 android:layout_below="@id/as_banner"
                                 >
@@ -165,36 +165,24 @@
                                     <ImageView
                                         android:layout_width="10dp"
                                         android:layout_height="10dp"
+                                        android:layout_marginLeft="5dp"
                                         android:layout_toRightOf="@id/number_goods_corns"
                                         android:layout_centerVertical="true"
                                         android:src="@mipmap/more_corn_icon"/>
                                 </RelativeLayout>
 
 
-<!--                                </TextView>-->
-<!--                                <ImageView-->
-<!--                                    android:layout_width="12dp"-->
-<!--                                    android:layout_height="12dp"-->
-<!--                                    android:layout_toRightOf="@id/number_goods_corns"-->
-<!--                                    android:layout_alignBottom="@id/number_goods_corns"-->
-<!--                                    android:layout_marginBottom="8dp"-->
-<!--                                    android:layout_marginLeft="-20dp"-->
-
-<!--                                    android:src="@mipmap/more_corn_icon"-->
-<!--                                    android:scaleType="centerInside"-->
-<!--                                    />-->
                             </RelativeLayout>
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="5dp"
+                                android:layout_height="10dp"
                                 android:background="@color/color_EDEDED"/>
 
                             <RelativeLayout
                                 android:id="@+id/rl_number_goods_title"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
+                                android:layout_height="40dp"
                                 android:background="@color/color_FFFFFF"
-                                android:layout_below="@id/rl_number_update_vip"
                                 >
                                 <TextView
                                     android:id="@+id/number_goods_title"
@@ -212,10 +200,10 @@
                         </LinearLayout>
 
                         <View
+                            android:id="@+id/v_line"
                             android:layout_width="match_parent"
-                            android:layout_height="5dp"
+                            android:layout_height="10dp"
                             android:background="@color/color_EDEDED"/>
-
                     </LinearLayout>
 
                     <FrameLayout

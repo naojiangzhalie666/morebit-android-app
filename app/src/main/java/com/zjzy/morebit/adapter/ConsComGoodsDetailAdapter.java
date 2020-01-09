@@ -223,6 +223,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
                 viewHolder.receiverGoodsTv.setVisibility(View.VISIBLE);
                 viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
+                viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
                 viewHolder.receiverGoodsTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
