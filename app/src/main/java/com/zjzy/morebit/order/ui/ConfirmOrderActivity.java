@@ -2,6 +2,8 @@ package com.zjzy.morebit.order.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,6 +28,7 @@ import com.zjzy.morebit.order.contract.ConfirmOrderContract;
 import com.zjzy.morebit.order.presenter.ConfirmOrderPresenter;
 import com.zjzy.morebit.payment.PayResult;
 import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
+import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
@@ -169,8 +172,6 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
 //                        Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         ViewShowUtils.showShortToast(ConfirmOrderActivity.this,"支付成功");
-
-
                     } else {
                         payStatus =1;
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
@@ -180,6 +181,9 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
 
                     }
                     mPresenter.syncPayResult(ConfirmOrderActivity.this,mOrderId,payStatus);
+                    payAction.setEnabled(true);
+                    payAction.setTextColor(Color.parseColor("#FFFFFF"));
+                    payAction.setBackgroundResource(R.drawable.bg_confirm_order_buy_corner);
                     break;
                 }
             }
@@ -233,6 +237,11 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
 
 
     private void initView(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
+        } else {
+            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
+        }
         headTitle.setText("确认订单");
         mGoodsOrderInfo = (GoodsOrderInfo) getIntent().getSerializableExtra(C.Extras.GOODS_ORDER_INFO);
         if (mGoodsOrderInfo == null){
@@ -272,6 +281,9 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
                 case R.id.txt_confirm_order_goods_real_pay_action:
 
                     if (checkAddress(mAddressInfo) && checkGoodsOrder(mGoodsOrderInfo)){
+                        payAction.setEnabled(false);
+                        payAction.setTextColor(Color.parseColor("#D3D3D3"));
+                        payAction.setBackgroundResource(R.drawable.bg_confirm_order_buy_corner_disable);
                         //创建订单
                         mPresenter.createOrderForVip(ConfirmOrderActivity.this,
                                 mAddressInfo.getId(),mGoodsOrderInfo.getGoodsId(),

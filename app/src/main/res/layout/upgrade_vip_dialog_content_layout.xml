@@ -21,8 +21,9 @@
             android:src="@mipmap/bg_leader_upgrade"
             android:scaleType="fitCenter"/>
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_alignBottom="@id/bg_img"
             android:layout_marginBottom="40dp"
             android:orientation="horizontal"
@@ -47,6 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="升级团队长"
+                        android:textColor="@color/color_78482F"
                         android:textStyle="bold"
                         android:textSize="12dp"/>
                     <TextView
@@ -54,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="20000豆"
-                        android:textColor="@color/color_885A3D"
+                        android:textColor="@color/color_333333"
                         android:textSize="12dp"/>
 
                 </LinearLayout>
@@ -77,6 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="升级VIP"
+                        android:textColor="@color/color_78482F"
                         android:textStyle="bold"
                         android:textSize="12dp"/>
                     <TextView
@@ -84,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="(3600豆)"
-                        android:textColor="@color/color_885A3D"
+                        android:textColor="@color/color_333333"
                         android:textSize="12dp"/>
                 </LinearLayout>
 
@@ -97,6 +100,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/dailog_vip_grade_container">
         <ImageView
@@ -105,7 +109,6 @@
             android:layout_height="45dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-
             android:padding="10dp"
             android:scaleType="centerInside"
             android:src="@mipmap/update_grade_close" />

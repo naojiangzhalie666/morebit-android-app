@@ -76,7 +76,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         } else {
-            ActivityStyleUtil.initSystemBar(this, R.color.color_757575); //设置标题栏颜色值
+            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
         }
         item1_rl = (RelativeLayout) findViewById(R.id.item1_rl);
         mUserIcon = (ImageView) findViewById(R.id.userIcon);

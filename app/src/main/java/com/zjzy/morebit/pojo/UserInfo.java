@@ -44,6 +44,10 @@ public class UserInfo implements Serializable {
     private String inviteCode = "";//邀请码
     private String userType; // partner  是判断角色字段  0 会员 1：vip会员 2团队长
     private String calculationRate = "";// 是佣金计算比例
+
+
+
+    private String calculationSelfRate = "";//自营商品佣金比例。
     private String gradename = "";// 用户等级名称
     private  int releasePermission;    //发圈发布管理权限 0 :否  1:有
     private int qr_code_show  ;//  微信二维码显示位置 全部 1，我的团队2，客服3
@@ -329,5 +333,13 @@ public class UserInfo implements Serializable {
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public String getCalculationSelfRate() {
+        return calculationSelfRate;
+    }
+
+    public void setCalculationSelfRate(String calculationSelfRate) {
+        this.calculationSelfRate = calculationSelfRate;
     }
 }

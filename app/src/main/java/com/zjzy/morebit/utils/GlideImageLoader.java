@@ -3,6 +3,7 @@ package com.zjzy.morebit.utils;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.youth.banner.loader.ImageLoader;
 
 
@@ -28,4 +29,10 @@ public class GlideImageLoader extends ImageLoader {
         }
     }
 
+    @Override
+    public ImageView createImageView(Context context) {
+        RoundedImageView img = new RoundedImageView(context);
+        img.setCornerRadius(DensityUtil.dip2px(context,5));
+        return img;
+    }
 }

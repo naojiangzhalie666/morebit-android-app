@@ -3,6 +3,7 @@ package com.zjzy.morebit.address.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import com.zjzy.morebit.address.contract.ManageAddressContract;
 import com.zjzy.morebit.address.presenter.ManageAddressPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
@@ -148,6 +150,11 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
     }
 
     private void initView(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
+        } else {
+            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
+        }
         fromOrderActivity = getIntent().getIntExtra(C.Extras.SELECTED_ADDRESS_FROM_CONFIRM_ORDER,0);
 
         headTitle.setText("管理收货地址");

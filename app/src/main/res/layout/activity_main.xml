@@ -28,6 +28,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="@color/color_FFFFFF"
             >
 
             <RelativeLayout
@@ -35,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/index_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 >
 
@@ -62,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/index_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="0dip">
 
@@ -91,7 +92,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/index_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="0dip">
 
@@ -120,7 +121,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/index_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="0dip">
 
@@ -148,7 +149,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/index_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="0dip">
 

@@ -75,7 +75,7 @@
                 android:paddingRight="10dp"
                 android:paddingTop="2dp"
                 android:text="@string/send_msg"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
     </LinearLayout>

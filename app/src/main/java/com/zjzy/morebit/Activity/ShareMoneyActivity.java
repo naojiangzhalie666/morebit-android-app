@@ -129,7 +129,7 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         } else {
-            ActivityStyleUtil.initSystemBar(this, R.color.color_757575); //设置标题栏颜色值
+            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
         }
         //设置页面头顶空出状态栏的高度
         btn_back = (LinearLayout) findViewById(R.id.btn_back);

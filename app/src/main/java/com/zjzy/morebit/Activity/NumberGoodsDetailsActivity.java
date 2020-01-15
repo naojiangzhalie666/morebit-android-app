@@ -120,6 +120,8 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     @BindView(R.id.room_view)
     View room_view;
 
+    @BindView(R.id.number_goods_title)
+    TextView numberGoodsTitle;
     /**
      * 会员商品Id
      */
@@ -544,6 +546,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         }
         double price = mGoodsInfo.getRetailPrice();
         goodsPrice.setText(String.valueOf(price));
+        numberGoodsTitle.setText(goodsInfo.getName());
         int moreCorn = (int)price*10;
         morebitCorn.setText(getResources().getString(R.string.number_give_more_corn,String.valueOf(moreCorn)));
         srl_view.setRefreshing(false);

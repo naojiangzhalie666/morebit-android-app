@@ -44,7 +44,7 @@
                     <!-- 用户信息-->
                     <include layout="@layout/mine_head_view" />
                     <!--收益-->
-                    <include layout="@layout/mine_earnings" />
+                        <include layout="@layout/mine_earnings" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -265,7 +265,6 @@
                     android:id="@+id/as_banner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="15dp"

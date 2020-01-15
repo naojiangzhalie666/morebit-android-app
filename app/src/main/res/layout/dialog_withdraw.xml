@@ -61,7 +61,7 @@
                 android:paddingRight="30dp"
                 android:paddingTop="8dp"
                 android:text="知道了"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_15" />
 
         </LinearLayout>

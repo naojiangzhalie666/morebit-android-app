@@ -1,21 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_F8F8F8"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-    <include layout="@layout/top" />
+<!--    <include layout="@layout/top" />-->
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        style="@style/TopSize">
 
+        <TextView
+            android:id="@+id/txt_head_title"
+            style="@style/TopSizeTitle"
+            android:layout_centerInParent="true"
+            android:text="确认订单" />
+
+        <LinearLayout
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingTop="10dp"
+            android:paddingRight="35dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                style="@style/TopSizeBack"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/commom_header_order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rel_top"
+        android:orientation="vertical"
+        >
 
     <!--订单状态-->
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/bg_order_detail">
@@ -289,7 +318,7 @@
                             android:textColor="@color/color_666666"
                             android:text="实付款"
                             android:textStyle="bold"
-                            android:textSize="@dimen/sp_18"/>
+                            android:textSize="@dimen/sp_12"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -496,46 +525,51 @@
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
-    <!--已完成订单没有购买，已关闭订单有再次购买-->
-    <LinearLayout
-        android:id="@+id/order_finish_rebuy"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         >
+        <!--已完成订单没有购买，已关闭订单有再次购买-->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:layout_gravity="center_vertical"
-            android:background="@color/color_FFFFFF">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+            android:id="@+id/order_finish_rebuy"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:layout_gravity="center_vertical"
-                android:text="合计："
-                android:gravity="center"
-                android:textColor="@color/color_ffe800"
-                android:textSize="@dimen/sp_12"
-                android:background="@color/color_FFFFFF"/>
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/money_red"/>
-            <TextView
-                android:id="@+id/total_pay_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/number_order_total_price"
-                android:gravity="center"
-                android:textColor="@color/color_ffe800"
-                android:textSize="@dimen/sp_14"
-                android:background="@color/color_FFFFFF"/>
-        </LinearLayout>
+                android:background="@color/color_FFFFFF">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="合计："
+                    android:gravity="center"
+                    android:textColor="@color/color_ffe800"
+                    android:textSize="@dimen/sp_12"
+                    android:background="@color/color_FFFFFF"/>
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/money_red"/>
+                <TextView
+                    android:id="@+id/total_pay_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/number_order_total_price"
+                    android:gravity="center"
+                    android:textColor="@color/color_ffe800"
+                    android:textSize="@dimen/sp_14"
+                    android:background="@color/color_FFFFFF"/>
+            </LinearLayout>
 
 
             <TextView
@@ -551,118 +585,118 @@
                 android:textColor="@color/color_FFFFFF"
                 android:background="@color/color_FF645B"
                 />
-    </LinearLayout>
-
-    <!--已完成订单没有购买，已关闭订单有再次购买-->
-    <LinearLayout
-        android:id="@+id/order_confirm_goods"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        >
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:layout_gravity="center_vertical"
-            android:background="@color/color_FFFFFF">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center_vertical"
-                android:text="合计："
-                android:gravity="center"
-                android:textColor="@color/color_ffe800"
-                android:textSize="@dimen/sp_12"
-                android:background="@color/color_FFFFFF"/>
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/money_red"/>
-            <TextView
-                android:id="@+id/total_pay_price_confirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/number_order_total_price"
-                android:gravity="center"
-                android:textColor="@color/color_ffe800"
-                android:textSize="@dimen/sp_14"
-                android:background="@color/color_FFFFFF"/>
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/btn_confirm_goods"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:text="确认收货"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold"
-            android:textColor="@color/color_FFFFFF"
-            android:background="@color/color_FF645B"
-            />
-    </LinearLayout>
-
-    <!--去支付。底部取消、去支付-->
-    <LinearLayout
-        android:id="@+id/order_cancel_repay"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        >
+        <!--已完成订单没有购买，已关闭订单有再次购买-->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:layout_gravity="center_vertical"
-            android:background="@color/color_FFFFFF">
+            android:id="@+id/order_confirm_goods"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical"
+                android:background="@color/color_FFFFFF">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="合计："
+                    android:gravity="center"
+                    android:textColor="@color/color_ffe800"
+                    android:textSize="@dimen/sp_12"
+                    android:background="@color/color_FFFFFF"/>
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/money_red"/>
+                <TextView
+                    android:id="@+id/total_pay_price_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/number_order_total_price"
+                    android:gravity="center"
+                    android:textColor="@color/color_ffe800"
+                    android:textSize="@dimen/sp_14"
+                    android:background="@color/color_FFFFFF"/>
+            </LinearLayout>
+
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:id="@+id/btn_confirm_goods"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:text="合计："
                 android:gravity="center"
-                android:textColor="@color/color_ffe800"
-                android:textSize="@dimen/sp_12"
-                android:background="@color/color_FFFFFF"/>
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/money_red"/>
-            <TextView
-                android:id="@+id/total_pay_price_topay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/number_order_total_price"
-                android:gravity="center"
-                android:textColor="@color/color_ffe800"
-                android:textSize="@dimen/sp_14"
-                android:background="@color/color_FFFFFF"/>
+                android:text="确认收货"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                android:textColor="@color/color_FFFFFF"
+                android:background="@color/color_FF645B"
+                />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/btn_cancel_order"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:text="取消订单"
-            android:textSize="@dimen/sp_12"
-            android:textColor="@color/color_999999"
-            android:background="@color/color_D8D8D8"
-            />
+        <!--去支付。底部取消、去支付-->
+        <LinearLayout
+            android:id="@+id/order_cancel_repay"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical"
+                android:background="@color/color_FFFFFF">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="合计："
+                    android:gravity="center"
+                    android:textColor="@color/color_ffe800"
+                    android:textSize="@dimen/sp_12"
+                    android:background="@color/color_FFFFFF"/>
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/money_red"/>
+                <TextView
+                    android:id="@+id/total_pay_price_topay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/number_order_total_price"
+                    android:gravity="center"
+                    android:textColor="@color/color_ffe800"
+                    android:textSize="@dimen/sp_14"
+                    android:background="@color/color_FFFFFF"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btn_cancel_order"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="取消订单"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/color_999999"
+                android:background="@color/color_D8D8D8"
+                />
 
             <TextView
                 android:id="@+id/btn_to_pay"
@@ -678,7 +712,8 @@
                 android:background="@color/color_FF645B"
                 />
 
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

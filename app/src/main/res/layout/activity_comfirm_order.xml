@@ -311,7 +311,6 @@
                     android:gravity="right"
                     android:layout_marginRight="10dp"
                     android:layout_gravity="center_vertical"
-                    android:textStyle="bold"
                     android:textSize="@dimen/sp_12"
                     />
             </LinearLayout>
@@ -350,7 +349,6 @@
                     android:gravity="right"
                     android:layout_marginRight="10dp"
                     android:layout_gravity="center_vertical"
-                    android:textStyle="bold"
                     android:textSize="@dimen/sp_12"
                     />
             </LinearLayout>

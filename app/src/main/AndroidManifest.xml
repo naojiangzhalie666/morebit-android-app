@@ -94,6 +94,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup"
         android:hardwareAccelerated="false"
+        android:networkSecurityConfig="@xml/network_security_config"
         >
 <!--        android:networkSecurityConfig="@xml/network_security_config"-->
 

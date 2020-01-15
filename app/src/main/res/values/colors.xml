@@ -126,7 +126,8 @@
     <color name="color_FFF3DD">#FFF3DD</color>
     <color name="color_FFF4BF">#FFF4BF</color>
     <color name="color_28221C">#28221C</color>
-    <color name="color_FFE50B">#FFE50B</color>
+    //主色调
+    <color name="color_FFE50B">#FF645B</color>
     <color name="color_BDBDBD">#BDBDBD</color>
     <color name="color_FFE02C">#FFE02C</color>
     <color name="color_D2D2D2">#D2D2D2</color>
@@ -246,5 +247,5 @@
     <color name="color_fffc672a">#fffc672a</color>
     <color name="color_B27D17">#B27D17</color>
     <color name="color_fff8f8f8">#fff8f8f8</color>
-
+    <color name="color_78482F">#78482F</color>
 </resources>

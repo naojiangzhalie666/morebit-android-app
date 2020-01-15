@@ -84,7 +84,7 @@
                 <com.zjzy.morebit.view.HorzProgressView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/horzProgressView"
-                    android:layout_width="168dp"
+                    android:layout_width="130dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="10dp"
                     app:liys_progress_line_max="100"
@@ -121,6 +121,7 @@
                     android:paddingRight="20dp"
                     android:textSize="@dimen/sp_16"
                     android:text="立即晋升"
+                    android:textColor="@color/color_000000"
                     android:textStyle="bold"
                     android:gravity="center"
                     android:background="@drawable/btn_bg_gold"

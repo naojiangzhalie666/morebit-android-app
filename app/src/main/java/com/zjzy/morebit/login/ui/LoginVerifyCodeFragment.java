@@ -1,6 +1,7 @@
 package com.zjzy.morebit.login.ui;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -161,6 +162,8 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     public void sendMsg() {
         //点击后置为不可点击状态
         mBtnSend.setEnabled(false);
+        mBtnSend.setTextColor(Color.parseColor("#666666"));
+        mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_666666_30dp);
         LoadingView.showDialog(getActivity(), "请求中...");
         mPresenter.checkoutPhone(this, mPhone, loginType,mAreaCode.getAreaCode());
 
@@ -220,6 +223,8 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     @Override
     public void showFailureMessage(String errorMsg) {
         mBtnSend.setEnabled(true);
+        mBtnSend.setTextColor(Color.parseColor("#F0F0F0"));
+        mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_f0f0f0_30dp);
     }
 
     @Override
@@ -325,6 +330,8 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
                         int seconds = (int) (60 - aLong);
                         mBtnSend.setEnabled(false);
                         mBtnSend.setText(getString(R.string.count_down, seconds + ""));
+//                        mBtnSend.setTextColor(Color.parseColor("#666666"));
+//                        mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_666666_30dp);
                         mBtnSend.setTextColor(getResources().getColor(R.color.color_999999));
                         mBtnSend.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_333333_30dp));
                     }
@@ -335,8 +342,10 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
                         //倒计时完毕置为可点击状态
                         mBtnSend.setEnabled(true);
                         mBtnSend.setText("重新发送");
+//                        mBtnSend.setTextColor(Color.parseColor("#F0F0F0"));
+//                        mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_f0f0f0_30dp);
                         mBtnSend.setTextColor(getResources().getColor(R.color.color_666666));
-                        mBtnSend.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_ffd800_14dp));
+                        mBtnSend.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_666666_30dp));
                     }
                 })
                 .subscribe();

@@ -100,25 +100,26 @@
                     android:background="@color/color_FFECB6"
                     android:gravity="center"
                     android:text="您的奖励预计为: 0.00元"
-                    android:textColor="@color/color_B4791D"
+                    android:textColor="@color/color_FFFFFF"
                     android:textSize="12sp"/>
 
                 <ImageView
                     android:id="@+id/icon_right"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/icon_guizefanhui"/>
+                    android:src="@drawable/icon_gengduo_white"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/icon_right"
                     android:text="规则"
-                    android:textColor="@color/color_B4791D"
+                    android:textColor="@color/color_FFFFFF"
                     android:textSize="11sp"/>
             </RelativeLayout>
 
@@ -154,7 +155,7 @@
                 android:background="@drawable/background_radius_haibao"
                 android:gravity="center"
                 android:text="更换海报主图"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="13dp"/>
 
             <TextView
@@ -217,7 +218,7 @@
                         android:paddingTop="5dp"
                         android:layout_marginRight="13dp"
                         android:text="@string/capy_tkl"
-                        android:textColor="@color/color_333333"
+                        android:textColor="@color/color_FFFFFF"
                         android:textSize="10sp"/>
                     <TextView
                         android:id="@+id/tv_edit_template"
@@ -229,7 +230,7 @@
                         android:background="@drawable/bg_fff4bf_round_11dp"
                         android:gravity="center"
                         android:text="@string/edit_template"
-                        android:textColor="@color/color_333333"
+                        android:textColor="@color/color_FFFFFF"
                         android:textSize="@dimen/sp_12"/>
 
 
@@ -262,7 +263,7 @@
                 android:paddingRight="13dp"
                 android:text="仅复制文案分享"
                 android:paddingTop="5dp"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="12sp"/>
         </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.zjzy.morebit.order.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.info.ui.fragment.OrderDetailFragment;
 import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
+import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 
@@ -23,8 +25,8 @@ import butterknife.BindView;
  */
 public class OrderTeamActivity extends BaseActivity {
 
-    @BindView(R.id.iv_back)
-    ImageView btnBack;
+    @BindView(R.id.btn_back)
+    LinearLayout btnBack;
 
     @BindView(R.id.ll_taobao_order)
     LinearLayout llTaobaoOrder;
@@ -46,6 +48,11 @@ public class OrderTeamActivity extends BaseActivity {
         initView();
     }
     private  void initView(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
+        } else {
+            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
+        }
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

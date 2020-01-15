@@ -2,6 +2,7 @@ package com.zjzy.morebit.address.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
@@ -25,6 +26,7 @@ import com.zjzy.morebit.address.contract.AddOrModifyAddressContract;
 import com.zjzy.morebit.address.presenter.AddOrModifyAddressPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
@@ -183,6 +185,11 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     }
 
     private void initView(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
+        } else {
+            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
+        }
         type = getIntent().getIntExtra(C.Extras.TYPE_ADDRESS,0);
         if (type == C.Address.UPDATE_TYPE){
             mAddressPosition = getIntent().getExtras().getInt("addressPosition");

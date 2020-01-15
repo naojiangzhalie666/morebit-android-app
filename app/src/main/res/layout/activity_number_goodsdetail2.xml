@@ -293,7 +293,6 @@
 
         >
 
-        <TextView style="@style/line"/>
 
         <LinearLayout
             android:id="@+id/bottomLy"

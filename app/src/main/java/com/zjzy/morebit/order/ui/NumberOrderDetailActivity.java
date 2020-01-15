@@ -2,6 +2,7 @@ package com.zjzy.morebit.order.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -32,6 +33,7 @@ import com.zjzy.morebit.order.presenter.OrderDetailPresenter;
 
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.payment.PayResult;
+import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -216,7 +218,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
     private int payStatus =0;
 
-    private Counter mTimer;
+    //private Counter mTimer;
 
 
     private OrderDetailInfo mInfo;
@@ -279,10 +281,11 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     protected void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
-        if (mTimer != null) {
+        //todo 隐藏倒计时功能
+        /**if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
-        }
+        }*/
     }
 
     @Override
@@ -708,7 +711,9 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
                 mPresenter.payForOrder(NumberOrderDetailActivity.this,mOrderId);
             }
         });
-        String createTime = info.getCreateTime();
+        //todo： 隐藏倒计时功能
+        tvDaojishiTime.setVisibility(View.GONE);
+      /**  String createTime = info.getCreateTime();
         if (isNumeric(createTime)){
 
 
@@ -724,7 +729,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
                 tvDaojishiTime.setVisibility(View.GONE);
                 MyLog.d("test","订单与客户端本地时间差异:"+time+"毫秒");
             }
-        }
+        }*/
 
 //        Counter counter = new Counter(60 * 1000, 1000); // 第一个参数是倒计时时间，后者为计时间隔，单位毫秒，这里是倒计时
 //        counter.start();
@@ -762,6 +767,11 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     }
 
     private void initView(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
+        } else {
+            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
+        }
         mOrderId = getIntent().getStringExtra("orderId");
         headTitle.setText("订单详情");
         //返回按钮
@@ -779,8 +789,8 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     private void initData(){
         mPresenter.getOrderDetail(NumberOrderDetailActivity.this,mOrderId);
     }
-
-    class Counter extends CountDownTimer {
+    //todo 隐藏倒计时功能
+    /**class Counter extends CountDownTimer {
 
         public Counter(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
@@ -789,11 +799,6 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         @Override
         public void onFinish() {
             try {
-//                tv_yanzhengma.setEnabled(true);
-//                tv_yanzhengma.setText("重新获取");
-//                tv_yanzhengma.setBackgroundResource(R.drawable.bg_ffe10a_rightround_2dp);
-//                tv_yanzhengma.setTextColor(getResources().getColor(R.color.color_000000));
-
                 initOrderStatusClose(mInfo);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -807,13 +812,9 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
                 String dataTime = DateTimeUtils.getHHmmss(millisUntilFinished);
                 tvDaojishiTime.setText("剩余 "+dataTime);
             }
-            // 获取当前时间总秒数
-//            first = millisUntilFinished / 1000;
-//            if (first <= SECONDS) { // 小于一分钟 只显示秒
-//                tv_yanzhengma.setText((first < 10 ? "0" + first : first) + " 秒后再试");
-//            }
+
 
         }
 
-    }
+    }*/
 }

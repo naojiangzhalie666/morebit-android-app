@@ -4,45 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:id="@+id/ll_earnings"
     android:orientation="vertical">
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/rl_balance"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="12dp"-->
-<!--        android:layout_marginRight="12dp"-->
-<!--        android:background="@drawable/mine_bg_withdaw"-->
-<!--        android:paddingBottom="5dp"-->
-<!--        android:paddingLeft="8dp"-->
-<!--        android:paddingRight="4dp"-->
-<!--        android:paddingTop="5dp"-->
-<!--        android:visibility="visible">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_balance"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentLeft="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="14sp" />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="51dp"-->
-<!--            android:layout_height="21dp"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:background="@drawable/mine_bg_text_withdraw"-->
-<!--            android:gravity="center"-->
-<!--            android:id="@+id/tv_withdraw"-->
-<!--            android:text="提现"-->
-<!--            android:textColor="@color/color_333333"-->
-<!--            android:textSize="14sp" />-->
-<!--    </RelativeLayout>-->
 
     <android.support.v7.widget.CardView
         android:id="@+id/moneyCardView"
@@ -50,13 +15,13 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="6dp"
         app:cardElevation="0dp"
-        app:cardUseCompatPadding="false">
+        app:cardUseCompatPadding="false"
+        app:cardBackgroundColor="#F8CE77">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:id="@+id/ll_mine_earnings"
-            android:background="@drawable/bg_mine_earnings"
             android:orientation="horizontal">
 
                     <LinearLayout
