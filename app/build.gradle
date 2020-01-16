@@ -79,9 +79,9 @@ android {
     buildTypes {
         release {
             // 开启混淆
-            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled true
-            debuggable true
+            debuggable false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -109,13 +109,13 @@ android {
     productFlavors {
         //开发环境
         develop {
-            buildConfigField "String", "BASE_HOST", '"http://api.markermall.com"'
+            buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "1"
             dimension "cooperator"
         }
         //测试Uat环境
         uat {
-            buildConfigField "String", "BASE_HOST", '"http://api.markermall.com"'
+            buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "2"
             dimension "cooperator"
         }
@@ -126,7 +126,7 @@ android {
         }
         //生产环境
         product {
-            buildConfigField "String", "BASE_HOST", '"https://api.markermall.com"'
+            buildConfigField "String", "BASE_HOST", '"https://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "4"
             dimension "cooperator"
         }
