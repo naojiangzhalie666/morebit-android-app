@@ -121,7 +121,7 @@
         android:id="@+id/bottomLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_EDEDED"/>
+        android:background="@color/color_F8F8F8"/>
 
 
 

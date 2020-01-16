@@ -1,6 +1,7 @@
 package com.zjzy.morebit.login.ui;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -267,8 +268,10 @@ public class SetPasswordFragment extends MvpFragment<SetpasswordPresenter> imple
         public void afterTextChanged(Editable s) {
             if (checkPassword(false) && checkRePassword(true)) {
                 mSetPassword.setEnabled(true);
+                mSetPassword.setTextColor(Color.parseColor("#FFFFFF"));
             } else {
                 mSetPassword.setEnabled(false);
+                mSetPassword.setTextColor(Color.parseColor("#333333"));
             }
         }
     };

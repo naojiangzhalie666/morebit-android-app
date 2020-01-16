@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.markermall.player_module.test", appContext.getPackageName());
+        assertEquals("com.morebit.player_module.test", appContext.getPackageName());
     }
 }

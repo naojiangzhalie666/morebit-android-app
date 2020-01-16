@@ -56,12 +56,12 @@ public class NoticeActivity  extends MvpActivity<NoticePresenter> implements Not
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         } else {
-            ActivityStyleUtil.initSystemBar(this, R.color.color_757575); //设置标题栏颜色值
+            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
         }
 
 
         noticeAdapter = new NoticeAdapter(this);
-        RecycleViewItemLine recycleViewItemLine = new RecycleViewItemLine(this,LinearLayoutManager.VERTICAL,DensityUtil.dip2px(this,11),R.color.color_EDEDED);
+        RecycleViewItemLine recycleViewItemLine = new RecycleViewItemLine(this,LinearLayoutManager.VERTICAL,DensityUtil.dip2px(this,11),R.color.color_F8F8F8);
         reUseListView.getListView().addItemDecoration(recycleViewItemLine);
         reUseListView.setAdapter(noticeAdapter);
 

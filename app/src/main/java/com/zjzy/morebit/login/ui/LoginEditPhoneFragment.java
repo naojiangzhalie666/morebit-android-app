@@ -2,6 +2,7 @@ package com.zjzy.morebit.login.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -143,14 +144,18 @@ public class LoginEditPhoneFragment extends MvpFragment<LoginEditPhonePresenter>
         if("86".equals(areaCode)){
             if (mEdtPhoneText != null && mEdtPhoneText.length() == mPhoneLenght) {
                 tv_next.setEnabled(true);
+                tv_next.setTextColor(Color.parseColor("#FFFFFF"));
             }else {
                 tv_next.setEnabled(false);
+                tv_next.setTextColor(Color.parseColor("#333333"));
             }
         }else{
             if(mEdtPhoneText != null  && mEdtPhoneText.length() >= C.PHONE.MIN_LENGTH ){
                 tv_next.setEnabled(true);
+                tv_next.setTextColor(Color.parseColor("#FFFFFF"));
             }else{
                 tv_next.setEnabled(false);
+                tv_next.setTextColor(Color.parseColor("#333333"));
             }
         }
     }

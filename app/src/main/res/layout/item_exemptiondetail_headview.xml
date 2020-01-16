@@ -135,7 +135,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="@color/color_EDEDED"/>
+                android:background="@color/color_F8F8F8"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -314,7 +314,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="@color/color_EDEDED"/>
+                android:background="@color/color_F8F8F8"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -336,7 +336,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="@color/color_EDEDED"/>
+                android:background="@color/color_F8F8F8"/>
 
             <RelativeLayout
                 android:id="@+id/rl_baobao_particulars"
@@ -377,7 +377,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/color_EDEDED"/>
+                android:background="@color/color_F8F8F8"/>
 
 
             <com.zjzy.morebit.view.FixRecyclerView
@@ -404,7 +404,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="@color/color_EDEDED"/>
+                android:background="@color/color_F8F8F8"/>
 <!--
 
             <LinearLayout

@@ -14,7 +14,7 @@
             android:id="@+id/rl_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_EDEDED"/>
+            android:background="@color/color_F8F8F8"/>
 
         <include layout="@layout/item_go_top"/>
     </RelativeLayout>

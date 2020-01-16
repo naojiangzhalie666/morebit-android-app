@@ -9,7 +9,7 @@
         android:id="@+id/v_line"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@color/color_EDEDED"/>
+        android:background="@color/color_F8F8F8"/>
     <RelativeLayout
         android:layout_below="@+id/v_line"
         android:id="@+id/rl_title"

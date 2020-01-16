@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_EDEDED"
+    android:background="@color/color_F8F8F8"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar_actionbar_no_shadow" />
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_above="@+id/ll_remove"
-                android:background="@color/color_EDEDED" />
+                android:background="@color/color_F8F8F8" />
 
             <include
                 layout="@layout/view_base_delete"

@@ -42,7 +42,7 @@ android {
 //                XIAOMI_APPKEY: "MI-5431771384274",//小米平台注册的appkey
 //                XIAOMI_APPID : "MI-2882303761517713274",//小米平台注册的appid
 //
-                HUAWEI_APPID:"100229485",//华为平台注册的appid
+                HUAWEI_APPID:"101614827",//华为平台注册的appid
 
                 MEIZU_APPKEY:"MZ-9a345249ed9d42e8a7bd95402e8395fc",//魅族平台注册的appkey
                 MEIZU_APPID:"MZ-115849",//魅族平台注册的appid

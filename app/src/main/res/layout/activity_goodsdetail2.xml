@@ -162,7 +162,7 @@
                                 <TextView
                                     android:id="@+id/tv_line"
                                     android:layout_width="1dp"
-                                    android:background="@color/color_EDEDED"
+                                    android:background="@color/color_F8F8F8"
                                     android:layout_height="12dp"/>
 
                                 <TextView
@@ -278,7 +278,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="5dp"
-                            android:background="@color/color_EDEDED"/>
+                            android:background="@color/color_F8F8F8"/>
 
                         <!--店铺信息-->
                         <include layout="@layout/layout_goodsdetail_shop"/>
@@ -288,7 +288,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/color_EDEDED"/>
+                            android:background="@color/color_F8F8F8"/>
 
                         <LinearLayout
                             android:id="@+id/ll_fw"
@@ -302,7 +302,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="5dp"
-                            android:background="@color/color_EDEDED"/>
+                            android:background="@color/color_F8F8F8"/>
 
                         <RelativeLayout
                             android:id="@+id/rl_desc"
@@ -343,7 +343,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="5dp"
-                            android:background="@color/color_EDEDED"/>
+                            android:background="@color/color_F8F8F8"/>
 
                     </LinearLayout>
 

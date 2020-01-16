@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/color_EDEDED">
+    android:background="@color/color_F8F8F8">
     <RelativeLayout
         android:id="@+id/rel_top"
         style="@style/TopSize">
