@@ -136,23 +136,24 @@ public class CircleFragment extends BaseMainFragmeng {
             return;
         }
         Integer size = data.size();
-        mTitles = new String[size];
+        mTitles = new String[size+1];
 
         for (int i = 0; i < size; i++) {
             String title = data.get(i).getTitle();
             if (data.get(i).getChild() == null || data.get(i).getChild().size() == 0) {
-                if ("商学院".equals(title)){
-                    mFragments.add(new HomeCollegeFragment());
-                }else{
-                    CategoryListDtos categoryDtos = data.get(i);
-                    mFragments.add(CircleDayHotFragment.newInstance(categoryDtos,data.get(i).getTitle()));
-                }
+//                if ("商学院".equals(title)){
+//                    mFragments.add(new HomeCollegeFragment());
+//                }else{
+                CategoryListDtos categoryDtos = data.get(i);
+                mFragments.add(CircleDayHotFragment.newInstance(categoryDtos,data.get(i).getTitle()));
+//                }
             } else {
                 mFragments.add(CircleCategoryFragment.newInstance(data.get(i).getChild(), data.get(i).getId(), data.get(i).getTitle()));
             }
             mTitles[i] = data.get(i).getTitle();
         }
-
+        mTitles[size]="商学院";
+        mFragments.add(new HomeCollegeFragment());
         viewPager.setAdapter(new ChannelAdapter(getChildFragmentManager()));
         tab.setViewPager(viewPager);
     }

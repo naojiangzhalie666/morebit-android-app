@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.zjzy.morebit.Activity.ShareMoneyActivity;
+import com.zjzy.morebit.LocalData.CommonLocalData;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.OpenPushDialog;
 import com.zjzy.morebit.Module.push.PushAction;
@@ -60,6 +62,7 @@ import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PutErrorUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
+import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.action.ACache;
 import com.zjzy.morebit.utils.action.MyAction;
@@ -67,6 +70,8 @@ import com.zjzy.morebit.utils.appDownload.QianWenUpdateUtlis;
 import com.zjzy.morebit.utils.appDownload.update_app.UpdateAppBean;
 import com.zjzy.morebit.utils.fire.DeviceIDUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
+import com.zjzy.morebit.view.AuthForPersonDialog;
+import com.zjzy.morebit.view.ConsCommissionRuleDialog;
 import com.zjzy.morebit.view.GrayUpgradeDialog;
 import com.zjzy.morebit.view.NoScrollViewPager;
 import com.zjzy.morebit.view.main.SysNotificationView;
@@ -113,6 +118,10 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     private Uri h5Uri;
     private Handler mHandler;
 
+    private AuthForPersonDialog mAuthForPersonDialog;
+
+    private AuthForPersonDialog.OnAuthListener mAuthListener;
+
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
         activity.startActivity(intent);
@@ -133,29 +142,57 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         EventBus.getDefault().register(this);
 
         initView();
+        //未授权隐私
+        mAuthListener = new AuthForPersonDialog.OnAuthListener() {
+            @Override
+            public void onAuthClick() {
+
+                CommonLocalData.authedPrivate();
+                initAppData();
+            }
+
+            @Override
+            public void onNoAuthClick() {
+                // 清空数据
+                MarkermallCircleAdapter.mShareCountId = 0;
+                ActivityLifeHelper.getInstance().finishAllActivities();
+            }
+        };
+        if (!CommonLocalData.getAuthedStatus()){
+            if (mAuthForPersonDialog == null){
+                mAuthForPersonDialog = new AuthForPersonDialog(MainActivity.this,mAuthListener);
+                mAuthForPersonDialog.show();
+            }
+
+        }else{
+            initAppData();
+        }
+
+
+    }
+    private void initAppData(){
         mHandler = new Handler();
         try {
+
             onCallPermission();//6.0申请相机权限
             openPush();//打开推送
             initPush();
             initRecevier();
-            mPresenter.getPicture(this);
-            mPresenter.getAppInfo(this);//检查app版本更新
-            mPresenter.putHeart(this);
-            mPresenter.getSysNotification(this, false);
+            mPresenter.getPicture(MainActivity.this);
+            mPresenter.getAppInfo(MainActivity.this);//检查app版本更新
+            mPresenter.putHeart(MainActivity.this);
+            mPresenter.getSysNotification(MainActivity.this, false);
             getHomeRedPackageData();
-            mPresenter.getTaobaoLink(this);
-            ConfigListUtlis.getConfigList(this, ConfigListUtlis.getConfigAllKey(), null);
-            mPresenter.getServerTime(this);
-//            if (!UserLocalData.getSavedRegionFlag()){
-//                mPresenter.getAllRegion(this);
-//            }
+            mPresenter.getTaobaoLink(MainActivity.this);
+            ConfigListUtlis.getConfigList(MainActivity.this, ConfigListUtlis.getConfigAllKey(), null);
+            mPresenter.getServerTime(MainActivity.this);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         gotoAd();
         h5Uri = getIntent().getData();
-        AppUtil.sendWebOpenApp(h5Uri,this);
+        AppUtil.sendWebOpenApp(h5Uri,MainActivity.this);
     }
 
 

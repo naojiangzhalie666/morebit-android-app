@@ -2,6 +2,7 @@
 <network-security-config>
     <domain-config>
         <domain includeSubdomains="true">api.morebit.com.cn</domain>
+        <domain includeSubdomains="true">file.morebit.com.cn</domain>
         <trust-anchors>
             <certificates src="@raw/charles_ssl_proxying_certificate"/>
         </trust-anchors>

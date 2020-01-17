@@ -412,6 +412,11 @@ public class C {
         public static final String SERVER_TIME="SERVER_TIME";
         public static final String CLIENT_TIME="CLIENT_TIME";
     }
+    //隐私授权
+    public static class authPrivate{
+
+        public static final String IS_AUTHED="IS_AUTHED";
+    }
 
     public static class sp {
         public static final String token = Setting.appName + "token";

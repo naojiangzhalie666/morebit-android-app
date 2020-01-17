@@ -447,4 +447,11 @@
     <string name="number_chengjiao_time">成交时间：%1$s</string>
     <string name="number_order_no">订单编号：%1$s</string>
     <string name="number_yujin">赚取佣金%1$s元</string>
+    <string name="auth_private">感谢您使用多点优选，您的信任对我们非常重要，我们深知个人信息对您的重要性，特向您说明如下：\n
+1.在您开始使用多点优选各项产品或服务，我们会收集并使用到您的个人信息。如对本政策内容有任何疑问、意见或建议，您可通过多点优选APP客服与我们联系。\n
+2.我们会严格按照隐私政策要求保护您的个人信息，未经您的允许，我们不会向任何第三方披露您的个人信息。\n
+3.我们的隐私权政策可能变更。未经您明确同意，我们不会限制您按照本隐私权政策所应享有的权利。有关隐私权政策的任何变更，我们会通过多点优选公示等方式提前通知您。\n
+4.点击“同意”，即表示您已阅读并同意《多点用户协议》和《隐私政策》</string>
+    <string name="auth_user_private_all"><![CDATA[<font color="#333333">查看完整版《</font><font color="#FF645B">多点用户协议</font><font color="#333333">》</font>]]></string>
+    <string name="auth_private_all"><![CDATA[<font color="#333333">和《</font><font color="#FF645B">隐私协议</font><font color="#333333">》</font>]]></string>
 </resources>

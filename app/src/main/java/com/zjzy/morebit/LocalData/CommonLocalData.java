@@ -36,4 +36,13 @@ public class CommonLocalData {
         SharedPreferencesUtils.put(App.getAppContext(), C.syncTime.SERVER_TIME, serverTime);
     }
 
+    public static boolean getAuthedStatus(){
+      return   (boolean)SharedPreferencesUtils.get(App.getAppContext(), C.authPrivate.IS_AUTHED, false);
+    }
+
+    //私有权限授权
+    public static void authedPrivate(){
+        SharedPreferencesUtils.put(App.getAppContext(), C.authPrivate.IS_AUTHED, true);
+    }
+
 }

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.PushAction;
 import com.zjzy.morebit.contact.EventBusAction;
@@ -206,6 +207,62 @@ public class LoginUtil {
      * @param activity
      */
     public static void getPrivateProtocol(final RxAppCompatActivity activity) {
+
+        LoadingView.showDialog(activity, "请求中...");
+        getSystemStaticPage(activity, C.ProtocolType.privateProtocol)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                })
+                .subscribe(new DataObserver<List<ProtocolRuleBean>>() {
+                    /**
+                     * 成功回调
+                     *
+                     * @param data 结果
+                     */
+                    @Override
+                    protected void onSuccess(List<ProtocolRuleBean> data) {
+                        PageToUtil.goToWebview(activity, "隐私政策 ", data.get(0).getHtmlUrl());
+                    }
+                });
+    }
+    /**
+     * 获取用户协议
+     *
+     * @param activity
+     */
+    public static void getUserProtocolForHome(final BaseActivity activity) {
+
+        LoadingView.showDialog(activity, "请求中...");
+        getSystemStaticPage(activity, C.ProtocolType.agreement)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                })
+                .subscribe(new DataObserver<List<ProtocolRuleBean>>() {
+                    /**
+                     * 成功回调
+                     *
+                     * @param data 结果
+                     */
+                    @Override
+                    protected void onSuccess(List<ProtocolRuleBean> data) {
+                        PageToUtil.goToWebview(activity, "用户协议 ", data.get(0).getHtmlUrl());
+                    }
+                });
+    }
+
+
+    /**
+     * 获取隐私政策
+     *
+     * @param activity
+     */
+    public static void getPrivateProtocolForHome(final BaseActivity activity) {
 
         LoadingView.showDialog(activity, "请求中...");
         getSystemStaticPage(activity, C.ProtocolType.privateProtocol)
