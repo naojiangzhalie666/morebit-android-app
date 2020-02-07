@@ -991,6 +991,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
     @Override
     public void onRecommendFailure(String errorMsg, String errCode) {
+        mReUseListView.getSwipeList().setRefreshing(false);
         if(StringsUtils.isDataEmpty(errCode)){
             mAdapter.loadMoreEnd();
         }

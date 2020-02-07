@@ -433,14 +433,18 @@ public class NumberSubFragment extends BaseFragment {
             mHorzProgressView.setCurrentNum(info.getMoreCoin());
             leader_icon.setVisibility(View.GONE);
             myGradedView.setText("VIP会员");
-//            numberGradeName.setText("团队长");
-            String coin1 = "多豆：" +info.getMoreCoin()+"/20000";
+            Long moreCoin = info.getMoreCoin();
+            String coin1 ;
+            if (moreCoin == null){
+                coin1 = "多豆：" +"0/20000";
+            }else{
+                coin1 = "多豆：" +info.getMoreCoin()+"/20000";
+            }
             moreCoinBiaozhun.setText(coin1);
 
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
             myGradedView.setText("团队长");
-//            numberGradeName.setText("团队长");
             rl_duodou_progress.setVisibility(View.GONE);
             leader_icon.setVisibility(View.VISIBLE);
             gradeForLeaderView();
@@ -453,12 +457,17 @@ public class NumberSubFragment extends BaseFragment {
             }else{
                 mHorzProgressView.setCurrentNum(0);
             }
-            String coin1 = "多豆：" +info.getMoreCoin()+"/20000";
+            Long moreCoin = info.getMoreCoin();
+            String coin1 ;
+            if (moreCoin == null){
+                coin1 = "多豆：" +"0/20000";
+            }else{
+                coin1 = "多豆：" +info.getMoreCoin()+"/20000";
+            }
             moreCoinBiaozhun.setText(coin1);
 
             leader_icon.setVisibility(View.GONE);
             myGradedView.setText("会员");
-//            numberGradeName.setText("VIP会员");
             gradeForNumberView();
         }
         Long coin = info.getMoreCoin();
