@@ -460,7 +460,10 @@ public class MineFragment extends BaseMainFragmeng {
                 break;
 
             case R.id.tv_withdraw: //提现
-                if(Double.parseDouble(mTotalMoney)<1){
+                if (TextUtils.isEmpty(mTotalMoney)){
+                    mTotalMoney = "0";
+                }
+                if(Double.parseDouble(mTotalMoney) < 1){
                     ViewShowUtils.showShortToast(getActivity(),"不足1元，无法提现");
                 } else {
                     if (TaobaoUtil.isAuth()) {   //淘宝授权

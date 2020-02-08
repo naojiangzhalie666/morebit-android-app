@@ -311,7 +311,8 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
      */
     private boolean checkAddress(AddressInfo info){
         boolean isCheck = true;
-        if (mAddressInfo == null){
+        if (mAddressInfo == null
+                || (mAddressInfo != null && mAddressInfo.getId() == null)){
             isCheck = false;
             ViewShowUtils.showShortToast(ConfirmOrderActivity.this, "请确认收货地址信息");
         }

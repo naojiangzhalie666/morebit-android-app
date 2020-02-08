@@ -8,6 +8,7 @@ import com.zjzy.morebit.pojo.order.OrderSyncResult;
 import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
 import com.zjzy.morebit.order.contract.ConfirmOrderContract;
 import com.zjzy.morebit.order.model.ConfirmOrderModel;
+import com.zjzy.morebit.utils.MyLog;
 
 /**
  * Created by fengrs on 2018/11/3.
@@ -23,6 +24,7 @@ public class ConfirmOrderPresenter extends MvpPresenter<ConfirmOrderModel, Confi
                     protected void onError(String errorMsg, String errCode) {
                         getIView().onDefaultAddressError();
                     }
+
 
                     @Override
                     protected void onSuccess(AddressInfo data) {
