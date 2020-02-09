@@ -139,6 +139,9 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     @BindView(R.id.rl_number_update_vip)
     RelativeLayout rlNumberUpdateVip;
 
+    @BindView(R.id.rl_grade_update)
+    RelativeLayout rlGradeUpdate;
+
     /**
      * 会员商品Id
      */
@@ -234,7 +237,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         if (TextUtils.isEmpty(C.SysConfig.SELF_COMMISSION_PERCENT_VALUE)) {
             mPresenter.getSysSelfCommissionPercent(this);
         } else {
-//            gduv_view.setUpdateView(mGoodsInfo, C.SysConfig.COMMISSION_PERCENT_VALUE);
+            setUpdateView(C.SysConfig.SELF_COMMISSION_PERCENT_VALUE);
         }
     }
 
@@ -500,7 +503,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
 
-    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action,R.id.btn_number_update_vip})
+    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action,R.id.rl_grade_update})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
@@ -512,7 +515,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
             case R.id.btn_goods_buy_action:
                 showPopupwindow();
                 break;
-            case R.id.btn_number_update_vip:
+            case R.id.rl_grade_update:
                 if (UserLocalData.getUser() != null){
                     if (C.UserType.member.equals(UserLocalData.getUser().getUserType())){
                         updateGrade();

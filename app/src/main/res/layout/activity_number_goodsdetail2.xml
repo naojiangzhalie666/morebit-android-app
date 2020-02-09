@@ -108,29 +108,37 @@
                                     android:textSize="@dimen/sp_12"
                                     android:textColor="@color/color_F5AB6D">
                                 </TextView>
-
-                                <ImageView
-                                    android:id="@+id/btn_number_update_vip"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:padding="5dp"
-                                    android:scaleType="centerInside"
-                                    android:src="@mipmap/youjiantou_org"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginRight="20dp"
-                                    android:layout_alignParentRight="true"/>
-                                <TextView
+                                <RelativeLayout
+                                    android:id="@+id/rl_grade_update"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_toLeftOf="@id/btn_number_update_vip"
-                                    android:padding="5dp"
                                     android:layout_centerVertical="true"
-                                    android:text="@string/number_update_vip_hint"
-                                    android:textSize="@dimen/sp_12"
-                                    android:textColor="@color/color_F5AB6D"
+                                    android:layout_alignParentRight="true"
                                     >
-                                </TextView>
+                                    <ImageView
+                                        android:id="@+id/btn_number_update_vip"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:padding="5dp"
+                                        android:scaleType="centerInside"
+                                        android:src="@mipmap/youjiantou_org"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_alignParentRight="true"/>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_toLeftOf="@id/btn_number_update_vip"
+                                        android:padding="5dp"
+                                        android:layout_centerVertical="true"
+                                        android:text="@string/number_update_vip_hint"
+                                        android:textSize="@dimen/sp_12"
+                                        android:textColor="@color/color_F5AB6D"
+                                        >
+                                    </TextView>
+                                </RelativeLayout>
+
 
                             </RelativeLayout>
                             <RelativeLayout
