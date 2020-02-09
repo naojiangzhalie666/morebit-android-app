@@ -26,6 +26,7 @@ import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.pojo.EarningsMsg;
 import com.zjzy.morebit.pojo.GoodsBrowsHistory;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -407,7 +408,13 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                 if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
                     commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
                 } else {
-                    commission.setText(getString(R.string.upgrade_commission));
+                    UserInfo userInfo1 =UserLocalData.getUser();
+                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                        commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
+                    }else{
+                        commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+                    }
+//                    commission.setText(getString(R.string.upgrade_commission));
                 }
                 //平台补贴
                 if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(item.getSubsidiesPrice())){

@@ -23,6 +23,7 @@ import com.zjzy.morebit.goods.shopping.ui.view.ForeshowItemTiemView;
 import com.zjzy.morebit.goods.shopping.ui.view.RecommendIndexView;
 import com.zjzy.morebit.pojo.SelectFlag;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -247,7 +248,13 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
                 if (C.UserType.vipMember.equals(UserLocalData.getUser((Activity) mContext).getPartner()) || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
                     viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) mContext).getCalculationRate(), info.getCommission())));
                 } else {
-                    viewHolder.commission.setText(mContext.getString(R.string.upgrade_commission));
+                    UserInfo userInfo1 =UserLocalData.getUser();
+                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, info.getCommission())));
+                    }else{
+                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
+                    }
+//                    viewHolder.commission.setText(mContext.getString(R.string.upgrade_commission));
                 }
             }
             viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));

@@ -281,7 +281,8 @@ public class C {
     public static class SysConfig {
         public static  String COMMISSION_PERCENT_VALUE;// 获取普通会员，VIP，运营商佣金比例 扥value
 
-
+        public static  String SELF_COMMISSION_PERCENT_VALUE;// 自营商品的获取普通会员，VIP，运营商佣金比例 扥value
+        public static  String NUMBER_COMMISSION_PERCENT_VALUE = "65";// 获取普通会员的分佣比例。
         public static final String RECEIVE_RED_PACKET = "RECEIVE_RED_PACKET";
         public static final String SEARCH_DISCOVERY_ANDROID = "SEARCH_DISCOVERY_ANDROID";
         public static final String WEB_FANS_LIST = "WEB_FANS_LIST";
@@ -295,6 +296,7 @@ public class C {
         public static final String CUSTOMER_SERVICE_ADDRESS = "CUSTOMER_SERVICE_ADDRESS";// 客服系统地址H5
         public static final String COMMISSION_PERCENT = "COMMISSION_PERCENT";// 获取普通会员，VIP，运营商佣金比例
 
+        public static final String SELF_COMMISSION_PERCENT = "SELF_COMMISSION_PERCENT";// 自营商品的获取普通会员，VIP，运营商佣金比例
     }
 
     /**

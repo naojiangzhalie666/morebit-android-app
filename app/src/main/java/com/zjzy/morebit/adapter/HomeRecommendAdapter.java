@@ -17,6 +17,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.HomeRecommendGoods;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -152,7 +153,13 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
                         }
 
                     } else {
-                        commission.setText(mContext.getString(R.string.upgrade_commission));
+                        UserInfo userInfo1 =UserLocalData.getUser();
+                        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                            commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
+                        }else{
+                            commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+                        }
+//                        commission.setText(mContext.getString(R.string.upgrade_commission));
                     }
                     //店铺名称
                     if (!TextUtils.isEmpty(item.getShopName())) {

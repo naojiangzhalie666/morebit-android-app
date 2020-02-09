@@ -146,7 +146,13 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
                 commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), mData.getCommission())));
             } else {
-                commission.setText(mContext.getString(R.string.upgrade_commission));
+                UserInfo userInfo1 =UserLocalData.getUser();
+                if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                    commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, mData.getCommission())));
+                }else{
+                    commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), mData.getCommission())));
+                }
+//                commission.setText(mContext.getString(R.string.upgrade_commission));
             }
 
             if (!StringsUtils.isEmpty(mData.getItemVoucherPrice())) {

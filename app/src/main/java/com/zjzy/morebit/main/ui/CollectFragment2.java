@@ -26,6 +26,7 @@ import com.zjzy.morebit.main.presenter.CollectPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
@@ -480,7 +481,13 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
                     commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
                 } else {
-                    commission.setText(getString(R.string.upgrade_commission));
+                    UserInfo userInfo1 =UserLocalData.getUser();
+                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                        commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
+                    }else{
+                        commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+                    }
+//                    commission.setText(getString(R.string.upgrade_commission));
                 }
                 discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(item.getVoucherPrice())));
                 price.setText(getString(R.string.income, MathUtils.getPrice(item.getPrice())));

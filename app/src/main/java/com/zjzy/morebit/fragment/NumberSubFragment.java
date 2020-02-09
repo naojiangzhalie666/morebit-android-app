@@ -44,6 +44,7 @@ import com.zjzy.morebit.view.HorzProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -216,13 +217,8 @@ public class NumberSubFragment extends BaseFragment {
         leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
 
             @Override
-            public void onClick(int type) {
-                //vip ==1
-                if (type == 1){
+            public void onClick() {
                     updateGradePresenter(NumberSubFragment.this,Integer.parseInt(C.UserType.vipMember));
-                }else if (type ==2){
-                    updateGradePresenter(NumberSubFragment.this,Integer.parseInt(C.UserType.operator));
-                }
             }
 
         });
@@ -450,7 +446,7 @@ public class NumberSubFragment extends BaseFragment {
             gradeForLeaderView();
         }else{
             rl_duodou_progress.setVisibility(View.VISIBLE);
-            mHorzProgressView.setMax(20000.00);
+            mHorzProgressView.setMax(3600.00);
             Long coin = info.getMoreCoin();
             if (coin != null){
                 mHorzProgressView.setCurrentNum(info.getMoreCoin());
@@ -460,9 +456,9 @@ public class NumberSubFragment extends BaseFragment {
             Long moreCoin = info.getMoreCoin();
             String coin1 ;
             if (moreCoin == null){
-                coin1 = "多豆：" +"0/20000";
+                coin1 = "多豆：" +"0/3600";
             }else{
-                coin1 = "多豆：" +info.getMoreCoin()+"/20000";
+                coin1 = "多豆：" +info.getMoreCoin()+"/3600";
             }
             moreCoinBiaozhun.setText(coin1);
 
@@ -607,6 +603,8 @@ public class NumberSubFragment extends BaseFragment {
             TextView desc = holder.viewFinder().view(R.id.number_goods_desc);
             TextView tvPrice = holder.viewFinder().view(R.id.number_goods_price);
             TextView morebitCorn = holder.viewFinder().view(R.id.txt_morebit_corn);
+            TextView selfCommission = holder.viewFinder().view(R.id.self_commission_value);
+
 
             String img = goods.getPicUrl();
             if (!TextUtils.isEmpty(img)) {
@@ -614,14 +612,34 @@ public class NumberSubFragment extends BaseFragment {
             }
             desc.setText(goods.getName());
             String price = goods.getRetailPrice();
-            double  pricedouble  = Double.parseDouble(price);
+
 
 
             if (TextUtils.isEmpty(price)){
                 tvPrice.setText("0");
             }else{
-                //            holder.price.setText(String.valueOf(((Number)pricedouble).longValue()));
-                tvPrice.setText(price);
+
+
+                UserInfo info = UserLocalData.getUser();
+                String calculationSelfRate;
+
+                if (info != null){
+                    if (C.UserType.member.equals(info.getPartner())){
+                        selfCommission.setText("升级收益");
+                    }else {
+                        calculationSelfRate = info.getCalculationSelfRate();
+                        String commission = MathUtils.getMuRatioComPrice(calculationSelfRate,price);
+                        selfCommission.setText(getResources().getString(R.string.commission,commission));
+                    }
+                }
+                double  pricedouble  = Double.parseDouble(price);
+                long pricelong = ((Number)pricedouble).longValue();
+                if (pricelong == 0){
+                    tvPrice.setText(price);
+                }else{
+                    tvPrice.setText(String.valueOf(pricelong));
+                }
+//                tvPrice.setText(price);
             }
             String moreCoin = MathUtils.getMorebitCorn(price);
             morebitCorn.setText(mContext.getResources().getString(R.string.number_give_more_corn,moreCoin));

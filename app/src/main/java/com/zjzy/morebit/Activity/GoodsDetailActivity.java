@@ -553,6 +553,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
         if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailActivity.this).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(GoodsDetailActivity.this).getPartner())) {
             tv_Share_the_money.setText(getString(R.string.now_share));
+            setEstimateData();
             setUPdateData();
         } else {
             if (!StringsUtils.isEmpty(Info.getCommission())) {

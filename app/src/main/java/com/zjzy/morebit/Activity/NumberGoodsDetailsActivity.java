@@ -123,6 +123,23 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     @BindView(R.id.number_goods_title)
     TextView numberGoodsTitle;
     /**
+     * 自营商品的当前身份的当前佣金（会员因为没有佣金，不显示）
+     */
+    @BindView(R.id.self_commission_value)
+    TextView tvSeflCommission;
+
+    @BindView(R.id.number_goods_hint)
+    TextView tvNumberGoodsHint;
+    /**
+     * 自营商品的团队长的展示
+     */
+    @BindView(R.id.ll_leader_grade)
+    LinearLayout llLeaderGrade;
+
+    @BindView(R.id.rl_number_update_vip)
+    RelativeLayout rlNumberUpdateVip;
+
+    /**
      * 会员商品Id
      */
     private String mGoodsId;
@@ -208,7 +225,19 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         mGoodsOrderInfo = new GoodsOrderInfo();
         mGoodsOrderInfo.setCount(1);
         mPresenter.getGoodsDetail(NumberGoodsDetailsActivity.this,mGoodsId);
+
     }
+    /**
+     * 设置升级佣金
+     */
+    private void setUPdateData() {
+        if (TextUtils.isEmpty(C.SysConfig.SELF_COMMISSION_PERCENT_VALUE)) {
+            mPresenter.getSysSelfCommissionPercent(this);
+        } else {
+//            gduv_view.setUpdateView(mGoodsInfo, C.SysConfig.COMMISSION_PERCENT_VALUE);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,6 +281,16 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     }
 
     private void initView() {
+        UserInfo info = UserLocalData.getUser();
+        if (info != null){
+            if (C.UserType.operator.equals(info.getPartner())){
+                llLeaderGrade.setVisibility(View.VISIBLE);
+                rlNumberUpdateVip.setVisibility(View.GONE);
+            }else{
+                llLeaderGrade.setVisibility(View.GONE);
+                rlNumberUpdateVip.setVisibility(View.VISIBLE);
+            }
+        }
         initTab();
 
         srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -424,17 +463,8 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
 
             @Override
-            public void onClick(int type) {
-                //vip ==1
-                if (type == 1){
-//                    Long coin = UserLocalData.getUser().getMoreCoin();
-
+            public void onClick() {
                     updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.vipMember));
-                }else if (type ==2){
-//                    Long coin = UserLocalData.getUser().getMoreCoin();
-
-                    updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.operator));
-                }
             }
 
         });
@@ -529,6 +559,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     @Override
     public void showSuccessful(NumberGoodsInfo goodsInfo) {
+        setUPdateData();
         mGoodsInfo = goodsInfo;
         mBannerList = goodsInfo.getGallery();
 
@@ -550,12 +581,51 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         int moreCorn = (int)price*10;
         morebitCorn.setText(getResources().getString(R.string.number_give_more_corn,String.valueOf(moreCorn)));
         srl_view.setRefreshing(false);
+
+        //设置自营商品的佣金展示
+        selfCommissionValue(String.valueOf(price));
     }
 
+    private void selfCommissionValue(String price){
+        UserInfo info = UserLocalData.getUser();
+        String calculationSelfRate;
+        if (info != null){
+            if (C.UserType.member.equals(info.getPartner())){
+                tvSeflCommission.setVisibility(View.GONE);
+            }else{
+                calculationSelfRate = info.getCalculationSelfRate();
+                String commission = MathUtils.getMuRatioComPrice(calculationSelfRate,price);
+                tvSeflCommission.setVisibility(View.VISIBLE);
+                tvSeflCommission.setText(getResources().getString(R.string.commission,commission));
+            }
+
+        }
+    }
     @Override
     public void onError() {
         MyLog.e(TAG,"获取商品详情失败");
         srl_view.setRefreshing(false);
+    }
+
+    @Override
+    public void setUpdateView(String sysValue) {
+        String[] split = null;
+        if (!TextUtils.isEmpty(sysValue)) {
+            split = sysValue.split(",");
+            if (split.length < 3) return;
+        }
+        UserInfo user = UserLocalData.getUser();
+        String price = String.valueOf(mGoodsInfo.getRetailPrice());
+        int integer;
+        if (C.UserType.vipMember.equals(user.getPartner())) {
+            integer = Integer.valueOf(C.UserType.operator);
+        }else {
+            integer = Integer.valueOf(C.UserType.vipMember);
+        }
+        String s = split[integer];
+        String muRatioComPrice = MathUtils.getMuRatioComPrice(s, price);
+        tvNumberGoodsHint.setText(getResources().getString(R.string.update_vip2_earnings,muRatioComPrice));
+
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {

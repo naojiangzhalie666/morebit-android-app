@@ -29,7 +29,6 @@ public class NumberVipUpgradeDialog extends Dialog implements View.OnClickListen
     private Context mContext;
 
     private View mView;
-    private LinearLayout updateLeaderGrade;
     private LinearLayout updateVipGrade;
 
     private ImageView ivClose;
@@ -61,12 +60,10 @@ public class NumberVipUpgradeDialog extends Dialog implements View.OnClickListen
 
     private void initView() {
         mView = LayoutInflater.from(mContext).inflate(R.layout.upgrade_vip_dialog_content_layout, null);
-        updateLeaderGrade = mView.findViewById(R.id.update_leader_grade);
+
         updateVipGrade = mView.findViewById(R.id.update_vip_grade);
 
         ivClose = mView.findViewById(R.id.iv_close);
-
-        updateLeaderGrade.setOnClickListener(this);
         updateVipGrade.setOnClickListener(this);
         ivClose.setOnClickListener(this);
 
@@ -94,15 +91,9 @@ public class NumberVipUpgradeDialog extends Dialog implements View.OnClickListen
             case R.id.iv_close:
                 this.dismiss();
                 break;
-            case R.id.update_leader_grade:
-                if (mListener != null) {
-                    mListener.onClick(OnListener.LEADER);
-                }
-                this.dismiss();
-                break;
             case R.id.update_vip_grade:
                 if (mListener != null) {
-                    mListener.onClick(OnListener.VIP);
+                    mListener.onClick();
                 }
                 this.dismiss();
                 break;
@@ -110,8 +101,6 @@ public class NumberVipUpgradeDialog extends Dialog implements View.OnClickListen
     }
 
     public interface OnListener {
-         int VIP = 1;
-         int LEADER = 2;
-        void onClick(int type);
+        void onClick();
     }
 }

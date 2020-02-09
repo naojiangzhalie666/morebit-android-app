@@ -85,9 +85,13 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
             mTv_estimate_earnings = view.findViewById(R.id.tv_estimate_earnings);
             view.setOnClickListener(this);
         } else {
-            view = mFrom.inflate(R.layout.view_goodsdetail_update_vip1, null);
+            view = mFrom.inflate(R.layout.view_goodsdetail_update_vip2, null);
             mTv_update_earnings = view.findViewById(R.id.tv_update_earnings);
+            mTv_estimate_earnings = view.findViewById(R.id.tv_estimate_earnings);
             view.setOnClickListener(this);
+//            view = mFrom.inflate(R.layout.view_goodsdetail_update_vip1, null);
+//            mTv_update_earnings = view.findViewById(R.id.tv_update_earnings);
+//            view.setOnClickListener(this);
         }
         return view;
     }
@@ -112,20 +116,13 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
      * 升级vip的弹框
      */
     private void updateGrade(){
-
         NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(mContext,R.style.dialog);
         leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
 
             @Override
-            public void onClick(int type) {
-                //vip ==1
-                if (type == 1){
-                    updateGradePresenter((BaseActivity)mContext,Integer.parseInt(C.UserType.vipMember));
-                }else if (type ==2){
-                    updateGradePresenter((BaseActivity) mContext,Integer.parseInt(C.UserType.operator));
-                }
+            public void onClick() {
+                updateGradePresenter((BaseActivity)mContext,Integer.parseInt(C.UserType.vipMember));
             }
-
         });
         leaderUpgradeDialog.show();
     }
@@ -224,6 +221,14 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
                 mTv_estimate_earnings.setText(mContext.getString(R.string.estimate_earnings, totalSubside));
             } else if (C.UserType.operator.equals(user.getPartner())) {//运营专员
                 mTv_estimate_earnings.setText(mContext.getString(R.string.update_vip3_earnings, totalSubside));
+            }else if (C.UserType.member.equals(user.getPartner())){//会员只有佣金分佣。没有补贴。//添加新逻辑
+                mTv_estimate_earnings.setText(mContext.getString(R.string.estimate_earnings, muRatioComPrice));
+            }
+            //未登录状态按照会员计算
+            if (user == null
+            || (user != null && user.getPartner() == null)){
+                String unLoginmuRatioComPrice = MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, data.getCommission());
+                mTv_estimate_earnings.setText(mContext.getString(R.string.estimate_earnings, unLoginmuRatioComPrice));
             }
         }
     }
@@ -252,7 +257,7 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
                 muRatioComPrice = TextUtils.isEmpty(muRatioComPrice) ? "0" : muRatioComPrice;
                 //String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(s,data.getSubsidiesPrice());
                // String totalSubside = MathUtils.getTotleSubSidies(muRatioComPrice,getRatioSubside);
-                mTv_update_earnings.setText(mContext.getString(R.string.update_vip1_earnings, muRatioComPrice));
+                mTv_update_earnings.setText(mContext.getString(R.string.update_vip2_earnings, muRatioComPrice));
             }
         }
     }

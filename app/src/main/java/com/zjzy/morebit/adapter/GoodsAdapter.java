@@ -18,6 +18,7 @@ import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.goods.shopping.ui.view.RecommendIndexView;
 import com.zjzy.morebit.pojo.SelectFlag;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -145,11 +146,21 @@ public class GoodsAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> 
         } else {
             commission.setVisibility(View.VISIBLE);
         }
-        if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
+        if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner())
+                || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
 //            commission.setVisibility(View.VISIBLE);
             commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
         } else {
-            commission.setText(getString(R.string.upgrade_commission));
+            UserInfo userInfo1 =UserLocalData.getUser();
+            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
+            }else{
+                commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+            }
+
+
+
+//            commission.setText(getString(R.string.upgrade_commission));
 //            commission.setVisibility(View.GONE);
         }
         //平台补贴

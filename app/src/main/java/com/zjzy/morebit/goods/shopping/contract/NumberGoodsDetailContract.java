@@ -27,11 +27,23 @@ public class NumberGoodsDetailContract {
         void showSuccessful(NumberGoodsInfo goodsInfo);
 
         void onError();
+        /**
+         * 设置升级之后滴view
+         * @param sysValue
+         */
+        void setUpdateView(String sysValue);
+
 
     }
 
     public interface Present extends BasePresenter {
 
         void getGoodsDetail(BaseActivity rxActivity,String goodsId);
+
+        /**
+         *  获取自营商品的普通会员，VIP，运营商佣金比例
+         */
+        void getSysSelfCommissionPercent(BaseActivity rxActivity);
+
     }
 }

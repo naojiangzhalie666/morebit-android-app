@@ -66,10 +66,35 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             >
+                            <LinearLayout
+                                android:id="@+id/ll_leader_grade"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:visibility="gone"
+                                android:background="@mipmap/bg_leader_bar"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@mipmap/leader_header_icon"
+                                    android:scaleType="fitCenter"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="@color/color_F5D344"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="超高收益享不停"
+                                    android:textSize="@dimen/sp_12"
+                                    />
+                            </LinearLayout>
                             <RelativeLayout
                                 android:id="@+id/rl_number_update_vip"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
+
                                 android:background="@color/color_333333"
                                 android:layout_below="@id/rl_number_goods_price"
                                 >
@@ -79,7 +104,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
                                     android:layout_centerVertical="true"
-                                    android:text="@string/number_update_vip"
+                                    android:text="@string/update_vip2_earnings"
                                     android:textSize="@dimen/sp_12"
                                     android:textColor="@color/color_F5AB6D">
                                 </TextView>
@@ -170,7 +195,21 @@
                                         android:layout_centerVertical="true"
                                         android:src="@mipmap/more_corn_icon"/>
                                 </RelativeLayout>
-
+                                <TextView
+                                    android:id="@+id/self_commission_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:text="预估收益1元"
+                                    android:paddingRight="7dp"
+                                    android:paddingLeft="7dp"
+                                    android:paddingTop="1dp"
+                                    android:paddingBottom="1dp"
+                                    android:textSize="@dimen/sp_12"
+                                    android:textColor="@color/color_F5AB6D"
+                                    android:background="@drawable/bg_org_4dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="10dp"/>
 
                             </RelativeLayout>
                             <View

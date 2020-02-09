@@ -216,6 +216,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         mHomeColumns.add(goodWhatLink);
         getSupeListData();
         getTopRedPackage();
+        getCommissionPercent();
 //        getUserscore();
 //        if (LoginUtil.checkIsLogin(getActivity(), false)) {
 //            getImportantNotice();
@@ -520,6 +521,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     }
 
 
+
     /**
      * 获取首页头部分类数据(超级分类）
      *
@@ -550,6 +552,22 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                 });
     }
 
+    /**
+     * 获取商品的分佣比例
+     */
+    public void getCommissionPercent(){
+        ConfigModel.getInstance().getConfigForKey((RxAppCompatActivity) getActivity(), C.SysConfig.COMMISSION_PERCENT)
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        String sysValue = data.getSysValue();
+                        if (!TextUtils.isEmpty(sysValue)) {
+                            C.SysConfig.COMMISSION_PERCENT_VALUE = sysValue;
+
+                        }
+                    }
+                });
+    }
     /**
      * 红包轮播
      */

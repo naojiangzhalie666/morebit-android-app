@@ -13,6 +13,7 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.RxWXHttp;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.number.NumberGoods;
@@ -22,6 +23,7 @@ import com.zjzy.morebit.pojo.request.RequestMaterialLink;
 import com.zjzy.morebit.pojo.request.RequestNumberGoodsDetailBean;
 import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
 import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestShopId;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.encrypt.EncryptUtlis;
@@ -51,6 +53,17 @@ public class NumberGoodsDetailModel extends MvpModel {
         )
                 .compose(RxUtils.<BaseResponse<NumberGoodsInfo>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<NumberGoodsInfo>>bindToLifecycle());
+    }
+
+    public Observable<BaseResponse<HotKeywords>> getConfigForKey(RxAppCompatActivity activity, String key) {
+
+        return RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(key))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .compose(activity.<BaseResponse<HotKeywords>>bindToLifecycle());
+
+//        return RxHttp.getInstance().getCommonService().getConfigForKey(key)
+//                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+//                .compose(activity.<BaseResponse<HotKeywords>>bindToLifecycle());
     }
 
 

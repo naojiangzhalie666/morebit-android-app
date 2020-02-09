@@ -18,6 +18,7 @@ import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -82,7 +83,13 @@ public class TodayGoodAdapter extends RecyclerView.Adapter<TodayGoodAdapter.View
         if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
             holder.incomeTv.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
         } else {
-            holder.incomeTv.setText(mContext.getString(R.string.upgrade_commission));
+            UserInfo userInfo1 =UserLocalData.getUser();
+            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                holder.incomeTv.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, info.getCommission())));
+            }else{
+                holder.incomeTv.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
+            }
+//            holder.incomeTv.setText(mContext.getString(R.string.upgrade_commission));
         }
 
         //原价

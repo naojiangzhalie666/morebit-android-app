@@ -70,4 +70,26 @@ public class NumberGoodsDetailPresenter extends MvpPresenter<NumberGoodsDetailMo
                     }
                 });
     }
+
+
+    /**
+     * 自营商品的获取普通会员，VIP，运营商佣金比例
+     *
+     * @param rxActivity
+     */
+    @Override
+    public void getSysSelfCommissionPercent(BaseActivity rxActivity) {
+        mModel.getConfigForKey((BaseActivity) rxActivity, C.SysConfig.SELF_COMMISSION_PERCENT)
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        String sysValue = data.getSysValue();
+                        if (!TextUtils.isEmpty(sysValue)) {
+                            C.SysConfig.SELF_COMMISSION_PERCENT_VALUE = sysValue;
+                            getIView().setUpdateView(sysValue);
+                        }
+                    }
+                });
+
+    }
 }

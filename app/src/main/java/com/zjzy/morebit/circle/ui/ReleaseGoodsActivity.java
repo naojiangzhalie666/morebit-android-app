@@ -243,7 +243,13 @@ public class ReleaseGoodsActivity extends BaseActivity {
 //            commission.setVisibility(View.VISIBLE);
             commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mShopGoodInfo.getCommission())));
         } else {
-            commission.setText(getString(R.string.upgrade_commission));
+            UserInfo userInfo1 =UserLocalData.getUser();
+            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, mShopGoodInfo.getCommission())));
+            }else{
+                commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mShopGoodInfo.getCommission())));
+            }
+//            commission.setText(getString(R.string.upgrade_commission));
 //            commission.setVisibility(View.GONE);
         }
         //店铺名称
