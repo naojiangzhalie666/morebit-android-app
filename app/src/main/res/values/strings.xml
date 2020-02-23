@@ -26,7 +26,7 @@
     <string name="save_img">保存图片</string>
     <string name="explain">说明</string>
     <string name="explain1"><![CDATA[1.{%1$s}表示商品标题，<br />2.{%2$s}表示在售价格，<br />3.{%3$s}表示券后价格，<br />4.{%4$s}表示商品推荐语，可为空<br />5.{%5$s}表示下单链接<br />6.{切换长链}用于电脑打开的用户<br />7.{切换短链}用于手机端打开的用户]]></string>
-    <string name="invitation_code">邀请码   %1$s</string>
+    <string name="invitation_code">邀请码： %1$s</string>
     <string name="copy">复制</string>
     <string name="copy_invitation">复制邀请码</string>
     <string name="vip">会员</string>
@@ -45,6 +45,7 @@
     <string name="goods_edit_shao">缺少必填内容</string>
     <string name="next_step">下一步</string>
     <string name="income">¥ %1$s</string>
+    <string name="income_yuan">%1$s元</string>
     <string name="commission">预估收益%1$s元</string>
     <string name="upgrade_commission">升级收益</string>
     <string name="exclusiveWechat">专属客服微信：%1$s</string>
@@ -222,6 +223,7 @@
     <string name="please_login">请先登录</string>
     <string name="now_share">立即分享</string>
     <string name="now_sharen">立即\n分享</string>
+
     <string name="panic_buy">限时秒杀</string>
     <string name="mini_withdraw">注：最低提现金额为1元</string>
     <string name="accredit">授权</string>
@@ -370,6 +372,7 @@
     <string name="submit_goods">提交审核</string>
     <string name="coupon_price_text">券后价</string>
     <string name="share_price">分享收益\n %1$s元</string>
+    <string name="share_price_new">分享收益%1$s元</string>
     <string name="edit_pwd_error">密码必须是8-16位的数字、字符组合</string>
     <string name="my_material">我的素材</string>
 
@@ -427,8 +430,8 @@
     <string name="add_goods_address">添加收货地址</string>
 
     <string name="number_welcome_hint">获取多豆可享受多项VIP会员权益</string>
-    <string name="vip_welcome_hint">获取多豆可享受多项V团队长权益</string>
-    <string name="tuandui_welcome_hint">获取多豆可享受多项团队长权益</string>
+    <string name="vip_welcome_hint">获取多豆可享受多项团队长权益</string>
+    <string name="tuandui_welcome_hint">获取多豆团队长权益享不停</string>
     <!--会员商品价格-->
     <string name="number_goods_price">%1$s</string>
     <string name="number_give_more_corn">送%1$s</string>

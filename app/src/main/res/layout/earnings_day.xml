@@ -50,10 +50,15 @@
             android:background="@color/white"
             android:paddingBottom="17dp">
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_jinri"
+                android:background="@drawable/bg_today_earning"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                android:text="今日"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/color_FFFFFF"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:id="@+id/icon_today"/>
@@ -81,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/color_56B1FF"
+                        android:textColor="@color/color_333333"
                         android:textSize="@dimen/sp_18" />
                 </LinearLayout>
                 <View
@@ -104,13 +109,26 @@
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13" />
 
-                    <TextView
-                        android:id="@+id/tv_today_estimate_money"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_E9AB4A"
-                        android:textSize="@dimen/sp_18" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12"
+                            android:text="¥ "/>
+                        <TextView
+                            android:id="@+id/tv_today_estimate_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_18" />
+                    </LinearLayout>
+
                 </LinearLayout>
                 <View
                     android:layout_width="0.5dp"
@@ -131,14 +149,29 @@
                         android:text="结算预估收入"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13" />
-
-                    <TextView
-                        android:id="@+id/tv_today_money"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_E9AB4A"
-                        android:textSize="@dimen/sp_18" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12"
+                            android:text="¥ "/>
+                        <TextView
+                            android:id="@+id/tv_today_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_18"
+                            android:text=""
+                            />
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
             </LinearLayout>
@@ -159,10 +192,15 @@
             android:background="@color/white"
             android:paddingBottom="17dp">
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/cion_zuotian"
+                android:background="@drawable/bg_yesteday_earning"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="昨日"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/sp_12"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:id="@+id/icon_yesterday"/>
@@ -213,14 +251,26 @@
                         android:text="成交预估收入"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13" />
-
-                    <TextView
-                        android:id="@+id/tv_yesterday_estimate_money"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_E9AB4A"
-                        android:textSize="@dimen/sp_18" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12"
+                            android:text="¥ "/>
+                        <TextView
+                            android:id="@+id/tv_yesterday_estimate_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_18" />
+                    </LinearLayout>
+
                 </LinearLayout>
                 <View
                     android:layout_width="0.5dp"
@@ -241,14 +291,27 @@
                         android:text="结算预估收入"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13" />
-
-                    <TextView
-                        android:id="@+id/tv_yesterday_money"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_E9AB4A"
-                        android:textSize="@dimen/sp_18" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12"
+                            android:text="¥ "/>
+
+                        <TextView
+                            android:id="@+id/tv_yesterday_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_18" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
             </LinearLayout>

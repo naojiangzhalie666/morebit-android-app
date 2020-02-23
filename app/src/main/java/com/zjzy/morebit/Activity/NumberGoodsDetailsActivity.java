@@ -562,8 +562,9 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     @Override
     public void showSuccessful(NumberGoodsInfo goodsInfo) {
-        setUPdateData();
+
         mGoodsInfo = goodsInfo;
+        setUPdateData();
         mBannerList = goodsInfo.getGallery();
 
         if (mBannerList == null || mBannerList.size() == 0) {

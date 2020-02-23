@@ -149,13 +149,13 @@ public class EarningDetailFragment  extends MvpFragment<EarningsDetailPresenter>
         }
         MineFragment.mDayEarnings = earnings;
         //今日
-        tv_today_estimate_money.setText(getString(R.string.income, MathUtils.getMoney(earnings.getTodayEstimateMoney())));
+        tv_today_estimate_money.setText(""+ MathUtils.getMoney(earnings.getTodayEstimateMoney()));
         tv_today_paymen_total.setText(earnings.getTodayPamentTotal());
-        tv_today_money.setText(getString(R.string.income, MathUtils.getMoney(earnings.getTodayMoney())));
+        tv_today_money.setText(""+MathUtils.getMoney(earnings.getTodayMoney()));
         //昨天
-        tv_yesterday_money.setText(getString(R.string.income, MathUtils.getMoney(earnings.getYesterdayMoney())));
+        tv_yesterday_money.setText(""+MathUtils.getMoney(earnings.getYesterdayMoney()));
         tv_yesterday_payment_total.setText(earnings.getYestredayPaymentTotal());
-        tv_yesterday_estimate_money.setText(getString(R.string.income, MathUtils.getMoney(earnings.getYesterdayEstimateMoney())));
+        tv_yesterday_estimate_money.setText("" +MathUtils.getMoney(earnings.getYesterdayEstimateMoney()));
     }
 
     private  void setMonthEarnings(MonthEarnings earnings) {
@@ -164,11 +164,11 @@ public class EarningDetailFragment  extends MvpFragment<EarningsDetailPresenter>
         }
         MineFragment.mMonthEarnings = earnings;
         //本月
-        tv_month_estimate_money.setText(getString(R.string.income, MathUtils.getMoney(earnings.getThisMonthEstimateMoney())));
-        tv_month_money.setText(getString(R.string.income, MathUtils.getMoney(earnings.getThisMonthMoney())));
+        tv_month_estimate_money.setText("" +MathUtils.getMoney(earnings.getThisMonthEstimateMoney()));
+        tv_month_money.setText("" +MathUtils.getMoney(earnings.getThisMonthMoney()));
         //上月
-        tv_last_month_money.setText(getString(R.string.income, MathUtils.getMoney(earnings.getPrevMonthMoney())));
-        tv_last__month_estimate_money.setText(getString(R.string.income, MathUtils.getMoney(earnings.getPrevMonthEstimateMoney())));
+        tv_last_month_money.setText(""+MathUtils.getMoney(earnings.getPrevMonthMoney()));
+        tv_last__month_estimate_money.setText("" +MathUtils.getMoney(earnings.getPrevMonthEstimateMoney()));
 
 
     }

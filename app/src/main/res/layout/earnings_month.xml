@@ -66,14 +66,27 @@
                         android:text="本月消费预估收入"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13" />
-
-                    <TextView
-                        android:id="@+id/tv_month_estimate_money"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_E9AB4A"
-                        android:textSize="@dimen/sp_18" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12"
+                            android:text="¥ "/>
+                        <TextView
+                            android:id="@+id/tv_month_estimate_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_18" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
@@ -90,13 +103,26 @@
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13" />
 
-                    <TextView
-                        android:id="@+id/tv_month_money"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_E9AB4A"
-                        android:textSize="@dimen/sp_18" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12"
+                            android:text="¥ "/>
+                        <TextView
+                            android:id="@+id/tv_month_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_18" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
             <View
@@ -126,14 +152,26 @@
                         android:text="上月消费预估收入"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13" />
-
-                    <TextView
-                        android:id="@+id/tv_last__month_estimate_money"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_E9AB4A"
-                        android:textSize="@dimen/sp_18" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12"
+                            android:text="¥ "/>
+                        <TextView
+                            android:id="@+id/tv_last__month_estimate_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_18" />
+                    </LinearLayout>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
@@ -149,14 +187,26 @@
                         android:text="上月消费结算预估收入"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_13" />
-
-                    <TextView
-                        android:id="@+id/tv_last_month_money"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/color_E9AB4A"
-                        android:textSize="@dimen/sp_18" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12"
+                            android:text="¥ "/>
+                        <TextView
+                            android:id="@+id/tv_last_month_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_18" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

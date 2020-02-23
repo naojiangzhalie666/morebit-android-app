@@ -58,11 +58,13 @@
                 android:id="@+id/coupon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/icon_quan_zuobian"
+                android:background="@drawable/bg_quan_2dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:gravity="center"
                 android:paddingBottom="2dp"
                 android:maxLines="1"
-                android:textColor="@color/white"
+                android:textColor="@color/color_ffe800"
                 android:textSize="@dimen/sp_12"
                 tools:text="10000000000元"/>
 

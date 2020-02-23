@@ -268,16 +268,14 @@ public class MarkermallCircleAdapter extends BaseMYShareAdapter<MarkermallCircle
         TextView tv_comment;
         @BindView(R.id.rl_comment)
         RelativeLayout rl_comment;
-        @BindView(R.id.iv_role_bg)
-        ImageView iv_role_bg;
         @BindView(R.id.collectBtn)
         CollectBtn collectBtn;
-        @BindView(R.id.labelIv)
-        ImageView labelIv;
-        @BindView(R.id.labelTv)
-        TextView labelTv;
-        @BindView(R.id.tabLayout)
-        LinearLayout tabLayout;
+//        @BindView(R.id.labelIv)
+//        ImageView labelIv;
+//        @BindView(R.id.labelTv)
+//        TextView labelTv;
+//        @BindView(R.id.tabLayout)
+//        LinearLayout tabLayout;
         private boolean isRefresh = false;
         MarkermallCirleItmeAdapter cirleDayHotItmeAdapter;
         MarkermallCirleItmeGoodsAdapter cirleDayHotItmeGoodsAdapter;
@@ -297,7 +295,7 @@ public class MarkermallCircleAdapter extends BaseMYShareAdapter<MarkermallCircle
             }
 
 
-            LoadImgUtils.setImg(mContext, iv_role_bg, item.getLabelPicture(), R.drawable.icon_darenbiaoqian);
+//            LoadImgUtils.setImg(mContext, iv_role_bg, item.getLabelPicture(), R.drawable.icon_darenbiaoqian);
 
 
             title.setText(item.getName());
@@ -321,20 +319,20 @@ public class MarkermallCircleAdapter extends BaseMYShareAdapter<MarkermallCircle
                 }
             });
 
-            if(1 == item.getIsRecommend()){
-                tabLayout.setVisibility(View.VISIBLE);
-                if(!TextUtils.isEmpty(item.getLabelPic())){
-                    labelIv.setVisibility(View.VISIBLE);
-                    LoadImgUtils.setImg(mContext, labelIv, item.getLabelPic(), false);
-                }else{
-                    labelIv.setVisibility(View.GONE);
-                }
-                if(!TextUtils.isEmpty(item.getLabelName())){
-                    labelTv.setText(item.getLabelName());
-                }
-            }else{
-                tabLayout.setVisibility(View.GONE);
-            }
+//            if(1 == item.getIsRecommend()){
+//                tabLayout.setVisibility(View.VISIBLE);
+//                if(!TextUtils.isEmpty(item.getLabelPic())){
+//                    labelIv.setVisibility(View.VISIBLE);
+//                    LoadImgUtils.setImg(mContext, labelIv, item.getLabelPic(), false);
+//                }else{
+//                    labelIv.setVisibility(View.GONE);
+//                }
+//                if(!TextUtils.isEmpty(item.getLabelName())){
+//                    labelTv.setText(item.getLabelName());
+//                }
+//            }else{
+//                tabLayout.setVisibility(View.GONE);
+//            }
             title.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {

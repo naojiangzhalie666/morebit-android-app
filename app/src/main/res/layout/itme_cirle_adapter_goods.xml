@@ -68,87 +68,146 @@
         android:textSize="14sp"
         tools:text="商品标题标题标题标题"
         />
-
-
-    <LinearLayout
-
-        android:layout_below="@+id/tv_title"
+    <!--券额-->
+    <TextView
+        android:layout_below="@id/tv_title"
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_toRightOf="@id/cv_head"
-        android:background="@drawable/bg_ffc0c0_white_round_6dp"
-        android:layout_width="match_parent"
-        android:layout_height="58dp">
+        android:background="@drawable/bg_quane_4dp"
+        android:paddingRight="4dp"
+        android:paddingLeft="4dp"
+        android:textColor="#ffff645b"
+        android:textSize="10sp"
+        tools:text="券额5元"
+        />
+    <!--券后价-->
+    <TextView
+        android:id="@+id/tv_coupon_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/cv_head"
+        android:layout_alignBottom="@id/cv_head"
+        android:textColor="#ffff645b"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        tools:text="券后价5.00元"
+        />
+    <TextView
+        android:id="@+id/tv_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/cv_head"
+        android:background="@drawable/bg_share_shouyi_8dp"
+        android:paddingRight="8dp"
+        android:textColor="@color/white"
+        android:paddingLeft="8dp"
+        android:gravity="center"
+        tools:text="分享收益3元"/>
 
-        <LinearLayout
-            android:layout_weight="0.335"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+<!--    <RelativeLayout-->
+<!--        android:layout_below="@+id/tv_title"-->
+<!--        android:layout_toRightOf="@id/cv_head"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="58dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:background="@drawable/bg_ffc0c0_white_round_6dp">-->
 
-            <TextView
-                android:id="@+id/tv_coupon_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ffff4141"
-                android:textSize="14sp"
-                tools:text="¥5.00"
-                />
+<!--        &lt;!&ndash;券额&ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/tv_price"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="#ff4141"-->
+<!--            android:textSize="14sp"-->
+<!--            tools:text="¥5.00"-->
+<!--            />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/coupon_price_text"
-                android:textColor="@color/color_333333"
-                android:textSize="12sp"
-                />
-        </LinearLayout>
+<!--    </RelativeLayout>-->
 
-        <View
-            style="@style/line_vertical"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="#FFC0C0"
-            />
+<!--    <LinearLayout-->
 
-        <LinearLayout
-            android:layout_weight="0.335"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+<!--        android:layout_below="@+id/tv_title"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:layout_toRightOf="@id/cv_head"-->
+<!--        android:background="@drawable/bg_ffc0c0_white_round_6dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="58dp">-->
 
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ff4141"
-                android:textSize="14sp"
-                tools:text="¥5.00"
-                />
+<!--        <LinearLayout-->
+<!--            android:layout_weight="0.335"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="券额"
-                android:textColor="@color/color_333333"
-                android:textSize="12sp"
-                />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_coupon_price"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="#ffff4141"-->
+<!--                android:textSize="14sp"-->
+<!--                tools:text="¥5.00"-->
+<!--                />-->
 
-        <TextView
-            android:id="@+id/tv_share"
-            android:layout_width="0dp"
-            android:textSize="11sp"
-            android:layout_weight="0.29"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/icon_combined_shape"
-            android:textColor="@color/white"
-            android:paddingLeft="3dp"
-            android:gravity="center"
-            android:layout_height="58dp"
-            tools:text="分享赚\n3元"/>
-    </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/coupon_price_text"-->
+<!--                android:textColor="@color/color_333333"-->
+<!--                android:textSize="12sp"-->
+<!--                />-->
+<!--        </LinearLayout>-->
+
+<!--        <View-->
+<!--            style="@style/line_vertical"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:layout_marginBottom="15dp"-->
+<!--            android:background="#FFC0C0"-->
+<!--            />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_weight="0.335"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_price"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="#ff4141"-->
+<!--                android:textSize="14sp"-->
+<!--                tools:text="¥5.00"-->
+<!--                />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="券额"-->
+<!--                android:textColor="@color/color_333333"-->
+<!--                android:textSize="12sp"-->
+<!--                />-->
+<!--        </LinearLayout>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_share"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:textSize="11sp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:background="@drawable/bg_share_shouyi_8dp"-->
+<!--            android:paddingRight="4dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:paddingLeft="4dp"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_height="58dp"-->
+<!--            tools:text="分享收益3元"/>-->
+<!--    </LinearLayout>-->
 
 
 </RelativeLayout>

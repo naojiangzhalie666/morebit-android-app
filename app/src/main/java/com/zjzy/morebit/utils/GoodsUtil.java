@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
@@ -294,18 +295,33 @@ public class GoodsUtil {
         return saveMakePath;
     }
 
-    public static Bitmap getViewBitmap(View view) {
-        int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        view.measure(me, me);
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-        view.buildDrawingCache();
-        return view.getDrawingCache();
+//    public static Bitmap getViewBitmap(View view) {
+//        int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//        view.measure(me, me);
+//        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+//        view.buildDrawingCache();
+//        return view.getDrawingCache();
+//    }
+    public static  Bitmap getViewBitmap(View v){
+        if (v == null) {
+            return null;
+        }
+                int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        v.measure(me, me);
+        v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+        Bitmap screenshot;
+        screenshot = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.RGB_565);
+        Canvas c = new Canvas(screenshot);
+        v.draw(c);
+        return screenshot;
+
     }
 
     @NonNull
     public static View getGoodsPosterView(Activity activity, ShopGoodInfo goodsInfo, Bitmap goodBitmap, Bitmap ewmBitmap) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.view_make_goods_poster, null);
-        ImageView goodShopTag = (ImageView) view.findViewById(R.id.goodShopTag);
+        View view = LayoutInflater.from(activity).inflate(R.layout.view_new_make_goods_poster, null);
+        TextView goodShopTag = (TextView) view.findViewById(R.id.goodShopTag);
+
         RoundedImageView goods_img = (RoundedImageView) view.findViewById(R.id.goods_img);
         ImageView qrcode_img = (ImageView) view.findViewById(R.id.qrcode_img);
         TextView title = (TextView) view.findViewById(R.id.title);
@@ -326,10 +342,11 @@ public class GoodsUtil {
         juanhou_prise.setText("¥" + MathUtils.getSalesPrice(MathUtils.getVoucherPrice(goodsInfo.getVoucherPrice())));
         yuan_prise.setText("¥ " + MathUtils.getPrice(goodsInfo.getPrice()));
         if (goodsInfo.getShopType() == 2) {
-            goodShopTag.setImageResource(R.drawable.tianmao);
+            goodShopTag.setText("天猫");
         } else {
-            goodShopTag.setImageResource(R.drawable.taobao);
+            goodShopTag.setText("淘宝");
         }
+
         if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {
             StringsUtils.retractTitle(title, title, goodsInfo.getTitle());
         }

@@ -92,11 +92,13 @@
                     android:id="@+id/coupon"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
-                    android:background="@drawable/icon_quan_zuobian"
+                    android:background="@drawable/bg_quan_2dp"
+                    android:paddingRight="4dp"
+                    android:paddingLeft="4dp"
                     android:gravity="center"
                     android:maxLines="1"
                     android:layout_marginRight="4dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_ffe800"
                     android:textSize="10dp"
                     tools:text="10000000000元"/>
             </LinearLayout>
@@ -105,10 +107,12 @@
                 android:id="@+id/commission"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:background="@drawable/bg_commission"
+                android:background="@drawable/bg_quan_2dp"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
                 android:maxLines="1"
                 android:gravity="center"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_ffe800"
                 android:textSize="10dp"
                 tools:text="250人"/>
         </LinearLayout>

@@ -106,8 +106,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/icon_quan_zuobian"
-            android:textColor="@color/white"
+            android:background="@drawable/bg_quan_2dp"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"
+            android:textColor="@color/color_ffe800"
             android:textSize="@dimen/sp_11"
             android:gravity="center"
             tools:text="100元" />

@@ -167,12 +167,12 @@
                 android:layout_below="@+id/yuan_prise"
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
-                android:background="@drawable/icon_quan_zuobian"
+                android:background="@drawable/bg_quan_2dp"
                 android:gravity="center"
                 android:maxLines="1"
-                android:paddingRight="5dp"
-                android:paddingLeft="5dp"
-                android:textColor="@color/white"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                android:textColor="@color/color_ffe800"
                 android:textSize="18dp"
                 tools:text="10000000000元"/>
 

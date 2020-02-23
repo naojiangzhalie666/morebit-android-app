@@ -129,7 +129,7 @@ public class MineFragment extends BaseMainFragmeng {
     @BindView(R.id.ll_my_tootls)
     LinearLayout ll_my_tootls;
     @BindView(R.id.ll_mine_earnings)
-    LinearLayout ll_mine_earnings;
+    RelativeLayout ll_mine_earnings;
     @BindView(R.id.moneyCardView)
     CardView moneyCardView;
     @BindView(R.id.scrollView)
@@ -300,7 +300,7 @@ public class MineFragment extends BaseMainFragmeng {
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
 //            mUserLevel.setImageResource(R.mipmap.my_leader_icon);
-            ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings);
+            ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
         }
         if (TextUtils.isEmpty(info.getWxNumber())) {
             rl_set_weixin.setVisibility(View.VISIBLE);

@@ -82,6 +82,7 @@ public class NumberSubFragment extends BaseFragment {
     TextView updateVip;
     View headView ;
     TextView userName;
+    TextView txtWelcome;
 
     SubNumberAdapter mAdapter;
     RoundedImageView cardNumber;
@@ -174,6 +175,8 @@ public class NumberSubFragment extends BaseFragment {
     }
 
     private void initHeadView(View headView){
+
+        txtWelcome = (TextView)headView.findViewById(R.id.txt_number_welcome_hint);
         userName = (TextView)headView.findViewById(R.id.user_name);
         mUserIcon = (RoundedImageView)headView.findViewById(R.id.userIcon);
         myGradedView = (TextView)headView.findViewById(R.id.lb_user_grade);
@@ -286,19 +289,15 @@ public class NumberSubFragment extends BaseFragment {
 
 
     /**
-     * vip的view
+     * number的view
      */
     private void gradeForNumberView(){
 
           cardNumber.setVisibility(View.VISIBLE);
           cardVip.setVisibility(View.GONE);
           cardLeader.setVisibility(View.GONE);
-//        gradeHint1.setText("购物更省钱");
-//        gradeHint2.setText("分享奖励高" );
-//        gradeHint3.setText("可申请团队长");
-//        gradeHint4.setText("大咖辅导");
-//        gradeHint5.setText("数据化运营");
-//        gradeHint6.setText("六位邀请码");
+        txtWelcome.setText(getResources().getString(R.string.number_welcome_hint));
+
     }
 
     /**
@@ -308,12 +307,8 @@ public class NumberSubFragment extends BaseFragment {
         cardVip.setVisibility(View.VISIBLE);
         cardNumber.setVisibility(View.GONE);
         cardLeader.setVisibility(View.GONE);
-//        gradeHint1.setText("购物更省钱");
-//        gradeHint2.setText("分享奖励高" );
-//        gradeHint3.setText("团队奖不停");
-//        gradeHint4.setText("大咖辅导");
-//        gradeHint5.setText("数据化运营");
-//        gradeHint6.setText("六位邀请码");
+        txtWelcome.setText(getResources().getString(R.string.vip_welcome_hint));
+
     }
 
     /**
@@ -323,12 +318,8 @@ public class NumberSubFragment extends BaseFragment {
         cardNumber.setVisibility(View.GONE);
         cardVip.setVisibility(View.GONE);
         cardLeader.setVisibility(View.VISIBLE);
-//        gradeHint1.setText("购物更省钱");
-//        gradeHint2.setText("分享奖励高");
-//        gradeHint3.setText("团队奖不停");
-//        gradeHint4.setText("大咖辅导");
-//        gradeHint5.setText("专属后台运营");
-//        gradeHint6.setText("六位邀请码");
+        txtWelcome.setText(getResources().getString(R.string.tuandui_welcome_hint));
+
     }
 
 
