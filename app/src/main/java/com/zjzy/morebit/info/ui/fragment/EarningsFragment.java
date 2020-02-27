@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.zjzy.morebit.Activity.ConsComGoodsDeailListActivity;
+import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
@@ -29,6 +30,7 @@ import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.payment.PayDemoActivity;
 import com.zjzy.morebit.pojo.DayEarnings;
 import com.zjzy.morebit.pojo.HotKeywords;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -68,6 +70,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     private String mTotalMoney = "";
 //    String[] tagTitle = new String[]{"淘宝","苏宁","其他"};
     String[] tagTitle = new String[]{"淘宝","优选"};
+    String[] tagTitleNoSelfYouxuan = new String[]{"淘宝"};
     private List<EarningDetailFragment> fragments = null;
     private int currentTab = 0;
 
@@ -88,15 +91,18 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     @Override
     protected void initView(View view) {
         initBundle();
+        fragments = new ArrayList<>();
+
+
         EarningDetailFragment taobaoFragment = EarningDetailFragment.newInstance(C.OrderType.TAOBAO);
         taobaoFragment.setEarningBalanceCallback(callback);
-        EarningDetailFragment yuxuanFragment = EarningDetailFragment.newInstance(C.OrderType.YUXUAN);
-        yuxuanFragment.setEarningBalanceCallback(callback);
+        fragments.add(taobaoFragment);
+
+
 //        EarningDetailFragment otherFragment = EarningDetailFragment.newInstance(C.OrderType.OTHER);
 //        otherFragment.setEarningBalanceCallback(callback);
-        fragments = new ArrayList<>();
-        fragments.add(taobaoFragment);
-        fragments.add(yuxuanFragment);
+
+
 //        fragments.add(otherFragment);
         swipeList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -114,7 +120,17 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         }
         tv_rule.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tv_rule.getPaint().setAntiAlias(true);//抗锯齿
-        setupViewPager(tagTitle);
+        UserInfo info = UserLocalData.getUser();
+        //不是会员的时候才展示优选的内容
+        if (info != null && !C.UserType.member.equals(info.getPartner())){
+            EarningDetailFragment yuxuanFragment = EarningDetailFragment.newInstance(C.OrderType.YUXUAN);
+            yuxuanFragment.setEarningBalanceCallback(callback);
+            fragments.add(yuxuanFragment);
+            setupViewPager(tagTitle);
+        }else{
+            setupViewPager(tagTitleNoSelfYouxuan);
+        }
+
 
     }
 

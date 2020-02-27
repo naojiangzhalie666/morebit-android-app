@@ -73,7 +73,7 @@
                     android:textSize="@dimen/sp_11"
                     android:textColor="@color/white"
                     android:gravity="center"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     />
 
 

@@ -141,11 +141,13 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
         viewHolder.textview_original.setText(mContext.getString(R.string.coupon, MathUtils.getVoucherPrice(info.getVoucherPrice())));
         viewHolder.textvihew_Preco.setText("" + MathUtils.getPrice(info.getPrice()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        String  itemLabeling = info.getItemLabeling();
         if(!TextUtils.isEmpty(info.getMarkValue()) && info.getItemFrom().equals("1") && showHotTag){
             viewHolder.markTv.setVisibility(View.VISIBLE);
             viewHolder.markTv.setBackgroundResource(R.drawable.bg_search_recommod_good);
             viewHolder.markTv.setText(info.getMarkValue());
-        }else if(!TextUtils.isEmpty(info.getItemLabeling())  ){
+        }else if(!TextUtils.isEmpty(itemLabeling)
+        && (itemLabeling !=null && !itemLabeling.equals("NULL"))){
             viewHolder.markTv.setVisibility(View.VISIBLE);
             viewHolder.markTv.setText(info.getItemLabeling());
         }else{

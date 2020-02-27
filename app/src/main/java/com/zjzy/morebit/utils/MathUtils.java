@@ -348,7 +348,9 @@ public class MathUtils {
 
     public static String getTitle(ShopGoodInfo item) {
         if (item == null) return "";
-        if (!TextUtils.isEmpty(item.getItemSubhead())) {
+        String itemSubhead = item.getItemSubhead();
+        if (!TextUtils.isEmpty(itemSubhead)
+        && (itemSubhead != null && !itemSubhead.equals("NULL"))) {
             return item.getItemSubhead();
         } else {
             if (!TextUtils.isEmpty(item.getTitle())) {
