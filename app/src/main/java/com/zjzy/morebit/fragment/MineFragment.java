@@ -558,6 +558,11 @@ public class MineFragment extends BaseMainFragmeng {
                                 if (permission.contains("3") || permission.contains(partner)) {//Permission为"0,1,2,3"格式的字符串，
                                     list.add(imageInfo);
                                 }
+                                //
+                                if ((C.UserType.member.equals(partner) || C.UserType.operator.equals(partner))
+                                        && "足迹".equals(data.get(i).getTitle())){
+                                    list.add(imageInfo);
+                                }
                             }
 
                             if (list.size() == 0) {
