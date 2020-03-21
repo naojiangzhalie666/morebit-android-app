@@ -89,6 +89,103 @@ public class ShopGoodInfo implements Serializable {
     // 自用
     public String markValue; //标识内容（本地商品专属，后台关闭则不显示）
 
+    //小程序对接-佣金比例
+    private String commissionRare;
+
+    //商品价格
+    private String price;
+
+    //商品券后价
+    private String voucherPrice;
+
+    //商品id
+    private Long goodsId;
+
+    //商品主图
+    private String imageUrl;
+
+    //推荐类型  1 为你推荐
+    private int recommendType;
+
+    //是否拼购   苏宁专用 优先跳 拼购小程序  1是 0 否
+    private int isPin;
+
+    //店家 编码
+    private String supplierCode;
+
+    //优惠券活动ID
+    private String couponActivityId;
+
+    //拼购ID
+    private String pgActionId;
+
+
+
+
+    public String getCommissionRare() {
+        return commissionRare;
+    }
+
+    public void setCommissionRare(String commissionRare) {
+        this.commissionRare = commissionRare;
+    }
+
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public int getRecommendType() {
+        return recommendType;
+    }
+
+    public void setRecommendType(int recommendType) {
+        this.recommendType = recommendType;
+    }
+
+    public int getIsPin() {
+        return isPin;
+    }
+
+    public void setIsPin(int isPin) {
+        this.isPin = isPin;
+    }
+
+    public String getSupplierCode() {
+        return supplierCode;
+    }
+
+    public void setSupplierCode(String supplierCode) {
+        this.supplierCode = supplierCode;
+    }
+
+    public String getCouponActivityId() {
+        return couponActivityId;
+    }
+
+    public void setCouponActivityId(String couponActivityId) {
+        this.couponActivityId = couponActivityId;
+    }
+
+    public String getPgActionId() {
+        return pgActionId;
+    }
+
+    public void setPgActionId(String pgActionId) {
+        this.pgActionId = pgActionId;
+    }
+
     public String getSubsidiesPrice() {
         return subsidiesPrice;
     }
@@ -231,6 +328,14 @@ public class ShopGoodInfo implements Serializable {
         this.itemSourceId = taobao;
     }
 
+    public String getVoucherPriceForPdd() {
+        return voucherPrice;
+    }
+
+    public void setVoucherPriceForPdd(String voucherPrice) {
+        this.voucherPrice = voucherPrice;
+    }
+
     public String getVoucherPrice() {
         return itemVoucherPrice;
     }
@@ -253,6 +358,14 @@ public class ShopGoodInfo implements Serializable {
 
     public void setShopType(int shopType) {
         this.shopType = shopType;
+    }
+
+    public String getPriceForPdd() {
+        return price;
+    }
+
+    public void setPriceForPdd(String price) {
+        this.price = price;
     }
 
     public String getPrice() {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F7F7F7"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ranking_tabbar_height">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/icon_denglu_fanhui"/>
+        </RelativeLayout>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tab"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ranking_tab_one_height"
+            android:layout_gravity="center_horizontal"
+            app:tl_indicator_color="@color/white"
+            app:tl_indicator_height="5dp"
+            app:tl_indicator_style="TRIANGLE"
+            app:tl_indicator_width="10dp"
+            app:tl_tab_padding="25dp"
+            app:tl_textSelectColor="@color/white"
+            app:tl_textUnselectColor="@color/white"
+            app:tl_textsize="16sp"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</RelativeLayout>

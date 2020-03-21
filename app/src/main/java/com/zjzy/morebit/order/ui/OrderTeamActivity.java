@@ -34,6 +34,11 @@ public class OrderTeamActivity extends BaseActivity {
     @BindView(R.id.ll_morebit_order)
     LinearLayout llMorebitOrder;
 
+    @BindView(R.id.ll_jd_order)
+    LinearLayout llJdOrder;
+
+    @BindView(R.id.ll_pdd_order)
+    LinearLayout llPddOrder;
 
     public static void start(Activity activity) {
         //跳转到订单类型列表
@@ -64,7 +69,7 @@ public class OrderTeamActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(C.Extras.order_type,1);
+                bundle.putInt(C.Extras.order_type,C.OrderType.TAOBAO);
                 OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
                         OrderDetailFragment.class.getName(), bundle);
             }
@@ -74,7 +79,30 @@ public class OrderTeamActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(C.Extras.order_type,10);
+                bundle.putInt(C.Extras.order_type,C.OrderType.YUXUAN);
+                OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
+                        OrderDetailFragment.class.getName(), bundle);
+            }
+        });
+
+        //京东
+        llJdOrder.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(C.Extras.order_type,C.OrderType.JD);
+                OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
+                        OrderDetailFragment.class.getName(), bundle);
+            }
+        });
+        //拼多多
+        llPddOrder.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(C.Extras.order_type,C.OrderType.PDD);
                 OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
                         OrderDetailFragment.class.getName(), bundle);
             }

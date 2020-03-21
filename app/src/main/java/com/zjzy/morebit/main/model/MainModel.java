@@ -5,6 +5,8 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.Logger;
+import com.zjzy.morebit.pojo.ProgramCatItemBean;
+import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
 import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.main.ui.CollectFragment2;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
@@ -13,6 +15,8 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.pojo.RankingTitleBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
+import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.RequestByGoodList;
 import com.zjzy.morebit.pojo.request.RequestCollectionListBean;
 import com.zjzy.morebit.pojo.request.RequestMaterial;
@@ -207,7 +211,7 @@ public class MainModel extends MvpModel {
         requestGoodsLike.setDeviceType("IMEI");
         requestGoodsLike.setDeviceValue(imei);
         requestGoodsLike.setPage(page);
-        return    RxHttp.getInstance().getCommonService().getRecommendItemsById(requestGoodsLike)
+        return RxHttp.getInstance().getCommonService().getRecommendItemsById(requestGoodsLike)
                 .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
                 .compose(rxFragmen.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
     }
@@ -238,6 +242,20 @@ public class MainModel extends MvpModel {
                 .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
                 .compose(rxFragmen.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
     }
+
+    /**
+     * 京东、拼多多商品列表_新接口
+     *
+     * @return
+     */
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getJdPddGoodsList(RxFragment rxFragmen, ProgramCatItemBean bean) {
+        return RxHttp.getInstance().getGoodsService().getJdPddGoodsList(bean)
+                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
+                .compose(rxFragmen.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
+    }
+
+
+
 
     /**
      * 获取所有区域内容

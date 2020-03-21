@@ -88,8 +88,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.item8_rl).setOnClickListener(this);
         findViewById(R.id.item10_rl).setOnClickListener(this);
         findViewById(R.id.item11_rl).setOnClickListener(this);
-        findViewById(R.id.item12_rl).setOnClickListener(this);
-        findViewById(R.id.item13_rl).setOnClickListener(this);
+
         findViewById(R.id.rl_wx).setOnClickListener(this);
         findViewById(R.id.message_notification).setOnClickListener(this);
         findViewById(R.id.my_goods_address).setOnClickListener(this);
@@ -257,13 +256,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 this.startActivity(aboutIt);
 
                 break;
-            case R.id.item12_rl:
-                LoginUtil.getUserProtocolForHome(SettingActivity.this);
-                break;
 
-            case R.id.item13_rl:
-                LoginUtil.getPrivateProtocolForHome(SettingActivity.this);
-                break;
             default:
                 break;
         }

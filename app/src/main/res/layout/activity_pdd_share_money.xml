@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/line_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/rel_top"
+            style="@style/TopSize">
+
+            <TextView
+                android:id="@+id/txt_head_title"
+                style="@style/TopSizeTitle"
+                android:layout_centerInParent="true"
+                android:text="创建分享"/>
+
+            <LinearLayout
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingBottom="10dp"
+                android:paddingRight="35dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+
+                    style="@style/TopSizeBack"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:paddingBottom="13dp"
+
+        android:visibility="visible">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/color_F8F8F8"/>
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="9dp"
+            android:layout_marginTop="9dp"
+            android:text="图文分享到"
+            android:textColor="@color/color_333333"
+            android:textSize="12sp"/>
+
+
+        <include
+            layout="@layout/layout_share_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/line_bottom"
+        android:layout_below="@id/line_top">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rule_ly"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/incomeMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_FFECB6"
+                    android:gravity="center"
+                    android:text="您的奖励预计为: 0.00元"
+                    android:textColor="@color/color_FFFFFF"
+                    android:textSize="12sp"/>
+
+                <ImageView
+                    android:id="@+id/icon_right"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/icon_gengduo_white"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/icon_right"
+                    android:text="规则"
+                    android:textColor="@color/color_FFFFFF"
+                    android:textSize="11sp"/>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tv_select_desc"
+                android:layout_marginTop="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="14dp"
+                android:text="选择图片"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_recyclerview_horizontal"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:scrollbars="none"/>
+
+
+            <TextView
+                android:id="@+id/makeGoodsPoster"
+                android:layout_width="116dp"
+                android:layout_height="28dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/background_radius_haibao"
+                android:gravity="center"
+                android:text="更换海报主图"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="13dp"/>
+
+            <TextView
+                android:id="@+id/tv_share_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="10dp"
+                android:text="编辑分享文案"
+                android:textColor="@color/color_333333"
+                android:textSize="13sp"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_copy_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_f8f8f8_round_6dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_copy"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_height="139dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bg_f8f8f8_round_6dp"
+                    android:gravity="top"
+                    android:hint=""
+                    android:textColorHint="@color/color_333333"
+                    android:textSize="13sp"
+                    android:windowSoftInputMode="stateHidden"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/et_copy"
+                    >
+
+
+                    <TextView
+                        android:id="@+id/tv_capy_tkl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/background_radius_haibao"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
+                        android:paddingTop="5dp"
+                        android:layout_marginRight="13dp"
+                        android:text="@string/capy_tkl"
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="10sp"/>
+                    <TextView
+                        android:id="@+id/tv_edit_template"
+                        android:layout_width="74dp"
+                        android:layout_toLeftOf="@+id/tv_capy_tkl"
+                        android:layout_height="22dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="9dp"
+                        android:background="@drawable/bg_fff4bf_round_11dp"
+                        android:gravity="center"
+                        android:text="@string/edit_template"
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="@dimen/sp_12"/>
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <com.zjzy.morebit.view.goods.ShareMoneySwitchTemplateView
+                android:id="@+id/view_swicht"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_copy"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_copy_text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/background_radius_haibao"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="12dp"
+                android:paddingLeft="13dp"
+                android:paddingRight="13dp"
+                android:text="仅复制文案分享"
+                android:paddingTop="5dp"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

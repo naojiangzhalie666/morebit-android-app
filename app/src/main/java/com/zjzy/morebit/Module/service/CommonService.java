@@ -1,5 +1,8 @@
 package com.zjzy.morebit.Module.service;
 
+import com.zjzy.morebit.pojo.ProgramCatItemBean;
+import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
+import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.pojo.address.AddressInfoList;
 import com.zjzy.morebit.pojo.address.AllRegionInfoList;
@@ -72,6 +75,8 @@ import com.zjzy.morebit.pojo.myInfo.OssKeyBean;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
+import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
 import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
@@ -521,6 +526,16 @@ public interface CommonService {
 //            @Field("couponUrl") String couponUrl,
 //            @Field("pid") String pid,
 //            @Field("template") String template);
+
+
+    /**
+     * 生成京东推广链接
+     *
+     * @return
+     */
+    @POST("/api/goods/program/generatePromotionUrl")
+    public Observable<BaseResponse<TKLBean>> getPromotionUrl(
+            @Body RequestTKLBean requestBean);
 
     /**
      * 获取优惠卷地址
@@ -1936,6 +1951,33 @@ public interface CommonService {
     @POST("/api/goods/ranking/new")
     Observable<BaseResponse<List<ShopGoodInfo>>> getRankingNews(
             @Body RankingTitleBean body
+    );
+
+
+    /**
+     * 京东、拼多多商品列表_新接口
+     */
+    @POST("/api/goods/program/getItemByCatId")
+    Observable<BaseResponse<List<ShopGoodInfo>>> getJdPddGoodsList(
+            @Body ProgramCatItemBean body
+    );
+
+    /**
+     * 京东、拼多多的商品详情_新接口
+     */
+    @POST("/api/goods/program/goodsDetail")
+    Observable<BaseResponse<ShopGoodInfo>> getJdPddGoodsDetail(
+            @Body ProgramGetGoodsDetailBean body
+    );
+
+
+
+    /**
+     * 京东、拼多多的搜索商品列表_新接口
+     */
+    @POST("/api/goods/program/searchKeyword")
+    Observable<BaseResponse<List<ProgramItem>>> getSearchKeywordForJdPdd(
+            @Body ProgramSearchKeywordBean body
     );
 
     /**

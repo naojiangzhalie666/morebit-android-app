@@ -3,6 +3,7 @@ package com.zjzy.morebit.goods.shopping.presenter;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -31,7 +32,6 @@ import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.dao.DBManager;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.List;
 
@@ -42,15 +42,11 @@ import io.reactivex.functions.Function;
  * Created by fengrs on 2018/11/3.
  */
 
-public class GoodsDetailPresenter extends MvpPresenter<GoodsDetailModel, GoodsDetailContract.View> implements GoodsDetailContract.Present {
+public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailModel, GoodsDetailContract.View> implements GoodsDetailContract.Present {
 
 
     private MainModel mMainModel;
 
-    @Override
-    public void getDetailDataForPdd(BaseActivity rxActivity, ShopGoodInfo goodsInfo, boolean isRefresh) {
-
-    }
 
     /**
      * 获取详情页信息
@@ -60,7 +56,12 @@ public class GoodsDetailPresenter extends MvpPresenter<GoodsDetailModel, GoodsDe
      */
     @Override
     public void getDetailData(final BaseActivity rxActivity, ShopGoodInfo goodsInfo, final boolean isRefresh) {
-        mModel.getBaseResponseObservable(rxActivity, goodsInfo)
+
+    }
+
+    @Override
+    public void getDetailDataForPdd(BaseActivity rxActivity, ShopGoodInfo goodsInfo,final boolean isRefresh) {
+        mModel.getBaseResponseObservableForPdd(rxActivity, goodsInfo)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -68,7 +69,7 @@ public class GoodsDetailPresenter extends MvpPresenter<GoodsDetailModel, GoodsDe
                     }
                 })
                 .subscribe(new DataObserver<ShopGoodInfo>() {
-                   @Override
+                    @Override
                     protected void onSuccess(final ShopGoodInfo data) {
                         getIView().showDetailsView(data, false, isRefresh);
                         getIView().getTaoKouLing();
@@ -76,52 +77,14 @@ public class GoodsDetailPresenter extends MvpPresenter<GoodsDetailModel, GoodsDe
                         if (isImgsToData) {
                             getIView().setModuleDescUrl(data, "");
                         }
-                        if (!TextUtils.isEmpty(data.getTaobaoDetailUrl())) {
-                            mModel.getprofileUrlObservable(rxActivity, data.getTaobaoDetailUrl())
-                                    .map(new Function<String, String>() {
-                                        @Override
-                                        public String apply(String s) throws Exception {
-                                            if (isImgsToData) {
-                                                return s;
-                                            } else {
-                                                return getTaobaoDataForModuleDescUrl(s, data);
-                                            }
-                                        }
-                                    })
-                                    .subscribe(new CallBackObserver<String>() {
-                                        @Override
-                                        public void onNext(String s) {
-                                            putTaobaoData(s);
-                                        }
-                                        @Override
-                                        public void onError(Throwable e) {
-                                            getIView().setModuleDescUrl(data, "");
-                                        }
-                                    });
-                        } else {
-                            getIView().showDetailsView(data, true, isRefresh);
-                            if (!isImgsToData) {
-                                getIView().setModuleDescUrl(data, "");
-                            }
+
+                        getIView().showDetailsView(data, true, isRefresh);
+                        if (!isImgsToData) {
+                            getIView().setModuleDescUrl(data, "");
                         }
+
                     }
 
-                    /**
-                     *  上传淘宝数据到接口解析,成功后再加载数据
-                     * @param s
-                     */
-                    private void putTaobaoData(String s) {
-                        if (TextUtils.isEmpty(s)) {
-                            return;
-                        }
-                        mModel.putTaobaoData(rxActivity, s)
-                                .subscribe(new DataObserver<ShopGoodInfo>(false) {
-                                    @Override
-                                    protected void onSuccess(ShopGoodInfo data) {
-                                        getIView().showDetailsView(data, true, isRefresh);
-                                    }
-                                });
-                    }
                     /**
                      *  判断是否有商品详情页数据返回
                      * @param data
@@ -129,41 +92,11 @@ public class GoodsDetailPresenter extends MvpPresenter<GoodsDetailModel, GoodsDe
                      */
                     private boolean getImgsToDataState(ShopGoodInfo data) {
                         return data.getPicUrls() != null &&
-                                                    data.getPicUrls().getA() != null &&
-                                                    data.getPicUrls().getA().getContent() != null &&
-                                                    data.getPicUrls().getA().getContent().size() != 0;
+                                data.getPicUrls().getA() != null &&
+                                data.getPicUrls().getA().getContent() != null &&
+                                data.getPicUrls().getA().getContent().size() != 0;
                     }
 
-                    /**
-                     *  自己解析淘宝详情数据中滴 ModuleDescUrl
-                     *  ModuleDescUrl 是请求商品详情页滴请求url
-                     * @param s
-                     * @param data
-                     * @return
-                     */
-                    private String getTaobaoDataForModuleDescUrl(String s, ShopGoodInfo data) {
-                        try {
-                            TaobaoGoodBean taobaoGoodBean = MyGsonUtils.jsonToBean(s, TaobaoGoodBean.class);
-                            if (taobaoGoodBean == null ||
-                                    taobaoGoodBean.getData() == null ||
-                                    taobaoGoodBean.getData().getItem() == null ||
-                                    TextUtils.isEmpty(taobaoGoodBean.getData().getItem().getModuleDescUrl())
-                                    ) {
-                                    getIView().setModuleDescUrl(data, "");
-                                return s;
-                            } else {
-                                TaobaoGoodBean.DataBean taobaodataBean = taobaoGoodBean.getData();
-                                TaobaoGoodBean.DataBean.BannerBean item = taobaodataBean.getItem();
-                                String moduleDescUrl = item.getModuleDescUrl();
-                                getIView().setModuleDescUrl(data, moduleDescUrl);
-                                return s;
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            return s;
-                        }
-                    }
                 });
     }
 
@@ -235,6 +168,7 @@ public class GoodsDetailPresenter extends MvpPresenter<GoodsDetailModel, GoodsDe
                 });
 
     }
+
 
 
     /**

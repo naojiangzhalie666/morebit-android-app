@@ -3,6 +3,7 @@ package com.zjzy.morebit.utils;
 import android.text.TextUtils;
 
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -360,6 +361,21 @@ public class MathUtils {
         return "";
     }
 
+    //拼多多标题
+    public static String getTitleForPdd(JdPddProgramItem item) {
+        if (item == null) return "";
+        String itemSubhead = item.getItemTitle();
+        if (!TextUtils.isEmpty(itemSubhead)
+                && (itemSubhead != null && !itemSubhead.equals("NULL"))) {
+            return item.getItemTitle();
+        } else {
+            if (!TextUtils.isEmpty(item.getItemTitle())) {
+                return item.getItemTitle();
+            }
+        }
+        return "";
+    }
+
     public static String getPicture(ShopGoodInfo item) {
         if (item == null) return "";
         if (!TextUtils.isEmpty(item.getPicture())) {
@@ -368,6 +384,7 @@ public class MathUtils {
             return "";
         }
     }
+
 
 
     /**

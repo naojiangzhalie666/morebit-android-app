@@ -208,6 +208,10 @@
             android:name="com.zjzy.morebit.Activity.GoodsDetailActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name="com.zjzy.morebit.Activity.GoodsDetailForPddActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
             android:name="com.zjzy.morebit.Activity.NumberGoodsDetailsActivity"
             android:screenOrientation="portrait"></activity>
         <activity
@@ -218,6 +222,10 @@
 
         <activity
             android:name="com.zjzy.morebit.Activity.ShareMoneyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name="com.zjzy.morebit.Activity.ShareMoneyForPddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zjzy.morebit.Activity.SettingActivity;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.InputVerificationCodeDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
@@ -20,6 +22,7 @@ import com.zjzy.morebit.pojo.AppUpgradeInfo;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.requestbodybean.RequestOsBean;
 import com.zjzy.morebit.utils.AppUtil;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.appDownload.QianWenUpdateUtlis;
 import com.zjzy.morebit.utils.appDownload.update_app.UpdateAppBean;
@@ -60,6 +63,8 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
         } catch (Exception e) {
             e.printStackTrace();
         }
+        view.findViewById(R.id.item3_rl).setOnClickListener(this);
+        view.findViewById(R.id.item4_rl).setOnClickListener(this);
     }
 
     /**
@@ -136,6 +141,13 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
                 } else {
                     openAccountDestroyDialog(mAccountDestroyHit);
                 }
+                break;
+            case R.id.item3_rl:
+                LoginUtil.getUserProtocolForHome((BaseActivity) getActivity());
+                break;
+
+            case R.id.item4_rl:
+                LoginUtil.getPrivateProtocolForHome((BaseActivity) getActivity());
                 break;
             default:
                 break;

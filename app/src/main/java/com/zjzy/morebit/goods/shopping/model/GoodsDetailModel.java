@@ -6,11 +6,13 @@ import android.text.TextUtils;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
+import com.zjzy.morebit.R;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.RxWXHttp;
+import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.request.RequestGoodsCollectBean;
@@ -83,6 +85,21 @@ public class GoodsDetailModel extends MvpModel {
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
+
+    /**
+     * 拼多多
+     * @param rxActivity
+     * @param goodsInfo
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForPdd(BaseActivity rxActivity, ShopGoodInfo goodsInfo) {
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(new ProgramGetGoodsDetailBean().setType(2)
+                .setGoodsId(goodsInfo.getGoodsId()))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
+
+
 
     public Observable<String> getprofileUrlObservable(BaseActivity rxActivity, String url) {
         return RxWXHttp.getInstance().getService(C.BASE_MOREBIT).profilePicture(url)

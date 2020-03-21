@@ -36,6 +36,8 @@ import com.zjzy.morebit.main.ui.CollectFragment2;
 import com.zjzy.morebit.main.ui.NoticeActivity;
 import com.zjzy.morebit.main.ui.fragment.ForeshowFragment;
 import com.zjzy.morebit.main.ui.fragment.GoodNewsFramgent;
+import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
+import com.zjzy.morebit.main.ui.fragment.PddFragment;
 import com.zjzy.morebit.main.ui.fragment.RankingFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
@@ -355,6 +357,12 @@ public class BannerInitiateUtils {
             GoodNewsFramgent.start((Activity) activity, info, C.GoodsListType.THREEGOODS);
         } else if (type == C.BannerIntentionType.GOODS_BYBRAND) { // 品牌列表
             GoodNewsFramgent.startGoodsByBrand(activity, info);
+        } else if (type == C.BannerIntentionType.JD){//京东
+
+        } else if (type == C.BannerIntentionType.PDD){//拼多多
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+            OpenFragmentUtils.goToSimpleFragment(activity, PddFragment.class.getName(), bundle);
         } else {
             showUptate(activity, type);
         }

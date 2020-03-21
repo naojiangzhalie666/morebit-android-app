@@ -68,6 +68,14 @@ public class GoodsDetailContract {
         void getDetailData(BaseActivity rxActivity, ShopGoodInfo goodsInfo,boolean isRefresh);
 
         /**
+         * 拼多多的商品详情
+         * @param rxActivity
+         * @param goodsInfo
+         * @param isRefresh
+         */
+        void getDetailDataForPdd(BaseActivity rxActivity, ShopGoodInfo goodsInfo,boolean isRefresh);
+
+        /**
          * 切换收藏
          * @param goodsInfo
          */
@@ -80,7 +88,7 @@ public class GoodsDetailContract {
          */
         void getShopList(BaseActivity goodsDetailActivity, ShopGoodInfo goodsInfo);
 
-        void saveGoodsHistor(GoodsDetailActivity activity, ShopGoodInfo itemSourceId);
+        void saveGoodsHistor(BaseActivity activity, ShopGoodInfo itemSourceId);
         /**
          * 获取系统通知
          */

@@ -96,16 +96,34 @@ public class OrderDetailFragment extends BaseFragment {
             mTeamType = bundle.getInt(C.Extras.order_type, 1);
         }
         List<String> columns = new ArrayList<>();
-        String[] titles ;
-        if (mTeamType == 1){
-            mTvTitle.setText("淘宝订单");
-            titles = getResources().getStringArray(R.array.taobao_order_type);
-            mTablayout.setTabPadding(25);
-        }else{
-            mTvTitle.setText("优选订单");
-            titles = getResources().getStringArray(R.array.self_order_type);
-            mTablayout.setTabPadding(10);
+        String[] titles = null ;
+        switch (mTeamType){
+            //淘宝
+            case C.OrderType.TAOBAO:
+                mTvTitle.setText("淘宝订单");
+                titles = getResources().getStringArray(R.array.taobao_order_type);
+                mTablayout.setTabPadding(25);
+                break;
+            //优选
+            case C.OrderType.YUXUAN:
+                mTvTitle.setText("优选订单");
+                titles = getResources().getStringArray(R.array.self_order_type);
+                mTablayout.setTabPadding(10);
+                break;
+            //京东
+            case C.OrderType.JD:
+                mTvTitle.setText("京东订单");
+                titles = getResources().getStringArray(R.array.taobao_order_type);
+                mTablayout.setTabPadding(25);
+                break;
+            //拼多多
+            case C.OrderType.PDD:
+                mTvTitle.setText("拼多多订单");
+                titles = getResources().getStringArray(R.array.taobao_order_type);
+                mTablayout.setTabPadding(25);
+                break;
         }
+
 
         for (int i = 0; i < titles.length; i++) {
             columns.add(titles[i]);

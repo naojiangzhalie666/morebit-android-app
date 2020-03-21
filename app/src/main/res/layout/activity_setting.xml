@@ -52,7 +52,7 @@
 
                 android:id="@+id/item1_rl"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <ImageView
@@ -95,7 +95,7 @@
             <RelativeLayout
                 android:id="@+id/item9_rl"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -144,7 +144,7 @@
             <RelativeLayout
                 android:id="@+id/item8_rl"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -195,7 +195,7 @@
             <RelativeLayout
                 android:id="@+id/item_tabao_rl"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -251,7 +251,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_wx"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:background="@drawable/btn_item_color_white_gray">
 
                     <LinearLayout
@@ -310,7 +310,7 @@
             <RelativeLayout
                 android:id="@+id/my_goods_address"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -352,7 +352,7 @@
             <RelativeLayout
                 android:id="@+id/modify_password"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -400,7 +400,7 @@
             <RelativeLayout
                 android:id="@+id/modify_phone_num"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -449,7 +449,7 @@
             <RelativeLayout
                 android:id="@+id/item10_rl"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -498,7 +498,7 @@
             <RelativeLayout
                 android:id="@+id/message_notification"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -538,7 +538,7 @@
             <RelativeLayout
                 android:id="@+id/item11_rl"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:background="@drawable/btn_item_color_white_gray">
 
                 <LinearLayout
@@ -565,77 +565,11 @@
                     android:src="@drawable/youjiantou" />
 
             </RelativeLayout>
-            <View style="@style/line_f1f1f1"/>
-
-
-            <RelativeLayout
-                android:id="@+id/item12_rl"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_item_color_white_gray">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="多点用户协议"
-                        android:textColor="@color/color_333333"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="17dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/youjiantou" />
-
-            </RelativeLayout>
-
-            <View style="@style/line_f1f1f1"/>
-
-
-            <RelativeLayout
-                android:id="@+id/item13_rl"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_item_color_white_gray">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="隐私政策"
-                        android:textColor="@color/color_333333"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="17dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/youjiantou" />
-
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="26dp"
@@ -645,18 +579,7 @@
                 android:textColor="@color/color_666666"
                 android:textSize="15sp" />
 
-            <!--<TextView-->
-                <!--android:id="@+id/account_destroy"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--android:layout_marginTop="40dp"-->
-                <!--android:layout_marginBottom="40dp"-->
-                <!--android:paddingTop="5dp"-->
-                <!--android:paddingBottom="5dp"-->
-                <!--android:text="账号注销"-->
-                <!--android:textColor="@color/color_333333"-->
-                <!--android:textSize="12sp" />-->
+
         </LinearLayout>
     </ScrollView>
 

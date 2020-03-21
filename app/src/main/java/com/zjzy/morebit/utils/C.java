@@ -46,6 +46,18 @@ public class C {
         public static final int os = 1;
     }
 
+//    //订单类型
+//    public static class OrderType{
+//        //淘宝
+//        public static final int ORDER_TYPE_TAOBAO = 1;
+//        //优选
+//        public static final int ORDER_TYPE_YOUXUAN = 10;
+//        //京东
+//        public static final int ORDER_TYPE_JD = 2;
+//        //拼多多
+//        public static final int ORDER_TYPE_PDD = 4;
+//    }
+
 
     public static class Result {  //返回值
         public static final int shareMoneyToEditTemplateCoad = 1001;
@@ -138,6 +150,7 @@ public class C {
         public static final String TAOBAO = "TAOBAO"; // 淘宝Id
         public static final String GOODSBEAN = "GOODSBEAN"; // 一个商品
         public static final String TKLDATA = "TKLDATA"; // 淘口令数据
+        public static final String PDDPROMOTIONDATA = "PDDPROMOTIONDATA"; // 拼多多数据
         public static final String ITEMVIDEOID = "ITEMVIDEOID"; // 视频地址
         public static final String WEBURL = "WEBURL"; // webview 地址
         public static final String WEBTITLE = "WEBTITLE"; // webview title
@@ -228,6 +241,9 @@ public class C {
         public static final int BRAND_LIST = 27;//品牌列表
         public static final int THREE_GOODS = 28;//分类
         public static final int  GOODS_BYBRAND = 29;//品牌列表
+        public static final int  JD = 40;//京东
+        public static final int  PDD = 41;//拼多多
+
     }
 
     /**
@@ -475,6 +491,7 @@ public class C {
         public static final String DIALOG_USER_IS_UPGRADE= Setting.appName + "DIALOG_USER_IS_UPGRADE";  //是否已弹出用户升级提示
         public static final String DIALOG_USER_IS_UPGRADE_TIME= Setting.appName + "DIALOG_USER_IS_UPGRADE_TIME";  //用户升级dialog弹出的时间
         public static final String SAVED_DB_FOR_ADDRESS= Setting.appName + "SAVED_DB_FOR_ADDRESS";  //地址保存到db
+        public static final String PDD_CATEGORY = Setting.appName + "PDD_CATEGORY"; //  拼多多二级标题数据
     }
 
 
@@ -602,10 +619,11 @@ public class C {
     }
 
     public static class OrderType{
-        public static final int TAOBAO = 0;
-//        public static final int SUNING = 3;
-//        public static final int OTHER = 1;
+        public static final int TAOBAO = 1;
         public static final int YUXUAN = 10;
+        public static final int JD = 2;
+        public static final int PDD = 4;
+
     }
 }
 
