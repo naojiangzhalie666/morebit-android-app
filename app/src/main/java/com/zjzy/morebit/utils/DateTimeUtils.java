@@ -532,6 +532,24 @@ public class DateTimeUtils {
         }
     }
 
+
+    /**
+     * 转换PHP返回的时间戳
+     * yyyy-MM-dd
+     *
+     * @return
+     */
+    public static String getmd(Date date) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("MM.dd");
+            String t1 = format.format(date);
+            return t1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
     /**
      * 获取过去第几天的日期
      *

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rl_shop_taobao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/shop_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/detail_pdd_icon"/>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/shop_img"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/shop_img"
+            >
+
+            <TextView
+                android:id="@+id/shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxEms="8"
+                android:maxLines="1"
+                android:text="店铺"
+                android:textColor="@color/color_333333"
+                android:textSize="15sp"/>
+
+
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/shop_img"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/shop_img"
+            >
+
+            <TextView
+                android:id="@+id/tv_describe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:textColor="@color/color_999999"
+                android:textSize="11sp"
+                android:text="描述相似"/>
+
+            <TextView
+                android:id="@+id/tv_descTxt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:textColor="#EA993E"
+                android:textSize="11sp"
+                android:text="高"/>
+
+            <TextView
+                android:id="@+id/tv_servTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:textColor="@color/color_999999"
+                android:textSize="11sp"
+                android:text="服务态度"/>
+            <TextView
+                android:id="@+id/tv_servTxt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:textColor="#EA993E"
+                android:textSize="11sp"
+                android:text="高"/>
+
+            <TextView
+                android:id="@+id/tv_lgstTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:textColor="@color/color_999999"
+                android:textSize="11sp"
+                android:text="物流服务"/>
+
+            <TextView
+                android:id="@+id/tv_lgstTxt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:textColor="#EA993E"
+                android:textSize="11sp"
+                android:text="高"/>
+
+
+        </LinearLayout>
+
+</RelativeLayout>

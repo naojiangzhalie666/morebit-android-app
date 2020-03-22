@@ -182,16 +182,4 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
         }
     }
 
-
-//    public class HolderAd extends SimpleViewHolder {
-//
-////        @BindView(R.id.img)
-////        ImageView img;
-//        public HolderAd(View itemView) {
-//            super(itemView);
-//        }
-//    }
-//
-
-
 }

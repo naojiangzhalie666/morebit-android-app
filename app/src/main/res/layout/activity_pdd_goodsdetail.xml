@@ -186,18 +186,25 @@
                                 android:layout_marginTop="9dp"
                                 android:layout_toRightOf="@+id/img_rl">
 
-                                <ImageView
-                                    android:id="@+id/iv_taobao"
+                                <TextView
+                                    android:id="@+id/tv_pdd"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
-                                    android:src="@drawable/taobao"/>
+                                    android:text="拼多多"
+                                    android:paddingLeft="2dp"
+                                    android:paddingRight="2dp"
+                                    android:textColor="@color/color_FFFFFF"
+                                    android:textSize="@dimen/sp_9"
+                                    android:background="@drawable/bg_pdd_icon"
+                                    />
 
                                 <com.zjzy.morebit.view.CopyTextView
                                     android:id="@+id/title"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="2dp"
+                                    android:layout_marginLeft="2dp"
                                     android:ellipsize="end"
                                     android:lineSpacingExtra="3dp"
                                     android:maxLines="2"
@@ -217,59 +224,122 @@
                                 android:layout_marginTop="8dp"
                                 android:visibility="gone"
                                 app:aspectRatio="4.22">
-
                                 <LinearLayout
                                     android:id="@+id/rl_prise"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_below="@+id/ll_jh"
-                                    android:background="@drawable/icon_youhuiquanbeijing">
-
-                                    <TextView
+                                    >
+                                    <LinearLayout
                                         android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.4"/>
-
-                                    <RelativeLayout
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1.6"
-                                        android:gravity="center">
-
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="3"
+                                        android:background="@mipmap/juan_left_icon">
                                         <TextView
-                                            android:id="@+id/coupon_prise"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_centerHorizontal="true"
-                                            android:textColor="@color/color_353535"
-                                            android:textSize="18sp"
-                                            tools:text="12sp"/>
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.1"/>
+                                        <RelativeLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1.9"
+                                            android:gravity="center">
 
-                                        <TextView
-                                            android:id="@+id/tv_coupon_time"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_below="@+id/coupon_prise"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_marginTop="4dp"
-                                            android:ellipsize="end"
-                                            android:maxLines="1"
-                                            android:textColor="@color/color_353535"
-                                            android:textSize="11sp"
-                                            tools:text="有效日期29-20"/>
+                                            <TextView
+                                                android:id="@+id/coupon_prise"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerHorizontal="true"
+                                                android:textColor="@color/color_353535"
+                                                android:textSize="18sp"
+                                                tools:text="12sp"/>
+
+                                            <TextView
+                                                android:id="@+id/tv_coupon_time"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/coupon_prise"
+                                                android:layout_centerHorizontal="true"
+                                                android:layout_marginTop="4dp"
+                                                android:ellipsize="end"
+                                                android:maxLines="1"
+                                                android:textColor="@color/color_353535"
+                                                android:textSize="11sp"
+                                                tools:text="有效日期29-20"/>
 
 
-                                    </RelativeLayout>
+                                        </RelativeLayout>
+                                    </LinearLayout>
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="0dp"
-                                        android:layout_height="match_parent"
+                                        android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:gravity="center"
-                                        android:text="立即领券"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/sp_15"/>
+                                        android:background="@mipmap/juan_right_icon">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="立即\n领券"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/sp_15"/>
+                                    </LinearLayout>
                                 </LinearLayout>
+
+<!--                                <LinearLayout-->
+<!--                                    android:id="@+id/rl_prise"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:layout_below="@+id/ll_jh"-->
+<!--                                    android:background="@drawable/icon_youhuiquanbeijing">-->
+
+<!--                                    <TextView-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_weight="0.4"/>-->
+
+<!--                                    <RelativeLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_weight="1.6"-->
+<!--                                        android:gravity="center">-->
+
+<!--                                        <TextView-->
+<!--                                            android:id="@+id/coupon_prise"-->
+<!--                                            android:layout_width="wrap_content"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:layout_centerHorizontal="true"-->
+<!--                                            android:textColor="@color/color_353535"-->
+<!--                                            android:textSize="18sp"-->
+<!--                                            tools:text="12sp"/>-->
+
+<!--                                        <TextView-->
+<!--                                            android:id="@+id/tv_coupon_time"-->
+<!--                                            android:layout_width="wrap_content"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:layout_below="@+id/coupon_prise"-->
+<!--                                            android:layout_centerHorizontal="true"-->
+<!--                                            android:layout_marginTop="4dp"-->
+<!--                                            android:ellipsize="end"-->
+<!--                                            android:maxLines="1"-->
+<!--                                            android:textColor="@color/color_353535"-->
+<!--                                            android:textSize="11sp"-->
+<!--                                            tools:text="有效日期29-20"/>-->
+
+
+<!--                                    </RelativeLayout>-->
+
+<!--                                    <TextView-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:text="立即领券"-->
+<!--                                        android:textColor="@color/white"-->
+<!--                                        android:textSize="@dimen/sp_15"/>-->
+<!--                                </LinearLayout>-->
                             </com.zjzy.morebit.view.AspectRatioView>
 
 
@@ -281,7 +351,7 @@
                             android:background="@color/color_F8F8F8"/>
 
                         <!--店铺信息-->
-                        <include layout="@layout/layout_goodsdetail_shop"/>
+                        <include layout="@layout/layout_goodsdetail_pdd_shop"/>
                         <!--店铺信息-->
 
 

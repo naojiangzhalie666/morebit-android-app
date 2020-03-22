@@ -220,6 +220,31 @@ public class StringsUtils {
         return map;
     }
 
+    /**
+     *     左边图片右边文字换行不错位
+     * @param title      标题
+     * @return
+     */
+    public static void retractTitleForPdd(final View icon, final TextView tv, final String title){
+        if(TextUtils.isEmpty(title)){
+            return;
+        }
+        if(sWidth == 0){
+            icon.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    sWidth = icon.getWidth() +App.getAppContext().getResources().getDimensionPixelSize(R.dimen.margin_small);
+                    retractTitle(tv,title);
+                    icon.getViewTreeObserver().removeOnPreDrawListener(
+                            this);
+                    return false;
+                }
+            });
+        }else{
+            retractTitle(tv,title);
+        }
+    }
+
 
     /**
      *     左边图片右边文字换行不错位

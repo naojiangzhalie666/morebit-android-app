@@ -160,6 +160,8 @@ public class C {
         public static final String POSTER_URL = "POSTER_URL"; //   海报
         public static final String POSTER_POS = "POSTER_POS"; //   海报 选择位置
 
+        public static final String GOODS_DETAIL_PDD = "GOODS_DETAIL_PDD"; //拼多多商品详情
+
         public static final String GOODS_CONTENTS = "GOODS_CONTENTS"; //   内容
 
         //会员商品订单

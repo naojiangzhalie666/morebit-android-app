@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
@@ -39,8 +41,11 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.ReleaseGoodsActivity;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.goods.shopping.contract.GoodsDetailContract;
+import com.zjzy.morebit.goods.shopping.contract.GoodsDetailForPddContract;
 import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailForPddPresenter;
 import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailPresenter;
+import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
+import com.zjzy.morebit.goods.shopping.ui.fragment.GoodsDetailImgForPddFragment;
 import com.zjzy.morebit.goods.shopping.ui.fragment.GoodsDetailImgFragment;
 import com.zjzy.morebit.goods.shopping.ui.view.GoodsDetailUpdateView;
 import com.zjzy.morebit.info.ui.AppFeedActivity;
@@ -49,6 +54,7 @@ import com.zjzy.morebit.main.ui.fragment.GoodsDetailLikeFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.GoodsDetailForPdd;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
@@ -85,6 +91,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -92,10 +99,10 @@ import butterknife.OnClick;
 import io.reactivex.functions.Action;
 
 /**
- * 商品详情页
+ * 拼多多商品详情页
  */
 
-public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailContract.View {
+public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
 
     @BindView(R.id.iv_feedback)
     ImageView iv_feedback;
@@ -115,8 +122,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     TextView momVolume;
     @BindView(R.id.coupon_prise)
     TextView coupon_prise;
-    @BindView(R.id.iv_taobao)
-    ImageView iv_taobao;
+    @BindView(R.id.tv_pdd)
+    TextView tv_pdd;
     @BindView(R.id.rl_prise)
     View rl_prise;
     @BindView(R.id.arv_prise)
@@ -130,12 +137,12 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     @BindView(R.id.tv_desc)
     TextView tv_desc;
     @BindView(R.id.tv_describe)
-    TextView tv_describe;
-    @BindView(R.id.tv_logistics)
-    TextView tv_logistics;
-    @BindView(R.id.tv_sellel)
-    TextView tv_sellel;
-    @BindView(R.id.tv_collect)
+//    TextView tv_describe;
+//    @BindView(R.id.tv_logistics)
+//    TextView tv_logistics;
+//    @BindView(R.id.tv_sellel)
+//    TextView tv_sellel;
+//    @BindView(R.id.tv_collect)
     TextView tv_collect;
     @BindView(R.id.collect_bg)
     ImageView collect_bg;
@@ -178,6 +185,18 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     @BindView(R.id.tablayout)
     CommonTabLayout tablayout;
 
+    //描述状态
+    @BindView(R.id.tv_descTxt_status)
+    TextView tv_desc_status;
+
+    //服务态度
+    @BindView(R.id.tv_servTxt_status)
+    TextView tv_servTxt_status;
+
+    //物流状态
+    @BindView(R.id.tv_lgstTxt_status)
+    TextView tv_lgstTxt_status;
+
     @BindView(R.id.re_tab)
     RelativeLayout re_tab;
     @BindView(R.id.search_statusbar_rl)
@@ -186,7 +205,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
     private ShopGoodInfo mGoodsInfo;
     private Bundle bundle;
-    private GoodsDetailImgFragment mDetailImgFragment;
+    private GoodsDetailImgForPddFragment mDetailImgFragment;
     private int mWidth;
     final List<String> mBannerList = new ArrayList<>();
     private TKLBean mTKLBean;
@@ -198,10 +217,15 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     private int mListHeight;
     private Handler mHandler;
     private int mTitleHeight;
-    private GoodsDetailLikeFragment mLikeFragment;
+
 
     private String[] mTitles;
     ArrayList mTabArrayList = new ArrayList<BaseCustomTabEntity>();
+
+    private GoodsDetailForPdd mGoodsDetailForPdd;
+
+    //拼多多的推广链接。
+    private String mPromotionUrl;
 
     public static void start(Context context, ShopGoodInfo info) {
         Intent intent = new Intent((Activity) context, GoodsDetailForPddActivity.class);
@@ -264,17 +288,20 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     private void initData(boolean isRefresh) {
         if (mGoodsInfo == null) return;
         mPresenter.getDetailDataForPdd(this, mGoodsInfo, isRefresh);
+        mPresenter.generatePromotionUrl(this,mGoodsInfo.getGoodsId(),mGoodsInfo.getCouponUrl());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTitles = new String[]{getString(R.string.goods_detail_baby), getString(R.string.goods_detail_recommend), getString(R.string.goods_detail_det)};
+        mTitles = new String[]{getString(R.string.goods_detail_baby), getString(R.string.goods_detail_det)};
         int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.margin_small);
         mConsumerPadding = getResources().getDimensionPixelSize(R.dimen.goods_consumer_itme_padding);
         mTitleHeight = getResources().getDimensionPixelSize(R.dimen.goods_detail_title_height);
         mWidth = AppUtil.getTaobaoIconWidth() + dimensionPixelSize;
         duration = getWindowManager().getDefaultDisplay().getWidth() - mTitleHeight + 0.0F;
+        //初始化
+        mGoodsDetailForPdd = new GoodsDetailForPdd();
         EventBus.getDefault().register(this);
         ImmersionBar.with(this)
                 .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
@@ -282,7 +309,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 .init();
         initBundle();
         initView();
-        initImgFragment();
+//        initImgFragment();
         initViewData(mGoodsInfo);
         initData(false);
         mPresenter.getSysNotification(this);
@@ -296,11 +323,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         setUPdateData();
     }
 
-    private void initImgFragment() {
-        mLikeFragment = GoodsDetailLikeFragment.newInstance(mGoodsInfo);
-        ActivityUtils.replaceFragmentToActivity(
-                getSupportFragmentManager(), mLikeFragment, R.id.fl_list);
-        mDetailImgFragment = GoodsDetailImgFragment.newInstance(mGoodsInfo);
+    private void initImgFragment(GoodsDetailForPdd goodsDetailForPdd) {
+        mDetailImgFragment = GoodsDetailImgForPddFragment.newInstance(mGoodsDetailForPdd);
         ActivityUtils.replaceFragmentToActivity(
                 getSupportFragmentManager(), mDetailImgFragment, R.id.fl_img);
 
@@ -320,9 +344,6 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             @Override
             public void onRefresh() {
                 initData(true);
-                if (mLikeFragment != null) {
-                    mLikeFragment.getData();
-                }
             }
         });
         if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getVideoid()) || "0".equals(mGoodsInfo.getVideoid())) {
@@ -393,18 +414,17 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 }
 
                 int currentTab = tablayout.getCurrentTab();
-                if (scrollY <= mListHeight) {
+                if (scrollY <= mIngHeight) {
                     if (currentTab != 0)
                         tablayout.setCurrentTab(0);
-                } else if (scrollY > mListHeight && scrollY <= mIngHeight) {
+                } else if (scrollY > mIngHeight) {
                     if (currentTab != 1)
                         tablayout.setCurrentTab(1);
-                } else if (scrollY > mIngHeight) {
-                    if (currentTab != 2)
-                        tablayout.setCurrentTab(2);
                 }
             }
         });
+
+
     }
 
     private void initTab() {
@@ -485,19 +505,11 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             mGoodsInfo.setItemDesc(Info.getItemDesc());
             tv_desc.setText(Info.getItemDesc());
         }
-        //判断是淘宝还是天猫的商品
-
-        if (Info.getShopType() != 0) {
-            mGoodsInfo.setShopType(Info.getShopType());
-            if (Info.getShopType() == 2) {
-                iv_taobao.setImageResource(R.drawable.tianmao);
-            } else {
-                iv_taobao.setImageResource(R.drawable.taobao);
-            }
-            if (!StringsUtils.isEmpty(Info.getTitle())) {
-                StringsUtils.retractTitle(iv_taobao, title, Info.getTitle());
-            }
+        mGoodsInfo.setItemSource(Info.getItemSource());
+        if (!StringsUtils.isEmpty(Info.getTitle())) {
+                StringsUtils.retractTitleForPdd(tv_pdd, title, Info.getTitle());
         }
+
 
         if (UserLocalData.getUser().getReleasePermission() == 1) {
             findViewById(R.id.iv_release_goods).setVisibility(View.VISIBLE);
@@ -525,15 +537,20 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             Info.setSellerPicture(Info.getSellerPicture());
             LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
         }
+        String dateStart = Info.getCouponStartTime();
+        String dateEnd = Info.getCouponEndTime();
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
-            if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                tv_coupon_time.setText("有效日期" + Info.getCouponStartTime() + "至 " + Info.getCouponEndTime());
+
+            if (!TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
+                tv_coupon_time.setText("有效日期" +dateStart.substring(5,7)+"."+dateStart.substring(8,10)
+                        + "-" + dateEnd.substring(5,7)+"."+dateEnd.substring(9,11));
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
         } else {
-            if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                tv_coupon_time.setText("有效日期 " + Info.getCouponStartTime() + " 至 " + Info.getCouponEndTime());
+            if (!TextUtils.isEmpty(dateEnd) && !TextUtils.isEmpty(dateEnd)) {
+                tv_coupon_time.setText("有效日期 " + dateStart.substring(5,7)+"."+dateStart.substring(8,10)
+                        + "-" + dateEnd.substring(5,7)+"."+dateEnd.substring(8,10));
             }
         }
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
@@ -551,7 +568,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (!TextUtils.isEmpty(Info.getCommission())) {
             mGoodsInfo.setCommission(Info.getCommission());
         }
-//|| C.UserType.member.equals(UserLocalData.getUser(GoodsDetailActivity.this).getPartner())
+
         if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForPddActivity.this).getPartner())) {
             tv_Share_the_money.setText(getString(R.string.now_share));
             setEstimateData();
@@ -637,30 +654,30 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     /**
      * 显示详情页数据
      *
-     * @param Info
+     * @param info
      * @param isSeavDao
      * @param isRefresh
      */
     @Override
-    public void showDetailsView(ShopGoodInfo Info, boolean isSeavDao, boolean isRefresh) {
-        if (Info == null) {
+    public void showDetailsView(ShopGoodInfo info, boolean isSeavDao, boolean isRefresh) {
+        if (info == null) {
             return;
         }
-        initViewData(Info);
-        initViewShopData(Info);
-        if (!StringsUtils.isEmpty(Info.getCouponUrl())) {
-            mGoodsInfo.setCouponUrl(Info.getCouponUrl());
+        initViewData(info);
+        initViewShopData(info);
+        if (!StringsUtils.isEmpty(info.getCouponUrl())) {
+            mGoodsInfo.setCouponUrl(info.getCouponUrl());
         }
-        if (Info.getColler() != 0) {
-            switchColler(Info);
+        if (info.getColler() != 0) {
+            switchColler(info);
         }
 
         if (TextUtils.isEmpty(tv_provcity.getText())) {
-            if (!StringsUtils.isEmpty(Info.getProvcity())) {
+            if (!StringsUtils.isEmpty(info.getProvcity())) {
                 tv_provcity.setVisibility(View.VISIBLE);
                 tv_line.setVisibility(View.VISIBLE);
-                tv_provcity.setText(Info.getProvcity());
-                mGoodsInfo.setProvcity(Info.getProvcity());
+                tv_provcity.setText(info.getProvcity());
+                mGoodsInfo.setProvcity(info.getProvcity());
             } else {
                 tv_line.setVisibility(View.GONE);
                 tv_provcity.setVisibility(View.GONE);
@@ -668,18 +685,33 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
 
 
-        if (!StringsUtils.isEmpty(Info.getCouponUrl())) {
-            mGoodsInfo.setCouponUrl(Info.getCouponUrl());
+        if (!StringsUtils.isEmpty(info.getCouponUrl())) {
+            mGoodsInfo.setCouponUrl(info.getCouponUrl());
         }
-        if (!StringsUtils.isEmpty(Info.getShopId())) {
-            mGoodsInfo.setShopId(Info.getShopId());
+        if (!StringsUtils.isEmpty(info.getShopId())) {
+            mGoodsInfo.setShopId(info.getShopId());
         }
         if (isSeavDao && !isRefresh) {
-            SensorsDataUtil.getInstance().browseProductTrack("", Info.getItemSourceId());
+            SensorsDataUtil.getInstance().browseProductTrack("", info.getItemSourceId());
             if (LoginUtil.checkIsLogin(this, false) && !TextUtils.isEmpty(mGoodsInfo.getTitle()) && !TextUtils.isEmpty(mGoodsInfo.getPrice())) {
                 mPresenter.saveGoodsHistor(this, mGoodsInfo);
             }
         }
+        //展示详情图片
+        List<String> imgs = info.getItemBanner();
+        if (imgs != null && imgs.size() > 0){
+
+            mGoodsDetailForPdd.setGoodsDetails(imgs);
+            initImgFragment(mGoodsDetailForPdd);
+        }
+
+        //描述状态
+        tv_desc_status.setText(info.getDescTxt());
+        //服务状态
+        tv_servTxt_status.setText(info.getServTxt());
+        //物流状态
+        tv_lgstTxt_status.setText(info.getLgstTxt());
+
         getViewLocationOnScreen();
     }
 
@@ -771,40 +803,40 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
     }
 
-    /**
-     * 评价
-     *
-     * @param info
-     */
-    private void showSellerEvaluate(ShopGoodInfo info) {
-        String evaluatesStr = info.getEvaluates();
-        if (TextUtils.isEmpty(evaluatesStr))
-            return;
-        ArrayList<EvaluatesBean> evaluatesBeansList = null;
-        try {
-            evaluatesBeansList = (ArrayList<EvaluatesBean>) MyGsonUtils.getListBeanWithResult(evaluatesStr, EvaluatesBean.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (evaluatesBeansList != null && evaluatesBeansList.size() != 0) {
-            for (int i = 0; i < evaluatesBeansList.size(); i++) {
-                EvaluatesBean evaluatesBean = evaluatesBeansList.get(i);
-                String levelText = evaluatesBean.getLevelText();
-                switch (i) {
-                    case 0:
-                        tv_describe.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
-                        break;
-                    case 1:
-                        tv_logistics.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
-                        break;
-                    case 2:
-                        tv_sellel.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
-                        break;
-                }
-            }
-        }
-    }
+//    /**
+//     * 评价
+//     *
+//     * @param info
+//     */
+//    private void showSellerEvaluate(ShopGoodInfo info) {
+//        String evaluatesStr = info.getEvaluates();
+//        if (TextUtils.isEmpty(evaluatesStr))
+//            return;
+//        ArrayList<EvaluatesBean> evaluatesBeansList = null;
+//        try {
+//            evaluatesBeansList = (ArrayList<EvaluatesBean>) MyGsonUtils.getListBeanWithResult(evaluatesStr, EvaluatesBean.class);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (evaluatesBeansList != null && evaluatesBeansList.size() != 0) {
+//            for (int i = 0; i < evaluatesBeansList.size(); i++) {
+//                EvaluatesBean evaluatesBean = evaluatesBeansList.get(i);
+//                String levelText = evaluatesBean.getLevelText();
+//                switch (i) {
+//                    case 0:
+//                        tv_describe.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
+//                        break;
+//                    case 1:
+//                        tv_logistics.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
+//                        break;
+//                    case 2:
+//                        tv_sellel.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
+//                        break;
+//                }
+//            }
+//        }
+//    }
 
     /**
      * 设置店铺信息
@@ -814,7 +846,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     public void initViewShopData(ShopGoodInfo data) {
 
         showConsumerProtection(data);
-        showSellerEvaluate(data);
+//        showSellerEvaluate(data);
     }
 
     /**
@@ -909,21 +941,9 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         gduv_view.setUpdateView(mGoodsInfo, sysValue);
     }
 
-    /**
-     * 设置详情页图片请求地址
-     *
-     * @param data
-     * @param moduleDescUrl
-     */
     @Override
-    public void setModuleDescUrl(ShopGoodInfo data, String moduleDescUrl) {
-        mGoodsInfo.moduleDescUrl = moduleDescUrl;
-        if (mDetailImgFragment != null) {
-            GoodsImgDetailBean goodsImgDetailBean = mDetailImgFragment.setModuleDescUrlData(data.getPicUrls(), mGoodsInfo, data.getAnalysisFlag());
-            if (goodsImgDetailBean != null) {
-                mGoodsInfo.setPicUrls(goodsImgDetailBean);
-            }
-        }
+    public void setPromotionUrl(String promotionUrl) {
+        mPromotionUrl = promotionUrl;
     }
 
     private void setSysNotificationView() {
@@ -964,53 +984,62 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
                 break;
             case R.id.ll_share_money:
-                if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
-                } else {
-                    if (isGoodsLose()) return;
-                    if (mGoodsInfo != null) {
-                        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
-                    }
-                    if (mTKLBean == null) {
-                        LoadingView.showDialog(this, "");
-                        GoodsUtil.getTaoKouLing(GoodsDetailForPddActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
-                            @Override
-                            public void invoke(TKLBean arg) {
-                                mTKLBean = arg;
-                            }
-
-                            @Override
-                            public void onError() {
-                            }
-                        });
-                    } else {
-                        ShareMoneyActivity.start(this, mGoodsInfo, mTKLBean);
-                    }
-                }
+//                if (TaobaoUtil.isAuth()) {//淘宝授权
+//                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
+//                } else {
+//                    if (isGoodsLose()) return;
+//                    if (mGoodsInfo != null) {
+//                        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
+//                    }
+//                    if (mTKLBean == null) {
+//                        LoadingView.showDialog(this, "");
+//                        GoodsUtil.getTaoKouLing(GoodsDetailForPddActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
+//                            @Override
+//                            public void invoke(TKLBean arg) {
+//                                mTKLBean = arg;
+//                            }
+//
+//                            @Override
+//                            public void onError() {
+//                            }
+//                        });
+//                    } else {
+//                        ShareMoneyActivity.start(this, mGoodsInfo, mTKLBean);
+//                    }
+//                }
 
                 break;
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买
-                if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
-                } else {
-                    if (isGoodsLose()) return;
-
-                    if (mGoodsInfo.getGrab_type() == 1) {
-                        showGotoNotification(mGoodsInfo);
-                        return;
-                    }
-                    if (!TextUtils.isEmpty(mGoodsInfo.material) || "11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) { // 物料商品跳转
-                        if ("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) {
-                            mGoodsInfo.material = mGoodsInfo.getComeFrom();
-                        }
-                        mPresenter.materialLinkList(GoodsDetailForPddActivity.this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
-                    } else {
-//                        TaobaoUtil.showByItemId(GoodsDetailActivity.this,mGoodsInfo.getItemSourceId());
-                        GoodsUtil.getCouponInfo(GoodsDetailForPddActivity.this, mGoodsInfo);
+                if (mPromotionUrl != null && mGoodsInfo.getTitle() != null){
+                    if (isHasInstalledPdd() && mPromotionUrl.contains("https://")){
+                        String content = "pinduoduo://"+mPromotionUrl.substring(8);
+                        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(content));
+                        startActivity(intent);
+                    }else{
+                        PddWebActivity.start(this,mPromotionUrl,mGoodsInfo.getTitle());
                     }
                 }
-                SensorsDataUtil.getInstance().buy("", "", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
+//                if (TaobaoUtil.isAuth()) {//淘宝授权
+//                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
+//                } else {
+//                    if (isGoodsLose()) return;
+//
+//                    if (mGoodsInfo.getGrab_type() == 1) {
+//                        showGotoNotification(mGoodsInfo);
+//                        return;
+//                    }
+//                    if (!TextUtils.isEmpty(mGoodsInfo.material) || "11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) { // 物料商品跳转
+//                        if ("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) {
+//                            mGoodsInfo.material = mGoodsInfo.getComeFrom();
+//                        }
+//                        mPresenter.materialLinkList(GoodsDetailForPddActivity.this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
+//                    } else {
+////                        TaobaoUtil.showByItemId(GoodsDetailActivity.this,mGoodsInfo.getItemSourceId());
+//                        GoodsUtil.getCouponInfo(GoodsDetailForPddActivity.this, mGoodsInfo);
+//                    }
+//                }
+//                SensorsDataUtil.getInstance().buy("", "", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
                 break;
 
             case R.id.videopaly_btn: //视频播放
@@ -1028,9 +1057,9 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 if (isGoodsLose()) return;
                 sumbitCollect();
                 break;
-            case R.id.rl_shop_taobao: // 跳转店铺，别多想
-                goToShopCoupon();
-                break;
+//            case R.id.rl_shop_taobao: // 跳转店铺，别多想
+//                goToShopCoupon();
+//                break;
             case R.id.ll_home: // 跳转首页
                 ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
                 break;
@@ -1073,16 +1102,16 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         mPresenter.switchCollect(this, mGoodsInfo);
     }
 
-    /**
-     * 跳转到店铺优惠券
-     */
-    private void goToShopCoupon() {
-        if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getShopId())) {
-            return;
-        }
-        LoadingView.showDialog(this);
-        mPresenter.getShopList(this, mGoodsInfo);
-    }
+//    /**
+//     * 跳转到店铺优惠券
+//     */
+//    private void goToShopCoupon() {
+//        if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getShopId())) {
+//            return;
+//        }
+//        LoadingView.showDialog(this);
+//        mPresenter.getShopList(this, mGoodsInfo);
+//    }
 
 
     @Override
@@ -1138,42 +1167,29 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         return this;
     }
 
-    /**
-     * 预加载淘口令
-     */
-    @Override
-    public void getTaoKouLing() {// 获取淘口令
-        //没有登录  有数据  没有title 没有价格
-        if (mTKLBean != null ||
-                !LoginUtil.checkIsLogin(this, false) ||
-                TextUtils.isEmpty(mGoodsInfo.getTitle()) ||
-                TaobaoUtil.isAuth()
-        ) {
-            return;
-        }
-        GoodsUtil.getGetTkLObservable(this, mGoodsInfo)
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        LoadingView.dismissDialog();
-                    }
-                })
-                .subscribe(new DataObserver<TKLBean>(false) {
-                    @Override
-                    protected void onSuccess(TKLBean bean) {
-                        mTKLBean = bean;
-
-                    }
-                });
-
-
-    }
+//    /**
+//     * 预加载淘口令
+//     */
+//    @Override
+//    public void getTaoKouLing() {// 获取淘口令
+//        //没有登录  有数据  没有title 没有价格
+//        if (mTKLBean != null ||
+//                !LoginUtil.checkIsLogin(this, false) ||
+//                TextUtils.isEmpty(mGoodsInfo.getTitle()) ||
+//                TaobaoUtil.isAuth()
+//        ) {
+//            return;
+//        }
+//
+//
+//
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == C.Result.shareMoneyToEditTemplateCoad && resultCode == RESULT_OK) {
-            getTaoKouLing();
+//            getTaoKouLing();
         }
     }
 
@@ -1184,38 +1200,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
 
     /**
-     * 搜索统计
-     *
-     * @param
+     * 判断是否安装拼多多
+     * @return
      */
-    private void sendSearchStatistics(int viewId) {
-        String keywords = "";
-        if (viewId == R.id.rl_prise) {
-            keywords = "领券-1";
-        } else if (viewId == R.id.btn_sweepg) {
-            keywords = "领券-2";
-        } else if (viewId == R.id.ll_share_money) {
-            keywords = "分享";
-        }
-
-        SearchStatisticsModel.getInstance().sendSearchStatistics(this, keywords, C.SearchStatistics.ID_SHARE, C.SearchStatistics.TYPE_share)
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-
-
-                    }
-                })
-                .subscribe(new DataObserver<String>() {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        Log.e("", errorMsg);
-                    }
-
-                    @Override
-                    protected void onSuccess(String data) {
-                        Log.e("", data);
-                    }
-                });
+    private boolean isHasInstalledPdd(){
+        return  AppUtil.checkHasInstalledApp(this, "com.xunmeng.pinduoduo");
     }
 }

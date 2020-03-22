@@ -9,6 +9,8 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.goods.shopping.contract.GoodsDetailContract;
+import com.zjzy.morebit.goods.shopping.contract.GoodsDetailForPddContract;
+import com.zjzy.morebit.goods.shopping.model.GoodsDetailForPddModel;
 import com.zjzy.morebit.goods.shopping.model.GoodsDetailModel;
 import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.main.model.MainModel;
@@ -42,22 +44,10 @@ import io.reactivex.functions.Function;
  * Created by fengrs on 2018/11/3.
  */
 
-public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailModel, GoodsDetailContract.View> implements GoodsDetailContract.Present {
+public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddModel, GoodsDetailForPddContract.View> implements GoodsDetailForPddContract.Present {
 
 
     private MainModel mMainModel;
-
-
-    /**
-     * 获取详情页信息
-     *
-     * @param rxActivity
-     * @param goodsInfo
-     */
-    @Override
-    public void getDetailData(final BaseActivity rxActivity, ShopGoodInfo goodsInfo, final boolean isRefresh) {
-
-    }
 
     @Override
     public void getDetailDataForPdd(BaseActivity rxActivity, ShopGoodInfo goodsInfo,final boolean isRefresh) {
@@ -72,34 +62,30 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailModel, G
                     @Override
                     protected void onSuccess(final ShopGoodInfo data) {
                         getIView().showDetailsView(data, false, isRefresh);
-                        getIView().getTaoKouLing();
-                        final boolean isImgsToData = getImgsToDataState(data);
-                        if (isImgsToData) {
-                            getIView().setModuleDescUrl(data, "");
-                        }
-
-                        getIView().showDetailsView(data, true, isRefresh);
-                        if (!isImgsToData) {
-                            getIView().setModuleDescUrl(data, "");
-                        }
 
                     }
-
-                    /**
-                     *  判断是否有商品详情页数据返回
-                     * @param data
-                     * @return
-                     */
-                    private boolean getImgsToDataState(ShopGoodInfo data) {
-                        return data.getPicUrls() != null &&
-                                data.getPicUrls().getA() != null &&
-                                data.getPicUrls().getA().getContent() != null &&
-                                data.getPicUrls().getA().getContent().size() != 0;
-                    }
-
                 });
     }
 
+
+    @Override
+    public void generatePromotionUrl(BaseActivity rxActivity, Long goodsId, String couponUrl) {
+        mModel.generatePromotionUrlForPdd(rxActivity,goodsId,couponUrl)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<String>() {
+                    @Override
+                    protected void onSuccess(final String data) {
+                        getIView().setPromotionUrl(data);
+//                        getIView().showDetailsView(data, false, isRefresh);
+
+                    }
+                });
+    }
 
     /**
      * 切换收藏
@@ -143,31 +129,7 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailModel, G
         }
     }
 
-    /**
-     * 跳转店铺详情
-     *
-     * @param rxActivity
-     * @param goodsInfo
-     */
-    @Override
-    public void getShopList(final BaseActivity rxActivity, final ShopGoodInfo goodsInfo) {
-        mModel.getShopList(rxActivity, goodsInfo)
-                .subscribe(new CallBackObserver<BaseResponse<List<ShopGoodInfo>>>() {
-                    @Override
-                    public void onNext(BaseResponse<List<ShopGoodInfo>> baen) {
-                        super.onNext(baen);
-                        if (baen.getData() == null || baen.getData().size() == 0) {
-                            ViewShowUtils.showShortToast(rxActivity, rxActivity.getString(R.string.shop_no_goods));
-                            return;
-                        }
-                        ImageInfo imageInfo = new ImageInfo();
-                        imageInfo.setTitle(rxActivity.getString(R.string.discount_stores));
-                        imageInfo.categoryId = goodsInfo.getShopId();
-                        GoodNewsFramgent.start(rxActivity, imageInfo, C.GoodsListType.DiscountStores);
-                    }
-                });
 
-    }
 
 
 
@@ -269,15 +231,5 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailModel, G
                 });
     }
 
-    public void materialLinkList(final RxAppCompatActivity rxActivity, String itemSourceId, String material) {
-        mModel.materialLinkList(rxActivity, itemSourceId, material)
-                .subscribe(new DataObserver<String>() {
-                    @Override
-                    protected void onSuccess(String data) {
-                        if (!TextUtils.isEmpty(data)) {
-                            TaobaoUtil.showUrl(rxActivity, data);
-                        }
-                    }
-                });
-    }
+
 }

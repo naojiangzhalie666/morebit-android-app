@@ -121,6 +121,7 @@ import com.zjzy.morebit.pojo.request.RequestNumberGoodsDetailBean;
 import com.zjzy.morebit.pojo.request.RequestOrderDetailBean;
 import com.zjzy.morebit.pojo.request.RequestPanicBuyTabBean;
 import com.zjzy.morebit.pojo.request.RequestPopupBean;
+import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
 import com.zjzy.morebit.pojo.request.RequestPushBean;
 import com.zjzy.morebit.pojo.request.RequestPutErrorBean;
 import com.zjzy.morebit.pojo.request.RequestRecommendBean;
@@ -656,6 +657,14 @@ public interface CommonService {
 //            @Field("os") int os,
 //            @Field("sign") String sign);
 
+    /**
+     * 拼多多的推广短链接。
+     * @param requestBean
+     * @return
+     */
+    @POST("/api/goods/program/generatePromotionUrl")
+    public Observable<BaseResponse<String>> generatePromotionUrlForPdd(
+            @Body RequestPromotionUrlBean requestBean );
     /**
      * 反馈标题
      *

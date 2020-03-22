@@ -348,6 +348,11 @@
         <activity
             android:name="com.zjzy.morebit.order.ui.NumberOrderDetailActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.zjzy.morebit.goods.shopping.ui.PddWebActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name="com.zjzy.morebit.order.ui.OrderTeamActivity"
             android:screenOrientation="portrait" />

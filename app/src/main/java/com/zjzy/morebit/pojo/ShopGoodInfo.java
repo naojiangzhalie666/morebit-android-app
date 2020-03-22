@@ -119,8 +119,39 @@ public class ShopGoodInfo implements Serializable {
     //拼购ID
     private String pgActionId;
 
+    //描述分
+    private String descTxt;
+
+    //服务分
+    private String servTxt;
+
+    //物流分
+    private String lgstTxt;
 
 
+    public String getDescTxt() {
+        return descTxt;
+    }
+
+    public void setDescTxt(String descTxt) {
+        this.descTxt = descTxt;
+    }
+
+    public String getServTxt() {
+        return servTxt;
+    }
+
+    public void setServTxt(String servTxt) {
+        this.servTxt = servTxt;
+    }
+
+    public String getLgstTxt() {
+        return lgstTxt;
+    }
+
+    public void setLgstTxt(String lgstTxt) {
+        this.lgstTxt = lgstTxt;
+    }
 
     public String getCommissionRare() {
         return commissionRare;

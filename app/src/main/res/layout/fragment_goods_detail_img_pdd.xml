@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:orientation="vertical">
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/color_F8F8F8"/>
+    <RelativeLayout
+        android:layout_below="@+id/v_line"
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/line"
+            android:layout_centerInParent="true"
+            android:layout_height="1dp"
+            android:layout_width="170dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/goods_detail"
+            android:layout_centerInParent="true"
+            android:padding="11dp"
+            android:background="@color/white"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
+            />
+    </RelativeLayout>
+
+    <com.zjzy.morebit.view.MyWebView
+        android:id="@+id/webViewNet"
+        android:layout_below="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="false"
+        android:visibility="gone"/>
+
+    <com.zjzy.morebit.view.FixRecyclerView
+        android:id="@+id/imgList"
+        android:layout_below="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:divider="@color/transparent"
+        android:dividerHeight="0dp"
+        android:nestedScrollingEnabled="false"/>
+
+</RelativeLayout>

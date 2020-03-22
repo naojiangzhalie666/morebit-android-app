@@ -72,6 +72,25 @@ public class AppUtil {
     }
 
     /**
+     * 检查是否安装应用
+     * @param context
+     * @param pkgName
+     * @return
+     */
+    public static boolean checkHasInstalledApp(@NonNull Context context, String pkgName) {
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(pkgName, PackageManager.GET_GIDS);
+            app_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        } catch (RuntimeException e) {
+            app_installed = false;
+        }
+        return app_installed;
+    }
+    /**
      * get App versionCode
      *
      * @param context
