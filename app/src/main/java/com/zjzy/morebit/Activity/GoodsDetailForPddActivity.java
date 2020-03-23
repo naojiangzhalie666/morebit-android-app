@@ -1011,9 +1011,15 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 break;
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买
-                if (mPromotionUrl != null && mGoodsInfo.getTitle() != null){
+                if (mPromotionUrl != null ){
+//                    String content = "pinduoduo://com.xunmeng.pinduoduo/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
+//                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(content));
+//                    startActivity(intent);
+                    mPromotionUrl = "https://mobile.yangkeduo.com/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
                     if (isHasInstalledPdd() && mPromotionUrl.contains("https://")){
-                        String content = "pinduoduo://"+mPromotionUrl.substring(8);
+                        String content = mPromotionUrl.replace("https://mobile.yangkeduo.com",
+                                "pinduoduo://com.xunmeng.pinduoduo");
+//                        String content = "pinduoduo://com.xunmeng.pinduoduo"+mPromotionUrl.substring(8);
                         Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(content));
                         startActivity(intent);
                     }else{

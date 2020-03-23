@@ -3,12 +3,14 @@ package com.zjzy.morebit.goods.shopping.ui;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -67,7 +69,6 @@ public class PddWebActivity extends BaseActivity {
     private ToolbarWebHelper mToolbarWebHelper;
     private boolean mCanGoBack;
     private String mTitle;
-    private String itemUrl;
     private boolean mIsStop;
     public static void start(Activity activity, String url, String title) {
         if (TextUtils.isEmpty(url)) {
@@ -181,6 +182,25 @@ public class PddWebActivity extends BaseActivity {
         });
         mWebview.setWebViewClient(new WebViewClient() {
 
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                MyLog.d("url:",url);
+                if (url.contains("pinduoduo://com.xunmeng.pinduoduo")){
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
+            }
 
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -202,20 +222,7 @@ public class PddWebActivity extends BaseActivity {
 
                 mToolbarWebHelper.setOffVisibility(mCanGoBack ? View.VISIBLE : View.GONE);
 
-//                if (url.contains("detail") && mCanGoBack) {
-//                    if (TextUtils.isEmpty(url)) return;
-//                    itemUrl = url;
-//                    Map<String, String> stringStringMap = AppUtil.URLRequest(url);
-//
-//                    for (Map.Entry<String, String> entry : stringStringMap.entrySet()) {
-//                        String key = entry.getKey().toString();
-//                        String value = entry.getValue().toString();
-//                        if ("id".equals(key) && !TextUtils.isEmpty(value)) {
-//                            mItemSourceId = value;
-//
-//                        }
-//                    }
-//                }
+
             }
         });
     }

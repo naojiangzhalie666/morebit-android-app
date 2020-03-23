@@ -82,7 +82,6 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     protected void onSuccess(final String data) {
                         getIView().setPromotionUrl(data);
 //                        getIView().showDetailsView(data, false, isRefresh);
-
                     }
                 });
     }

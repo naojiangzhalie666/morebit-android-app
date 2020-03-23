@@ -116,7 +116,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        setContentView(R.layout.activity_share_money);
+        setContentView(R.layout.activity_pdd_share_money);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             goodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);

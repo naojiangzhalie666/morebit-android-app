@@ -411,6 +411,7 @@
     <string name="share_money_pc_line">PC端链接</string>
     <string name="share_money_download">下载链接</string>
     <string name="invitation_code_text">邀请码</string>
+    <string name="share_money_buy_url">抢购地址</string>
     <string name="change_img">更换海报主图</string>
     <string name="save_succeed">保存成功</string>
     <string name="order_subsidy_money">平台补贴 %1$s</string>
