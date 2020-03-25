@@ -150,7 +150,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 //            } else {
 //                viewHolder.good_mall_tag.setImageResource(R.drawable.taobao);
 //            }
-            StringsUtils.retractTitle(viewHolder.good_pdd_tag,viewHolder.textview,MathUtils.getTitle(info));
+            StringsUtils.retractTitleForPdd(viewHolder.good_pdd_tag,viewHolder.textview,MathUtils.getTitle(info));
 
 
 
@@ -177,7 +177,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         ImageView select_tag;
         View ll_prise;
         LinearLayout ll_bottom;
-        TextView subsidiesPriceRankTv;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -196,7 +196,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
             ll_prise = (View) itemView.findViewById(R.id.ll_return_cash);
             ll_bottom = (LinearLayout) itemView.findViewById(R.id.ll_bottom);
             return_cash = (LinearLayout) itemView.findViewById(R.id.ll_return_cash);
-            subsidiesPriceRankTv = itemView.findViewById(R.id.subsidiesPriceRankTv);
+
         }
     }
 

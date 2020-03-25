@@ -233,7 +233,7 @@ public class StringsUtils {
             icon.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
-                    sWidth = icon.getWidth() +App.getAppContext().getResources().getDimensionPixelSize(R.dimen.margin_small);
+                    sWidth = icon.getWidth() +App.getAppContext().getResources().getDimensionPixelSize(R.dimen.margin_pdd);
                     retractTitle(tv,title);
                     icon.getViewTreeObserver().removeOnPreDrawListener(
                             this);

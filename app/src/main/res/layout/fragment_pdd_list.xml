@@ -8,7 +8,6 @@
 
     <RelativeLayout
         android:id="@+id/rl_r"
-        android:layout_marginTop="@dimen/home_recommend_item_decoration"
         android:layout_width="match_parent"
         android:background="@drawable/bg_input_white_round_top_10dp"
         android:layout_height="wrap_content">

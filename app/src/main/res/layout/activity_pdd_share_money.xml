@@ -196,7 +196,7 @@
 
             </RelativeLayout>
 
-            <com.zjzy.morebit.view.goods.ShareMoneySwitchTemplateView
+            <com.zjzy.morebit.view.goods.ShareMoneySwitchForPddTemplateView
                 android:id="@+id/view_swicht"
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"

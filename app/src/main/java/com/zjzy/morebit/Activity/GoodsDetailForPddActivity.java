@@ -85,6 +85,7 @@ import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.view.AspectRatioView;
+import com.zjzy.morebit.view.goods.ShareMoneySwitchForPddTemplateView;
 import com.zjzy.morebit.view.main.SysNotificationView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -493,9 +494,9 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (!StringsUtils.isEmpty(Info.getTitle())) {
             mGoodsInfo.setTitle(Info.getTitle());
         }
-        if (!StringsUtils.isEmpty(Info.getVoucherPrice())) {
+        if (!StringsUtils.isEmpty(Info.getVoucherPriceForPdd())) {
             mGoodsInfo.setVoucherPriceForPdd(Info.getVoucherPriceForPdd());
-            textview_original.setText("¥ " + MathUtils.getVoucherPrice(Info.getVoucherPrice()));
+            textview_original.setText("¥ " + MathUtils.getVoucherPrice(Info.getVoucherPriceForPdd()));
         }
 
         if (StringsUtils.isEmpty(Info.getItemDesc())) {
@@ -517,9 +518,9 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             findViewById(R.id.iv_release_goods).setVisibility(View.GONE);
         }
 
-        if (!StringsUtils.isEmpty(Info.getPrice())) {
-            mGoodsInfo.setPrice(Info.getPrice());
-            text_two.setText(" ¥" + MathUtils.getPrice(Info.getPrice()));
+        if (!StringsUtils.isEmpty(Info.getPriceForPdd())) {
+            mGoodsInfo.setPriceForPdd(Info.getPriceForPdd());
+            text_two.setText(" ¥" + MathUtils.getPrice(Info.getPriceForPdd()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
         if (!StringsUtils.isEmpty(Info.getSaleMonth())) {
@@ -984,6 +985,26 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
                 break;
             case R.id.ll_share_money:
+                if (isGoodsLose()) return;
+                    if (mGoodsInfo != null) {
+                        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
+                    }
+                ShareMoneyForPddActivity.start(this,mGoodsInfo,mPromotionUrl);
+//                    if (mTKLBean == null) {
+//                        LoadingView.showDialog(this, "");
+//                        GoodsUtil.getTaoKouLing(GoodsDetailForPddActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
+//                            @Override
+//                            public void invoke(TKLBean arg) {
+//                                mTKLBean = arg;
+//                            }
+//
+//                            @Override
+//                            public void onError() {
+//                            }
+//                        });
+//                    } else {
+//                        ShareMoneyActivity.start(this, mGoodsInfo, mTKLBean);
+//                    }
 //                if (TaobaoUtil.isAuth()) {//淘宝授权
 //                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
 //                } else {
@@ -1015,8 +1036,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 //                    String content = "pinduoduo://com.xunmeng.pinduoduo/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
 //                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(content));
 //                    startActivity(intent);
-                    mPromotionUrl = "https://mobile.yangkeduo.com/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
-                    if (isHasInstalledPdd() && mPromotionUrl.contains("https://")){
+//                    mPromotionUrl = "https://mobile.yangkeduo.com/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
+                    if (isHasInstalledPdd() && mPromotionUrl.contains("https://mobile.yangkeduo.com")){
                         String content = mPromotionUrl.replace("https://mobile.yangkeduo.com",
                                 "pinduoduo://com.xunmeng.pinduoduo");
 //                        String content = "pinduoduo://com.xunmeng.pinduoduo"+mPromotionUrl.substring(8);
@@ -1070,11 +1091,11 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
                 break;
 
-            case R.id.iv_release_goods:   //商品发布管理
-                RequestReleaseGoods request = new RequestReleaseGoods();
-                request.setItemId(mGoodsInfo.getItemSourceId());
-                mPresenter.checkPermission(this, request);
-                break;
+//            case R.id.iv_release_goods:   //商品发布管理
+//                RequestReleaseGoods request = new RequestReleaseGoods();
+//                request.setItemId(mGoodsInfo.getItemSourceId());
+//                mPresenter.checkPermission(this, request);
+//                break;
             case R.id.iv_img_download:   //下载图片
                 if (mBannerList.size() > 0) {
                     DownloadDialog downloadDialog = new DownloadDialog(this, R.style.dialog, mBannerList);
@@ -1156,7 +1177,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (mGoodsInfo == null) {
             return true;
         }
-        if (TextUtils.isEmpty(mGoodsInfo.getPrice())) {
+        if (TextUtils.isEmpty(mGoodsInfo.getPriceForPdd())) {
             ViewShowUtils.showLongToast(this, "商品已经过期，请联系管理员哦");
             return true;
         }

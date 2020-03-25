@@ -1,24 +1,34 @@
 package com.zjzy.morebit.main.ui.fragment;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
+import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
 import com.zjzy.morebit.pojo.RankingTitleBean;
+import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
+import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.SensorsDataUtil;
+import com.zjzy.morebit.utils.SwipeDirectionDetector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +41,27 @@ import butterknife.BindView;
  */
 public class PddChildFragment extends BaseMainFragmeng {
 
-    @BindView(R.id.tab)
-    SlidingTabLayout tablayout;
-    @BindView(R.id.cv_tab)
-    CardView cv_tab;
+    @BindView(R.id.xTablayout)
+    XTabLayout tablayout;
+    @BindView(R.id.status_bar)
+    View status_bar;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
+    @BindView(R.id.iv_back)
+    ImageView iv_back;
+    @BindView(R.id.iv_right_search)
+    ImageView iv_right_search;
+
     boolean isUserHint =true;
-    private ArrayList<CirclePagerBaen> mCirclePagerBaens = new ArrayList<>();
     private View mView;
     private int mPushType;
+    private ChannelAdapter mChannelAdapter;
+    private SwipeDirectionDetector swipeDirectionDetector;
+    private int currentViewPagerPosition = 0;
 
     /**
-     * 1、实时排行/2、今日排行
+     * 拼多多商品页面
      *
      * @param type
      * @return
@@ -69,9 +87,7 @@ public class PddChildFragment extends BaseMainFragmeng {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPushType = getArguments().getInt(C.Extras.pushType);
-//        if (mPushType == 1) {
-            initView(mView);
-//        }
+        initView(mView);
     }
 
 
@@ -79,7 +95,7 @@ public class PddChildFragment extends BaseMainFragmeng {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         MyLog.d("setUserVisibleHint", "CircleFragment  " + isVisibleToUser);
-        if (isVisibleToUser && isUserHint && mView != null&&mPushType == 2) {
+        if (isVisibleToUser && isUserHint && mView != null) {
             initView(mView);
             isUserHint = false;
         }
@@ -219,62 +235,103 @@ public class PddChildFragment extends BaseMainFragmeng {
      * 初始化界面
      */
     private void initView(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //处理全屏显示
+            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
+            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
+            status_bar.setLayoutParams(viewParams);
+
+        }
         App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
         List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
         if (data != null && data.size() != 0) {
             initTab(data);
-        } else {
-            cv_tab.setVisibility(View.GONE);
         }
+
+
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+        iv_right_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
+
+    }
+    private void setupViewPager(final List<PddJdTitleTypeItem> homeColumns) {
+
+        mChannelAdapter.setHomeColumns(homeColumns);
+        mChannelAdapter.notifyDataSetChanged();
+
+        tablayout.setupWithViewPager(viewPager);
+
 
     }
 
     private void initTab(List<PddJdTitleTypeItem> data) {
-        cv_tab.setVisibility(View.VISIBLE);
-        for (int i = 0; i < data.size(); i++) {
-            PddJdTitleTypeItem titleTypeItem = data.get(i);
-            PddListFragment pddListFragment = PddListFragment.newInstance(titleTypeItem);
-            CirclePagerBaen baen = new CirclePagerBaen(pddListFragment, titleTypeItem.getTitle());
-            mCirclePagerBaens.add(baen);
-        }
-        viewPager.setAdapter(new ChannelAdapter(getChildFragmentManager()));
-        tablayout.setViewPager(viewPager);
+        mChannelAdapter = new ChannelAdapter(getChildFragmentManager());
+        swipeDirectionDetector = new SwipeDirectionDetector();
+        viewPager.setAdapter(mChannelAdapter);
+        setupViewPager(data);
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                swipeDirectionDetector.onPageScrolled(position, positionOffset, positionOffsetPixels);
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                swipeDirectionDetector.onPageSelected(position);
+                currentViewPagerPosition = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                swipeDirectionDetector.onPageScrollStateChanged(state);
+                MyLog.d("addOnPageChangeListener", " onPageScrollStateChanged  state = " + state);
+            }
+        });
     }
 
-    private class ChannelAdapter extends FragmentStatePagerAdapter {
+    private class ChannelAdapter extends FragmentPagerAdapter {
+        private List<PddJdTitleTypeItem> mHomeColumns = new ArrayList<>();
 
         public ChannelAdapter(FragmentManager fm) {
             super(fm);
 
         }
+        public void setHomeColumns(List<PddJdTitleTypeItem> homeColumns) {
+            mHomeColumns.clear();
+            if (homeColumns == null && homeColumns.size() == 0) {
+                return;
+            }
+            mHomeColumns.addAll(homeColumns);
+        }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mCirclePagerBaens.get(position).title;
+            PddJdTitleTypeItem homeColumn = mHomeColumns.get(position);
+            return homeColumn.getTitle();
+
         }
 
         @Override
         public Fragment getItem(int position) {
-            return mCirclePagerBaens.get(position).mFragment;
+            return PddListFragment.newInstance(mHomeColumns.get(position));
         }
 
         @Override
         public int getCount() {
-            return mCirclePagerBaens.size();
+            return mHomeColumns.size();
         }
     }
-
-
-    public class CirclePagerBaen {
-        public Fragment mFragment;
-        public String title;
-
-        public CirclePagerBaen(Fragment fragment, String title) {
-            mFragment = fragment;
-            this.title = title;
-        }
-
-    }
-
 
 }

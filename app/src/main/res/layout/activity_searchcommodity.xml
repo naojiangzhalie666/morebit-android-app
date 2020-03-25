@@ -35,7 +35,7 @@
             android:background="@drawable/bg_search_result_btn_new"
             android:gravity="center"
             android:text="搜索"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/color_FFFFFF"
             android:textSize="14sp"
             />
 

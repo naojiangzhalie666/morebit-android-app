@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv_view"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="4dp"
+            android:paddingBottom="10dp"
+            >
+            <LinearLayout
+                android:id="@+id/guideLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/guideTitleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/guideSearch"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginBottom="12dp"
+                    android:textColor="@color/color_333333"
+                    />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <com.zjzy.morebit.view.AspectRatioView
+                        android:id="@+id/as_banner_make_money"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        app:aspectRatio="2.92">
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="0dp"
+                            app:cardUseCompatPadding="false"
+                            >
+                            <ImageView
+                                android:id="@+id/guideIv"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/image_search_guide"/>
+                        </android.support.v7.widget.CardView>
+                    </com.zjzy.morebit.view.AspectRatioView>
+                    <ImageView
+                        android:id="@+id/videoPlayIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_video_play"
+                        android:visibility="gone"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <!--热门搜索-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_search_hotkey"
+                android:paddingBottom="5dp"
+                android:paddingTop="15dp"
+                android:layout_marginTop="14dp"
+                >
+                <LinearLayout
+                    android:id="@+id/hotSearchLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    >
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="热门搜索"
+                        android:textColor="@color/color_333333"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/searchHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/historyReLay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    >
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        android:text="搜索历史"
+                        android:textColor="@color/color_333333"
+                        android:textSize="15sp"/>
+                    <ImageView
+                        android:id="@+id/clearLy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/icon_shanchutubiao"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+                <!--<ListView-->
+                <!--android:id="@+id/hotKey_list"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:cacheColorHint="#00000000"-->
+                <!--android:dividerHeight="0.1px"-->
+                <!--android:paddingLeft="20dp"-->
+                <!--android:paddingRight="20dp"-->
+                <!--android:scrollbars="none"-->
+                <!--/>-->
+
+                <LinearLayout
+                    android:id="@+id/hotKey_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/moreHistoryLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="10dp"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/moreHistoryTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多搜索历史"
+                        android:textSize="@dimen/sp_13"
+                        android:textColor="@color/color_333333"/>
+                    <ImageView
+                        android:id="@+id/arrowIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_arrow_down"
+                        android:layout_marginTop="1dp"/>
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/clearLy_bottom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/color_E5E5E5"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+            <!--今日推荐-->
+            <LinearLayout
+                android:id="@+id/todayLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:background="@color/white">
+                <View android:layout_height="9dp" android:layout_width="match_parent" android:background="@color/color_F6F6F6" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="14dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_search_todaygoods"/>
+                    <TextView
+                        android:id="@+id/toDayTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="今日推荐"
+                        android:textSize="@dimen/sp_15"
+                        android:textColor="@color/color_333333"
+                        android:layout_marginLeft="9dp"
+                        android:layout_marginRight="9dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_search_todaygoods"/>
+                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/todayGoodRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    >
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>

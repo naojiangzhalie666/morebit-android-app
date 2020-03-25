@@ -37,10 +37,12 @@ import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.CheckCouponStatusBean;
 import com.zjzy.morebit.pojo.goods.CouponUrlBean;
+import com.zjzy.morebit.pojo.goods.PddShareContent;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestCheckGoodsBean;
 import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
+import com.zjzy.morebit.pojo.request.RequestPddShareContent;
 import com.zjzy.morebit.pojo.request.RequestTKLBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestUploadCouponInfo;
 import com.zjzy.morebit.utils.action.MyAction;
@@ -100,6 +102,42 @@ public class GoodsUtil {
     public static Observable<BaseResponse<TKLBean>> getGetTkLObservable(final RxAppCompatActivity activity, final ShopGoodInfo goodsInfo) {
         return getGetTkLFinalObservable(activity, goodsInfo);
 
+    }
+
+    /**
+     * 获取拼多多的推广内容
+     * @param activity
+     * @param goodsInfo
+     * @return
+     */
+    public static Observable<BaseResponse<PddShareContent>> getGenerateForPDD(RxAppCompatActivity activity,
+                                                                              ShopGoodInfo goodsInfo) {
+        int isInvitecode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
+        int isDownloadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
+        String isShortLink = App.getACache().getAsString(C.sp.isShortLink);
+        if (TextUtils.isEmpty(isShortLink)) {
+            isShortLink = "1";
+        }
+        RequestPddShareContent requestBean = new RequestPddShareContent();
+        requestBean.setGoodsId(goodsInfo.getGoodsId().toString());
+        requestBean.setGoodsDesc(goodsInfo.getItemDesc());
+        requestBean.setGoodsTitle(goodsInfo.getTitle());
+        requestBean.setGoodsPrice(goodsInfo.getPriceForPdd());
+        requestBean.setGoodsVoucherPrice(goodsInfo.getVoucherPriceForPdd());
+        requestBean.setIsDownLoadUrl(isDownloadUrl);
+        requestBean.setIsInviteCode(isInvitecode);
+        requestBean.setIsShortLink(isShortLink);
+        return RxHttp.getInstance().getGoodsService().getGenerateForPDD(
+                requestBean
+        )
+                .compose(RxUtils.<BaseResponse<PddShareContent>>switchSchedulers())
+                .compose(activity.<BaseResponse<PddShareContent>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
     }
 
 

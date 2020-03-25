@@ -35,6 +35,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.ShareMoenyPosterEvent;
 import com.zjzy.morebit.pojo.goods.EditTemplateInfo;
+import com.zjzy.morebit.pojo.goods.PddShareContent;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
@@ -54,6 +55,7 @@ import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.share.ShareMore;
 import com.zjzy.morebit.utils.sys.RequestPermissionUtlis;
 import com.zjzy.morebit.view.ConsCommissionRuleDialog;
+import com.zjzy.morebit.view.goods.ShareMoneySwitchForPddTemplateView;
 import com.zjzy.morebit.view.goods.ShareMoneySwitchTemplateView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -88,11 +90,11 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
     private EditText et_copy;
     private LinearLayout weixinCircle, weixinFriend;
     private ShopGoodInfo goodsInfo;
-    private TKLBean mTKLBean;
+
     private String promotionUrl;//推广链接
     private RelativeLayout rule_ly;
     private int ticknum = 1; //选择多少张
-    EditTemplateInfo editTemplateInfo;
+
     private String mExtension = "";
     private String mPosterPicPath;
     private int mPosterPos;
@@ -155,11 +157,11 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 return false;
             }
         });
-        findViewById(R.id.tv_capy_tkl).setOnClickListener(this);
+
 
         weixinCircle = (LinearLayout) findViewById(R.id.weixinCircle);
         weixinFriend = (LinearLayout) findViewById(R.id.weixinFriend);
-        findViewById(R.id.tv_edit_template).setOnClickListener(this);
+
         btn_back.setOnClickListener(this);
         tv_copy.setOnClickListener(this);
         weixinCircle.setOnClickListener(this);
@@ -196,31 +198,30 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
             });
             mAdapter.notifyDataSetChanged();
         }
-        if (!TextUtils.isEmpty(mTKLBean.getTemplate())) {
-            et_copy.setText(mTKLBean.getTemplate());
-        }
+
         rule_ly = (RelativeLayout) findViewById(R.id.rule_ly);
         rule_ly.setOnClickListener(this);
         //代理商显示代理佣金
         incomeMoney = (TextView) findViewById(R.id.incomeMoney);
-        //设置是否是代理商
+
         UserInfo userInfo = UserLocalData.getUser(ShareMoneyForPddActivity.this);
-        if (C.UserType.member.equals(userInfo.getPartner())) { //消费者
-            rule_ly.setVisibility(View.GONE);
-        } else {
+//        if (C.UserType.member.equals(userInfo.getPartner())) { //消费者
+//            rule_ly.setVisibility(View.GONE);
+//        } else {
             rule_ly.setVisibility(View.VISIBLE);
             String discountsMoneyStr = MathUtils.getMuRatioComPrice(userInfo.getCalculationRate(), goodsInfo.getCommission());
-            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(userInfo.getCalculationRate(), goodsInfo.getSubsidiesPrice());
-            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
-            incomeMoney.setText("您的奖励预计为: " + allDiscountsMoneyStr + "元");
-        }
-        ShareMoneySwitchTemplateView viewSwitch = (ShareMoneySwitchTemplateView) findViewById(R.id.view_swicht);
+//            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(userInfo.getCalculationRate(), goodsInfo.getSubsidiesPrice());
+//            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
+            incomeMoney.setText("您的奖励预计为: " + discountsMoneyStr + "元");
+//        }
+        ShareMoneySwitchForPddTemplateView viewSwitch = (ShareMoneySwitchForPddTemplateView) findViewById(R.id.view_swicht);
         viewSwitch.setAction(new MyAction.One<Integer>() {
             @Override
             public void invoke(Integer arg) {
                 getTemplate();
             }
         });
+        getTemplate();
 
     }
 
@@ -228,14 +229,14 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        String templateGson = (String) SharedPreferencesUtils.get(this, C.sp.editTemplate, "");
-        if (!TextUtils.isEmpty(templateGson)) {
-            try {
-                editTemplateInfo = (EditTemplateInfo) MyGsonUtils.jsonToBean(templateGson, EditTemplateInfo.class);
-            } catch (Exception e) {
-                editTemplateInfo = new EditTemplateInfo();
-            }
-        }
+//        String templateGson = (String) SharedPreferencesUtils.get(this, C.sp.editTemplate, "");
+//        if (!TextUtils.isEmpty(templateGson)) {
+//            try {
+//                editTemplateInfo = (EditTemplateInfo) MyGsonUtils.jsonToBean(templateGson, EditTemplateInfo.class);
+//            } catch (Exception e) {
+//                editTemplateInfo = new EditTemplateInfo();
+//            }
+//        }
     }
 
     @Override
@@ -251,26 +252,11 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 AppUtil.coayTextPutNative(this, et_copy.getText().toString());
                 ViewShowUtils.showShortToast(this, R.string.coayTextSucceed);
                 break;
-            case R.id.tv_capy_tkl:
-                if (TextUtils.isEmpty(mTKLBean.getTkl())) {
-                    return;
-                }
-                AppUtil.coayTextPutNative(this, mTKLBean.getTkl());
-                ViewShowUtils.showShortToast(this, R.string.coayTextSucceed);
-                break;
 
             case R.id.weixinFriend:
                 startShare(ShareUtil.WechatType);
+                break;
 
-                break;
-            case R.id.tv_edit_template:
-                Intent intent = new Intent(this, EditTemplateActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(goodsDataText, goodsInfo);
-                intent.putExtras(bundle);
-                intent.putExtra("temp", mTKLBean.getTemp());
-                startActivityForResult(intent, C.Result.shareMoneyToEditTemplateCoad);
-                break;
             case R.id.weixinCircle:
                 if (ticknum > 1) {
                     openShareFriendsDialog();
@@ -458,17 +444,15 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
     public void getTemplate() {
         setResult(RESULT_OK);
         LoadingView.showDialog(this, "请求中...");
-//        GoodsUtil.getGetTkLFinalObservable(this, goodsInfo)
-//                .subscribe(new DataObserver<TKLBean>() {
-//                    @Override
-//                    protected void onSuccess(TKLBean data) {
-//                        String template = data.getTemplate();
-//                        et_copy.setText(template);
-//                        mTKLBean.setTemp(data.getTemp());
-//                    }
-//                });
+        GoodsUtil.getGenerateForPDD(this, goodsInfo)
+                .subscribe(new DataObserver<PddShareContent>() {
+                    @Override
+                    protected void onSuccess(PddShareContent data) {
+                        String template = data.getTemplate();
+                        et_copy.setText(template);
 
-
+                    }
+                });
     }
 
 

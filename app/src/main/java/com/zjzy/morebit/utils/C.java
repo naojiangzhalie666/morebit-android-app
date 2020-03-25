@@ -483,7 +483,7 @@ public class C {
         public static final String CIRCLE_SEARCH_HISTORY = Setting.appName + "circle_search_history";  // 发圈历史搜索
         public static final String SHARE_MOENY_IS_INVITECODE = Setting.appName + "SHARE_MOENY_IS_INVITECODE";  // 是否需要邀请码 0 否 1是
         public static final String SHARE_MOENY_IS_DOWNLOAD_URL = Setting.appName + "SHARE_MOENY_IS_DOWNLOAD_URL ";  // 是否需要下载链接 0 否 1是
-
+        public static final String SHARE_SHORT_LINK_FOR_PDD = Setting.appName + "SHARE_SHORT_LINK_FOR_PDD"; //  抢购链接拼多多
 
         public static final String COLLEGE_SEARCH_HISTORY = Setting.appName + "college_search_history";  // 商学院历史搜索
         public static final String APPSTART_POPUPTYPE = Setting.appName + "APPSTART_POPUPTYPE";  //广告页面

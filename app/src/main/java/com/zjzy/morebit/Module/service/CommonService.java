@@ -7,6 +7,7 @@ import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.pojo.address.AddressInfoList;
 import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.pojo.goods.PddShareContent;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
 import com.zjzy.morebit.pojo.order.OrderSyncResult;
 import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
@@ -120,6 +121,7 @@ import com.zjzy.morebit.pojo.request.RequestNoticeListBean;
 import com.zjzy.morebit.pojo.request.RequestNumberGoodsDetailBean;
 import com.zjzy.morebit.pojo.request.RequestOrderDetailBean;
 import com.zjzy.morebit.pojo.request.RequestPanicBuyTabBean;
+import com.zjzy.morebit.pojo.request.RequestPddShareContent;
 import com.zjzy.morebit.pojo.request.RequestPopupBean;
 import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
 import com.zjzy.morebit.pojo.request.RequestPushBean;
@@ -516,19 +518,15 @@ public interface CommonService {
     @POST("/api/goods/getGenerate")
     public Observable<BaseResponse<TKLBean>> getTKL(
             @Body RequestTKLBean requestBean);
-//            @Field("itemSourceId") String itemSourceId,
-//            @Field("itemTitle") String itemTitle,
-//            @Field("itemDesc") String itemDesc,
-//            @Field("itemPicture") String itemPicture,
-//            @Field("itemPrice") String itemPrice,
-//            @Field("couponPrice") String couponPrice,
-//            @Field("itemVoucherPrice") String itemVoucherPrice,
-//            @Field("saleMonth") String saleMonth,
-//            @Field("couponUrl") String couponUrl,
-//            @Field("pid") String pid,
-//            @Field("template") String template);
 
-
+    /**
+     * 生成拼多多的分享
+     * @param requestBean
+     * @return
+     */
+    @POST("/api/goods/getGenerateForPDD")
+    public Observable<BaseResponse<PddShareContent>> getGenerateForPDD(
+            @Body RequestPddShareContent requestBean);
     /**
      * 生成京东推广链接
      *

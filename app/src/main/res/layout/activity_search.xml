@@ -39,7 +39,7 @@
             android:paddingLeft="9dp"
             android:paddingRight="9dp"
             android:paddingTop="10dp"
-            android:src="@drawable/btn_title_return_icon"/>
+            android:src="@drawable/btn_title_return_icon_white"/>
 
             <TextView
                 android:id="@+id/search"
@@ -98,13 +98,35 @@
 
 
         </RelativeLayout>
+<!--    <android.support.design.widget.TabLayout-->
+<!--        android:id="@+id/tab_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:tabIndicatorColor="@color/color_FF645B"-->
+<!--        android:/>-->
+    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+        android:id="@+id/xTablayout"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_below="@id/rel_top"
+
+        app:xTabDisplayNum="2"
+        app:xTabIndicatorColor="@color/color_FFFFFF"
+        app:xTabIndicatorHeight="3dp"
+        app:xTabIndicatorWidth="15dp"
+        app:xTabMode="scrollable"
+        app:xTabSelectedTextColor="@color/color_FFFFFF"
+        app:xTabSelectedTextSize="@dimen/sp_15"
+        app:xTabTextColor="@color/color_FFFFFF"
+        app:xTabTextSize="@dimen/sp_15" />
+
 
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nsv_view"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:layout_below="@id/rel_top"
+        android:layout_below="@id/xTablayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -121,16 +143,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-            <TextView
-                android:id="@+id/guideTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/guideSearch"
-                android:layout_marginLeft="15dp"
-                android:textSize="@dimen/sp_14"
-                android:layout_marginBottom="12dp"
-                android:textColor="@color/color_333333"
-                />
+<!--            <TextView-->
+<!--                android:id="@+id/guideTitleTv"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/guideSearch"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:textSize="@dimen/sp_14"-->
+<!--                android:layout_marginBottom="12dp"-->
+<!--                android:textColor="@color/color_333333"-->
+<!--                />-->
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -184,9 +206,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                >
-
-
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -244,17 +263,6 @@
                 android:layout_marginLeft="15dp"
                 android:orientation="vertical">
             </LinearLayout>
-
-            <!--<ListView-->
-            <!--android:id="@+id/hotKey_list"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:cacheColorHint="#00000000"-->
-            <!--android:dividerHeight="0.1px"-->
-            <!--android:paddingLeft="20dp"-->
-            <!--android:paddingRight="20dp"-->
-            <!--android:scrollbars="none"-->
-            <!--/>-->
 
             <LinearLayout
                 android:id="@+id/hotKey_list"

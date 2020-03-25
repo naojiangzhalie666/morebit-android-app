@@ -85,16 +85,7 @@ public class RankingListAdapter extends RecyclerView.Adapter {
         }else{
             viewHolder.markTv.setVisibility(View.GONE);
         }
-        //平台补贴
-        if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(info.getSubsidiesPrice())){
-            viewHolder.subsidiesPriceRankTv.setVisibility(View.VISIBLE);
-            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getSubsidiesPrice());
-            viewHolder.subsidiesPriceRankTv.setText(mContext.getString(R.string.subsidiesPrice, getRatioSubside));
-            viewHolder.ll_bottom.setPadding(0, 0, 0, 0);
-        }else{
-            viewHolder.subsidiesPriceRankTv.setVisibility(View.GONE);
-            viewHolder.subsidiesPriceRankTv.setText("");
-        }
+
 
         try {
             if (C.UserType.member.equals(UserLocalData.getUser((Activity) mContext).getPartner()) || info.isCollect) {
@@ -176,7 +167,7 @@ public class RankingListAdapter extends RecyclerView.Adapter {
         View ll_prise;
         ImageView good_mall_tag;
         LinearLayout ll_shop_name, ll_bottom;
-        TextView subsidiesPriceRankTv;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -199,7 +190,7 @@ public class RankingListAdapter extends RecyclerView.Adapter {
 
             ll_bottom = (LinearLayout) itemView.findViewById(R.id.ll_bottom);
             return_cash = (LinearLayout) itemView.findViewById(R.id.ll_return_cash);
-            subsidiesPriceRankTv = itemView.findViewById(R.id.subsidiesPriceRankTv);
+
         }
     }
 

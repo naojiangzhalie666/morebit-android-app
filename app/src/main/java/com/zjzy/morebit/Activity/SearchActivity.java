@@ -7,7 +7,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -30,6 +35,7 @@ import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.App;
+import com.zjzy.morebit.HomeFragment;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.R;
@@ -37,8 +43,14 @@ import com.zjzy.morebit.adapter.SearchHotAdapter;
 import com.zjzy.morebit.adapter.SimpleAdapter;
 import com.zjzy.morebit.adapter.TodayGoodAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
+import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment;
+import com.zjzy.morebit.home.fragment.HomeRecommendFragment;
 import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.main.model.SearchStatisticsModel;
+import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
+import com.zjzy.morebit.main.ui.fragment.PddListFragment;
+import com.zjzy.morebit.main.ui.fragment.ShoppingListFragment2;
+import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
 import com.zjzy.morebit.network.CallBackObserver;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.RxWXHttp;
@@ -47,7 +59,11 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.SearchHotKeyBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.SystemConfigBean;
+import com.zjzy.morebit.pojo.goods.Child2;
+import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.goods.TaobaoSearch;
+import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
+import com.zjzy.morebit.pojo.pddjd.SearchItem;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ConfigListUtlis;
 import com.zjzy.morebit.utils.DensityUtil;
@@ -56,6 +72,7 @@ import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.StringsUtils;
+import com.zjzy.morebit.utils.SwipeDirectionDetector;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
@@ -102,11 +119,16 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     LinearLayout todayLayout;
     @BindView(R.id.toDayTv)
     TextView toDayTv;
-    @BindView(R.id.guideTitleTv)
-    TextView guideTitleTv;
+//    @BindView(R.id.guideTitleTv)
+//    TextView guideTitleTv;
     TodayGoodAdapter todayGoodAdapter;
     @BindView(R.id.videoPlayIv)
     ImageView videoPlayIv;
+//    @BindView(R.id.tab_layout)
+//    TabLayout tab_layout;
+    @BindView(R.id.xTablayout)
+    XTabLayout xTabLayout;
+
     private EditText etSearch;
     SharedPreferences mSharedPreference;
 
@@ -177,6 +199,25 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     return true;
                 }
                 return false;
+            }
+        });
+        xTabLayout.addTab(xTabLayout.newTab().setText("淘宝"));
+        xTabLayout.addTab(xTabLayout.newTab().setText("拼多多"));
+        xTabLayout.setTabGravity(XTabLayout.MODE_FIXED|XTabLayout.GRAVITY_CENTER);
+        xTabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(XTabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(XTabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(XTabLayout.Tab tab) {
+
             }
         });
         getSearchGuide();
@@ -294,11 +335,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                             keyArrays = keyLists.toArray(keyArrays);
                             addViewToFlowLayout(keyArrays, searchHistory, 40);
                         }
-//                        String sysValue = data.getSysValue();
-//                        if (!TextUtils.isEmpty(sysValue)) {
-//                            String[] split = sysValue.split(",");
-//                            addViewToFlowLayout(split, searchHistory, 40);
-//                        }
+
                     }
                 });
     }
@@ -371,12 +408,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private void setGuideUI(List<ImageInfo> data){
         if(null != data && data.size()>0){
             final ImageInfo info  = data.get(0);
-            if(!TextUtils.isEmpty(info.getTitle()) && info.getMark() == 1){
-                guideTitleTv.setVisibility(View.VISIBLE);
-                guideTitleTv.setText(info.getTitle());
-            }else{
-                guideTitleTv.setVisibility(View.GONE);
-            }
+//            if(!TextUtils.isEmpty(info.getTitle()) && info.getMark() == 1){
+//                guideTitleTv.setVisibility(View.VISIBLE);
+//                guideTitleTv.setText(info.getTitle());
+//            }else{
+//                guideTitleTv.setVisibility(View.GONE);
+//            }
             if(info.getMediaType() == 1){
                 videoPlayIv.setVisibility(View.VISIBLE);
             }
@@ -689,4 +726,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     }
                 });
     }
+
+
+
+
+
+
 }

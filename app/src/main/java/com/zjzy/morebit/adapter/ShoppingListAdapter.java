@@ -180,16 +180,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
 
             viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice(info.getCouponPrice())));
 
-            //平台补贴
-            if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(info.getSubsidiesPrice())){
-                viewHolder.subsidiesPriceTv.setVisibility(View.VISIBLE);
-                String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(mContext).getCalculationRate(),info.getSubsidiesPrice());
-                viewHolder.subsidiesPriceTv.setText(mContext.getString(R.string.subsidiesPrice, getRatioSubside));
-            }else{
-                viewHolder.subsidiesPriceTv.setVisibility(View.GONE);
-                viewHolder.subsidiesPriceTv.setText("");
-            }
-
 
             if (info.getType() == 1) {  //如果是收藏商品
                 viewHolder.commission.setVisibility(View.GONE);
@@ -347,7 +337,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
         View iv_icon_bg, ll_prise;
         ImageView checkBox, good_mall_tag;
         private TextView markTv;
-        private TextView subsidiesPriceTv;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -368,7 +358,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
             iv_icon_bg = (View) itemView.findViewById(R.id.iv_icon_bg);
             ll_prise = (View) itemView.findViewById(R.id.ll_return_cash);
             checkBox = (ImageView) itemView.findViewById(R.id.checkbox);
-            subsidiesPriceTv = itemView.findViewById(R.id.subsidiesPriceTv);
+
             return_cash = (LinearLayout) itemView.findViewById(R.id.ll_return_cash);
         }
     }

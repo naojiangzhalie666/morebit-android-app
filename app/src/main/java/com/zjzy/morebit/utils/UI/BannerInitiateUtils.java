@@ -362,7 +362,7 @@ public class BannerInitiateUtils {
         } else if (type == C.BannerIntentionType.PDD){//拼多多
             Bundle bundle = new Bundle();
             bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-            OpenFragmentUtils.goToSimpleFragment(activity, PddFragment.class.getName(), bundle);
+            OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
         } else {
             showUptate(activity, type);
         }
