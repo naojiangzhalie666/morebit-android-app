@@ -121,22 +121,7 @@
                 >
             </android.support.design.widget.TabLayout>
         </FrameLayout>
-<!--        <LinearLayout-->
-<!--            android:id="@+id/couponLayout"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:gravity="center">-->
-<!--            <View android:id="@+id/line" -->
-<!--                android:layout_width="1px" -->
-<!--                android:layout_height="match_parent" -->
-<!--                android:background="@color/color_F1F1F1" -->
-<!--                android:layout_marginRight="12dp" -->
-<!--                android:layout_marginLeft="3dp" -->
-<!--                android:layout_marginTop="8dp" -->
-<!--                android:layout_marginBottom="8dp" />-->
 
-<!--        </LinearLayout>-->
 
     </LinearLayout>
 
@@ -160,8 +145,8 @@
             <com.zjzy.morebit.Module.common.View.ReUseListView
                 android:id="@+id/listview"
                 android:background="@color/color_F5F5F5"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout

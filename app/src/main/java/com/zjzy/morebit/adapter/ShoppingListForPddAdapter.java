@@ -3,6 +3,7 @@ package com.zjzy.morebit.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.goods.shopping.ui.view.ForeshowItemTiemView;
 import com.zjzy.morebit.goods.shopping.ui.view.RecommendIndexView;
 import com.zjzy.morebit.pojo.SelectFlag;
@@ -37,49 +39,30 @@ import java.util.List;
 /**
  * 列表新版
  */
-public class ShoppingListForPddAdapter extends RecyclerView.Adapter {
-    private LayoutInflater mInflater;
+public class ShoppingListForPddAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> {
     private Context mContext;
-    private List<ShopGoodInfo> mDatas = new ArrayList<>();
-
-
+//    private List<ShopGoodInfo> mDatas = new ArrayList<>();
 
     public ShoppingListForPddAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
+        super(context);
         this.mContext = context;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (mDatas == null || mDatas.size() == 0) {
-            return 0;
-        }
-        return 0;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//            return new ViewHolder(mInflater.inflate(R.layout.item_shoppingaole2_pdd, parent, false));
+            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shoppingaole2_pdd, parent, false));
+
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(mInflater.inflate(R.layout.item_shoppingaole2_pdd, parent, false));
-
-    }
-
-
-    public void setData(List<ShopGoodInfo> data) {
-        if (data != null) {
-            mDatas.clear();
-            mDatas.addAll(data);
-        }
-    }
-
-
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        final ShopGoodInfo info = mDatas.get(position);
+    public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
+        final ShopGoodInfo info = getItem(position);
         if (info == null) return;
         final ViewHolder viewHolder = (ViewHolder) holder;
         LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, MathUtils.getImageUrl(info), 9);
-        viewHolder.textview_original.setText(mContext.getString(R.string.coupon, MathUtils.getVoucherPrice(info.getVoucherPriceForPdd())));
+        viewHolder.textview_original.setText(mContext.getString(R.string.coupon,
+                MathUtils.getVoucherPrice(info.getVoucherPriceForPdd())));
         viewHolder.textvihew_Preco.setText("" + MathUtils.getPrice(info.getPriceForPdd()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
@@ -109,14 +92,14 @@ public class ShoppingListForPddAdapter extends RecyclerView.Adapter {
 
 
             viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        GoodsDetailActivity.start(mContext, info);
-                    }
-                });
+                @Override
+                public void onClick(View view) {
+                    GoodsDetailActivity.start(mContext, info);
+                }
+            });
 
             if (C.UserType.vipMember.equals(UserLocalData.getUser((Activity) mContext).getPartner())
-                        || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
+                    || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
                 viewHolder.commission.setText(mContext.getString(R.string.commission,
                         MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) mContext).getCalculationRate(),
                                 info.getCommission())));
@@ -138,34 +121,23 @@ public class ShoppingListForPddAdapter extends RecyclerView.Adapter {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return mDatas == null ? 0 : mDatas.size();
     }
 
 
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
-        ForeshowItemTiemView mForeshowItemTiemView;
-        RecommendIndexView mRecommendIndexView;
+
+
+
+    private class ViewHolder  extends SimpleViewHolder {
+
         TextView textview, textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name,good_pdd_tag;
         ImageView iv_icon;
         LinearLayout return_cash;
         RelativeLayout toDetail, img_rl;
-
         View iv_icon_bg, ll_prise;
-
-
-
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             textview = (TextView) itemView.findViewById(R.id.title);
             tv_shop_name = (TextView) itemView.findViewById(R.id.tv_shop_name);
             textview_original = (TextView) itemView.findViewById(R.id.discount_price);
@@ -175,14 +147,10 @@ public class ShoppingListForPddAdapter extends RecyclerView.Adapter {
             coupon = (TextView) itemView.findViewById(R.id.coupon);
             toDetail = (RelativeLayout) itemView.findViewById(R.id.toDetail);
             img_rl = (RelativeLayout) itemView.findViewById(R.id.img_rl);
-
             commission = (TextView) itemView.findViewById(R.id.commission);
-
             good_pdd_tag = (TextView)itemView.findViewById(R.id.good_pdd_tag);
             iv_icon_bg = (View) itemView.findViewById(R.id.iv_icon_bg);
             ll_prise = (View) itemView.findViewById(R.id.ll_return_cash);
-
-
             return_cash = (LinearLayout) itemView.findViewById(R.id.ll_return_cash);
         }
     }

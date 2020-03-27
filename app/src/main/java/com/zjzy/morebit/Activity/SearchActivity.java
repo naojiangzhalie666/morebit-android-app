@@ -212,7 +212,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 if ("拼多多".equals(title)){
                     MyLog.d("拼多多的搜索");
                     mPlatFormType = 2;
+                }else{
+                    mPlatFormType = 1;
                 }
+
             }
 
             @Override
@@ -226,6 +229,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 if ("拼多多".equals(title)){
                     MyLog.d("拼多多的搜索");
                     mPlatFormType = 2;
+                }else{
+                    mPlatFormType = 1;
                 }
             }
         });
@@ -643,17 +648,26 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     String getText = (String) vt.getTag();
                     //判断是否有配置跳转，没有执行以下代码
                     //热门搜索
+                    boolean isGotoSearchPage = false;
                     if(linearLayout.getId() == R.id.searchHistory){
                         SearchHotKeyBean shk = mSearchHotKeyDatas.get(pot);
                         if(shk.getOpen() != 0){
                             BannerInitiateUtils.gotoAction(SearchActivity.this,MyGsonUtils.toImageInfo(shk));
                         }else{
-                            addSearchText(getText.trim());
-                            gotoSearchResultActivity(getText.trim());
+                            isGotoSearchPage = true;
+
                         }
                     }else{
+                        isGotoSearchPage = true;
+                    }
+                    if (isGotoSearchPage){
                         addSearchText(getText.trim());
-                        gotoSearchResultActivity(getText.trim());
+                        if (mPlatFormType == 2){
+                            gotoSearchResultForPddActivity(getText.trim());
+                        }else{
+                            gotoSearchResultActivity(getText.trim());
+                        }
+
                     }
 
 

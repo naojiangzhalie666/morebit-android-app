@@ -14,7 +14,7 @@ public class RequestSearchForPddBean implements Serializable {
     //desc/asc
     private String order;
 
-    private String page;
+    private int page;
 
     private String keyword;
 
@@ -42,15 +42,13 @@ public class RequestSearchForPddBean implements Serializable {
         this.order = order;
     }
 
-    public String getPage() {
+    public int getPage() {
         return page;
     }
 
-    public void setPage(String page) {
+    public void setPage(int page) {
         this.page = page;
     }
-
-
 
     public String getKeyword() {
         return keyword;

@@ -64,7 +64,7 @@ public class SearchResultForPddActivity extends BaseActivity {
     private TabLayout mTabLayout;
 
 
-    private String mPage = "1";
+    private int mPage = 1;
 
     private ArrayList<BaseTitleTabBean> tabList = new ArrayList<>();
     private int mSelectedPos;
@@ -80,12 +80,9 @@ public class SearchResultForPddActivity extends BaseActivity {
     ImageView iv_clear;
 
 
-    private SearchHotAdapter mTaobaoSearchAdapter;
-    boolean isClserSearch = false;
+
     private boolean isFrist = true;
 
-    private int fromSearch = FROM_SELF;
-    private boolean isLoadData = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +109,6 @@ public class SearchResultForPddActivity extends BaseActivity {
     public void initView() {
         ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         mAdapter = new ShoppingListForPddAdapter(SearchResultForPddActivity.this);
-//        mAdapter.setShowHotTag(true);
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
@@ -129,10 +125,7 @@ public class SearchResultForPddActivity extends BaseActivity {
                     getMoreData();
             }
         });
-//        initSearchAdapter();
-
         etSearch.setText(keyWord == null ? "" : keyWord);
-
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -162,10 +155,7 @@ public class SearchResultForPddActivity extends BaseActivity {
         tabList.add(new BaseTitleTabBean("综合", false, ""));
         tabList.add(new BaseTitleTabBean("佣金比例", true, C.Setting.sort_commissionShare));
         tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
-//        String partner = UserLocalData.getUser(this).getPartner();
-//        if (null != partner && !C.UserType.member.equals(partner)) {
         tabList.add(new BaseTitleTabBean("奖励", false, C.Setting.sort_price));
-//        }
         initTab(mTabLayout);
         if (!TextUtils.isEmpty(keyWord)) {
             etSearch.setText(keyWord);
@@ -188,18 +178,6 @@ public class SearchResultForPddActivity extends BaseActivity {
         }
         MyLog.i("test", "isFrist: " + isFrist);
         MyLog.i("test", "editable: " + s.toString());
-        if (!s.toString().equals(keyWord)) {
-            try {
-//                if (!TextUtils.isEmpty(s.toString())) {
-//                    getGoodsData(s.toString());
-//                    isClserSearch = false;
-//                } else {
-//                    isClserSearch = true;
-//                    clserSearchAdapter();
-//                }
-            } catch (Exception e) {
-            }
-        }
     }
 
     /**
@@ -322,7 +300,7 @@ public class SearchResultForPddActivity extends BaseActivity {
             ViewShowUtils.showShortToast(this, "请输入搜索内容");
             return;
         }
-        mPage = "1";
+        mPage = 1;
         mRecyclerView.getListView().setNoMore(false);
         mRecyclerView.getSwipeList().setRefreshing(true);
         fristSearch(keyWord);
@@ -331,6 +309,7 @@ public class SearchResultForPddActivity extends BaseActivity {
     private void fristSearch(String keywords) {
         BaseTitleTabBean bean = tabList.get(mSelectedPos);
         mRecyclerView.getSwipeList().setRefreshing(true);
+        mRecyclerView.getListView().setNoMore(false);
         bean.where = "";
         bean.order = "";
         getObservable( keywords, bean)
@@ -338,15 +317,12 @@ public class SearchResultForPddActivity extends BaseActivity {
                     @Override
                     public void run() throws Exception {
                         mRecyclerView.getSwipeList().setRefreshing(false);
-
                     }
                 })
                 .subscribe(new DataObserver<List<ShopGoodInfo> >() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        listArray.clear();
-                        mAdapter.setData(listArray);
-                        mRecyclerView.notifyDataSetChanged();
+
                         searchNullTips_ly.setVisibility(View.VISIBLE);
 
                     }
@@ -357,11 +333,13 @@ public class SearchResultForPddActivity extends BaseActivity {
                         dataList_ly.setVisibility(View.VISIBLE);
                         if (data != null && data.size() != 0) {
                             searchNullTips_ly.setVisibility(View.GONE);
-                            mAdapter.setData(data);
+                            listArray.clear();
+                            listArray.addAll(data);
+                            mAdapter.replace(listArray);
                         } else {
-                            mAdapter.setData(listArray);
                             searchNullTips_ly.setVisibility(View.VISIBLE);
                         }
+
                         mRecyclerView.notifyDataSetChanged();
                         if (data != null && data.size() == 0){
                             mRecyclerView.getListView().setNoMore(true);
@@ -405,11 +383,11 @@ public class SearchResultForPddActivity extends BaseActivity {
                     @Override
                     protected void onSuccess(List<ShopGoodInfo>  data) {
                         mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
-
+                        mPage++;
                         if (data != null) {
                             if (data.size() > 0) {
-                                mAdapter.setData(data);
-                                //设置是否是代理商
+                                listArray.addAll(data);
+                                mAdapter.replace(listArray);
                                 mRecyclerView.notifyDataSetChanged();
                             } else {
                                 mRecyclerView.getListView().setNoMore(true);
