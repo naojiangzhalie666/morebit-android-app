@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="10dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/btn_title_return_icon"/>
+
+        <TextView
+            android:id="@+id/search"
+            android:layout_width="52dp"
+            android:layout_height="31dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_search_result_btn_new"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="14sp"
+            />
+
+        <RelativeLayout
+
+            android:id="@+id/search_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_toLeftOf="@+id/search"
+            android:layout_toRightOf="@+id/iv_back">
+
+            <EditText
+                android:id="@+id/search_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_search_bg"
+                android:gravity="left|center_vertical"
+                android:hint="搜索商品名或粘贴淘宝标题"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="40dp"
+                android:paddingRight="32dp"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textColorHint="@color/color_999999"
+                android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                android:textSize="12sp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/icon_search_new"/>
+
+            <ImageView
+                android:id="@+id/iv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:padding="3dp"
+                android:background="@drawable/input_search_text_delete_icon"
+                android:visibility="invisible"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_E5E5E5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_weight="1">
+
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tl_tab"
+                style="@style/MyTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                >
+            </android.support.design.widget.TabLayout>
+        </FrameLayout>
+<!--        <LinearLayout-->
+<!--            android:id="@+id/couponLayout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center">-->
+<!--            <View android:id="@+id/line" -->
+<!--                android:layout_width="1px" -->
+<!--                android:layout_height="match_parent" -->
+<!--                android:background="@color/color_F1F1F1" -->
+<!--                android:layout_marginRight="12dp" -->
+<!--                android:layout_marginLeft="3dp" -->
+<!--                android:layout_marginTop="8dp" -->
+<!--                android:layout_marginBottom="8dp" />-->
+
+<!--        </LinearLayout>-->
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/dataList_ly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="9dp"
+                android:layout_gravity="bottom"
+                android:background="@color/color_F5F5F5"/>
+
+            <com.zjzy.morebit.Module.common.View.ReUseListView
+                android:id="@+id/listview"
+                android:background="@color/color_F5F5F5"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/searchNullTips_ly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_meiyousousuojilu"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="下次看到喜欢的东西赶紧下手哦"
+                android:textColor="@color/color_666666"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>
+
+</RelativeLayout>
+</LinearLayout>

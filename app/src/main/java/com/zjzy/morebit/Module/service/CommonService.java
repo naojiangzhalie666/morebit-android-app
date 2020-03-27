@@ -76,7 +76,6 @@ import com.zjzy.morebit.pojo.myInfo.OssKeyBean;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
-import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
@@ -137,6 +136,7 @@ import com.zjzy.morebit.pojo.request.RequestRemarkBean;
 import com.zjzy.morebit.pojo.request.RequestRemoveCircleCollectBean;
 import com.zjzy.morebit.pojo.request.RequestReplyBean;
 import com.zjzy.morebit.pojo.request.RequestSearchBean;
+import com.zjzy.morebit.pojo.request.RequestSearchForPddBean;
 import com.zjzy.morebit.pojo.request.RequestSearchGuideBean;
 import com.zjzy.morebit.pojo.request.RequestSearchOrderBean;
 import com.zjzy.morebit.pojo.request.RequestSearchStatistics;
@@ -328,6 +328,18 @@ public interface CommonService {
     @POST("/api/goods/searchKeyword")
     public Observable<BaseResponse<ShopGoodBean>> getSearchGoodsList(
             @Body RequestSearchBean requestBody);
+
+    /**
+     * 关键词搜索
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/program/searchKeyword")
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getSearchGoodsListForPdd(
+            @Body RequestSearchForPddBean requestBody);
+
+
 
     /**
      * 关键词搜索

@@ -218,7 +218,9 @@
             android:name="com.zjzy.morebit.Activity.SearchFansActivity"
             android:screenOrientation="portrait"></activity>
 
-
+        <activity
+            android:name="com.zjzy.morebit.Activity.SearchResultForPddActivity"
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="com.zjzy.morebit.Activity.ShareMoneyActivity"

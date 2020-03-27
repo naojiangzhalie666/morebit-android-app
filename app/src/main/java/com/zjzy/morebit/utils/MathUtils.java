@@ -385,6 +385,20 @@ public class MathUtils {
         }
     }
 
+    /**
+     * 获取商品主图
+     * @param item
+     * @return
+     */
+    public static String getImageUrl(ShopGoodInfo item) {
+        if (item == null) return "";
+        String imageUrl = item.getImageUrl();
+        if (!TextUtils.isEmpty(imageUrl)) {
+            return imageUrl;
+        } else {
+            return "";
+        }
+    }
 
 
     /**

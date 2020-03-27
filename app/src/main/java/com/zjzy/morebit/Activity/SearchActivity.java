@@ -146,6 +146,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     boolean isShowMoreHistory = false;
     private int mSearchType = 1;
     private List<SearchHotKeyBean> mSearchHotKeyDatas;
+    private int mPlatFormType = 1;//平台类型 1：淘宝 2：拼多多
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,7 +208,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         xTabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
-
+                String title = tab.getText().toString();
+                if ("拼多多".equals(title)){
+                    MyLog.d("拼多多的搜索");
+                    mPlatFormType = 2;
+                }
             }
 
             @Override
@@ -217,7 +222,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onTabReselected(XTabLayout.Tab tab) {
-
+                String title = tab.getText().toString();
+                if ("拼多多".equals(title)){
+                    MyLog.d("拼多多的搜索");
+                    mPlatFormType = 2;
+                }
             }
         });
         getSearchGuide();
@@ -230,12 +239,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     @OnTextChanged(value = R.id.search_et, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterTextChanged(Editable s) {
         try {
-            if (!TextUtils.isEmpty(s.toString())) {
-                getGoodsData(s.toString());
-                isClserSearch = false;
-            } else {
-                isClserSearch = true;
-                clserSearchAdapter();
+            if (mPlatFormType != 2){
+                if (!TextUtils.isEmpty(s.toString())) {
+                    getGoodsData(s.toString());
+                    isClserSearch = false;
+                } else {
+                    isClserSearch = true;
+                    clserSearchAdapter();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -283,8 +294,15 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         } else {
             addSearchText(etSearch.getText().toString());
         }
+        if (mPlatFormType == 2) {
+            //拼多多搜索结果
+            gotoSearchResultForPddActivity(etSearch.getText().toString());
+        }else{
+            //淘宝搜索结果
+            gotoSearchResultActivity(etSearch.getText().toString());
+        }
 
-        gotoSearchResultActivity(etSearch.getText().toString());
+
     }
 
     private void addSearchText(String text) {
@@ -645,10 +663,19 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-
+    /**
+     * 拼多多的搜索结果
+     * @param getText
+     */
+    private void gotoSearchResultForPddActivity(String getText) {
+        Intent intent = new Intent(SearchActivity.this, SearchResultForPddActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("keyWord", getText);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 
     private void gotoSearchResultActivity(String getText) {
-        SensorsDataUtil.getInstance().searchKeyTrack(getText,C.BigData.NORMAL_SEARCH);
         Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("keyWord", getText);

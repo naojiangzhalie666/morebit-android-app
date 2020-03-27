@@ -42,6 +42,11 @@ public class C {
         public static final String coupon_select = "select"; //优惠卷
         public static final String coupon_un_select = "select"; //优惠卷
 
+        public static final String sort_price="price";//单价
+        public static final String sort_commissionShare="commissionShare";//佣金比例
+        public static final String sort_inOrderCount30Days="inOrderCount30Days";//销量
+
+
         public static final int deviceType = 1;
         public static final int os = 1;
     }
@@ -300,7 +305,7 @@ public class C {
         public static  String COMMISSION_PERCENT_VALUE;// 获取普通会员，VIP，运营商佣金比例 扥value
 
         public static  String SELF_COMMISSION_PERCENT_VALUE;// 自营商品的获取普通会员，VIP，运营商佣金比例 扥value
-        public static  String NUMBER_COMMISSION_PERCENT_VALUE = "65";// 获取普通会员的分佣比例。
+        public static  String NUMBER_COMMISSION_PERCENT_VALUE = "60";// 获取普通会员的分佣比例。
         public static final String RECEIVE_RED_PACKET = "RECEIVE_RED_PACKET";
         public static final String SEARCH_DISCOVERY_ANDROID = "SEARCH_DISCOVERY_ANDROID";
         public static final String WEB_FANS_LIST = "WEB_FANS_LIST";

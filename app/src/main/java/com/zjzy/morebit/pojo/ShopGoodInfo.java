@@ -84,7 +84,7 @@ public class ShopGoodInfo implements Serializable {
 
     public  boolean isImg; // 是否图片密封圈用到
     public  String material; // 是否是物料
-    private String itemSource; //商品来源（1：淘宝 2：京东 3：聚划算，11-物料ID）
+    private String itemSource; //商品来源（1：淘宝 2：京东 3：聚划算，11-物料ID）//商品 来源  1 京东 2拼多多 3 苏宁
     private String comeFrom; //调度 1：后台放单 2：后台录入,N-物料ID'
     // 自用
     public String markValue; //标识内容（本地商品专属，后台关闭则不显示）

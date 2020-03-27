@@ -104,11 +104,11 @@
                 android:layout_height="15dp"
                 android:gravity="center"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/bg_quan_2dp"
+                android:background="@drawable/bg_commission_1dp"
                 android:paddingRight="4dp"
                 android:paddingLeft="4dp"
                 android:maxLines="1"
-                android:textColor="@color/color_FFFFFF"
+                android:textColor="@color/color_FA6400"
                 android:textSize="@dimen/sp_11"
                 tools:text="250人"/>
         </LinearLayout>
