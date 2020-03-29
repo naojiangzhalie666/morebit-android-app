@@ -49,6 +49,7 @@ import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.main.model.SearchStatisticsModel;
 import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
 import com.zjzy.morebit.main.ui.fragment.PddListFragment;
+import com.zjzy.morebit.main.ui.fragment.SearchResultFragment;
 import com.zjzy.morebit.main.ui.fragment.ShoppingListFragment2;
 import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
 import com.zjzy.morebit.network.CallBackObserver;
@@ -70,6 +71,7 @@ import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
@@ -126,8 +128,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     ImageView videoPlayIv;
 //    @BindView(R.id.tab_layout)
 //    TabLayout tab_layout;
-    @BindView(R.id.xTablayout)
-    XTabLayout xTabLayout;
+//    @BindView(R.id.xTablayout)
+//    XTabLayout xTabLayout;
 
     private EditText etSearch;
     SharedPreferences mSharedPreference;
@@ -202,38 +204,38 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 return false;
             }
         });
-        xTabLayout.addTab(xTabLayout.newTab().setText("淘宝"));
-        xTabLayout.addTab(xTabLayout.newTab().setText("拼多多"));
-        xTabLayout.setTabGravity(XTabLayout.MODE_FIXED|XTabLayout.GRAVITY_CENTER);
-        xTabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(XTabLayout.Tab tab) {
-                String title = tab.getText().toString();
-                if ("拼多多".equals(title)){
-                    MyLog.d("拼多多的搜索");
-                    mPlatFormType = 2;
-                }else{
-                    mPlatFormType = 1;
-                }
-
-            }
-
-            @Override
-            public void onTabUnselected(XTabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(XTabLayout.Tab tab) {
-                String title = tab.getText().toString();
-                if ("拼多多".equals(title)){
-                    MyLog.d("拼多多的搜索");
-                    mPlatFormType = 2;
-                }else{
-                    mPlatFormType = 1;
-                }
-            }
-        });
+//        xTabLayout.addTab(xTabLayout.newTab().setText("淘宝"));
+//        xTabLayout.addTab(xTabLayout.newTab().setText("拼多多"));
+//        xTabLayout.setTabGravity(XTabLayout.MODE_FIXED|XTabLayout.GRAVITY_CENTER);
+//        xTabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(XTabLayout.Tab tab) {
+//                String title = tab.getText().toString();
+//                if ("拼多多".equals(title)){
+//                    MyLog.d("拼多多的搜索");
+//                    mPlatFormType = 2;
+//                }else{
+//                    mPlatFormType = 1;
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onTabUnselected(XTabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(XTabLayout.Tab tab) {
+//                String title = tab.getText().toString();
+//                if ("拼多多".equals(title)){
+//                    MyLog.d("拼多多的搜索");
+//                    mPlatFormType = 2;
+//                }else{
+//                    mPlatFormType = 1;
+//                }
+//            }
+//        });
         getSearchGuide();
         getHotKeywords();
         getTodayTitle();
@@ -299,13 +301,17 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         } else {
             addSearchText(etSearch.getText().toString());
         }
-        if (mPlatFormType == 2) {
-            //拼多多搜索结果
-            gotoSearchResultForPddActivity(etSearch.getText().toString());
-        }else{
-            //淘宝搜索结果
-            gotoSearchResultActivity(etSearch.getText().toString());
-        }
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+        bundle.putString(C.Extras.search_keyword,etSearch.getText().toString());
+        OpenFragmentUtils.goToSimpleFragment(this, SearchResultFragment.class.getName(), bundle);
+//        if (mPlatFormType == 2) {
+//            //拼多多搜索结果
+//            gotoSearchResultForPddActivity(etSearch.getText().toString());
+//        }else{
+//            //淘宝搜索结果
+//            gotoSearchResultActivity(etSearch.getText().toString());
+//        }
 
 
     }
@@ -544,7 +550,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String s = mTaobaoSearchData.get(position);
                         addSearchText(s);
-                        gotoSearchResultActivity(s);
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+                        OpenFragmentUtils.goToSimpleFragment(SearchActivity.this, SearchResultFragment.class.getName(), bundle);
+//                        gotoSearchResultActivity(s);
                     }
                 });
             }
@@ -662,11 +671,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     }
                     if (isGotoSearchPage){
                         addSearchText(getText.trim());
-                        if (mPlatFormType == 2){
-                            gotoSearchResultForPddActivity(getText.trim());
-                        }else{
-                            gotoSearchResultActivity(getText.trim());
-                        }
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+                        OpenFragmentUtils.goToSimpleFragment(SearchActivity.this, SearchResultFragment.class.getName(), bundle);
+//                        if (mPlatFormType == 2){
+//                            gotoSearchResultForPddActivity(getText.trim());
+//                        }else{
+//                            gotoSearchResultActivity(getText.trim());
+//                        }
 
                     }
 
@@ -681,22 +693,22 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
      * 拼多多的搜索结果
      * @param getText
      */
-    private void gotoSearchResultForPddActivity(String getText) {
-        Intent intent = new Intent(SearchActivity.this, SearchResultForPddActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("keyWord", getText);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    private void gotoSearchResultActivity(String getText) {
-        Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("keyWord", getText);
-        bundle.putInt(SearchResultActivity.KEY_SEARCH_TYPE,mSearchType);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
+//    private void gotoSearchResultForPddActivity(String getText) {
+//        Intent intent = new Intent(SearchActivity.this, SearchResultForPddActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("keyWord", getText);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//    }
+//
+//    private void gotoSearchResultActivity(String getText) {
+//        Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("keyWord", getText);
+//        bundle.putInt(SearchResultActivity.KEY_SEARCH_TYPE,mSearchType);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//    }
 
     private Dialog textDialog;
 

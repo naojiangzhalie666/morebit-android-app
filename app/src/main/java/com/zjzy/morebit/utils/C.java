@@ -134,6 +134,8 @@ public class C {
         public static final String fragmentData = "fragmentData";
         // 过时用下面滴
         public static final String openFragment_isSysBar = "openFragment_isSysBar"; // 打开fragment时候是否要导航栏
+        //搜索关键字
+        public static final String search_keyword = "keyWord";
 
         public static final String loginType = "loginType"; // 是否显示用户协议,判断是否注册
 

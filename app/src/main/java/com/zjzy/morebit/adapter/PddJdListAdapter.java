@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lovejjfg.powertext.LabelTextView;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -77,7 +78,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
         LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon,  MathUtils.getPicture(info), 9);
         //viewHolder.textview.setText(StringsUtils.retractTitle(MathUtils.getTitle(info)));
-        viewHolder.textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//        viewHolder.textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         viewHolder.textview_original.setText("¥" + MathUtils.getVoucherPrice(info.getVoucherPriceForPdd()));
         viewHolder.textvihew_Preco.setText("¥" + MathUtils.getPrice(info.getPriceForPdd()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
@@ -150,10 +151,10 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 //            } else {
 //                viewHolder.good_mall_tag.setImageResource(R.drawable.taobao);
 //            }
-            StringsUtils.retractTitleForPdd(viewHolder.good_pdd_tag,viewHolder.textview,MathUtils.getTitle(info));
+//            StringsUtils.retractTitleForPdd(viewHolder.good_pdd_tag,viewHolder.textview,MathUtils.getTitle(info));
 
-
-
+            viewHolder.pdd_title.setLabelText("拼多多");
+            viewHolder.pdd_title.setOriginalText(MathUtils.getTitle(info));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,18 +171,19 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textview, textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name,good_pdd_tag;
+        TextView  textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name;
         ImageView iv_icon;
         LinearLayout return_cash;
         RelativeLayout toDetail, img_rl;
         ImageView select_tag;
         View ll_prise;
         LinearLayout ll_bottom;
+        LabelTextView pdd_title;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textview = (TextView) itemView.findViewById(R.id.title);
+            pdd_title = (LabelTextView) itemView.findViewById(R.id.pdd_title);
             tv_shop_name = (TextView) itemView.findViewById(R.id.tv_shop_name);
             textview_original = (TextView) itemView.findViewById(R.id.discount_price);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
@@ -190,7 +192,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
             coupon = (TextView) itemView.findViewById(R.id.coupon);
             toDetail = (RelativeLayout) itemView.findViewById(R.id.toDetail);
             img_rl = (RelativeLayout) itemView.findViewById(R.id.img_rl);
-            good_pdd_tag = (TextView) itemView.findViewById(R.id.good_pdd_tag);
+
             commission = (TextView) itemView.findViewById(R.id.commission);
             select_tag = (ImageView) itemView.findViewById(R.id.select_tag);
             ll_prise = (View) itemView.findViewById(R.id.ll_return_cash);

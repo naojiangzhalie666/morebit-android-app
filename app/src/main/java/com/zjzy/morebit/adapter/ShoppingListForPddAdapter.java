@@ -17,7 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lovejjfg.powertext.LabelTextView;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
@@ -29,6 +31,7 @@ import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
+import com.zjzy.morebit.utils.StringUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
@@ -94,7 +97,7 @@ public class ShoppingListForPddAdapter extends SimpleAdapter<ShopGoodInfo, Simpl
             viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    GoodsDetailActivity.start(mContext, info);
+                    GoodsDetailForPddActivity.start(mContext, info);
                 }
             });
 
@@ -116,7 +119,11 @@ public class ShoppingListForPddAdapter extends SimpleAdapter<ShopGoodInfo, Simpl
 
             viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));
 
-            StringsUtils.retractTitle(viewHolder.good_pdd_tag,viewHolder.textview,MathUtils.getTitle(info));
+//            viewHolder.textview.setText(MathUtils.getTitle(info));
+            viewHolder.pdd_title.setLabelText("拼多多");
+            viewHolder.pdd_title.setOriginalText(MathUtils.getTitle(info));
+//            StringUtils
+//            StringsUtils.retractTitleForPdd(viewHolder.good_pdd_tag,viewHolder.textview,MathUtils.getTitle(info));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,15 +137,16 @@ public class ShoppingListForPddAdapter extends SimpleAdapter<ShopGoodInfo, Simpl
 
     private class ViewHolder  extends SimpleViewHolder {
 
-        TextView textview, textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name,good_pdd_tag;
+        TextView textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name;
         ImageView iv_icon;
         LinearLayout return_cash;
         RelativeLayout toDetail, img_rl;
         View iv_icon_bg, ll_prise;
+        LabelTextView pdd_title;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textview = (TextView) itemView.findViewById(R.id.title);
+            pdd_title = (LabelTextView) itemView.findViewById(R.id.pdd_title);
             tv_shop_name = (TextView) itemView.findViewById(R.id.tv_shop_name);
             textview_original = (TextView) itemView.findViewById(R.id.discount_price);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
@@ -148,7 +156,7 @@ public class ShoppingListForPddAdapter extends SimpleAdapter<ShopGoodInfo, Simpl
             toDetail = (RelativeLayout) itemView.findViewById(R.id.toDetail);
             img_rl = (RelativeLayout) itemView.findViewById(R.id.img_rl);
             commission = (TextView) itemView.findViewById(R.id.commission);
-            good_pdd_tag = (TextView)itemView.findViewById(R.id.good_pdd_tag);
+//            good_pdd_tag = (TextView)itemView.findViewById(R.id.good_pdd_tag);
             iv_icon_bg = (View) itemView.findViewById(R.id.iv_icon_bg);
             ll_prise = (View) itemView.findViewById(R.id.ll_return_cash);
             return_cash = (LinearLayout) itemView.findViewById(R.id.ll_return_cash);

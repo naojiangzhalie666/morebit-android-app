@@ -139,6 +139,7 @@
     <string name="share_friends">分享好友</string>
 
     <string name="my_publish">发布管理</string>
+    <string name="offen_question">常见问题</string>
     <string name="order_search">订单查询</string>
     <string name="my_footmarker">足迹</string>
     <string name="my_favorite">我的收藏</string>
@@ -155,6 +156,8 @@
     <string name="complaint_suggestion">投诉建议</string>
     <string name="find_splendid">发现精彩</string>
     <string name="sales">销量：%1$s</string>
+    <string name="current_taobao">淘宝</string>
+    <string name="current_pdd">拼多多</string>
     <string name="current_ranking">实时排行</string>
     <string name="pdd_tab">拼多多</string>
     <string name="today_ranking">今日排行</string>

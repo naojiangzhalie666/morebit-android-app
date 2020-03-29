@@ -508,6 +508,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
         mGoodsInfo.setItemSource(Info.getItemSource());
         if (!StringsUtils.isEmpty(Info.getTitle())) {
+
                 StringsUtils.retractTitleForPdd(tv_pdd, title, Info.getTitle());
         }
 

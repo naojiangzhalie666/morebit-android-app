@@ -155,7 +155,7 @@ public class SearchResultForPddActivity extends BaseActivity {
         tabList.add(new BaseTitleTabBean("综合", false, ""));
         tabList.add(new BaseTitleTabBean("佣金比例", true, C.Setting.sort_commissionShare));
         tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
-        tabList.add(new BaseTitleTabBean("奖励", false, C.Setting.sort_price));
+        tabList.add(new BaseTitleTabBean("奖励", true, C.Setting.sort_price));
         initTab(mTabLayout);
         if (!TextUtils.isEmpty(keyWord)) {
             etSearch.setText(keyWord);
@@ -192,7 +192,12 @@ public class SearchResultForPddActivity extends BaseActivity {
         //填充数据
         for (int i = 0; i < tabList.size(); i++) {
             BaseTitleTabBean bean = tabList.get(i);
-            bean.order = C.Setting.descParms;
+            if (i == 0 ){
+                bean.order = "";
+            }else{
+                bean.order = C.Setting.descParms;
+            }
+
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setCustomView(R.layout.tablayout_donw_up_item_tv);
             TextView textView = (TextView) tab.getCustomView().findViewById(R.id.class_tv);
@@ -276,7 +281,6 @@ public class SearchResultForPddActivity extends BaseActivity {
     public void Onclick(View v) {
         switch (v.getId()) {
             case R.id.search:
-
                 getFirstData();
                 break;
             case R.id.iv_back:
@@ -310,8 +314,6 @@ public class SearchResultForPddActivity extends BaseActivity {
         BaseTitleTabBean bean = tabList.get(mSelectedPos);
         mRecyclerView.getSwipeList().setRefreshing(true);
         mRecyclerView.getListView().setNoMore(false);
-        bean.where = "";
-        bean.order = "";
         getObservable( keywords, bean)
                 .doFinally(new Action() {
                     @Override

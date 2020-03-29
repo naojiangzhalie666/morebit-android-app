@@ -1,5 +1,6 @@
 package com.zjzy.morebit.utils;
 
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.LeadingMarginSpan;
@@ -243,6 +244,7 @@ public class StringsUtils {
         }else{
             retractTitle(tv,title);
         }
+
     }
 
 
@@ -275,12 +277,15 @@ public class StringsUtils {
         if(TextUtils.isEmpty(title)){
             return;
         }
+
         SpannableString spannableString = new SpannableString(title);
         LeadingMarginSpan.Standard what = new LeadingMarginSpan.Standard(sWidth  , 0);
         spannableString.setSpan(what, 0, title.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
         tv.setText(spannableString);
 
     }
+
+
 
     /**
      * 接口数据列表返回null或者size为0

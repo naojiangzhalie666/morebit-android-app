@@ -117,6 +117,10 @@ public class MineFragment extends BaseMainFragmeng {
     TextView tv_remainder;
     @BindView(R.id.userName)
     TextView mUserName;
+
+    @BindView(R.id.ll_user_grade)
+    LinearLayout llUserGrade;
+
     @BindView(R.id.tv_user_type)
     TextView tvUserType;
 
@@ -137,16 +141,11 @@ public class MineFragment extends BaseMainFragmeng {
     @BindView(R.id.rl_set_weixin)
     RelativeLayout rl_set_weixin;
 
-    @BindView(R.id.fl_share_expert)
-    FrameLayout fl_share_expert;
-    @BindView(R.id.iv_bg_expert)
-    ImageView iv_bg_expert;
-    @BindView(R.id.tv_role)
-    TextView tv_role;
+//    @BindView(R.id.tv_role)
+//    TextView tv_role;
 
     @BindView(R.id.tv_withdraw)
     TextView tvWithDraw;
-
 
     @BindView(R.id.tv_today_money)
             TextView tv_today_money;
@@ -156,8 +155,8 @@ public class MineFragment extends BaseMainFragmeng {
             TextView tv_this_month_estimate_money;
     @BindView(R.id.tv_prev_month_estimate_oney)
             TextView tv_prev_month_estimate_oney;
-    @BindView(R.id.my_publish)
-    LinearLayout my_publish;
+    @BindView(R.id.offen_question)
+    LinearLayout offen_question;
     @BindView(R.id.order_search)
     LinearLayout order_search;
     @BindView(R.id.my_footmarker)
@@ -288,18 +287,17 @@ public class MineFragment extends BaseMainFragmeng {
         mUserName.setText(info.getNickName());
 
         if (C.UserType.member.equals(info.getPartner())) {
-//            mUserLevel.setImageResource(R.mipmap.my_number_icon);
             tvUserType.setText("会员");
+            llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
-//            ll_up_marquee.setVisibility(View.GONE);
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
-//            mUserLevel.setImageResource(R.mipmap.my_vip_icon);
             tvUserType.setText("VIP");
+            llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
-//            ll_up_marquee.setVisibility(View.GONE);
+
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
-//            mUserLevel.setImageResource(R.mipmap.my_leader_icon);
+            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
             ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
         }
         if (TextUtils.isEmpty(info.getWxNumber())) {
@@ -308,15 +306,15 @@ public class MineFragment extends BaseMainFragmeng {
             rl_set_weixin.setVisibility(View.GONE);
         }
         if (UserLocalData.getUser().getReleasePermission() == 1) {
-            fl_share_expert.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(UserLocalData.getUser().getLabelPicture())) {
-                LoadImgUtils.setImg(getActivity(), iv_bg_expert, UserLocalData.getUser().getLabelPicture());
-            }
+//            fl_share_expert.setVisibility(View.VISIBLE);
+//            if (!TextUtils.isEmpty(UserLocalData.getUser().getLabelPicture())) {
+//                LoadImgUtils.setImg(getActivity(), iv_bg_expert, UserLocalData.getUser().getLabelPicture());
+//            }
             if (!TextUtils.isEmpty(UserLocalData.getUser().getLabel())) {
-                tv_role.setText(UserLocalData.getUser().getLabel());
+//                tv_role.setText(UserLocalData.getUser().getLabel());
             }
         } else {
-            fl_share_expert.setVisibility(View.GONE);
+//            fl_share_expert.setVisibility(View.GONE);
         }
     }
 
@@ -379,7 +377,7 @@ public class MineFragment extends BaseMainFragmeng {
 
     @OnClick({R.id.copy_invitation_code, R.id.my_earnings, R.id.rl_set_weixin,
             R.id.my_team, R.id.order_detail, R.id.share_friends, R.id.setting, R.id.tv_y, R.id.iv_wenhao,
-             R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon,R.id.my_publish,R.id.order_search,R.id.my_footmarker,R.id.my_favorite})
+             R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon,R.id.offen_question,R.id.order_search,R.id.my_footmarker,R.id.my_favorite})
     public void onClick(View v) {
         switch (v.getId()) {  //复制邀请码
             case R.id.copy_invitation_code:
@@ -416,13 +414,12 @@ public class MineFragment extends BaseMainFragmeng {
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
 //                PartnerShareActivity.start(getActivity());
                 break;
-            case R.id.my_publish:
-                ImageInfo publish = mLocalData.get("1");
-                if (publish == null){
-                    ViewShowUtils.showShortToast(getActivity(),"没有发布管理权限");
-                }else{
-                    BannerInitiateUtils.gotoAction(getActivity(), publish);
-                }
+            case R.id.offen_question:
+                ImageInfo question = new ImageInfo();
+                question.setOpen(3);//打开外部链接。
+                question.setUrl("https://helper.morebit.com.cn/#/question");
+                BannerInitiateUtils.gotoAction(getActivity(), question);
+
                 break;
             case R.id.order_search:
                 ImageInfo orderSearch = mLocalData.get("2");
@@ -592,6 +589,10 @@ public class MineFragment extends BaseMainFragmeng {
                 }
                 if(x.getTitle().equals("发布管理")){
                     mLocalData.put("1",x);
+                    it.remove();
+                }
+                if(x.getTitle().equals("常见问题")){
+                    mLocalData.put("5",x);
                     it.remove();
                 }
                 if(x.getTitle().equals("足迹")){
