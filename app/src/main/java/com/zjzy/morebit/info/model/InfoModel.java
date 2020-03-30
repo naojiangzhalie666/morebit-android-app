@@ -1,6 +1,7 @@
 package com.zjzy.morebit.info.model;
 
 
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
@@ -12,6 +13,7 @@ import com.zjzy.morebit.pojo.EarningExplainBean;
 import com.zjzy.morebit.pojo.EarningsMsg;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MonthEarnings;
+import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UpgradeCarousel;
 import com.zjzy.morebit.pojo.myInfo.ApplyUpgradeBean;
@@ -246,6 +248,7 @@ public class InfoModel extends MvpModel {
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
                 .compose(rxFragment.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
+
 
 
     /**

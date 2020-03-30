@@ -494,14 +494,14 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
                 //平台补贴
-                if(!TextUtils.isEmpty(item.getSubsidiesPrice())){
-                    subsidiesPriceTv.setVisibility(View.VISIBLE);
-                    String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(mContext).getCalculationRate(),item.getSubsidiesPrice());
-                    subsidiesPriceTv.setText(mContext.getString(R.string.subsidiesPrice, getRatioSubside));
-                }else{
-                    subsidiesPriceTv.setVisibility(View.GONE);
-                    subsidiesPriceTv.setText("");
-                }
+//                if(!TextUtils.isEmpty(item.getSubsidiesPrice())){
+//                    subsidiesPriceTv.setVisibility(View.VISIBLE);
+//                    String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(mContext).getCalculationRate(),item.getSubsidiesPrice());
+//                    subsidiesPriceTv.setText(mContext.getString(R.string.subsidiesPrice, getRatioSubside));
+//                }else{
+//                    subsidiesPriceTv.setVisibility(View.GONE);
+//                    subsidiesPriceTv.setText("");
+//                }
 
                 if(position+1<getItems().size()){
                     if(TextUtils.isEmpty(getItem(position+1).getCreateTime())&&!TextUtils.isEmpty(getItem(position+1).getTime())){

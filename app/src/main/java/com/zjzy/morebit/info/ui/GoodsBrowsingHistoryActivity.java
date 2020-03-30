@@ -416,15 +416,15 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                     }
 //                    commission.setText(getString(R.string.upgrade_commission));
                 }
-                //平台补贴
-                if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(item.getSubsidiesPrice())){
-                    subsidiesPriceTv.setVisibility(View.VISIBLE);
-                    String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getSubsidiesPrice());
-                    subsidiesPriceTv.setText(mContext.getString(R.string.subsidiesPrice, getRatioSubside));
-                }else{
-                    subsidiesPriceTv.setVisibility(View.GONE);
-                    subsidiesPriceTv.setText("");
-                }
+//                //平台补贴
+//                if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(item.getSubsidiesPrice())){
+//                    subsidiesPriceTv.setVisibility(View.VISIBLE);
+//                    String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getSubsidiesPrice());
+//                    subsidiesPriceTv.setText(mContext.getString(R.string.subsidiesPrice, getRatioSubside));
+//                }else{
+//                    subsidiesPriceTv.setVisibility(View.GONE);
+//                    subsidiesPriceTv.setText("");
+//                }
                 MyLog.i("test", "item.getShopName(): " + item.getShopName() + " url: " + item.getItemPicture());
                 discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(item.getItemVoucherPrice())));
                 price.setText(getString(R.string.income, MathUtils.getPrice(item.getItemPrice())));

@@ -1,5 +1,6 @@
 package com.zjzy.morebit.info.presenter;
 
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.push.Logger;
 import com.zjzy.morebit.info.contract.OrderListContract;
 import com.zjzy.morebit.info.model.InfoModel;
@@ -92,6 +93,8 @@ public class OrderListPresenter extends MvpPresenter<InfoModel, OrderListContrac
                     }
                 });
     }
+
+
 
     @Override
     public void ConfirmReceiveGoods(RxFragment rxFragment, String orderId) {

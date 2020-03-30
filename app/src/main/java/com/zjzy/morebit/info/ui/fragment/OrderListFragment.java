@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -137,7 +138,11 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
             public void onItem(int position) {
                 if (mTeamType == 1){
                     mPresenter.onCheckGoods(OrderListFragment.this, mListArray.get(position).getItemId());
-                }else{
+                }else if(mTeamType == 4) {
+                    ShopGoodInfo info = new ShopGoodInfo();
+                    info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
+                    GoodsDetailForPddActivity.start(getActivity(),info);
+                } else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     NumberOrderDetailActivity.startOrderDetailActivity(getActivity(),
                             mListArray.get(position).getOrderSn());

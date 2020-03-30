@@ -42,14 +42,11 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             mDatas.addAll(datas);
         }
     }
-//    public void setTeamType(int teamType){
-//        this.teamType = teamType;
-//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            return new ViewHolder(mInflater.inflate(R.layout.item_conscomgoods_detail, parent, false));
+            return new PlatFormViewHolder(mInflater.inflate(R.layout.item_order_taobao_pdd, parent, false));
         } else {
             return new SelfViewHolder(mInflater.inflate(R.layout.item_order_goods_detail, parent, false));
         }
@@ -75,8 +72,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof ViewHolder) {
-            taoBaoViewHolder((ViewHolder) holder, position);
+        if (holder instanceof PlatFormViewHolder) {
+            platformViewHolder((PlatFormViewHolder) holder, position);
         } else if (holder instanceof SelfViewHolder) {
             selfViewHolder((SelfViewHolder) holder, position);
         }
@@ -194,30 +191,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                         NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
                     }
                 });
-//                viewHolder.shipGoodsTv.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (onSelfOrderClickListener != null) {
-//                            onSelfOrderClickListener.onShip(info.getOrderSn(), position);
-//                        }
-//                    }
-//                });
 
-                //确认收货
-//                if ("1".equals(info.getHasConfirm())) {
-//                    viewHolder.receiverGoodsTv.setVisibility(View.GONE);
-//                } else {
-//                    viewHolder.receiverGoodsTv.setVisibility(View.VISIBLE);
-//                }
-
-//                viewHolder.receiverGoodsTv.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (onSelfOrderClickListener != null) {
-//                            onSelfOrderClickListener.onReceiveGoods(info.getOrderSn(), position);
-//                        }
-//                    }
-//                });
                 viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
             } else if ("6".equals(info.getStatus())) {
                 viewHolder.tv_order_status.setText("待收货");
@@ -264,77 +238,59 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         });
     }
 
-    private void taoBaoViewHolder(ViewHolder viewHolder, final int position) {
+    private void platformViewHolder(PlatFormViewHolder viewHolder, final int position){
         final ConsComGoodsInfo info = mDatas.get(position);
-
-
         if (TextUtils.isEmpty(info.getItemImg())) {
             viewHolder.pic.setImageResource(R.drawable.icon_default);
         } else {
             LoadImgUtils.setImg(mContext, viewHolder.pic, info.getItemImg());
         }
 
+
         try {
             viewHolder.title.setText(info.getItemName());
             if (!TextUtils.isEmpty(info.getCreateTime()) && !"0".equals(info.getCreateTime())) {
-                viewHolder.createDay.setText("创建: " + info.getCreateTime());
+                viewHolder.createDay.setText("创建时间: " + info.getCreateTime());
             } else {
                 viewHolder.createDay.setText("");
             }
-            viewHolder.xfyugu_tv.setText("¥" + info.getPaymentAmount());
-            if (!TextUtils.isEmpty(info.getCommission())) {
-                viewHolder.yjyugu_tv.setVisibility(View.VISIBLE);
-                viewHolder.yjyugu_tv.setText("赚佣" + info.getCommission() + "元");
+            String goodsPrice = info.getPaymentAmount();
+            if (!TextUtils.isEmpty(goodsPrice)) {
+                viewHolder.goods_price.setText(goodsPrice);
             } else {
-                viewHolder.yjyugu_tv.setVisibility(View.GONE);
+                viewHolder.goods_price.setText("");
+            }
+            String goodsNum = info.getGoodsNum();
+            if (!TextUtils.isEmpty(goodsNum)) {
+                viewHolder.order_googs_num.setText(mContext.getResources().getString(R.string.number_goods_count, goodsNum));
+            } else {
+                viewHolder.order_googs_num.setText(mContext.getResources().getString(R.string.number_goods_count, "0"));
+            }
+            String unit = info.getUnit();
+            if (!TextUtils.isEmpty(goodsNum)) {
+                viewHolder.order_goods_unit.setText(unit);
+            } else {
+                viewHolder.order_goods_unit.setText("");
+            }
+            //佣金
+            String commission = info.getCommission();
+            if (!TextUtils.isEmpty(commission) && !commission.equals("0") && !commission.equals("null")) {
+                viewHolder.number_yongjin_tv.setVisibility(View.VISIBLE);
+                viewHolder.number_yongjin_tv.setText(mContext.getResources().getString(R.string.number_yujin, commission));
+            } else {
+                viewHolder.number_yongjin_tv.setText("");
+                viewHolder.number_yongjin_tv.setVisibility(View.GONE);
             }
 
-            if (!TextUtils.isEmpty(info.getSubsidy())) {
-                viewHolder.subsidiesPriceTv.setVisibility(View.VISIBLE);
-                viewHolder.subsidiesPriceTv.setText(mContext.getString(R.string.subsidiesPrice, info.getSubsidy()));
+            //订单
+            String orderNo = info.getOrderSn();
+            if (!TextUtils.isEmpty(orderNo)) {
+                viewHolder.tv_order_no.setText(mContext.getResources().getString(R.string.number_order_no, orderNo));
             } else {
-                viewHolder.subsidiesPriceTv.setVisibility(View.GONE);
-                viewHolder.subsidiesPriceTv.setText("");
+                viewHolder.tv_order_no.setText("");
             }
 
-            if ("4".equals(info.getStatus())) {//失效4
-                if (teamType == 10) {
-                    viewHolder.jiesuanDay.setText("已关闭");
-                } else {
-                    viewHolder.jiesuanDay.setText("已失效");
-                }
 
-                viewHolder.yjyugu_tv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-                viewHolder.jiesuanDay.setTextColor(ContextCompat.getColor(mContext, R.color.color_999999));
-                viewHolder.jiesuanDay_date.setVisibility(View.GONE);
-                viewHolder.yjyugu_tv.setBackgroundResource(R.drawable.bg_quan_2dp);
-                viewHolder.yjyugu_tv.setTextColor(ContextCompat.getColor(mContext, R.color.color_ffe800));
-
-            } else {
-
-                if ("3".equals(info.getStatus())) {  //已结算
-                    viewHolder.jiesuanDay_date.setVisibility(View.VISIBLE);
-                    viewHolder.jiesuanDay.setText("已结算");
-                    viewHolder.jiesuanDay.setTextColor(ContextCompat.getColor(mContext, R.color.color_4FCC84));
-                    if (!TextUtils.isEmpty(info.getSettlementTime()) && !"0".equals(info.getSettlementTime())) {
-                        viewHolder.jiesuanDay_date.setText("结算日期: " + info.getSettlementTime());
-                    } else {
-                        viewHolder.jiesuanDay.setText("");
-                    }
-                } else {
-
-                    viewHolder.jiesuanDay.setText("已付款");
-                    viewHolder.jiesuanDay.setTextColor(ContextCompat.getColor(mContext, R.color.color_4FCC84));
-                    viewHolder.jiesuanDay_date.setVisibility(View.GONE);
-                }
-                viewHolder.yjyugu_tv.getPaint().setFlags(0); //还原
-                viewHolder.yjyugu_tv.getPaint().setAntiAlias(true);//抗锯齿
-                viewHolder.yjyugu_tv.invalidate();
-                viewHolder.yjyugu_tv.setBackgroundResource(R.drawable.bg_quan_2dp);
-                viewHolder.yjyugu_tv.setTextColor(ContextCompat.getColor(mContext, R.color.color_ffe800));
-            }
-
-            viewHolder.tv_order.setText("订单单号: " + info.getOrderSn());
             viewHolder.tv_copy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -342,6 +298,26 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                     ViewShowUtils.showShortToast(mContext, mContext.getString(R.string.coayTextSucceed));
                 }
             });
+
+            //结算时间
+            String settleDate = info.getSettlementTime();
+            if (!TextUtils.isEmpty(settleDate)) {
+                viewHolder.rl_settle_date.setVisibility(View.VISIBLE);
+                viewHolder.tv_settle_date.setText("结算日期："+settleDate);
+            } else {
+                viewHolder.rl_settle_date.setVisibility(View.GONE);
+                viewHolder.tv_settle_date.setVisibility(View.GONE);
+            }
+            if ("4".equals(info.getStatus())) {//已失效
+                viewHolder.tv_order_status.setText("失效");
+            } else if ("3".equals(info.getStatus())) {//已结算
+                viewHolder.tv_order_status.setText("已结算");
+
+            } else if ("1".equals(info.getStatus())) {//已支付
+                viewHolder.tv_order_status.setText("已支付");
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -355,6 +331,90 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         });
     }
 
+//    private void taoBaoViewHolder(ViewHolder viewHolder, final int position) {
+//        final ConsComGoodsInfo info = mDatas.get(position);
+//
+//
+//        if (TextUtils.isEmpty(info.getItemImg())) {
+//            viewHolder.pic.setImageResource(R.drawable.icon_default);
+//        } else {
+//            LoadImgUtils.setImg(mContext, viewHolder.pic, info.getItemImg());
+//        }
+//
+//        try {
+//            viewHolder.title.setText(info.getItemName());
+//            if (!TextUtils.isEmpty(info.getCreateTime()) && !"0".equals(info.getCreateTime())) {
+//                viewHolder.createDay.setText("创建: " + info.getCreateTime());
+//            } else {
+//                viewHolder.createDay.setText("");
+//            }
+//            viewHolder.xfyugu_tv.setText("¥" + info.getPaymentAmount());
+//            if (!TextUtils.isEmpty(info.getCommission())) {
+//                viewHolder.yjyugu_tv.setVisibility(View.VISIBLE);
+//                viewHolder.yjyugu_tv.setText("赚佣" + info.getCommission() + "元");
+//            } else {
+//                viewHolder.yjyugu_tv.setVisibility(View.GONE);
+//            }
+//
+//
+//            if ("4".equals(info.getStatus())) {//失效4
+//                if (teamType == 10) {
+//                    viewHolder.jiesuanDay.setText("已关闭");
+//                } else {
+//                    viewHolder.jiesuanDay.setText("已失效");
+//                }
+//
+//                viewHolder.yjyugu_tv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+//                viewHolder.jiesuanDay.setTextColor(ContextCompat.getColor(mContext, R.color.color_999999));
+//                viewHolder.jiesuanDay_date.setVisibility(View.GONE);
+//                viewHolder.yjyugu_tv.setBackgroundResource(R.drawable.bg_quan_2dp);
+//                viewHolder.yjyugu_tv.setTextColor(ContextCompat.getColor(mContext, R.color.color_ffe800));
+//
+//            } else {
+//
+//                if ("3".equals(info.getStatus())) {  //已结算
+//                    viewHolder.jiesuanDay_date.setVisibility(View.VISIBLE);
+//                    viewHolder.jiesuanDay.setText("已结算");
+//                    viewHolder.jiesuanDay.setTextColor(ContextCompat.getColor(mContext, R.color.color_4FCC84));
+//                    if (!TextUtils.isEmpty(info.getSettlementTime()) && !"0".equals(info.getSettlementTime())) {
+//                        viewHolder.jiesuanDay_date.setText("结算日期: " + info.getSettlementTime());
+//                    } else {
+//                        viewHolder.jiesuanDay.setText("");
+//                    }
+//                } else {
+//
+//                    viewHolder.jiesuanDay.setText("已付款");
+//                    viewHolder.jiesuanDay.setTextColor(ContextCompat.getColor(mContext, R.color.color_4FCC84));
+//                    viewHolder.jiesuanDay_date.setVisibility(View.GONE);
+//                }
+//                viewHolder.yjyugu_tv.getPaint().setFlags(0); //还原
+//                viewHolder.yjyugu_tv.getPaint().setAntiAlias(true);//抗锯齿
+//                viewHolder.yjyugu_tv.invalidate();
+//                viewHolder.yjyugu_tv.setBackgroundResource(R.drawable.bg_quan_2dp);
+//                viewHolder.yjyugu_tv.setTextColor(ContextCompat.getColor(mContext, R.color.color_ffe800));
+//            }
+//
+//            viewHolder.tv_order.setText("订单单号: " + info.getOrderSn());
+//            viewHolder.tv_copy.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    AppUtil.coayText((Activity) mContext, info.getOrderSn());
+//                    ViewShowUtils.showShortToast(mContext, mContext.getString(R.string.coayTextSucceed));
+//                }
+//            });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        viewHolder.iten_rl.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (onAdapterClickListener != null) {
+//                    onAdapterClickListener.onItem(position);
+//                }
+//            }
+//        });
+//    }
+
     @Override
     public int getItemCount() {
         return mDatas == null ? 0 : mDatas.size();
@@ -366,7 +426,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         TextView title, createDay, jiesuanDay, xfyugu_tv, yjyugu_tv, tv_order, jiesuanDay_date;
         View bottomLine;
         LinearLayout iten_rl;
-        TextView subsidiesPriceTv, tv_copy;
+        TextView  tv_copy;
 
 
         public ViewHolder(View itemView) {
@@ -381,8 +441,38 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             yjyugu_tv = (TextView) itemView.findViewById(R.id.yjyugu_tv);
             tv_order = (TextView) itemView.findViewById(R.id.tv_order);
             bottomLine = (View) itemView.findViewById(R.id.bottomLine);
-            subsidiesPriceTv = itemView.findViewById(R.id.subsidiesPriceTv);
+
             tv_copy = itemView.findViewById(R.id.tv_copy);
+        }
+    }
+
+    //平台商品
+    private class PlatFormViewHolder extends RecyclerView.ViewHolder {
+        ImageView pic;
+        TextView title, createDay, tv_order_status, goods_price, order_googs_num, order_goods_unit, number_yongjin_tv;
+
+        LinearLayout iten_rl;
+        TextView tv_copy, tv_order_no;
+        TextView tv_new_person,tv_settle_date;
+        RelativeLayout rl_settle_date;
+
+        public PlatFormViewHolder(View itemView) {
+            super(itemView);
+            iten_rl = (LinearLayout) itemView.findViewById(R.id.iten_rl);
+            pic = (ImageView) itemView.findViewById(R.id.pic);
+            title = (TextView) itemView.findViewById(R.id.title);
+            createDay = (TextView) itemView.findViewById(R.id.createDay);
+            tv_order_status = (TextView) itemView.findViewById(R.id.tv_order_status);
+            goods_price = (TextView) itemView.findViewById(R.id.goods_price);
+            order_googs_num = (TextView) itemView.findViewById(R.id.order_googs_num);
+            order_goods_unit = (TextView) itemView.findViewById(R.id.order_goods_unit);
+            //赚取佣金 会员没有佣金，可以不显示
+            number_yongjin_tv = (TextView) itemView.findViewById(R.id.number_yongjin_tv);
+            tv_order_no = (TextView) itemView.findViewById(R.id.tv_order_no);
+            tv_copy = (TextView) itemView.findViewById(R.id.tv_copy);
+            tv_new_person = (TextView)itemView.findViewById(R.id.tv_new_person);
+            tv_settle_date = (TextView)itemView.findViewById(R.id.tv_settle_date);
+            rl_settle_date = (RelativeLayout)itemView.findViewById(R.id.rl_settle_date);
         }
     }
 
