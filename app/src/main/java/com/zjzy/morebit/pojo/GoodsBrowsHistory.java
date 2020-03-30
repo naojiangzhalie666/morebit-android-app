@@ -35,7 +35,7 @@ public class GoodsBrowsHistory {
 	private String itemVideoid = "";//商品视频ID
 
 	private String itemVoucherPrice = "";  // 券后价格
-	private String commission = "";//扣税后总佣金；预计可得（（商品原价 * 佣金比例）* 0.88）
+	private String commission = "";//扣税后总佣金；预计可得（（商品原价 * 佣金比例）* 0.90）
 	private String couponPrice = "";//优惠券金额
 	private String couponUrl = "";//优惠券链接
 	private String itemFrom; // 1内网  0 全网
