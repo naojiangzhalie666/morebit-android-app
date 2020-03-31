@@ -58,6 +58,8 @@ public class GoodsBrowsHistory {
 	private String  subsidiesPrice; //补贴金额
 
 
+
+
 	// 自用
 	@Transient
 	public boolean isSelect; //是否选择

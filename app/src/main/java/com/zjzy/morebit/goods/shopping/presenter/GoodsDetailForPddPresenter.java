@@ -61,7 +61,7 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                 .subscribe(new DataObserver<ShopGoodInfo>() {
                     @Override
                     protected void onSuccess(final ShopGoodInfo data) {
-                        getIView().showDetailsView(data, false, isRefresh);
+                        getIView().showDetailsView(data, true, isRefresh);
 
                     }
                 });
@@ -114,7 +114,7 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                         }
                     });
         } else {
-            mModel.getGoodsCollect(rxActivity, goodsInfo)
+            mModel.getGoodsCollectForPdd(rxActivity, goodsInfo)
                     .subscribe(new DataObserver<Integer>() {
                         @Override
                         protected void onSuccess(Integer data) {

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -368,17 +369,27 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                 LinearLayout ll_return_cash = holder.viewFinder().view(R.id.ll_return_cash);
 //                if (!TextUtils.isEmpty(item.getItemPicture())) {
                 LoadImgUtils.setImg(mContext, goods_bg, item.getItemPicture());
-                TextView subsidiesPriceTv = holder.viewFinder().view(R.id.subsidiesPriceTv);
+//                TextView subsidiesPriceTv = holder.viewFinder().view(R.id.subsidiesPriceTv);
 //                } else {
 //                    goods_bg.setImageResource(R.drawable.);
 //                }
 //                browse_time.setText(TimeUtils.millis2String(item.getBrowse_time()));
                 //判断是淘宝还是天猫的商品
-                if (item.getShopType() == 2) {
-                    good_mall_tag.setImageResource(R.drawable.tianmao);
-                } else {
-                    good_mall_tag.setImageResource(R.drawable.taobao);
+                int shopType = item.getShopType();
+                switch (shopType){
+                    case 2:
+                        good_mall_tag.setImageResource(R.drawable.tianmao);
+                        break;
+                    case 1:
+                        good_mall_tag.setImageResource(R.drawable.taobao);
+                        break;
+                    case 3:
+                        good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                        break;
+                    default:
+                        break;
                 }
+
                 if (!TextUtils.isEmpty(item.getItemTitle())) {
                     StringsUtils.retractTitle(good_mall_tag,title,item.getItemTitle());
                 }
@@ -426,7 +437,12 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 //                    subsidiesPriceTv.setText("");
 //                }
                 MyLog.i("test", "item.getShopName(): " + item.getShopName() + " url: " + item.getItemPicture());
-                discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(item.getItemVoucherPrice())));
+                if (shopType == 3){
+                    discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(item.getItemVoucherPrice())));
+                }else{
+                    discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(item.getItemVoucherPrice())));
+                }
+
                 price.setText(getString(R.string.income, MathUtils.getPrice(item.getItemPrice())));
                 price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
@@ -460,13 +476,20 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                             ShopGoodInfo shopGoodInfo = (ShopGoodInfo) MyGsonUtils.jsonToBean(MyGsonUtils.beanToJson(item), ShopGoodInfo.class);
 
                             if (shopGoodInfo == null) return;
-                            GoodsUtil.checkGoods(GoodsBrowsingHistoryActivity.this, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
-                                @Override
-                                public void invoke(ShopGoodInfo arg) {
-                                    MyLog.i("test", "arg: " + arg);
-                                    GoodsDetailActivity.start(mContext, arg);
-                                }
-                            });
+                            if (item.getShopType() == 3){
+                                String itemSourceId = item.getItemSourceId();
+                                shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                                GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
+                            }else{
+                                GoodsUtil.checkGoods(GoodsBrowsingHistoryActivity.this, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
+                                    @Override
+                                    public void invoke(ShopGoodInfo arg) {
+                                        MyLog.i("test", "arg: " + arg);
+                                        GoodsDetailActivity.start(mContext, arg);
+                                    }
+                                });
+                            }
+
 
                         }
                     }

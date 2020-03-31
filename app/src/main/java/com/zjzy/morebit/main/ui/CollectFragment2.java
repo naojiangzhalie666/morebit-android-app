@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -454,10 +455,14 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 //                }
 //                browse_time.setText(TimeUtils.millis2String(item.getBrowse_time()));
                 //判断是淘宝还是天猫的商品
+
                 if (item.getShopType()==2) {
                     good_mall_tag.setImageResource(R.drawable.tianmao);
-                } else {
+                } else if (item.getShopType() == 1) {
                     good_mall_tag.setImageResource(R.drawable.taobao);
+                    //拼多多
+                }else if (item.getShopType() == 3){
+                    good_mall_tag.setImageResource(R.drawable.pdd_icon);
                 }
                 if (!TextUtils.isEmpty(item.getTitle())) {
                     StringsUtils.retractTitle(good_mall_tag,title,item.getTitle());
@@ -539,14 +544,20 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                             ShopGoodInfo shopGoodInfo = (ShopGoodInfo) MyGsonUtils.jsonToBean(MyGsonUtils.beanToJson(item), ShopGoodInfo.class);
 
                             if (shopGoodInfo == null) return;
+                            if (item.getShopType() == 3){
+                                String itemSourceId = item.getItemSourceId();
+                                shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                                GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
+                            }else{
+                                GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
+                                    @Override
+                                    public void invoke(ShopGoodInfo arg) {
+                                        MyLog.i("test", "arg: " + arg);
+                                        GoodsDetailActivity.start(mContext, arg);
+                                    }
+                                });
 
-                            GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
-                                @Override
-                                public void invoke(ShopGoodInfo arg) {
-                                    MyLog.i("test", "arg: " + arg);
-                                    GoodsDetailActivity.start(mContext, arg);
-                                }
-                            });
+                            }
 //                            GoodsDetailActivity.start(mContext, shopGoodInfo);
                         }
                     }

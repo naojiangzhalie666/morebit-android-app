@@ -335,6 +335,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         bundle = getIntent().getExtras();
         if (bundle != null) {
             mGoodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
+            //商铺:拼多多
+            mGoodsInfo.setShopType(3);
+            //商品Id
+            mGoodsInfo.setItemSourceId(mGoodsInfo.getGoodsId().toString());
         }
     }
 
@@ -496,8 +500,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
         if (!StringsUtils.isEmpty(Info.getVoucherPriceForPdd())) {
             mGoodsInfo.setVoucherPriceForPdd(Info.getVoucherPriceForPdd());
+            mGoodsInfo.setVoucherPrice(Info.getVoucherPriceForPdd());
             textview_original.setText("¥ " + MathUtils.getVoucherPrice(Info.getVoucherPriceForPdd()));
         }
+
 
         if (StringsUtils.isEmpty(Info.getItemDesc())) {
             rl_desc.setVisibility(View.GONE);
@@ -521,6 +527,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
         if (!StringsUtils.isEmpty(Info.getPriceForPdd())) {
             mGoodsInfo.setPriceForPdd(Info.getPriceForPdd());
+            mGoodsInfo.setPrice(Info.getPriceForPdd());
             text_two.setText(" ¥" + MathUtils.getPrice(Info.getPriceForPdd()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
@@ -693,13 +700,17 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (!StringsUtils.isEmpty(info.getShopId())) {
             mGoodsInfo.setShopId(info.getShopId());
         }
+        String imageUrl = info.getImageUrl();
+        if (!StringsUtils.isEmpty(imageUrl)){
+            mGoodsInfo.setPicture(imageUrl);
+        }
         if (isSeavDao && !isRefresh) {
             SensorsDataUtil.getInstance().browseProductTrack("", info.getItemSourceId());
             if (LoginUtil.checkIsLogin(this, false) && !TextUtils.isEmpty(mGoodsInfo.getTitle()) && !TextUtils.isEmpty(mGoodsInfo.getPrice())) {
                 mPresenter.saveGoodsHistor(this, mGoodsInfo);
             }
         }
-        //展示详情图片
+        //示详情图片
         List<String> imgs = info.getItemBanner();
         if (imgs != null && imgs.size() > 0){
 
@@ -991,44 +1002,6 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                         mGoodsInfo.setAdImgUrl(indexbannerdataArray);
                     }
                 ShareMoneyForPddActivity.start(this,mGoodsInfo,mPromotionUrl);
-//                    if (mTKLBean == null) {
-//                        LoadingView.showDialog(this, "");
-//                        GoodsUtil.getTaoKouLing(GoodsDetailForPddActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
-//                            @Override
-//                            public void invoke(TKLBean arg) {
-//                                mTKLBean = arg;
-//                            }
-//
-//                            @Override
-//                            public void onError() {
-//                            }
-//                        });
-//                    } else {
-//                        ShareMoneyActivity.start(this, mGoodsInfo, mTKLBean);
-//                    }
-//                if (TaobaoUtil.isAuth()) {//淘宝授权
-//                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
-//                } else {
-//                    if (isGoodsLose()) return;
-//                    if (mGoodsInfo != null) {
-//                        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
-//                    }
-//                    if (mTKLBean == null) {
-//                        LoadingView.showDialog(this, "");
-//                        GoodsUtil.getTaoKouLing(GoodsDetailForPddActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
-//                            @Override
-//                            public void invoke(TKLBean arg) {
-//                                mTKLBean = arg;
-//                            }
-//
-//                            @Override
-//                            public void onError() {
-//                            }
-//                        });
-//                    } else {
-//                        ShareMoneyActivity.start(this, mGoodsInfo, mTKLBean);
-//                    }
-//                }
 
                 break;
             case R.id.btn_sweepg: //立即购买
@@ -1048,26 +1021,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                         PddWebActivity.start(this,mPromotionUrl,mGoodsInfo.getTitle());
                     }
                 }
-//                if (TaobaoUtil.isAuth()) {//淘宝授权
-//                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
-//                } else {
-//                    if (isGoodsLose()) return;
-//
-//                    if (mGoodsInfo.getGrab_type() == 1) {
-//                        showGotoNotification(mGoodsInfo);
-//                        return;
-//                    }
-//                    if (!TextUtils.isEmpty(mGoodsInfo.material) || "11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) { // 物料商品跳转
-//                        if ("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) {
-//                            mGoodsInfo.material = mGoodsInfo.getComeFrom();
-//                        }
-//                        mPresenter.materialLinkList(GoodsDetailForPddActivity.this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
-//                    } else {
-////                        TaobaoUtil.showByItemId(GoodsDetailActivity.this,mGoodsInfo.getItemSourceId());
-//                        GoodsUtil.getCouponInfo(GoodsDetailForPddActivity.this, mGoodsInfo);
-//                    }
-//                }
-//                SensorsDataUtil.getInstance().buy("", "", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
+
                 break;
 
             case R.id.videopaly_btn: //视频播放
@@ -1114,7 +1068,9 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
      * 收藏或取消收藏
      */
     private void sumbitCollect() {
-        if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getItemSourceId()) || TextUtils.isEmpty(mGoodsInfo.getTitle())) {
+
+        if (mGoodsInfo == null || mGoodsInfo.getGoodsId() == 0
+                || TextUtils.isEmpty(mGoodsInfo.getTitle())) {
             ViewShowUtils.showShortToast(GoodsDetailForPddActivity.this, "收藏失败,请稍后再试");
             return;
         }

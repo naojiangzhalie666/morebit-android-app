@@ -67,6 +67,41 @@ public class GoodsDetailForPddModel extends MvpModel {
     }
 
     /**
+     * 拼多多收藏
+     * @param rxActivity
+     * @param goodsInfo
+     * @return
+     */
+    public Observable<BaseResponse<Integer>> getGoodsCollectForPdd(BaseActivity rxActivity, ShopGoodInfo goodsInfo) {
+        RequestGoodsCollectBean requestBean = new RequestGoodsCollectBean();
+        requestBean.setItemSourceId(goodsInfo.getGoodsId().toString());
+        requestBean.setItemTitle(goodsInfo.getTitle());
+        requestBean.setItemPicture(goodsInfo.getImageUrl());
+        requestBean.setItemPrice(goodsInfo.getPriceForPdd());
+        requestBean.setCouponPrice(goodsInfo.getCouponPrice());
+        requestBean.setItemVoucherPrice(goodsInfo.getVoucherPriceForPdd());
+        requestBean.setCouponUrl(goodsInfo.getCouponUrl());
+        requestBean.setCouponEndTime(goodsInfo.getCouponEndTime());
+        requestBean.setCommission(goodsInfo.getCommission());
+        requestBean.setShopType(goodsInfo.getShopType()+"");
+        requestBean.setShopName(goodsInfo.getShopName());
+        requestBean.setSaleMonth(TextUtils.isEmpty(goodsInfo.getSaleMonth())?"0":goodsInfo.getSaleMonth());
+        requestBean.setSign(EncryptUtlis.getSign2(requestBean));
+
+        return RxHttp.getInstance().getCommonService().getGoodsCollect(
+                requestBean
+        )
+                .compose(RxUtils.<BaseResponse<Integer>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<Integer>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
+
+    /**
      * 拼多多
      * @param rxActivity
      * @param goodsInfo

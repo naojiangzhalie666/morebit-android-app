@@ -301,10 +301,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         } else {
             addSearchText(etSearch.getText().toString());
         }
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-        bundle.putString(C.Extras.search_keyword,etSearch.getText().toString());
-        OpenFragmentUtils.goToSimpleFragment(this, SearchResultFragment.class.getName(), bundle);
+
+        gotoSearchResultPage(etSearch.getText().toString());
+
 //        if (mPlatFormType == 2) {
 //            //拼多多搜索结果
 //            gotoSearchResultForPddActivity(etSearch.getText().toString());
@@ -437,12 +436,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private void setGuideUI(List<ImageInfo> data){
         if(null != data && data.size()>0){
             final ImageInfo info  = data.get(0);
-//            if(!TextUtils.isEmpty(info.getTitle()) && info.getMark() == 1){
-//                guideTitleTv.setVisibility(View.VISIBLE);
-//                guideTitleTv.setText(info.getTitle());
-//            }else{
-//                guideTitleTv.setVisibility(View.GONE);
-//            }
             if(info.getMediaType() == 1){
                 videoPlayIv.setVisibility(View.VISIBLE);
             }
@@ -550,9 +543,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String s = mTaobaoSearchData.get(position);
                         addSearchText(s);
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-                        OpenFragmentUtils.goToSimpleFragment(SearchActivity.this, SearchResultFragment.class.getName(), bundle);
+                        gotoSearchResultPage(s);
+
 //                        gotoSearchResultActivity(s);
                     }
                 });
@@ -671,21 +663,21 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     }
                     if (isGotoSearchPage){
                         addSearchText(getText.trim());
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-                        OpenFragmentUtils.goToSimpleFragment(SearchActivity.this, SearchResultFragment.class.getName(), bundle);
-//                        if (mPlatFormType == 2){
-//                            gotoSearchResultForPddActivity(getText.trim());
-//                        }else{
-//                            gotoSearchResultActivity(getText.trim());
-//                        }
-
+                        gotoSearchResultPage(getText.trim());
                     }
 
 
                 }
             });
         }
+
+    }
+
+    private void gotoSearchResultPage(String keywords){
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+        bundle.putString(C.Extras.search_keyword,keywords);
+        OpenFragmentUtils.goToSimpleFragment(this, SearchResultFragment.class.getName(), bundle);
 
     }
 
