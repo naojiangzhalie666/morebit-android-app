@@ -106,14 +106,10 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     @BindView(R.id.number_goods_price)
     TextView goodsPrice;
 
-    @BindView(R.id.number_goods_corns)
-    TextView morebitCorn;
 
     @BindView(R.id.btn_goods_buy_action)
     TextView btnBuy;
 
-    @BindView(R.id.btn_number_update_vip)
-    ImageView updateVipTv;
 
     TextView addCartNumTv;
 
@@ -122,25 +118,9 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     @BindView(R.id.number_goods_title)
     TextView numberGoodsTitle;
-    /**
-     * 自营商品的当前身份的当前佣金（会员因为没有佣金，不显示）
-     */
-    @BindView(R.id.self_commission_value)
-    TextView tvSeflCommission;
 
-    @BindView(R.id.number_goods_hint)
-    TextView tvNumberGoodsHint;
-    /**
-     * 自营商品的团队长的展示
-     */
-    @BindView(R.id.ll_leader_grade)
-    LinearLayout llLeaderGrade;
-
-    @BindView(R.id.rl_number_update_vip)
-    RelativeLayout rlNumberUpdateVip;
-
-    @BindView(R.id.rl_grade_update)
-    RelativeLayout rlGradeUpdate;
+    @BindView(R.id.tv_give_growth_value)
+    TextView tvGiveGrowthValue;
 
     /**
      * 会员商品Id
@@ -223,8 +203,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     }
 
     private void initData(boolean isRefresh) {
-//        if (mGoodsInfo == null) return;
-//        mPresenter.getDetailData(this, mGoodsInfo, isRefresh);
+
         mGoodsOrderInfo = new GoodsOrderInfo();
         mGoodsOrderInfo.setCount(1);
         mPresenter.getGoodsDetail(NumberGoodsDetailsActivity.this,mGoodsId);
@@ -260,7 +239,6 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         initBundle();
         initView();
         initImgFragment();
-//        initViewData(mGoodsInfo);
         initData(false);
 
         mHandler = new Handler();
@@ -278,22 +256,10 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     private void initBundle() {
         bundle = getIntent().getExtras();
-//        if (bundle != null) {
-//            mGoodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
-//        }
     }
 
     private void initView() {
-        UserInfo info = UserLocalData.getUser();
-        if (info != null){
-            if (C.UserType.operator.equals(info.getPartner())){
-                llLeaderGrade.setVisibility(View.VISIBLE);
-                rlNumberUpdateVip.setVisibility(View.GONE);
-            }else{
-                llLeaderGrade.setVisibility(View.GONE);
-                rlNumberUpdateVip.setVisibility(View.VISIBLE);
-            }
-        }
+
         initTab();
 
         srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -392,9 +358,6 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                     case 1:
                         scrollViewToLocation(mListHeight);
                         break;
-//                    case 2:
-//                        scrollViewToLocation(mIngHeight);
-//                        break;
 
                     default:
                         break;
@@ -457,53 +420,10 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 //        }
     }
 
-    /**
-     * 升级vip的弹框
-     */
-    private void updateGrade(){
-
-        NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(NumberGoodsDetailsActivity.this,R.style.dialog);
-        leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
-
-            @Override
-            public void onClick() {
-                    updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.vipMember));
-            }
-
-        });
-        leaderUpgradeDialog.show();
-    }
-
-    /**
-     * 升级团队长的弹框
-     */
-    private void updateGradeForLeader(){
-        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(NumberGoodsDetailsActivity.this,R.style.dialog);
-        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener(){
-
-            @Override
-            public void onClick(){
-                Long coin = UserLocalData.getUser().getMoreCoin();
-
-                updateGradePresenter(NumberGoodsDetailsActivity.this,Integer.parseInt(C.UserType.operator));
-            }
-
-        });
-        vipUpgradeDialog.show();
-
-    }
 
 
 
-
-
-
-
-
-
-
-
-    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action,R.id.rl_grade_update})
+    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
@@ -514,16 +434,6 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                 break;
             case R.id.btn_goods_buy_action:
                 showPopupwindow();
-                break;
-            case R.id.rl_grade_update:
-                if (UserLocalData.getUser() != null){
-                    if (C.UserType.member.equals(UserLocalData.getUser().getUserType())){
-                        updateGrade();
-
-                    }else if (C.UserType.vipMember.equals(UserLocalData.getUser().getUserType())){
-                        updateGradeForLeader();
-                    }
-                }
                 break;
             default:
                 break;
@@ -580,31 +490,14 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
             }
         }
         double price = mGoodsInfo.getRetailPrice();
-        goodsPrice.setText(String.valueOf(price));
+        String priceStr = String.valueOf(price);
+        goodsPrice.setText(priceStr);
         numberGoodsTitle.setText(goodsInfo.getName());
-        int moreCorn = (int)price*10;
-        morebitCorn.setText(getResources().getString(R.string.number_give_more_corn,String.valueOf(moreCorn)));
         srl_view.setRefreshing(false);
-
-        //设置自营商品的佣金展示
-        selfCommissionValue(String.valueOf(price));
+        tvGiveGrowthValue.setText(getResources().getString(R.string.give_growth_value,priceStr));
+        btnBuy.setText(getResources().getString(R.string.number_goods_buy_txt,priceStr));
     }
 
-    private void selfCommissionValue(String price){
-        UserInfo info = UserLocalData.getUser();
-        String calculationSelfRate;
-        if (info != null){
-            if (C.UserType.member.equals(info.getPartner())){
-                tvSeflCommission.setVisibility(View.GONE);
-            }else{
-                calculationSelfRate = info.getCalculationSelfRate();
-                String commission = MathUtils.getMuRatioComPrice(calculationSelfRate,price);
-                tvSeflCommission.setVisibility(View.VISIBLE);
-                tvSeflCommission.setText(getResources().getString(R.string.commission,commission));
-            }
-
-        }
-    }
     @Override
     public void onError() {
         MyLog.e(TAG,"获取商品详情失败");
@@ -628,7 +521,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         }
         String s = split[integer];
         String muRatioComPrice = MathUtils.getMuRatioComPrice(s, price);
-        tvNumberGoodsHint.setText(getResources().getString(R.string.update_vip2_earnings,muRatioComPrice));
+//        tvNumberGoodsHint.setText(getResources().getString(R.string.update_vip2_earnings,muRatioComPrice));
 
     }
 
@@ -738,40 +631,6 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     }
 
 
-
-    /**
-     * 升级
-     * @param fragment
-     * @param userType
-     */
-    public void updateGradePresenter(BaseActivity fragment, int userType) {
-        updateUserGrade(fragment, userType)
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-
-
-
-                    }
-                })
-                .subscribe(new DataObserver<UpdateInfoBean>() {
-
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-
-                        showError(errCode,errorMsg);
-                    }
-                    @Override
-                    protected void onDataListEmpty() {
-
-                    }
-                    @Override
-                    protected void onSuccess(UpdateInfoBean data) {
-                        onGradeSuccess(data);
-                    }
-                });
-    }
-
     public void showError(String errorNo,String msg) {
         MyLog.i("test", "onFailure: " + this);
         if ("B1100007".equals(errorNo)
@@ -783,44 +642,44 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     }
 
-    public void onGradeSuccess(UpdateInfoBean info) {
-        if (info != null){
-            UserInfo userInfo = UserLocalData.getUser();
-            userInfo.setUserType(String.valueOf(info.getUserType()));
-            userInfo.setMoreCoin(info.getMoreCoin());
-            UserLocalData.setUser(NumberGoodsDetailsActivity.this,userInfo);
-            if (C.UserType.vipMember.equals(info.getUserType())){
-                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"Vip升级成功");
-            }else if (C.UserType.operator.equals(info.getUserType())){
-                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"团队长升级成功");
-            }
+//    public void onGradeSuccess(UpdateInfoBean info) {
+//        if (info != null){
+//            UserInfo userInfo = UserLocalData.getUser();
+//            userInfo.setUserType(String.valueOf(info.getUserType()));
+//            userInfo.setMoreCoin(info.getMoreCoin());
+//            UserLocalData.setUser(NumberGoodsDetailsActivity.this,userInfo);
+//            if (C.UserType.vipMember.equals(info.getUserType())){
+//                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"Vip升级成功");
+//            }else if (C.UserType.operator.equals(info.getUserType())){
+//                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"团队长升级成功");
+//            }
+//
+//        }else{
+//            MyLog.d("test","用户信息为空");
+//        }
+//
+//    }
 
-        }else{
-            MyLog.d("test","用户信息为空");
-        }
 
-    }
-
-
-    public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(BaseActivity fragment, int page) {
-        RequestNumberGoodsList bean = new RequestNumberGoodsList();
-        bean.setLimit(10);
-        bean.setPage(page);
-        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
-                .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
-                .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
-    }
-    /**
-     * 用户等级升级
-     *
-     * @param fragment
-     * @return
-     */
-    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(BaseActivity fragment,int userGrade) {
-        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
-        updateUserBean.setType(userGrade);
-        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
-                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
-    }
+//    public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(BaseActivity fragment, int page) {
+//        RequestNumberGoodsList bean = new RequestNumberGoodsList();
+//        bean.setLimit(10);
+//        bean.setPage(page);
+//        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
+//                .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
+//                .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
+//    }
+//    /**
+//     * 用户等级升级
+//     *
+//     * @param fragment
+//     * @return
+//     */
+//    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(BaseActivity fragment,int userGrade) {
+//        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
+//        updateUserBean.setType(userGrade);
+//        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
+//                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
+//                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
+//    }
 }

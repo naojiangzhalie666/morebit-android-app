@@ -434,9 +434,9 @@
     <!--收货地址-->
     <string name="add_goods_address">添加收货地址</string>
 
-    <string name="number_welcome_hint">获取多豆可享受多项VIP会员权益</string>
-    <string name="vip_welcome_hint">获取多豆可享受多项团队长权益</string>
-    <string name="tuandui_welcome_hint">获取多豆团队长权益享不停</string>
+    <string name="number_welcome_hint">获取成长值可享受多项VIP会员权益</string>
+    <string name="vip_welcome_hint">获取成长值可享受多项团队长权益</string>
+    <string name="tuandui_welcome_hint">获取成长值团队长权益享不停</string>
     <!--会员商品价格-->
     <string name="number_goods_price">%1$s</string>
     <string name="number_give_more_corn">送%1$s</string>
@@ -463,4 +463,9 @@
 4.点击“同意”，即表示您已阅读并同意《多点用户协议》和《隐私政策》</string>
     <string name="auth_user_private_all"><![CDATA[<font color="#333333">查看完整版《</font><font color="#FF645B">多点用户协议</font><font color="#333333">》</font>]]></string>
     <string name="auth_private_all"><![CDATA[<font color="#333333">和《</font><font color="#FF645B">隐私协议</font><font color="#333333">》</font>]]></string>
+    <string name="number_goods_buy_txt">购买立得%1$s成长值</string>
+    <string name="give_growth_value">送%1$s成长值</string>
+    <string name="vip_growth_value">您还需要%1$s成长值才能成为团队长</string>
+    <string name="number_growth_value">您还需要%1$s成长值才能成为VIP</string>
+
 </resources>

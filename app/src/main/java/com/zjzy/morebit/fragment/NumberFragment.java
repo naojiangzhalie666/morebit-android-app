@@ -41,8 +41,8 @@ public class NumberFragment extends BaseMainFragmeng  {
 //    View status_bar;
 
 
-    @BindView(R.id.my_more_corn)
-    TextView myCornView;
+//    @BindView(R.id.my_more_corn)
+//    TextView myCornView;
 
 
     List<BaseFragment> mFragments = new ArrayList<>();
@@ -115,12 +115,12 @@ public class NumberFragment extends BaseMainFragmeng  {
 
     @Subscribe  //订阅事件
     public void onEventMainThread(MyMoreCoinEvent event) {
-       Long coin = event.getCoin();
-       if (coin == null){
-            myCornView.setText("0");
-        }else{
-            myCornView.setText(String.valueOf(coin));
-        }
+//       Long coin = event.getCoin();
+//       if (coin == null){
+//            myCornView.setText("0");
+//        }else{
+//            myCornView.setText(String.valueOf(coin));
+//        }
 
     }
 

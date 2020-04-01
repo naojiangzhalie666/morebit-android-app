@@ -28,106 +28,112 @@
                 app:riv_corner_radius="0dip"
                 app:riv_mutate_background="true"
                 app:riv_oval="true" />
-        <LinearLayout
+
+        <!--显示晋升按钮-->
+        <TextView
+            android:id="@+id/btn_number_update_vip"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_toRightOf="@id/userIcon"
-            android:orientation="vertical">
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="@dimen/sp_16"
+            android:text="立即晋升"
+            android:textColor="@color/color_000000"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/btn_bg_gold"
+            android:layout_alignBottom="@id/userIcon"
+            android:layout_alignParentRight="true"
+            />
+     <RelativeLayout
+         android:layout_width="wrap_content"
+         android:layout_height="60dp"
+         android:layout_centerVertical="true"
+         android:layout_marginLeft="10dp"
+         android:layout_toRightOf="@id/userIcon">
+         <TextView
+             android:id="@+id/user_name"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:ellipsize="end"
+             android:maxLines="1"
+             android:textColor="@color/color_FFFFFF"
+             android:textSize="@dimen/sp_15"
+             tools:text="昵称" />
+         <LinearLayout
+             android:id="@+id/ll_user_grade"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/bg_gray_grade_vip"
+             android:layout_toRightOf="@id/user_name"
+             android:layout_centerVertical="true"
+             android:paddingRight="4dp"
+             android:layout_marginLeft="10dp">
+             <ImageView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="5dp"
+                 android:layout_gravity="center_vertical"
+                 android:scaleType="centerInside"
+                 android:src="@mipmap/icon_grade_prex"/>
+             <TextView
+                 android:id="@+id/tv_user_type"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="10dp"
+                 android:text="会员"
+                 android:textColor="@color/color_FFFFFF"
+                 android:textSize="@dimen/sp_12"/>
+         </LinearLayout>
+     </RelativeLayout>
+
+        <!--显示成长值-->
+        <RelativeLayout
+            android:id="@+id/rl_duodou_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userIcon"
+            android:layout_alignLeft="@id/userIcon"
+            android:layout_marginTop="30dp"
+            >
+            <TextView
+                android:id="@+id/more_corn_biaozhun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                >
-                <TextView
-                    android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/sp_15"
-                    tools:text="昵称" />
-
-                <TextView
-                    android:id="@+id/lb_user_grade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/userName"
-                    android:layout_marginLeft="30dp"
-                    android:layout_alignBottom="@id/userName"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/color_EBC69B"
-                    android:textSize="@dimen/sp_12"
-                    tools:text="会员" />
-
-                <ImageView
-                    android:id="@+id/leader_icon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/lb_user_grade"
-                    android:src="@mipmap/leader_icon"
-                    android:scaleType="centerInside"
-                    />
-            </LinearLayout>
-            <!--显示多豆-->
-            <RelativeLayout
-                android:id="@+id/rl_duodou_progress"
+                android:layout_centerVertical="true"
+                android:paddingRight="5dp"
+                android:text="成长值：0/20000"
+                android:textColor="@color/colcor_D3D3D3"
+                android:textSize="@dimen/sp_12" />
+            <TextView
+                android:id="@+id/tv_growth_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginTop="3dp"
-                android:visibility="visible"
-                >
-                <com.zjzy.morebit.view.HorzProgressView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/horzProgressView"
-                    android:layout_width="130dp"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="10dp"
-                    app:liys_progress_line_max="100"
-                    app:liys_progress_line_progress="0"
-                    app:liys_progress_line_outColor="@color/colcor_FFAC00"
-                    app:liys_progress_line_inDrawable="@drawable/vip_progress_bg"/>
+                android:layout_centerVertical="true"
+                android:paddingRight="5dp"
+                android:text="@string/vip_growth_value"
+                android:textColor="@color/colcor_D3D3D3"
+                android:textSize="@dimen/sp_12"
+                android:layout_alignParentRight="true"/>
+
+            <com.zjzy.morebit.view.HorzProgressView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/horzProgressView"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_below="@id/more_corn_biaozhun"
+                android:layout_marginTop="10dp"
+                app:liys_progress_line_max="100"
+                app:liys_progress_line_progress="20"
+                app:liys_progress_line_outColor="@color/colcor_gold"
+                app:liys_progress_line_inDrawable="@drawable/vip_progress_bg"/>
+        </RelativeLayout>
 
 
 
-                <TextView
-                    android:id="@+id/more_corn_biaozhun"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/horzProgressView"
-                    android:layout_alignLeft="@id/horzProgressView"
-                    android:layout_marginTop="5dp"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="5dp"
-                    android:text="多豆：0/20000"
-                    android:textColor="@color/colcor_D3D3D3"
-                    android:textSize="@dimen/sp_12" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-                <!--显示晋升按钮-->
-                <TextView
-                    android:id="@+id/btn_number_update_vip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="2dp"
-                    android:paddingTop="2dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textSize="@dimen/sp_16"
-                    android:text="立即晋升"
-                    android:textColor="@color/color_000000"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:background="@drawable/btn_bg_gold"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/userIcon"
-                    />
     </RelativeLayout>
 
 
@@ -174,7 +180,7 @@
              <TextView
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:text="攒多豆享特权"
+                 android:text="攒成长值享特权"
                  android:textColor="@color/color_958360"
                  android:textStyle="bold"
                  android:textSize="@dimen/sp_15"

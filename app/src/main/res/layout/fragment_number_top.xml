@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="90dp"
+    android:layout_height="50dp"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rel_top"
         android:background="@color/colcor_black_333333"
-        android:layout_height="90dp"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
         >
 
@@ -21,32 +21,7 @@
             android:textColor="@color/item_view_normal_color"
             android:layout_centerInParent="true"/>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="13dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            >
 
-
-            <TextView
-                android:id="@+id/my_more_corn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="0"
-                android:textSize="@dimen/sp_18"
-                android:textColor="@color/colcor_gold"/>
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/more_corn_icon"
-                android:layout_toLeftOf="@id/my_more_corn"
-                android:layout_marginRight="5dp"/>
-        </RelativeLayout>
 
 
     </RelativeLayout>

@@ -66,87 +66,12 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             >
-                            <LinearLayout
-                                android:id="@+id/ll_leader_grade"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:visibility="gone"
-                                android:background="@mipmap/bg_leader_bar"
-                                android:orientation="horizontal">
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:src="@mipmap/leader_header_icon"
-                                    android:scaleType="fitCenter"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:textColor="@color/color_F5D344"
-                                    android:layout_gravity="center_vertical"
-                                    android:text="超高收益享不停"
-                                    android:textSize="@dimen/sp_12"
-                                    />
-                            </LinearLayout>
-                            <RelativeLayout
-                                android:id="@+id/rl_number_update_vip"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-
-                                android:background="@color/color_333333"
-                                android:layout_below="@id/rl_number_goods_price"
-                                >
-                                <TextView
-                                    android:id="@+id/number_goods_hint"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_centerVertical="true"
-                                    android:text="@string/update_vip2_earnings"
-                                    android:textSize="@dimen/sp_12"
-                                    android:textColor="@color/color_F5AB6D">
-                                </TextView>
-                                <RelativeLayout
-                                    android:id="@+id/rl_grade_update"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_alignParentRight="true"
-                                    >
-                                    <ImageView
-                                        android:id="@+id/btn_number_update_vip"
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:padding="5dp"
-                                        android:scaleType="centerInside"
-                                        android:src="@mipmap/youjiantou_org"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="20dp"
-                                        android:layout_alignParentRight="true"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="20dp"
-                                        android:layout_toLeftOf="@id/btn_number_update_vip"
-                                        android:padding="5dp"
-                                        android:layout_centerVertical="true"
-                                        android:text="@string/number_update_vip_hint"
-                                        android:textSize="@dimen/sp_12"
-                                        android:textColor="@color/color_F5AB6D"
-                                        >
-                                    </TextView>
-                                </RelativeLayout>
-
-
-                            </RelativeLayout>
                             <RelativeLayout
                                 android:id="@+id/rl_number_goods_price"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/color_FFFFFF"
-                                android:layout_below="@id/as_banner"
+
                                 >
                                 <RelativeLayout
                                     android:id="@+id/ll_number_goods_price"
@@ -161,7 +86,7 @@
                                         android:layout_height="10dp"
                                         android:layout_alignParentBottom="true"
                                         android:layout_marginBottom="2dp"
-                                        android:src="@drawable/money_red"
+                                        android:src="@drawable/money_black"
                                         android:scaleType="centerInside"/>
                                     <TextView
                                         android:id="@+id/number_goods_price"
@@ -173,51 +98,23 @@
                                         android:text="0.00"
                                         android:textStyle="bold"
                                         android:textSize="@dimen/sp_20"
-                                        android:textColor="#EE403A">
-                                    </TextView>
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="25dp"
-                                    android:background="@drawable/bg_red_duodou"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_alignBottom="@id/ll_number_goods_price"
-                                    android:layout_toRightOf="@id/ll_number_goods_price"
-                                    android:paddingRight="10dp">
+                                        android:textColor="@color/color_333333"/>
                                     <TextView
-                                        android:id="@+id/number_goods_corns"
+                                        android:id="@+id/tv_give_growth_value"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingLeft="10dp"
+                                        android:layout_toRightOf="@id/number_goods_price"
                                         android:layout_centerVertical="true"
-                                        android:text="@string/number_give_more_corn"
-                                        android:textSize="@dimen/sp_14"
+                                        android:layout_marginLeft="20dp"
+                                        android:textSize="@dimen/sp_10"
                                         android:textColor="@color/color_FFFFFF"
-                                        />
-                                    <ImageView
-                                        android:layout_width="10dp"
-                                        android:layout_height="10dp"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_toRightOf="@id/number_goods_corns"
-                                        android:layout_centerVertical="true"
-                                        android:src="@mipmap/more_corn_icon"/>
+                                        android:text="@string/give_growth_value"
+                                        android:gravity="center"
+                                        android:background="@mipmap/bg_chengzhangzhi"/>
                                 </RelativeLayout>
-                                <TextView
-                                    android:id="@+id/self_commission_value"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:text="预估收益1元"
-                                    android:paddingRight="7dp"
-                                    android:paddingLeft="7dp"
-                                    android:paddingTop="1dp"
-                                    android:paddingBottom="1dp"
-                                    android:textSize="@dimen/sp_12"
-                                    android:textColor="@color/color_F5AB6D"
-                                    android:background="@drawable/bg_org_4dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"/>
+
+
+
 
                             </RelativeLayout>
                             <View
@@ -237,8 +134,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
                                     android:text="商品标题"
-                                    android:textSize="@dimen/sp_15"
-                                    android:textStyle="bold"
+                                    android:textSize="@dimen/sp_16"
                                     android:textColor="@color/color_333333"
                                     >
                                 </TextView>
@@ -349,7 +245,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:text="立即购买"
+                android:text="@string/number_goods_buy_txt"
                 android:textSize="@dimen/sp_19"
                 android:textStyle="bold"
                 android:textColor="@color/color_FFFFFF"
