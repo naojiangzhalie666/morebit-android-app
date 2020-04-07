@@ -44,7 +44,7 @@ import io.reactivex.functions.Consumer;
 
 
 /**
- * App启动页-逻辑跳转用
+ * App启动页-逻辑跳转用  111
  * Created by Administrator on 2017/9/11 0011.
  */
 
