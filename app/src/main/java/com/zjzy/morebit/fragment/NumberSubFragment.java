@@ -554,7 +554,7 @@ public class NumberSubFragment extends BaseFragment {
             TextView desc = holder.viewFinder().view(R.id.number_goods_desc);
             TextView tvPrice = holder.viewFinder().view(R.id.number_goods_price);
             TextView morebitCorn = holder.viewFinder().view(R.id.txt_morebit_corn);
-            TextView selfCommission = holder.viewFinder().view(R.id.self_commission_value);
+
 
 
             String img = goods.getPicUrl();
@@ -569,20 +569,6 @@ public class NumberSubFragment extends BaseFragment {
             if (TextUtils.isEmpty(price)){
                 tvPrice.setText("0");
             }else{
-
-
-                UserInfo info = UserLocalData.getUser();
-                String calculationSelfRate;
-
-                if (info != null){
-                    if (C.UserType.member.equals(info.getPartner())){
-                        selfCommission.setText("升级收益");
-                    }else {
-                        calculationSelfRate = info.getCalculationSelfRate();
-                        String commission = MathUtils.getMuRatioComPrice(calculationSelfRate,price);
-                        selfCommission.setText(getResources().getString(R.string.commission,commission));
-                    }
-                }
                 double  pricedouble  = Double.parseDouble(price);
                 long pricelong = ((Number)pricedouble).longValue();
                 if (pricelong == 0){
@@ -593,7 +579,7 @@ public class NumberSubFragment extends BaseFragment {
 //                tvPrice.setText(price);
             }
             String moreCoin = MathUtils.getMorebitCorn(price);
-            morebitCorn.setText(mContext.getResources().getString(R.string.number_give_more_corn,moreCoin));
+            morebitCorn.setText(mContext.getResources().getString(R.string.give_growth_value,moreCoin));
             holder.itemView.setOnClickListener(new View.OnClickListener(){
 
                 @Override

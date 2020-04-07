@@ -15,9 +15,9 @@ import java.text.NumberFormat;
 
 public class MathUtils {
     /**
-     * 多豆比例
+     * 成长值比例
      */
-    public static final int CORN_RATION=10;
+    public static final int CORN_RATION=1;
 
     /**
      * 转换两位数小时
