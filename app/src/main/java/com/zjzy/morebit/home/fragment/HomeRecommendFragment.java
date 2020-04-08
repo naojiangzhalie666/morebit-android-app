@@ -82,6 +82,8 @@ import java.util.List;
 
 /**
  * Created by liuhaiping on 2019/1/05.
+ *
+ * 首页精选
  */
 
 public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> implements HomeRecommentContract.View, View.OnClickListener {

@@ -88,6 +88,8 @@ import io.reactivex.functions.Action;
 
 /**
  * Created by YangBoTian on 2018/9/10.
+ *
+ * 首页fragment
  */
 
 public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOffsetChangedListener, UpdateColorCallback {

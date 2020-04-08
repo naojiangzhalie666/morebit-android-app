@@ -2275,4 +2275,14 @@ public interface CommonService {
     @POST("/api/openapi/user/agent/upgradeUser")
     public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(
             @Body RequestUpdateUserBean requestBody);
+
+
+    /**
+     * 检查用户是否可购买0元购
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/user/checkUserCondition")
+    public Observable<BaseResponse<String>> checkPruchase();
 }

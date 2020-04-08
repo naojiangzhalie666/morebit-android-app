@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zjzy.morebit">
-
     <!-- Required -->
-    <!--   <permission
+    <!--
+   <permission
            android:name="com.zjzy.morebit.permission.JPUSH_MESSAGE"
-           android:protectionLevel="signature" />-->
-
+           android:protectionLevel="signature" />
+    -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -16,47 +16,30 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <!-- 蓝牙分享所需的权限 -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-
-    <uses-permission android:name="android.permission.REORDER_TASKS" />
-
-    <!--阿里移动推送相关权限-->
-    <!--Android 6.0版本可去除，用于选举信息（通道复用）的同步-->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!--进行网络访问和网络状态监控相关的权限声明-->
+    <uses-permission android:name="android.permission.REORDER_TASKS" /> <!-- 阿里移动推送相关权限 -->
+    <!-- Android 6.0版本可去除，用于选举信息（通道复用）的同步 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 进行网络访问和网络状态监控相关的权限声明 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--允许对sd卡进行读写操作-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--网络库使用，当网络操作时需要确保事务完成不被杀掉-->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!--用于读取手机硬件信息等，用于机型过滤-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!--选举使用，当应用有删除或者更新时需要重新选举，复用推送通道-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许对sd卡进行读写操作 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 网络库使用，当网络操作时需要确保事务完成不被杀掉 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 用于读取手机硬件信息等，用于机型过滤 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 选举使用，当应用有删除或者更新时需要重新选举，复用推送通道 -->
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED" />
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
-    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
-    <!--补偿通道小米PUSH使用，不用可去除-->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!--补偿通道GCM使用，不使用可去除-->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <!--允许监听启动完成事件-->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!--允许访问震动器-->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- 允许task重排序 -->
-    <uses-permission android:name="android.permission.REORDER_TASKS" />
-
-    <!-- Required  一些系统要求的权限，如访问网络等-->
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" /> <!-- 补偿通道小米PUSH使用，不用可去除 -->
+    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 补偿通道GCM使用，不使用可去除 -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- 允许监听启动完成事件 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 允许访问震动器 -->
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 允许task重排序 -->
+    <uses-permission android:name="android.permission.REORDER_TASKS" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.zjzy.morebit.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -65,12 +48,9 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-<!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
-<!--    <uses-permission android:name="android.permission.READ_SMS" />-->
-<!--    <uses-permission android:name="android.permission.WRITE_SMS" />-->
-
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_SMS" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_SMS" /> -->
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -78,58 +58,56 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!--<uses-permission android:name="android.permission.RECORD_AUDIO"/>-->
-
+    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- <uses-permission android:name="android.permission.RECORD_AUDIO"/> -->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application
-        android:name="com.zjzy.morebit.App"
+        android:name=".App"
         android:allowBackup="false"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup"
-        android:hardwareAccelerated="false"
-        >
-<!--        android:networkSecurityConfig="@xml/network_security_config"-->
-
+        tools:replace="android:allowBackup">
+        <activity android:name=".goodsvideo.VideoClassActivity"></activity>
+        <activity android:name=".goodsvideo.VideoActivity" />
+        <activity android:name=".purchase.PurchaseActivity" /> <!-- android:networkSecurityConfig="@xml/network_security_config" -->
         <activity
-            android:name="com.zjzy.morebit.Activity.AppStartActivity"
+            android:name=".Activity.AppStartActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppStart">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <data
                     android:host="markermall"
                     android:scheme="scheme" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-        </activity>
-        <!--<activity-alias-->
-        <!--android:name="com.zjzy.morebit.Activity.AppStartAliasActivity"-->
-        <!--android:enabled="false"-->
-        <!--android:icon="@mipmap/ic_launcher"-->
-        <!--android:label="@string/app_name"-->
-        <!--android:targetActivity="com.zjzy.morebit.Activity.AppStartActivity">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
-
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        <!--</activity-alias>-->
-
-
-        <!--   <activity
+        </activity> <!-- <activity-alias -->
+        <!-- android:name="com.zjzy.morebit.Activity.AppStartAliasActivity" -->
+        <!-- android:enabled="false" -->
+        <!-- android:icon="@mipmap/ic_launcher" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:targetActivity="com.zjzy.morebit.Activity.AppStartActivity"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity-alias> -->
+        <!--
+   <activity
                android:name="com.zjzy.morebit.Activity.AppStartActivity"
                android:launchMode="standard"
                android:screenOrientation="portrait"
@@ -158,302 +136,254 @@
                    <action android:name="android.intent.action.MAIN"/>
                    <category android:name="android.intent.category.LAUNCHER"/>
                </intent-filter>
-           </activity-alias>-->
-
-
+           </activity-alias>
+        -->
         <activity
-            android:name="com.zjzy.morebit.Activity.FirstStartActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.zjzy.morebit.Activity.StartAdActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <activity
-            android:name="com.zjzy.morebit.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
-        </activity>
-
-
-        <activity
-            android:name="com.zjzy.morebit.info.ui.VipActivity"
+            android:name=".Activity.FirstStartActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.info.ui.VideoActivity"
+            android:name=".Activity.StartAdActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".info.ui.VipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".info.ui.VideoActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.zjzy.morebit.circle.ui.VideoPlayerActivity"
+            android:name=".circle.ui.VideoPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/Theme.AppCompat.Full"
-            android:screenOrientation="portrait"/>
-        <!--android:configChanges="orientation|keyboardHidden|screenSize"-->
-        <!--android:screenOrientation="landscape"-->
-
-        <activity
-            android:name="com.zjzy.morebit.login.ui.LoginSinglePaneActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-
+            android:theme="@style/Theme.AppCompat.Full" /> <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
+        <!-- android:screenOrientation="landscape" -->
         <activity
-            android:name="com.zjzy.morebit.Activity.ModifyPasswordActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.zjzy.morebit.Activity.ModifyPhoneNumAcitivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.zjzy.morebit.Activity.EditTemplateActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.zjzy.morebit.Activity.GoodsDetailActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.zjzy.morebit.Activity.GoodsDetailForPddActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.zjzy.morebit.Activity.NumberGoodsDetailsActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.zjzy.morebit.Activity.SearchFansActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.zjzy.morebit.Activity.SearchResultForPddActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.zjzy.morebit.Activity.ShareMoneyActivity"
+            android:name=".login.ui.LoginSinglePaneActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name="com.zjzy.morebit.Activity.ShareMoneyForPddActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-
-        <activity
-            android:name="com.zjzy.morebit.Activity.SearchActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name="com.zjzy.morebit.circle.ui.SearchArticleListActitivty"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-
-        <activity
-            android:name="com.zjzy.morebit.Activity.SettingActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name="com.zjzy.morebit.address.ui.ManageGoodsAddressActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name="com.zjzy.morebit.address.ui.AddModifyAddressActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name="com.zjzy.morebit.order.ui.ConfirmOrderActivity"
-            android:screenOrientation="portrait"/>
-
-
-
-        <activity
-            android:name="com.zjzy.morebit.Activity.SettingNotificationActivity"
+            android:name=".Activity.ModifyPasswordActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
-            android:name="com.zjzy.morebit.Activity.SearchResultActivity"
-            android:screenOrientation="portrait"></activity>
+            android:name=".Activity.ModifyPhoneNumAcitivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.circle.ui.RecommendListActivity"
+            android:name=".Activity.EditTemplateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.GoodsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.GoodsDetailForPddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.NumberGoodsDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SearchFansActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SearchResultForPddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ShareMoneyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".Activity.ShareMoneyForPddActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".Activity.SearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".circle.ui.SearchArticleListActitivty"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".Activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".address.ui.ManageGoodsAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".address.ui.AddModifyAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".order.ui.ConfirmOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SettingNotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SearchResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".circle.ui.RecommendListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.zjzy.morebit.Activity.ShowWebActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.zjzy.morebit.circle.ui.ReleaseManageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.circle.ui.ReleaseGoodsActivity"
+            android:name=".Activity.ShowWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".circle.ui.ReleaseManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".circle.ui.ReleaseGoodsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name="com.zjzy.morebit.info.ui.SettingWechatActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.zjzy.morebit.Module.common.Activity.ImagePagerActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.zjzy.morebit.Activity.CashMoneyActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.zjzy.morebit.login.ui.ScanQRCodeActivity"
+            android:name=".info.ui.SettingWechatActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.Module.common.Activity.SinglePaneActivity"
+            android:name=".Module.common.Activity.ImagePagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.CashMoneyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.ui.ScanQRCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Module.common.Activity.SinglePaneActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.zjzy.morebit.Activity.ConsComGoodsDeailListActivity"
+            android:name=".Activity.ConsComGoodsDeailListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.Activity.SharePosterActivity"
+            android:name=".Activity.SharePosterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.info.ui.FansActivity"
+            android:name=".info.ui.FansActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.Activity.OneFragmentDefaultActivity"
+            android:name=".Activity.OneFragmentDefaultActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.info.ui.GoodsBrowsingHistoryActivity"
+            android:name=".info.ui.GoodsBrowsingHistoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.Activity.ShortVideoPlayActivity"
+            android:name=".Activity.ShortVideoPlayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="com.zjzy.morebit.Module.common.Activity.OneImageShowActivity"
-            android:screenOrientation="portrait" />
-
-
-        <activity
-            android:name="com.zjzy.morebit.goods.shopping.ui.LoadComplaintOrderActivity"
+            android:name=".Module.common.Activity.OneImageShowActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.Activity.ChannelWebActivity"
+            android:name=".goods.shopping.ui.LoadComplaintOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.info.ui.LoadUserInfoActivity"
+            android:name=".Activity.ChannelWebActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.info.ui.AppFeedActivity"
+            android:name=".info.ui.LoadUserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.Activity.MyMaterialActivity"
+            android:name=".info.ui.AppFeedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"
+            android:name=".Activity.MyMaterialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.order.ui.PayOrderSuccessActivity"
+            android:name=".info.ui.SettingMineInfoActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.zjzy.morebit.order.ui.NumberOrderDetailActivity"
+            android:name=".order.ui.PayOrderSuccessActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.zjzy.morebit.goods.shopping.ui.PddWebActivity"
+            android:name=".order.ui.NumberOrderDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.zjzy.morebit.order.ui.OrderTeamActivity"
+            android:name=".goods.shopping.ui.PddWebActivity"
             android:screenOrientation="portrait" />
-
-
-<!--        <activity-->
-<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
-<!--            android:screenOrientation="portrait" />-->
-<!--        <activity-->
-<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
-<!--            android:screenOrientation="portrait" />-->
-<!--        <activity-->
-<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
-<!--            android:screenOrientation="portrait" />-->
-<!--        <activity-->
-<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
-<!--            android:screenOrientation="portrait" />-->
-<!--        <activity-->
-<!--            android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity"-->
-<!--            android:screenOrientation="portrait" />-->
-
-
-        <service android:name="com.zjzy.morebit.InitializeService"></service>
-
-
-        <!-- **************************************************第三方的东西*******************************************************   -->
-        <!--淘宝授权-->
+        <activity
+            android:name=".order.ui.OrderTeamActivity"
+            android:screenOrientation="portrait" /> <!-- <activity -->
+        <!-- android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- <activity -->
+        <!-- android:name="com.zjzy.morebit.info.ui.SettingMineInfoActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <service android:name=".InitializeService" /> <!-- **************************************************第三方的东西******************************************************* -->
+        <!-- 淘宝授权 -->
         <activity
             android:name="com.ali.auth.third.ui.LoginActivity"
             android:theme="@style/AlibcLoginTheme"
-            tools:replace="android:theme" />
-
-        <!--支付宝-->
+            tools:replace="android:theme" /> <!-- 支付宝 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
-
+            android:screenOrientation="behind" />
         <activity
-            android:name="com.zjzy.morebit.payment.H5PayDemoActivity"
+            android:name=".payment.H5PayDemoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
         <activity
-            android:name="com.zjzy.morebit.payment.PayDemoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:name=".payment.PayDemoActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.goods.shopping.ui.TmallWebActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:name=".goods.shopping.ui.TmallWebActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.zjzy.morebit.login.ui.AreaCodeActivity"
+            android:name=".login.ui.AreaCodeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
-
-        <activity android:name="com.zjzy.morebit.Activity.WebViewActivity"></activity>
-
-        <activity android:name="com.zjzy.morebit.main.ui.NoticeActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.zjzy.morebit.goods.shopping.ui.ShareMoneyGetImgActivity" android:screenOrientation="portrait"/>
-        <!--微信分享-->
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activity.WebViewActivity" />
+        <activity
+            android:name=".main.ui.NoticeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".goods.shopping.ui.ShareMoneyGetImgActivity"
+            android:screenOrientation="portrait" /> <!-- 微信分享 -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
-
-        <!--华为推送接受-->
+            android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- 华为推送接受 -->
         <activity
-            android:name="com.zjzy.morebit.Module.push.JPushReceiveActivity"
+            android:name=".Module.push.JPushReceiveActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-        </activity>
-        <!--华为推送接受-->
+        </activity> <!-- 华为推送接受 -->
         <meta-data
             android:name="Mob-AppKey"
             android:value="23e1e9104c75c" />
         <meta-data
             android:name="Mob-AppSecret"
-            android:value="a35df204d7e2a887f752c730a6eda761" />
-        <!--微信分享回调 以防package的name和包名不同，最好在wxapi前面加上自己的包名-->
+            android:value="a35df204d7e2a887f752c730a6eda761" /> <!-- 微信分享回调 以防package的name和包名不同，最好在wxapi前面加上自己的包名 -->
         <activity
-            android:name="com.zjzy.morebit.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!-- QQ分享 -->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- QQ分享 -->
         <activity
             android:name="cn.sharesdk.tencent.qq.ReceiveActivity"
             android:launchMode="singleTask"
@@ -466,32 +396,29 @@
 
                 <data android:scheme="tencent1106270320" />
             </intent-filter>
-        </activity>
-
-        <!--图片选择-->
+        </activity> <!-- 图片选择 -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!--图片选择-->
-        <!--腾讯Bugly   -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- 图片选择 -->
+        <!-- 腾讯Bugly -->
         <!-- 配置APP ID -->
-        <!--<meta-data-->
-        <!--android:name="BUGLY_APPID"-->
-        <!--android:value="ae5e0fb76b" />-->
-        <!--&lt;!&ndash; 配置APP版本号 &ndash;&gt;-->
-        <!--<meta-data-->
-        <!--android:name="BUGLY_APP_VERSION"-->
-        <!--android:value="1.0.0" />-->
-        <!--&lt;!&ndash; 配置APP渠道号 &ndash;&gt;-->
-        <!--<meta-data-->
-        <!--android:name="BUGLY_APP_CHANNEL"-->
-        <!--android:value="teste" />-->
-        <!--&lt;!&ndash; 配置Bugly调试模式（true或者false）&ndash;&gt;-->
-        <!--<meta-data-->
-        <!--android:name="BUGLY_ENABLE_DEBUG"-->
-        <!--android:value="false" />-->
-        <!--兼容Android7.0以上版本 相机-->
+        <!-- <meta-data -->
+        <!-- android:name="BUGLY_APPID" -->
+        <!-- android:value="ae5e0fb76b" /> -->
+        <!-- &lt;!&ndash; 配置APP版本号 &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="BUGLY_APP_VERSION" -->
+        <!-- android:value="1.0.0" /> -->
+        <!-- &lt;!&ndash; 配置APP渠道号 &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="BUGLY_APP_CHANNEL" -->
+        <!-- android:value="teste" /> -->
+        <!-- &lt;!&ndash; 配置Bugly调试模式（true或者false）&ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="BUGLY_ENABLE_DEBUG" -->
+        <!-- android:value="false" /> -->
+        <!-- 兼容Android7.0以上版本 相机 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -500,55 +427,41 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider>
-        <!--&lt;!&ndash;兼容Android7.0以上版本 下载&ndash;&gt;-->
-        <!--<provider-->
-        <!--android:name="android.support.v4.content.FileProvider"-->
-        <!--android:authorities="${applicationId}.provider"-->
-        <!--android:exported="false"-->
-        <!--android:grantUriPermissions="true">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--android:resource="@xml/provider_paths1"/>-->
-        <!--</provider>-->
-
-
-        <!--兼容Android7.0以上版本 相机-->
-        /****************************************极光推送***************************************************/
-
-
-        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        </provider> <!-- &lt;!&ndash;兼容Android7.0以上版本 下载&ndash;&gt; -->
+        <!-- <provider -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:authorities="${applicationId}.provider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/provider_paths1"/> -->
+        <!-- </provider> -->
+        <!-- 兼容Android7.0以上版本 相机 -->
+        <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
-            android:name="com.zjzy.morebit.Module.push.MyReceiver"
+            android:name=".Module.push.MyReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.zjzy.morebit" />
             </intent-filter>
-        </receiver>
-
-        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
-        <receiver android:name="com.zjzy.morebit.Module.push.MyJPushMessageReceiver">
+        </receiver> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
+        <receiver android:name=".Module.push.MyJPushMessageReceiver">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="com.zjzy.morebit"></category>
+
+                <category android:name="com.zjzy.morebit" />
             </intent-filter>
-        </receiver>
-        <!-- Required  . Enable it you can get statistics data with channel -->
-
-        /****************************************友盟统计***************************************************/
-
-
+        </receiver> <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="tbbtest"></meta-data>
-
-        /****************************************热更新***************************************************/
+            android:value="tbbtest" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -559,7 +472,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
@@ -567,48 +479,42 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <provider
-            android:name="com.zjzy.morebit.utils.fire.BuglyFileProvider"
+            android:name=".utils.fire.BuglyFileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths1" />
-        </provider>
+        </provider> <!-- app更新 -->
+        <service android:name=".utils.appDownload.update_app.service.DownloadService" />
 
-
-        <!--app更新-->
-        <service android:name="com.zjzy.morebit.utils.appDownload.update_app.service.DownloadService" />
         <provider
-            android:name="com.zjzy.morebit.utils.appDownload.update_app.UpdateFileProvider"
+            android:name=".utils.appDownload.update_app.UpdateFileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/new_app_file_paths" />
-        </provider>
-        <!--app更新-->
-
-        <!--选择图片-->
+        </provider> <!-- app更新 -->
+        <!-- 选择图片 -->
         <provider
-            android:name="com.zjzy.morebit.utils.fire.FeedBackFileProvider"
+            android:name=".utils.fire.FeedBackFileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_feed_back" />
-        </provider>
-
-        <!--选择图片-->
-        <!--<meta-data-->
-        <!--android:name="com.zjzy.morebit.utils.GlideConfiguration"-->
-        <!--android:value="GlideModule"/>-->
-
+        </provider> <!-- 选择图片 -->
+        <!-- <meta-data -->
+        <!-- android:name="com.zjzy.morebit.utils.GlideConfiguration" -->
+        <!-- android:value="GlideModule"/> -->
         <activity
-            android:name="com.zjzy.morebit.circle.CollegeListActivity"
+            android:name=".circle.CollegeListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
     </application>
+
 </manifest>

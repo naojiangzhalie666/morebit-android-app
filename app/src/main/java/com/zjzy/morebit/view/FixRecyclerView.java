@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
+
 /**
  * Created by Administrator on 2017/10/16.
  */
@@ -31,4 +33,5 @@ public class FixRecyclerView extends RecyclerView {
                 MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
+
 }

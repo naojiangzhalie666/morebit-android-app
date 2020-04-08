@@ -43,6 +43,7 @@
     <color name="color_666666">#666666</color>
     //主色调
     <color name="color_FFED25">#FF645B</color>
+    <color name="color_FA6350">#FA6350</color>
     <color name="color_ffe800">#EE403A</color>
     <color name="color_ffd506">#FF645B</color>
     <color name="color_000000">#000000</color>
@@ -255,5 +256,7 @@
     <color name="color_E59339">#E59339</color>
     <color name="color_DB493E">#DB493E</color>
     <color name="color_FA6400">#FA6400</color>
+    <color name="color_FD58D3D">#D58D3D</color>
+    <color name="color_F5D3116">#5D3116</color>
 
 </resources>

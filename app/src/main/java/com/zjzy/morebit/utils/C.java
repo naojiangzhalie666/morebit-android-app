@@ -1,5 +1,7 @@
 package com.zjzy.morebit.utils;
 
+import com.zjzy.morebit.BuildConfig;
+
 /**
  * SharePreference配置常量
  */
@@ -7,7 +9,9 @@ public class C {
 
     // api
 
-    public static final String BASE_MOREBIT = "https://api.morebit.com.cn";
+  // public static final String BASE_MOREBIT = "http://api.dev.morebit.com.cn";//开发
+    public static final String BASE_MOREBIT = "http://api.test.morebit.com.cn";//测试
+  // public static final String BASE_MOREBIT = "https://api.morebit.com.cn";//正式
 
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;
@@ -581,6 +585,7 @@ public class C {
         public static final int FLOOR_TWO = 2;
         public static final int FLOOR_THREE = 3;
         public static final int FLOOR_FOUR = 4;
+        public static final int FLOOR_FIVE = 5;
     }
 
     public static class PHONE{

@@ -35,23 +35,23 @@ android {
         //极光推送
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : "com.zjzy.morebit",
+                JPUSH_PKGNAME: "com.zjzy.morebit",
                 JPUSH_APPKEY : "e5556d95372e634b6e063b42", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
 
 //                XIAOMI_APPKEY: "MI-5431771384274",//小米平台注册的appkey
 //                XIAOMI_APPID : "MI-2882303761517713274",//小米平台注册的appid
 //
-                HUAWEI_APPID:"101614827",//华为平台注册的appid
+                HUAWEI_APPID : "101614827",//华为平台注册的appid
 
-                MEIZU_APPKEY:"MZ-9a345249ed9d42e8a7bd95402e8395fc",//魅族平台注册的appkey
-                MEIZU_APPID:"MZ-115849",//魅族平台注册的appid
+                MEIZU_APPKEY : "MZ-9a345249ed9d42e8a7bd95402e8395fc",//魅族平台注册的appkey
+                MEIZU_APPID  : "MZ-115849",//魅族平台注册的appid
         ]
 
 
     }
-    sourceSets.main{
-        jni.srcDirs=[]
+    sourceSets.main {
+        jni.srcDirs = []
     }
 
     signingConfigs {
@@ -141,6 +141,8 @@ repositories {
     }
 }
 dependencies {
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -162,16 +164,16 @@ dependencies {
     compile files('libs/umeng-analytics-v6.1.2.jar')
     //友盟统计
     //极光推送
-    compile 'cn.jiguang.sdk:jpush:3.2.0'
+    implementation 'cn.jiguang.sdk:jpush:3.2.0'
     // 此处以JPush 3.1.6 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.2.7'
+    implementation 'cn.jiguang.sdk:jcore:1.2.7'
     // 此处以JCore 1.2.5 版本为例。
     //    compile 'cn.jiguang.sdk.plugin:xiaomi:3.2.0' // 小米
-    compile 'cn.jiguang.sdk.plugin:huawei:3.2.0' // 华为
-    compile 'cn.jiguang.sdk.plugin:meizu:3.2.0'
+    implementation 'cn.jiguang.sdk.plugin:huawei:3.2.0' // 华为
+    implementation 'cn.jiguang.sdk.plugin:meizu:3.2.0'
     //魅族
     //极光推送
-    compile 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.1'
     // 多dex配置
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["view-core"]
@@ -272,49 +274,49 @@ dependencies {
     //compile(name: 'SecurityBodySDK-external-release-5.4.28', ext: 'aar')
     //compile(name: 'SecurityGuardSDK-external-release-5.4.38', ext: 'aar')
     //图片滑动效果
-    compile 'com.github.devlight:infinitecycleviewpager:1.0.2'
+    implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
     //支付
     //上传图片
-    compile 'com.aliyun.dpa:oss-android-sdk:+'
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
     // 选择图片
-    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
     // 导航栏
-    compile 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
     //greendao升级帮助类
-    compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.1.0'
-    compile 'com.drawthink:expandable-recyclerview:0.0.3'
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.1.0'
+    implementation 'com.drawthink:expandable-recyclerview:0.0.3'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     //
     //    compile ("com.github.bumptech.glide:recyclerview-integration:4.4.0") {
     //        // Excludes the support library because it's already included by Glide.
     //         transitive = false
     //    }
     //RecyclerView适配器 可减少大量代码量
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     //SmartRefreshLayout
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
     //    compile 'com.shuyu:GSYVideoPlayer:7.0.0-beta1'
     //    compile 'cn.jzvd:jiaozivideoplayer:6.4.1'
     compile project(':player_module')
 
     //微信
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-    compile 'com.github.JuHonggang:ShadowDrawable:0.1'
-    compile 'com.github.lzyzsd:circleprogress:1.2.1'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation 'com.github.JuHonggang:ShadowDrawable:0.1'
+    implementation 'com.github.lzyzsd:circleprogress:1.2.1'
     //时间选择
-    compile 'com.contrarywind:Android-PickerView:4.1.8'
+    implementation 'com.contrarywind:Android-PickerView:4.1.8'
 
     // compile 'com.github.cpiz:BubbleView:1.0.3'
     compile(name: 'bubbleview', ext: 'aar')
 //    compile(name: 'bigdata1.0.3', ext: 'aar')
 
-    compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+    implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
 
     //Optional: see how to use the utility.
-    compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     implementation project(path: ':Address_library')
 
-    implementation ('com.github.sendtion:XRichText:1.9.4') {
+    implementation('com.github.sendtion:XRichText:1.9.4') {
         exclude group: 'com.android.support'
     }
     //Optional: see how to use the utility.
