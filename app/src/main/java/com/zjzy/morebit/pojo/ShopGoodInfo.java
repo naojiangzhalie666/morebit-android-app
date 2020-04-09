@@ -38,6 +38,16 @@ public class ShopGoodInfo implements Serializable {
     private String itemFrom = "1"; // 1内网  0 全网
     private String shopId = "";//店主的userId
     private String itemDesc = "";  // 商品描述
+    private String subsidyPrice="";//补贴金额
+
+    public String getSubsidyPrice() {
+        return subsidyPrice;
+    }
+
+    public void setSubsidyPrice(String subsidyPrice) {
+        this.subsidyPrice = subsidyPrice;
+    }
+//  private st
 
     private int coller; // 有收藏就返回收藏id
 

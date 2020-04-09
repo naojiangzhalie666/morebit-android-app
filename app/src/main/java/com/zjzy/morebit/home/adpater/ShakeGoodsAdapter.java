@@ -1,0 +1,80 @@
+package com.zjzy.morebit.home.adpater;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.zjzy.morebit.R;
+import com.zjzy.morebit.goodsvideo.VideoActivity;
+import com.zjzy.morebit.pojo.goods.VideoBean;
+import com.zjzy.morebit.utils.LoadImgUtils;
+
+import java.util.List;
+
+public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.ViewHolder> {
+    private Context context;
+    private List<VideoBean> list;
+    public ShakeGoodsAdapter(Context context, List<VideoBean> list) {
+        this.context=context;
+        this.list=list;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+       // View view= LayoutInflater.from(context).inflate(R.layout.itme_shake_goods,parent,false);
+      View view = View.inflate(context, R.layout.itme_shake_goods, null);
+//        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+//        int widthPixels = metrics.widthPixels;
+//        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+//        layoutParams.width=widthPixels/3;
+        ViewHolder viewHolder=new ViewHolder(view);
+        return viewHolder;
+
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        final VideoBean videoBean = list.get(position);
+        holder.tv_title.setText(list.get(position).getItemTitle());
+        //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());
+        LoadImgUtils.loadingCornerTop(context, holder.iv_head,list.get(position).getItemPic(),5);
+        holder.commission.setText(list.get(position).getCouponMoney()+"元劵");
+        holder.tv_price.setText("¥"+list.get(position).getItemPrice());
+        holder.tv_coupul.setText("预估收益"+list.get(position).getTkMoney()+"元");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VideoActivity.start(context,videoBean);
+            }
+        });
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 3;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView iv_head;
+        private TextView tv_title,commission,tv_price,tv_coupul;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            iv_head=itemView.findViewById(R.id.iv_head);//主图
+            tv_title=itemView.findViewById(R.id.tv_title);//标题
+            commission=itemView.findViewById(R.id.commission);//优惠券
+            tv_price=itemView.findViewById(R.id.tv_price);//价格
+            tv_coupul=itemView.findViewById(R.id.tv_coupul);//预估收益
+
+        }
+    }
+}

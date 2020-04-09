@@ -8,6 +8,7 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.pojo.goods.VideoBean;
 
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class HomeRecommentContract {
         void onActivityFailure( );
         void onFloorSuccess(List<FloorInfo> data);
         void onFloorFailure();
+        void onVideoSuccess(List<VideoBean>  videoBean);
+        void onVideoFailure();
     }
 
     public interface Present extends BasePresenter {
@@ -55,6 +58,11 @@ public class HomeRecommentContract {
          * @param fragment
          */
         void  getFloor(RxFragment fragment);
+        /**
+         * 抖货
+         * @param fragment
+         */
+        void  getVideo(RxFragment fragment);
 
 
 

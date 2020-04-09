@@ -101,16 +101,16 @@
             <TextView
                 android:id="@+id/commission"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:gravity="center"
+                android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/bg_commission_1dp"
-                android:paddingRight="4dp"
-                android:paddingLeft="4dp"
+                android:gravity="center"
                 android:maxLines="1"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:textColor="@color/color_FA6400"
                 android:textSize="@dimen/sp_11"
-                tools:text="250人"/>
+                tools:text="250人" />
         </LinearLayout>
 
 

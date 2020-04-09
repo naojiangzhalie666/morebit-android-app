@@ -10,8 +10,8 @@ public class C {
     // api
 
   // public static final String BASE_MOREBIT = "http://api.dev.morebit.com.cn";//开发
-    public static final String BASE_MOREBIT = "http://api.test.morebit.com.cn";//测试
-  // public static final String BASE_MOREBIT = "https://api.morebit.com.cn";//正式
+  //  public static final String BASE_MOREBIT = "http://api.test.morebit.com.cn";//测试
+   public static final String BASE_MOREBIT = "https://api.morebit.com.cn";//正式
 
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;
@@ -251,9 +251,9 @@ public class C {
         public static final int BigShop = 24;//24：超值大牌
         public static final int ForeShow = 25;//25：预告单
         public static final int CIRCLE_REVIEW = 26;//0pen=2,商学院预览列表
-        public static final int BRAND_LIST = 27;//品牌列表
-        public static final int THREE_GOODS = 28;//分类
-        public static final int  GOODS_BYBRAND = 29;//品牌列表
+        public static final int BRAND_LIST = 27;//新人免单
+        public static final int THREE_GOODS = 28;//饿了么
+        public static final int  GOODS_BYBRAND = 29;//口碑餐饮
         public static final int  JD = 40;//京东
         public static final int  PDD = 41;//拼多多
 

@@ -70,9 +70,7 @@ public class FloorAdapter extends RecyclerView.Adapter<FloorAdapter.ViewHolder> 
             view = mInflater.inflate(R.layout.vlayout_floor_three, viewGroup, false);
         } else if (viewType == C.ViewType.FLOOR_FOUR) {
             view = mInflater.inflate(R.layout.vlayout_floor_four, viewGroup, false);
-        } else if (viewType == C.ViewType.FLOOR_FIVE) {
-        view = mInflater.inflate(R.layout.vlayout_floor_four, viewGroup, false);
-    }else {
+        } else {
             view = mInflater.inflate(R.layout.view_empty, viewGroup, false);
         }
         if (null != view) {

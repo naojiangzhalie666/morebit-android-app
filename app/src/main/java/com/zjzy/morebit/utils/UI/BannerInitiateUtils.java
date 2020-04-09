@@ -14,6 +14,7 @@ import com.zjzy.morebit.Activity.MyMaterialActivity;
 import com.zjzy.morebit.Activity.OneFragmentDefaultActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
+import com.zjzy.morebit.Activity.StartAdActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Activity.SinglePaneActivity;
@@ -52,6 +53,7 @@ import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.home.TmallActivityBean;
 import com.zjzy.morebit.pojo.request.RequestSplashStatistics;
 import com.zjzy.morebit.pojo.request.RequestTmallActivityLinkBean;
+import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GlideImageLoader;
@@ -220,7 +222,7 @@ public class BannerInitiateUtils {
                         openFligyDialog(activity, imageInfo);
                     }
                 }
-            } else {
+            }  else {
                 showUptate(activity, open);
             }
             // 不能再加16了,会和之前飞猪有兼容
@@ -351,8 +353,9 @@ public class BannerInitiateUtils {
             OpenFragmentUtils.goToSimpleFragment(activity, ForeshowFragment.class.getName(), null);
         } else if (type == C.BannerIntentionType.CIRCLE_REVIEW) { // 商学院预览列表
             RecommendListActivity.start(activity, RecommendListActivity.ARTICLE_REVIEW);
-        } else if (type == C.BannerIntentionType.BRAND_LIST) { // 品牌列表
-            OpenFragmentUtils.goToSimpleFragment(activity, BrandListFragment.class.getName(), new Bundle());
+        } else if (type == C.BannerIntentionType.BRAND_LIST) { // 新人免单
+           // OpenFragmentUtils.goToSimpleFragment(activity, BrandListFragment.class.getName(), new Bundle());
+            activity.startActivity(new Intent(activity,PurchaseActivity.class));
         } else if (type == C.BannerIntentionType.THREE_GOODS) { // 分类
             GoodNewsFramgent.start((Activity) activity, info, C.GoodsListType.THREEGOODS);
         } else if (type == C.BannerIntentionType.GOODS_BYBRAND) { // 品牌列表

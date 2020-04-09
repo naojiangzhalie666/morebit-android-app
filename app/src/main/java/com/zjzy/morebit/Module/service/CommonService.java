@@ -8,6 +8,7 @@ import com.zjzy.morebit.pojo.address.AddressInfoList;
 import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
+import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
 import com.zjzy.morebit.pojo.order.OrderSyncResult;
 import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
@@ -2285,4 +2286,31 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/user/checkUserCondition")
     public Observable<BaseResponse<String>> checkPruchase();
+
+    /**
+     * 零元购商品
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/getZeroActivityGoods")
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getPurchaseGoods(@Body RequestPage requestBean);
+
+    /**
+     * 零元购好货商品
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/getMustSeizeActivityGoods")
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getProductGoods();
+
+    /**
+     * 首页抖货
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/listTikTokGoods")
+    public Observable<BaseResponse<List<VideoBean>>> getVideo();
 }

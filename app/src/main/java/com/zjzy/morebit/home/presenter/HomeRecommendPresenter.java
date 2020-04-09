@@ -3,16 +3,21 @@ package com.zjzy.morebit.home.presenter;
 import com.zjzy.morebit.home.contract.HomeRecommentContract;
 import com.zjzy.morebit.home.model.HomeModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.FloorInfo;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
+import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.action.ACache;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.util.List;
+
+import io.reactivex.functions.Action;
 
 /**
  * Created by YangBoTian on 2018/9/12.
@@ -123,6 +128,36 @@ public class HomeRecommendPresenter extends MvpPresenter<HomeModel, HomeRecommen
                     protected void onSuccess(List<FloorInfo> data) {
                         getIView().onFloorSuccess(data);
                     }
+                });
+    }
+/*
+* 首页抖货商品
+*
+* */
+    @Override
+    public void getVideo(RxFragment fragment) {
+        mModel.getVideo(fragment)
+                .compose(RxUtils.<BaseResponse<List<VideoBean>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<VideoBean>>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                })
+                .subscribe(new DataObserver<List<VideoBean>>() {
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().onVideoFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(List<VideoBean> data) {
+                        getIView().onVideoSuccess(data);
+
+                    }
+
                 });
     }
 

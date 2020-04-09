@@ -146,8 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/iv_head"
-            android:layout_marginLeft="60dp"
-            android:layout_toRightOf="@+id/tv_coupon_price"
+            android:layout_toLeftOf="@+id/tv_share"
             android:background="@drawable/bg_color_fc6047_right_16"
             android:gravity="center"
             android:paddingLeft="8dp"
@@ -156,25 +155,35 @@
             android:paddingBottom="2dp"
             android:textColor="@color/white"
             android:textSize="11sp"
-            tools:text="分享赚钱" />
+            android:text="分享赚钱" />
 
         <TextView
             android:id="@+id/tv_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/iv_head"
-            android:layout_toRightOf="@+id/tv_buy"
             android:background="@drawable/bg_color_f333333_left_16"
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingTop="2dp"
+            android:layout_alignParentRight="true"
             android:paddingRight="8dp"
             android:paddingBottom="2dp"
             android:textColor="@color/white"
             android:textSize="11sp"
-            tools:text="立即购买" />
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="立即购买" />
 
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/short_video_play_icon"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>

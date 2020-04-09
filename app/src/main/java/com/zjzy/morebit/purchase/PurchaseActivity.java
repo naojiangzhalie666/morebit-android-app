@@ -1,5 +1,6 @@
 package com.zjzy.morebit.purchase;
 
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,14 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
+import com.zjzy.morebit.Module.common.Dialog.PurchaseRuleDialog;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.CircleDayHotFragment;
+import com.zjzy.morebit.mvp.base.base.BaseView;
+import com.zjzy.morebit.mvp.base.frame.MvpActivity;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.purchase.adapter.ProductAdapter;
 import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
+import com.zjzy.morebit.purchase.control.PurchaseControl;
+import com.zjzy.morebit.purchase.presenter.PurchasePresenter;
 import com.zjzy.morebit.utils.ShareUtil;
 import com.zjzy.morebit.view.CommercialShareDialog;
 import com.zjzy.morebit.view.FixRecyclerView;
@@ -28,7 +36,7 @@ import static com.zjzy.morebit.utils.C.requestType.initData;
 *
 * 0元购
 * */
-public class PurchaseActivity extends BaseActivity implements View.OnClickListener {
+public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements PurchaseControl.View ,View.OnClickListener {
 
 
     private TextView txt_head_title,tv_rule;
@@ -36,34 +44,50 @@ public class PurchaseActivity extends BaseActivity implements View.OnClickListen
     private PurchseAdapter adapter;
     private ProductAdapter padapter;
     private ImageView share;
+    private LinearLayout btn_back;
     CommercialShareDialog shareDialog;
+    private List<ShopGoodInfo> data,mdata;
+    private NestedScrollView nscorll;
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_purchase);
+       //setContentView(R.layout.activity_purchase);
 
         initView();
         initData();
     }
 
+    @Override
+    public BaseView getBaseView() {
+        return this;
+    }
+
+    @Override
+    protected int getViewLayout() {
+        return R.layout.activity_purchase;
+    }
+
     private void initData() {
         txt_head_title.setText("新人0元购");
 
-        
+       mPresenter.getPurchase(this,1);//免单
+       mPresenter.getProduct(this);//好货
+
+
     }
 
     private void initView() {
         txt_head_title= (TextView) findViewById(R.id.txt_head_title);
-        rl_list= (FixRecyclerView) findViewById(R.id.rl_list);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        adapter=new PurchseAdapter(this);
-        rl_list.setLayoutManager(manager);
-        rl_list.setAdapter(adapter);
 
-        rcy_product= (FixRecyclerView) findViewById(R.id.rcy_product);
-        padapter=new ProductAdapter(this);
-        rcy_product.setLayoutManager(manager);
-        rcy_product.setAdapter(padapter);
+        rl_list= (RecyclerView) findViewById(R.id.rl_list);
+        rl_list.setNestedScrollingEnabled(false);
+        rl_list.setFocusable(false);
+
+        rcy_product= (RecyclerView) findViewById(R.id.rcy_product);
+
+        rcy_product.setNestedScrollingEnabled(false);
+        rcy_product.setFocusable(false);
 
 
         share = (ImageView) findViewById(R.id.share);//分享
@@ -72,7 +96,9 @@ public class PurchaseActivity extends BaseActivity implements View.OnClickListen
         tv_rule= (TextView) findViewById(R.id.tv_rule);//活动规则
         tv_rule.setOnClickListener(this);
 
-
+         btn_back = (LinearLayout) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(this);
+        nscorll= (NestedScrollView) findViewById(R.id.nscorll);
 
     }
 
@@ -113,7 +139,19 @@ public class PurchaseActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.tv_rule:
+                final PurchaseRuleDialog purchaseRuleDialog=new PurchaseRuleDialog(this);
+                purchaseRuleDialog.setmCancelListener(new PurchaseRuleDialog.OnCancelListner() {
+                    @Override
+                    public void onClick(View view) {
+                        purchaseRuleDialog.dismiss();
+                    }
+                });
+                purchaseRuleDialog.show();
                 break;
+            case R.id.btn_back:
+                finish();
+                break;
+
         }
     }
 
@@ -134,5 +172,47 @@ public class PurchaseActivity extends BaseActivity implements View.OnClickListen
                // shareGoods(mDatas, osgData, sharePlatform);
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(List<ShopGoodInfo> shopGoodInfo) {
+        data=new ArrayList<>();
+        data.addAll(shopGoodInfo);
+
+
+        adapter=new PurchseAdapter(this,data);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        rl_list.setLayoutManager(manager);
+        rl_list.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onError(String throwable) {
+
+    }
+
+    @Override
+    public void onProductSuccess(List<ShopGoodInfo> shopGoodInfo) {
+        mdata=new ArrayList<>();
+        mdata.addAll(shopGoodInfo);
+
+        LinearLayoutManager manager2 = new LinearLayoutManager(this);
+        padapter=new ProductAdapter(this,mdata,nscorll);
+        rcy_product.setLayoutManager(manager2);
+        rcy_product.setAdapter(padapter);
+
+        padapter.setOnAddClickListener(new ProductAdapter.OnAddClickListener() {
+            @Override
+            public void onItemClick() {
+                nscorll.scrollTo(0,0);//滑到顶部
+            }
+        });
+
+    }
+
+    @Override
+    public void onProductError(String throwable) {
+
     }
 }

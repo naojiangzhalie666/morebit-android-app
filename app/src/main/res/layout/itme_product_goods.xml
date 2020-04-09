@@ -25,7 +25,7 @@
         android:maxLines="2"
         android:textColor="@color/color_333333"
         android:textSize="16sp"
-        tools:text="商品标题标题标题标题" />
+        android:text="商品标题标题标题标题" />
     <!--券额-->
     <TextView
         android:layout_marginLeft="@dimen/dp_10"
@@ -42,7 +42,7 @@
         android:paddingRight="5dp"
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
-        tools:text="预告收益0.18" />
+        android:text="预告收益0.18" />
     <TextView
         android:id="@+id/tv_subsidy"
         android:layout_width="wrap_content"
@@ -58,12 +58,12 @@
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
         android:layout_marginLeft="12dp"
-        tools:text="1元劵" />
+        android:text="1元劵" />
     <TextView
         android:id="@+id/price_after"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@id/iv_head"
-        android:layout_below="@id/tv_price"
+        android:layout_below="@id/tv_subsidy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¥299.0"
@@ -81,8 +81,7 @@
         android:layout_toRightOf="@id/iv_head"
         android:textColor="#ffd3d3d3"
         android:textSize="12sp"
-        android:textStyle="bold"
-        tools:text="¥299.00元" />
+        android:text="¥299.00元" />
 
     <TextView
         android:id="@+id/tv_share"
@@ -98,7 +97,7 @@
         android:paddingBottom="2dp"
         android:textColor="@color/white"
         android:textSize="11sp"
-        tools:text="立即抢购" />
+        android:text="立即抢购" />
 
     <!--    <RelativeLayout-->
     <!--        android:layout_below="@+id/tv_title"-->

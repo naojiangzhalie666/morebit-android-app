@@ -57,6 +57,7 @@ import com.zjzy.morebit.pojo.goods.EvaluatesBean;
 import com.zjzy.morebit.pojo.goods.GoodsImgDetailBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
+import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -990,26 +991,28 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 break;
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买
-                if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
-                } else {
-                    if (isGoodsLose()) return;
+//                if (TaobaoUtil.isAuth()) {//淘宝授权
+//                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
+//                } else {
+//                    if (isGoodsLose()) return;
+//
+//                    if (mGoodsInfo.getGrab_type() == 1) {
+//                        showGotoNotification(mGoodsInfo);
+//                        return;
+//                    }
+//                    if (!TextUtils.isEmpty(mGoodsInfo.material) || "11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) { // 物料商品跳转
+//                        if ("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) {
+//                            mGoodsInfo.material = mGoodsInfo.getComeFrom();
+//                        }
+//                        mPresenter.materialLinkList(GoodsDetailActivity.this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
+//                    } else {
+////                        TaobaoUtil.showByItemId(GoodsDetailActivity.this,mGoodsInfo.getItemSourceId());
+//                        GoodsUtil.getCouponInfo(GoodsDetailActivity.this, mGoodsInfo);
+//                    }
+//                }
+//                SensorsDataUtil.getInstance().buy("", "", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
 
-                    if (mGoodsInfo.getGrab_type() == 1) {
-                        showGotoNotification(mGoodsInfo);
-                        return;
-                    }
-                    if (!TextUtils.isEmpty(mGoodsInfo.material) || "11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) { // 物料商品跳转
-                        if ("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) {
-                            mGoodsInfo.material = mGoodsInfo.getComeFrom();
-                        }
-                        mPresenter.materialLinkList(GoodsDetailActivity.this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
-                    } else {
-//                        TaobaoUtil.showByItemId(GoodsDetailActivity.this,mGoodsInfo.getItemSourceId());
-                        GoodsUtil.getCouponInfo(GoodsDetailActivity.this, mGoodsInfo);
-                    }
-                }
-                SensorsDataUtil.getInstance().buy("", "", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
+                startActivity(new Intent(this, PurchaseActivity.class));
                 break;
 
             case R.id.videopaly_btn: //视频播放

@@ -12,6 +12,7 @@ import com.zjzy.morebit.pojo.SystemConfigBean;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.zjzy.morebit.pojo.goods.RecommendBean;
+import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestConfigKeyBean;
 import com.zjzy.morebit.pojo.request.RequestRecommendBean;
@@ -96,5 +97,18 @@ public class HomeModel extends MvpModel {
         return     RxHttp.getInstance().getSysteService().getConfigByKey(requestConfigKeyBean)
                 .compose(RxUtils.<BaseResponse<SystemConfigBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<SystemConfigBean>>bindToLifecycle());
+    }
+
+    /**
+     * 获取首页抖货商品
+     *
+     * @return
+     */
+    public Observable<BaseResponse<List<VideoBean>>> getVideo(RxFragment fragment) {
+
+        return RxHttp.getInstance().getGoodsService()
+                .getVideo()
+                .compose(RxUtils.<BaseResponse<List<VideoBean>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<VideoBean>>>bindToLifecycle());
     }
 }

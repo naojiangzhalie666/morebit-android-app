@@ -1,33 +1,51 @@
 package com.zjzy.morebit.purchase.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Dialog.AuthorDialog;
+import com.zjzy.morebit.Module.common.Dialog.ProductDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.purchase.PurchaseActivity;
+import com.zjzy.morebit.utils.GlideImageLoader;
+import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.UI.GlideImageCircularLoader;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
+import java.util.List;
+
 import io.reactivex.functions.Action;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /*
 * 好货adapter
 * */
 public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     private Context context;
-    public ProductAdapter(Context context) {
+    private List<ShopGoodInfo> list;
+    private NestedScrollView nscorll;
+    public ProductAdapter(Context context, List<ShopGoodInfo> list, NestedScrollView nscorll) {
         this.context=context;
+        this.list=list;
+        this.nscorll=nscorll;
 
     }
 
@@ -41,11 +59,56 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+//        Glide.with(context).load(list.get(position).getItemPicture())
+//                .transform(new RoundedCornersTransformation(corner, 0, RoundedCornersTransformation.CornerType.ALL))
+//                .into(holder.iv_head);
+        LoadImgUtils.loadingCornerBitmap(context, holder.iv_head,list.get(position).getItemPicture());
+        //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPicture());
+        final ShopGoodInfo info = list.get(position);
+        holder.tv_title.setText(list.get(position).getItemTitle());
+
+        if (list.get(position).getSubsidyPrice()==null){
+            holder.tv_price.setVisibility(View.GONE);
+        }else{
+            holder.tv_price.setVisibility(View.VISIBLE);
+            holder.tv_price.setText("预估收益"+list.get(position).getSubsidyPrice());
+        }
+        holder.tv_subsidy.setText(list.get(position).getCouponPrice()+"元劵");
+        holder.tv_coupon_price.setText("¥"+list.get(position).getItemPrice());
+        holder.tv_coupon_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG); //中划线
+        holder.price_after.setText("¥"+list.get(position).getItemVoucherPrice());
 
         holder.tv_share.setOnClickListener(new View.OnClickListener() {//立即购买
             @Override
             public void onClick(View v) {
 
+                final ProductDialog productDialog=new ProductDialog((PurchaseActivity) context);
+
+                productDialog.setmCancelListener(new ProductDialog.OnCancelListner() {//立即分享
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                productDialog.setmOkListener(new ProductDialog.OnOkListener() {//畅享0元购
+                    @Override
+                    public void onClick(View view) {
+                        if(onItemAddClick != null) {
+                            onItemAddClick.onItemClick();
+                        }
+                    }
+                });
+
+                productDialog.setmCloseListener(new ProductDialog.OnCloseListner() {//关闭dialog
+                    @Override
+                    public void onClick(View view) {
+                        productDialog.dismiss();
+                    }
+                });
+
+                productDialog.show();
+               // GoodsDetailActivity.start(context, info);
             }
         });
     }
@@ -54,7 +117,7 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -72,4 +135,18 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
 
         }
     }
+
+
+    public static interface OnAddClickListener {
+        // true add; false cancel
+        public void onItemClick(); //传递boolean类型数据给activity
+    }
+
+    // add click callback
+    OnAddClickListener onItemAddClick;
+
+    public void setOnAddClickListener(OnAddClickListener onItemAddClick) {
+        this.onItemAddClick = onItemAddClick;
+    }
+
 }

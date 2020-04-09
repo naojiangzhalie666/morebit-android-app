@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_color_ff_top_20"
+    android:paddingBottom="8dp"
+    >
+
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/prushchase_bg"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="抖音强烈推荐…"
+        android:textColor="#ff333333"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="12sp"
+        android:paddingLeft="8dp"
+        />
+    <TextView
+        android:id="@+id/commission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_commission_1dp"
+        android:gravity="center"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textColor="@color/color_FA6400"
+        android:textSize="@dimen/sp_11"
+        android:layout_marginLeft="8dp"
+        android:text="20元劵" />
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥299.0"
+        android:textColor="#ff333333"
+        android:layout_marginTop="5dp"
+        android:textSize="12sp"
+        android:layout_marginLeft="8dp"
+        />
+    <TextView
+        android:id="@+id/tv_coupul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="预估收益31.57元"
+        android:textColor="#ffffffff"
+        android:textSize="10sp"
+        android:background="@drawable/bg_earning_header_2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        />
+
+</LinearLayout>

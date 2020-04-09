@@ -7,14 +7,19 @@
 
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nscorll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="20dp">
+        android:layout_gravity="fill_vertical"
+        android:layout_marginBottom="?attr/actionBarSize"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="45dp">
+            android:layout_marginTop="45dp"
+            android:paddingBottom="60dp"
+            >
 
             <ImageView
                 android:layout_width="match_parent"
@@ -185,8 +190,8 @@
                     android:src="@mipmap/product_left" />
 
                 <TextView
-                    android:layout_width="96dp"
-                    android:layout_height="34dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="必抢好货"
                     android:textColor="#ffffffff"
                     android:textSize="22sp" />
@@ -236,7 +241,7 @@
     <ImageView
         android:id="@+id/share"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_60"
         android:layout_alignParentBottom="true"
         android:scaleType="fitXY"
         android:src="@mipmap/pruchase_share" />

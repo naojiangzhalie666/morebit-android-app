@@ -68,7 +68,8 @@
         <include layout="@layout/official_recommend"/>
         <!--楼层模块-->
         <include layout="@layout/view_layout_floor"/>
-
+        <!--抖货模块-->
+        <include layout="@layout/fragment_shakegoods"/>
         <com.zjzy.morebit.view.AspectRatioView
             android:id="@+id/as_banner_make_money"
             android:layout_width="wrap_content"

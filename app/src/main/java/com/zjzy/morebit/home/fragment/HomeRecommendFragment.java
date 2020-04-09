@@ -36,6 +36,7 @@ import com.zjzy.morebit.adapter.HomeRecommendAdapter;
 import com.zjzy.morebit.adapter.SecondModuleAdapter;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.home.adpater.ActivityAdapter;
+import com.zjzy.morebit.home.adpater.ShakeGoodsAdapter;
 import com.zjzy.morebit.home.contract.HomeRecommentContract;
 import com.zjzy.morebit.home.presenter.HomeRecommendPresenter;
 import com.zjzy.morebit.interfaces.UpdateColorCallback;
@@ -53,6 +54,7 @@ import com.zjzy.morebit.pojo.event.LogoutEvent;
 import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
+import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ConfigListUtlis;
@@ -60,6 +62,7 @@ import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SensorsDataUtil;
+import com.zjzy.morebit.utils.SpaceItemDecorationUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.UIUtils;
@@ -146,6 +149,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
     private boolean isNearEadge = false;
 
+    private RecyclerView rcy_shakegoods;
+
     public static HomeRecommendFragment newInstance() {
         Bundle args = new Bundle();
         HomeRecommendFragment fragment = new HomeRecommendFragment();
@@ -169,7 +174,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mView == null) {
             super.onCreateView(inflater, container, savedInstanceState);
-            mHeadView = LayoutInflater.from(getActivity()).inflate(R.layout.home_recommend_head, null);
+            mHeadView = LayoutInflater.from(getActivity()).inflate(R.layout. home_recommend_head, null);
             init();
         }
         ViewGroup parent = (ViewGroup) mView.getParent();
@@ -276,6 +281,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         mPresenter.getFloor(this);
         //首页悬浮窗
         mPresenter.getBanner(this, C.UIShowType.FLOAT_AD);
+        mPresenter.getVideo(this);//首页抖货商品
     }
 
     private void setRecommendData() {
@@ -345,6 +351,14 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
+        rcy_shakegoods=mHeadView.findViewById(R.id.rcy_shakegoods);//抖货recycleview
+        GridLayoutManager manager=new GridLayoutManager(getActivity(),3);
+        //设置图标的间距
+        SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(20, 3);
+        rcy_shakegoods.addItemDecoration(spaceItemDecorationUtils);
+        rcy_shakegoods.setLayoutManager(manager);
+
+
         recommendTitleTv = mHeadView.findViewById(R.id.recommendTitleTv);
         mActivityRecyclerView = (RecyclerView) mHeadView.findViewById(R.id.recyclerview_activity);
         mReUseListView = (ReUseStaggeredView) mView.findViewById(R.id.mListView);
@@ -1135,6 +1149,19 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     @Override
     public void onFloorFailure() {
         floorRootLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onVideoSuccess(List<VideoBean> videoBean) {//抖货商品获取成功
+        List<VideoBean> data=new ArrayList<>();
+        data.addAll(videoBean);
+        ShakeGoodsAdapter shakeadapter=new ShakeGoodsAdapter(getActivity(),data);
+        rcy_shakegoods.setAdapter(shakeadapter);
+    }
+
+    @Override
+    public void onVideoFailure() {
+
     }
 
 
