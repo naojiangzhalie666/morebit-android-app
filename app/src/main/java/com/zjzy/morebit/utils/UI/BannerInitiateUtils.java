@@ -29,6 +29,7 @@ import com.zjzy.morebit.fragment.PanicBuyFragment;
 import com.zjzy.morebit.goods.shopping.ui.TmallWebActivity;
 import com.zjzy.morebit.goods.shopping.ui.fragment.BrandListFragment;
 import com.zjzy.morebit.goods.shopping.ui.fragment.BrandSellFragment;
+import com.zjzy.morebit.goodsvideo.ShopMallActivity;
 import com.zjzy.morebit.info.ui.AppFeedActivity;
 import com.zjzy.morebit.info.ui.GoodsBrowsingHistoryActivity;
 import com.zjzy.morebit.info.ui.OfficialNoticeFragment;
@@ -340,7 +341,11 @@ public class BannerInitiateUtils {
             bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
             OpenFragmentUtils.goToSimpleFragment(activity, RankingFragment.class.getName(), bundle);
         } else if (type == C.BannerIntentionType.DAYRECOMMEND) {
-            GoodNewsFramgent.startTiemSale(activity, info);
+           // GoodNewsFramgent.startTiemSale(activity, info);
+            if (!LoginUtil.checkIsLogin((Activity) activity)) {
+                return;
+            }
+            activity.startActivity(new Intent(activity, ShopMallActivity.class));//优选商城
         } else if (type == C.BannerIntentionType.Browsing) { //  20 足迹
             GoodsBrowsingHistoryActivity.start(activity);
         } else if (type == C.BannerIntentionType.operator) { // 运营专员后台

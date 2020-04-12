@@ -26,6 +26,7 @@ public class PurchaseControl {
         void onProductSuccess(List<ShopGoodInfo> shopGoodInfo);
          void onProductError(String throwable);
 
+
     }
     public interface Present extends BasePresenter {
 
@@ -37,8 +38,6 @@ public class PurchaseControl {
          * 免单好货商品
          */
         void getProduct(BaseActivity activity);
-
-
 
     }
 }

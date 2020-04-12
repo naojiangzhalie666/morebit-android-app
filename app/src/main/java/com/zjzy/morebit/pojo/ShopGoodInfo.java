@@ -39,6 +39,68 @@ public class ShopGoodInfo implements Serializable {
     private String shopId = "";//店主的userId
     private String itemDesc = "";  // 商品描述
     private String subsidyPrice="";//补贴金额
+    private String itemPic="";//主图
+    private String couponMoney="";//优惠券
+    private String tkMoney;//预估收益
+    private String itemVideo="";//抖货视频
+    private String itemSale="";//销量
+    private String itemId="";//抖货商品id
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getItemSale() {
+        return itemSale;
+    }
+
+    public void setItemSale(String itemSale) {
+        this.itemSale = itemSale;
+    }
+
+    public String getItemVideoid() {
+        return itemVideoid;
+    }
+
+    public void setItemVideoid(String itemVideoid) {
+        this.itemVideoid = itemVideoid;
+    }
+
+    public String getItemVideo() {
+        return itemVideo;
+    }
+
+    public void setItemVideo(String itemVideo) {
+        this.itemVideo = itemVideo;
+    }
+
+    public String getTkMoney() {
+        return tkMoney;
+    }
+
+    public void setTkMoney(String tkMoney) {
+        this.tkMoney = tkMoney;
+    }
+
+    public String getCouponMoney() {
+        return couponMoney;
+    }
+
+    public void setCouponMoney(String couponMoney) {
+        this.couponMoney = couponMoney;
+    }
+
+    public String getItemPic() {
+        return itemPic;
+    }
+
+    public void setItemPic(String itemPic) {
+        this.itemPic = itemPic;
+    }
 
     public String getSubsidyPrice() {
         return subsidyPrice;

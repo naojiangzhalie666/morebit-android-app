@@ -468,4 +468,7 @@
     <string name="vip_growth_value">您还需要%1$s成长值才能成为团队长</string>
     <string name="number_growth_value">您还需要%1$s成长值才能成为VIP</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

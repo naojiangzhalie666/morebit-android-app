@@ -104,11 +104,11 @@ public class HomeModel extends MvpModel {
      *
      * @return
      */
-    public Observable<BaseResponse<List<VideoBean>>> getVideo(RxFragment fragment) {
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getVideo(RxFragment fragment) {
 
         return RxHttp.getInstance().getGoodsService()
                 .getVideo()
-                .compose(RxUtils.<BaseResponse<List<VideoBean>>>switchSchedulers())
-                .compose(fragment.<BaseResponse<List<VideoBean>>>bindToLifecycle());
+                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
     }
 }

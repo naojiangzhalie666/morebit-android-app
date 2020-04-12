@@ -12,9 +12,15 @@
         android:layout_height="460dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:padding="10dp"
         android:background="@drawable/bg_ffffff_12dp"
         >
+        <WebView
 
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
     </LinearLayout>
 

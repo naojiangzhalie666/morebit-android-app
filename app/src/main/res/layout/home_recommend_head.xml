@@ -66,6 +66,10 @@
         <include layout="@layout/view_layout_hot_text"/>
         <!--官方推荐-->
         <include layout="@layout/official_recommend"/>
+        <!--限时抢购-->
+        <include layout="@layout/fragment_litmited"
+            android:id="@+id/litmited_time"
+            />
         <!--楼层模块-->
         <include layout="@layout/view_layout_floor"/>
         <!--抖货模块-->

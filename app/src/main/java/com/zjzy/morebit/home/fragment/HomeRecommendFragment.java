@@ -2,10 +2,12 @@ package com.zjzy.morebit.home.fragment;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,6 +28,8 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
+import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseStaggeredView;
@@ -35,6 +39,8 @@ import com.zjzy.morebit.adapter.HomeMenuAdapter;
 import com.zjzy.morebit.adapter.HomeRecommendAdapter;
 import com.zjzy.morebit.adapter.SecondModuleAdapter;
 import com.zjzy.morebit.contact.EventBusAction;
+import com.zjzy.morebit.fragment.PanicBuyFragment;
+import com.zjzy.morebit.goodsvideo.VideoClassActivity;
 import com.zjzy.morebit.home.adpater.ActivityAdapter;
 import com.zjzy.morebit.home.adpater.ShakeGoodsAdapter;
 import com.zjzy.morebit.home.contract.HomeRecommentContract;
@@ -43,24 +49,34 @@ import com.zjzy.morebit.interfaces.UpdateColorCallback;
 import com.zjzy.morebit.main.ui.NoticeActivity;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.FloorInfo;
 import com.zjzy.morebit.pojo.HomeRecommendGoods;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.PanicBuyTiemBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.SystemConfigBean;
+import com.zjzy.morebit.pojo.UserFeedback;
 import com.zjzy.morebit.pojo.event.HomeSupeListRefreshEvent;
 import com.zjzy.morebit.pojo.event.LogoutEvent;
+import com.zjzy.morebit.pojo.goods.FloorBean;
 import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.zjzy.morebit.pojo.goods.VideoBean;
+import com.zjzy.morebit.pojo.request.RequestPanicBuyTabBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ConfigListUtlis;
+import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.SpaceItemDecorationUtils;
 import com.zjzy.morebit.utils.StringsUtils;
@@ -83,9 +99,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import io.reactivex.Observable;
+
 /**
  * Created by liuhaiping on 2019/1/05.
- *
+ * <p>
  * 首页精选
  */
 
@@ -121,9 +139,9 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     private HomeMenuAdapter menuAdapter;
     private LinearLayout secondLayout;
     private View officalFrameLayout;
-    private LinearLayout floorRootLayout;
+    private LinearLayout floorRootLayout, litmited_time;
     private TextView recommendTitleTv;
-    private ImageView go_recommod;
+    private ImageView go_recommod, img_limted2, img_limted1;
     private ImageView go_top;
     private ImageView floatIv;
     private RelativeLayout parentNotify;
@@ -150,6 +168,11 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     private boolean isNearEadge = false;
 
     private RecyclerView rcy_shakegoods;
+    private ImageInfo mImageInfo;
+    private TextView shake_more;
+    private TextView tv_limitime;
+    private List<PanicBuyTiemBean> mPanicBuyTiemBean;
+    private CountDownTimer mCountDownTiemr;
 
     public static HomeRecommendFragment newInstance() {
         Bundle args = new Bundle();
@@ -174,7 +197,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mView == null) {
             super.onCreateView(inflater, container, savedInstanceState);
-            mHeadView = LayoutInflater.from(getActivity()).inflate(R.layout. home_recommend_head, null);
+            mHeadView = LayoutInflater.from(getActivity()).inflate(R.layout.home_recommend_head, null);
             init();
         }
         ViewGroup parent = (ViewGroup) mView.getParent();
@@ -337,8 +360,113 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         mFloorAdapter = new FloorAdapter(getActivity(), getChildFragmentManager());
         mFloorRv.setAdapter(mFloorAdapter);
 
+        img_limted2 = mHeadView.findViewById(R.id.img_limted2);//新手教程
+        img_limted1 = mHeadView.findViewById(R.id.img_limted1);//限时抢购
+        litmited_time = mHeadView.findViewById(R.id.litmited_time);//限时抢购模块
+
+
+        mImageInfo = new ImageInfo();
+        mImageInfo.setClassId(4);
+        mImageInfo.setId(363);
+        mImageInfo.setSplicePid("0");
+        mImageInfo.setType("4");
+        mImageInfo.setTitle("限时抢购");
+
+        RxHttp.getInstance().getSysteService()//获取楼层活动数据
+                .getFloorPicture()
+                .compose(RxUtils.<BaseResponse<FloorBean>>switchSchedulers())
+                .compose(this.<BaseResponse<FloorBean>>bindToLifecycle())
+                .subscribe(new DataObserver<FloorBean>() {
+                    @Override
+                    protected void onSuccess(final FloorBean data) {
+                        if (data != null) {
+                            LoadImgUtils.setImg(getActivity(), img_limted1, data.getFlashSalePic());
+                            LoadImgUtils.setImg(getActivity(), img_limted2, data.getNoviceTutorialPic());
+                            img_limted1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // BannerInitiateUtils.gotoMenu(getActivity(),4,mImageInfo);
+                                    PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+                                }
+                            });
+                            img_limted2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowWebActivity.start(getActivity(),data.getNoviceTutorial(),"新手教程");//跳新手教程
+                                }
+                            });
+                            litmited_time.setVisibility(View.VISIBLE);
+                        } else {
+                            litmited_time.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+
+
+        shake_more=mHeadView.findViewById(R.id.shake_more);
+        tv_limitime=mHeadView.findViewById(R.id.tv_limitime);//限时秒杀时间
+        shake_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), VideoClassActivity.class));
+            }
+        });
+
+        getGet_taoqianggou_time(this)
+                .subscribe(new DataObserver<List<PanicBuyTiemBean>>() {
+                    @Override
+                    protected void onSuccess(List<PanicBuyTiemBean> bean) {
+                        mPanicBuyTiemBean = bean;
+
+                        for (int i = 0; i < bean.size(); i++) {
+                            PanicBuyTiemBean itme = bean.get(i);
+                            if ("1".equals(itme.getType())) {
+                                long l = System.currentTimeMillis();
+                                int endTiem = 0;
+                                try {
+                                    endTiem = Integer.valueOf(itme.getEndTime());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                                final long firstCreateIndexDate = DateTimeUtils.getFirstCreateIndexDate(endTiem);
+                                long downTiem = firstCreateIndexDate - l;
+                                if (mCountDownTiemr != null) {
+                                    mCountDownTiemr.cancel();
+                                }
+                                mCountDownTiemr = new CountDownTimer(downTiem, 1000) {
+                                    public void onTick(long millisUntilFinished) {
+
+                                        String hms = DateTimeUtils.getCountTimeByLong(millisUntilFinished);
+                                        if (!TextUtils.isEmpty(hms))
+                                            tv_limitime.setText(hms);
+                                    }
+
+                                    public void onFinish() {
+                                       // getTabDeta(activity);
+                                    }
+                                }.start();
+                            }
+                        }
+                    }
+                });
+
+
     }
 
+    /*
+    * 秒杀时间
+    * */
+    private Observable<BaseResponse<List<PanicBuyTiemBean>>> getGet_taoqianggou_time(RxFragment fragment) {
+        RequestPanicBuyTabBean requestBean = new RequestPanicBuyTabBean();
+        requestBean.setType(0);
+
+        return RxHttp.getInstance().getSysteService()
+                .getPanicBuyTabData(requestBean)
+                .compose(RxUtils.<BaseResponse<List<PanicBuyTiemBean>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<PanicBuyTiemBean>>>bindToLifecycle());
+    }
     private void setFloorLayout(List<FloorInfo> data) {
         if (null == data || data.isEmpty()) {
             return;
@@ -351,8 +479,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
-        rcy_shakegoods=mHeadView.findViewById(R.id.rcy_shakegoods);//抖货recycleview
-        GridLayoutManager manager=new GridLayoutManager(getActivity(),3);
+        rcy_shakegoods = mHeadView.findViewById(R.id.rcy_shakegoods);//抖货recycleview
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
         //设置图标的间距
         SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(20, 3);
         rcy_shakegoods.addItemDecoration(spaceItemDecorationUtils);
@@ -933,7 +1061,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         mReUseListView.getSwipeList().setRefreshing(false);
         mAdapter.setEnableLoadMore(true);
 
-        if (recommendBean == null){
+        if (recommendBean == null) {
             mAdapter.loadMoreEnd();
             return;
         }
@@ -1008,7 +1136,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     @Override
     public void onRecommendFailure(String errorMsg, String errCode) {
         mReUseListView.getSwipeList().setRefreshing(false);
-        if(StringsUtils.isDataEmpty(errCode)){
+        if (StringsUtils.isDataEmpty(errCode)) {
             mAdapter.loadMoreEnd();
         }
 
@@ -1123,7 +1251,6 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     }
 
 
-
     @Override
     public void onActivitySuccessFul(List<HandpickBean> data) {
         mLlActivity.setVisibility(View.VISIBLE);
@@ -1152,10 +1279,10 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     }
 
     @Override
-    public void onVideoSuccess(List<VideoBean> videoBean) {//抖货商品获取成功
-        List<VideoBean> data=new ArrayList<>();
+    public void onVideoSuccess(List<ShopGoodInfo> videoBean) {//抖货商品获取成功
+        List<ShopGoodInfo> data = new ArrayList<>();
         data.addAll(videoBean);
-        ShakeGoodsAdapter shakeadapter=new ShakeGoodsAdapter(getActivity(),data);
+        ShakeGoodsAdapter shakeadapter = new ShakeGoodsAdapter(getActivity(), data);
         rcy_shakegoods.setAdapter(shakeadapter);
     }
 
@@ -1308,7 +1435,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                 @Override
                 public void run() {
                     mScreenWidth = DensityUtil.getPhoneWidth(getActivity());
-                    int floatleft = mScreenWidth - floatIv.getWidth() - DensityUtil.dip2px(getActivity(),15);
+                    int floatleft = mScreenWidth - floatIv.getWidth() - DensityUtil.dip2px(getActivity(), 15);
                     int targetLeft = mScreenWidth - 60;
 
 
@@ -1341,7 +1468,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                 public void run() {
                     mScreenWidth = DensityUtil.getPhoneWidth(getActivity());
                     int targetLeft = mScreenWidth - 60;
-                    int floatleft = mScreenWidth - floatIv.getWidth() - DensityUtil.dip2px(getActivity(),15);
+                    int floatleft = mScreenWidth - floatIv.getWidth() - DensityUtil.dip2px(getActivity(), 15);
 
                     ValueAnimator valueAnimator = ValueAnimator.ofInt(targetLeft, floatleft);
                     valueAnimator.setDuration(300);
@@ -1368,5 +1495,11 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         layoutParams.setMargins(left, top, right, bottom);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
         return layoutParams;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mCountDownTiemr != null) mCountDownTiemr.cancel();
     }
 }

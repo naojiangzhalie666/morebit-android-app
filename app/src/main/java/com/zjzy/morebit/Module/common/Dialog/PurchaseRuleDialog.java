@@ -3,6 +3,7 @@ package com.zjzy.morebit.Module.common.Dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,9 +21,11 @@ public class PurchaseRuleDialog extends Dialog {
     private OnCancelListner mCancelListener;
     private ClearSDdataDialog.OnOkListener okListener;
     private ImageView btn_close;
+    private String url;
 
-    public PurchaseRuleDialog(RxAppCompatActivity activity) {
+    public PurchaseRuleDialog(RxAppCompatActivity activity,String url) {
         super(activity, R.style.dialog);
+        this.url=url;
     }
 
     @Override
@@ -35,6 +38,11 @@ public class PurchaseRuleDialog extends Dialog {
 
     private void initView() {
         btn_close=findViewById(R.id.btn_close);
+        WebView webView = findViewById(R.id.webview);
+        webView.getSettings().setGeolocationEnabled(true);
+        //启用支持DOM Storage
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.loadUrl("https://blog.csdn.net/RoseChilde/article/details/102576994");
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

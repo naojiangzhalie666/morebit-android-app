@@ -66,7 +66,10 @@ public class PanicBuyFragment extends BaseFragment {
         bundle.putSerializable(C.Extras.GOODSBEAN, info);
         OpenFragmentUtils.goToSimpleFragment(activity, PanicBuyFragment.class.getName(), bundle);
     }
-
+    public static void mstart(Activity activity) {
+        Bundle bundle = new Bundle();
+        OpenFragmentUtils.goToSimpleFragment(activity, PanicBuyFragment.class.getName(), bundle);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

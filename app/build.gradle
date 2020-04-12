@@ -143,6 +143,7 @@ repositories {
 dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-v4:26.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -347,7 +348,10 @@ dependencies {
     implementation 'com.alibaba.sdk.android:nb_trade:4.0.0.8@aar'
     implementation 'com.alibaba:fastjson:1.2.41'
     implementation project(path: ':labeltext_lib')
-
+    //智能加载框架
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    //没有使用特殊Header和Footer，可以不加下面这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
 
 }
 // 依赖插件脚本

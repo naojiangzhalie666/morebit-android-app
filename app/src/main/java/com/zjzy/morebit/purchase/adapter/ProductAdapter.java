@@ -1,5 +1,6 @@
 package com.zjzy.morebit.purchase.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.AuthorDialog;
 import com.zjzy.morebit.Module.common.Dialog.ProductDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -27,6 +29,8 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
+import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.GlideImageCircularLoader;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
@@ -41,11 +45,11 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     private Context context;
     private List<ShopGoodInfo> list;
-    private NestedScrollView nscorll;
-    public ProductAdapter(Context context, List<ShopGoodInfo> list, NestedScrollView nscorll) {
+    String ischeck;
+    public ProductAdapter(Context context, List<ShopGoodInfo> list, String ischeck) {
         this.context=context;
         this.list=list;
-        this.nscorll=nscorll;
+        this.ischeck=ischeck;
 
     }
 
@@ -65,6 +69,7 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
         LoadImgUtils.loadingCornerBitmap(context, holder.iv_head,list.get(position).getItemPicture());
         //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPicture());
         final ShopGoodInfo info = list.get(position);
+        info.setItemSourceId(list.get(position).getItemId());
         holder.tv_title.setText(list.get(position).getItemTitle());
 
         if (list.get(position).getSubsidyPrice()==null){
@@ -81,34 +86,46 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
         holder.tv_share.setOnClickListener(new View.OnClickListener() {//立即购买
             @Override
             public void onClick(View v) {
+                if (!LoginUtil.checkIsLogin((Activity) context)) {
+                    return;
+                }
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) context);
+                    return;
+                }
+                if (ischeck.equals("false")){
+                    GoodsDetailActivity.start(context, info);
+                }else{
+                    final ProductDialog productDialog=new ProductDialog((PurchaseActivity) context);
 
-                final ProductDialog productDialog=new ProductDialog((PurchaseActivity) context);
-
-                productDialog.setmCancelListener(new ProductDialog.OnCancelListner() {//立即分享
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-
-                productDialog.setmOkListener(new ProductDialog.OnOkListener() {//畅享0元购
-                    @Override
-                    public void onClick(View view) {
-                        if(onItemAddClick != null) {
-                            onItemAddClick.onItemClick();
+                    productDialog.setmCancelListener(new ProductDialog.OnCancelListner() {//立即分享
+                        @Override
+                        public void onClick(View view) {
+                            if(onItemAddClick != null) {
+                                onItemAddClick.onShareItemClick();
+                            }
                         }
-                    }
-                });
+                    });
 
-                productDialog.setmCloseListener(new ProductDialog.OnCloseListner() {//关闭dialog
-                    @Override
-                    public void onClick(View view) {
-                        productDialog.dismiss();
-                    }
-                });
+                    productDialog.setmOkListener(new ProductDialog.OnOkListener() {//畅享0元购
+                        @Override
+                        public void onClick(View view) {
+                            if(onItemAddClick != null) {
+                                onItemAddClick.onItemClick();
+                            }
+                        }
+                    });
 
-                productDialog.show();
-               // GoodsDetailActivity.start(context, info);
+                    productDialog.setmCloseListener(new ProductDialog.OnCloseListner() {//关闭dialog
+                        @Override
+                        public void onClick(View view) {
+                            productDialog.dismiss();
+                        }
+                    });
+
+                    productDialog.show();
+                }
+
             }
         });
     }
@@ -140,6 +157,7 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
     public static interface OnAddClickListener {
         // true add; false cancel
         public void onItemClick(); //传递boolean类型数据给activity
+        public void onShareItemClick(); //传递boolean类型数据给activity
     }
 
     // add click callback

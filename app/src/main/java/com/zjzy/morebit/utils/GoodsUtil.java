@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +47,8 @@ import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
 import com.zjzy.morebit.pojo.request.RequestPddShareContent;
 import com.zjzy.morebit.pojo.request.RequestTKLBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestUploadCouponInfo;
+import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
+import com.zjzy.morebit.purchase.adapter.PurchsePosterAdapter;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.fire.BuglyUtils;
 import com.zjzy.morebit.utils.share.ShareMore;
@@ -333,6 +337,27 @@ public class GoodsUtil {
         return saveMakePath;
     }
 
+
+    /**
+     * 生成虚拟页面数据并保存为图片
+     *
+     * @param activity
+     * @param goodsInfo
+     * @throws Exception
+     */
+    public static String savePruchaseGoodsImg(Activity activity, List<ShopGoodInfo> goodsInfo, Bitmap ewmBitmap) throws Exception {
+        //设置布局数据
+        View view = getPurchasePoster(activity, goodsInfo, ewmBitmap);
+        Bitmap vBitmap = getViewBitmap(view);
+        //保存图片到本地
+        String saveMakePath = SdDirPath.IMAGE_CACHE_PATH + "goodqr_" + System.currentTimeMillis() + ".jpg";
+        File file = new File(saveMakePath);
+
+        vBitmap.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(file));
+        vBitmap.recycle();
+        vBitmap = null;
+        return saveMakePath;
+    }
 //    public static Bitmap getViewBitmap(View view) {
 //        int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 //        view.measure(me, me);
@@ -396,7 +421,25 @@ public class GoodsUtil {
             qrcode_img.setImageBitmap(ewmBitmap);
         return view;
     }
+    @NonNull
+    public static View getPurchasePoster(Activity activity, List<ShopGoodInfo> goodsInfo, Bitmap ewmBitmap) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.view_new_pruchase_goods_poster, null);
+        RecyclerView rcy_pruchase=view.findViewById(R.id.rcy_pruchase);
+        PurchsePosterAdapter  adapter=new PurchsePosterAdapter(activity,goodsInfo);
+        LinearLayoutManager manager = new LinearLayoutManager(activity);
+        rcy_pruchase.setLayoutManager(manager);
+        rcy_pruchase.setAdapter(adapter);
+        ImageView qrcode_img = (ImageView) view.findViewById(R.id.qrcode_img);
 
+        TextView tv_code = (TextView) view.findViewById(R.id.tv_code);
+
+        tv_code.setText(activity.getString(R.string.invitation_code, UserLocalData.getUser().getInviteCode()));
+
+
+        if (ewmBitmap != null)
+            qrcode_img.setImageBitmap(ewmBitmap);
+        return view;
+    }
     /**
      * 获取二维码
      *

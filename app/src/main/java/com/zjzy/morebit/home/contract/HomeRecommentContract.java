@@ -5,6 +5,7 @@ import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.pojo.FloorInfo;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -26,7 +27,7 @@ public class HomeRecommentContract {
         void onActivityFailure( );
         void onFloorSuccess(List<FloorInfo> data);
         void onFloorFailure();
-        void onVideoSuccess(List<VideoBean>  videoBean);
+        void onVideoSuccess(List<ShopGoodInfo>  videoBean);
         void onVideoFailure();
     }
 

@@ -33,6 +33,7 @@ import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment;
+import com.zjzy.morebit.goodsvideo.ShopMallActivity;
 import com.zjzy.morebit.home.fragment.HomeRecommendFragment;
 import com.zjzy.morebit.info.ui.fragment.MsgFragment;
 import com.zjzy.morebit.interfaces.GuideNextCallback;
@@ -54,6 +55,7 @@ import com.zjzy.morebit.pojo.goods.Child2;
 import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.home.HomeTopRedPagckageBean;
 import com.zjzy.morebit.pojo.home.SysNoticeBean;
+import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -449,7 +451,10 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                 if (!LoginUtil.checkIsLogin(getActivity())) {
                     return;
                 }
+                //消息
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgFragment.class.getName(), new Bundle());
+
+
                 break;
             case R.id.iv_hongbao:
                 if (!TextUtils.isEmpty(mRedpackagecode)) {
@@ -473,9 +478,12 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 //                FenleiFragment.start(getActivity());
                 break;
             case R.id.btn_service:
+
+                //客服
                 if (LoginUtil.checkIsLogin(getActivity())) {
                     getService();
                 }
+
                 break;
         }
     }

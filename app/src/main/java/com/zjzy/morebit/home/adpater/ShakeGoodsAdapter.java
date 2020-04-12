@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +12,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.goodsvideo.VideoActivity;
+import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.VideoBean;
+import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.MathUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.ViewHolder> {
     private Context context;
-    private List<VideoBean> list;
-    public ShakeGoodsAdapter(Context context, List<VideoBean> list) {
+    private List<ShopGoodInfo> list;
+    public ShakeGoodsAdapter(Context context, List<ShopGoodInfo> list) {
         this.context=context;
         this.list=list;
     }
@@ -42,13 +50,38 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final VideoBean videoBean = list.get(position);
+        final ShopGoodInfo videoBean = list.get(position);
+        videoBean.setItemSourceId(list.get(position).getItemId());
+        videoBean.setItemVoucherPrice(list.get(position).getItemPrice());
+        ImageInfo imglist=new ImageInfo();
+       imglist.setThumb(list.get(position).getItemPic());
+        List<ImageInfo> mlist=new ArrayList<>();
+        mlist.add(imglist);
+        videoBean.setAdImgUrl(mlist);
         holder.tv_title.setText(list.get(position).getItemTitle());
         //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());
         LoadImgUtils.loadingCornerTop(context, holder.iv_head,list.get(position).getItemPic(),5);
         holder.commission.setText(list.get(position).getCouponMoney()+"元劵");
         holder.tv_price.setText("¥"+list.get(position).getItemPrice());
-        holder.tv_coupul.setText("预估收益"+list.get(position).getTkMoney()+"元");
+
+        if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
+                || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())) {
+//            commission.setVisibility(View.VISIBLE);
+            holder.tv_coupul.setText("预估收益"+ MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney()+"")+"元");
+        } else {
+            UserInfo userInfo1 =UserLocalData.getUser();
+            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                holder.tv_coupul.setText("预估收益"+MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, list.get(position).getTkMoney()+"")+"元");
+            }else{
+                holder.tv_coupul.setText("预估收益"+MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney()+"")+"元");
+            }
+
+
+
+//            commission.setText(getString(R.string.upgrade_commission));
+//            commission.setVisibility(View.GONE);
+        }
+      //  holder.tv_coupul.setText("预估收益"+list.get(position).getTkMoney()+"元");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

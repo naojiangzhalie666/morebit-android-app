@@ -5,6 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".goodsvideo.VideoClassActivity">
+    <include
+        layout="@layout/top" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="#fff"
+        >
 
+        <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+            android:id="@+id/xTablayout"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            app:xTabDisplayNum="7"
+            app:xTabIndicatorColor="#FF645B"
+            app:xTabIndicatorHeight="3dp"
+            app:xTabIndicatorWidth="20dp"
+            app:xTabMode="scrollable"
+            app:xTabSelectedTextColor="#333333"
+            app:xTabSelectedTextSize="@dimen/sp_15"
+            app:xTabTextColor="#999999"
+            app:xTabTextSize="@dimen/sp_12"/>
+    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/video_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

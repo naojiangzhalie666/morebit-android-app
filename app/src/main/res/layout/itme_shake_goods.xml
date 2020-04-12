@@ -55,16 +55,17 @@
         />
     <TextView
         android:id="@+id/tv_coupul"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="预估收益31.57元"
         android:textColor="#ffffffff"
-        android:textSize="10sp"
+        android:textSize="9sp"
         android:background="@drawable/bg_earning_header_2dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
+
         />
 
 </LinearLayout>

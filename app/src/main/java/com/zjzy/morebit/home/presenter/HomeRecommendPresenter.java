@@ -8,6 +8,7 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.FloorInfo;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.zjzy.morebit.pojo.goods.VideoBean;
@@ -137,15 +138,15 @@ public class HomeRecommendPresenter extends MvpPresenter<HomeModel, HomeRecommen
     @Override
     public void getVideo(RxFragment fragment) {
         mModel.getVideo(fragment)
-                .compose(RxUtils.<BaseResponse<List<VideoBean>>>switchSchedulers())
-                .compose(fragment.<BaseResponse<List<VideoBean>>>bindToLifecycle())
+                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle())
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
 
                     }
                 })
-                .subscribe(new DataObserver<List<VideoBean>>() {
+                .subscribe(new DataObserver<List<ShopGoodInfo>>() {
 
                     @Override
                     protected void onError(String errorMsg, String errCode) {
@@ -153,7 +154,7 @@ public class HomeRecommendPresenter extends MvpPresenter<HomeModel, HomeRecommen
                     }
 
                     @Override
-                    protected void onSuccess(List<VideoBean> data) {
+                    protected void onSuccess(List<ShopGoodInfo> data) {
                         getIView().onVideoSuccess(data);
 
                     }

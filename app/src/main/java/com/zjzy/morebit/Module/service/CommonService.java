@@ -3,10 +3,12 @@ package com.zjzy.morebit.Module.service;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
+import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.pojo.address.AddressInfoList;
 import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.pojo.goods.FloorBean;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
 import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
@@ -156,6 +158,7 @@ import com.zjzy.morebit.pojo.request.RequestUpdateNewPhoneBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.request.RequestUserInfoBean;
 import com.zjzy.morebit.pojo.request.RequestVaultListBean;
+import com.zjzy.morebit.pojo.request.RequestVideoGoodsBean;
 import com.zjzy.morebit.pojo.request.RequestVideoId;
 import com.zjzy.morebit.pojo.request.RequestWechatCodeBean;
 import com.zjzy.morebit.pojo.request.RequestWeixiLoginBean;
@@ -2312,5 +2315,35 @@ public interface CommonService {
      */
 //    @FormUrlEncoded
     @POST("/api/goods/listTikTokGoods")
-    public Observable<BaseResponse<List<VideoBean>>> getVideo();
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getVideo();
+
+    /**
+     * 获取楼层活动数据
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/floorPicture")
+    public Observable<BaseResponse<FloorBean>> getFloorPicture();
+
+
+
+    /**
+     * 获取抖货分类条目
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/listTikTokTab")
+    public Observable<BaseResponse<List<VideoClassBean>>> getVideoClass();
+
+
+    /**
+     * 获取抖货分类商品
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/queryTikTokGoods")
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getVideoGoods(@Body RequestVideoGoodsBean requestBean);
 }
