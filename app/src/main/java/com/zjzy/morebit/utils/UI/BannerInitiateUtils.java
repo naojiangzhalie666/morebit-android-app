@@ -45,6 +45,7 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ActivityLinkBean;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
@@ -52,6 +53,7 @@ import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.OpenCategoryEvent;
 import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.home.TmallActivityBean;
+import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestSplashStatistics;
 import com.zjzy.morebit.pojo.request.RequestTmallActivityLinkBean;
 import com.zjzy.morebit.purchase.PurchaseActivity;
@@ -361,10 +363,12 @@ public class BannerInitiateUtils {
         } else if (type == C.BannerIntentionType.BRAND_LIST) { // 新人免单
            // OpenFragmentUtils.goToSimpleFragment(activity, BrandListFragment.class.getName(), new Bundle());
             activity.startActivity(new Intent(activity,PurchaseActivity.class));
-        } else if (type == C.BannerIntentionType.THREE_GOODS) { // 分类
-            GoodNewsFramgent.start((Activity) activity, info, C.GoodsListType.THREEGOODS);
-        } else if (type == C.BannerIntentionType.GOODS_BYBRAND) { // 品牌列表
-            GoodNewsFramgent.startGoodsByBrand(activity, info);
+        } else if (type == C.BannerIntentionType.THREE_GOODS) { // 饿了么
+            //GoodNewsFramgent.start((Activity) activity, info, C.GoodsListType.THREEGOODS);   //分类
+            getHungryLink((BaseActivity) activity,info);
+        } else if (type == C.BannerIntentionType.GOODS_BYBRAND) { //  口碑
+           // GoodNewsFramgent.startGoodsByBrand(activity, info);  //品牌列表
+            getMouthLink((BaseActivity) activity,info);
         } else if (type == C.BannerIntentionType.JD){//京东
 
         } else if (type == C.BannerIntentionType.PDD){//拼多多
@@ -423,6 +427,59 @@ public class BannerInitiateUtils {
         }
     }
 
+
+    /**
+     * 获取活动生成饿了么链接
+     *
+     * @param activity
+     * @param
+     */
+    private static void getHungryLink(final BaseActivity activity,final ImageInfo info) {
+
+        RequestActivityLinkBean bean = new RequestActivityLinkBean();
+        bean.setActivityId("1571715733668");
+            RxHttp.getInstance().getGoodsService()
+                    .getHungryyLink(bean)
+                    .compose(RxUtils.<BaseResponse<ActivityLinkBean>>switchSchedulers())
+                    .compose(activity.<BaseResponse<ActivityLinkBean>>bindToLifecycle())
+                    .subscribe(new DataObserver<ActivityLinkBean>() {
+                        @Override
+                        protected void onSuccess(ActivityLinkBean data) {
+                            String activityLink = data.getActivityLink();
+                            if (TextUtils.isEmpty(activityLink)) return;
+                            ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle());
+
+                        }
+                    });
+
+    }
+
+
+    /**
+     * 获取活动生成口碑链接
+     *
+     * @param activity
+     * @param
+     */
+    private static void getMouthLink(final BaseActivity activity,final ImageInfo info) {
+
+        RequestActivityLinkBean bean = new RequestActivityLinkBean();
+        bean.setActivityId("1583739244161");
+        RxHttp.getInstance().getGoodsService()
+                .getMouthLink(bean)
+                .compose(RxUtils.<BaseResponse<ActivityLinkBean>>switchSchedulers())
+                .compose(activity.<BaseResponse<ActivityLinkBean>>bindToLifecycle())
+                .subscribe(new DataObserver<ActivityLinkBean>() {
+                    @Override
+                    protected void onSuccess(ActivityLinkBean data) {
+                        String activityLink = data.getActivityLink();
+                        if (TextUtils.isEmpty(activityLink)) return;
+                        ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle());
+
+                    }
+                });
+
+    }
     private static void loginTaobao(final BaseActivity activity, final ImageInfo info) {
         if (!LoginUtil.checkIsLogin(activity)) {
             return;

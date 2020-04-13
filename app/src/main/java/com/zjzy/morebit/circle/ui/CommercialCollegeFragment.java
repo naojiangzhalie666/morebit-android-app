@@ -71,6 +71,7 @@ public class CommercialCollegeFragment extends MvpFragment<CommercialCollegePres
     private  List<MarkermallInformation> mMarkermallInformationList = new ArrayList<>();
     float endX = 0;
     List<View> mHotviews = new ArrayList<>();
+    private LinearLayout search_rl;
 
     public static CommercialCollegeFragment newInstance() {
         Bundle args = new Bundle();
@@ -184,6 +185,13 @@ public class CommercialCollegeFragment extends MvpFragment<CommercialCollegePres
             }
         });
         iv_hot.setImageResource(R.drawable.icon_college_information);
+//        search_rl=mHeadView.findViewById(R.id.search_rl);
+//        search_rl.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SearchArticleListActitivty.start(getActivity());
+//            }
+//        });
     }
 
     private void initStudyView() {
@@ -358,14 +366,14 @@ public class CommercialCollegeFragment extends MvpFragment<CommercialCollegePres
     }
 
 
-    @OnClick({R.id.btn_search})
+ /*   @OnClick({R.id.search_rl})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_search:
-                SearchArticleListActitivty.start(getActivity());
+            case R.id.search_rl:
+
                 break;
         }
-    }
+    }*/
 
 
     private void setHotView(final List<MarkermallInformation> datas) {

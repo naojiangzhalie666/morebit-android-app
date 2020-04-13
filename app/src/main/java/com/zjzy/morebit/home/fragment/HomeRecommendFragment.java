@@ -14,7 +14,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -439,8 +444,19 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                                     public void onTick(long millisUntilFinished) {
 
                                         String hms = DateTimeUtils.getCountTimeByLong(millisUntilFinished);
-                                        if (!TextUtils.isEmpty(hms))
-                                            tv_limitime.setText(hms);
+                                        if (!TextUtils.isEmpty(hms)) {
+                                            SpannableStringBuilder style=new SpannableStringBuilder(hms);
+                                            style.setSpan(new BackgroundColorSpan(Color.RED),0,2, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
+                                            style.setSpan(new BackgroundColorSpan(Color.RED),3,5, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
+                                            style.setSpan(new BackgroundColorSpan(Color.RED),6,8, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
+                                            style.setSpan(new ForegroundColorSpan(Color.WHITE),0,2,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            style.setSpan(new ForegroundColorSpan(Color.WHITE),3,5,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            style.setSpan(new ForegroundColorSpan(Color.WHITE),6,8,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            style.setSpan(new ForegroundColorSpan(Color.RED),2,3,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            style.setSpan(new ForegroundColorSpan(Color.RED),5,6,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            tv_limitime.setText(style);
+                                        }
+
                                     }
 
                                     public void onFinish() {

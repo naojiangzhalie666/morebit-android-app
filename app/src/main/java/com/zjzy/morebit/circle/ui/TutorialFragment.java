@@ -70,10 +70,12 @@ public class TutorialFragment extends MvpFragment<TutorialPresenter> implements 
                 mReUseListView.getListView().setNoMore(true);
             } else {
                 mTutorialAdapter.add(data);
+
             }
         }
-        page++;
         mReUseListView.notifyDataSetChanged();
+
+
 
     }
 
@@ -109,10 +111,10 @@ public class TutorialFragment extends MvpFragment<TutorialPresenter> implements 
 
     public void getTutorialData() {
         RequestTwoLevel requestTwoLevel = new RequestTwoLevel();
-        requestTwoLevel.setTwoLevel(mId);
+       // requestTwoLevel.setTwoLevel(mId);
         requestTwoLevel.setModelId(mId+"");
         requestTwoLevel.setPage(page);
-        mPresenter.getTutorialData(this, requestTwoLevel, mType);
+        mPresenter.getTutorialData(this, requestTwoLevel,1);
 
     }
 
@@ -136,6 +138,7 @@ public class TutorialFragment extends MvpFragment<TutorialPresenter> implements 
             @Override
             public void onLoadMore() {
                 if (!mReUseListView.getSwipeList().isRefreshing()) {
+                    page++;
                     getTutorialData();
                 }
             }

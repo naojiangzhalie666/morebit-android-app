@@ -9,7 +9,12 @@ import com.zjzy.morebit.pojo.request.RequestListBody;
 public class RequestTwoLevel extends RequestListBody {
 
     private int twoLevel;
-  private  String modelId;
+    private  String modelId;
+
+    public String getModelId() {
+        return modelId;
+    }
+
     public int getTwoLevel() {
         return twoLevel;
     }

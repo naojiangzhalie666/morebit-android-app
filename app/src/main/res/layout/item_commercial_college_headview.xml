@@ -8,9 +8,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/color_F8F8F8"
         android:orientation="vertical">
 
         >
@@ -45,6 +46,21 @@
         <!--</LinearLayout>-->
 
 
+
+
+        <!--分类-->
+        <include layout="@layout/view_layout_college_category"
+            android:visibility="gone"
+            />
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/reyclerview_study"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:layout_marginRight="2dp"-->
+        <!--android:layout_marginBottom="22dp"-->
+        <!--android:layout_marginTop="12dp" />-->
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,19 +86,9 @@
                     app:scroll_time="1000" />
             </com.zjzy.morebit.view.AspectRatioView>
         </android.support.v7.widget.CardView>
-
-        <!--分类-->
-        <include layout="@layout/view_layout_college_category" />
-        <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/reyclerview_study"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="12dp"-->
-        <!--android:layout_marginRight="2dp"-->
-        <!--android:layout_marginBottom="22dp"-->
-        <!--android:layout_marginTop="12dp" />-->
         <!--优选资讯-->
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -19,11 +19,21 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.RecommendListActivity;
+import com.zjzy.morebit.goodsvideo.ShopMallActivity;
+import com.zjzy.morebit.goodsvideo.adapter.ShopmallAdapter;
 import com.zjzy.morebit.main.ui.fragment.ShowWebFragment;
 import com.zjzy.morebit.main.ui.fragment.ShowWebFragment.MYWebChromeClient;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ActivityLinkBean;
 import com.zjzy.morebit.pojo.Article;
 import com.zjzy.morebit.pojo.event.WebViewEvent;
 import com.zjzy.morebit.pojo.event.WebViewUpdataColorEvent;
+import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -58,6 +68,8 @@ import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.utils.WechatClientNotExistException;
 import cn.sharesdk.wechat.utils.WechatFavoriteNotSupportedException;
 import cn.sharesdk.wechat.utils.WechatTimelineNotSupportedException;
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 
 /**
  * 展示网页用界面
@@ -466,6 +478,5 @@ public class ShowWebActivity extends BaseActivity {
         }
         return false;
     }
-
 
 }

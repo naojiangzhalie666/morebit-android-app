@@ -18,6 +18,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.circle.ui.CircleBusinessFragment;
 import com.zjzy.morebit.circle.ui.CircleCategoryFragment;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.main.ui.fragment.HomeCollegeFragment;
@@ -153,7 +154,8 @@ public class CircleFragment extends BaseMainFragmeng {
             mTitles[i] = data.get(i).getTitle();
         }
         mTitles[size]="商学院";
-        mFragments.add(new HomeCollegeFragment());
+        //mFragments.add(new HomeCollegeFragment());
+        mFragments.add(new CircleBusinessFragment());//跳转商学院二级页面
         viewPager.setAdapter(new ChannelAdapter(getChildFragmentManager()));
         tab.setViewPager(viewPager);
     }

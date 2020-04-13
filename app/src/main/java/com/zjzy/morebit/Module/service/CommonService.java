@@ -1,5 +1,6 @@
 package com.zjzy.morebit.Module.service;
 
+import com.zjzy.morebit.pojo.ActivityLinkBean;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
@@ -82,6 +83,7 @@ import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
+import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
 import com.zjzy.morebit.pojo.request.RequestAppFeedBackBean;
 import com.zjzy.morebit.pojo.request.RequestArticleBean;
@@ -2346,4 +2348,23 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/goods/queryTikTokGoods")
     public Observable<BaseResponse<List<ShopGoodInfo>>> getVideoGoods(@Body RequestVideoGoodsBean requestBean);
+
+    /**
+     * 获取饿了么跳转链接
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/marketing/official/getGenerateActivityLink")
+    public Observable<BaseResponse<ActivityLinkBean>> getHungryyLink(@Body RequestActivityLinkBean requestBean);
+
+
+    /**
+     * 获取口碑跳转链接
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/marketing/official/getGenerateActivityInfo")
+    public Observable<BaseResponse<ActivityLinkBean>> getMouthLink(@Body RequestActivityLinkBean requestBean);
 }
