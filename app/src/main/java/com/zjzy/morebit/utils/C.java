@@ -9,9 +9,9 @@ public class C {
 
     // api
 
-  public static final String BASE_MOREBIT = "http://api.dev.morebit.com.cn";//开发
-//  public static final String BASE_MOREBIT = "http://api.test.morebit.com.cn";//测试
- //  public static final String BASE_MOREBIT = "https://api.morebit.com.cn";//正式
+ // public static final String BASE_MOREBIT = "http://api.dev.morebit.com.cn";//开发
+ public static final String BASE_MOREBIT = "http://api.test.morebit.com.cn";//测试
+//   public static final String BASE_MOREBIT = "https://api.morebit.com.cn";//正式
 
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;

@@ -108,7 +108,8 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
                 .subscribe(new DataObserver<String>() {
                     @Override
                     protected void onSuccess(String data) {
-                        ischeck= data;
+
+                            ischeck= data;
                     }
                 });
     }

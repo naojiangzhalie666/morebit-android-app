@@ -30,6 +30,7 @@ import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.payment.PayDemoActivity;
 import com.zjzy.morebit.pojo.DayEarnings;
 import com.zjzy.morebit.pojo.HotKeywords;
+import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
@@ -73,6 +74,9 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     String[] tagTitleNoSelfYouxuan = new String[]{"淘宝"};
     private List<EarningDetailFragment> fragments = null;
     private int currentTab = 0;
+    private TextView tao_money,pin_money,profit_money,tv_today_paymen_total,tv_today_integral,tv_today_estimate_money,tv_today_money
+            ,tv_yesterday_payment_total,tv_yestaday_integral,tv_yesterday_estimate_money,tv_yesterday_money,tv_month_estimate_money
+            ,tv_month_money,tv_last__month_estimate_money,tv_last_month_money,tv_month_profit,tv_last_month_profit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,9 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 //            withDrawTimeTv.setText(getString(R.string.withdraw_time,systemConfigBean.getSysValue()));
 //        }
         withDrawTimeTv.setText("每月25~31号可提现上月结算收益");
+
+        mPresenter.getDayMoney(this);
+        mPresenter.getMontMoney(this);
     }
 
     @Override
@@ -107,9 +114,12 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         swipeList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-               if(null != mAdapter){
-                   mAdapter.update(currentTab);
-               }
+//               if(null != mAdapter){
+//                   mAdapter.update(currentTab);
+//               }
+
+                initData();
+
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -130,6 +140,27 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         }else{
             setupViewPager(tagTitleNoSelfYouxuan);
         }
+
+
+        tao_money=view.findViewById(R.id.tao_money);//淘宝总收益
+        pin_money=view.findViewById(R.id.pin_moeny);//拼多多总收益
+        profit_money=view.findViewById(R.id.profit_money);//积分总收益
+        tv_today_paymen_total=view.findViewById(R.id.tv_today_paymen_total);//今日付款笔数
+        tv_today_integral=view.findViewById(R.id.tv_today_integral);//今日积分收益
+        tv_today_estimate_money=view.findViewById(R.id.tv_today_estimate_money);//今日预估收益
+        tv_today_money=view.findViewById(R.id.tv_today_money);//今日结算收益
+        tv_yesterday_payment_total=view.findViewById(R.id.tv_yesterday_payment_total);//昨日付款笔数
+        tv_yestaday_integral=view.findViewById(R.id.tv_yestaday_integral);//昨日积分收益
+        tv_yesterday_estimate_money=view.findViewById(R.id.tv_yesterday_estimate_money);//昨日预估收益
+        tv_yesterday_money=view.findViewById(R.id.tv_yesterday_money);//昨日结算收益
+
+        tv_month_estimate_money=view.findViewById(R.id.tv_month_estimate_money);//本月预估收益
+        tv_month_money=view.findViewById(R.id.tv_month_money);//本月结算收益
+        tv_last__month_estimate_money=view.findViewById(R.id.tv_last__month_estimate_money);//上月预估
+        tv_last_month_money=view.findViewById(R.id.tv_last_month_money);//上月结算收益
+        tv_month_profit=view.findViewById(R.id.tv_month_profit);//本月积分收益
+        tv_last_month_profit=view.findViewById(R.id.tv_last_month_profit);//上月积分收益
+
 
 
     }
@@ -178,7 +209,49 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
     }
 
+    @Override
+    public void getMontnSuccess(MonthEarnings data) {//月收益
+        //本月
+        tv_month_estimate_money.setText(""+MathUtils.getMoney(data.getThisMonthEstimateMoney()));
+        tv_month_money.setText(""+MathUtils.getMoney(data.getThisMonthMoney()));
+        tv_month_profit.setText(""+MathUtils.getMoney(data.getThisMonthIntegral()));
 
+        //上月
+        tv_last__month_estimate_money.setText(""+MathUtils.getMoney(data.getPrevMonthEstimateMoney()));
+        tv_last_month_money.setText(""+MathUtils.getMoney(data.getPrevMonthMoney()));
+        tv_last_month_profit.setText(""+MathUtils.getMoney(data.getPrevMonthIntegral()));
+
+        //平台收益总额
+        tao_money.setText(""+MathUtils.getMoney(data.getTotalTaoBaoEstimateMoney()));
+        pin_money.setText(""+MathUtils.getMoney(data.getTotalPddEstimateMoney()));
+        profit_money.setText(""+MathUtils.getMoney(data.getTotalIntegral()));
+
+
+    }
+
+    @Override
+    public void getMonthError(String errMsg, String errCode) {
+
+    }
+
+    @Override
+    public void getDaySuccess(DayEarnings data) {//日收益
+        //今日
+        tv_today_estimate_money.setText(""+ MathUtils.getMoney(data.getTodayEstimateMoney()));
+        tv_today_paymen_total.setText(data.getTodayPamentTotal());
+        tv_today_money.setText(""+MathUtils.getMoney(data.getTodayMoney()));
+        tv_today_integral.setText(""+MathUtils.getMoney(data.getTotalEstimateIntegral()));
+        //昨天
+        tv_yesterday_money.setText(""+MathUtils.getMoney(data.getYesterdayMoney()));
+        tv_yesterday_payment_total.setText(data.getYestredayPaymentTotal());
+        tv_yesterday_estimate_money.setText("" +MathUtils.getMoney(data.getYesterdayEstimateMoney()));
+        tv_yestaday_integral.setText(""+MathUtils.getMoney(data.getYesterdayEstimateIntegral()));
+    }
+
+    @Override
+    public void getDayError(String errMsg, String errCode) {
+
+    }
 
 
     @OnClick({R.id.bill_details, R.id.withdraw, R.id.back, R.id.tv_rule})
@@ -187,7 +260,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
             case R.id.bill_details:   //账单详情
                 Intent communityIt = new Intent(getActivity(), ConsComGoodsDeailListActivity.class);
                 Bundle communityBundle = new Bundle();
-                communityBundle.putString("title", "账单详情");
+                communityBundle.putString("title", "账单明细");
                 communityBundle.putString("fragmentName", "ConsComDetailListFragment");
                 communityIt.putExtras(communityBundle);
                 startActivity(communityIt);
@@ -221,7 +294,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         }
         MineFragment.mDayEarnings = earnings;
         mTotalMoney = MathUtils.getMoney(earnings.getTotalMoney());
-        balance.setText(getString(R.string.income, mTotalMoney));
+        balance.setText(mTotalMoney);
 
     }
 

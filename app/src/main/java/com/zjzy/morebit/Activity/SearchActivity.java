@@ -163,7 +163,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         ImmersionBar.with(this)
                 .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
                 .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                //.statusBarColor(R.color.color_FFD800)     //状态栏颜色，不写默认透明色
+                .statusBarColor(R.color.white)     //状态栏颜色，不写默认透明色
                 //.fitsSystemWindows(true)    //解决状态栏和布局重叠问题，任选其一，默认为false，当为true时一定要指定statusBarColor()，不然状态栏为透明色，还有一些重载方法
                 .titleBar(bgIv)
                 .init();
@@ -442,21 +442,22 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             guideIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(info.getMediaType() == 1){
+                    if(info.getMediaType() == 1) {
                         //视频
-                        if(!TextUtils.isEmpty(info.getVideoUrl())){
+                        if (!TextUtils.isEmpty(info.getVideoUrl())) {
                             Intent it = new Intent(SearchActivity.this, ShortVideoPlayActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putString(C.Extras.ITEMVIDEOID, info.getVideoUrl());
                             it.putExtras(bundle);
                             startActivity(it);
                         }
-                    }else{
-                        //图片
-                        if(info.getOpen() != 0){
-                            BannerInitiateUtils.gotoAction(SearchActivity.this,info);
-                        }
                     }
+//                    }else{
+//                        //图片
+//                        if(info.getOpen() != 0){
+//                            BannerInitiateUtils.gotoAction(SearchActivity.this,info);
+//                        }
+//                    }
                 }
             });
             if(!TextUtils.isEmpty(info.getPicture())){

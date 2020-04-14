@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
@@ -155,10 +156,10 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
                 if (verticalOffsetABs >= appBarLayout.getTotalScrollRange()) {
                     mTabLayout.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.color_FFD800));
                     ((FansActivity)getActivity()).setImmersionBarBg(true);
-                    //  ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
+                     ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
                 } else if (verticalOffset == 0) {
                     ((FansActivity)getActivity()).setImmersionBarBg(false);
-                    //ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.color_FFD800).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
+                    ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.color_FFD800).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
                     mTabLayout.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.color_333333));
                 }
 

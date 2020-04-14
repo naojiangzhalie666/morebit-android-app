@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.PurchaseDialog;
@@ -68,7 +69,9 @@ public class PurchseAdapter extends RecyclerView.Adapter<PurchseAdapter.ViewHold
                     TaobaoUtil.getAllianceAppKey((BaseActivity) context);
                     return;
                 }
-                if (ischeck.equals("false")) {
+                if (ischeck==null){
+                    ToastUtils.showLong("系统繁忙");
+                } else if (ischeck.equals("false")) {
                     final PurchaseDialog purchaseDialog = new PurchaseDialog((PurchaseActivity) context);
 
                     purchaseDialog.setmCancelListener(new PurchaseDialog.OnCancelListner() {//查看商品
@@ -95,7 +98,7 @@ public class PurchseAdapter extends RecyclerView.Adapter<PurchseAdapter.ViewHold
                     });
 
                     purchaseDialog.show();
-                } else {
+                } else if (ischeck.equals("true")){
                     GoodsDetailActivity.start(context, info);
                 }
 

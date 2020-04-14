@@ -5,8 +5,12 @@ import com.zjzy.morebit.info.contract.EarningsContract;
 import com.zjzy.morebit.info.model.InfoModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+
+import io.reactivex.functions.Action;
 
 /**
  * Created by YangBoTian on 2018/9/12.
@@ -31,9 +35,38 @@ public class EarningsPresenter extends MvpPresenter<InfoModel, EarningsContract.
 
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        getIView().checkWithdrawTimeError(errorMsg,errCode);
+                        getIView().checkWithdrawTimeError(errorMsg, errCode);
                     }
                 });
+    }
+
+    //获取月收益
+    @Override
+    public void getMontMoney(RxFragment rxFragment) {
+        mModel.getMonthIncome(rxFragment)
+                .subscribe(new DataObserver<MonthEarnings>() {
+                    @Override
+                    protected void onSuccess(MonthEarnings data) {
+                        getIView().getMontnSuccess(data);
+                    }
+                });
+    }
+
+    @Override
+    public void getDayMoney(RxFragment rxFragment) {
+        mModel.getDayIncome(rxFragment)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().onIncomeFinally();
+                    }
+                }).subscribe(new DataObserver<DayEarnings>() {
+
+            @Override
+            protected void onSuccess(DayEarnings data) {
+                getIView().getDaySuccess(data);
+            }
+        });
     }
 
 

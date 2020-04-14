@@ -120,7 +120,7 @@ public class EarningDetailFragment  extends MvpFragment<EarningsDetailPresenter>
 
     private void getData() {
          mPresenter.getPlatformDayIncome(this,orderType);
-         mPresenter.getPlatformMonthIncome(this,orderType);
+         mPresenter.getPlatformMonthIncome(this,0);
     }
 
 

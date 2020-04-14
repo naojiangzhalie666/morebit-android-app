@@ -18,6 +18,41 @@ public class DayEarnings implements Serializable {
     private String yesterdayMoney= "";   //昨天结算预估金额
     private String accumulatedAmount= "";   //累计金额
 
+    private String totalEstimateIntegral= "";   //今日预估积分收益
+
+    private String yesterdayEstimateIntegral= "";   //昨日预估积分收益
+
+    public String getTodayPaymentTotal() {
+        return todayPaymentTotal;
+    }
+
+    public void setTodayPaymentTotal(String todayPaymentTotal) {
+        this.todayPaymentTotal = todayPaymentTotal;
+    }
+
+    public String getYesterdayPaymentTotal() {
+        return yesterdayPaymentTotal;
+    }
+
+    public void setYesterdayPaymentTotal(String yesterdayPaymentTotal) {
+        this.yesterdayPaymentTotal = yesterdayPaymentTotal;
+    }
+
+    public String getTotalEstimateIntegral() {
+        return totalEstimateIntegral;
+    }
+
+    public void setTotalEstimateIntegral(String totalEstimateIntegral) {
+        this.totalEstimateIntegral = totalEstimateIntegral;
+    }
+
+    public String getYesterdayEstimateIntegral() {
+        return yesterdayEstimateIntegral;
+    }
+
+    public void setYesterdayEstimateIntegral(String yesterdayEstimateIntegral) {
+        this.yesterdayEstimateIntegral = yesterdayEstimateIntegral;
+    }
 
     public String getTodayMoney() {
         return todayMoney;

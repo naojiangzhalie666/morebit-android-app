@@ -369,7 +369,6 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         img_limted1 = mHeadView.findViewById(R.id.img_limted1);//限时抢购
         litmited_time = mHeadView.findViewById(R.id.litmited_time);//限时抢购模块
 
-
         mImageInfo = new ImageInfo();
         mImageInfo.setClassId(4);
         mImageInfo.setId(363);

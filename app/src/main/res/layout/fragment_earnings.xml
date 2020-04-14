@@ -3,18 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F8F9FB"
-    >
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:background="@drawable/bg_earning_header"/>-->
+    android:background="@color/color_F8F9FB">
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        android:background="@drawable/bg_earning_header"/>-->
     <com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout
         android:id="@+id/swipeList"
         android:layout_width="match_parent"
-        app:is_auto_refresh="false"
         android:layout_height="match_parent"
-        >
+        app:is_auto_refresh="false">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -41,7 +39,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_earning_header"
+                    android:background="@color/color_FF645B"
                     android:orientation="vertical"
                     android:paddingBottom="8dp">
 
@@ -52,6 +50,31 @@
                         android:background="@color/transparent" />
 
                     <include layout="@layout/title_earnings" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="#FF8078"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icon_income_notice" />
+
+                        <TextView
+                            android:id="@+id/withDrawTimeTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text=""
+                            android:textColor="@color/color_FFFFFF"
+                            android:textSize="@dimen/sp_12" />
+                    </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -78,16 +101,30 @@
                                     android:layout_marginTop="20dp"
                                     android:text="@string/balance"
                                     android:textColor="@color/color_FFFFFF"
-                                    android:textSize="@dimen/sp_13" />
+                                    android:textSize="@dimen/sp_16" />
 
-                                <TextView
-                                    android:id="@+id/balance"
+                                <LinearLayout
+                                    android:layout_marginBottom="20dp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/color_FFFFFF"
-                                    android:textSize="@dimen/sp_38" />
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:text="¥ "
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/color_FFFFFF"
+                                        android:textSize="@dimen/sp_16" />
+
+                                    <TextView
+                                        android:id="@+id/balance"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/color_FFFFFF"
+                                        android:textSize="@dimen/sp_38" />
+                                </LinearLayout>
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/bill_details"
                                     android:layout_width="71dp"
                                     android:layout_height="23dp"
@@ -98,31 +135,6 @@
                                     android:textColor="@color/color_FFFFFF"
                                     android:textSize="@dimen/sp_12" />
 
-                                  <LinearLayout
-                                      android:layout_width="wrap_content"
-                                      android:layout_height="wrap_content"
-                                      android:background="@drawable/bg_income_tips"
-                                      android:paddingLeft="14dp"
-                                      android:paddingRight="14dp"
-                                      android:paddingTop="3dp"
-                                      android:paddingBottom="3dp"
-                                      android:layout_marginTop="12dp"
-                                      android:gravity="center">
-                                      <ImageView
-                                          android:layout_width="20dp"
-                                          android:layout_height="20dp"
-                                          android:src="@drawable/icon_income_notice"
-                                          android:scaleType="fitCenter"/>
-                                      <TextView
-                                          android:id="@+id/withDrawTimeTv"
-                                          android:layout_width="wrap_content"
-                                          android:layout_height="wrap_content"
-                                          android:text=""
-                                          android:textColor="@color/color_FFFFFF"
-                                          android:textSize="@dimen/sp_12"
-                                          android:layout_marginLeft="5dp"
-                                          />
-                                  </LinearLayout>
 
                             </LinearLayout>
 
@@ -135,48 +147,53 @@
                                 android:layout_marginRight="29dp"
                                 android:background="@drawable/bg_ffffff_corners_30dp"
                                 android:gravity="center"
-                                android:text="@string/withdraw"
-                                android:textColor="#FC6428"
+                                android:text="去提现"
+                                android:paddingRight="10dp"
+                                android:drawableRight="@drawable/earnings_next"
+                                android:textColor="#FF5B5B"
                                 android:textSize="@dimen/sp_14" />
                         </RelativeLayout>
 
                     </RelativeLayout>
                 </LinearLayout>
                 <!--预估收入-->
+
+                <include layout="@layout/eaings_item_estimate"/>
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
 
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white">
-                            <com.flyco.tablayout.SlidingTabLayout
-                                android:id="@+id/orderTabLayout"
-                                android:layout_width="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_height="40dp"
-                                app:tl_indicator_width="20dp"
-                                app:tl_indicator_height="4dp"
-                                app:tl_indicator_margin_bottom="5dp"
-                                app:tl_indicator_corner_radius="2dp"
-                                app:tl_indicator_color="@color/color_fffc672a"
-                                app:tl_textSelectColor="@color/color_333333"
-                                app:tl_textUnselectColor="@color/color_666666"
-                                app:tl_textsize="@dimen/sp_16"
-                                app:tl_tab_padding="30dp"
-                                />
-                        </FrameLayout>
+                    <FrameLayout
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
 
+                        <com.flyco.tablayout.SlidingTabLayout
+                            android:id="@+id/orderTabLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_horizontal"
+                            app:tl_indicator_color="@color/color_fffc672a"
+                            app:tl_indicator_corner_radius="2dp"
+                            app:tl_indicator_height="4dp"
+                            app:tl_indicator_margin_bottom="5dp"
+                            app:tl_indicator_width="20dp"
+                            app:tl_tab_padding="30dp"
+                            app:tl_textSelectColor="@color/color_333333"
+                            app:tl_textUnselectColor="@color/color_666666"
+                            app:tl_textsize="@dimen/sp_16" />
+                    </FrameLayout>
 
 
                     <com.zjzy.morebit.view.ChildViewPager
+                        android:visibility="gone"
                         android:id="@+id/orderViewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        />
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
 
@@ -184,9 +201,9 @@
                     android:id="@+id/tv_rule"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="29dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="29dp"
                     android:gravity="right"
                     android:text="@string/rule"
                     android:textColor="@color/color_999999"

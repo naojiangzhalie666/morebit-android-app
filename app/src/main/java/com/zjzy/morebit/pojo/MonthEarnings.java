@@ -15,6 +15,52 @@ public class MonthEarnings implements Serializable {
     private String prevMonthEstimateMoney = "";   //上月预估收入
     private String prevMonthMoney = "";   //上月结算收入
 
+    private String thisMonthIntegral="";//本月积分收益
+    private String prevMonthIntegral="";//上月积分收益
+    private String totalIntegral=""	;//总积分收益
+    private String totalTaoBaoEstimateMoney="";//淘宝预估总收益
+    private String totalPddEstimateMoney="";//拼多多预估总收益
+
+    public String getThisMonthIntegral() {
+        return thisMonthIntegral;
+    }
+
+    public void setThisMonthIntegral(String thisMonthIntegral) {
+        this.thisMonthIntegral = thisMonthIntegral;
+    }
+
+    public String getPrevMonthIntegral() {
+        return prevMonthIntegral;
+    }
+
+    public void setPrevMonthIntegral(String prevMonthIntegral) {
+        this.prevMonthIntegral = prevMonthIntegral;
+    }
+
+    public String getTotalIntegral() {
+        return totalIntegral;
+    }
+
+    public void setTotalIntegral(String totalIntegral) {
+        this.totalIntegral = totalIntegral;
+    }
+
+    public String getTotalTaoBaoEstimateMoney() {
+        return totalTaoBaoEstimateMoney;
+    }
+
+    public void setTotalTaoBaoEstimateMoney(String totalTaoBaoEstimateMoney) {
+        this.totalTaoBaoEstimateMoney = totalTaoBaoEstimateMoney;
+    }
+
+    public String getTotalPddEstimateMoney() {
+        return totalPddEstimateMoney;
+    }
+
+    public void setTotalPddEstimateMoney(String totalPddEstimateMoney) {
+        this.totalPddEstimateMoney = totalPddEstimateMoney;
+    }
+
     public String getThisMonthEstimateMoney() {
         return thisMonthEstimateMoney;
     }

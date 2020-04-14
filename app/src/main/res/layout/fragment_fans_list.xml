@@ -161,6 +161,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#ffffff"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <com.flyco.tablayout.SlidingTabLayout
@@ -174,8 +175,8 @@
                     app:tl_indicator_height="2dp"
                     app:tl_tab_space_equal="true"
                     app:tl_indicator_width="14dp"
-                    app:tl_textSelectColor="@color/color_FFFFFF"
-                    app:tl_textUnselectColor="@color/color_FFFFFF"
+                    app:tl_textSelectColor="@color/content_text_color"
+                    app:tl_textUnselectColor="@color/color_999999"
                     app:tl_textsize="@dimen/sp_15" />
 
             </RelativeLayout>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
@@ -93,9 +94,11 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
                     TaobaoUtil.getAllianceAppKey((BaseActivity) context);
                     return;
                 }
-                if (ischeck.equals("false")){
+                if (ischeck==null){
+                    ToastUtils.showLong("系统繁忙");
+                } else if (ischeck.equals("false")){
                     GoodsDetailActivity.start(context, info);
-                }else{
+                }else if (ischeck.equals("true")){
                     final ProductDialog productDialog=new ProductDialog((PurchaseActivity) context);
 
                     productDialog.setmCancelListener(new ProductDialog.OnCancelListner() {//立即分享

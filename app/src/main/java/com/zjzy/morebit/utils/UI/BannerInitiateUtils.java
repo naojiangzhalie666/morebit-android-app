@@ -362,7 +362,9 @@ public class BannerInitiateUtils {
             RecommendListActivity.start(activity, RecommendListActivity.ARTICLE_REVIEW);
         } else if (type == C.BannerIntentionType.BRAND_LIST) { // 新人免单
            // OpenFragmentUtils.goToSimpleFragment(activity, BrandListFragment.class.getName(), new Bundle());
-            activity.startActivity(new Intent(activity,PurchaseActivity.class));
+            if (LoginUtil.checkIsLogin(activity)) {
+                activity.startActivity(new Intent(activity,PurchaseActivity.class));
+            }
         } else if (type == C.BannerIntentionType.THREE_GOODS) { // 饿了么
             //GoodNewsFramgent.start((Activity) activity, info, C.GoodsListType.THREEGOODS);   //分类
             getHungryLink((BaseActivity) activity,info);

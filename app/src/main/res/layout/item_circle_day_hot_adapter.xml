@@ -78,6 +78,7 @@
                         android:text="多点优选分享用户"/>
 
                     <com.zjzy.morebit.view.CollectBtn
+                        android:visibility="gone"
                         android:id="@+id/collectBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
