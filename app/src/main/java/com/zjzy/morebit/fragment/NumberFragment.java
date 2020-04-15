@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
@@ -56,8 +57,9 @@ public class NumberFragment extends BaseMainFragmeng  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          super.onCreateView(inflater, container, savedInstanceState);
-        mView = inflater.inflate(R.layout.fragment_number, container, false);
 
+
+        mView = inflater.inflate(R.layout.fragment_number, container, false);
         ButterKnife.bind(this, mView);
 
         initView(mView);

@@ -7,10 +7,7 @@
     android:background="@color/color_fff8f8f8"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@color/color_333333"/>
+
 
     <com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout
         android:id="@+id/swipeList"
@@ -32,6 +29,10 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:background="@color/color_333333"/>
 
                     <View
                         android:layout_width="wrap_content"

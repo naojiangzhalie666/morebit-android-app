@@ -374,7 +374,7 @@ public class NumberSubFragment extends BaseFragment {
             rl_duodou_progress.setVisibility(View.VISIBLE);
             mHorzProgressView.setMax(50000.00);
             mHorzProgressView.setCurrentNum(info.getMoreCoin());
-            myGradedView.setText("VIP会员");
+            myGradedView.setText("VIP");
             Long moreCoin = info.getMoreCoin();
             String coin1 ;
             if (moreCoin == null){

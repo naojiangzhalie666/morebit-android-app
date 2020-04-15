@@ -69,6 +69,7 @@ import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
+import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.view.HomeCategoryPopWindow;
@@ -304,6 +305,9 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                 noLoginView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (TimeUtils.isFrequentOperation()){//防止用户多次点击跳两次页面
+                            return;
+                        }
                         LoginUtil.goToPasswordLogin(getActivity());
                     }
                 });

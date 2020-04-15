@@ -179,7 +179,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         tabList.add(new BaseTitleTabBean("综合", false, C.Setting.itemIndex));
         tabList.add(new BaseTitleTabBean("券后价", true, C.Setting.itemVoucherPrice));
         tabList.add(new BaseTitleTabBean("销量", true, C.Setting.saleMonth));
-        tabList.add(new BaseTitleTabBean("奖励", false, C.Setting.commission));
+//        tabList.add(new BaseTitleTabBean("奖励", false, C.Setting.commission));
 
         initTab(mTabLayout);
 

@@ -148,13 +148,13 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
                 int colorSearch = (int) evaluatorSearch.evaluate(percent, ContextCompat.getColor(getActivity(), R.color.color_FFC200), ContextCompat.getColor(getActivity(), R.color.color_ECECEC));
                 int color = (int) evaluator.evaluate(percent, ContextCompat.getColor(getActivity(), R.color.color_FFD800), ContextCompat.getColor(getActivity(), R.color.white));
 //                toolbar.setBackgroundColor(color);
-                appbar.setBackgroundColor(color);
-                mTabLayout.setBackgroundColor(color);
+            //    appbar.setBackgroundColor(color);
+              //  mTabLayout.setBackgroundColor(color);
 //                search_rl.setBackgroundColor(colorSearch);
 //                status_bar.setBackgroundColor(color);
                 ((FansActivity)getActivity()).setTopBg(percent);
                 if (verticalOffsetABs >= appBarLayout.getTotalScrollRange()) {
-                    mTabLayout.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.color_FFD800));
+                 //   mTabLayout.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.color_FFD800));
                     ((FansActivity)getActivity()).setImmersionBarBg(true);
                      ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
                 } else if (verticalOffset == 0) {
@@ -167,10 +167,10 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
         });
         if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
             rl_teamLeader.setVisibility(View.GONE);
-            tv_contact.setVisibility(View.VISIBLE);
+           // tv_contact.setVisibility(View.VISIBLE);
         } else {
             rl_teamLeader.setVisibility(View.VISIBLE);
-            tv_contact.setVisibility(View.GONE);
+          //  tv_contact.setVisibility(View.GONE);
         }
         getTabText();
         getTeamLeader();
@@ -304,15 +304,15 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
 
         if (TextUtils.isEmpty(data.getWxNumber())) {
             mTeamLeaderCode.setText("未填写");
-            mTeamLeaderCode.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_999999));
-            copy.setBackgroundResource(R.drawable.bg_solid_ececec_5dp);
-            copy.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_999999));
+          //  mTeamLeaderCode.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_999999));
+           // copy.setBackgroundResource(R.drawable.bg_solid_ececec_5dp);
+         //   copy.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_999999));
             copy.setEnabled(false);
         } else {
             mTeamLeaderCode.setText(data.getWxNumber());
-            mTeamLeaderCode.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
-            copy.setBackgroundResource(R.drawable.bg_stroke_dadada_5dp);
-            copy.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_333333));
+          //  mTeamLeaderCode.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
+         //   copy.setBackgroundResource(R.drawable.bg_stroke_dadada_5dp);
+          //  copy.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_333333));
             copy.setEnabled(true);
         }
 

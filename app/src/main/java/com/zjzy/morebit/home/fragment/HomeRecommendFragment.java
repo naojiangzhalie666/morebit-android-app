@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -219,6 +220,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         initRecyclerView();
         getCache();
         setBigTag(false);
+        initLimted();
 //        refreshData();
     }
 
@@ -289,6 +291,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         isNearEadge = false;
         setRecommendData();
         if (isLoadData) initTitleUI();
+        initLimted();
         //mPresenter.getOfficalList(this);
     }
 
@@ -365,6 +368,19 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         mFloorAdapter = new FloorAdapter(getActivity(), getChildFragmentManager());
         mFloorRv.setAdapter(mFloorAdapter);
 
+
+
+    }
+
+    /*
+    *
+    * 限时抢购模块
+    *
+    * */
+
+    private void initLimted(){
+
+
         img_limted2 = mHeadView.findViewById(R.id.img_limted2);//新手教程
         img_limted1 = mHeadView.findViewById(R.id.img_limted1);//限时抢购
         litmited_time = mHeadView.findViewById(R.id.litmited_time);//限时抢购模块
@@ -384,6 +400,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     @Override
                     protected void onSuccess(final FloorBean data) {
                         if (data != null) {
+
+                            SPUtils.getInstance().put("purchaseRule",data.getZeroActivityRule());
                             LoadImgUtils.setImg(getActivity(), img_limted1, data.getFlashSalePic());
                             LoadImgUtils.setImg(getActivity(), img_limted2, data.getNoviceTutorialPic());
                             img_limted1.setOnClickListener(new View.OnClickListener() {
@@ -459,7 +477,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                                     }
 
                                     public void onFinish() {
-                                       // getTabDeta(activity);
+                                        // getTabDeta(activity);
                                     }
                                 }.start();
                             }
@@ -467,8 +485,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     }
                 });
 
-
-    }
+        }
 
     /*
     * 秒杀时间
@@ -1032,6 +1049,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         super.onResume();
         setTopButtonPosition();
         setBigTag(false);
+        initLimted();
     }
 
     @Override

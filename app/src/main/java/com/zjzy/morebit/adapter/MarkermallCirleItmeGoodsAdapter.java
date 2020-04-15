@@ -69,11 +69,11 @@ public class MarkermallCirleItmeGoodsAdapter extends BaseMYShareAdapter<Markerma
             holder.markTv.setVisibility(View.GONE);
         }
         LoadImgUtils.loadingCornerBitmap(mContext, holder.iv_head, MathUtils.getPicture(info));
-        if (TextUtils.isEmpty(UserLocalData.getUser(mContext).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(mContext).getPartner())) {
-            holder.tv_share.setText(mContext.getString(R.string.now_share));
-        } else {
+//        if (TextUtils.isEmpty(UserLocalData.getUser(mContext).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(mContext).getPartner())) {
+//            holder.tv_share.setText(mContext.getString(R.string.now_share));
+//        } else {
             holder.tv_share.setText(mContext.getString(R.string.share_price_new, muRatioComPrice));
-        }
+//        }
         holder.tv_price.setText("券额"+mContext.getString(R.string.income_yuan, MathUtils.getPrice(info.getCouponPrice())));
 
 

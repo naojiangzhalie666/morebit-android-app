@@ -29,24 +29,7 @@
                 app:riv_mutate_background="true"
                 app:riv_oval="true" />
 
-        <!--显示晋升按钮-->
-        <TextView
-            android:id="@+id/btn_number_update_vip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="@dimen/sp_16"
-            android:text="立即晋升"
-            android:textColor="@color/color_000000"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:background="@drawable/btn_bg_gold"
-            android:layout_alignBottom="@id/userIcon"
-            android:layout_alignParentRight="true"
-            />
+
      <RelativeLayout
          android:layout_width="wrap_content"
          android:layout_height="60dp"
@@ -59,6 +42,7 @@
              android:layout_height="wrap_content"
              android:layout_centerVertical="true"
              android:ellipsize="end"
+             android:maxEms="6"
              android:maxLines="1"
              android:textColor="@color/color_FFFFFF"
              android:textSize="@dimen/sp_15"
@@ -71,7 +55,7 @@
              android:layout_toRightOf="@id/user_name"
              android:layout_centerVertical="true"
              android:paddingRight="4dp"
-             android:layout_marginLeft="10dp">
+             android:layout_marginLeft="5dp">
              <ImageView
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
@@ -88,6 +72,24 @@
                  android:textColor="@color/color_FFFFFF"
                  android:textSize="@dimen/sp_12"/>
          </LinearLayout>
+         <!--显示晋升按钮-->
+         <TextView
+             android:id="@+id/btn_number_update_vip"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:paddingBottom="2dp"
+             android:paddingTop="2dp"
+             android:paddingLeft="10dp"
+             android:paddingRight="10dp"
+             android:textSize="@dimen/sp_16"
+             android:text="立即晋升"
+             android:textColor="@color/color_000000"
+             android:textStyle="bold"
+             android:gravity="center"
+             android:layout_centerVertical="true"
+             android:background="@drawable/btn_bg_gold"
+             android:layout_alignParentRight="true"
+             />
      </RelativeLayout>
 
         <!--显示成长值-->
@@ -171,6 +173,7 @@
          </LinearLayout>
          <!--赞多豆享特权-->
          <LinearLayout
+             android:visibility="gone"
              android:id="@+id/ll_more_corn_priority"
              android:layout_width="match_parent"
              android:layout_height="20dp"

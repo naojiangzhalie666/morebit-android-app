@@ -376,7 +376,7 @@
     <string name="submit_goods">提交审核</string>
     <string name="coupon_price_text">券后价</string>
     <string name="share_price">分享收益\n %1$s元</string>
-    <string name="share_price_new">分享收益%1$s元</string>
+    <string name="share_price_new">分享赚%1$s元</string>
     <string name="edit_pwd_error">密码必须是8-16位的数字、字符组合</string>
     <string name="my_material">我的素材</string>
 

@@ -143,6 +143,19 @@ public class ShowWebActivity extends BaseActivity {
         activity.startActivity(it);
     }
 
+    public static void start(Activity activity, String url, String title,String id) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        //跳转到网页
+        Intent it = new Intent(activity, ShowWebActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putString("url", url);
+        it.putExtras(bundle);
+        activity.startActivity(it);
+    }
+
     /**
      * 物流信息
      * @param activity

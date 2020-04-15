@@ -52,6 +52,8 @@
                 android:layout_marginTop="3dp"
                 android:layout_gravity="center"
                 android:lineSpacingExtra="3dp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textColor="@color/color_333333"
                 android:textSize="13sp"
                 app:defaultLineCount="2"

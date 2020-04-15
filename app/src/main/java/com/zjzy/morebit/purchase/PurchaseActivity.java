@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.wireless.security.open.middletier.fc.IFCActionCallback;
+import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -195,7 +196,8 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
                 break;
 
             case R.id.tv_rule:
-                final PurchaseRuleDialog purchaseRuleDialog = new PurchaseRuleDialog(this,"");//规则h5链接
+                String purchaseRule = SPUtils.getInstance().getString("purchaseRule");
+                final PurchaseRuleDialog purchaseRuleDialog = new PurchaseRuleDialog(this,purchaseRule);//规则h5链接
                 purchaseRuleDialog.setmCancelListener(new PurchaseRuleDialog.OnCancelListner() {
                     @Override
                     public void onClick(View view) {

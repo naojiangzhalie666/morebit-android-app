@@ -449,7 +449,7 @@ public class BannerInitiateUtils {
                         protected void onSuccess(ActivityLinkBean data) {
                             String activityLink = data.getActivityLink();
                             if (TextUtils.isEmpty(activityLink)) return;
-                            ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle());
+                            ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle(),"28");
 
                         }
                     });
@@ -476,7 +476,7 @@ public class BannerInitiateUtils {
                     protected void onSuccess(ActivityLinkBean data) {
                         String activityLink = data.getActivityLink();
                         if (TextUtils.isEmpty(activityLink)) return;
-                        ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle());
+                        ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle(),"29");
 
                     }
                 });

@@ -67,7 +67,7 @@ public class ShowWebFragment extends BaseFragment {
     @BindView(R.id.ll_error)
     LinearLayout ll_error;
     String url;
-    boolean isLoginSucceed=false;
+    boolean isLoginSucceed = false;
     private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> mUploadMessageArray;
     private MYWebChromeClient mWebChromeClient;
@@ -123,7 +123,6 @@ public class ShowWebFragment extends BaseFragment {
         webview.setWebViewClient(new WebViewClient() {
 
 
-
             @Override
             public void onPageCommitVisible(WebView view, String url) {
                 super.onPageCommitVisible(view, url);
@@ -142,19 +141,22 @@ public class ShowWebFragment extends BaseFragment {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String newurl) {
                 try {
-                    if(null != mTaobaoLink && mTaobaoLink.size()>0){
-                        boolean isFind = false;
-                        for (String url: mTaobaoLink) {
-                             if(newurl.contains(url)){
-                                 isFind = true;
-                             }
-                        }
-                        if(isFind){
-                            if (AppUtil.isTaobaoClientAvailable(getActivity())) {
-                                TaobaoUtil.showUrl(getActivity(), newurl);
-                                return true;
+                    if (!newurl.contains("activityLink=https://s.click.ele.me")&&!newurl.contains("activityLink=https://s.click.koubei.com")) {
+                        if (null != mTaobaoLink && mTaobaoLink.size() > 0) {
+                            boolean isFind = false;
+                            for (String url : mTaobaoLink) {
+                                if (newurl.contains(url)) {
+                                    isFind = true;
+                                }
+                            }
+                            if (isFind) {
+                                if (AppUtil.isTaobaoClientAvailable(getActivity())) {
+                                    TaobaoUtil.showUrl(getActivity(), newurl);
+                                    return true;
+                                }
                             }
                         }
+
                     }
 
 
@@ -232,7 +234,7 @@ public class ShowWebFragment extends BaseFragment {
 
     @Subscribe  //订阅事件
     public void onEventMainThread(LoginSucceedEvent event) {
-        isLoginSucceed  = true;
+        isLoginSucceed = true;
     }
 
     public void refreshWeb() {
@@ -255,6 +257,7 @@ public class ShowWebFragment extends BaseFragment {
                 callback.invoke(origin, true, false);
                 super.onGeolocationPermissionsShowPrompt(origin, callback);
             }
+
             public void onProgressChanged(WebView view, int newProgress) {
                 if (pb != null) {
                     pb.setProgress(newProgress);
@@ -357,7 +360,8 @@ public class ShowWebFragment extends BaseFragment {
 
                     break;
             }
-        }if(requestCode == ShowWebActivity.REQUEST_COLLEGE_FEEDBACK&&resultCode==Activity.RESULT_OK){
+        }
+        if (requestCode == ShowWebActivity.REQUEST_COLLEGE_FEEDBACK && resultCode == Activity.RESULT_OK) {
             webview.reload();
         } else {
             onReceiveValue();
@@ -432,22 +436,22 @@ public class ShowWebFragment extends BaseFragment {
         MyLog.i("currentThreadName", "sss  " + Thread.currentThread().getName());
         if (webview != null) {
             webview.onResume();
-            if (isLoginSucceed){
-            //恢复pauseTimers状态
+            if (isLoginSucceed) {
+                //恢复pauseTimers状态
                 initBundle();
                 webview.loadUrl(url);
                 MyLog.i("currentThreadName", "url  " + url);
-                if (mHandler ==null){
+                if (mHandler == null) {
                     mHandler = new Handler();
                 }
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        isLoginSucceed  = false;
+                        isLoginSucceed = false;
                         refreshWeb();
                     }
-             },500);
-         }
+                }, 500);
+            }
         }
     }
 

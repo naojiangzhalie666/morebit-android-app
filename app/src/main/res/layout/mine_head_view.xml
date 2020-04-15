@@ -53,6 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:maxEms="8"
                         android:maxLines="1"
                         android:textColor="@color/color_FFFFFF"
                         android:textSize="@dimen/sp_18"
@@ -63,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_gray_grade_vip"
                         android:layout_toRightOf="@id/userName"
-                        android:layout_alignBottom="@id/userName"
+                       android:layout_centerVertical="true"
                         android:paddingRight="4dp"
                         android:layout_marginLeft="10dp">
                         <ImageView
@@ -78,7 +79,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-
                             android:text="会员"
                             android:textColor="@color/color_FFFFFF"
                             android:textSize="@dimen/sp_12"/>
@@ -86,33 +86,7 @@
 
 
 
-                    <RelativeLayout
-                        android:id="@+id/rl_set_weixin"
-                        android:layout_width="95dp"
-                        android:layout_height="23dp"
-                        android:layout_alignTop="@id/userName"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/bg_stroke_d1d1d1_solid_ffffff_30dp"
-                        android:gravity="center"
-                        android:visibility="gone">
 
-                        <ImageView
-                            android:id="@+id/icon_weixin"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_marginRight="3dp"
-                            android:src="@drawable/icon_mine_weixin" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/icon_weixin"
-                            android:text="绑定微信"
-                            android:textColor="@color/color_333333"
-                            android:textSize="@dimen/sp_12" />
-                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -121,7 +95,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical">
-
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="24dp"
@@ -139,7 +115,7 @@
                             android:id="@+id/copy_invitation_code"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginBottom="3dp"
                             android:background="@mipmap/bg_copy"
                             android:layout_toRightOf="@+id/invitation_code"
@@ -150,8 +126,34 @@
                             />
 
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rl_set_weixin"
+                        android:layout_width="95dp"
+                        android:layout_height="23dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bg_stroke_d1d1d1_solid_ffffff_30dp"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        >
 
+                        <ImageView
+                            android:id="@+id/icon_weixin"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginRight="3dp"
+                            android:src="@drawable/icon_mine_weixin" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/icon_weixin"
+                            android:text="绑定微信"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_12" />
+                    </RelativeLayout>
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
 

@@ -1,9 +1,14 @@
 package com.zjzy.morebit.Module.common.Dialog;
 
 import android.app.Dialog;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,12 +42,45 @@ public class PurchaseRuleDialog extends Dialog {
     }
 
     private void initView() {
+
+/**
+ * 启用mixed content    android 5.0以上默认不支持Mixed Content
+ *
+ * 5.0以上允许加载http和https混合的页面(5.0以下默认允许，5.0+默认禁止)
+ * */
         btn_close=findViewById(R.id.btn_close);
         WebView webView = findViewById(R.id.webview);
-        webView.getSettings().setGeolocationEnabled(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setGeolocationEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setSavePassword(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSettings.setUseWideViewPort(true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
         //启用支持DOM Storage
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.loadUrl("https://blog.csdn.net/RoseChilde/article/details/102576994");
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                // 不要使用super，否则有些手机访问不了，因为包含了一条 handler.cancel()
+                // super.onReceivedSslError(view, handler, error);
+                // 接受所有网站的证书，忽略SSL错误，执行访问网页
+                handler.proceed();
+
+            }
+        });
+        webView.loadUrl(url);
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
