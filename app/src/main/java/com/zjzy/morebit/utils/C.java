@@ -11,11 +11,7 @@ public class C {
 
  // public static final String BASE_MOREBIT = "http://api.dev.morebit.com.cn";//开发
 // public static final String BASE_MOREBIT = "http://api.test.morebit.com.cn";//测试
-<<<<<<< HEAD
     public static final String BASE_MOREBIT = "https://api.morebit.com.cn";//正式
-=======
-   public static final String BASE_MOREBIT = "https://api.morebit.com.cn";//正式
->>>>>>> 7e7e4fbd55428734523cb95d46825890e9be1273
 
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;
