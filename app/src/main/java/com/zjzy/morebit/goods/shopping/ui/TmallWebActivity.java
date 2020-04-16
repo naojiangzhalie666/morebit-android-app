@@ -3,12 +3,14 @@ package com.zjzy.morebit.goods.shopping.ui;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -110,6 +112,14 @@ public class TmallWebActivity extends BaseActivity {
     }
 
     private void initView() {
+        //webview卡顿优化
+        mWebview.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings settings = mWebview.getSettings();
+        settings.setAppCacheEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setDomStorageEnabled(true);//开启DOM缓存，关闭的话H5自身的一些操作是无效的
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setBlockNetworkImage(true);
         mUrl = getIntent().getStringExtra(C.Extras.WEBURL);
         String title = getIntent().getStringExtra(C.Extras.WEBTITLE);
         if (TextUtils.isEmpty(mUrl)) return;
@@ -203,6 +213,7 @@ public class TmallWebActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                mWebview.getSettings().setBlockNetworkImage(false);//网页图片延迟加载
                 if (!TextUtils.isEmpty(mTitle) && !mTitle.contains("http")) {
                     mToolbarWebHelper.setCustomTitle(mTitle);
                 }
@@ -293,8 +304,8 @@ public class TmallWebActivity extends BaseActivity {
      * 搜索优惠券
      */
     private void searchConcessional() {
-        shareTv.setText("分享");
-        tv_buy.setText("立即购买");
+        shareTv.setText("分享赚");
+        tv_buy.setText("自购省");
         LoadingView.showDialog(this);
         ByItemSourceIdBean requestBean = new ByItemSourceIdBean();
         requestBean.setItemSourceId(mItemSourceId);

@@ -449,7 +449,8 @@ public class BannerInitiateUtils {
                         protected void onSuccess(ActivityLinkBean data) {
                             String activityLink = data.getActivityLink();
                             if (TextUtils.isEmpty(activityLink)) return;
-                            ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle(),"28");
+                    //       ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle(),"28");
+                           ShowWebActivity.start(activity,"http://192.168.3.88:81/#/ele",info.getTitle(),"28");
 
                         }
                     });
@@ -476,7 +477,7 @@ public class BannerInitiateUtils {
                     protected void onSuccess(ActivityLinkBean data) {
                         String activityLink = data.getActivityLink();
                         if (TextUtils.isEmpty(activityLink)) return;
-                        ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle(),"29");
+                        //ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle(),"29");
 
                     }
                 });

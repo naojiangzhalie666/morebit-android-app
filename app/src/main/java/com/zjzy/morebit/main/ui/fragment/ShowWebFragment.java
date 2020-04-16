@@ -141,24 +141,24 @@ public class ShowWebFragment extends BaseFragment {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String newurl) {
                 try {
-                    if (!newurl.contains("activityLink=https://s.click.ele.me")&&!newurl.contains("activityLink=https://s.click.koubei.com")) {
-                        if (null != mTaobaoLink && mTaobaoLink.size() > 0) {
-                            boolean isFind = false;
-                            for (String url : mTaobaoLink) {
-                                if (newurl.contains(url)) {
-                                    isFind = true;
-                                }
-                            }
-                            if (isFind) {
-                                if (AppUtil.isTaobaoClientAvailable(getActivity())) {
-                                    TaobaoUtil.showUrl(getActivity(), newurl);
-                                    return true;
-                                }
+//                    if (!newurl.contains("activityLink=https://s.click.ele.me")&&!newurl.contains("activityLink=https://s.click.koubei.com")) {
+//
+//                    }
+
+                    if (null != mTaobaoLink && mTaobaoLink.size() > 0) {
+                        boolean isFind = false;
+                        for (String url : mTaobaoLink) {
+                            if (newurl.contains(url)) {
+                                isFind = true;
                             }
                         }
-
+                        if (isFind) {
+                            if (AppUtil.isTaobaoClientAvailable(getActivity())) {
+                                TaobaoUtil.showUrl(getActivity(), newurl);
+                                return true;
+                            }
+                        }
                     }
-
 
                     if (TextUtils.isEmpty(newurl)) {
                         super.shouldOverrideUrlLoading(view, newurl);
@@ -390,6 +390,9 @@ public class ShowWebFragment extends BaseFragment {
     }
 
 
+    private void getUserId(){
+
+    }
     private void handleFile(File file) {
         if (file.isFile()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

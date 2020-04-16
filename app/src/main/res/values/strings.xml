@@ -436,7 +436,7 @@
 
     <string name="number_welcome_hint">获取成长值可享受多项VIP会员权益</string>
     <string name="vip_welcome_hint">获取成长值可享受多项团队长权益</string>
-    <string name="tuandui_welcome_hint">获取成长值团队长权益享不停</string>
+    <string name="tuandui_welcome_hint">团队长权益享不停</string>
     <!--会员商品价格-->
     <string name="number_goods_price">%1$s</string>
     <string name="number_give_more_corn">送%1$s</string>

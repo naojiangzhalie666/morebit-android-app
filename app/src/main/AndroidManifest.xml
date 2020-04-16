@@ -154,6 +154,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
+            android:hardwareAccelerated="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
@@ -352,6 +353,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".goods.shopping.ui.TmallWebActivity"
+            android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".login.ui.AreaCodeActivity"

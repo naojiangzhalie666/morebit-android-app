@@ -34,4 +34,9 @@
     <item name="viewstubGuide" type="id" />
     <item name="imageGuideSucai" type="id" />
     <item name="webviewload_monitor_cancel_point" type="id"/>
+
+
+    <!-- StatusBarUtils 用到-->
+    <item type="id" name="statusbarutil_fake_status_bar_view" />
+    <item type="id" name="statusbarutil_translucent_view" />
 </resources>

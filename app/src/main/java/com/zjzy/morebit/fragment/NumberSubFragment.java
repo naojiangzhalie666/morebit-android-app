@@ -385,8 +385,10 @@ public class NumberSubFragment extends BaseFragment {
             moreCoinBiaozhun.setText(coin1);
             Long growthValue = 50000 - info.getMoreCoin();
             if (growthValue > 0 ){
-                tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
+                tvGrowthValue.setText(getResources().getString(R.string.vip_growth_value,
                         growthValue.toString()));
+            }else {
+                tvGrowthValue.setText("立即升级尊享高佣权益");
             }
 
             gradeForVipView();
@@ -412,7 +414,13 @@ public class NumberSubFragment extends BaseFragment {
                 coin1 = "成长值：" +info.getMoreCoin()+"/360";
             }
             moreCoinBiaozhun.setText(coin1);
-
+//            Long growthValue = 360 - info.getMoreCoin();
+//            if (growthValue > 0 ){
+//                tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
+//                        growthValue.toString()));
+//            }else{
+//                tvGrowthValue.setText("立即升级尊享高佣权益");
+//            }
 //            leader_icon.setVisibility(View.GONE);
             myGradedView.setText("会员");
             gradeForNumberView();

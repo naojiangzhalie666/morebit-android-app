@@ -11,7 +11,6 @@ import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
@@ -121,7 +120,17 @@ public class WebJSHook {
         AppUtil.coayText(mFragment.getActivity(), text);
         showText("复制成功");
     }
+    /*
+     *
+     *
+     * 获取用户id
+     * */
 
+    @JavascriptInterface
+    public String getUserCode() {
+        UserInfo user = UserLocalData.getUser(mFragment.getActivity());
+     return user.getId();
+    }
     /**
      * 复制文字 不会弹窗
      */
@@ -296,7 +305,7 @@ public class WebJSHook {
         App.mHandler.post(new Runnable() {
             @Override
             public void run() {
-                EventBus.getDefault().post(new WebViewUpdataColorEvent(colorStr,iconType));
+                EventBus.getDefault().post(new WebViewUpdataColorEvent(colorStr, iconType));
             }
         });
     }
@@ -441,6 +450,7 @@ public class WebJSHook {
         });
 
     }
+
     /**
      * 调整商学院意见反馈(用户已提交反馈)
      *
@@ -453,11 +463,12 @@ public class WebJSHook {
         App.mHandler.post(new Runnable() {
             @Override
             public void run() {
-                OpinionpReplyFragment.start(mFragment.getActivity(),FeedbackId);
+                OpinionpReplyFragment.start(mFragment.getActivity(), FeedbackId);
             }
         });
 
     }
+
     /**
      * 和banner方式跳转
      */
@@ -474,6 +485,8 @@ public class WebJSHook {
             });
         }
     }
+
+
 
 
     /**
@@ -629,4 +642,7 @@ public class WebJSHook {
         return userInfo.getHeadImg();
 
     }
+
+
+
 }

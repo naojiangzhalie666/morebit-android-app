@@ -1,5 +1,6 @@
 package com.zjzy.morebit.fragment;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.pojo.event.MyMoreCoinEvent;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.StatusBarUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -37,9 +39,9 @@ public class NumberFragment extends BaseMainFragmeng  {
     private static final String TAG = NumberFragment.class.getSimpleName();
 
     private View mView;
-
-//    @BindView(R.id.status_bar)
-//    View status_bar;
+//
+    @BindView(R.id.status_bar)
+    View status_bar;
 
 
 //    @BindView(R.id.my_more_corn)
@@ -57,8 +59,6 @@ public class NumberFragment extends BaseMainFragmeng  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          super.onCreateView(inflater, container, savedInstanceState);
-
-
         mView = inflater.inflate(R.layout.fragment_number, container, false);
         ButterKnife.bind(this, mView);
 
@@ -74,13 +74,13 @@ public class NumberFragment extends BaseMainFragmeng  {
         ViewPager viewPager = view.findViewById(R.id.viewPager);
 
         mFragments.add(NumberSubFragment.newInstance());
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            //处理全屏显示
-//            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
-//            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
-//            status_bar.setLayoutParams(viewParams);
-//            status_bar.setBackgroundResource(R.color.color_333333);
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //处理全屏显示
+            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
+            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
+            status_bar.setLayoutParams(viewParams);
+            status_bar.setBackgroundResource(R.color.transparent);
+        }
         viewPager.setAdapter(new NumbersGoodsAdapter(getChildFragmentManager()));
     }
 
