@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
@@ -56,6 +57,7 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.LogoutEvent;
+import com.zjzy.morebit.pojo.event.MyGrowthEvent;
 import com.zjzy.morebit.pojo.event.OpenCategoryEvent;
 import com.zjzy.morebit.pojo.event.OpenNumberEvent;
 import com.zjzy.morebit.pojo.event.UpdateGradeEvent;
@@ -404,6 +406,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
 
 
     private void initPush() {
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             int inType = extras.getInt(C.Extras.pushType, 1);
@@ -423,6 +427,18 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 default:
                     break;
             }
+        }
+
+        String type = getIntent().getStringExtra("type");
+        String growth = getIntent().getStringExtra("growth");
+        if (type.equals("19")){
+            mViewPager.setCurrentItem(2, false);
+            curPosition = C.mainPage.NUMBER;
+//                collegeFragment.onResume();
+            numberFragment.onResume();
+            setSysNotificationView();
+            SPUtils.getInstance().put("growth",growth);
+        //   EventBus.getDefault().post(new MyGrowthEvent(growth));
         }
     }
 

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -33,6 +34,7 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.event.MyGrowthEvent;
 import com.zjzy.morebit.pojo.event.MyMoreCoinEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
@@ -50,6 +52,7 @@ import com.zjzy.morebit.view.HorzProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -124,9 +127,27 @@ public class NumberSubFragment extends BaseFragment {
             headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number_header, null);
             initHeadView(headView);
             initView(mView);
+            initTan();
             initData();
+            initPush();
         }
         return mView;
+    }
+
+    private void initPush() {
+
+        String growth = SPUtils.getInstance().getString("growth");
+        if (growth!=null){
+            if (growth.equals("360")){
+                updateGrade();
+                SPUtils.getInstance().remove("growth");
+            }
+
+            if (growth.equals("50000")){
+                updateGradeForLeader();
+                SPUtils.getInstance().remove("growth");
+            }
+        }
     }
 
 
@@ -139,7 +160,7 @@ public class NumberSubFragment extends BaseFragment {
     }
 
     public void initView(View view) {
-        mReUseGridView = (NumberReUseGridView)view.findViewById(R.id.mListView);
+        mReUseGridView = (NumberReUseGridView) view.findViewById(R.id.mListView);
         mReUseGridView.setOnReLoadListener(new NumberReUseGridView.OnReLoadListener() {
             @Override
             public void onReload() {
@@ -155,34 +176,16 @@ public class NumberSubFragment extends BaseFragment {
 
         mAdapter = new SubNumberAdapter(getActivity());
 
-        mReUseGridView.setAdapterAndHeadView(headView,mAdapter);
+        mReUseGridView.setAdapterAndHeadView(headView, mAdapter);
 
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            extra = arguments.getString("extra");
-            try {
-                JSONObject jsonObject = new JSONObject(extra);
-                String contentJson = jsonObject.optString("contentJson");
-                JSONObject jsonObject1 = new JSONObject(contentJson);
-                String growth = jsonObject1.optString("growth");
-                if (growth.equals("360")){
-                    updateGrade();
-                }
 
-                if (growth.equals("50000")){
-                    updateGradeForLeader();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Log.e("abf",extra+"");
-//            Log.e("id",id);
-//            ToastUtils.showLong(id+"");
 
-        }
+
 
 
     }
+
+
 
     private void initHeadView(View headView){
 
@@ -309,10 +312,29 @@ public class NumberSubFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         refreshData();
-        initTan();
+
     }
 
     private void initTan() {
+        UserInfo  mUserInfo = UserLocalData.getUser(getActivity());
+        if (mUserInfo==null){
+            return;
+        }
+        Long moreCoin = mUserInfo.getMoreCoin();
+        if (moreCoin!=null){
+            if (moreCoin>360){
+                if (C.UserType.member.equals(mUserInfo.getUserType())){
+                    updateGrade();
+                }
+
+            }
+            if(moreCoin>50000){
+                if (C.UserType.vipMember.equals(mUserInfo.getUserType())){
+                    updateGradeForLeader();
+                }
+
+            }
+        }
 
 
     }
@@ -407,12 +429,6 @@ public class NumberSubFragment extends BaseFragment {
         || "B1100010".equals(errorNo)) {
             ViewShowUtils.showShortToast(getActivity(),msg);
         }
-        if ("B80012".equals(errorNo)){
-
-            EventBus.getDefault().post(new MessageEvent(EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA));//通知个人中心页面更新
-            refreshData();
-
-        }
         if (page != 1)
             mReUseGridView.getListView().setNoMore(true);
 
@@ -434,7 +450,6 @@ public class NumberSubFragment extends BaseFragment {
             userInfo.setMoreCoin(info.getMoreCoin());
             UserLocalData.setUser(getActivity(),userInfo);
             refreshUserInfo(userInfo);
-
         }else{
             MyLog.d("test","用户信息为空");
         }
@@ -618,6 +633,8 @@ public class NumberSubFragment extends BaseFragment {
                 break;
         }
     }
+
+
 
 
 

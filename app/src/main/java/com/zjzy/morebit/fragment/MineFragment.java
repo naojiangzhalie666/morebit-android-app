@@ -370,7 +370,6 @@ public class MineFragment extends BaseMainFragmeng {
     public void onEventMainThread(MessageEvent event) {
         if (event.getAction().equals(EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA)) {
             updataUser();
-            refreshData();
         } else if (event.getAction().equals(EventBusAction.LOGINA_SUCCEED)) { //更新个人信息
             updataUser();
             refreshData();

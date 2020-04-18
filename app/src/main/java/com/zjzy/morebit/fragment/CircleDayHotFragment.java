@@ -289,7 +289,8 @@ public class CircleDayHotFragment extends BaseFragment {
                                 mAdapter.notifyDataSetChanged();
                             }
                             pageNum = pageNum + 1;
-                            if (mLoadType != TYPE_SEARCH && mLoadType != TYPE_MY_COLLECTS && mLoadType != TypeThisMaterial) {
+                            if (mLoadType != TYPE_SEARCH && mLoadType != TYPE_MY_COLLECTS
+                                    && mLoadType != TypeThisMaterial && mLoadType != TypeCommodity) {
                                 getGuiessList();
                             }
 

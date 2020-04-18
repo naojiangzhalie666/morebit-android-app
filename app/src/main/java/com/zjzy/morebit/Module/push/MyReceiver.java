@@ -136,14 +136,24 @@ public class MyReceiver extends BroadcastReceiver {
 
             //  JSONObject("")
           //  String push_type = pushMessage.getPush_type();
+            String contentJson = jsonObject.optString("contentJson");
+            JSONObject jsonObject1 = new JSONObject(contentJson);
+            String growth = jsonObject1.optString("growth");
             if (jsonObject.optString("push_type").equals("19")){
-                Bundle itBundle = new Bundle();
-              //  itBundle.putString();
-//            Intent  it = new Intent(context, SinglePaneActivity.class);
-//            it.putExtra("fragment",  NumberFragment.class.getName());
-//            it.putExtras(itBundle);
-                itBundle.putString("extra",extra);
-                OpenFragmentUtils.goToSimpleFragment(context, NumberSubFragment.class.getName(), itBundle);
+//                Bundle itBundle = new Bundle();
+//              //  itBundle.putString();
+////            Intent  it = new Intent(context, SinglePaneActivity.class);
+////            it.putExtra("fragment",  NumberFragment.class.getName());
+////            it.putExtras(itBundle);
+//                itBundle.putString("extra",extra);
+//                OpenFragmentUtils.goToSimpleFragment(context, NumberSubFragment.class.getName(), itBundle);
+
+                    Intent it = new Intent(context, MainActivity.class);
+                    it.putExtra("type","19");
+                    it.putExtra("growth",growth);
+                    context.startActivity(it);
+
+
             }
         }catch (Exception e) {
             e.printStackTrace();

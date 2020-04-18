@@ -23,16 +23,17 @@
             android:scaleType="fitXY"
             />
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             >
 
             <TextView
                 android:textStyle="bold"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="限时抢购 "
+                android:text=" "
                 android:textColor="#ff333333"
                 android:textSize="12sp"
                 android:layout_marginLeft="12dp"
@@ -41,7 +42,7 @@
             <TextView
                 android:id="@+id/tv_limitime"
                 android:textSize="@dimen/sp_12"
-                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -63,25 +64,6 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="新手教程 "
-                android:textStyle="bold"
-                android:textColor="#ff333333"
-                android:textSize="12sp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="12dp"
-                />
-        </LinearLayout>
-
-
-
-
 
     </RelativeLayout>
 

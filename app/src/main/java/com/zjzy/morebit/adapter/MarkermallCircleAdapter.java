@@ -111,13 +111,13 @@ public class MarkermallCircleAdapter extends BaseMYShareAdapter<MarkermallCircle
     @Override
     public void onBindViewHolder(CommonViewHolder holder, int position) {
         try {
-            if(getItemViewType(position) == DISPLAY_RECOMMOND){
-                BrandViewHolder brandViewHolder = (BrandViewHolder) holder;
-                brandViewHolder.bind(brandViewHolder, position, mDataList.get(position));
-            }else{
+//            if(getItemViewType(position) == DISPLAY_RECOMMOND){
+//                BrandViewHolder brandViewHolder = (BrandViewHolder) holder;
+//                brandViewHolder.bind(brandViewHolder, position, mDataList.get(position));
+//            }else{
                 PostViewHolder postViewHolder = (PostViewHolder) holder;
                 postViewHolder.bind(postViewHolder, position, mDataList.get(position));
-            }
+//            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,23 +131,30 @@ public class MarkermallCircleAdapter extends BaseMYShareAdapter<MarkermallCircle
 
     @Override
     public CommonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == DISPLAY_RECOMMOND){
-            return new BrandViewHolder(mInflater.inflate(R.layout.item_circle_brands_rv, parent, false));
-        }
+//        if(viewType == DISPLAY_RECOMMOND){
+//            return new BrandViewHolder(mInflater.inflate(R.layout.item_circle_brands_rv, parent, false));
+//        }
         return new PostViewHolder(mInflater.inflate(R.layout.item_circle_day_hot_adapter, parent, false));
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(mDataList.get(position).isShowCircleBrand()){
-            return DISPLAY_RECOMMOND;
-        }
+//        if(mDataList.get(position).isShowCircleBrand()){
+//            return DISPLAY_RECOMMOND;
+//        }
         return DISPLAY_CIRCLE_INFO;
     }
 
     public void setData(List<MarkermallCircleInfo> data) {
         mDataList.clear();
         if (data != null) {
+//            int size = data.size();
+//            for(int i = 0; i < size;i++ ){
+//                MarkermallCircleInfo info = data.get(i);
+//                if (!info.isShowCircleBrand()){
+//                    mDataList.add(info);
+//                }
+//            }
             mDataList.addAll(data);
         }
     }
