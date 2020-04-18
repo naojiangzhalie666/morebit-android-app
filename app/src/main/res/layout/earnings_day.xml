@@ -19,7 +19,7 @@
             android:text="日预估收入"
             android:textColor="@color/color_1E1E1E"
             android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+             />
 
         <TextView
             android:layout_width="wrap_content"

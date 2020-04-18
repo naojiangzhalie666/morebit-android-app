@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Module.common.Dialog.PurchaseDialog;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.UI.GlideImageCircularLoader;
 
 import java.util.List;
 

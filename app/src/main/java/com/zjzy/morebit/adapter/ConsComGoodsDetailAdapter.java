@@ -116,7 +116,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             //佣金
             String commission = info.getCommission();
             if (!TextUtils.isEmpty(commission) && !commission.equals("0") && !commission.equals("null")) {
-                viewHolder.number_yongjin_tv.setVisibility(View.VISIBLE);
+                viewHolder.number_yongjin_tv.setVisibility(View.GONE);
                 viewHolder.number_yongjin_tv.setText(mContext.getResources().getString(R.string.number_yujin, commission));
             } else {
                 viewHolder.number_yongjin_tv.setText("");
@@ -154,6 +154,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 });
                 viewHolder.receiverGoodsTv.setVisibility(View.GONE);
                 viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
+                viewHolder.tv_num.setVisibility(View.GONE);
+                viewHolder.tv_date.setVisibility(View.GONE);
 
             } else if ("3".equals(info.getStatus())) {//已结算
                 viewHolder.tv_order_status.setText("已结算");
@@ -178,6 +180,16 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.receiverGoodsTv.setVisibility(View.GONE);
                 viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
 
+                viewHolder.tv_num.setVisibility(View.VISIBLE);
+                viewHolder.tv_num.setText("送"+goodsPrice+"成长值");
+                if(!TextUtils.isEmpty(info.getSettlementTime())){
+                    viewHolder.tv_date.setVisibility(View.VISIBLE);
+                    viewHolder.tv_date.setText("结算日期 :  "+info.getSettlementTime());
+                }else{
+                    viewHolder.tv_date.setVisibility(View.GONE);
+                }
+
+
             } else if ("1".equals(info.getStatus())) {//已支付
                 viewHolder.tv_order_status.setText("已支付");
                 viewHolder.shipGoodsTv.setVisibility(View.GONE);
@@ -191,8 +203,10 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                         NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
                     }
                 });
-
+                viewHolder.tv_num.setVisibility(View.VISIBLE);
+                viewHolder.tv_num.setText("送"+goodsPrice+"成长值");
                 viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
+                viewHolder.tv_date.setVisibility(View.GONE);
             } else if ("6".equals(info.getStatus())) {
                 viewHolder.tv_order_status.setText("待收货");
                 viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
@@ -207,6 +221,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                         }
                     }
                 });
+                viewHolder.tv_num.setVisibility(View.GONE);
+                viewHolder.tv_date.setVisibility(View.GONE);
 
             } else if ("2".equals(info.getStatus())) {//待支付
 
@@ -222,6 +238,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                         onSelfOrderClickListener.onPay(info.getOrderSn(), position);
                     }
                 });
+                viewHolder.tv_num.setVisibility(View.GONE);
+                viewHolder.tv_date.setVisibility(View.GONE);
             }
 
 
@@ -302,8 +320,19 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             //结算时间
             String settleDate = info.getSettlementTime();
             if (!TextUtils.isEmpty(settleDate)) {
-                viewHolder.rl_settle_date.setVisibility(View.VISIBLE);
-                viewHolder.tv_settle_date.setText("结算日期："+settleDate);
+                if (info.getType()==2){
+                    if ("1".equals(info.getStatus())){
+                        viewHolder.rl_settle_date.setVisibility(View.GONE);
+                        viewHolder.tv_settle_date.setVisibility(View.GONE);
+                    }else{
+                        viewHolder.rl_settle_date.setVisibility(View.VISIBLE);
+                        viewHolder.tv_settle_date.setText("结算日期："+settleDate);
+                    }
+                }else{
+                    viewHolder.rl_settle_date.setVisibility(View.VISIBLE);
+                    viewHolder.tv_settle_date.setText("结算日期："+settleDate);
+                }
+
             } else {
                 viewHolder.rl_settle_date.setVisibility(View.GONE);
                 viewHolder.tv_settle_date.setVisibility(View.GONE);
@@ -313,9 +342,16 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             } else if ("3".equals(info.getStatus())) {//已结算
                 viewHolder.tv_order_status.setText("已结算");
 
-            } else if ("1".equals(info.getStatus())) {//已支付
-                viewHolder.tv_order_status.setText("已支付");
 
+            } else if ("1".equals(info.getStatus())) {//已支付
+                viewHolder.tv_order_status.setText("已付款");
+
+            }
+
+            if (info.isZeroOrder()==true){//0元购
+                viewHolder.tv_new_person.setVisibility(View.VISIBLE);
+            }else{
+                viewHolder.tv_new_person.setVisibility(View.GONE);
             }
 
         } catch (Exception e) {
@@ -479,7 +515,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
     //自营商品
     private class SelfViewHolder extends RecyclerView.ViewHolder {
         ImageView pic;
-        TextView title, createDay, tv_order_status, goods_price, order_googs_num, order_goods_unit, number_yongjin_tv;
+        TextView title, createDay, tv_order_status, goods_price, order_googs_num, order_goods_unit, number_yongjin_tv,tv_num,tv_date;
 
         LinearLayout iten_rl;
         TextView tv_copy, shipGoodsTv, receiverGoodsTv, go_goods_detail_tv, go_goods_pay_tv, tv_order_no;
@@ -505,6 +541,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             rl_receiver_ggods = (RelativeLayout) itemView.findViewById(R.id.rl_receiver_ggods);
             go_goods_detail_tv = (TextView) itemView.findViewById(R.id.go_goods_detail_tv);
             go_goods_pay_tv = (TextView) itemView.findViewById(R.id.go_goods_pay_tv);
+            tv_num=itemView.findViewById(R.id.tv_num);//成长值
+            tv_date=itemView.findViewById(R.id.tv_date);//结算日期
         }
     }
 

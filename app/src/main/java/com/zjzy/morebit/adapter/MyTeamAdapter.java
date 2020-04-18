@@ -91,11 +91,11 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
 
         viewHolder.userLevel.setText(info.getGrade());
         if(C.UserType.member.equals(info.getUserType()+"")){
-            viewHolder.userLevel.setBackgroundResource(R.drawable.bg_corners_f8f8f8_30);
-            viewHolder.userLevel.setTextColor(ContextCompat.getColor(mContext,R.color.color_999999));
+            viewHolder.userLevel.setBackgroundResource(R.drawable.bg_corners_ff645b_30);
+            viewHolder.userLevel.setTextColor(ContextCompat.getColor(mContext,R.color.white));
         } else {
-            viewHolder.userLevel.setBackgroundResource(R.drawable.bg_corners_fff3dd_30);
-            viewHolder.userLevel.setTextColor(ContextCompat.getColor(mContext,R.color.color_CA8C1A));
+            viewHolder.userLevel.setBackgroundResource(R.drawable.bg_corners_ff645b_30);
+            viewHolder.userLevel.setTextColor(ContextCompat.getColor(mContext,R.color.white));
         }
         viewHolder.people_count.setText("已推"+info.getChildCount()+"人");
         viewHolder.item_ly.setOnClickListener(new View.OnClickListener() {

@@ -103,6 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="新人精选"
+                            android:textStyle="bold"
                             android:textColor="#ff666666"
                             android:textSize="20sp" />
 
@@ -110,6 +111,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0元好货"
+                            android:textStyle="bold"
                             android:textColor="#ffff5e4e"
                             android:textSize="20sp" />
                     </LinearLayout>
@@ -168,7 +170,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="45dp"
+                    android:layout_marginLeft="35dp"
                     android:layout_marginTop="90dp"
                     android:src="@mipmap/product_yuan" />
 
@@ -177,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="90dp"
-                    android:layout_marginRight="45dp"
+                    android:layout_marginRight="35dp"
                     android:src="@mipmap/product_yuan" />
             </RelativeLayout>
 

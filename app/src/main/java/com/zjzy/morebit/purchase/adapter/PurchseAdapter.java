@@ -65,6 +65,7 @@ public class PurchseAdapter extends RecyclerView.Adapter<PurchseAdapter.ViewHold
                 if (!LoginUtil.checkIsLogin((Activity) context)) {
                     return;
                 }
+
                 if (TaobaoUtil.isAuth()) {//淘宝授权
                     TaobaoUtil.getAllianceAppKey((BaseActivity) context);
                     return;

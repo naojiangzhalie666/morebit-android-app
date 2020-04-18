@@ -251,11 +251,14 @@ public class C {
         public static final int BigShop = 24;//24：超值大牌
         public static final int ForeShow = 25;//25：预告单
         public static final int CIRCLE_REVIEW = 26;//0pen=2,商学院预览列表
-        public static final int BRAND_LIST = 27;//新人免单
-        public static final int THREE_GOODS = 28;//饿了么
-        public static final int  GOODS_BYBRAND = 29;//口碑餐饮
+        public static final int BRAND_LIST = 27;//
+        public static final int THREE_GOODS = 28;//
+        public static final int  GOODS_BYBRAND = 29;//
         public static final int  JD = 40;//京东
         public static final int  PDD = 41;//拼多多
+        public static final int NEW_PERSONAL=42;//新人免单
+        public static final int HUNGRY=43;//饿了么
+        public static final int MOUTH=44;//口碑
 
     }
 
@@ -539,6 +542,7 @@ public class C {
         public final static int SHARE_MSG_PASS = 16;//16 商品已上架
         public final static int SHARE_MSG_FAILURE = 17;// 商品未通过
         public final static int SHARE_MSG_UNSHELVE = 18;//商品已下架
+        public final static int SHARE_MSG_VIP = 19;//vip会员页
         public final static String tag_everydayHotCommodity = "everydayHotCommodity";//热门推荐Tag
     }
 

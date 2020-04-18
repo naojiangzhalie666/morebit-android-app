@@ -35,7 +35,7 @@
                 android:textSize="13sp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="12dp"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/white"
                 android:text="@string/immediately_login_hint"
                 android:layout_weight="0.6"
                 android:layout_height="wrap_content"/>

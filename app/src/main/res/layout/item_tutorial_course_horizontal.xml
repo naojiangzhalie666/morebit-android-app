@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="99dp"
+    android:layout_height="100dp"
     android:layout_marginBottom="19dp"
     android:paddingRight="12dp"
     android:paddingLeft="12dp"
     android:orientation="horizontal">
 
     <android.support.v7.widget.CardView
-        android:layout_width="132dp"
+        android:layout_width="180dp"
         android:layout_height="match_parent"
         android:layout_marginRight="9dp"
         android:background="@color/white"
@@ -68,9 +68,20 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
             android:textColor="@color/colcor_999999"
-            android:layout_above="@+id/rl_bottom"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="5dp"
             android:textSize="11sp"
             tools:text="999" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_study_num"
+            android:includeFontPadding="false"
+            android:textColor="@color/colcor_999999"
+            android:layout_marginTop="5dp"
+            android:textSize="11sp"
+            tools:text="6547" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,23 +107,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_share_sum"
                 android:includeFontPadding="false"
                 android:textColor="@color/colcor_999999"
-                android:drawableLeft="@drawable/icon_college_like"
-                android:drawablePadding="4dp"
-                android:textSize="11sp"
-                tools:text="6547" />
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/faquan_collect"
                 android:layout_alignParentRight="true"
-                android:includeFontPadding="false"
-                android:textColor="@color/colcor_999999"
+                android:drawablePadding="4dp"
+                android:layout_marginRight="16dp"
                 android:textSize="11sp"
                 tools:text="6547" />
+
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

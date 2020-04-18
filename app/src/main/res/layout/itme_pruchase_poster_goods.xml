@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="310dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="6dp"
@@ -32,7 +32,7 @@
         android:layout_toRightOf="@id/iv_head"
         android:ellipsize="end"
         android:maxLines="1"
-        android:maxEms="10"
+        android:maxEms="12"
         android:textColor="@color/color_333333"
         android:textSize="16sp"
         android:text="商品标题标题标题标题" />
@@ -70,19 +70,39 @@
         android:layout_marginLeft="12dp"
         android:text=" 补贴189元" />
     <TextView
+        android:id="@+id/tv1"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@id/iv_head"
         android:layout_below="@id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="新人专享0元购"
+        android:text="新人专享价："
         android:textColor="#ffdb493e"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:layout_marginTop="10dp"
         />
 
-
-
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_toRightOf="@+id/tv1"
+        android:layout_below="@id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥ "
+        android:layout_marginTop="14dp"
+        android:textColor="#ffdb493e"
+        android:textSize="12sp"
+        />
+    <TextView
+        android:layout_toRightOf="@+id/tv2"
+        android:layout_below="@id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_marginTop="6dp"
+        android:textColor="#ffdb493e"
+        android:textSize="20sp"
+        />
 
 
 </RelativeLayout>

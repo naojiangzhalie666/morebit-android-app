@@ -79,7 +79,7 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
                 LoadImgUtils.setImg(mContext, viewHolder.ivShow, article.getImage());
             }
             if (!TextUtils.isEmpty(article.getReleaseTime())) {
-                viewHolder.tvTime.setText(DateTimeUtils.ymdhmsToymd(article.getReleaseTime()) + "");
+                viewHolder.tvTime.setText("日期："+DateTimeUtils.ymdhmsToymd(article.getReleaseTime()) + "");
             } else {
                 viewHolder.tvTime.setText("");
             }
@@ -92,7 +92,7 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
 
             int finalStudyNum = article.getStudyNum() + article.getVirtualStudy();
             if(isStudyView){
-                viewHolder.tvCount.setTextColor(ContextCompat.getColor(mContext,R.color.colcor_FFA61F));
+                viewHolder.tvCount.setTextColor(ContextCompat.getColor(mContext,R.color.colcor_999999));
                 if(position<3){
                     viewHolder. iv_recommend.setVisibility(View.VISIBLE);
                 } else {
@@ -143,9 +143,9 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
             }
             if (!TextUtils.isEmpty(article.getReleaseTime())) {
                 if(TYPE_RECOMMEND == mType){
-                    tv_time.setText(article.getReleaseTime());
+                    tv_time.setText("日期： "+article.getReleaseTime());
                 } else {
-                    tv_time.setText(DateTimeUtils.ymdhmsToymd(article.getReleaseTime()));
+                    tv_time.setText("日期： "+DateTimeUtils.ymdhmsToymd(article.getReleaseTime()));
                 }
 
             } else {

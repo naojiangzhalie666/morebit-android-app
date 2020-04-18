@@ -7,22 +7,27 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.PushMsgLocalData;
 import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.SinglePaneActivity;
 import com.zjzy.morebit.circle.ui.ReleaseManageActivity;
+import com.zjzy.morebit.fragment.NumberFragment;
 import com.zjzy.morebit.info.ui.fragment.EarningsFragment;
 import com.zjzy.morebit.info.ui.fragment.MsgEarningsFragment;
 import com.zjzy.morebit.info.ui.fragment.MsgFansFragment;
 import com.zjzy.morebit.info.ui.fragment.MsgFeedbackFragment;
 import com.zjzy.morebit.info.ui.fragment.MsgSysFragment;
 import com.zjzy.morebit.main.ui.CollectFragment2;
+import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
+import com.zjzy.morebit.pojo.PushMessage;
 import com.zjzy.morebit.pojo.PushMsgInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.OpenFragmentUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +88,8 @@ public class MyReceiver extends BroadcastReceiver {
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 Logger.d(TAG, "[MyReceiver] 用户点击打开了通知");
                 String getMsgId = bundle.getString(JPushInterface.EXTRA_MSG_ID);
+                String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
+                startVipActivity(context,extra);
                 try {
                     List<PushMsgInfo> getArrMsg = PushMsgLocalData.getPushList(context);
                     if (getArrMsg != null) {
@@ -113,6 +120,23 @@ public class MyReceiver extends BroadcastReceiver {
             }
         } catch (Exception e) {
 
+        }
+
+    }
+
+    public static void startVipActivity(Context context, String extra) {
+        try {
+            PushMessage pushMessage = new Gson().fromJson(extra, PushMessage.class);
+            String push_type = pushMessage.getPush_type();
+            if (push_type.equals("19")){
+                Bundle itBundle = new Bundle();
+//            Intent  it = new Intent(context, SinglePaneActivity.class);
+//            it.putExtra("fragment",  NumberFragment.class.getName());
+//            it.putExtras(itBundle);
+                OpenFragmentUtils.goToSimpleFragment(context, NumberFragment.class.getName(), itBundle);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -189,6 +213,7 @@ public class MyReceiver extends BroadcastReceiver {
                 it = new Intent(context, ReleaseManageActivity.class);
                 it.putExtra("pushType",pushType);
                 it.putExtras(itBundle);
+
             default:
                 break;
         }

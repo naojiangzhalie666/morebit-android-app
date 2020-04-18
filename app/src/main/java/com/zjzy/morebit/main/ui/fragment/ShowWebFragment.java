@@ -141,22 +141,24 @@ public class ShowWebFragment extends BaseFragment {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String newurl) {
                 try {
-//                    if (!newurl.contains("activityLink=https://s.click.ele.me")&&!newurl.contains("activityLink=https://s.click.koubei.com")) {
-//
-//                    }
+                    if (!newurl.contains("activityLink=https://s.click.ele.me")&&!newurl.contains("activityLink=https://s.click.koubei.com")) {
+                        if (!newurl.contains("https://activity.morebit.com.cn/#/ele?") && !newurl.contains("https://activity.morebit.com.cn/#/resta?")) {
 
-                    if (null != mTaobaoLink && mTaobaoLink.size() > 0) {
-                        boolean isFind = false;
-                        for (String url : mTaobaoLink) {
-                            if (newurl.contains(url)) {
-                                isFind = true;
+                            if (null != mTaobaoLink && mTaobaoLink.size() > 0) {
+                                boolean isFind = false;
+                                for (String url : mTaobaoLink) {
+                                    if (newurl.contains(url)) {
+                                        isFind = true;
+                                    }
+                                }
+                                if (isFind) {
+                                    if (AppUtil.isTaobaoClientAvailable(getActivity())) {
+                                        TaobaoUtil.showUrl(getActivity(), newurl);
+                                        return true;
+                                    }
+                                }
                             }
-                        }
-                        if (isFind) {
-                            if (AppUtil.isTaobaoClientAvailable(getActivity())) {
-                                TaobaoUtil.showUrl(getActivity(), newurl);
-                                return true;
-                            }
+
                         }
                     }
 

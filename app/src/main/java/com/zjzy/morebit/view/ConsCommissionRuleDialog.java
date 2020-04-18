@@ -87,7 +87,8 @@ public class ConsCommissionRuleDialog extends Dialog implements View.OnClickList
 //            title_tv.setText(title);
         }
         if (!TextUtils.isEmpty(content))
-        tv_content.setText( content );
+
+        tv_content.setText( content.replace("。","\n") );
     }
 
     @Override

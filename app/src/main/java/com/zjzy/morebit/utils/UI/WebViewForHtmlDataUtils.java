@@ -1,6 +1,7 @@
 package com.zjzy.morebit.utils.UI;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -43,7 +44,7 @@ public class WebViewForHtmlDataUtils {
 // 扩大比例的缩放
         webSettings.setUseWideViewPort(true);
 // 自适应屏幕
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
@@ -51,9 +52,17 @@ public class WebViewForHtmlDataUtils {
         // 加载空白error
         webSettings.setDomStorageEnabled(true);
         webview.getSettings().setJavaScriptEnabled(true);
-
         SensorsDataUtil.getInstance().showUpWebView(webview, false);
-        webview.loadDataWithBaseURL(null,htmlData,"text/html","utf-8",null);
+        //使图片自适应完美解决
+        String head = "<head>" +
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> " +
+                "<style>*{margin:0;padding:0;}img{max-width: 100%; width:auto; height:auto;}</style>" +
+                "</head>";
+       String content= "<html>"+head +"<body>" + htmlData+ "</body></html>";
+        // *{margin:0;padding:0这个是关键解决空白问题的代码，完美解决所有问题，
+
+        webview.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
+
 
         // 返回键后退
         webview.setOnKeyListener(new View.OnKeyListener() {

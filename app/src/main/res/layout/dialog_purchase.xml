@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="130dp"
             android:text="提示"
+            android:textStyle="bold"
             android:textColor="#fffe6776"
             android:textSize="16sp" />
 
@@ -50,6 +51,7 @@
                 android:background="@mipmap/product_share"
                 android:gravity="center"
                 android:text="查看商品"
+
                 android:textColor="#ff333333"
                 android:textSize="12sp" />
 
@@ -61,6 +63,7 @@
                 android:background="@mipmap/product_buy"
                 android:gravity="center"
                 android:text="立即分享"
+                android:textStyle="bold"
                 android:textColor="#ffffffff"
                 android:textSize="12sp" />
         </RelativeLayout>

@@ -225,7 +225,7 @@ public class BannerInitiateUtils {
                         openFligyDialog(activity, imageInfo);
                     }
                 }
-            }  else {
+            } else {
                 showUptate(activity, open);
             }
             // 不能再加16了,会和之前飞猪有兼容
@@ -343,7 +343,7 @@ public class BannerInitiateUtils {
             bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
             OpenFragmentUtils.goToSimpleFragment(activity, RankingFragment.class.getName(), bundle);
         } else if (type == C.BannerIntentionType.DAYRECOMMEND) {
-           // GoodNewsFramgent.startTiemSale(activity, info);
+            // GoodNewsFramgent.startTiemSale(activity, info);
             if (!LoginUtil.checkIsLogin((Activity) activity)) {
                 return;
             }
@@ -361,22 +361,30 @@ public class BannerInitiateUtils {
         } else if (type == C.BannerIntentionType.CIRCLE_REVIEW) { // 商学院预览列表
             RecommendListActivity.start(activity, RecommendListActivity.ARTICLE_REVIEW);
         } else if (type == C.BannerIntentionType.BRAND_LIST) { // 新人免单
-           // OpenFragmentUtils.goToSimpleFragment(activity, BrandListFragment.class.getName(), new Bundle());
-            if (LoginUtil.checkIsLogin(activity)) {
-                activity.startActivity(new Intent(activity,PurchaseActivity.class));
-            }
-        } else if (type == C.BannerIntentionType.THREE_GOODS) { // 饿了么
-            //GoodNewsFramgent.start((Activity) activity, info, C.GoodsListType.THREEGOODS);   //分类
-            getHungryLink((BaseActivity) activity,info);
-        } else if (type == C.BannerIntentionType.GOODS_BYBRAND) { //  口碑
-           // GoodNewsFramgent.startGoodsByBrand(activity, info);  //品牌列表
-            getMouthLink((BaseActivity) activity,info);
-        } else if (type == C.BannerIntentionType.JD){//京东
+            OpenFragmentUtils.goToSimpleFragment(activity, BrandListFragment.class.getName(), new Bundle());
 
-        } else if (type == C.BannerIntentionType.PDD){//拼多多
+        } else if (type == C.BannerIntentionType.THREE_GOODS) { // 饿了么
+            GoodNewsFramgent.start((Activity) activity, info, C.GoodsListType.THREEGOODS);   //分类
+
+        } else if (type == C.BannerIntentionType.GOODS_BYBRAND) { //  口碑
+            GoodNewsFramgent.startGoodsByBrand(activity, info);  //品牌列表
+
+        } else if (type == C.BannerIntentionType.JD) {//京东
+
+        } else if (type == C.BannerIntentionType.PDD) {//拼多多
             Bundle bundle = new Bundle();
             bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
             OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
+        } else if (type == C.BannerIntentionType.NEW_PERSONAL) {//新人免单
+            if (LoginUtil.checkIsLogin(activity)) {
+                activity.startActivity(new Intent(activity, PurchaseActivity.class));
+            }
+        } else if (type == C.BannerIntentionType.HUNGRY) {//饿了么
+
+            getHungryLink((BaseActivity) activity, info);
+        } else if (type == C.BannerIntentionType.MOUTH) {//口碑
+
+            getMouthLink((BaseActivity) activity, info);
         } else {
             showUptate(activity, type);
         }
@@ -390,7 +398,7 @@ public class BannerInitiateUtils {
      */
     private static void showWebIntent(Activity activity, ImageInfo info) {
         if (TextUtils.isEmpty(info.getUrl())) return;
-        ShowWebActivity.start(activity,getAppendUrl(info),info.getTitle());
+        ShowWebActivity.start(activity, getAppendUrl(info), info.getTitle());
 
 //        Intent it = new Intent(activity, ShowWebActivity.class);
 //        Bundle bundle = new Bundle();
@@ -436,24 +444,31 @@ public class BannerInitiateUtils {
      * @param activity
      * @param
      */
-    private static void getHungryLink(final BaseActivity activity,final ImageInfo info) {
+    private static void getHungryLink(final BaseActivity activity, final ImageInfo info) {
 
         RequestActivityLinkBean bean = new RequestActivityLinkBean();
         bean.setActivityId("1571715733668");
-            RxHttp.getInstance().getGoodsService()
-                    .getHungryyLink(bean)
-                    .compose(RxUtils.<BaseResponse<ActivityLinkBean>>switchSchedulers())
-                    .compose(activity.<BaseResponse<ActivityLinkBean>>bindToLifecycle())
-                    .subscribe(new DataObserver<ActivityLinkBean>() {
-                        @Override
-                        protected void onSuccess(ActivityLinkBean data) {
-                            String activityLink = data.getActivityLink();
-                            if (TextUtils.isEmpty(activityLink)) return;
-                    //       ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle(),"28");
-                           ShowWebActivity.start(activity,"http://192.168.3.88:81/#/ele",info.getTitle(),"28");
-
+        RxHttp.getInstance().getGoodsService()
+                .getHungryyLink(bean)
+                .compose(RxUtils.<BaseResponse<ActivityLinkBean>>switchSchedulers())
+                .compose(activity.<BaseResponse<ActivityLinkBean>>bindToLifecycle())
+                .subscribe(new DataObserver<ActivityLinkBean>() {
+                    @Override
+                    protected void onSuccess(ActivityLinkBean data) {
+                        String activityLink = data.getActivityLink();
+                         if (TextUtils.isEmpty(activityLink)) return;
+                        if (!LoginUtil.checkIsLogin((BaseActivity) activity)) {
+                            return;
                         }
-                    });
+                        if (TaobaoUtil.isAuth()) {//淘宝授权
+                            TaobaoUtil.getAllianceAppKey((BaseActivity) activity);
+                            return;
+                        }
+                       ShowWebActivity.start(activity, info.getUrl() + "?activityLinkTkl=" + data.getActivityLinkTkl() + "&activityLink=" + data.getActivityLink(), info.getTitle(), "28");
+              //          ShowWebActivity.start(activity, "http://192.168.3.88:81/#/resta", info.getTitle(), "28");
+
+                    }
+                });
 
     }
 
@@ -464,7 +479,7 @@ public class BannerInitiateUtils {
      * @param activity
      * @param
      */
-    private static void getMouthLink(final BaseActivity activity,final ImageInfo info) {
+    private static void getMouthLink(final BaseActivity activity, final ImageInfo info) {
 
         RequestActivityLinkBean bean = new RequestActivityLinkBean();
         bean.setActivityId("1583739244161");
@@ -477,12 +492,20 @@ public class BannerInitiateUtils {
                     protected void onSuccess(ActivityLinkBean data) {
                         String activityLink = data.getActivityLink();
                         if (TextUtils.isEmpty(activityLink)) return;
-                        //ShowWebActivity.start(activity,info.getUrl()+"?activityLinkTkl="+data.getActivityLinkTkl()+"&activityLink="+data.getActivityLink(),info.getTitle(),"29");
+                        if (!LoginUtil.checkIsLogin((BaseActivity) activity)) {
+                            return;
+                        }
+                        if (TaobaoUtil.isAuth()) {//淘宝授权
+                            TaobaoUtil.getAllianceAppKey((BaseActivity) activity);
+                            return;
+                        }
+                        ShowWebActivity.start(activity, info.getUrl() + "?activityLinkTkl=" + data.getActivityLinkTkl() + "&activityLink=" + data.getActivityLink(), info.getTitle(), "29");
 
                     }
                 });
 
     }
+
     private static void loginTaobao(final BaseActivity activity, final ImageInfo info) {
         if (!LoginUtil.checkIsLogin(activity)) {
             return;
@@ -532,7 +555,8 @@ public class BannerInitiateUtils {
     public static void setBrandBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView) {
         setBrandBanner(activity, data, banner, aspectRatioView, BannerConfig.RIGHT);
     }
-    public static void setBrandBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView,int bannerConfigType) {
+
+    public static void setBrandBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView, int bannerConfigType) {
         final int bannerId = banner.getId();
         if (data == null || data.size() == 0) {
             return;
@@ -571,14 +595,14 @@ public class BannerInitiateUtils {
 //                        JAnalyticsInterface.onEvent(getActivity(), cEvent);
                         ImageInfo imageInfo = data.get(position);
                         String mudule = "";
-                        if(bannerId == R.id.roll_view_pager){
+                        if (bannerId == R.id.roll_view_pager) {
                             mudule = C.BigData.AD_A;
-                        }else if(bannerId == R.id.banner_offical){
+                        } else if (bannerId == R.id.banner_offical) {
                             mudule = C.BigData.AD_B;
-                        }else if(bannerId == R.id.banner_make_money){
+                        } else if (bannerId == R.id.banner_make_money) {
                             mudule = C.BigData.AD_C;
                         }
-                        SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(),imageInfo.getId()+"",imageInfo.getOpen()+"",mudule,position,imageInfo.getClassId()+"",imageInfo.getUrl());
+                        SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(), imageInfo.getId() + "", imageInfo.getOpen() + "", mudule, position, imageInfo.getClassId() + "", imageInfo.getUrl());
                         BannerInitiateUtils.gotoAction(activity, imageInfo);
 
                     }
@@ -610,58 +634,59 @@ public class BannerInitiateUtils {
 
     /**
      * 是否追加pid和rid级成新的url
+     *
      * @param info
      * @return
      */
-    public static String getAppendUrl(ImageInfo info){
+    public static String getAppendUrl(ImageInfo info) {
         String url = info.getUrl();
-        if(null != info && !TextUtils.isEmpty(info.getSplicePid()) && !info.getSplicePid().equals("0")){
+        if (null != info && !TextUtils.isEmpty(info.getSplicePid()) && !info.getSplicePid().equals("0")) {
             UserInfo user = UserLocalData.getUser();
             String[] keyList = info.getSplicePid().split(",");
             //获取user里的url参数map组合
-            Map<String,String> params = StringsUtils.getUrlParams(user.getSpliceIdsName());
-            Map<String,String> passParams = new LinkedHashMap<>();
-            for (String key: keyList) {
+            Map<String, String> params = StringsUtils.getUrlParams(user.getSpliceIdsName());
+            Map<String, String> passParams = new LinkedHashMap<>();
+            for (String key : keyList) {
                 Iterator<Map.Entry<String, String>> iter = params.entrySet().iterator();
                 int position = 0;
                 while (iter.hasNext()) {
                     position++;
                     Map.Entry<String, String> entry = iter.next();
-                    if(key.equals("3")){
-                        if(!TextUtils.isEmpty(entry.getValue()) && !entry.getValue().equals("null")){
-                            passParams.put(entry.getKey(),entry.getValue());
+                    if (key.equals("3")) {
+                        if (!TextUtils.isEmpty(entry.getValue()) && !entry.getValue().equals("null")) {
+                            passParams.put(entry.getKey(), entry.getValue());
                         }
-                    }else{
-                        if(position == Integer.parseInt(key) && !TextUtils.isEmpty(entry.getValue()) && !entry.getValue().equals("null")){
-                            passParams.put(entry.getKey(),entry.getValue());
+                    } else {
+                        if (position == Integer.parseInt(key) && !TextUtils.isEmpty(entry.getValue()) && !entry.getValue().equals("null")) {
+                            passParams.put(entry.getKey(), entry.getValue());
                         }
                     }
 
                 }
             }
-            url = StringsUtils.appendUrlParams(info.getUrl(),passParams);
+            url = StringsUtils.appendUrlParams(info.getUrl(), passParams);
         }
-        return   url;
+        return url;
     }
 
-    public static void openFligyDialog(final Activity activity, final ImageInfo info){
+    public static void openFligyDialog(final Activity activity, final ImageInfo info) {
 
-         FliggyDialog fliggyDialog = new FliggyDialog(activity, R.style.dialog, new FliggyDialog.GoToFliggyListener() {
-             @Override
-             public void onClick(Dialog dialog, String text) {
-                         //前往飞猪
-                 if (info.getUrl().startsWith("http")) {
-                     if (TextUtils.isEmpty(info.getUrl())) return;
-                     TmallWebActivity.start(activity, getAppendUrl(info), info.getTitle());
-                 }
-             }
+        FliggyDialog fliggyDialog = new FliggyDialog(activity, R.style.dialog, new FliggyDialog.GoToFliggyListener() {
+            @Override
+            public void onClick(Dialog dialog, String text) {
+                //前往飞猪
+                if (info.getUrl().startsWith("http")) {
+                    if (TextUtils.isEmpty(info.getUrl())) return;
+                    TmallWebActivity.start(activity, getAppendUrl(info), info.getTitle());
+                }
+            }
 
-         }, new FliggyDialog.GoToFindOrderListener() {
-             @Override
-             public void onClick(Dialog dialog, String text) {
-                        //订单找回
-             }
-         });
+        }, new FliggyDialog.GoToFindOrderListener() {
+            @Override
+            public void onClick(Dialog dialog, String text) {
+                //订单找回
+            }
+        });
 
         if (fliggyDialog != null) {
             try {
@@ -673,10 +698,10 @@ public class BannerInitiateUtils {
     }
 
 
-    public static void goToArticle(Activity activity,String allUrl,String allTitle) {
+    public static void goToArticle(Activity activity, String allUrl, String allTitle) {
         //url=123&type=1&id=1&title=aa 取type的值,1是打开商学院的首页,2是商学院的文章,3是h5
         Map<String, String> params = AppUtil.getUrlParms(allUrl);
-        if(params==null){
+        if (params == null) {
             return;
         }
         String type = params.get("type");

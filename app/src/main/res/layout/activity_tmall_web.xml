@@ -106,18 +106,17 @@
                     android:id="@+id/rl_share"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.39"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_yellow_ffd800_round_left_30dp">
 
                     <TextView
                         android:id="@+id/shareTv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_centerInParent="true"
                         android:gravity="center"
-                        android:text="@string/share"
-                        android:drawablePadding="5dp"
-                        android:textColor="#333333"
+                        android:text="分享赚"
+                        android:textColor="#ffffff"
                         android:textSize="12sp"
                         />
                 </RelativeLayout>
@@ -127,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:layout_weight="0.61"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_goods_detail_to_taobao"
                     android:gravity="center"
                     android:text="@string/immediately_buy"

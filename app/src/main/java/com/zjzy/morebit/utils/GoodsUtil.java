@@ -406,8 +406,10 @@ public class GoodsUtil {
         yuan_prise.setText("¥ " + MathUtils.getPrice(goodsInfo.getPrice()));
         if (goodsInfo.getShopType() == 2) {
             goodShopTag.setText("天猫");
-        } else {
+        } else if (goodsInfo.getShopType() == 1){
             goodShopTag.setText("淘宝");
+        }else {
+            goodShopTag.setText("拼多多");
         }
 
         if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {
@@ -436,8 +438,8 @@ public class GoodsUtil {
         tv_code.setText(activity.getString(R.string.invitation_code, UserLocalData.getUser().getInviteCode()));
 
 
-        if (ewmBitmap != null)
-            qrcode_img.setImageBitmap(ewmBitmap);
+        //if (ewmBitmap != null)
+          //  qrcode_img.setImageBitmap(ewmBitmap);
         return view;
     }
     /**

@@ -16,7 +16,7 @@
         android:id="@+id/iten_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/bg_ffffff_8dp"
         android:paddingLeft="12dp"
         android:paddingRight="10dp"
         android:orientation="vertical">
@@ -95,11 +95,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥"
+                    android:text="¥ "
                     android:layout_gravity="bottom"
                     android:gravity="bottom"
                     android:textSize="@dimen/sp_10"
-                    android:textColor="@color/color_FD5212"
+                    android:textColor="@color/color_EE403A"
                     />
                 <TextView
                     android:id="@+id/goods_price"
@@ -108,7 +108,7 @@
                     android:gravity="bottom"
                     android:text="29.90"
                     android:textStyle="bold"
-                    android:textColor="@color/color_FD5212"
+                    android:textColor="@color/color_EE403A"
                     android:layout_marginTop="3dp"
                     android:visibility="visible"
                     />
@@ -135,6 +135,26 @@
                 android:layout_below="@id/title"
                 />
             <TextView
+                android:id="@+id/tv_num"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_goods_unit"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="13dp"
+                android:layout_toRightOf="@id/icon"
+                android:paddingBottom="2dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center"
+                android:paddingTop="2dp"
+                android:text="送30成长值"
+                android:textColor="@color/color_EE403A"
+                android:background="@drawable/bg_yujin_item"
+                android:textSize="10sp"
+                />
+            <TextView
+                android:visibility="gone"
                 android:id="@+id/number_yongjin_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -197,7 +217,7 @@
                         android:paddingRight="8dp"
                         android:paddingLeft="8dp"
                         android:background="@drawable/bg_receiver_goods"
-                        android:textColor="@color/color_FD5212"
+                        android:textColor="@color/color_EE403A"
                         android:textSize="11sp"
                         android:visibility="visible"
                         android:text="重新购买"
@@ -281,5 +301,14 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/sp_11" />
         </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="结算日期：2019-12-23 14:53:12"
+            android:textColor="#ff999999"
+            android:textSize="@dimen/sp_11"
+            android:paddingBottom="8dp"
+            />
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -30,7 +30,7 @@
             android:id="@+id/videoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="70dp"
             android:layout_centerVertical="true" />
     </RelativeLayout>
 
@@ -40,7 +40,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/background_radius_white_7dp">
 
         <ImageView
@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_price"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/iv_head"
             tools:text="销量：23456"
             android:textColor="#ff999999"
@@ -124,10 +124,11 @@
             android:id="@+id/qian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_head"
             android:layout_marginLeft="@dimen/dp_10"
+            android:layout_below="@+id/tv_num"
             android:layout_toRightOf="@id/iv_head"
-            android:text="¥"
+            android:text="¥  "
+            android:layout_marginTop="3dp"
             android:textColor="#ff333333"
             android:textSize="12sp" />
 
@@ -135,7 +136,7 @@
             android:id="@+id/tv_coupon_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_head"
+            android:layout_below="@+id/tv_num"
             android:layout_toRightOf="@id/qian"
             tools:text="299.0"
             android:textColor="#ff333333"
@@ -145,7 +146,7 @@
             android:id="@+id/tv_buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_head"
+           android:layout_below="@+id/tv_num"
             android:layout_toLeftOf="@+id/tv_share"
             android:background="@drawable/bg_color_fc6047_right_16"
             android:gravity="center"
@@ -161,7 +162,7 @@
             android:id="@+id/tv_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_head"
+            android:layout_below="@+id/tv_num"
             android:background="@drawable/bg_color_f333333_left_16"
             android:gravity="center"
             android:paddingLeft="8dp"

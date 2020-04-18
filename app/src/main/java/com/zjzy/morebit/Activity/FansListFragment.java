@@ -156,7 +156,7 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
                 if (verticalOffsetABs >= appBarLayout.getTotalScrollRange()) {
                  //   mTabLayout.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.color_FFD800));
                     ((FansActivity)getActivity()).setImmersionBarBg(true);
-                     ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
+                     ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.color_FFD800).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
                 } else if (verticalOffset == 0) {
                     ((FansActivity)getActivity()).setImmersionBarBg(false);
                     ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.color_FFD800).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();

@@ -52,7 +52,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final ShopGoodInfo videoBean = list.get(position);
         videoBean.setItemSourceId(list.get(position).getItemId());
-        videoBean.setItemPrice(list.get(position).getItemPrice());
+        videoBean.setItemVoucherPrice(list.get(position).getItemPrice());
         ImageInfo imglist=new ImageInfo();
        imglist.setThumb(list.get(position).getItemPic());
         List<ImageInfo> mlist=new ArrayList<>();

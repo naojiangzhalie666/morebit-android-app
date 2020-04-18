@@ -248,6 +248,9 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     @Override
     public void onReceiveGoodsSuccessFul(Boolean data) {
         ViewShowUtils.showShortToast(getActivity(),"确认收货成功！");
+        page=1;
+        getData();
+
     }
 
     // 更新信息

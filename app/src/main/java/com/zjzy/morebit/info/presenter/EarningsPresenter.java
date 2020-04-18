@@ -6,6 +6,7 @@ import com.zjzy.morebit.info.model.InfoModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.EarningExplainBean;
 import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -67,6 +68,17 @@ public class EarningsPresenter extends MvpPresenter<InfoModel, EarningsContract.
                 getIView().getDaySuccess(data);
             }
         });
+    }
+
+    @Override
+    public void getEarningsExplain(RxFragment rxFragment) {
+        mModel.getEarningsExplain(rxFragment)
+                .subscribe(new DataObserver<EarningExplainBean>() {
+                    @Override
+                    protected void onSuccess(EarningExplainBean data) {
+                        getIView().onExplainSuccess(data);
+                    }
+                });
     }
 
 

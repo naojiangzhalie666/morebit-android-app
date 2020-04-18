@@ -16,7 +16,7 @@
         android:id="@+id/iten_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/bg_ffffff_8dp"
         android:paddingLeft="12dp"
         android:paddingRight="10dp"
         android:orientation="vertical">
@@ -99,7 +99,7 @@
                     android:layout_gravity="bottom"
                     android:gravity="bottom"
                     android:textSize="@dimen/sp_10"
-                    android:textColor="@color/color_FD5212"
+                    android:textColor="@color/color_EE403A"
                     />
                 <TextView
                     android:id="@+id/goods_price"
@@ -108,7 +108,7 @@
                     android:gravity="bottom"
                     android:text="29.90"
                     android:textStyle="bold"
-                    android:textColor="@color/color_FD5212"
+                    android:textColor="@color/color_EE403A"
                     android:layout_marginTop="3dp"
                     android:visibility="visible"
                     />
@@ -144,7 +144,7 @@
                 android:layout_alignLeft="@id/order_goods_unit"
                 android:paddingRight="6dp"
                 android:paddingLeft="6dp"
-                android:text="新人免单"
+                android:text="新人首单"
                 android:textColor="@color/color_FFFFFF"
                 android:background="@drawable/bg_new_person"
                 android:textSize="@dimen/sp_11"

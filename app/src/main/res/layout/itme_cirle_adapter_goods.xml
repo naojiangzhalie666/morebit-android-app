@@ -76,11 +76,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_toRightOf="@id/cv_head"
-        android:background="@drawable/bg_quane_4dp"
+        android:background="@drawable/faquan_juan"
         android:paddingRight="4dp"
         android:paddingLeft="4dp"
-        android:textColor="#ffff645b"
-        android:textSize="10sp"
+        android:textColor="#DB493E"
+        android:gravity="center"
+        android:textSize="12sp"
         tools:text="券额5元"
         />
     <!--券后价-->
@@ -97,15 +98,13 @@
         />
     <TextView
         android:id="@+id/tv_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="11sp"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:textSize="12sp"
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@id/cv_head"
-        android:background="@drawable/bg_share_shouyi_8dp"
-        android:paddingRight="8dp"
+        android:background="@drawable/faquan_share"
         android:textColor="@color/white"
-        android:paddingLeft="8dp"
         android:gravity="center"
         tools:text="分享收益3元"/>
 

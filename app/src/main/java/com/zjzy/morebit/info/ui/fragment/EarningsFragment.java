@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.zjzy.morebit.Activity.ConsComGoodsDeailListActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Dialog.EarningsHintNewsDialog;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
@@ -29,6 +30,7 @@ import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.payment.PayDemoActivity;
 import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.EarningExplainBean;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.pojo.UserInfo;
@@ -76,8 +78,10 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     private int currentTab = 0;
     private TextView tao_money,pin_money,profit_money,tv_today_paymen_total,tv_today_integral,tv_today_estimate_money,tv_today_money
             ,tv_yesterday_payment_total,tv_yestaday_integral,tv_yesterday_estimate_money,tv_yesterday_money,tv_month_estimate_money
-            ,tv_month_money,tv_last__month_estimate_money,tv_last_month_money,tv_month_profit,tv_last_month_profit;
-
+            ,tv_month_money,tv_last__month_estimate_money,tv_last_month_money,tv_month_profit,tv_last_month_profit,tv_day_hint,tv_month_hint;
+    EarningsHintNewsDialog mMonthdialog;
+    EarningsHintNewsDialog mDayialog;
+    EarningExplainBean mExplainData;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +97,45 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
         mPresenter.getDayMoney(this);
         mPresenter.getMontMoney(this);
+        if(null == mExplainData){
+            mPresenter.getEarningsExplain(this);
+        }
+
+        tv_day_hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDaydialog();
+            }
+        });
+
+        tv_month_hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMonthdialog();
+            }
+        });
+
+    }
+
+    private void openMonthdialog() {//月说明
+
+        if (mMonthdialog == null) {
+            mMonthdialog = new EarningsHintNewsDialog(getActivity());
+        }
+
+        if (!mMonthdialog.isShowing()) {
+            mMonthdialog.show(1, mExplainData);
+        }
+    }
+
+    private void openDaydialog() {//日说明
+        if (mDayialog == null) {
+            mDayialog = new EarningsHintNewsDialog(getActivity());
+        }
+
+        if (!mDayialog.isShowing()) {
+            mDayialog.show(0, mExplainData);
+        }
     }
 
     @Override
@@ -160,6 +203,9 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         tv_last_month_money=view.findViewById(R.id.tv_last_month_money);//上月结算收益
         tv_month_profit=view.findViewById(R.id.tv_month_profit);//本月积分收益
         tv_last_month_profit=view.findViewById(R.id.tv_last_month_profit);//上月积分收益
+
+        tv_day_hint=view.findViewById(R.id.tv_day_hint);//日说明
+        tv_month_hint=view.findViewById(R.id.tv_month_hint);//月说明
 
 
 
@@ -251,6 +297,13 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     @Override
     public void getDayError(String errMsg, String errCode) {
 
+    }
+
+    @Override
+    public void onExplainSuccess(EarningExplainBean data) {
+        if (null != data) {
+            mExplainData = data;
+        }
     }
 
 

@@ -131,9 +131,11 @@ public class ShowWebActivity extends BaseActivity {
             return;
         }
         //跳转淘宝
-        if (isTaobaoClient(activity, url)) {
-            return;
-        };
+        if (!url.contains("activity.morebit.com.cn/#/ele?") && !url.contains("activity.morebit.com.cn/#/resta?")) {
+            if (isTaobaoClient(activity, url)) {
+                return;
+            };
+        }
         //跳转到网页
         Intent it = new Intent(activity, ShowWebActivity.class);
         Bundle bundle = new Bundle();

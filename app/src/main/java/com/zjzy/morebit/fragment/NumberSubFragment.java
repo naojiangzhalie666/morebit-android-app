@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -20,6 +21,7 @@ import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.NumberReUseGridView;
+import com.zjzy.morebit.Module.common.widget.NumberSwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
@@ -38,9 +40,11 @@ import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
+import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.view.HorzProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -97,6 +101,7 @@ public class NumberSubFragment extends BaseFragment {
 
     UserInfo mUserInfo;
     private int page = 1;
+    private ImageView user_king;
 
 
 
@@ -128,7 +133,6 @@ public class NumberSubFragment extends BaseFragment {
 
     public void initView(View view) {
         mReUseGridView = (NumberReUseGridView)view.findViewById(R.id.mListView);
-
         mReUseGridView.setOnReLoadListener(new NumberReUseGridView.OnReLoadListener() {
             @Override
             public void onReload() {
@@ -167,10 +171,12 @@ public class NumberSubFragment extends BaseFragment {
         tvUserType= (TextView)headView.findViewById(R.id.tv_user_type);
         llUserGrade = (LinearLayout)headView.findViewById(R.id.ll_user_grade);
         tvGrowthValue = (TextView)headView.findViewById(R.id.tv_growth_value);
+        user_king = headView.findViewById(R.id.user_king);
     }
 
     private void updataUser() {
-        mUserInfo = UserLocalData.getUser(getActivity());
+
+        UserInfo  mUserInfo = UserLocalData.getUser(getActivity());
         if (mUserInfo != null) {
             initViewData(mUserInfo);
         }
@@ -223,13 +229,16 @@ public class NumberSubFragment extends BaseFragment {
         if (C.UserType.member.equals(info.getPartner())) {
             tvUserType.setText("会员");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
+            user_king.setVisibility(View.GONE);
 
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
             tvUserType.setText("VIP");
             llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
+            user_king.setVisibility(View.GONE);
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
+            user_king.setVisibility(View.VISIBLE);
 
         }
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
@@ -265,8 +274,31 @@ public class NumberSubFragment extends BaseFragment {
         getData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
     private void refreshData() {
-        updataUser();
+        LoginUtil.getUserInfo((RxAppCompatActivity) getActivity(), false, new MyAction.OnResultFinally<UserInfo>() {
+            /**
+             * 结束
+             */
+            @Override
+            public void onFinally() {
+
+            }
+
+            @Override
+            public void invoke(UserInfo arg) {
+                updataUser();
+            }
+
+            @Override
+            public void onError() {
+            }
+        });
         getData();
     }
 
@@ -338,6 +370,12 @@ public class NumberSubFragment extends BaseFragment {
         || "B1100010".equals(errorNo)) {
             ViewShowUtils.showShortToast(getActivity(),msg);
         }
+        if ("B80012".equals(errorNo)){
+
+            EventBus.getDefault().post(new MessageEvent(EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA));//通知个人中心页面更新
+            refreshData();
+
+        }
         if (page != 1)
             mReUseGridView.getListView().setNoMore(true);
 
@@ -348,6 +386,7 @@ public class NumberSubFragment extends BaseFragment {
         LoadingView.dismissDialog();
         mReUseGridView.getSwipeList().setRefreshing(false);
         mReUseGridView.getListView().refreshComplete(REQUEST_COUNT);
+
     }
 
 
@@ -358,6 +397,7 @@ public class NumberSubFragment extends BaseFragment {
             userInfo.setMoreCoin(info.getMoreCoin());
             UserLocalData.setUser(getActivity(),userInfo);
             refreshUserInfo(userInfo);
+
         }else{
             MyLog.d("test","用户信息为空");
         }
@@ -390,38 +430,42 @@ public class NumberSubFragment extends BaseFragment {
             }else {
                 tvGrowthValue.setText("立即升级尊享高佣权益");
             }
-
+            user_king.setVisibility(View.GONE);
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
             myGradedView.setText("团队长");
             rl_duodou_progress.setVisibility(View.GONE);
-
+            user_king.setVisibility(View.VISIBLE);
             gradeForLeaderView();
         }else{
             rl_duodou_progress.setVisibility(View.VISIBLE);
             mHorzProgressView.setMax(360.00);
             Long coin = info.getMoreCoin();
+            String coin1 ;
             if (coin != null){
                 mHorzProgressView.setCurrentNum(info.getMoreCoin());
+                coin1 = "成长值：" +info.getMoreCoin()+"/360";
             }else{
                 mHorzProgressView.setCurrentNum(0);
-            }
-            Long moreCoin = info.getMoreCoin();
-            String coin1 ;
-            if (moreCoin == null){
                 coin1 = "成长值：" +"0/360";
-            }else{
-                coin1 = "成长值：" +info.getMoreCoin()+"/360";
+                return;
             }
-            moreCoinBiaozhun.setText(coin1);
-//            Long growthValue = 360 - info.getMoreCoin();
-//            if (growthValue > 0 ){
-//                tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
-//                        growthValue.toString()));
+            user_king.setVisibility(View.GONE);
+//            Long moreCoin = info.getMoreCoin();
+//
+//            if (moreCoin == null){
+//
 //            }else{
-//                tvGrowthValue.setText("立即升级尊享高佣权益");
+//
 //            }
-//            leader_icon.setVisibility(View.GONE);
+            moreCoinBiaozhun.setText(coin1);
+            if (coin < 360){
+                tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
+                        String.valueOf(360-coin)));
+            }else{
+                tvGrowthValue.setText("立即升级尊享高佣权益");
+            }
+           // leader_icon.setVisibility(View.GONE);
             myGradedView.setText("会员");
             gradeForNumberView();
         }
@@ -537,6 +581,7 @@ public class NumberSubFragment extends BaseFragment {
                 break;
         }
     }
+
 
 
     @Override

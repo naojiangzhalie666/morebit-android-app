@@ -38,6 +38,15 @@ public class ConsComGoodsInfo  implements Serializable{
     private String goodsNum;//购买数量
     private String unit;//规格
     private int type;
+    private boolean zeroOrder;//true 是0元购  false 不是
+
+    public boolean isZeroOrder() {
+        return zeroOrder;
+    }
+
+    public void setZeroOrder(boolean zeroOrder) {
+        this.zeroOrder = zeroOrder;
+    }
 
     public int getType() {
         return type;

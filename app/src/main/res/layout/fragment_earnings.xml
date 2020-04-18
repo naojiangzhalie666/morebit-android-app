@@ -158,7 +158,8 @@
                 </LinearLayout>
                 <!--预估收入-->
 
-                <include layout="@layout/eaings_item_estimate"/>
+                <include layout="@layout/eaings_item_estimate"
+                    />
                 <LinearLayout
                     android:visibility="gone"
                     android:layout_width="match_parent"

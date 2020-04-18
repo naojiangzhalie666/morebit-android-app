@@ -266,6 +266,7 @@ public class MineFragment extends BaseMainFragmeng {
             UserLocalData.isPartner = false;
             updataUser();
         }
+
     }
 
     @Override
@@ -369,6 +370,7 @@ public class MineFragment extends BaseMainFragmeng {
     public void onEventMainThread(MessageEvent event) {
         if (event.getAction().equals(EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA)) {
             updataUser();
+            refreshData();
         } else if (event.getAction().equals(EventBusAction.LOGINA_SUCCEED)) { //更新个人信息
             updataUser();
             refreshData();
@@ -439,11 +441,11 @@ public class MineFragment extends BaseMainFragmeng {
                 break;
             case R.id.my_favorite:
                 ImageInfo favorite = mLocalData.get("4");
-                if (favorite == null){
-                    ViewShowUtils.showShortToast(getActivity(),"没有收藏权限");
-                }else{
+//                if (favorite == null){
+//                    ViewShowUtils.showShortToast(getActivity(),"没有收藏权限");
+//                }else{
                     BannerInitiateUtils.gotoAction(getActivity(), favorite);
-                }
+//                }
                 break;
             case R.id.setting: //设置
                 Intent in = new Intent(getActivity(), SettingActivity.class);

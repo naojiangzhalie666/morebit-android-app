@@ -304,8 +304,7 @@ public class TmallWebActivity extends BaseActivity {
      * 搜索优惠券
      */
     private void searchConcessional() {
-        shareTv.setText("分享赚");
-        tv_buy.setText("自购省");
+
         LoadingView.showDialog(this);
         ByItemSourceIdBean requestBean = new ByItemSourceIdBean();
         requestBean.setItemSourceId(mItemSourceId);
@@ -325,6 +324,9 @@ public class TmallWebActivity extends BaseActivity {
                     protected void onError(String errorMsg, String errCode) {
                         showErrorView(true);
                         tv_earnings.setText(getString(R.string.search_no_concessional));
+                        tv_earnings.setVisibility(View.VISIBLE);
+                        tv_buy.setText("自购省");
+                        shareTv.setText("分享赚");
                     }
 
                     @Override
@@ -332,8 +334,11 @@ public class TmallWebActivity extends BaseActivity {
                         mShopGoodInfo = data;
                         String string = getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) TmallWebActivity.this).getCalculationRate(), mShopGoodInfo.getCommission()));
                         tv_earnings.setText(string);
+                        tv_earnings.setVisibility(View.VISIBLE);
+                        tv_buy.setText("自购省￥"+ MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) TmallWebActivity.this).getCalculationRate(), mShopGoodInfo.getCommission())+"元");
+                        shareTv.setText("分享赚￥"+ MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) TmallWebActivity.this).getCalculationRate(), mShopGoodInfo.getCommission())+"元");
                         showCommission(true);
-                        setBottomBtnCommiss(mShopGoodInfo);
+                       // setBottomBtnCommiss(mShopGoodInfo);
                     }
                 });
     }
@@ -421,7 +426,7 @@ public class TmallWebActivity extends BaseActivity {
 
     private void setBottomBtnCommiss(ShopGoodInfo mData){
         if (TextUtils.isEmpty(UserLocalData.getUser(this).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(this).getPartner())) {
-            shareTv.setText("分享");
+            shareTv.setText("分享赚￥"+MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mData.getCommission())+"元");
         } else {
             if (!StringsUtils.isEmpty(mData.getCommission())) {
                 if ("分享".equals(shareTv.getText().toString())) {

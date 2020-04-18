@@ -269,12 +269,12 @@
             android:id="@+id/people_num_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_FFD800"
+            android:background="@color/color_FFFFFF"
             android:gravity="center_horizontal"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
             android:text=""
-            android:textColor="@color/color_FFFFFF"
+            android:textColor="@color/color_EE403A"
             android:textSize="12sp" />
     </LinearLayout>
 </RelativeLayout>

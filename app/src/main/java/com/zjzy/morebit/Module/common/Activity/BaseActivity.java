@@ -265,7 +265,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 
     protected void openSearchDialog(final String getClipStr) {
 
-        searchDialog = new SearchGoodsDialog(BaseActivity.this, R.style.dialog, "", getClipStr, new SearchGoodsDialog.OnCloseListener() {
+        searchDialog = new  SearchGoodsDialog(BaseActivity.this, R.style.dialog, "", getClipStr, new SearchGoodsDialog.OnCloseListener() {
             @Override
             public void onClick(Dialog dialog, String text) {
                 String textTrim = getClipStr.trim();

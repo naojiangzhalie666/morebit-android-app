@@ -584,7 +584,7 @@
                     android:paddingLeft="5dp"
                     android:shadowRadius="10"
                     android:text="@string/now_share"
-                    android:textColor="@color/color_333333"
+                    android:textColor="@color/white"
                     android:textSize="12dp"
                     />
             </LinearLayout>

@@ -180,9 +180,9 @@ public class FansActivity extends BaseActivity {
 //           tabLayoutBg = (GradientDrawable) tabLayout.getBackground();
 //        }
         //滑动渐变
-        int topBgColor = (int) evaluatorSearch.evaluate(percent, ContextCompat.getColor(this, R.color.color_FFD800), ContextCompat.getColor(this, R.color.white));
+        int topBgColor = (int) evaluatorSearch.evaluate(percent, ContextCompat.getColor(this, R.color.color_FFD800), ContextCompat.getColor(this, R.color.color_FFD800));
         int colorTabLyout = (int) evaluatorTabLyout.evaluate(percent, ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.color_ECECEC));
-        int color = (int) evaluator.evaluate(percent, ContextCompat.getColor(this, R.color.color_FFD800), ContextCompat.getColor(this, R.color.white));
+        int color = (int) evaluator.evaluate(percent, ContextCompat.getColor(this, R.color.color_FFD800), ContextCompat.getColor(this, R.color.color_FFD800));
      //  tabLayoutBg.setColor(colorTabLyout);
        rl_top.setBackgroundColor(topBgColor);
         status_bar.setBackgroundColor(color);
