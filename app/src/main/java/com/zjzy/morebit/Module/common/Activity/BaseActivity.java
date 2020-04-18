@@ -16,12 +16,14 @@ import android.view.ViewGroup;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Activity.SearchResultActivity;
+import com.zjzy.morebit.Activity.SearchResultForPddActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.Logger;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.main.ui.fragment.SearchResultFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
@@ -34,6 +36,7 @@ import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.UI.WindowUtils;
@@ -286,13 +289,14 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                 }
                 App.getACache().put(C.sp.searchHotKey, asObject);
                 //跳转到搜索页面
-                Intent intent = new Intent(BaseActivity.this, SearchResultActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("keyWord", textTrim);
-                bundle.putInt(SearchResultActivity.KEY_SEARCH_FROM, SearchResultActivity.FROM_EXTERNAL);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                SensorsDataUtil.getInstance().searchKeyTrack(textTrim,C.BigData.SUPER_SEARCH);
+                gotoSearchResultPage(textTrim);
+//                Intent intent = new Intent(BaseActivity.this, SearchResultForPddActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("keyWord", textTrim);
+//                bundle.putInt(SearchResultActivity.KEY_SEARCH_FROM, SearchResultForPddActivity.FROM_EXTERNAL);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//                SensorsDataUtil.getInstance().searchKeyTrack(textTrim,C.BigData.SUPER_SEARCH);
             }
 
         });
@@ -305,6 +309,13 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 
             }
         }
+    }
+    private void gotoSearchResultPage(String keywords){
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+        bundle.putString(C.Extras.search_keyword,keywords);
+        OpenFragmentUtils.goToSimpleFragment(this, SearchResultFragment.class.getName(), bundle);
+
     }
 
     protected void openGuessDialog(ShopGoodInfo data){
