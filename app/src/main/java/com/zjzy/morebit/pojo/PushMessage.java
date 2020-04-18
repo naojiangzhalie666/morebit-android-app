@@ -1,8 +1,10 @@
 package com.zjzy.morebit.pojo;
 
-import org.json.JSONObject;
+import java.io.Serializable;
+import java.util.List;
 
-public class PushMessage {
+public class PushMessage implements Serializable {
+
 
     /**
      * content : 恭喜您已经攒够成长值，快去升级VIP畅享海量优惠吧~
@@ -11,7 +13,7 @@ public class PushMessage {
      */
 
     private String content;
-    private JSONObject contentJson;
+    private String contentJson;
     private String push_type;
 
     public String getContent() {
@@ -22,11 +24,11 @@ public class PushMessage {
         this.content = content;
     }
 
-    public JSONObject getContentJson() {
+    public String getContentJson() {
         return contentJson;
     }
 
-    public void setContentJson(JSONObject contentJson) {
+    public void setContentJson(String contentJson) {
         this.contentJson = contentJson;
     }
 

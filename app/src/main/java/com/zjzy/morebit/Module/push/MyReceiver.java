@@ -15,6 +15,7 @@ import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.SinglePaneActivity;
 import com.zjzy.morebit.circle.ui.ReleaseManageActivity;
 import com.zjzy.morebit.fragment.NumberFragment;
+import com.zjzy.morebit.fragment.NumberSubFragment;
 import com.zjzy.morebit.info.ui.fragment.EarningsFragment;
 import com.zjzy.morebit.info.ui.fragment.MsgEarningsFragment;
 import com.zjzy.morebit.info.ui.fragment.MsgFansFragment;
@@ -22,10 +23,12 @@ import com.zjzy.morebit.info.ui.fragment.MsgFeedbackFragment;
 import com.zjzy.morebit.info.ui.fragment.MsgSysFragment;
 import com.zjzy.morebit.main.ui.CollectFragment2;
 import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
+import com.zjzy.morebit.pojo.JPushSkipBean;
 import com.zjzy.morebit.pojo.PushMessage;
 import com.zjzy.morebit.pojo.PushMsgInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 
@@ -126,14 +129,21 @@ public class MyReceiver extends BroadcastReceiver {
 
     public static void startVipActivity(Context context, String extra) {
         try {
-            PushMessage pushMessage = new Gson().fromJson(extra, PushMessage.class);
-            String push_type = pushMessage.getPush_type();
-            if (push_type.equals("19")){
+
+         //   PushMessage pushMessage = (PushMessage) MyGsonUtils.jsonToBean(extra, PushMessage.class);
+       //  PushMessage pushMessage = new Gson().fromJson(extra, PushMessage.class);
+            JSONObject jsonObject = new JSONObject(extra);
+
+            //  JSONObject("")
+          //  String push_type = pushMessage.getPush_type();
+            if (jsonObject.optString("push_type").equals("19")){
                 Bundle itBundle = new Bundle();
+              //  itBundle.putString();
 //            Intent  it = new Intent(context, SinglePaneActivity.class);
 //            it.putExtra("fragment",  NumberFragment.class.getName());
 //            it.putExtras(itBundle);
-                OpenFragmentUtils.goToSimpleFragment(context, NumberFragment.class.getName(), itBundle);
+                itBundle.putString("extra",extra);
+                OpenFragmentUtils.goToSimpleFragment(context, NumberSubFragment.class.getName(), itBundle);
             }
         }catch (Exception e) {
             e.printStackTrace();

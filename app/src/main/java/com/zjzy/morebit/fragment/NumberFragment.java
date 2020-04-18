@@ -42,6 +42,7 @@ public class NumberFragment extends BaseMainFragmeng  {
 //
     @BindView(R.id.status_bar)
     View status_bar;
+    private  String extra;
 
 
 //    @BindView(R.id.my_more_corn)
@@ -54,6 +55,11 @@ public class NumberFragment extends BaseMainFragmeng  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+
+//        Bundle args = getArguments();
+//        extra = args.getString("extra");
+
+
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.zjzy.morebit.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,8 @@ import com.zjzy.morebit.view.HorzProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -102,6 +105,7 @@ public class NumberSubFragment extends BaseFragment {
     UserInfo mUserInfo;
     private int page = 1;
     private ImageView user_king;
+    private String extra;
 
 
 
@@ -128,6 +132,9 @@ public class NumberSubFragment extends BaseFragment {
 
     public static NumberSubFragment newInstance() {
         NumberSubFragment fragment = new NumberSubFragment();
+//        Bundle args = new Bundle();
+//        args.putString("extra", extra);
+//        fragment.setArguments(args);
         return fragment;
     }
 
@@ -149,6 +156,30 @@ public class NumberSubFragment extends BaseFragment {
         mAdapter = new SubNumberAdapter(getActivity());
 
         mReUseGridView.setAdapterAndHeadView(headView,mAdapter);
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            extra = arguments.getString("extra");
+            try {
+                JSONObject jsonObject = new JSONObject(extra);
+                String contentJson = jsonObject.optString("contentJson");
+                JSONObject jsonObject1 = new JSONObject(contentJson);
+                String growth = jsonObject1.optString("growth");
+                if (growth.equals("360")){
+                    updateGrade();
+                }
+
+                if (growth.equals("50000")){
+                    updateGradeForLeader();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.e("abf",extra+"");
+//            Log.e("id",id);
+//            ToastUtils.showLong(id+"");
+
+        }
 
 
     }
@@ -278,6 +309,12 @@ public class NumberSubFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         refreshData();
+        initTan();
+    }
+
+    private void initTan() {
+
+
     }
 
     private void refreshData() {
