@@ -139,10 +139,12 @@ public class SearchResultFragment extends BaseMainFragmeng {
                    mType = 2;
                }
                String currentSearch = etSearch.getText().toString();
-               if (!keyWord.equals(currentSearch)){
-                   keyWord = currentSearch;
-                   sendMsgForChildFragment(mType);
-               }
+               keyWord = currentSearch;
+               sendMsgForChildFragment(mType);
+//               if (!keyWord.equals(currentSearch)){
+//                   keyWord = currentSearch;
+//                   sendMsgForChildFragment(mType);
+//               }
 
            }
 

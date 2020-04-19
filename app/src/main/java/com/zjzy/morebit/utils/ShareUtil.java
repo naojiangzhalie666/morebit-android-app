@@ -465,7 +465,8 @@ public class ShareUtil {
 
         @Override
         public void onCancel(Platform platform, int i) {
-            ViewShowUtils.showShortToast(com.zjzy.morebit.App.getAppContext(), "分享取消");
+            //修改为成功。第三方的问题。成功也回调取消。
+            ViewShowUtils.showShortToast(com.zjzy.morebit.App.getAppContext(), "分享成功");
         }
     }
 
