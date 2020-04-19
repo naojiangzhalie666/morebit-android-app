@@ -5,14 +5,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.LocalData.CommonLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.adapter.MarkermallCircleAdapter;
 import com.zjzy.morebit.utils.LoginUtil;
+import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 
 /**
  * 授权用户隐私弹窗
@@ -125,6 +129,20 @@ public class AuthForPersonDialog extends Dialog implements View.OnClickListener 
     public interface OnAuthListener {
         void onAuthClick();
         void onNoAuthClick();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            //虚拟的返回键
+            if (!CommonLocalData.getAuthedStatus()){
+                // 清空数据
+                MarkermallCircleAdapter.mShareCountId = 0;
+                ActivityLifeHelper.getInstance().finishAllActivities();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }
