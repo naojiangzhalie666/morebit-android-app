@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
+
 import com.facebook.stetho.Stetho;
 //import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -127,6 +128,7 @@ public class App extends Application implements ProtectedMemberKeeper {
             }
         });
        // initBidDataAPI();
+
 
     }
 

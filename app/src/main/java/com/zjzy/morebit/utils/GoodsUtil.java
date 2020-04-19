@@ -345,9 +345,9 @@ public class GoodsUtil {
      * @param goodsInfo
      * @throws Exception
      */
-    public static String savePruchaseGoodsImg(Activity activity, List<ShopGoodInfo> goodsInfo, Bitmap ewmBitmap) throws Exception {
+    public static String savePruchaseGoodsImg(Activity activity, List<ShopGoodInfo> goodsInfo,ArrayList<Bitmap> mUrlArrayList) throws Exception {
         //设置布局数据
-        View view = getPurchasePoster(activity, goodsInfo, ewmBitmap);
+        View view = getPurchasePoster(activity, goodsInfo, mUrlArrayList);
         Bitmap vBitmap = getViewBitmap(view);
         //保存图片到本地
         String saveMakePath = SdDirPath.IMAGE_CACHE_PATH + "goodqr_" + System.currentTimeMillis() + ".jpg";
@@ -424,18 +424,18 @@ public class GoodsUtil {
         return view;
     }
     @NonNull
-    public static View getPurchasePoster(Activity activity, List<ShopGoodInfo> goodsInfo, Bitmap ewmBitmap) {
+    public static View getPurchasePoster(Activity activity, List<ShopGoodInfo> goodsInfo, ArrayList<Bitmap> mUrlArrayList) {
         View view = LayoutInflater.from(activity).inflate(R.layout.view_new_pruchase_goods_poster, null);
-        RecyclerView rcy_pruchase=view.findViewById(R.id.rcy_pruchase);
-        PurchsePosterAdapter  adapter=new PurchsePosterAdapter(activity,goodsInfo);
+       RecyclerView rcy_pruchase=view.findViewById(R.id.rcy_pruchase);
+      PurchsePosterAdapter  adapter=new PurchsePosterAdapter(activity,goodsInfo,mUrlArrayList);
         LinearLayoutManager manager = new LinearLayoutManager(activity);
         rcy_pruchase.setLayoutManager(manager);
         rcy_pruchase.setAdapter(adapter);
-        ImageView qrcode_img = (ImageView) view.findViewById(R.id.qrcode_img);
-
-        TextView tv_code = (TextView) view.findViewById(R.id.tv_code);
-
-        tv_code.setText(activity.getString(R.string.invitation_code, UserLocalData.getUser().getInviteCode()));
+//        ImageView qrcode_img = (ImageView) view.findViewById(R.id.qrcode_img);
+//
+//        TextView tv_code = (TextView) view.findViewById(R.id.tv_code);
+//
+//        tv_code.setText(activity.getString(R.string.invitation_code, UserLocalData.getUser().getInviteCode()));
 
 
         //if (ewmBitmap != null)

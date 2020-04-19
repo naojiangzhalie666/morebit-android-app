@@ -71,6 +71,7 @@
         android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
         <activity android:name=".goodsvideo.ShopMallActivity"></activity>
         <activity android:name=".goodsvideo.VideoClassActivity" />
@@ -237,6 +238,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.ShowWebActivity"
+            android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".circle.ui.ReleaseManageActivity"
