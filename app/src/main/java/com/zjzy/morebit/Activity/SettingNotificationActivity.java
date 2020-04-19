@@ -1,8 +1,13 @@
 package com.zjzy.morebit.Activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
@@ -64,12 +69,15 @@ public class SettingNotificationActivity extends BaseActivity {
     private boolean isGoodsPush = true; //粉丝推送
     private String mIsOpenHotMsgPush;
     private HosSwitch mHosSwitch;
+    private ScreenStatusReceiver mScreenStatusReceiver;
+    private   NotificationDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_notification);
         init();
+        registSreenStatusReceiver();
     }
 
     private void init() {
@@ -89,7 +97,7 @@ public class SettingNotificationActivity extends BaseActivity {
             }
         });
 
-        if(UserLocalData.getUser().getReleasePermission()==1){
+        if (UserLocalData.getUser().getReleasePermission() == 1) {
             rl_share_goods.setVisibility(View.VISIBLE);
         } else {
             rl_share_goods.setVisibility(View.GONE);
@@ -97,7 +105,7 @@ public class SettingNotificationActivity extends BaseActivity {
         if (NotificationsUtils.isNotificationEnabled(this)) {
             getSwitch();
         }
-        mIsOpenHotMsgPush = App.getACache().getAsString(UserLocalData.getUser().getPhone()+C.sp.isOpenHotMsgPush);
+        mIsOpenHotMsgPush = App.getACache().getAsString(UserLocalData.getUser().getPhone() + C.sp.isOpenHotMsgPush);
         mHotSwitch.setChecked(TextUtils.isEmpty(mIsOpenHotMsgPush));
         mHosSwitch = new HosSwitch();
         mHotSwitch.setOnClickListener(mHosSwitch);
@@ -110,7 +118,8 @@ public class SettingNotificationActivity extends BaseActivity {
             PushAction.addTags(getApplicationContext(), C.Push.tag_everydayHotCommodity);
         }
     }
-    private class  HosSwitch implements View.OnClickListener{
+
+    private class HosSwitch implements View.OnClickListener {
 
         /**
          * Called when a view has been clicked.
@@ -121,38 +130,37 @@ public class SettingNotificationActivity extends BaseActivity {
         public void onClick(View v) {
             setOpenHotPush(TextUtils.isEmpty(mIsOpenHotMsgPush));
             mIsOpenHotMsgPush = TextUtils.isEmpty(mIsOpenHotMsgPush) ? "1" : "";
-            App.getACache().put(UserLocalData.getUser().getPhone()+C.sp.isOpenHotMsgPush, mIsOpenHotMsgPush);
+            App.getACache().put(UserLocalData.getUser().getPhone() + C.sp.isOpenHotMsgPush, mIsOpenHotMsgPush);
 
         }
     }
-
 
 
     /**
      * 设置开关
      */
     private void setSwitchCheck(final Switch switchCheck, boolean isChecked) {
-        MyLog.i("test","switchCheck: " +switchCheck +" isChecked: " +isChecked );
+        MyLog.i("test", "switchCheck: " + switchCheck + " isChecked: " + isChecked);
         switchCheck.setOnCheckedChangeListener(null);
         switchCheck.setChecked(isChecked);
         switchCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MyLog.i("test","isChecked: " +isChecked +" switchCheck: " +switchCheck +" isProfitPush: " +isProfitPush);
+                MyLog.i("test", "isChecked: " + isChecked + " switchCheck: " + switchCheck + " isProfitPush: " + isProfitPush);
                 switchCheck.setChecked(!isChecked);
                 if (switchCheck == mProfitSwitch) {
-                    editJpush(isChecked, isFansPush,isGoodsPush);
-                } else if(switchCheck == mFansSwitch) {
-                    editJpush( isProfitPush,isChecked,isGoodsPush);
-                } else if(switchCheck == share_goods_switch){
-                    editJpush(isProfitPush, isFansPush,isChecked);
+                    editJpush(isChecked, isFansPush, isGoodsPush);
+                } else if (switchCheck == mFansSwitch) {
+                    editJpush(isProfitPush, isChecked, isGoodsPush);
+                } else if (switchCheck == share_goods_switch) {
+                    editJpush(isProfitPush, isFansPush, isChecked);
                 }
             }
         });
     }
 
     private void showDialog() {
-        NotificationDialog dialog = new NotificationDialog(SettingNotificationActivity.this, R.style.dialog)
+          dialog = new NotificationDialog(SettingNotificationActivity.this, R.style.dialog)
                 .setOnListner(new NotificationDialog.OnListener() {
                     @Override
                     public void onClick(int type) {
@@ -179,7 +187,7 @@ public class SettingNotificationActivity extends BaseActivity {
         if (NotificationsUtils.isNotificationEnabled(this)) {
             setSwitchCheck(mProfitSwitch, isProfitPush);
             setSwitchCheck(mFansSwitch, isFansPush);
-            setSwitchCheck(share_goods_switch,isGoodsPush);
+            setSwitchCheck(share_goods_switch, isGoodsPush);
             mFansSwitch.setEnabled(true);
             mProfitSwitch.setEnabled(true);
             share_goods_switch.setEnabled(true);
@@ -215,10 +223,10 @@ public class SettingNotificationActivity extends BaseActivity {
      * @param isFansChecked
      * @param isProfitChecked
      */
-    private void editJpush(final boolean isProfitChecked, final boolean isFansChecked,final  boolean isGoodsChecked) {
-       MyLog.i("test","isProfitChecked: " +isProfitChecked +" isFansChecked: " +isFansChecked+" isGoodsChecked"+isGoodsChecked);
+    private void editJpush(final boolean isProfitChecked, final boolean isFansChecked, final boolean isGoodsChecked) {
+        MyLog.i("test", "isProfitChecked: " + isProfitChecked + " isFansChecked: " + isFansChecked + " isGoodsChecked" + isGoodsChecked);
         LoadingView.showDialog(this);
-        RequestPushBean bean = new RequestPushBean(isFansChecked, isProfitChecked,isGoodsChecked);
+        RequestPushBean bean = new RequestPushBean(isFansChecked, isProfitChecked, isGoodsChecked);
         RxHttp.getInstance().getUsersService().editJpush(bean)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(this.<BaseResponse<String>>bindToLifecycle())
@@ -239,7 +247,7 @@ public class SettingNotificationActivity extends BaseActivity {
                         isProfitPush = isProfitChecked;
                         isFansPush = isFansChecked;
                         isGoodsPush = isGoodsChecked;
-                        MyLog.i("test","isProfitPush: " +isProfitPush + " isFansPush: " + " isGoodsPush: " +isGoodsPush );
+                        MyLog.i("test", "isProfitPush: " + isProfitPush + " isFansPush: " + " isGoodsPush: " + isGoodsPush);
                         setSwitchCheck(mProfitSwitch, isProfitChecked);
                         setSwitchCheck(mFansSwitch, isFansChecked);
                         setSwitchCheck(share_goods_switch, isGoodsChecked);
@@ -265,7 +273,7 @@ public class SettingNotificationActivity extends BaseActivity {
                         if (data != null) {
                             isProfitPush = (data.getIncomeMessage() == 1);
                             isFansPush = (data.getFansMessage() == 1);
-                            isGoodsPush = (data.getShareItemMessage()== 1);
+                            isGoodsPush = (data.getShareItemMessage() == 1);
 
                             setSwitchCheck(mProfitSwitch, isProfitPush);
                             setSwitchCheck(mFansSwitch, isFansPush);
@@ -273,5 +281,36 @@ public class SettingNotificationActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    private void registSreenStatusReceiver() {
+        mScreenStatusReceiver = new ScreenStatusReceiver();
+        IntentFilter screenStatusIF = new IntentFilter();
+        screenStatusIF.addAction(Intent.ACTION_SCREEN_ON);
+        screenStatusIF.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(mScreenStatusReceiver, screenStatusIF);
+    }
+
+
+    class ScreenStatusReceiver extends BroadcastReceiver {
+        String SCREEN_ON = "android.intent.action.SCREEN_ON";
+        String SCREEN_OFF = "android.intent.action.SCREEN_OFF";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (SCREEN_ON.equals(intent.getAction())) {
+                Log.e("gggg","开屏");
+            } else if (SCREEN_OFF.equals(intent.getAction())) {
+                Log.e("gggg","息屏");
+                dialog.dismiss();
+            }
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mScreenStatusReceiver);
     }
 }
