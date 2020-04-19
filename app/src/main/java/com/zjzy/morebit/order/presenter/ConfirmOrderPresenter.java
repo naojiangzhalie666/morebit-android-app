@@ -39,7 +39,7 @@ public class ConfirmOrderPresenter extends MvpPresenter<ConfirmOrderModel, Confi
                 .subscribe(new DataObserver<ResponseOrderInfo>() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        getIView().onCreateError();
+                        getIView().onCreateError(errorMsg);
                     }
 
                     @Override

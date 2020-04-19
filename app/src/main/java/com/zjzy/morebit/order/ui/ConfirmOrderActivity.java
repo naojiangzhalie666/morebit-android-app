@@ -358,8 +358,8 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
     }
 
     @Override
-    public void onCreateError() {
-        ViewShowUtils.showShortToast(ConfirmOrderActivity.this, "支付失败，请稍后重试");
+    public void onCreateError(String msgError) {
+        ViewShowUtils.showShortToast(ConfirmOrderActivity.this, msgError);
         payAction.setEnabled(true);
         payAction.setTextColor(Color.parseColor("#FFFFFF"));
         payAction.setBackgroundResource(R.drawable.bg_confirm_order_buy_corner);
