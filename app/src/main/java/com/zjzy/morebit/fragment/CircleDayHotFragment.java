@@ -290,7 +290,8 @@ public class CircleDayHotFragment extends BaseFragment {
                             }
                             pageNum = pageNum + 1;
                             if (mLoadType != TYPE_SEARCH && mLoadType != TYPE_MY_COLLECTS
-                                    && mLoadType != TypeThisMaterial && mLoadType != TypeCommodity) {
+                                    && mLoadType != TypeThisMaterial && mLoadType != TypeCommodity
+                                    && mLoadType != TypeImg) {
                                 getGuiessList();
                             }
 
