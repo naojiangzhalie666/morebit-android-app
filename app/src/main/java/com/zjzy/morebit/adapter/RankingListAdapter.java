@@ -70,6 +70,7 @@ public class RankingListAdapter extends RecyclerView.Adapter {
         if (info == null) return;
 
         final ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.img_shop_icon.setVisibility(View.GONE);
         viewHolder.ll_shop_name.setVisibility(View.GONE);
         viewHolder.ll_bottom.setPadding(0, mBottomPadding, 0, 0);
 
@@ -165,7 +166,7 @@ public class RankingListAdapter extends RecyclerView.Adapter {
         RelativeLayout toDetail, img_rl;
         ImageView select_tag, video_play;
         View ll_prise;
-        ImageView good_mall_tag;
+        ImageView good_mall_tag,img_shop_icon;
         LinearLayout ll_shop_name, ll_bottom;
 
 
@@ -190,6 +191,7 @@ public class RankingListAdapter extends RecyclerView.Adapter {
 
             ll_bottom = (LinearLayout) itemView.findViewById(R.id.ll_bottom);
             return_cash = (LinearLayout) itemView.findViewById(R.id.ll_return_cash);
+            img_shop_icon = (ImageView)itemView.findViewById(R.id.img_shop_icon);
 
         }
     }
