@@ -71,7 +71,7 @@
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
                         android:textColor="@color/color_FFFFFF"
-                        android:text="每月25号可提现上月结算收益"
+                        android:text="每月25～31号可提现上月结算收益"
                         android:textSize="10sp"
                         android:background="@drawable/bg_withdraw_6dp"/>
                 </LinearLayout>
