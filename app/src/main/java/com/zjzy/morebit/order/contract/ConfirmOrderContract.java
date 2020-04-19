@@ -22,7 +22,7 @@ public class ConfirmOrderContract {
         /**
          * 创建订单失败
          */
-        void onCreateError();
+        void onCreateError(String msgError);
 
         /**
          * 获取默认地址成功

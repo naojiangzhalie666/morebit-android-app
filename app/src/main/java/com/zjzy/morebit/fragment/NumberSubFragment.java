@@ -466,6 +466,7 @@ public class NumberSubFragment extends BaseFragment {
             rl_duodou_progress.setVisibility(View.VISIBLE);
             mHorzProgressView.setMax(50000.00);
             mHorzProgressView.setCurrentNum(info.getMoreCoin());
+            llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
             myGradedView.setText("VIP");
             Long moreCoin = info.getMoreCoin();
             String coin1 ;
@@ -486,6 +487,7 @@ public class NumberSubFragment extends BaseFragment {
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
             myGradedView.setText("团队长");
+            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
             rl_duodou_progress.setVisibility(View.GONE);
             user_king.setVisibility(View.VISIBLE);
             gradeForLeaderView();
@@ -502,6 +504,7 @@ public class NumberSubFragment extends BaseFragment {
                 coin1 = "成长值：" +"0/360";
                 return;
             }
+            llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
             user_king.setVisibility(View.GONE);
 //            Long moreCoin = info.getMoreCoin();
 //
