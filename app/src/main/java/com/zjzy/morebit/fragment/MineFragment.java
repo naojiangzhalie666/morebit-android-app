@@ -266,7 +266,7 @@ public class MineFragment extends BaseMainFragmeng {
             UserLocalData.isPartner = false;
             updataUser();
         }
-
+        refreshData();
     }
 
     @Override
