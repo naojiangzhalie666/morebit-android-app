@@ -106,11 +106,15 @@
                                         android:layout_toRightOf="@id/number_goods_price"
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="20dp"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp"
+                                        android:paddingTop="2dp"
+                                        android:paddingBottom="2dp"
                                         android:textSize="@dimen/sp_10"
                                         android:textColor="@color/color_FFFFFF"
                                         android:text="@string/give_growth_value"
                                         android:gravity="center"
-                                        android:background="@mipmap/bg_chengzhangzhi"/>
+                                        android:background="@drawable/bg_selected_goods_coin"/>
                                 </RelativeLayout>
 
 

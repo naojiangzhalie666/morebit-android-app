@@ -583,7 +583,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
         txtGoodsName.setText(mGoodsInfo.getName());
         txtGoodsRule.setText(mGoodsInfo.getUnit());
-        selectedGoodsPrice.setText(String.valueOf(mGoodsInfo.getRetailPrice()));
+        selectedGoodsPrice.setText(" "+String.valueOf(mGoodsInfo.getRetailPrice()));
 
         LoadImgUtils.setImg(NumberGoodsDetailsActivity.this, goodsPicView, mGoodsInfo.getPicUrl());
 
