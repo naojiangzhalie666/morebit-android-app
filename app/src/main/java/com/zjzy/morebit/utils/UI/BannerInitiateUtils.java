@@ -199,6 +199,7 @@ public class BannerInitiateUtils {
             } else if (open == 10) {   //第三方活动列表
                 gotoMenu(activity, imageInfo.getClassId(), imageInfo);  //如果是2类型，class_id就是分类ID
             } else if (open == 11) {   //物料id列表
+
                 if (LoginUtil.checkIsLogin(activity)) {
                     if (TaobaoUtil.isAuth()) {//淘宝授权
                         TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
@@ -384,7 +385,15 @@ public class BannerInitiateUtils {
             getHungryLink((BaseActivity) activity, info);
         } else if (type == C.BannerIntentionType.MOUTH) {//口碑
 
-            getMouthLink((BaseActivity) activity, info);
+            if (LoginUtil.checkIsLogin(activity)) {
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity,false);
+                }else{
+                    getMouthLink((BaseActivity) activity, info);
+                }
+            }
+
+
         } else {
             showUptate(activity, type);
         }
@@ -492,13 +501,6 @@ public class BannerInitiateUtils {
                     protected void onSuccess(ActivityLinkBean data) {
                         String activityLink = data.getActivityLink();
                         if (TextUtils.isEmpty(activityLink)) return;
-                        if (!LoginUtil.checkIsLogin((BaseActivity) activity)) {
-                            return;
-                        }
-                        if (TaobaoUtil.isAuth()) {//淘宝授权
-                            TaobaoUtil.getAllianceAppKey((BaseActivity) activity);
-                            return;
-                        }
                         ShowWebActivity.start(activity, info.getUrl() + "?activityLinkTkl=" + data.getActivityLinkTkl() + "&activityLink=" + data.getActivityLink(), info.getTitle(), "29");
 
                     }

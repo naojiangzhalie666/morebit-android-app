@@ -278,7 +278,7 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
 //
 //            }
 
-            imgpath = GoodsUtil.savePruchaseGoodsImg(this, shopGoodInfo, mUrlArrayList);
+            imgpath = GoodsUtil.savePruchaseGoodsImg(this, shopGoodInfo);
             adapter = new PurchseAdapter(this, data,ischeck);
             LinearLayoutManager manager = new LinearLayoutManager(this);
             rl_list.setLayoutManager(manager);

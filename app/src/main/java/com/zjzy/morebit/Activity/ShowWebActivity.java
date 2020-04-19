@@ -135,7 +135,14 @@ public class ShowWebActivity extends BaseActivity {
             if (isTaobaoClient(activity, url)) {
                 return;
             };
+
+        }else{
+            if (TaobaoUtil.isAuth()) {//淘宝授权
+                TaobaoUtil.getAllianceAppKey((BaseActivity) activity,false);
+                return;
+            }
         }
+
         //跳转到网页
         Intent it = new Intent(activity, ShowWebActivity.class);
         Bundle bundle = new Bundle();
