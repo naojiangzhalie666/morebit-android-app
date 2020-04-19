@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -171,7 +172,7 @@ public class SearchResultFragment extends BaseMainFragmeng {
                    //这里调用搜索方法
 
 
-
+                   keyWord = etSearch.getText().toString();
                    mListView.setVisibility(View.GONE);
                    sendMsgForChildFragment(mType);
                    ViewShowUtils.hideSoftInput(getActivity(), etSearch);
@@ -281,12 +282,26 @@ public class SearchResultFragment extends BaseMainFragmeng {
         }
     }
 
+
+
     private void initBundle() {
         bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
             keyWord = bundle.getString(C.Extras.search_keyword);
 
         }
+//        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+//                    keyWord = etSearch.getText().toString();
+//                    sendMsgForChildFragment(mType);
+//                    return true;
+//                }
+//
+//                return false;
+//            }
+//        });
     }
 
     /**
