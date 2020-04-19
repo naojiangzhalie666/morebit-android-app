@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -866,6 +867,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
 
     @Override
     public void onBackPressed() {
+
 //        if (numberFragment != null) {
 //            MyLog.i("test", "((CircleFragment)circleFragment).onBackPressed(): ");
 ////            if (((HomeCollegeFragment) collegeFragment).onBackPressed()) {
