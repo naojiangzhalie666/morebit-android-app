@@ -65,6 +65,12 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
 
     private void initData() {
         String url = mGoodsInfo.getItemVideo();
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
+            }
+        });
         if (!TextUtils.isEmpty(url)) {
             try {
                 Uri uri = Uri.parse(url);
