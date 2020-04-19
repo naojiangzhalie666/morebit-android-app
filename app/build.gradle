@@ -353,6 +353,8 @@ dependencies {
     //没有使用特殊Header和Footer，可以不加下面这行
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
 
+
+
 }
 // 依赖插件脚本
 //apply from: 'tinker-support.gradle'

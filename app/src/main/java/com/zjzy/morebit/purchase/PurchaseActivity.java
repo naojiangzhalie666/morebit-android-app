@@ -20,6 +20,7 @@ import com.alibaba.wireless.security.open.middletier.fc.IFCActionCallback;
 import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.PurchaseRuleDialog;
@@ -42,17 +43,21 @@ import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
 import com.zjzy.morebit.purchase.control.PurchaseControl;
 import com.zjzy.morebit.purchase.presenter.PurchasePresenter;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
+import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
+import com.zjzy.morebit.utils.ImageUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.QRCodeGenerater;
 import com.zjzy.morebit.utils.QrcodeUtils;
 import com.zjzy.morebit.utils.ShareUtil;
 import com.zjzy.morebit.utils.TaobaoUtil;
+import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.share.ShareMore;
 import com.zjzy.morebit.view.CommercialShareDialog;
 import com.zjzy.morebit.view.FixRecyclerView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +99,6 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
                 .fitsSystemWindows(false)
                 .statusBarColor(R.color.white)
                 .init();
-        getShareEWMBitmap();
         isCheckNew();
 
         initView();
@@ -115,34 +119,7 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
                 });
     }
 
-    /**
-     * 获取二维码
-     */
-    private void getShareEWMBitmap() {
-        ShareMore.getShareAppLinkObservable(this)
-                .observeOn(Schedulers.io())
-                .flatMap(new Function<BaseResponse<ShareUrlBaen>, ObservableSource<Bitmap>>() {
-                    @Override
-                    public ObservableSource<Bitmap> apply(BaseResponse<ShareUrlBaen> baseResponse) throws Exception {
-                        MyLog.threadName();
-                        ShareUrlBaen data = baseResponse.getData();
-                        if (data != null) {
-                            Bitmap qrCode = QRCodeGenerater.createQRCode(data.getLink(), 60, 60);
-                            mEwmBitmap = qrCode;
-                            mPresenter.getPurchase(PurchaseActivity.this, 1);//免单
-                            mPresenter.getProduct(PurchaseActivity.this);//好货
 
-                        }
-                        return null;
-                    }
-                })
-                .subscribe(new CallBackObserver<Bitmap>() {
-                    @Override
-                    public void onNext(Bitmap bitmap) {
-
-                    }
-                });
-    }
 
     @Override
     public BaseView getBaseView() {
@@ -156,7 +133,8 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
 
     private void initData() {
         txt_head_title.setText("新人0元购");
-
+        mPresenter.getPurchase(PurchaseActivity.this, 1);//免单
+        mPresenter.getProduct(PurchaseActivity.this);//好货
 
     }
 
@@ -285,13 +263,28 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
                 linear_more.setVisibility(View.GONE);
                 data.addAll(shopGoodInfo);
             }
+            final ArrayList<Bitmap> mUrlArrayList = new ArrayList<>();
+//            for (int i = 0; i < shopGoodInfo.size(); i++) {
+//                String itemPicture = shopGoodInfo.get(i).getItemPicture();
+//                if (itemPicture!=null){
+//                    Bitmap bitmap = ImageUtils.returnBitMap(itemPicture);
+//                    mUrlArrayList.add(bitmap);
+//
+//                }
+//
+//
+//            }
+//            if (mUrlArrayList!=null){
+//
+//            }
+
+            imgpath = GoodsUtil.savePruchaseGoodsImg(this, shopGoodInfo, mUrlArrayList);
             adapter = new PurchseAdapter(this, data,ischeck);
             LinearLayoutManager manager = new LinearLayoutManager(this);
             rl_list.setLayoutManager(manager);
             rl_list.setAdapter(adapter);
-            if (mEwmBitmap != null) {
-                imgpath = GoodsUtil.savePruchaseGoodsImg(this, shopGoodInfo, mEwmBitmap);
-            }
+
+
 
             adapter.setOnAddClickListener(new PurchseAdapter.OnAddClickListener() {
                 @Override
