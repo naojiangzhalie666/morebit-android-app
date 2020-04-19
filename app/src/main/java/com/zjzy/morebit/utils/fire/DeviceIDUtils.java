@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -387,6 +388,9 @@ public class DeviceIDUtils {
             imei = tm.getDeviceId();
             if (!TextUtils.isEmpty(imei)) {
                 savaString(LOACL_IMEI, imei);
+            }else{
+                imei= Settings.Secure.getString(mContext.getApplicationContext().getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
             }
             return imei;
         } catch (Exception e) {
