@@ -36,7 +36,7 @@
     <string name="bind_hind"> 如未设置密码,请先前往修改;如没有实名名称,请先前往实名支付宝!</string>
     <string name="main_circle_hotday">每日爆款</string>
     <string name="main_circle_adv">宣传素材</string>
-    <string name="goodsShertError">该商品已经失效,请重新选择商品</string>
+    <string name="goodsShertError">商品优惠券已领完，请重新选择商品</string>
 
     <string name="coupon">¥%1$s</string>
     <string name="coupon_add_text">券后¥%1$s</string>

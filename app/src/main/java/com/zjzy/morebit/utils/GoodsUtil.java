@@ -755,7 +755,7 @@ public class GoodsUtil {
                     imageUris.add(new File(urlPs));
                 }
                 if (imageUris.size() == 0) {
-                    ViewShowUtils.showShortToast(activity, "该商品已失效,请重新选择商品");
+                    ViewShowUtils.showShortToast(activity, "商品优惠券已领完，请重新选择商品");
                     if (action != null) {
                         action.onError();
                     }
@@ -807,7 +807,7 @@ public class GoodsUtil {
                     imageUris.add(new File(urlPs));
                 }
                 if (imageUris.size() == 0) {
-                    ViewShowUtils.showShortToast(activity, "该商品已失效,请重新选择商品");
+                    ViewShowUtils.showShortToast(activity, "商品优惠券已领完，请重新选择商品");
                     if (action != null) {
                         action.onError();
                     }
