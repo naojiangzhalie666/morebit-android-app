@@ -50,12 +50,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="11dp">
 
             <android.support.v7.widget.CardView
                 android:layout_width="96dp"
-                android:layout_height="match_parent"
+                android:layout_height="96dp"
                 app:cardCornerRadius="5dp"
                 android:id="@+id/icon"
                 app:cardElevation="0dp"
@@ -175,10 +175,12 @@
                 android:textSize="10sp" />
 
             <RelativeLayout
+
                 android:id="@+id/rl_receiver_goods_ship"
-                android:layout_width="160dp"
-                android:layout_height="30dp"
-                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp"
+               android:layout_below="@+id/tv_num"
                 android:layout_alignParentRight="true"
                 >
 
@@ -205,26 +207,24 @@
                     <TextView
                         android:id="@+id/go_goods_detail_tv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="32dp"
                         android:gravity="center"
                         android:background="@mipmap/buy_again"
                         android:textColor="@color/white"
                         android:textSize="11sp"
+                        android:layout_marginTop="2dp"
                         android:visibility="visible"
                         android:text="重新购买"
                         />
                     <TextView
                         android:id="@+id/go_goods_pay_tv"
-                        android:layout_width="80dp"
+                        android:layout_width="@dimen/dp_72"
                         android:layout_height="32dp"
                         android:gravity="center"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:paddingRight="8dp"
-                        android:paddingLeft="8dp"
-                        android:background="@drawable/bg_receiver_goods"
-                        android:textColor="@color/color_FD5212"
-                        android:textSize="12sp"
+                        android:background="@mipmap/buy_again"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:layout_marginTop="2dp"
                         android:visibility="gone"
                         android:text="立即支付"
                         />
@@ -238,13 +238,11 @@
                     android:layout_alignBottom="@id/rl_receiver_ggods"
                     android:background="@drawable/bg_ship"
                     android:gravity="center"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:paddingRight="8dp"
-                    android:paddingLeft="8dp"
+                    android:paddingRight="6dp"
+                    android:paddingLeft="6dp"
                     android:layout_marginBottom="3dp"
                     android:textColor="@color/color_333333"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:text="查看物流"
                     android:visibility="visible"
                     />
