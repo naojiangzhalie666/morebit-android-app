@@ -4,7 +4,7 @@
                                 xmlns:tools="http://schemas.android.com/tools"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="#ff333333"
+                                android:background="#FFEFD7"
                                 app:aspectRatio="11.36">
 
     <RelativeLayout
@@ -18,9 +18,8 @@
             android:textColor="@color/color_FFFFFF"
             android:textSize="12sp"
             android:gravity="center_vertical"
-            android:paddingRight="15dp"
             android:paddingLeft="10dp"
-            android:background="@drawable/bg_goods_detail_update_vip_estimate"
+            android:background="@mipmap/bg_goods_detail_bg"
             />
         <TextView
             android:id="@+id/tv_update_earnings"
@@ -30,7 +29,7 @@
             android:layout_toRightOf="@+id/tv_estimate_earnings"
             android:layout_height="wrap_content"
             android:text="@string/update_vip2_earnings"
-            android:textColor="@color/color_FFFFFF"
+            android:textColor="#8B511D"
             android:textSize="12sp"
             />
 
@@ -47,7 +46,7 @@
             android:paddingTop="3dp"
             android:layout_centerVertical="true"
             android:background="@drawable/bg_goods_detail_update_vip_updata"
-            android:textColor="@color/color_FFFFFF"
+            android:textColor="#8B511D"
             android:textSize="11sp"
             />
     </RelativeLayout>

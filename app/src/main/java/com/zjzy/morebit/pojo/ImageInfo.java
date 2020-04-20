@@ -52,7 +52,15 @@ public class ImageInfo implements Serializable {
     private String videoUrl; //搜索引导的视频
 
     private int popupType;//0 无限次 1 一天一次
+    private int superType;//1  超级入口   0 普通页面
 
+    public int getSuperType() {
+        return superType;
+    }
+
+    public void setSuperType(int superType) {
+        this.superType = superType;
+    }
 
     public String getVideoUrl() {
         return videoUrl;

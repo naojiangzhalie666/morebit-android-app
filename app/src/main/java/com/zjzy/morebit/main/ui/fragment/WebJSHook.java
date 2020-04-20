@@ -476,6 +476,7 @@ public class WebJSHook {
     public void startBannerInitiate(final String jsonString) {
         if (TextUtils.isEmpty(jsonString)) return;
         final ImageInfo imageInfo = MyGsonUtils.jsonToBean(jsonString, ImageInfo.class);
+        imageInfo.setSuperType(1);
         if (imageInfo != null) {
             App.mHandler.post(new Runnable() {
                 @Override

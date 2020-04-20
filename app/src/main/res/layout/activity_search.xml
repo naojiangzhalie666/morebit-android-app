@@ -208,8 +208,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:text="热门搜索"
+                    android:textStyle="bold"
                     android:textColor="@color/color_333333"
-                    android:textSize="15sp"/>
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -243,7 +244,8 @@
                     android:layout_centerVertical="true"
                     android:text="搜索历史"
                     android:textColor="@color/color_333333"
-                    android:textSize="15sp"/>
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
                 <ImageView
                     android:id="@+id/clearLy"
                     android:layout_width="wrap_content"

@@ -475,7 +475,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         }
         if (!StringsUtils.isEmpty(Info.getVoucherPrice())) {
             mGoodsInfo.setVoucherPrice(Info.getVoucherPrice());
-            textview_original.setText("¥ " + MathUtils.getVoucherPrice(Info.getVoucherPrice()));
+            textview_original.setText("" + MathUtils.getVoucherPrice(Info.getVoucherPrice()));
         }
 
         if (StringsUtils.isEmpty(Info.getItemDesc())) {
@@ -539,7 +539,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
             mGoodsInfo.setCouponPrice(Info.getCouponPrice());
             arv_prise.setVisibility(View.VISIBLE);
-            coupon_prise.setText(getString(R.string.coupon_price, MathUtils.getCouponPrice(Info.getCouponPrice())));
+            coupon_prise.setText(MathUtils.getCouponPrice(Info.getCouponPrice())+"");
             setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
         }
 
@@ -751,7 +751,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
             //简单使用
             mRollViewPager.setImages(mBannerList)
-                    .setBannerStyle(BannerConfig.NUM_INDICATOR)
+                    .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                     .setImageLoader(new GlideImageLoader())
                     .setOnBannerListener(new OnBannerListener() {
                         @Override
