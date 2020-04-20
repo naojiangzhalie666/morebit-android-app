@@ -62,6 +62,7 @@ import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.pojo.ProtocolRuleBean;
 import com.zjzy.morebit.pojo.UpgradeCarousel;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
@@ -1024,6 +1025,14 @@ public class MineFragment extends BaseMainFragmeng {
                 .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
     }
+
+    @Subscribe
+    public void onEventMainThread(RefreshUserInfoEvent event){
+
+        refreshData();
+    }
+
+
 
 
 

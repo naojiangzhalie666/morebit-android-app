@@ -1,6 +1,5 @@
 package com.zjzy.morebit.fragment;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,19 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
-import com.zjzy.morebit.pojo.event.MyMoreCoinEvent;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.MyLog;
-import com.zjzy.morebit.utils.StatusBarUtils;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,16 +115,16 @@ public class NumberFragment extends BaseMainFragmeng  {
     }
 
 
-    @Subscribe  //订阅事件
-    public void onEventMainThread(MyMoreCoinEvent event) {
-//       Long coin = event.getCoin();
-//       if (coin == null){
-//            myCornView.setText("0");
-//        }else{
-//            myCornView.setText(String.valueOf(coin));
-//        }
-
-    }
+//    @Subscribe  //订阅事件
+//    public void onEventMainThread(MyMoreCoinEvent event) {
+////       Long coin = event.getCoin();
+////       if (coin == null){
+////            myCornView.setText("0");
+////        }else{
+////            myCornView.setText(String.valueOf(coin));
+////        }
+//
+//    }
 
 
     @Override

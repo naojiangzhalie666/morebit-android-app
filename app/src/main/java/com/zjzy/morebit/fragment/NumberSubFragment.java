@@ -3,7 +3,6 @@ package com.zjzy.morebit.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.NumberReUseGridView;
-import com.zjzy.morebit.Module.common.widget.NumberSwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
@@ -34,8 +32,7 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
-import com.zjzy.morebit.pojo.event.MyGrowthEvent;
-import com.zjzy.morebit.pojo.event.MyMoreCoinEvent;
+import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
@@ -52,14 +49,9 @@ import com.zjzy.morebit.view.HorzProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
-import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
@@ -468,6 +460,7 @@ public class NumberSubFragment extends BaseFragment {
             mHorzProgressView.setCurrentNum(info.getMoreCoin());
             llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
             myGradedView.setText("VIP");
+            updateVip.setVisibility(View.VISIBLE);
             Long moreCoin = info.getMoreCoin();
             String coin1 ;
             if (moreCoin == null){
@@ -490,6 +483,8 @@ public class NumberSubFragment extends BaseFragment {
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
             rl_duodou_progress.setVisibility(View.GONE);
             user_king.setVisibility(View.VISIBLE);
+            updateVip.setVisibility(View.GONE);
+
             gradeForLeaderView();
         }else{
             rl_duodou_progress.setVisibility(View.VISIBLE);
@@ -506,13 +501,6 @@ public class NumberSubFragment extends BaseFragment {
             }
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
             user_king.setVisibility(View.GONE);
-//            Long moreCoin = info.getMoreCoin();
-//
-//            if (moreCoin == null){
-//
-//            }else{
-//
-//            }
             moreCoinBiaozhun.setText(coin1);
             if (coin < 360){
                 tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
@@ -523,9 +511,10 @@ public class NumberSubFragment extends BaseFragment {
            // leader_icon.setVisibility(View.GONE);
             myGradedView.setText("会员");
             gradeForNumberView();
+            updateVip.setVisibility(View.VISIBLE);
         }
-        Long coin = info.getMoreCoin();
-        EventBus.getDefault().post(new MyMoreCoinEvent(coin));
+
+        EventBus.getDefault().post(new RefreshUserInfoEvent());
 
     }
 
