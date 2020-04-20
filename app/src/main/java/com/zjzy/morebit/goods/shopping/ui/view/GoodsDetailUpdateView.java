@@ -25,6 +25,7 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.utils.C;
@@ -32,6 +33,8 @@ import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
@@ -189,7 +192,7 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
             userInfo.setUserType(String.valueOf(info.getUserType()));
             userInfo.setMoreCoin(info.getMoreCoin());
             UserLocalData.setUser((Activity) mContext,userInfo);
-//            refreshUserInfo(userInfo);
+            EventBus.getDefault().post(new RefreshUserInfoEvent());
         }else{
             MyLog.d("test","用户信息为空");
         }

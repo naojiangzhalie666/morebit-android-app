@@ -1029,7 +1029,7 @@ public class MineFragment extends BaseMainFragmeng {
     @Subscribe
     public void onEventMainThread(RefreshUserInfoEvent event){
 
-        refreshData();
+        updataUser();
     }
 
 

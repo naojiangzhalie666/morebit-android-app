@@ -441,7 +441,8 @@ public class NumberSubFragment extends BaseFragment {
             userInfo.setUserType(String.valueOf(info.getUserType()));
             userInfo.setMoreCoin(info.getMoreCoin());
             UserLocalData.setUser(getActivity(),userInfo);
-            refreshUserInfo(userInfo);
+            EventBus.getDefault().post(new RefreshUserInfoEvent());
+//            refreshUserInfo(userInfo);
         }else{
             MyLog.d("test","用户信息为空");
         }
@@ -514,7 +515,7 @@ public class NumberSubFragment extends BaseFragment {
             updateVip.setVisibility(View.VISIBLE);
         }
 
-        EventBus.getDefault().post(new RefreshUserInfoEvent());
+
 
     }
 
@@ -627,6 +628,10 @@ public class NumberSubFragment extends BaseFragment {
     }
 
 
+    @Subscribe
+    public void onEventMainThread(RefreshUserInfoEvent event){
+        updataUser();
+    }
 
 
 
@@ -635,6 +640,8 @@ public class NumberSubFragment extends BaseFragment {
         super.onDestroy();
         EventBus.getDefault().unregister(NumberSubFragment.this);
     }
+
+
 
 
     class SubNumberAdapter extends SimpleAdapter<NumberGoods, SimpleViewHolder> {

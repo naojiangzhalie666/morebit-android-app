@@ -61,6 +61,7 @@ import com.zjzy.morebit.pojo.event.LogoutEvent;
 import com.zjzy.morebit.pojo.event.MyGrowthEvent;
 import com.zjzy.morebit.pojo.event.OpenCategoryEvent;
 import com.zjzy.morebit.pojo.event.OpenNumberEvent;
+import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.event.UpdateGradeEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.request.RequestSplashStatistics;
@@ -670,6 +671,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             userInfo.setUserType(String.valueOf(info.getUserType()));
             userInfo.setMoreCoin(info.getMoreCoin());
             UserLocalData.setUser(this,userInfo);
+            EventBus.getDefault().post(new RefreshUserInfoEvent());
         }else{
             MyLog.d("test","用户信息为空");
         }
