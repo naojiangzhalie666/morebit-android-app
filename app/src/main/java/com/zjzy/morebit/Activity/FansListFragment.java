@@ -166,7 +166,7 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
             }
         });
         if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
-            rl_teamLeader.setVisibility(View.GONE);
+            rl_teamLeader.setVisibility(View.VISIBLE);
            // tv_contact.setVisibility(View.VISIBLE);
         } else {
             rl_teamLeader.setVisibility(View.VISIBLE);

@@ -263,28 +263,13 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
                 linear_more.setVisibility(View.GONE);
                 data.addAll(shopGoodInfo);
             }
-            final ArrayList<Bitmap> mUrlArrayList = new ArrayList<>();
-//            for (int i = 0; i < shopGoodInfo.size(); i++) {
-//                String itemPicture = shopGoodInfo.get(i).getItemPicture();
-//                if (itemPicture!=null){
-//                    Bitmap bitmap = ImageUtils.returnBitMap(itemPicture);
-//                    mUrlArrayList.add(bitmap);
-//
-//                }
-//
-//
-//            }
-//            if (mUrlArrayList!=null){
-//
-//            }
 
-            imgpath = GoodsUtil.savePruchaseGoodsImg(this, shopGoodInfo);
             adapter = new PurchseAdapter(this, data,ischeck);
             LinearLayoutManager manager = new LinearLayoutManager(this);
             rl_list.setLayoutManager(manager);
             rl_list.setAdapter(adapter);
 
-
+            imgpath = GoodsUtil.savePruchaseGoodsImg(this, shopGoodInfo);
 
             adapter.setOnAddClickListener(new PurchseAdapter.OnAddClickListener() {
                 @Override

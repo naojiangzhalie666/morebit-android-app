@@ -34,6 +34,16 @@
         android:textSize="16sp" />
 
 
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_foder"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="13dp"
+        android:background="@drawable/bg_editoneline_dialog_whilebg_8dp"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcy_pruchase"

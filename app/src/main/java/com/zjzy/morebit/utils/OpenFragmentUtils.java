@@ -23,6 +23,7 @@ import com.zjzy.morebit.fragment.SystemMsgDetailFragment;
 import com.zjzy.morebit.goods.shopping.ui.LoadComplaintOrderActivity;
 import com.zjzy.morebit.info.ui.OfficialNoticeFragment;
 import com.zjzy.morebit.login.ui.LoginSinglePaneActivity;
+import com.zjzy.morebit.main.ui.fragment.ShowWebFragment;
 
 /**
  * Created by Administrator on 2017/11/24.
@@ -104,6 +105,7 @@ public class OpenFragmentUtils {
         else if ("OfficialNoticeFragment".equals(fragmentName)) {
             return new OfficialNoticeFragment();
         }
+
         return null;
     }
 

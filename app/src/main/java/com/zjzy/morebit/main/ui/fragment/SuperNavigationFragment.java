@@ -29,6 +29,11 @@ public class SuperNavigationFragment extends BaseMainFragmeng {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mView = inflater.inflate(R.layout.fragment_super_navigation, container, false);
+        SystemConfigBean bean = ConfigListUtlis.getSystemConfigBean(C.ConfigKey.SUPER_NAVIGATION_URL);
+        if (bean != null) {
+            mUrl = bean.getSysValue();
+            addFragment(mUrl);
+        }
         return mView;
     }
 
