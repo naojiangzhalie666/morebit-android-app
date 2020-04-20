@@ -45,7 +45,7 @@
                 android:ellipsize="end"
                 android:maxEms="6"
                 android:maxLines="1"
-                android:textColor="@color/color_FFFFFF"
+                android:textColor="@color/colcor_gold"
                 android:textSize="@dimen/sp_15"
                 tools:text="昵称" />
 
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+
                 android:background="@drawable/btn_bg_gold"
                 android:gravity="center"
                 android:paddingLeft="10dp"
@@ -121,7 +121,7 @@
                 android:layout_centerVertical="true"
                 android:paddingRight="5dp"
                 android:text="成长值：0/50000"
-                android:textColor="@color/colcor_D3D3D3"
+                android:textColor="@color/colcor_gold"
                 android:textSize="@dimen/sp_12" />
 
             <TextView
@@ -132,13 +132,13 @@
                 android:layout_centerVertical="true"
                 android:paddingRight="5dp"
                 android:text="@string/vip_growth_value"
-                android:textColor="@color/colcor_D3D3D3"
+                android:textColor="@color/colcor_gold"
                 android:textSize="@dimen/sp_12" />
 
             <com.zjzy.morebit.view.HorzProgressView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/horzProgressView"
                 android:layout_width="match_parent"
-                android:layout_height="8dp"
+                android:layout_height="12dp"
                 android:layout_below="@id/more_corn_biaozhun"
                 android:layout_marginTop="10dp"
                 app:liys_progress_line_inDrawable="@drawable/vip_progress_bg"
@@ -157,31 +157,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:scaleType="centerInside"
-            android:src="@mipmap/more_youxuan_txt" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/more_duodian" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/number_icon_shape" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:scaleType="centerInside"
-            android:src="@mipmap/more_jingcai" />
 
     </LinearLayout>
     <!--赞多豆享特权-->

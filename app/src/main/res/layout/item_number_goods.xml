@@ -71,12 +71,12 @@
                     android:layout_marginLeft="5dp"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/money_black" />
+                        android:textColor="@color/color_DB493E"
+                        android:text="¥ " />
 
                     <TextView
                         android:id="@+id/number_goods_price"
@@ -84,8 +84,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:text="@string/number_goods_price"
-                        android:textColor="@color/color_333333"
-                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_DB493E"
+                        android:textSize="@dimen/sp_20"
                         android:textStyle="bold" />
 
                 </LinearLayout>
