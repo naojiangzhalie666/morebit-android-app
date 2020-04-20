@@ -48,7 +48,7 @@ public class NumberFragment extends BaseMainFragmeng  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
 
 //        Bundle args = getArguments();
 //        extra = args.getString("extra");
@@ -130,7 +130,7 @@ public class NumberFragment extends BaseMainFragmeng  {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
 
