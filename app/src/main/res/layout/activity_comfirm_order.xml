@@ -41,7 +41,7 @@
                 android:layout_below="@id/img_add_address"
                 android:text="点击添加地址"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_15"/>
+                android:textSize="@dimen/sp_16"/>
         </RelativeLayout>
 
     <!--有地址的时候，展示默认地址，可以进行切换-->
@@ -187,11 +187,12 @@
                 android:layout_alignTop="@id/img_confirm_order_goods"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp">
-                <ImageView
+                <TextView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/money_red"
+                    android:textColor="#ffee403a"
+                    android:text="¥"
+                    android:textSize="@dimen/sp_10"
                     android:layout_gravity="center_vertical|right"/>
                 <TextView
                     android:id="@+id/txt_confirm_order_goods_price"
@@ -261,7 +262,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/number_goods_price"
-                        android:textColor="@color/color_333333"
+                        android:textColor="@color/color_DB493E"
                         android:layout_centerVertical="true"
                         android:gravity="right"
                         android:layout_marginRight="10dp"
@@ -269,12 +270,14 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/sp_16"
                         />
-                    <ImageView
+                    <TextView
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_toLeftOf="@id/txt_confirm_order_pay_price"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/money_black"/>
+                        android:textColor="#DB493E"
+                        android:text="¥"
+                        android:textSize="@dimen/sp_10"/>
 
                 </RelativeLayout>
             </LinearLayout>

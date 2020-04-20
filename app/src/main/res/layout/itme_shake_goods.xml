@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¥299.0"
-        android:textColor="#ff333333"
+        android:textColor="#DB493E"
         android:layout_marginTop="5dp"
         android:textSize="12sp"
         android:layout_marginLeft="8dp"

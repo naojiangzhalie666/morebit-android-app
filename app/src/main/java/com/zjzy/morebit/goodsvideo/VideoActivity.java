@@ -21,6 +21,12 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.goods.shopping.contract.GoodsDetailContract;
+import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailPresenter;
+import com.zjzy.morebit.mvp.base.base.BaseView;
+import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.TKLBean;
@@ -36,6 +42,8 @@ import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
+
+import java.util.List;
 
 import static com.zjzy.morebit.utils.C.requestType.initData;
 
@@ -56,12 +64,13 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video);
+      setContentView(R.layout.activity_video);
         initBundle();
         initView();
         initData();
 
     }
+
 
     private void initData() {
         String url = mGoodsInfo.getItemVideo();
@@ -179,9 +188,13 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                     if (TaobaoUtil.isAuth()) {//淘宝授权
                         TaobaoUtil.getAllianceAppKey((BaseActivity) this);
                     } else {
-                        TaobaoUtil.showUrl(this, mGoodsInfo.getCouponUrl());
+//                        TaobaoUtil.showUrl(this, mGoodsInfo.getCouponUrl());
+               //         mPresenter.materialLinkList(this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
+                    //    GoodsDetailActivity.start(this, mGoodsInfo);
+
+                        GoodsUtil.getCouponInfo(this, mGoodsInfo);
                     }
-                   // GoodsDetailActivity.start(this, mGoodsInfo);
+
                     break;
                 case R.id.videoView://点击视频播放暂停
                     if (videoView.isPlaying()) {
@@ -234,7 +247,9 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
 
         }
 
-        public static void start (Context context, ShopGoodInfo info){
+
+
+    public static void start (Context context, ShopGoodInfo info){
             Intent intent = new Intent((Activity) context, VideoActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(C.Extras.GOODSBEAN, info);
@@ -247,4 +262,6 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                 mGoodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
             }
         }
-    }
+
+
+}

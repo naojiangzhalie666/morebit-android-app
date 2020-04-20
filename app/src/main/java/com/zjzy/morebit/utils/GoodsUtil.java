@@ -22,7 +22,9 @@ import android.text.TextUtils;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
@@ -429,17 +431,22 @@ public class GoodsUtil {
     @NonNull
     public static View getPurchasePoster(Activity activity, List<ShopGoodInfo> goodsInfo) {
         View view = LayoutInflater.from(activity).inflate(R.layout.view_new_pruchase_goods_poster, null);
-       RecyclerView rcy_pruchase=view.findViewById(R.id.rcy_pruchase);
+//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        layoutParams.setMargins(0,0,0,50);
+
+   /*    RecyclerView rcy_pruchase=view.findViewById(R.id.rcy_pruchase);
       PurchsePosterAdapter  adapter=new PurchsePosterAdapter(activity,goodsInfo);
         LinearLayoutManager manager = new LinearLayoutManager(activity);
         rcy_pruchase.setLayoutManager(manager);
-        rcy_pruchase.setAdapter(adapter);
+        rcy_pruchase.setAdapter(adapter);*/
        // Bitmap bitmap = getRecycleViewBitmap(rcy_pruchase);
 //        ImageView qrcode_img = (ImageView) view.findViewById(R.id.qrcode_img);
 //
         TextView tv_code = (TextView) view.findViewById(R.id.tv_code);
-        ImageView img_recycleview = view.findViewById(R.id.img_recycleview);
+      //  tv_code.setLayoutParams(layoutParams);
+      //  ImageView img_recycleview = view.findViewById(R.id.img_recycleview);
      //   img_recycleview.setImageBitmap(bitmap);
+
         tv_code.setText(activity.getString(R.string.invitation_code, UserLocalData.getUser().getInviteCode()));
 
 

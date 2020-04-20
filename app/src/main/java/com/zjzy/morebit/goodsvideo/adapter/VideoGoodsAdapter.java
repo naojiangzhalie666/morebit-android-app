@@ -71,7 +71,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
         //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());
         LoadImgUtils.loadingCornerTop(context, holder.iv_head, list.get(position).getItemPic(), 5);
         holder.commission.setText(list.get(position).getCouponMoney() + "元劵");
-        holder.tv_price.setText("¥ " + list.get(position).getItemPrice());
+        holder.tv_price.setText("" + list.get(position).getItemPrice());
 
         if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
                 || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())) {

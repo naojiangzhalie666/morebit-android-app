@@ -149,6 +149,7 @@
                 android:background="@drawable/bg_new_person"
                 android:textSize="@dimen/sp_11"
                 android:visibility="gone"
+
                 />
 
 

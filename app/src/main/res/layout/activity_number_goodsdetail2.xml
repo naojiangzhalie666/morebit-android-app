@@ -80,14 +80,15 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_centerVertical="true"
                                     android:orientation="horizontal">
-                                    <ImageView
+                                    <TextView
                                         android:id="@+id/img_money"
-                                        android:layout_width="10dp"
-                                        android:layout_height="10dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_alignParentBottom="true"
-                                        android:layout_marginBottom="2dp"
-                                        android:src="@drawable/money_black"
-                                        android:scaleType="centerInside"/>
+                                        android:textColor="@color/color_DB493E"
+                                        android:text="¥ "
+                                        android:textSize="@dimen/sp_12"
+                                       />
                                     <TextView
                                         android:id="@+id/number_goods_price"
                                         android:layout_width="wrap_content"
@@ -98,7 +99,7 @@
                                         android:text="0.00"
                                         android:textStyle="bold"
                                         android:textSize="@dimen/sp_20"
-                                        android:textColor="@color/color_333333"/>
+                                        android:textColor="@color/color_DB493E"/>
                                     <TextView
                                         android:id="@+id/tv_give_growth_value"
                                         android:layout_width="wrap_content"
@@ -114,7 +115,7 @@
                                         android:textColor="@color/color_FFFFFF"
                                         android:text="@string/give_growth_value"
                                         android:gravity="center"
-                                        android:background="@drawable/bg_selected_goods_coin"/>
+                                        android:background="@drawable/bg_coin_up"/>
                                 </RelativeLayout>
 
 
@@ -239,7 +240,7 @@
         <LinearLayout
             android:id="@+id/bottomLy"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             android:orientation="horizontal"
@@ -252,8 +253,9 @@
                 android:text="@string/number_goods_buy_txt"
                 android:textSize="@dimen/sp_19"
                 android:textStyle="bold"
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/color_FFFFFF"
-                android:background="@color/color_333333"
+                android:background="@drawable/vip_botton_bg"
                 />
 
 

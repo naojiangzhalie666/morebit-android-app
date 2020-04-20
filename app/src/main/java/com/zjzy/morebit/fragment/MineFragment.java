@@ -135,8 +135,8 @@ public class MineFragment extends BaseMainFragmeng {
     LinearLayout ll_my_tootls;
     @BindView(R.id.ll_mine_earnings)
     RelativeLayout ll_mine_earnings;
-    @BindView(R.id.moneyCardView)
-    CardView moneyCardView;
+//    @BindView(R.id.moneyCardView)
+//    CardView moneyCardView;
     @BindView(R.id.scrollView)
     NestedScrollView nestedScrollView;
     @BindView(R.id.rl_set_weixin)
@@ -291,16 +291,16 @@ public class MineFragment extends BaseMainFragmeng {
         if (C.UserType.member.equals(info.getPartner())) {
             tvUserType.setText("会员");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
-            ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+           // ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
             tvUserType.setText("VIP");
             llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
-            ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+          //  ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
 
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
-            ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+        //    ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
         }
         if (TextUtils.isEmpty(info.getWxNumber())) {
             rl_set_weixin.setVisibility(View.VISIBLE);
@@ -841,12 +841,12 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
     public void showGuideMoney() {
-        GuideViewUtil.showGuideView(getActivity(), moneyCardView, GuideViewUtil.GUIDE_MONEY, 0, null, new GuideViewUtil.GuideCallback() {
-            @Override
-            public void onDissmiss() {
-                showGuideService();
-            }
-        });
+//        GuideViewUtil.showGuideView(getActivity(), moneyCardView, GuideViewUtil.GUIDE_MONEY, 0, null, new GuideViewUtil.GuideCallback() {
+//            @Override
+//            public void onDissmiss() {
+//                showGuideService();
+//            }
+//        });
     }
 
     public void showGuideService() {

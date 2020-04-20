@@ -37,7 +37,7 @@
             tl:tl_indicator_margin_bottom="2dp"
             tl:tl_indicator_bounce_enable="true"
             tl:tl_textUnselectColor="@color/color_666666"
-            tl:tl_textSelectColor="@color/color_333333"
+            tl:tl_textSelectColor="@color/white"
             tl:tl_textsize="14sp"
             tl:tl_tab_space_equal="true"/>
         <!--<com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout-->

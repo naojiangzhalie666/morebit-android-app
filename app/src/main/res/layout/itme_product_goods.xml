@@ -89,12 +89,8 @@
         android:layout_height="wrap_content"
       android:layout_below="@+id/price_after"
         android:layout_alignParentRight="true"
-        android:background="@drawable/background_radius_product_12dp"
+        android:background="@mipmap/product_bg_buy"
         android:gravity="center"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:text="立即抢购" />

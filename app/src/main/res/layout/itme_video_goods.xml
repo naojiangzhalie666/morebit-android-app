@@ -50,12 +50,19 @@
         android:layout_marginTop="5dp">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ "
+            android:layout_marginLeft="8dp"
+            android:textColor="#ffdb493e"
+            android:textSize="12sp"
+            />
+        <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="¥299.0"
-            android:textColor="#ff333333"
+            android:text="299.0"
+            android:textColor="#ffdb493e"
             android:textSize="16sp" />
 
         <TextView
@@ -85,10 +92,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="8dp"
-        android:background="@mipmap/yugu_money_bg"
+        android:background="@mipmap/yugu_bg"
         android:gravity="center"
         android:text="预估收益31.57元"
         android:textColor="#ffffffff"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>

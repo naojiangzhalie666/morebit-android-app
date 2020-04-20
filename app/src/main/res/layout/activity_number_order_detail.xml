@@ -211,7 +211,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/number_goods_price"
-                            android:textColor="@color/color_FD5212"
+                            android:textColor="@color/color_EE403A"
                             android:textSize="@dimen/sp_16"
                             />
                     </LinearLayout>
@@ -338,7 +338,7 @@
                                 android:id="@+id/goods_real_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/color_FD5212"
+                                android:textColor="@color/color_EE403A"
                                 android:text="@string/number_goods_price"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/sp_18"/>

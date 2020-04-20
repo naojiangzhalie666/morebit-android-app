@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+    android:shape="oval">
     <!-- rectangle表示为矩形 -->
     <stroke android:width="2dp" android:color="#ffd3d3d3" />
+
 </shape>

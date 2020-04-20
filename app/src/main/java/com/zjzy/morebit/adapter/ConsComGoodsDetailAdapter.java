@@ -117,7 +117,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             String commission = info.getCommission();
             if (!TextUtils.isEmpty(commission) && !commission.equals("0") && !commission.equals("null")) {
                 viewHolder.number_yongjin_tv.setVisibility(View.GONE);
-                viewHolder.number_yongjin_tv.setText(mContext.getResources().getString(R.string.number_yujin, commission));
+                viewHolder.number_yongjin_tv.setText(mContext.getResources().getString(R.string.order_yongjin, commission));
             } else {
                 viewHolder.number_yongjin_tv.setText("");
                 viewHolder.number_yongjin_tv.setVisibility(View.GONE);

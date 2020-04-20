@@ -400,7 +400,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
             //简单使用
             mRollViewPager.setImages(mBannerList)
-                    .setBannerStyle(BannerConfig.NUM_INDICATOR)
+                    .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                     .setImageLoader(new GlideImageLoader())
                     .setOnBannerListener(new OnBannerListener() {
                         @Override
