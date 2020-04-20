@@ -677,17 +677,29 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
      */
     protected void shareGoods() {
         List<ShopGoodInfo> shopGoodInfos = new ArrayList<>();
-        for(int i=0;i<mGuessGoodsAdapter.getItems().size();i++){
-            if(mGuessGoodsAdapter.getItem(i).getType()==0){
-                if(mGuessGoodsAdapter.getItem(i).isSelect()){
-                    shopGoodInfos.add(mGuessGoodsAdapter.getItem(i));
+        int size = mGuessGoodsAdapter.getItems().size();
+        boolean isHavePdd = false;
+        for(int i=0;i<size;i++){
+            ShopGoodInfo info = mGuessGoodsAdapter.getItem(i);
+            if(info.getType()==0){
+                if(info.isSelect()){
+                    if (info.getShopType() != 3){
+                        shopGoodInfos.add(info);
+                    }else{
+                        isHavePdd = true;
+                    }
                 }
+
 
             }
         }
+
         if(shopGoodInfos.size()>9){
             ViewShowUtils.showShortToast(getActivity(),"最多可以选9个商品");
             return;
+        }
+        if (isHavePdd){
+            ViewShowUtils.showShortToast(getActivity(),"暂时仅支持分享淘宝系商品");
         }
         GoodsUtil.SharePosterList2(getActivity(), shopGoodInfos, new MyAction.OnResult<String>() {
             @Override
