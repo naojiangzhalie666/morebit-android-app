@@ -311,7 +311,7 @@ public class SearchResultFragment extends BaseMainFragmeng {
 
         final String taobaoSearchUrl = "https://suggest.taobao.com/sug?code=utf-8&q=" + string + "&k=1&area=c2c";
 
-        RxWXHttp.getInstance().getService(C.BASE_MOREBIT).profilePicture(taobaoSearchUrl)
+        RxWXHttp.getInstance().getService(C.getInstance().getGoodsIp()).profilePicture(taobaoSearchUrl)
                 .compose(RxUtils.<String>switchSchedulers())
                 .compose(this.<String>bindToLifecycle())
                 .map(new Function<String, TaobaoSearch>() {

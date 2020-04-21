@@ -1,16 +1,26 @@
 package com.zjzy.morebit.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.wireless.security.open.middletier.fc.IFCActionCallback;
+import com.blankj.utilcode.util.SPUtils;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.zjzy.morebit.Activity.SettingActivity;
+import com.zjzy.morebit.BuildConfig;
+import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
+import com.zjzy.morebit.Module.common.Dialog.DevelopIpSettingDialog;
 import com.zjzy.morebit.Module.common.Dialog.InputVerificationCodeDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
@@ -22,6 +32,7 @@ import com.zjzy.morebit.pojo.AppUpgradeInfo;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.requestbodybean.RequestOsBean;
 import com.zjzy.morebit.utils.AppUtil;
+import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.appDownload.QianWenUpdateUtlis;
@@ -35,20 +46,49 @@ import okhttp3.RequestBody;
 /**
  * 关于界面
  */
-public class AppAboutFragment extends BaseFragment implements View.OnClickListener {
+public class AppAboutFragment extends BaseFragment implements View.OnClickListener,Handler.Callback  {
 
-    private TextView item_tv1, item_tv2;
+    private TextView item_tv1, item_tv2,name_ip_tv;
     private AppUpgradeInfo auData;
     private ClearSDdataDialog mAccountDestroyDialog;
     private String mAccountDestroyHit;
+    private RoundedImageView icon_img;
+    private View mMSearviceIpRl;
+    private boolean showDevlep;
+    private int mClickAboutCount;
+    private Handler mHandler;
+    public static final int SETTING_CODE = 120;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.activity_appabout, container, false);
+        mHandler = new Handler(Looper.getMainLooper(),this);
         inview(view);
         getAppInfo();
+        settingDevelop();
         return view;
+    }
+
+    private void settingDevelop() {
+
+
+        mMSearviceIpRl.setOnClickListener(this);
+
+                //显示切换环境设置
+//                if (!showDevlep) {
+//
+//                }
+
+
+        if (BuildConfig.IS_IP==0){
+            mMSearviceIpRl.setVisibility(View.VISIBLE);
+           // SPUtils.getInstance().put(C.Extras.KEY_SHOW_DEVELOPER_SETTING,true);
+        }else{
+            mMSearviceIpRl.setVisibility(View.GONE);
+        }
+       // showDevlep = SPUtils.getInstance().getBoolean(C.Extras.KEY_SHOW_DEVELOPER_SETTING, false);
+
     }
 
     public void inview(View view) {
@@ -56,6 +96,13 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
         //设置页面头顶空出状态栏的高度
         item_tv1 = (TextView) view.findViewById(R.id.item_tv1);
         item_tv2 = (TextView) view.findViewById(R.id.item_tv2);
+        icon_img=view.findViewById(R.id.icon_img);
+
+        //服务器ip环境设置
+        mMSearviceIpRl = view.findViewById(R.id.service_ip_rl);
+        mMSearviceIpRl.setOnClickListener(this);
+        name_ip_tv = view.findViewById(R.id.name_ip_tv);
+        name_ip_tv.setText(C.getInstance().getServerTypeName());
         view.findViewById(R.id.item2_rl).setOnClickListener(this);
         view.findViewById(R.id.item_account_destroy).setOnClickListener(this);
         try {
@@ -149,10 +196,43 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
             case R.id.item4_rl:
                 LoginUtil.getPrivateProtocolForHome((BaseActivity) getActivity());
                 break;
+            case R.id.service_ip_rl:
+                //切换ip环境
+            //    DiaLogManager.showDevelopIpSettingDialog(this, getSupportFragmentManager(), this);
+                openDialog();
+                break;
             default:
                 break;
 
         }
+    }
+
+    private void openDialog() {
+        DevelopIpSettingDialog developIpSettingDialog=new DevelopIpSettingDialog(getActivity());
+        developIpSettingDialog.setmProdistener(new DevelopIpSettingDialog.OnProdListener() {//正式环境
+            @Override
+            public void onClick(View view) {
+                SPUtils.getInstance().put(C.Extras.KEY_SERVER_TYPE, C.PROD);
+                mHandler.sendEmptyMessageDelayed(SETTING_CODE, 500);
+            }
+        });
+
+        developIpSettingDialog.setmDevListener(new DevelopIpSettingDialog.OnDevListner() {//开发环境
+            @Override
+            public void onClick(View view) {
+                SPUtils.getInstance().put(C.Extras.KEY_SERVER_TYPE, C.DEV);
+                mHandler.sendEmptyMessageDelayed(SETTING_CODE, 500);
+            }
+        });
+
+        developIpSettingDialog.setmTestListener(new DevelopIpSettingDialog.OnTestListner() {//测试环境
+            @Override
+            public void onClick(View view) {
+                SPUtils.getInstance().put(C.Extras.KEY_SERVER_TYPE, C.TEST);
+                mHandler.sendEmptyMessageDelayed(SETTING_CODE, 500);
+            }
+        });
+        developIpSettingDialog.show();
     }
 
     /**
@@ -224,5 +304,19 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
                     }
                 });
 
+    }
+
+
+    public boolean handleMessage(Message msg) {
+        switch (msg.what) {
+            case SETTING_CODE:
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                return true;
+        }
+        return false;
     }
 }

@@ -14,6 +14,7 @@ import android.util.Log;
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.facebook.stetho.Stetho;
 //import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -128,8 +129,8 @@ public class App extends Application implements ProtectedMemberKeeper {
             }
         });
        // initBidDataAPI();
-
-
+        int serverType = SPUtils.getInstance().getInt(C.Extras.KEY_SERVER_TYPE, C.PROD);
+        C.getInstance().setServerType(serverType);
     }
 
     private void initBaiDuStat() {

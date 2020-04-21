@@ -1,5 +1,7 @@
 package com.zjzy.morebit.utils;
 
+import android.support.annotation.IntRange;
+
 import com.zjzy.morebit.BuildConfig;
 
 /**
@@ -7,25 +9,71 @@ import com.zjzy.morebit.BuildConfig;
  */
 public class C {
 
+
     // api
 
- // public static final String BASE_MOREBIT = "http://api.dev.morebit.com.cn";//开发
-// public static final String BASE_MOREBIT = "http://api.test.morebit.com.cn";//测试
-    public static final String BASE_MOREBIT = "https://api.morebit.com.cn";//正式
+    public static final String BASE_MOREBIT_DEV = "http://api.dev.morebit.com.cn";//开发
+    public static final String BASE_MOREBIT_TEST = "http://api.test.morebit.com.cn";//测试
+    public static final String BASE_MOREBIT_PROD = "https://api.morebit.com.cn";//正式
 
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;
 
+    private int serverType = PROD;
+    public static final int PROD = 0;//正式
+    public static final int TEST = 1;//测试
+    public static final int DEV = 2;//开发
+
+    /**
+     * 设置服务ip切换环境
+     *
+     * @param serverType
+     */
+    public void setServerType(@IntRange(from = 0, to = 2) int serverType) {
+        this.serverType = serverType;
+    }
+
+
+    public String getServerTypeName() {
+        switch (serverType) {
+            case PROD:
+                return "正式环境";
+            case TEST:
+                return "测试环境";
+            case DEV:
+                return "开发";
+        }
+        return "正式";
+    }
+    private static C instance;
+    public synchronized static C getInstance() {
+        if (instance == null) {
+            instance = new C();
+        }
+        return instance;
+    }
+
+    public String getGoodsIp() {
+        switch (serverType) {
+            case PROD:
+                return BASE_MOREBIT_PROD;
+            case TEST:
+                return BASE_MOREBIT_TEST;
+            case DEV:
+                return BASE_MOREBIT_DEV;
+        }
+        return BASE_MOREBIT_PROD;
+    }
 
     public static class UrlV2 {
         //用户模块调用
-        public static final String USERS = BASE_MOREBIT;
+     //   public static final String USERS = BASE_MOREBIT;
         //商品模块调用
-        public static final String GOODS = BASE_MOREBIT;
+     //   public static final String GOODS = BASE_MOREBIT;
         //系统模块
-        public static final String SYSTE = BASE_MOREBIT;
+    //    public static final String SYSTE = BASE_MOREBIT;
         //订单模块
-        public static final String ORDERS = BASE_MOREBIT;
+     //   public static final String ORDERS = BASE_MOREBIT;
     }
 
     public static class Setting {
@@ -34,7 +82,6 @@ public class C {
         public static String device_id = "";//设备号
         public static String app_version = "";//app版本号
         public static String gray = ""; //灰度控制参数
-
 
 
         public static final String descParms = "desc"; //倒序
@@ -46,9 +93,9 @@ public class C {
         public static final String coupon_select = "select"; //优惠卷
         public static final String coupon_un_select = "select"; //优惠卷
 
-        public static final String sort_price="price";//单价
-        public static final String sort_commissionShare="commissionShare";//佣金比例
-        public static final String sort_inOrderCount30Days="inOrderCount30Days";//销量
+        public static final String sort_price = "price";//单价
+        public static final String sort_commissionShare = "commissionShare";//佣金比例
+        public static final String sort_inOrderCount30Days = "inOrderCount30Days";//销量
 
 
         public static final int deviceType = 1;
@@ -75,7 +122,7 @@ public class C {
     /**
      * 更新或者增加地址。
      */
-    public static class Address{
+    public static class Address {
         public static final int ADD_TYPE = 0;
         public static final int UPDATE_TYPE = 1;
     }
@@ -84,7 +131,7 @@ public class C {
     /**
      * 订单状态
      */
-    public static class OrderStatus{
+    public static class OrderStatus {
         /**
          * 未支付的订单状态
          */
@@ -113,16 +160,16 @@ public class C {
     /**
      * 更新或者增加地址。
      */
-    public static class UserGrade{
+    public static class UserGrade {
 
         /**
          * 会员
          */
-        public static final int NUMBER=0;
+        public static final int NUMBER = 0;
         /**
          * Vip会员
          */
-        public static final int VIP_NUMBER=1;
+        public static final int VIP_NUMBER = 1;
         /**
          * 团队长
          */
@@ -176,14 +223,21 @@ public class C {
         public static final String GOODS_CONTENTS = "GOODS_CONTENTS"; //   内容
 
         //会员商品订单
-        public static final String GOODS_ORDER_INFO= "GOODS_ORDER_INFO";
+        public static final String GOODS_ORDER_INFO = "GOODS_ORDER_INFO";
         //收货地址
-        public static final String GOODS_ADDRESS_INFO= "GOODS_ADDRESS_INFO";
+        public static final String GOODS_ADDRESS_INFO = "GOODS_ADDRESS_INFO";
         //增加或者更新地址
-        public static final String TYPE_ADDRESS= "UPDATE_ADDRESS";
+        public static final String TYPE_ADDRESS = "UPDATE_ADDRESS";
         //从订单确认页面跳转
-        public static final String SELECTED_ADDRESS_FROM_CONFIRM_ORDER= "SELECT_ADDRESS_FROM_CONFIRM_ORDER";
+        public static final String SELECTED_ADDRESS_FROM_CONFIRM_ORDER = "SELECT_ADDRESS_FROM_CONFIRM_ORDER";
 
+        //是否显示 切换环境item
+        public static final String KEY_SHOW_DEVELOPER_SETTING = "key_show_developer_setting";
+
+        /**
+         * 切换服务器类型
+         */
+        public static final  String KEY_SERVER_TYPE = "serverType";
 
     }
 
@@ -253,12 +307,12 @@ public class C {
         public static final int CIRCLE_REVIEW = 26;//0pen=2,商学院预览列表
         public static final int BRAND_LIST = 27;//
         public static final int THREE_GOODS = 28;//
-        public static final int  GOODS_BYBRAND = 29;//
-        public static final int  JD = 40;//京东
-        public static final int  PDD = 41;//拼多多
-        public static final int NEW_PERSONAL=42;//新人免单
-        public static final int HUNGRY=43;//饿了么
-        public static final int MOUTH=44;//口碑
+        public static final int GOODS_BYBRAND = 29;//
+        public static final int JD = 40;//京东
+        public static final int PDD = 41;//拼多多
+        public static final int NEW_PERSONAL = 42;//新人免单
+        public static final int HUNGRY = 43;//饿了么
+        public static final int MOUTH = 44;//口碑
 
     }
 
@@ -311,10 +365,10 @@ public class C {
      * WEB_FANS_LIST: 粉丝列表
      */
     public static class SysConfig {
-        public static  String COMMISSION_PERCENT_VALUE;// 获取普通会员，VIP，运营商佣金比例 扥value
+        public static String COMMISSION_PERCENT_VALUE;// 获取普通会员，VIP，运营商佣金比例 扥value
 
-        public static  String SELF_COMMISSION_PERCENT_VALUE;// 自营商品的获取普通会员，VIP，运营商佣金比例 扥value
-        public static  String NUMBER_COMMISSION_PERCENT_VALUE = "60";// 获取普通会员的分佣比例。
+        public static String SELF_COMMISSION_PERCENT_VALUE;// 自营商品的获取普通会员，VIP，运营商佣金比例 扥value
+        public static String NUMBER_COMMISSION_PERCENT_VALUE = "60";// 获取普通会员的分佣比例。
         public static final String RECEIVE_RED_PACKET = "RECEIVE_RED_PACKET";
         public static final String SEARCH_DISCOVERY_ANDROID = "SEARCH_DISCOVERY_ANDROID";
         public static final String WEB_FANS_LIST = "WEB_FANS_LIST";
@@ -376,7 +430,7 @@ public class C {
      * "10": "安卓更新公告",
      * "12": "分类菜单",
      * "14": "发现精彩",
-     *  "15": "隐私政策"
+     * "15": "隐私政策"
      */
     public static class ProtocolType {
 
@@ -442,14 +496,16 @@ public class C {
 
 
     }
-    public static class syncTime{
-        public static final String SERVER_TIME="SERVER_TIME";
-        public static final String CLIENT_TIME="CLIENT_TIME";
-    }
-    //隐私授权
-    public static class authPrivate{
 
-        public static final String IS_AUTHED="IS_AUTHED";
+    public static class syncTime {
+        public static final String SERVER_TIME = "SERVER_TIME";
+        public static final String CLIENT_TIME = "CLIENT_TIME";
+    }
+
+    //隐私授权
+    public static class authPrivate {
+
+        public static final String IS_AUTHED = "IS_AUTHED";
     }
 
     public static class sp {
@@ -492,7 +548,7 @@ public class C {
         public static final String RELEASE_GOODS = Setting.appName + "RELEASE_GOODS"; //  商品发布管理缓存
         public static final String FLOOR_CACHE = Setting.appName + "floorCache"; //  模块管理
         public static final String TAOBAO_LINK_CACHE = Setting.appName + "taobao_link"; //  淘宝跳转缓存
-        public static final String CLESE_RECOMMEND_GOODS= Setting.appName + "CLESE_RECOMMEND_GOODS"; //  关闭推荐商品
+        public static final String CLESE_RECOMMEND_GOODS = Setting.appName + "CLESE_RECOMMEND_GOODS"; //  关闭推荐商品
         public static final String RANKING_CATEGORY = Setting.appName + "RANKING_CATEGORY"; //  排行榜二级标题数据
         public static final String CIRCLE_SEARCH_HISTORY = Setting.appName + "circle_search_history";  // 发圈历史搜索
         public static final String SHARE_MOENY_IS_INVITECODE = Setting.appName + "SHARE_MOENY_IS_INVITECODE";  // 是否需要邀请码 0 否 1是
@@ -504,12 +560,11 @@ public class C {
         public static final String CIRCLE_LOAD_DATA_TYPE = Setting.appName + "CIRCLE_LOAD_DATA_TYPE";  //发圈加载数据type
         public static final String CIRCLE_SEARCH_NAME = Setting.appName + "CIRCLE_SEARCH_NAME ";  //发圈搜索内容
         public static final String CIRCLE_SEARCH_TITLE = Setting.appName + "CIRCLE_SEARCH_TITLE ";  //发圈 title
-        public static final String DIALOG_USER_IS_UPGRADE= Setting.appName + "DIALOG_USER_IS_UPGRADE";  //是否已弹出用户升级提示
-        public static final String DIALOG_USER_IS_UPGRADE_TIME= Setting.appName + "DIALOG_USER_IS_UPGRADE_TIME";  //用户升级dialog弹出的时间
-        public static final String SAVED_DB_FOR_ADDRESS= Setting.appName + "SAVED_DB_FOR_ADDRESS";  //地址保存到db
+        public static final String DIALOG_USER_IS_UPGRADE = Setting.appName + "DIALOG_USER_IS_UPGRADE";  //是否已弹出用户升级提示
+        public static final String DIALOG_USER_IS_UPGRADE_TIME = Setting.appName + "DIALOG_USER_IS_UPGRADE_TIME";  //用户升级dialog弹出的时间
+        public static final String SAVED_DB_FOR_ADDRESS = Setting.appName + "SAVED_DB_FOR_ADDRESS";  //地址保存到db
         public static final String PDD_CATEGORY = Setting.appName + "PDD_CATEGORY"; //  拼多多二级标题数据
     }
-
 
 
     public static class requestType {
@@ -552,8 +607,8 @@ public class C {
 
 
     public static class SearchStatistics {
-        public final static  String ADID = "adId";
-        public final static  String TYPE = "type";
+        public final static String ADID = "adId";
+        public final static String TYPE = "type";
 
         //商品领券分享模块
         public final static String ID_SHARE = "32";
@@ -583,8 +638,7 @@ public class C {
     }
 
 
-
-    public static class ViewType{
+    public static class ViewType {
         public static final int FLOOR_ONE = 1;
         public static final int FLOOR_TWO = 2;
         public static final int FLOOR_THREE = 3;
@@ -592,13 +646,13 @@ public class C {
         public static final int FLOOR_FIVE = 5;
     }
 
-    public static class PHONE{
+    public static class PHONE {
         public static final int MIN_LENGTH = 6;
         public static final int MAX_LENGTH = 12;
         public static final int DEFAULT_LENGTH = 11;
     }
 
-    public static class ConfigKey{
+    public static class ConfigKey {
         //NOTICE_SHOW_MORE 公告区-是否显示更多入口 1：是 0：否
         public static final String NOTICE = "NOTICE_SHOW_MORE";
         //HOME_RECOMMENDED_TITLE: 首页推荐区title
@@ -608,9 +662,9 @@ public class C {
         //ITEM_DETAILS_RECOMMENDED_TITLE: 商品详情页推荐区title
         public static final String ITEM_DETAILS_RECOMMENDED_TITLE = "ITEM_DETAILS_RECOMMENDED_TITLE";
         //超级导航URL
-        public static final String SUPER_NAVIGATION_URL  = "SUPER_NAVIGATION_URL";
+        public static final String SUPER_NAVIGATION_URL = "SUPER_NAVIGATION_URL";
         //分类地址
-        public static final String CATEGORY_URL   = "CATEGORY_URL";
+        public static final String CATEGORY_URL = "CATEGORY_URL";
         //订单找回地址
         public static final String ORDER_TRACKING = "ORDER_TRACKING";
         //大数据开关
@@ -619,14 +673,15 @@ public class C {
         public static final String WEB_WITHDRAW_TIME = "WEB_WITHDRAW_TIME";
     }
 
-    public static class BigData{
+    public static class BigData {
         public static final int NORMAL_SEARCH = 0;
         public static final int SUPER_SEARCH = 1;
         public static final String AD_A = "A";
         public static final String AD_B = "B";
         public static final String AD_C = "C";
     }
-    public static class mainPage{
+
+    public static class mainPage {
         public static final int HOME = 0;
         public static final int SUPER_NAVIGATION = 1;
         //修改为会员页面
@@ -636,7 +691,7 @@ public class C {
 
     }
 
-    public static class OrderType{
+    public static class OrderType {
         public static final int TAOBAO = 1;
         public static final int YUXUAN = 10;
         public static final int JD = 2;

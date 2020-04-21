@@ -114,7 +114,7 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
             rl_list.getSwipeList().setRefreshing(true);
         if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
-        programCatItemBean.setCatId(mPddJdTitleTypeItem.getCatId());
+        programCatItemBean.setCatId(Integer.valueOf(mPddJdTitleTypeItem.getTabNo()));
         mPresenter.getJdPddGoodsList(this,  programCatItemBean, C.requestType.initData);
     }
 
@@ -122,7 +122,7 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
     public void onLoadMore() {
         if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
-        programCatItemBean.setCatId(mPddJdTitleTypeItem.getCatId());
+        programCatItemBean.setCatId(Integer.valueOf(mPddJdTitleTypeItem.getTabNo()));
         mPresenter.getJdPddGoodsList(this, programCatItemBean,C.requestType.loadMore);
     }
 

@@ -80,6 +80,7 @@ import com.zjzy.morebit.pojo.myInfo.OssKeyBean;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
@@ -2367,4 +2368,14 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/marketing/official/getGenerateActivityInfo")
     public Observable<BaseResponse<ActivityLinkBean>> getMouthLink(@Body RequestActivityLinkBean requestBean);
+
+
+    /**
+     * 获取拼多多商品栏目
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/listPddTab")
+    public Observable<BaseResponse<List<PddJdTitleTypeItem>>> getPddTitle();
 }

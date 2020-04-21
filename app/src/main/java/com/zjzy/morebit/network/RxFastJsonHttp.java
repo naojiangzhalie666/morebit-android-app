@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RxFastJsonHttp {
-    private final String BASE_URL = C.BASE_MOREBIT;
+    private final String BASE_URL = C.getInstance().getGoodsIp();
     private Map<String, Retrofit> mRetrofitMap = new HashMap<>();
     HttpLoggingInterceptor loggingInterceptor = null;
     private boolean mIsFast;

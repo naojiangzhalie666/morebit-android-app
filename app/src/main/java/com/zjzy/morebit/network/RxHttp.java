@@ -68,7 +68,7 @@ public class RxHttp {
 
 
     public CommonService getCommonService() {
-        return getRetrofit(C.BASE_MOREBIT).create(CommonService.class);
+        return getRetrofit(C.getInstance().getGoodsIp()).create(CommonService.class);
     }
 
     public CommonService getCommonService(String url) {
@@ -76,19 +76,19 @@ public class RxHttp {
     }
 
     public CommonService getUsersService() {
-        return getRetrofit(C.UrlV2.USERS).create(CommonService.class);
+        return getRetrofit(C.getInstance().getGoodsIp()).create(CommonService.class);
     }
 
     public CommonService getGoodsService() {
-        return getRetrofit(C.UrlV2.GOODS).create(CommonService.class);
+        return getRetrofit(C.getInstance().getGoodsIp()).create(CommonService.class);
     }
 
     public CommonService getSysteService() {
-        return getRetrofit(C.UrlV2.SYSTE).create(CommonService.class);
+        return getRetrofit(C.getInstance().getGoodsIp()).create(CommonService.class);
     }
 
     public CommonService getOrdersService() {
-        return getRetrofit(C.UrlV2.ORDERS).create(CommonService.class);
+        return getRetrofit(C.getInstance().getGoodsIp()).create(CommonService.class);
     }
 
 

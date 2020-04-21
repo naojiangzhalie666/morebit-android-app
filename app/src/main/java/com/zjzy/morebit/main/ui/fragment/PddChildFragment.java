@@ -15,17 +15,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.zjzy.morebit.Activity.SearchActivity;
+import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.fragment.PanicBuyFragment;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.RankingTitleBean;
+import com.zjzy.morebit.pojo.goods.FloorBean;
 import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
@@ -34,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
 
 
 /**
@@ -59,6 +69,7 @@ public class PddChildFragment extends BaseMainFragmeng {
     private ChannelAdapter mChannelAdapter;
     private SwipeDirectionDetector swipeDirectionDetector;
     private int currentViewPagerPosition = 0;
+
 
     /**
      * 拼多多商品页面
@@ -101,9 +112,15 @@ public class PddChildFragment extends BaseMainFragmeng {
         }
 
     }
+
     //初始化拼多多标题。
     private List<PddJdTitleTypeItem>  initPddTitle(){
-        ArrayList<PddJdTitleTypeItem> data = new ArrayList<>();
+
+        final ArrayList<PddJdTitleTypeItem> data = new ArrayList<>();
+        final PddJdTitleTypeItem item = new PddJdTitleTypeItem();
+
+
+/*
         PddJdTitleTypeItem item = new PddJdTitleTypeItem();
         item.setTitle("男装");
         item.setType(2);
@@ -228,7 +245,7 @@ public class PddChildFragment extends BaseMainFragmeng {
         item20.setTitle("玩具");
         item20.setType(2);
         item20.setCatId(15083);
-        data.add(item20);
+        data.add(item20);*/
         return data;
     }
     /**
@@ -242,11 +259,31 @@ public class PddChildFragment extends BaseMainFragmeng {
             status_bar.setLayoutParams(viewParams);
 
         }
-        App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
-        List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
-        if (data != null && data.size() != 0) {
-            initTab(data);
-        }
+
+       // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
+      //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
+
+        RxHttp.getInstance().getCommonService().getPddTitle()//获取拼多多栏目
+                .compose(RxUtils.<BaseResponse<List<PddJdTitleTypeItem>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<PddJdTitleTypeItem>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<PddJdTitleTypeItem>>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+
+                    }
+
+                    @Override
+                    protected void onSuccess(List<PddJdTitleTypeItem> data) {
+                        if (data != null) {
+                            if (data != null && data.size() != 0) {
+                                initTab(data);
+                            }
+
+                        }
+                    }
+                });
+
+
 
 
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -263,6 +300,9 @@ public class PddChildFragment extends BaseMainFragmeng {
         });
 
     }
+
+
+
     private void setupViewPager(final List<PddJdTitleTypeItem> homeColumns) {
 
         mChannelAdapter.setHomeColumns(homeColumns);
@@ -319,7 +359,7 @@ public class PddChildFragment extends BaseMainFragmeng {
         @Override
         public CharSequence getPageTitle(int position) {
             PddJdTitleTypeItem homeColumn = mHomeColumns.get(position);
-            return homeColumn.getTitle();
+            return homeColumn.getTabName();
 
         }
 
