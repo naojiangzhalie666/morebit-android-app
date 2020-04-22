@@ -1,6 +1,7 @@
 package com.zjzy.morebit.home.presenter;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.CommonLocalData;
@@ -101,11 +102,13 @@ public class MainPresenter extends MvpPresenter<MainModel, MainContract.View> im
                     @Override
                     protected void onError(String errorMsg, String errCode) {
                         getGrayUpgradeInfo(rxActivity,null);
+                        Log.e("gggg",errorMsg);
                     }
 
                     @Override
                     protected void onSuccess(AppUpgradeInfo data) {
                         checkAppUpgrade(data,rxActivity);
+                        Log.e("gggg",data+"");
                     }
                 });
     }
