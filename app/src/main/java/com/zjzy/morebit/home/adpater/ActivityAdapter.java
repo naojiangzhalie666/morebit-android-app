@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
@@ -72,10 +73,13 @@ public class ActivityAdapter extends SimpleAdapter<HandpickBean, SimpleViewHolde
             LoadImgUtils.loadingCornerTop(mContext, banner, activityBean.getPicture(),5);
         }
         if (activityBean.getItems() != null && activityBean.getItems().size() > 0) {
-            GridLayoutManager manager = new GridLayoutManager(mContext, 3);
+            LinearLayoutManager manager = new LinearLayoutManager(mContext);
+            manager.setOrientation(LinearLayout.HORIZONTAL);
             //设置图标的间距
-            SpaceItemRightUtils spaceItemDecorationUtils = new SpaceItemRightUtils(20, 3);
-            mRecyclerView.addItemDecoration(spaceItemDecorationUtils);
+            if (mRecyclerView.getItemDecorationCount()==0){//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
+                SpaceItemRightUtils spaceItemDecorationUtils = new SpaceItemRightUtils(20, 3);
+                mRecyclerView.addItemDecoration(spaceItemDecorationUtils);
+            }
             mRecyclerView.setLayoutManager(manager);
             ActivityHorizontalAdapter activityHorizontalAdapter = new ActivityHorizontalAdapter(mContext);
             activityHorizontalAdapter.replace(activityBean.getItems());
@@ -128,7 +132,7 @@ public class ActivityAdapter extends SimpleAdapter<HandpickBean, SimpleViewHolde
                 }
             });
             if (StringsUtils.isEmpty(item.getCouponPrice())) {
-                coupon.setVisibility(View.GONE);
+                coupon.setVisibility(View.INVISIBLE);
             } else {
                 coupon.setVisibility(View.VISIBLE);
                 coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice(item.getCouponPrice())));
@@ -150,10 +154,7 @@ public class ActivityAdapter extends SimpleAdapter<HandpickBean, SimpleViewHolde
 
         }
 
-        @Override
-        public int getItemCount() {
-            return 3;
-        }
+
 
         @Override
         protected View onCreateView(LayoutInflater layoutInflater, ViewGroup parent, int viewType) {

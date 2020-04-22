@@ -276,4 +276,5 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
     public void setHomeRecommend(boolean homeRecommend) {
         isHomeRecommend = homeRecommend;
     }
+
 }

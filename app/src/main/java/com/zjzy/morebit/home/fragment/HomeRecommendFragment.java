@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.youth.banner.Transformer;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -883,6 +885,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
      */
     private void setModuleView() {
         mTitleBanner = (Banner) mHeadView.findViewById(R.id.roll_view_pager);
+        mTitleBanner.setBannerAnimation(Transformer.ZoomOutSlide);
+        mTitleBanner.setPadding(10,0,10,0);
         mTitleBanner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

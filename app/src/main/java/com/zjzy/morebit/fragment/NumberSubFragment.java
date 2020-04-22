@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -284,10 +285,20 @@ public class NumberSubFragment extends BaseFragment {
                 public void onClick(View v) {
                     if (mUserInfo != null){
                         if (C.UserType.member.equals(mUserInfo.getUserType())){
-                            updateGrade();
+                            if (mUserInfo.getMoreCoin()<360){
+                                ToastUtils.showLong("成长值不足");
+                            }else{
+                                updateGrade();
+
+                            }
 
                         }else if (C.UserType.vipMember.equals(mUserInfo.getUserType())){
-                            updateGradeForLeader();
+                            if (mUserInfo.getMoreCoin()<50000){
+                                ToastUtils.showLong("成长值不足");
+                            }else{
+                                updateGradeForLeader();
+                            }
+
                         }
                     }
 

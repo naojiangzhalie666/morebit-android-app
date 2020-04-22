@@ -22,7 +22,6 @@
     </com.zjzy.morebit.view.AspectRatioView>
 
     <android.support.v7.widget.RecyclerView
-        android:paddingLeft="5dp"
         android:id="@+id/recyclerview_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

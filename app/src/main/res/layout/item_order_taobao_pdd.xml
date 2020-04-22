@@ -115,6 +115,7 @@
             </LinearLayout>
             <TextView
                 android:id="@+id/order_googs_num"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_999999"
