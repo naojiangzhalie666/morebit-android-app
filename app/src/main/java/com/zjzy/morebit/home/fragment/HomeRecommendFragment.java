@@ -885,8 +885,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
      */
     private void setModuleView() {
         mTitleBanner = (Banner) mHeadView.findViewById(R.id.roll_view_pager);
-        mTitleBanner.setBannerAnimation(Transformer.ZoomOutSlide);
-        mTitleBanner.setPadding(10,0,10,0);
+//        mTitleBanner.setBannerAnimation(Transformer.ZoomOutSlide);
+//        mTitleBanner.setPadding(10,0,10,0);
         mTitleBanner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

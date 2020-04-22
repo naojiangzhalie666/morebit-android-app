@@ -290,16 +290,16 @@ public class MineFragment extends BaseMainFragmeng {
 
         if (C.UserType.member.equals(info.getPartner())) {
             tvUserType.setText("会员");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
+            llUserGrade.setBackgroundResource(R.drawable.bg_grade_number);
            // ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
             tvUserType.setText("VIP");
-            llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
+            llUserGrade.setBackgroundResource(R.drawable.bg_grade_vip);
           //  ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
 
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
+            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leadr);
         //    ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
         }
         if (TextUtils.isEmpty(info.getWxNumber())) {
