@@ -67,9 +67,9 @@
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     android:drawablePadding="5dp"
-                    android:drawableLeft="@drawable/icon_anniusousuo"
+                    android:drawableLeft="@drawable/icon_college_search_white"
                     android:text="@string/search_concessional"
-                    android:textColor="#333333"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     />
             </RelativeLayout>
