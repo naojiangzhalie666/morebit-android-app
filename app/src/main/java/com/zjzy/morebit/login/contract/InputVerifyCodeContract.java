@@ -16,11 +16,15 @@ public class InputVerifyCodeContract {
         void showRegisterData(UserInfo userInfo);
         void showRegisterFinally();
         void showRegisterFailure(String errCode);
+        void showLoginFailure(String errCode);
+        void showLoginData(UserInfo userInfo);
+
     }
 
     public interface Present extends LoginBaseSendCodePresent {
         void register(RxFragment baseFragment,String phone, String verifyCode , String invitationCode,String areaCode);
         void login(RxFragment baseFragment,String phone,String verifyCode);
         void weixinRegister(RxFragment baseFragment, String s, String phone, String verifyCode, WeixinInfo weixinInfo);
+        void weixinLogin(RxFragment baseFragment, String s, String phone, String verifyCode, WeixinInfo weixinInfo);
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_ffffff_12dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="提示"
+            android:textStyle="bold"
+            android:textColor="#FF645B"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="当前微信未绑定多点优选账号\n 立即注册绑定，畅享百万优惠"
+            android:textColor="#ff333333"
+            android:textSize="16sp" />
+
+
+
+            <TextView
+                android:id="@+id/btn_ok"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="33dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/background_radius_haibao_15dp"
+                android:gravity="center"
+                android:text="确定"
+                android:layout_marginBottom="12dp"
+                android:textColor="#ffffffff"
+                android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

@@ -226,6 +226,16 @@ public class InputVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         }
     }
 
+    @Override
+    public void showLoginFailure(String errCode) {
+
+    }
+
+    @Override
+    public void showLoginData(UserInfo userInfo) {
+
+    }
+
     private void openRegisterDialog() {  //退出确认弹窗
         mRegisterDialog = new ClearSDdataDialog(getActivity(), R.style.dialog, "提示", "该手机号未注册", new ClearSDdataDialog.OnOkListener() {
             @Override

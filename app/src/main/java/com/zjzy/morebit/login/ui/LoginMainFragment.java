@@ -259,7 +259,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 //        });
 //        mDialog.show();
 
-      dialog=  new ResginDialog(getActivity(), "", "", "", "", new ResginDialog.OnOkListener() {
+      dialog=  new ResginDialog(getActivity(), "尚未注册", "您还没有注册喔，快去注册吧！", "取消", "注册", new ResginDialog.OnOkListener() {
             @Override
             public void onClick(View view) {
                 //跳到注册

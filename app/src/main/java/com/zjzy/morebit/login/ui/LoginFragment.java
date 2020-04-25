@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.Module.common.Dialog.WxResginDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
@@ -140,8 +141,15 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
         if (ErrorCodeUtlis.isNuRegister(code)) {
             //用户不存在  跳转到注册页
 
-            WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
-            LoginEditInviteFragment.start(getActivity(), "", weixinInfo, mAreaCode);
+            final WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
+            WxResginDialog dialog = new WxResginDialog(getActivity(), "", "当前微信未绑定多点优选账号\n立即注册绑定，畅享百万优惠", "", new WxResginDialog.OnOkListener() {
+                @Override
+                public void onClick(View view) {
+                    LoginEditInviteFragment.start(getActivity(), "", weixinInfo, mAreaCode);
+                }
+            });
+            dialog.show();
+
         }
     }
 

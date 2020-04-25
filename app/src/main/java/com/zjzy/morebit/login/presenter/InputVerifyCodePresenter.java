@@ -79,4 +79,28 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
                  });
 
     }
+
+    @Override
+    public void weixinLogin(RxFragment baseFragment, String phone,String yqm_code,  String verifyCode, WeixinInfo weixinInfo) {
+        if (AppUtil.isFastCashMoneyClick(500)){
+            return;
+        }
+        mModel.getWeixinRegister(baseFragment, phone, yqm_code, verifyCode, weixinInfo)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().showFinally();
+                    }
+                })
+                .subscribe(new DataObserver<UserInfo>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().showLoginFailure(errCode);
+                    }
+                    @Override
+                    protected void onSuccess(UserInfo data) {
+                        getIView().showLoginData(data);
+                    }
+                });
+    }
 }

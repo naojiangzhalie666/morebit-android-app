@@ -17,7 +17,7 @@ public class ResginDialog extends Dialog {
     private ResginDialog.OnCancelListner mCancelListener;
     private ResginDialog.OnCloseListner mCloseListener;
     private ClearSDdataDialog.OnOkListener okListener;
-    private TextView tv_title;
+    private TextView tv_title,tv_content;
     private String title="尚未注册";
     private String content="您还没有注册喔，快去注册吧！";
     private Context mContext;
@@ -48,6 +48,12 @@ public class ResginDialog extends Dialog {
         btn_ok = findViewById(R.id.btn_ok);
         mBtncancel = findViewById(R.id.btn_cancel);
         tv_title=findViewById(R.id.tv_title);
+        tv_content=findViewById(R.id.tv_content);
+        btn_ok.setText(ok);
+        mBtncancel.setText(cancle);
+        tv_content.setText(content);
+        tv_title.setText(title);
+
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

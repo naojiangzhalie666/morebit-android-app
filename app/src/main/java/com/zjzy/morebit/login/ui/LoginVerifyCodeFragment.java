@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
@@ -15,6 +16,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.LoginNotRegeditDialog;
+import com.zjzy.morebit.Module.common.Dialog.ResginDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.login.contract.InputVerifyCodeContract;
@@ -222,14 +224,18 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         ViewShowUtils.hideSoftInput(getActivity(), edtsms);
         switch (loginType) {
             case C.sendCodeType.REGISTER:
-                mPresenter.register(this, mPhone, edtsms.getText().toString(), mInvitationCode, mAreaCode.getAreaCode());
+                mPresenter.register(this, edtPhone.getText().toString(), edtsms.getText().toString(), mInvitationCode, mAreaCode.getAreaCode());
                 break;
             case C.sendCodeType.LOGIN:
-                mPresenter.login(this, mPhone, edtsms.getText().toString());
+                mPresenter.login(this, edtPhone.getText().toString(), edtsms.getText().toString());
                 break;
             case C.sendCodeType.WEIXINREGISTER:
-                mPresenter.weixinRegister(this, mPhone, mInvitationCode, edtsms.getText().toString(), mWeixinInfo);
+                mPresenter.weixinRegister(this, edtPhone.getText().toString(), mInvitationCode, edtsms.getText().toString(), mWeixinInfo);
                 break;
+            case C.sendCodeType.WEIXINBIND:
+                mPresenter.weixinLogin(this, edtPhone.getText().toString(), mInvitationCode, edtsms.getText().toString(), mWeixinInfo);
+                break;
+
 
             default:
                 break;
@@ -304,6 +310,18 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         }
     }
 
+    @Override
+    public void showLoginFailure(String errCode) {
+
+    }
+
+    @Override
+    public void showLoginData(UserInfo userInfo) {
+        Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
+//        ActivityLifeHelper.getInstance().finishActivity(LoginSinglePaneActivity.class);
+        ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
+    }
+
     private void openRegisterDialog() {  //退出确认弹窗
         mRegisterDialog = new ClearSDdataDialog(getActivity(), R.style.dialog, "提示", "该手机号未注册", new ClearSDdataDialog.OnOkListener() {
             @Override
@@ -324,18 +342,32 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
 
     private void openLoginDialog() {
-        mloginDialog = new LoginNotRegeditDialog(getActivity(), R.style.dialog, "您已注册", "您已注册，请去登录吧！", new LoginNotRegeditDialog.OnOkListener() {
+//        mloginDialog = new LoginNotRegeditDialog(getActivity(), R.style.dialog, "您已注册", "您已注册，请去登录吧！", new LoginNotRegeditDialog.OnOkListener() {
+//            @Override
+//            public void onClick(View view, String text) {
+//                LoginMainFragment.start(getActivity());
+//                ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
+//            }
+//        });
+//        mloginDialog.setOkTextAndColor(R.color.color_333333, "登录");
+//        mloginDialog.setCancelTextAndColor(R.color.color_999999, "取消");
+//        mloginDialog.show();
+//
+//        mloginDialog.setCancelable(false);
+        final ResginDialog   dialog=  new ResginDialog(getActivity(), "您已注册", "您已注册，立即登录吧！", "取消", "登录", new ResginDialog.OnOkListener() {
             @Override
-            public void onClick(View view, String text) {
+            public void onClick(View view) {
                 LoginMainFragment.start(getActivity());
-                ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
+              ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
             }
         });
-        mloginDialog.setOkTextAndColor(R.color.color_333333, "登录");
-        mloginDialog.setCancelTextAndColor(R.color.color_999999, "取消");
-        mloginDialog.show();
-
-        mloginDialog.setCancelable(false);
+        dialog.setmCancelListener(new ResginDialog.OnCancelListner() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
 
     }
 
@@ -451,7 +483,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
                 getmsm.setTextColor(Color.parseColor("#999999"));
                 getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);
                 LoadingView.showDialog(getActivity(), "请求中...");
-                mPresenter.checkoutPhone(this, mPhone, loginType, mAreaCode.getAreaCode());
+                mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
                 break;
             case R.id.next_login:
                // ToastUtils.showLong("111");
@@ -464,7 +496,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
                 break;
             case R.id.passwordLogin:
-                LoginPasswordFragment.start(getActivity(),mPhone,mAreaCode);
+                LoginPasswordFragment.start(getActivity(),edtPhone.getText().toString(),mAreaCode);
                 break;
         }
     }

@@ -1010,6 +1010,31 @@ public interface CommonService {
 
     );
 
+
+    /**
+     * 绑定微信
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/user/wechatBindPhone")
+
+    public Observable<BaseResponse<UserInfo>> LoginAndBindWeixin(
+            @Body RequestRegisterAndBindWeChatBean requestBean
+//            @Field("phone") String phone,
+//            @Field("verCode") String verCode,
+//            @Field("oauthWx") String oauthWx,
+//            @Field("yqmCodeOrPhone") String yqmCodeOrPhone,
+//            @Field("nickname") String nickname,
+//            @Field("sex") String sex,
+//            @Field("headImg") String headImg,
+//            @Field("country") String country,
+//            @Field("province") String province,
+//            @Field("city") String city,
+//            @Field("sign") String sign
+
+    );
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 

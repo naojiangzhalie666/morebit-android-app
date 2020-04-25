@@ -117,6 +117,40 @@ public class LoginModel extends MvpModel {
                 .compose(baseFragment.<BaseResponse<UserInfo>>bindToLifecycle());
     }
 
+    public Observable<BaseResponse<UserInfo>> getWeixinLogin(RxFragment baseFragment, String phone, String yqm_code, String verifyCode, WeixinInfo weixinInfo) {
+
+        RequestRegisterAndBindWeChatBean requestBean = new RequestRegisterAndBindWeChatBean();
+        requestBean.setPhone(phone);
+        requestBean.setVerCode(verifyCode);
+        requestBean.setOauthWx(weixinInfo.getOpenid());
+        requestBean.setYqmCodeOrPhone(yqm_code);
+        requestBean.setNickname(weixinInfo.getNickname());
+        requestBean.setSex(weixinInfo.getSex() + "");
+        requestBean.setHeadImg(weixinInfo.getHeadimgurl());
+        requestBean.setCountry(weixinInfo.getCountry());
+        requestBean.setProvince(weixinInfo.getProvince());
+        requestBean.setCity(weixinInfo.getCity());
+        requestBean.setSign(EncryptUtlis.getSign2(requestBean));
+
+
+        return RxHttp.getInstance().getCommonService().LoginAndBindWeixin(
+                requestBean
+//                phone,
+//                verifyCode,
+//                weixinInfo.getOpenid(),
+//                yqm_code,
+//                weixinInfo.getNickName(),
+//                weixinInfo.getSex() + "",
+//                weixinInfo.getHeadimgurl(),
+//                weixinInfo.getCountry(),
+//                weixinInfo.getProvince(),
+//                weixinInfo.getCity(),
+//                ""
+        )
+                .compose(RxUtils.<BaseResponse<UserInfo>>switchSchedulers())
+                .compose(baseFragment.<BaseResponse<UserInfo>>bindToLifecycle());
+    }
+
 
     public Observable<BaseResponse<List<AreaCodeBean>>> getCountryList(RxAppCompatActivity baseFragment) {
         return RxHttp.getInstance().getUsersService()
