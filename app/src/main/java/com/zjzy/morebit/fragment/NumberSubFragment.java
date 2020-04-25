@@ -163,6 +163,7 @@ public class NumberSubFragment extends BaseFragment {
 
             @Override
             public void onLoadMore() {
+                page++;
                 getData();
             }
         });
@@ -419,7 +420,6 @@ public class NumberSubFragment extends BaseFragment {
             }
 
         }
-        page++;
         mAdapter.notifyDataSetChanged();
     }
 
