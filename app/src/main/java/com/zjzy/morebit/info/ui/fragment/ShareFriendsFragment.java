@@ -149,7 +149,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
 
     @Override
     protected void initView(View view) {
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.share_friends)).setCustomRightTitle("奖励规则", new View.OnClickListener() {
+        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.share_friends)).setCustomRightTitle(""/*"奖励规则"*/, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getJiangRule();

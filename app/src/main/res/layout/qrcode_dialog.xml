@@ -122,14 +122,14 @@
 
                     <ImageButton
                         android:id="@+id/iv_close"
-                        android:layout_width="21dp"
-                        android:layout_height="21dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginRight="6dp"
                         android:layout_marginTop="6dp"
                         android:background="@color/transparent"
-                        android:src="@drawable/icon_guanbi" />
+                        android:src="@drawable/icon_guanbi_off_white" />
 
                 </RelativeLayout>
 

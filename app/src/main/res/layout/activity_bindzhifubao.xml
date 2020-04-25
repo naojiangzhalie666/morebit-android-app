@@ -151,7 +151,7 @@
                     android:paddingBottom="7dp"
                     android:layout_marginRight="20dp"
                     android:text="获取验证码"
-                    android:textColor="@color/color_2B0900"
+                    android:textColor="@color/white"
                     android:textSize="13sp" />
 
             </LinearLayout>
