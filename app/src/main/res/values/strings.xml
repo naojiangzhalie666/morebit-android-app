@@ -71,7 +71,7 @@
     <string name="finish">完成</string>
     <string name="send_msg">重新发送</string>
     <string name="input_verifycode">请输入短信验证码</string>
-    <string name="count_down">%1$s秒后重新发送</string>
+    <string name="count_down">%1$s秒后重发</string>
     <string name="send_phone">验证码已发送至 +86 %1$s</string>
     <string name="net_work_text">网络请求失败，请检查您的网络设置</string>
     <string name="start_buy">已开抢</string>

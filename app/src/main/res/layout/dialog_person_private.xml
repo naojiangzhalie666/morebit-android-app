@@ -17,8 +17,8 @@
         android:textColor="@color/color_333333"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_F8F8F8"/>
+        android:layout_height="1dp"
+        android:background="@color/color_EEEEEE"/>
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《多点优选用户协议》"
-                android:textColor="@color/color_FFE50B"
+                android:textColor="@color/color_4479C4"
                 android:textSize="@dimen/sp_13"
                 />
 
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《隐私政策》"
-                android:textColor="@color/color_FFE50B"
+                android:textColor="@color/color_4479C4"
                 android:textSize="@dimen/sp_13"
                 />
         </LinearLayout>
@@ -135,7 +135,7 @@
             android:gravity="center"
             android:text="不同意"
             android:textSize="15sp"
-            android:textColor="@color/color_808080"/>
+            android:textColor="@color/color_C2C2C2"/>
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
@@ -145,10 +145,10 @@
             android:id="@+id/ok"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_FFE50B"
+            android:background="@color/color_3276F5"
             android:layout_weight="1.0"
             android:gravity="center"
-            android:text="确定"
+            android:text="同意"
             android:textSize="14sp"
             android:textColor="@color/color_FFFFFF"
             />

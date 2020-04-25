@@ -112,7 +112,7 @@ android {
             buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "1"
             dimension "cooperator"
-            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
+            buildConfigField "int", "IS_IP", "0"        //0 环境切换  1不切换   上线前一定要记得换回1
 
         }
         //测试Uat环境
@@ -120,20 +120,20 @@ android {
             buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "2"
             dimension "cooperator"
-            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
+            buildConfigField "int", "IS_IP", "0"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
         pp {
             buildConfigField "String", "BASE_HOST", '"http://pp.markermall.com"'
             buildConfigField "int", "ENV_TYPE", "3"
             dimension "cooperator"
-            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
+            buildConfigField "int", "IS_IP", "0"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
         //生产环境
         product {
             buildConfigField "String", "BASE_HOST", '"https://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "4"
             dimension "cooperator"
-            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
+            buildConfigField "int", "IS_IP", "0"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
     }
 
@@ -157,7 +157,9 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
     testCompile 'junit:junit:4.12'
     compile project(':LRecyclerview_library')
+
     //上拉下拉列表
+
     //base
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile rootProject.ext.dependencies["design"]
@@ -165,77 +167,116 @@ dependencies {
     compile rootProject.ext.dependencies["cardview-v7"]
     compile rootProject.ext.dependencies["constraint"]
     compile rootProject.ext.dependencies["support-v4"]
+
     //base
+
     //工具
     compile files('libs/umeng-analytics-v6.1.2.jar')
+
     //友盟统计
+
     //极光推送
     implementation 'cn.jiguang.sdk:jpush:3.2.0'
+
     // 此处以JPush 3.1.6 版本为例。
     implementation 'cn.jiguang.sdk:jcore:1.2.7'
+
     // 此处以JCore 1.2.5 版本为例。
+
     //    compile 'cn.jiguang.sdk.plugin:xiaomi:3.2.0' // 小米
-    implementation 'cn.jiguang.sdk.plugin:huawei:3.2.0' // 华为
+    implementation 'cn.jiguang.sdk.plugin:huawei:3.2.0'
+
+    // 华为
     implementation 'cn.jiguang.sdk.plugin:meizu:3.2.0'
+
     //魅族
+
     //极光推送
     implementation 'com.android.support:multidex:1.0.1'
+
     // 多dex配置
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["view-core"]
+
     //viewpager 滑动
     compile rootProject.ext.dependencies["ultimateswipetool"]
+
     // 侧滑返回
     compile rootProject.ext.dependencies["bugly"]
+
     // 远程依赖集成方式（推荐）
     compile rootProject.ext.dependencies["tinker"]
+
     // 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
     compile rootProject.ext.dependencies["rxpermissions"]
+
     // rxpermissions 权限
     compile rootProject.ext.dependencies["zxing"]
+
     //二维码扫描、识别、生成
     compile rootProject.ext.dependencies["logging"]
+
     // 请求log
     compile rootProject.ext.dependencies["eventbus"]
+
     // enentBus
     compile rootProject.ext.dependencies["dagger"]
+
     //dagger2
     compile rootProject.ext.dependencies["dagger-compiler"]
+
     //dagger2
     compile rootProject.ext.dependencies["annotation"]
+
     //dagger2
     compile rootProject.ext.dependencies["fragmentation"]
+
     //dagger2
+
     //工具
+
     //UI
     compile rootProject.ext.dependencies["vercodeedittext"]
+
     // 验证码
     compile rootProject.ext.dependencies["FlycoTabLayout_Lib"]
+
     // 验证码
     compile rootProject.ext.dependencies["marqueeview"]
+
     // 跑马灯效果
     compile rootProject.ext.dependencies["transformations"]
+
     // 高斯模糊
     compile rootProject.ext.dependencies["floatingactionbutton"]
+
     //    compile rootProject.ext.dependencies["rxgalleryfinal"]     // 图片选择   PictureSelector 这里面有这个引用
     compile rootProject.ext.dependencies["roundedimageview"]
+
     // 圆角图片
     compile rootProject.ext.dependencies["banner"]
+
     // 轮播图
     compile rootProject.ext.dependencies["greendao"]
+
     // 轮播图
     compile rootProject.ext.dependencies["utilcode"]
+
     //工具类
+
     //UI
+
     //网络
     compile rootProject.ext.dependencies["okhttp-utils"]
     compile rootProject.ext.dependencies["okgo"]
+
     //gson
     compile rootProject.ext.dependencies["retrofit-converter-gson"]
     compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["rxjava"]
     compile rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
     compile rootProject.ext.dependencies["retrofit"]
+
     //gson 数据解析适配器
     compile rootProject.ext.dependencies["retrofit-converter-gson"]
     compile rootProject.ext.dependencies["retrofit-converter-gson"]
@@ -245,63 +286,107 @@ dependencies {
     compile rootProject.ext.dependencies["rxlifecycle-components"]
     compile rootProject.ext.dependencies["fastjson"]
     compile rootProject.ext.dependencies["logging"]
+
     // 请求log
     compile rootProject.ext.dependencies["stetho"]
+
     //facebook 安卓调试工具
     compile rootProject.ext.dependencies["stetho-okhttp3"]
     compile rootProject.ext.dependencies["butterknife"]
+
     // butterknife
     compile rootProject.ext.dependencies["butterknife-compiler"]
+
     //文件下载
     compile rootProject.ext.dependencies["filedownloader"]
+
     // butterknife
+
     //网络
+
     //支付
+
     //支付宝支付
+
     //compile files('libs/alipaySdk-20170922.jar')
+
     //阿里百川sdk---
+
     //登陆
+
     //compile 'com.ali.auth.sdk:alibabauth_core:1.4.3@jar'
+
     //compile 'com.ali.auth.sdk:alibabauth_ui:1.4.3@aar'
+
     //compile 'com.ali.auth.sdk:alibabauth_ext:1.4.3@jar'
+
     //Mtop网关
+
     //compile 'com.taobao.android:mtopsdk_allinone_open:1.2.2.4@jar'
+
     //compile 'com.alibaba.sdk.android:alibc_link_partner:1.1.0.6'
+
     //UT
+
     //compile 'com.alibaba.mtl:app-monitor-sdk:2.5.1.3_for_bc_proguard@jar'
+
     //联盟SDK
+
     //compile 'com.alimama.tunion.sdk:tuniontradesdk:0.3.2'
+
     //电商SDK
+
     //compile 'com.alibaba.sdk.android:alibc_trade_common:3.1.1.206'
+
     //compile 'com.alibaba.sdk.android:alibc_trade_biz:3.1.1.206'
+
     //compile 'com.alibaba.sdk.android:alibc_trade_sdk:3.1.1.206'
+
     //阿里web防火墙
+
     //compile(name: 'AVMPSDK-external-release-5.4.1001', ext: 'aar')
+
     //compile(name: 'SecurityBodySDK-external-release-5.4.28', ext: 'aar')
+
     //compile(name: 'SecurityGuardSDK-external-release-5.4.38', ext: 'aar')
+
     //图片滑动效果
     implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
+
     //支付
+
     //上传图片
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
+
     // 选择图片
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+
     // 导航栏
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+
     //greendao升级帮助类
     implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.1.0'
     implementation 'com.drawthink:expandable-recyclerview:0.0.3'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
     //
+
     //    compile ("com.github.bumptech.glide:recyclerview-integration:4.4.0") {
+
     //        // Excludes the support library because it's already included by Glide.
+
     //         transitive = false
+
     //    }
+
     //RecyclerView适配器 可减少大量代码量
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
     //SmartRefreshLayout
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
+
     //    compile 'com.shuyu:GSYVideoPlayer:7.0.0-beta1'
+
     //    compile 'cn.jzvd:jiaozivideoplayer:6.4.1'
     compile project(':player_module')
 
@@ -309,56 +394,67 @@ dependencies {
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     implementation 'com.github.JuHonggang:ShadowDrawable:0.1'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
+
     //时间选择
     implementation 'com.contrarywind:Android-PickerView:4.1.8'
 
     // compile 'com.github.cpiz:BubbleView:1.0.3'
     compile(name: 'bubbleview', ext: 'aar')
-//    compile(name: 'bigdata1.0.3', ext: 'aar')
 
+    //    compile(name: 'bigdata1.0.3', ext: 'aar')
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
 
     //Optional: see how to use the utility.
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     implementation project(path: ':Address_library')
-
     implementation('com.github.sendtion:XRichText:1.9.4') {
         exclude group: 'com.android.support'
     }
+
     //Optional: see how to use the utility.
-//    compile 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
-//    compile 'com.oneapm.agent.android:agent:5.5.3.5'
+
+    //    compile 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
+
+    //    compile 'com.oneapm.agent.android:agent:5.5.3.5'
+
     //支付宝（可选）
     implementation 'com.alipay.android.app.cashier:standardcashier-single:15.6.5@aar'
     compileOnly 'com.alipay.mobile.android.securitysdk:apsecuritysdk-all:3.3.0'
+
     //登陆
     implementation 'com.ali.auth.sdk:alibabauth_core:2.0.0.6@aar'
     implementation 'com.ali.auth.sdk:alibabauth_ui:2.0.0.6@aar'
     implementation 'com.ali.auth.sdk:alibabauth_ext:2.0.0.6@aar'
+
     //安全组件
     implementation 'com.taobao.android:securityguardaar3:5.4.171@aar'
     implementation 'com.taobao.android:securitybodyaar3:5.4.99@aar'
     implementation 'com.taobao.android:avmpaar3:5.4.36@aar'
     implementation 'com.taobao.android:sgmiddletieraar3:5.4.9@aar'
+
     //Mtop
     implementation 'com.taobao.android:mtopsdk_allinone_open:3.1.2.5@jar'
+
     //applink
     implementation 'com.alibaba.sdk.android:alibc_link_partner:4.1.15@aar'
+
     //ut
     implementation 'com.taobao.android:utdid4all:1.5.2'
     implementation 'com.alibaba.mtl:app-monitor-sdk:2.6.4.5_for_bc'
+
     // 电商基础组件
     implementation 'com.alibaba.sdk.android:AlibcTradeCommon:4.0.0.8@aar'
     implementation 'com.alibaba.sdk.android:AlibcTradeBiz:4.0.0.8@aar'
     implementation 'com.alibaba.sdk.android:nb_trade:4.0.0.8@aar'
     implementation 'com.alibaba:fastjson:1.2.41'
     implementation project(path: ':labeltext_lib')
+
     //智能加载框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+
     //没有使用特殊Header和Footer，可以不加下面这行
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
-
-
+    implementation project(':kepler')
 
 }
 // 依赖插件脚本

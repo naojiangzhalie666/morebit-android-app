@@ -38,6 +38,7 @@ import com.zjzy.morebit.main.ui.CollectFragment2;
 import com.zjzy.morebit.main.ui.NoticeActivity;
 import com.zjzy.morebit.main.ui.fragment.ForeshowFragment;
 import com.zjzy.morebit.main.ui.fragment.GoodNewsFramgent;
+import com.zjzy.morebit.main.ui.fragment.JdChildFragment;
 import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
 import com.zjzy.morebit.main.ui.fragment.PddFragment;
 import com.zjzy.morebit.main.ui.fragment.RankingFragment;
@@ -388,7 +389,11 @@ public class BannerInitiateUtils {
             OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
         } else if (type == C.BannerIntentionType.NEW_PERSONAL) {//新人免单
             if (LoginUtil.checkIsLogin(activity)) {
-                activity.startActivity(new Intent(activity, PurchaseActivity.class));
+               // activity.startActivity(new Intent(activity, PurchaseActivity.class));
+
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+                OpenFragmentUtils.goToSimpleFragment(activity, JdChildFragment.class.getName(), bundle);
             }
         } else if (type == C.BannerIntentionType.HUNGRY) {//饿了么
 

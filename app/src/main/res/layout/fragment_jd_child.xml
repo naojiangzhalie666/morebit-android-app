@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="vertical"
+        android:background="#FFFFFFFF">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/btn_title_return_icon"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="京东商城"
+            android:layout_centerInParent="true"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            />
+        <ImageView
+            android:id="@+id/iv_right_search"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/btn_search_black"
+            android:scaleType="fitCenter"/>
+    </RelativeLayout>
+</LinearLayout>
+
+
+    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+        android:id="@+id/xTablayout"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        app:xTabDisplayNum="8"
+        app:tl_tab_padding="20dp"
+        android:background="#FFFFFFFF"
+        app:xTabIndicatorColor="@color/color_FF645B"
+        app:xTabIndicatorHeight="3dp"
+        app:xTabIndicatorWidth="15dp"
+        app:xTabMode="scrollable"
+        app:xTabSelectedTextColor="@color/color_FF645B"
+        app:xTabSelectedTextSize="@dimen/sp_15"
+        app:xTabTextColor="@color/color_666666"
+        app:xTabTextSize="@dimen/sp_12" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

@@ -458,3 +458,7 @@ public static java.lang.String TABLENAME;
 -keep public class * extends android.support.v4.**
 -keep public class * extends android.app.Fragment
 -keep class com.scwang.smartrefresh.layout.** { *; }
+#jd开普勒
+-keep class com.kepler.**{*;}
+
+-dontwarn com.kepler.**

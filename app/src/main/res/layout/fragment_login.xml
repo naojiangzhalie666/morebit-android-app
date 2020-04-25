@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".login.ui.LoginFragment">
+
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/login_head_bg"
+        />
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/closs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/retrun_white" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_below="@+id/img"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/login_logo_bg"
+        android:layout_marginTop="50dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/wx_ll"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/logo"
+        android:layout_marginLeft="29dp"
+        android:layout_marginRight="29dp"
+        android:layout_marginTop="110dp"
+        android:gravity="center"
+        android:background="@mipmap/login_text_bg"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/wx_icon"
+            />
+        <TextView
+            android:id="@+id/tv_wechat"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="微信号快捷登录"
+            android:textSize="@dimen/sp_16"
+            android:gravity="center"
+
+            />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/phone_ll"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/wx_ll"
+        android:layout_marginLeft="29dp"
+        android:layout_marginRight="29dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:background="@mipmap/login_text_bg"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/logo_phone_bg"
+            />
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="手机号登录"
+            android:textSize="@dimen/sp_16"
+            android:gravity="center"
+
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册或登录即代表您已同意"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12"
+            />
+
+        <TextView
+            android:id="@+id/ll_userAgreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《多点优选用户协议》"
+            android:textColor="@color/color_EE403A"
+            android:textSize="@dimen/sp_12"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="和"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12"
+            />
+
+        <TextView
+            android:id="@+id/privateProtocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《隐私政策》"
+            android:textColor="@color/color_EE403A"
+            android:textSize="@dimen/sp_12"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

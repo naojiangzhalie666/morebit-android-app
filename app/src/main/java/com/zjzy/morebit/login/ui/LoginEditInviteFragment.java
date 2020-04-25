@@ -17,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.Module.common.Dialog.InvateBindDialog;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.login.contract.LoginEditInviteContract;
 import com.zjzy.morebit.login.presenter.LoginEditInvitePresenter;
@@ -75,8 +79,12 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
     private String areaCode;
     private AreaCodeBean mAreaCode;
     private static final int MSG_SEARCH = 1;
+    private RelativeLayout rl;//返回键
+    private TextView ll_userAgreement, privateProtocol;
+    private TextView tv_bind;
 
-    private Handler mSearchHandler = new Handler(){
+
+    private Handler mSearchHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             //搜索请求
@@ -85,17 +93,16 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
     };
 
 
-
     public static void start(Activity activity, String phone, int loginType, AreaCodeBean areaCodeBean) {
         Bundle bundle = new Bundle();
         bundle.putString(C.Extras.PHONE, phone);
-        bundle.putSerializable(C.Extras.AREACODE,areaCodeBean);
+        bundle.putSerializable(C.Extras.AREACODE, areaCodeBean);
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
         bundle.putInt(C.Extras.loginType, loginType);
         OpenFragmentUtils.goToLoginSimpleFragment(activity, LoginEditInviteFragment.class.getName(), bundle);
     }
 
-    public static void start(Activity activity, String phone, WeixinInfo weixinInfo,AreaCodeBean areaCodeBean) {
+    public static void start(Activity activity, String phone, WeixinInfo weixinInfo, AreaCodeBean areaCodeBean) {
         Bundle bundle = new Bundle();
         bundle.putString(C.Extras.PHONE, phone);
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
@@ -106,8 +113,19 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
             bundle.putInt(C.Extras.loginType, C.sendCodeType.REGISTER);
 
         }
-        bundle.putSerializable(C.Extras.AREACODE,areaCodeBean);
+        bundle.putSerializable(C.Extras.AREACODE, areaCodeBean);
         OpenFragmentUtils.goToLoginSimpleFragment(activity, LoginEditInviteFragment.class.getName(), bundle);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ImmersionBar.with(getActivity())
+                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .fitsSystemWindows(false)
+                .statusBarColor(R.color.color_FFD4CF)
+                .init();
+
     }
 
     @Override
@@ -120,7 +138,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         if (mHandler == null) {
             mHandler = new Handler();
         }
-        mAnimHeight = getResources().getDimensionPixelSize(R.dimen.login_edit_invite_anim_height);
+        mAnimHeight = getResources().getDimensionPixelSize(R.dimen.sp_24/*login_edit_invite_anim_height*/);
         Bundle bundle = getArguments();
         if (bundle != null) {
             mPhone = bundle.getString(C.Extras.PHONE, "");
@@ -129,10 +147,14 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
             mLoginType = bundle.getInt(C.Extras.loginType);
         }
 
-        if(mLoginType == C.sendCodeType.WEIXINREGISTER || mLoginType == C.sendCodeType.REGISTER){
-            if(null == mAreaCode){
+        if (mLoginType == C.sendCodeType.WEIXINREGISTER || mLoginType == C.sendCodeType.REGISTER) {
+            if (null == mAreaCode) {
                 mAreaCode = AreaCodeUtil.getDefaultCode();
             }
+        }
+
+        if (mLoginType == C.sendCodeType.WEIXINREGISTER){
+            tv_bind.setVisibility(View.VISIBLE);
         }
 
         areaCode = mAreaCode.getAreaCode();
@@ -144,6 +166,11 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
 //        if (!TextUtils.isEmpty(coyeTextIsInvite)) {
 //            edtInvite.setText(coyeTextIsInvite);
 //        }
+
+        rl = view.findViewById(R.id.rl);
+        tv_bind=view.findViewById(R.id.tv_bind);//已有账号立即绑定
+        privateProtocol = view.findViewById(R.id.privateProtocol);
+        ll_userAgreement = view.findViewById(R.id.ll_userAgreement);
     }
 
     @Override
@@ -152,28 +179,25 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
     }
 
 
-
-
-
     @OnTextChanged(value = R.id.edtInvite, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterTextChanged(Editable s) {
         mInviteUserInfoBean = null;
         mEditInviteText = s.toString();
 
 
-        if(!TextUtils.isEmpty(areaCode) && !"86".equals(areaCode) && mEditInviteText.length() >= 6){
-            if(mEditInviteText.length() >= C.PHONE.MIN_LENGTH  && mEditInviteText.length()<= C.PHONE.MAX_LENGTH){
-                if(mSearchHandler.hasMessages(MSG_SEARCH)){
+        if (!TextUtils.isEmpty(areaCode) && !"86".equals(areaCode) && mEditInviteText.length() >= 6) {
+            if (mEditInviteText.length() >= C.PHONE.MIN_LENGTH && mEditInviteText.length() <= C.PHONE.MAX_LENGTH) {
+                if (mSearchHandler.hasMessages(MSG_SEARCH)) {
                     mSearchHandler.removeMessages(MSG_SEARCH);
                 }
-                mSearchHandler.sendEmptyMessageDelayed(MSG_SEARCH,1000);
+                mSearchHandler.sendEmptyMessageDelayed(MSG_SEARCH, 1000);
 
             }
-        }else {
+        } else {
             errorTv.setText("");
             errorTv.setVisibility(View.GONE);
             tv_next.setEnabled(false);
-            tv_next.setTextColor(Color.parseColor("#333333"));
+            // tv_next.setTextColor(Color.parseColor("#333333"));
             if (!mIsAnimInTop) {
                 mIsAnimInTop = true;
                 hideAnim(rl_invite);
@@ -182,7 +206,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         }
 
 
-        if(!TextUtils.isEmpty(areaCode) && "86".equals(areaCode)){
+        if (!TextUtils.isEmpty(areaCode) && "86".equals(areaCode)) {
             if (mEditInviteText.length() == 6 || mEditInviteText.length() == 11) {
                 if (!AppUtil.isFastClick(400)) {
                     if (mEditInviteText.length() == 6) {
@@ -209,7 +233,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                 }
             } else {
                 tv_next.setEnabled(false);
-                tv_next.setTextColor(Color.parseColor("#333333"));
+                //   tv_next.setTextColor(Color.parseColor("#333333"));
                 if (!mIsAnimInTop) {
                     mIsAnimInTop = true;
                     hideAnim(rl_invite);
@@ -221,7 +245,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
     }
 
 
-    @OnClick({R.id.tv_next, R.id.iv_req_qr})
+    @OnClick({R.id.tv_next, R.id.iv_req_qr, R.id.privateProtocol, R.id.ll_userAgreement, R.id.rl,R.id.tv_bind})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.iv_req_qr:
@@ -258,17 +282,43 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
 
                 break;
             case R.id.tv_next:
-                if (AppUtil.isFastClick(500)) {
-                    return;
-                }
-                if (mInviteUserInfoBean == null) {
-                    ViewShowUtils.showShortToast(getActivity(), "信息有误哦,请稍后重试");
-                    return;
-                }
-                LoginEditPhoneFragment.start(getActivity(), mLoginType, mEditInviteText, mPhone, mWeixinInfo,mAreaCode);
+                final InvateBindDialog dialog = new InvateBindDialog(getActivity(), tv_invite_name.getText().toString(), "", "", "", new InvateBindDialog.OnOkListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (AppUtil.isFastClick(500)) {
+                            return;
+                        }
+                        if (mInviteUserInfoBean == null) {
+                            ViewShowUtils.showShortToast(getActivity(), "信息有误哦,请稍后重试");
+                            return;
+                        }
+                        LoginVerifyCodeFragment.srart(getActivity(), mLoginType, mPhone, mEditInviteText, mWeixinInfo,mAreaCode);
+                      //  LoginEditPhoneFragment.start(getActivity(), mLoginType, mEditInviteText, mPhone, mWeixinInfo, mAreaCode);
+                    }
+                });
+                dialog.show();
+                dialog.setmCancelListener(new InvateBindDialog.OnCancelListner() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
                 break;
             case R.id.areaCodeBtn:
                 AreaCodeActivity.actionStart(getActivity());
+                break;
+            case R.id.privateProtocol:
+                LoginUtil.getPrivateProtocol((RxAppCompatActivity) getActivity());
+                break;
+            case R.id.ll_userAgreement:
+                LoginUtil.getUserProtocol((RxAppCompatActivity) getActivity());
+                break;
+            case R.id.rl:
+                getActivity().finish();
+                break;
+            case R.id.tv_bind:
+                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINBIND, "", "", mWeixinInfo,mAreaCode);
                 break;
 
         }
@@ -278,7 +328,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
     @Override
     public void loginError(String code) {
         tv_next.setEnabled(false);
-        tv_next.setTextColor(Color.parseColor("#333333"));
+        //  tv_next.setTextColor(Color.parseColor("#333333"));
         if (!mIsAnimInTop) {
             hideAnim(rl_invite);
             TranslateTopAnim(tv_next);
@@ -432,8 +482,6 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
             }
         }
     }
-
-
 
 
 }

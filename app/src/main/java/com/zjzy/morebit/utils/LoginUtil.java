@@ -12,6 +12,7 @@ import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.PushAction;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.MineFragment;
+import com.zjzy.morebit.login.ui.LoginFragment;
 import com.zjzy.morebit.login.ui.LoginMainFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
@@ -55,7 +56,9 @@ public class LoginUtil {
      */
     public static void goToPasswordLogin(Activity activity) {
 //        activity.startActivity(new Intent(activity, LoginPasswordActivity.class));
-        LoginMainFragment.start(activity);
+     //  LoginMainFragment.start(activity);
+        LoginFragment.start(activity);
+
     }
 
     /**

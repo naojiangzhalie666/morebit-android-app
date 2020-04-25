@@ -1,4 +1,4 @@
-include ':app', ':player_module', ':Address_library', ':labeltext_lib'
+include ':app', ':player_module', ':Address_library', ':labeltext_lib', ':kepler'
 include ':LRecyclerview_library'
 //include ':banner'
 

@@ -213,7 +213,6 @@ public class TmallWebActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                mWebview.getSettings().setBlockNetworkImage(false);//网页图片延迟加载
                 if (!TextUtils.isEmpty(mTitle) && !mTitle.contains("http")) {
                     mToolbarWebHelper.setCustomTitle(mTitle);
                 }

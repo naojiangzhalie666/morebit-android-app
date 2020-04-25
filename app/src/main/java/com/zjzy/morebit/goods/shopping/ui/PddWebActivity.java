@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -197,6 +199,12 @@ public class PddWebActivity extends BaseActivity {
                 String url = request.getUrl().toString();
                 MyLog.d("url:",url);
                 if (url.contains("pinduoduo://com.xunmeng.pinduoduo")){
+                    return true;
+                }
+                if (url.contains("https://api.pinduoduo.com/api/app/channel/pinduoduolite_wxactivity_lite_6m_l?refer_page_name=duo_download")){
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("market://details?id=com.xunmeng.pinduoduo"));//跳转应用市场下载拼多多
+                    startActivity(intent);
                     return true;
                 }
                 return super.shouldOverrideUrlLoading(view, url);

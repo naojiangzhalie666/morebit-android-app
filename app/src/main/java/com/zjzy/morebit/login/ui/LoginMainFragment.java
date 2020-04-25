@@ -14,7 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Module.common.Dialog.LoginNotRegeditDialog;
+import com.zjzy.morebit.Module.common.Dialog.ResginDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.login.contract.LoginMainContract;
@@ -29,10 +32,13 @@ import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
+import com.zjzy.morebit.utils.WechatUtil;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.utils.netWork.ErrorCodeUtlis;
 import com.zjzy.morebit.view.ClearEditText;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,6 +65,10 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
    LinearLayout llMobileRegister;
 
    LoginNotRegeditDialog mDialog;
+   private ResginDialog dialog;
+   private RelativeLayout rl;
+    private String mInvite;
+    private WeixinInfo mWeixinInfo;
 
    private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86"; //默认是中国的86
@@ -71,12 +81,29 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ImmersionBar.with(getActivity())
+                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .fitsSystemWindows(false)
+                .statusBarColor(R.color.color_FFD4CF)
+                .init();
+    }
+
+    @Override
     protected void initData() {
 
     }
 
     @Override
     protected void initView(View view) {
+        rl=view.findViewById(R.id.rl);
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         mAreaCode = AreaCodeUtil.getDefaultCode();
         edtPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -91,7 +118,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                     next_login.setTextColor(Color.parseColor("#FFFFFF"));
                 }else{
                     next_login.setEnabled(false);
-                    next_login.setTextColor(Color.parseColor("#333333"));
+                    next_login.setTextColor(Color.parseColor("#FFFFFF"));
                 }
             }
 
@@ -116,6 +143,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     @OnClick({R.id.iv_back, R.id.ll_mobile_register, R.id.ll_weixin_btn,R.id.next_login,R.id.ll_userAgreement,R.id.areaCodeBtn,R.id.privateProtocol})
     public void onclick(View view) {
         switch (view.getId()) {
+
             case R.id.iv_back:
                 getActivity().finish();
                 break;
@@ -141,6 +169,10 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                 break;
             case R.id.next_login:
                String  mEditPhone = edtPhone.getText().toString().trim();
+               if (!isMobile()){
+                   ToastUtils.showLong("请输入正确的手机号");
+                   return;
+               }
                 if (mEditPhone != null  && checkPhone()) {
                     mPresenter.checkoutPhone(this,mEditPhone,6,areaCode);
                 }
@@ -173,6 +205,11 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         return true;
     }
 
+    //判断手机号格式是否正确
+    public  boolean isMobile() {
+        String  mEditPhone = edtPhone.getText().toString().trim();
+        return Pattern.matches("^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$", mEditPhone);
+    }
 
     /**
      * 微信未注册
@@ -187,7 +224,8 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
             LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),weixinInfo,mAreaCode);
         }else if(ErrorCodeUtlis.isRegister(code)){
             //手机号已注册
-            LoginPasswordFragment.start(getActivity(),edtPhone.getText().toString().trim(),mAreaCode);
+           // LoginPasswordFragment.start(getActivity(),edtPhone.getText().toString().trim(),mAreaCode);
+            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, mWeixinInfo,mAreaCode);
         }
     }
 
@@ -212,14 +250,29 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
     @Override
     public void goToRegister() {
-        mDialog = new LoginNotRegeditDialog(getActivity(), R.style.dialog, "", "", new LoginNotRegeditDialog.OnOkListener() {
+//        mDialog = new LoginNotRegeditDialog(getActivity(), R.style.dialog, "", "", new LoginNotRegeditDialog.OnOkListener() {
+//            @Override
+//            public void onClick(View view, String text) {
+//                //跳到注册
+//                LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
+//            }
+//        });
+//        mDialog.show();
+
+      dialog=  new ResginDialog(getActivity(), "", "", "", "", new ResginDialog.OnOkListener() {
             @Override
-            public void onClick(View view, String text) {
+            public void onClick(View view) {
                 //跳到注册
-                LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
+              LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
             }
         });
-        mDialog.show();
+        dialog.setmCancelListener(new ResginDialog.OnCancelListner() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+      dialog.show();
 
     }
 

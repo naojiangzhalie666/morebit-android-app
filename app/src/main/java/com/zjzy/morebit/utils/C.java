@@ -327,7 +327,7 @@ public class C {
 
     /**
      * 发送验证码
-     * 1：登录 2：修改密码 3：绑定微信 4：修改支付宝 5：修改手机号 6:注册 7: 注销
+     * 1：登录 2：修改密码 3：绑定微信 4：修改支付宝 5：修改手机号 6:注册 7: 注销 8:微信注册 已有账号立即绑定
      */
     public static class sendCodeType {
         public static final int LOGIN = 1;
@@ -338,6 +338,7 @@ public class C {
         public static final int REGISTER = 6;
         public static final int logout = 7; //
         public static final int WEIXINREGISTER = 7; //自己用 绑定微信
+        public static final int WEIXINBIND = 8;
 
     }
 
@@ -696,6 +697,10 @@ public class C {
         public static final int YUXUAN = 10;
         public static final int JD = 2;
         public static final int PDD = 4;
+
+
+        public static final  int E_UPLIMIT_SORT_DOWN=0;//降序
+        public static final  int E_UPLIMIT_SORT_UP=1;//升序
 
     }
 }

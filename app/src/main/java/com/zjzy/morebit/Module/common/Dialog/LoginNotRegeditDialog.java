@@ -88,11 +88,11 @@ public class LoginNotRegeditDialog extends Dialog implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_login_not_regedit);
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = ((Activity)mContext).getWindowManager().getDefaultDisplay().getWidth()*3/4;
-        getWindow().setAttributes(params);
-
-        setCanceledOnTouchOutside(false);
+//        WindowManager.LayoutParams params = getWindow().getAttributes();
+//        params.width = ((Activity)mContext).getWindowManager().getDefaultDisplay().getWidth()*3/4;
+//        getWindow().setAttributes(params);
+//
+//        setCanceledOnTouchOutside(false);
         initView();
     }
 

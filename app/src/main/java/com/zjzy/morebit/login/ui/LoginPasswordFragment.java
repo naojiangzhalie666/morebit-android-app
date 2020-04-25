@@ -11,9 +11,11 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Activity.ModifyPasswordActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.R;
@@ -63,6 +65,8 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
     private AreaCodeBean mAreaCode;
     private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86";
+    private RelativeLayout rl;//返回键
+    private TextView next_login;
     @Override
     protected int getViewLayout() {
         return R.layout.activity_login_password1;
@@ -80,6 +84,15 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ImmersionBar.with(getActivity())
+                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .fitsSystemWindows(false)
+                .statusBarColor(R.color.color_FFD4CF)
+                .init();
+    }
+    @Override
     protected void initData() {
     }
 
@@ -88,6 +101,9 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
         mPhone = getArguments().getString(C.Extras.PHONE, "");
         mAreaCode = (AreaCodeBean) getArguments().getSerializable(C.Extras.COUNTRY);
         mEdtPhoneText = mPhone.trim();
+        rl=view.findViewById(R.id.rl);
+        next_login=view.findViewById(R.id.next_login);
+
         if (!TextUtils.isEmpty(mPhone)) {
             phoneTv.setText(mPhone);
         }
@@ -152,7 +168,7 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
     }
 
 
-    @OnClick({R.id.login,R.id.password_login,R.id.forget_password,})
+    @OnClick({R.id.login,R.id.password_login,R.id.forget_password,R.id.rl,R.id.next_login})
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.password_login:
@@ -162,6 +178,18 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
                 ModifyPasswordActivity.start(getActivity(), ModifyPasswordActivity.FIND_PASSWORD, mPhone.trim(),mAreaCode);
                 break;
             case R.id.login:
+//                if (AppUtil.isFastClick(1000)) {
+//                    return;
+//                }
+//                if (!checkInput()) {
+//                    return;
+//                }
+//                mPresenter.Passwordlogin(this,mEdtPhoneText.toString(),mEdtPasswordText.toString(),mAreaCode.getAreaCode());
+                break;
+            case R.id.rl:
+                getActivity().finish();
+                break;
+            case R.id.next_login:
                 if (AppUtil.isFastClick(1000)) {
                     return;
                 }

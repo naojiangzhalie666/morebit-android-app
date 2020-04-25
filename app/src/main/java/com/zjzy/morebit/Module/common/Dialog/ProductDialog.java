@@ -1,6 +1,7 @@
 package com.zjzy.morebit.Module.common.Dialog;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,11 +17,13 @@ public class ProductDialog extends Dialog {
     private ProductDialog.OnCancelListner mCancelListener;
     private ProductDialog.OnCloseListner mCloseListener;
     private ClearSDdataDialog.OnOkListener okListener;
-    private ImageView btn_close;
+
 
     public ProductDialog(RxAppCompatActivity activity) {
         super(activity, R.style.dialog);
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,6 @@ public class ProductDialog extends Dialog {
     private void initView() {
         mBtnConfirm = findViewById(R.id.btn_confirm);
         mBtncancel = findViewById(R.id.btn_cancel);
-        btn_close=findViewById(R.id.btn_close);
         mBtnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,15 +45,7 @@ public class ProductDialog extends Dialog {
                 }
             }
         });
-        btn_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCloseListener != null) {
-                    mCloseListener.onClick(v);
-                    dismiss();
-                }
-            }
-        });
+
         mBtncancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

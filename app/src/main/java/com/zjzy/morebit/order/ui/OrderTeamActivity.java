@@ -34,8 +34,8 @@ public class OrderTeamActivity extends BaseActivity {
     @BindView(R.id.ll_morebit_order)
     LinearLayout llMorebitOrder;
 
-//    @BindView(R.id.ll_jd_order)
-//    LinearLayout llJdOrder;
+    @BindView(R.id.ll_jd_order)
+    LinearLayout llJdOrder;
 
     @BindView(R.id.ll_pdd_order)
     LinearLayout llPddOrder;
@@ -86,16 +86,16 @@ public class OrderTeamActivity extends BaseActivity {
         });
 
         //京东
-//        llJdOrder.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(C.Extras.order_type,C.OrderType.JD);
-//                OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
-//                        OrderDetailFragment.class.getName(), bundle);
-//            }
-//        });
+        llJdOrder.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(C.Extras.order_type,C.OrderType.JD);
+                OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
+                        OrderDetailFragment.class.getName(), bundle);
+            }
+        });
         //拼多多
         llPddOrder.setOnClickListener(new View.OnClickListener(){
 

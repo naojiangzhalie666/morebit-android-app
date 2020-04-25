@@ -5,8 +5,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.LoginNotRegeditDialog;
@@ -19,6 +24,7 @@ import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.pojo.AreaCodeBean;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.WeixinInfo;
+import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.AreaCodeUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -30,6 +36,7 @@ import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.jkb.vcedittext.VerificationAction;
 import com.jkb.vcedittext.VerificationCodeEditText;
+import com.zjzy.morebit.view.ClearEditText;
 
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +53,7 @@ import io.reactivex.functions.Consumer;
  * 验证码登录
  */
 
-public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresenter> implements InputVerifyCodeContract.View {
+public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresenter> implements InputVerifyCodeContract.View, View.OnClickListener {
     public static final int LOGIN = 2;
     public static final int WEIXINREGISTER = 3;
 
@@ -65,25 +72,40 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
     private Disposable mdDisposable;
     private int loginType;
-    private String mPhone ="";
+    private String mPhone = "";
     private String mInvitationCode;
     private WeixinInfo mWeixinInfo;
     private String mId;
     private ClearSDdataDialog mRegisterDialog;
     private LoginNotRegeditDialog mloginDialog;
     private AreaCodeBean mAreaCode;
+    private ClearEditText edtPhone;
+    private RelativeLayout rl;//返回键
+    private TextView ll_userAgreement, privateProtocol;
+    private TextView getmsm,next_login,passwordLogin;
+    private ClearEditText edtsms;//验证码
 
     public static void srart(Activity activity, int loginType, String phone, String invite, WeixinInfo weixinInfo, AreaCodeBean areaCodeBean) {
         Bundle bundle = new Bundle();
         bundle.putInt(C.Extras.loginType, loginType);
         bundle.putString(C.Extras.PHONE, phone);
-        bundle.putSerializable(C.Extras.COUNTRY,areaCodeBean);
+        bundle.putSerializable(C.Extras.COUNTRY, areaCodeBean);
         bundle.putString(C.Extras.INVITATION_CODE, invite);
         if (weixinInfo != null) {
             bundle.putSerializable(C.Extras.OAUTH_WX, weixinInfo);
         }
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
         OpenFragmentUtils.goToLoginSimpleFragment(activity, LoginVerifyCodeFragment.class.getName(), bundle);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ImmersionBar.with(getActivity())
+                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .fitsSystemWindows(false)
+                .statusBarColor(R.color.color_FFD4CF)
+                .init();
     }
 
     @Override
@@ -97,21 +119,26 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             mAreaCode = (AreaCodeBean) bundle.getSerializable(C.Extras.COUNTRY);
         }
 
-        if(null == mAreaCode){
+        if (null == mAreaCode) {
             mAreaCode = AreaCodeUtil.getDefaultCode();
-        }else{
-            if(!TextUtils.isEmpty(mAreaCode.getAreaCode())){
-                areaCodeTv.setText("+"+mAreaCode.getAreaCode());
+        } else {
+            if (!TextUtils.isEmpty(mAreaCode.getAreaCode())) {
+                areaCodeTv.setText("+" + mAreaCode.getAreaCode());
             }
         }
 
-        //因为注册的界面已经检查手机和发送验证码才会进来这界面，此条件控制重复发送验证码
-        if(loginType != C.sendCodeType.REGISTER && loginType != C.sendCodeType.WEIXINREGISTER){
-            //请求验证码
-            mPresenter.checkoutPhone(this, mPhone, loginType,mAreaCode.getAreaCode());
+        if (loginType== C.sendCodeType.WEIXINBIND){
+            passwordLogin.setVisibility(View.GONE);
         }
-        countDown();
-        mTextSend.setText(mPhone);
+
+        //因为注册的界面已经检查手机和发送验证码才会进来这界面，此条件控制重复发送验证码
+//        if (loginType != C.sendCodeType.REGISTER && loginType != C.sendCodeType.WEIXINREGISTER) {
+//            //请求验证码
+//            mPresenter.checkoutPhone(this, mPhone, loginType, mAreaCode.getAreaCode());
+//        }
+//        countDown();
+        // mTextSend.setText(mPhone);
+        edtPhone.setText(mPhone);
         accountLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,12 +147,25 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         });
 
 
-
-
     }
 
     @Override
     protected void initView(View view) {
+
+        edtPhone = view.findViewById(R.id.edtPhone);
+        rl = view.findViewById(R.id.rl);
+        rl.setOnClickListener(this);
+        privateProtocol = view.findViewById(R.id.privateProtocol);
+        privateProtocol.setOnClickListener(this);
+        ll_userAgreement = view.findViewById(R.id.ll_userAgreement);
+        ll_userAgreement.setOnClickListener(this);
+        getmsm = view.findViewById(R.id.getmsm);//获取验证码
+        getmsm.setOnClickListener(this);
+        next_login=view.findViewById(R.id.next_login);//登录
+        next_login.setOnClickListener(this);
+        edtsms=view.findViewById(R.id.edtsms);
+        passwordLogin=view.findViewById(R.id.passwordLogin);//密码登录
+        passwordLogin.setOnClickListener(this);
         mTitle.setText(R.string.input_verifycode);
         mVerificationCodeEditText.setOnVerificationCodeChangedListener(new VerificationAction.OnVerificationCodeChangedListener() {
             @Override
@@ -165,7 +205,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         mBtnSend.setTextColor(Color.parseColor("#666666"));
         mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_666666_30dp);
         LoadingView.showDialog(getActivity(), "请求中...");
-        mPresenter.checkoutPhone(this, mPhone, loginType,mAreaCode.getAreaCode());
+        mPresenter.checkoutPhone(this, mPhone, loginType, mAreaCode.getAreaCode());
 
 
     }
@@ -177,18 +217,18 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     public void nextStep() {
 
         //点击后置为不可点击状态
-       // mNextStep.setClickable(false);
+        // mNextStep.setClickable(false);
         LoadingView.showDialog(getActivity(), "请求中...");
-        ViewShowUtils.hideSoftInput(getActivity(), mVerificationCodeEditText);
+        ViewShowUtils.hideSoftInput(getActivity(), edtsms);
         switch (loginType) {
             case C.sendCodeType.REGISTER:
-                mPresenter.register(this, mPhone, mVerificationCodeEditText.getText().toString(), mInvitationCode,mAreaCode.getAreaCode());
+                mPresenter.register(this, mPhone, edtsms.getText().toString(), mInvitationCode, mAreaCode.getAreaCode());
                 break;
             case C.sendCodeType.LOGIN:
-                mPresenter.login(this, mPhone, mVerificationCodeEditText.getText().toString());
+                mPresenter.login(this, mPhone, edtsms.getText().toString());
                 break;
             case C.sendCodeType.WEIXINREGISTER:
-                mPresenter.weixinRegister(this, mPhone, mInvitationCode, mVerificationCodeEditText.getText().toString(), mWeixinInfo);
+                mPresenter.weixinRegister(this, mPhone, mInvitationCode, edtsms.getText().toString(), mWeixinInfo);
                 break;
 
             default:
@@ -217,14 +257,19 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     @Override
     public void showData(String msg) {
         countDown();
-        mTextSend.setText( mPhone);
+        //mTextSend.setText( mPhone);
+        edtPhone.setText(mPhone);
     }
 
     @Override
     public void showFailureMessage(String errorMsg) {
-        mBtnSend.setEnabled(true);
-        mBtnSend.setTextColor(Color.parseColor("#F0F0F0"));
-        mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_f0f0f0_30dp);
+//        mBtnSend.setEnabled(true);
+//        mBtnSend.setTextColor(Color.parseColor("#F0F0F0"));
+//        mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_f0f0f0_30dp);
+
+        getmsm.setEnabled(true);
+        getmsm.setTextColor(Color.parseColor("#F0F0F0"));
+        getmsm.setBackgroundResource(R.drawable.bg_white_stroke_f0f0f0_30dp);
     }
 
     @Override
@@ -238,19 +283,21 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         }
         mId = userInfo.getPhone();
         LoginUtil.LoginSuccess(userInfo, getActivity());
-        openDialog();
+        ViewShowUtils.showLongToast(getActivity(), "登录成功");
+        ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
+        //openDialog();
     }
 
     @Override
     public void showRegisterFinally() {
         LoadingView.dismissDialog();
-       // mNextStep.setClickable(true);
+        // mNextStep.setClickable(true);
     }
 
     @Override
     public void showRegisterFailure(String errCode) {
-       // mNextStep.setClickable(true);
-        if (C.requestCode.B10051.equals(errCode)||C.requestCode.B10005.equals(errCode)) {
+        // mNextStep.setClickable(true);
+        if (C.requestCode.B10051.equals(errCode) || C.requestCode.B10005.equals(errCode)) {
             //openRegisterDialog();
             //提示已经注册
             openLoginDialog();
@@ -261,7 +308,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         mRegisterDialog = new ClearSDdataDialog(getActivity(), R.style.dialog, "提示", "该手机号未注册", new ClearSDdataDialog.OnOkListener() {
             @Override
             public void onClick(View view, String text) {
-                LoginEditInviteFragment.start(getActivity(), mPhone, C.sendCodeType.REGISTER,null);
+                LoginEditInviteFragment.start(getActivity(), mPhone, C.sendCodeType.REGISTER, null);
             }
         });
         mRegisterDialog.setOkTextAndColor(R.color.color_F32F19, "去注册");
@@ -305,16 +352,13 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         mloginDialog.setOnCancelListner(new LoginNotRegeditDialog.OnCancelListner() {
             @Override
             public void onClick(View view, String text) {
-                 ExclusiveWeChatFragment.start(getActivity(), mId);
+                ExclusiveWeChatFragment.start(getActivity(), mId);
             }
         });
         mloginDialog.show();
 
         mloginDialog.setCancelable(false);
     }
-
-
-
 
 
     /**
@@ -328,24 +372,24 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
                     @Override
                     public void accept(Long aLong) throws Exception {
                         int seconds = (int) (60 - aLong);
-                        mBtnSend.setEnabled(false);
-                        mBtnSend.setText(getString(R.string.count_down, seconds + ""));
+                        getmsm.setEnabled(false);
+                        getmsm.setText(getString(R.string.count_down, seconds + ""));
 //                        mBtnSend.setTextColor(Color.parseColor("#666666"));
 //                        mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_666666_30dp);
-                        mBtnSend.setTextColor(getResources().getColor(R.color.color_999999));
-                        mBtnSend.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_333333_30dp));
+                        getmsm.setTextColor(getResources().getColor(R.color.color_999999));
+                        getmsm.setBackground(getResources().getDrawable(R.drawable.background_radius_f2f2f2_4dp));
                     }
                 })
                 .doOnComplete(new Action() {
                     @Override
                     public void run() throws Exception {
                         //倒计时完毕置为可点击状态
-                        mBtnSend.setEnabled(true);
-                        mBtnSend.setText("重新发送");
+                        getmsm.setEnabled(true);
+                        getmsm.setText("重新发送");
 //                        mBtnSend.setTextColor(Color.parseColor("#F0F0F0"));
 //                        mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_f0f0f0_30dp);
-                        mBtnSend.setTextColor(getResources().getColor(R.color.color_666666));
-                        mBtnSend.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_666666_30dp));
+                        getmsm.setTextColor(getResources().getColor(R.color.color_666666));
+                        getmsm.setBackground(getResources().getDrawable(R.drawable.bg_color_666666_5dp));
                     }
                 })
                 .subscribe();
@@ -354,8 +398,9 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     @Override
     public void loginError(String code) {
 //        mNextStep.setClickable(true);
-        mBtnSend.setEnabled(true);
-        if (C.requestCode.B10051.equals(code)||C.requestCode.B10005.equals(code)) {
+        //   mBtnSend.setEnabled(true);
+        getmsm.setEnabled(true);
+        if (C.requestCode.B10051.equals(code) || C.requestCode.B10005.equals(code)) {
             openLoginDialog();
         }
     }
@@ -363,7 +408,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     @Override
     public void loginSucceed(String userJson) {
 
-       // mNextStep.setClickable(true);
+        // mNextStep.setClickable(true);
         ViewShowUtils.showLongToast(getActivity(), "登录成功");
         ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
 //     ActivityLifeHelper.getInstance().finishActivity(LoginSinglePaneActivity.class);
@@ -377,9 +422,50 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
     @Override
     public void sendCodeFail() {
-        mBtnSend.setEnabled(true);
-        mBtnSend.setText("重新发送");
-        mBtnSend.setTextColor(getResources().getColor(R.color.color_666666));
-        mBtnSend.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_ffd800_14dp));
+//        mBtnSend.setEnabled(true);
+//        mBtnSend.setText("重新发送");
+//        mBtnSend.setTextColor(getResources().getColor(R.color.color_666666));
+//        mBtnSend.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_ffd800_14dp));
+
+        getmsm.setEnabled(true);
+        getmsm.setText("重新发送");
+        getmsm.setTextColor(getResources().getColor(R.color.color_666666));
+        getmsm.setBackground(getResources().getDrawable(R.drawable.bg_color_666666_5dp));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl:
+                getActivity().finish();
+                break;
+            case R.id.privateProtocol:
+                LoginUtil.getPrivateProtocol((RxAppCompatActivity) getActivity());
+                break;
+            case R.id.ll_userAgreement:
+                LoginUtil.getUserProtocol((RxAppCompatActivity) getActivity());
+                break;
+            case R.id.getmsm:
+                //点击后置为不可点击状态
+                getmsm.setEnabled(false);
+                getmsm.setTextColor(Color.parseColor("#999999"));
+                getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);
+                LoadingView.showDialog(getActivity(), "请求中...");
+                mPresenter.checkoutPhone(this, mPhone, loginType, mAreaCode.getAreaCode());
+                break;
+            case R.id.next_login:
+               // ToastUtils.showLong("111");
+                if (TextUtils.isEmpty(edtsms.getText().toString())){
+                    ToastUtils.showLong("验证码不能为空");
+                }else{
+                  //  mPresenter.login(this, mPhone, edtsms.getText().toString());
+                    nextStep();
+                }
+
+                break;
+            case R.id.passwordLogin:
+                LoginPasswordFragment.start(getActivity(),mPhone,mAreaCode);
+                break;
+        }
     }
 }
