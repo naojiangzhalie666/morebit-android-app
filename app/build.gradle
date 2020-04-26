@@ -112,7 +112,7 @@ android {
             buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "1"
             dimension "cooperator"
-            buildConfigField "int","IS_IP","0"        //0 环境切换  1不切换   上线前一定要记得换回1
+            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
         //测试Uat环境
         uat {
@@ -353,6 +353,8 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     //没有使用特殊Header和Footer，可以不加下面这行
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+    //仿转转banner特效
+    implementation 'com.tokiii:reveal-banner:1.0.2'
 
 
 

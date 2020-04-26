@@ -5,7 +5,12 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-
+    <com.wikikii.bannerlib.banner.LoopLayout
+        android:visibility="gone"
+        android:id="@+id/loop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+         />
 
         <RelativeLayout
             android:layout_width="match_parent"
