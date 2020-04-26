@@ -46,7 +46,6 @@
         android:layout_marginTop="50dp"
         android:src="@mipmap/login_logo_bg" />
 
-
     <LinearLayout
         android:id="@+id/rl_c"
         android:layout_width="match_parent"

@@ -30,6 +30,7 @@ import com.zjzy.morebit.utils.LogUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
+import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.utils.netWork.ErrorCodeUtlis;
 
 /**
@@ -155,6 +156,8 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
 
     @Override
     public void loginSucceed(String s) {
+        ViewShowUtils.showLongToast(getActivity(), "登录成功");
+        ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
 
     }
 

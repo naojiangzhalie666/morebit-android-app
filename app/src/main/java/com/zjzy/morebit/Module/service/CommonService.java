@@ -200,6 +200,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -2403,4 +2404,13 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/goods/listPddTab")
     public Observable<BaseResponse<List<PddJdTitleTypeItem>>> getPddTitle();
+
+    /**
+     * 获取京东商品栏目
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @GET("/api/goods/fans/getJdElite")
+    public Observable<BaseResponse<List<PddJdTitleTypeItem>>> getJdTitle();
 }

@@ -11,6 +11,8 @@ public class PddJdTitleTypeItem implements Serializable {
     private int type;
     private String tabNo;//栏目id
     private String tabName;//栏目名称
+    private String eliteId;//栏目id
+    private String eliteName;//栏目名称
 
     public String getTabNo() {
         return tabNo;

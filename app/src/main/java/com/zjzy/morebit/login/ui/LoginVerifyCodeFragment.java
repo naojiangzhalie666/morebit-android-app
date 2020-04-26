@@ -84,7 +84,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     private ClearEditText edtPhone;
     private RelativeLayout rl;//返回键
     private TextView ll_userAgreement, privateProtocol;
-    private TextView getmsm,next_login,passwordLogin;
+    private TextView getmsm,next_login,passwordLogin,tv_bind;
     private ClearEditText edtsms;//验证码
 
     public static void srart(Activity activity, int loginType, String phone, String invite, WeixinInfo weixinInfo, AreaCodeBean areaCodeBean) {
@@ -131,6 +131,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
         if (loginType== C.sendCodeType.WEIXINBIND){
             passwordLogin.setVisibility(View.GONE);
+            tv_bind.setVisibility(View.VISIBLE);
         }
 
         //因为注册的界面已经检查手机和发送验证码才会进来这界面，此条件控制重复发送验证码
@@ -169,6 +170,8 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         passwordLogin=view.findViewById(R.id.passwordLogin);//密码登录
         passwordLogin.setOnClickListener(this);
         mTitle.setText(R.string.input_verifycode);
+        tv_bind=view.findViewById(R.id.tv_bind);//已有账号立即绑定
+        tv_bind.setOnClickListener(this);
         mVerificationCodeEditText.setOnVerificationCodeChangedListener(new VerificationAction.OnVerificationCodeChangedListener() {
             @Override
             public void onVerCodeChanged(CharSequence charSequence, int i, int i1, int i2) {
