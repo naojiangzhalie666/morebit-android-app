@@ -527,7 +527,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         }
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
             if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + " 至 " + Info.getCouponEndTime());
+                tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + " - " + Info.getCouponEndTime());
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
@@ -537,7 +537,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             }
         } else {
             if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + " 至 " + Info.getCouponEndTime());
+                tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + " - " + Info.getCouponEndTime());
             }
         }
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {

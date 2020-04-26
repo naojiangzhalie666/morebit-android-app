@@ -552,7 +552,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
             if (!TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
                 tv_coupon_time.setText("有效日期：" +dateStart.substring(5,7)+"."+dateStart.substring(8,10)
-                        + "至" + dateEnd.substring(5,7)+"."+dateEnd.substring(9,11));
+                        + " - " + dateEnd.substring(5,7)+"."+dateEnd.substring(9,11));
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
@@ -563,7 +563,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         } else {
             if (!TextUtils.isEmpty(dateEnd) && !TextUtils.isEmpty(dateEnd)) {
                 tv_coupon_time.setText("有效日期：" + dateStart.substring(5,7)+"."+dateStart.substring(8,10)
-                        + "至" + dateEnd.substring(5,7)+"."+dateEnd.substring(8,10));
+                        + " - " + dateEnd.substring(5,7)+"."+dateEnd.substring(8,10));
             }
         }
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
