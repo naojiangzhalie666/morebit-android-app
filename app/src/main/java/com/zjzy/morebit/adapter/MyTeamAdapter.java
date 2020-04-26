@@ -124,6 +124,13 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
             viewHolder.tv_remark.setText(mContext.getString(R.string.fans_remark,info.getRemark()));
         }
 
+        if (TextUtils.isEmpty(info.getSpecialId())){
+            viewHolder.authorization.setVisibility(View.GONE);
+        }else{
+            viewHolder.authorization.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     @Override
@@ -133,7 +140,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView userIcon;
-        TextView phone, userLevel, createTime, people_count,tv_remark,input_remark;
+        TextView phone, userLevel, createTime, people_count,tv_remark,input_remark,authorization;
         View bottomLine;
         RelativeLayout item_ly;
 
@@ -149,6 +156,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
             tv_remark = (TextView) itemView.findViewById(R.id.tv_remark);
             input_remark = (TextView) itemView.findViewById(R.id.input_remark);
             people_count = (TextView) itemView.findViewById(R.id.people_count);
+            authorization=itemView.findViewById(R.id.authorization);
         }
     }
 

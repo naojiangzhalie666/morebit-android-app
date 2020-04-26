@@ -42,6 +42,15 @@ public class TeamInfo implements Serializable {
     private String wxQrCode=""; //微信二维码
     private int userType; //用户类型
     private int customerServiceType; //客服类型：0运营专员，1公司
+    private String specialId;
+
+    public String getSpecialId() {
+        return specialId;
+    }
+
+    public void setSpecialId(String specialId) {
+        this.specialId = specialId;
+    }
 
     public String getInviteCode() {
         return inviteCode;
