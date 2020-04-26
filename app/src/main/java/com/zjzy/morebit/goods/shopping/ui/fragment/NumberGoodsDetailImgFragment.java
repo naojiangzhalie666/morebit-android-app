@@ -1,5 +1,6 @@
 package com.zjzy.morebit.goods.shopping.ui.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.UI.WebViewForHtmlDataUtils;
 import com.zjzy.morebit.utils.UI.WebViewUtils;
 import com.zjzy.morebit.utils.action.MyAction;
@@ -54,8 +56,11 @@ public class NumberGoodsDetailImgFragment extends BaseMainFragmeng  {
 
     @BindView(R.id.webViewNet)
     MyWebView webViewNet;
-
+    @BindView(R.id.imgList)
+    FixRecyclerView imgList;
     View mView;
+
+    private GoodDeImgAdapter mGoodDeImgAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,9 +82,57 @@ public class NumberGoodsDetailImgFragment extends BaseMainFragmeng  {
         if (webViewNet == null ) {
             return;
         }
+        initListData();
+    }
+
+    private void initListData() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("http:默认图片.png");
+        arrayList.add("http:默认图片.png");
+        arrayList.add("http:默认图片.png");
+        arrayList.add("http:默认图片.png");
+        mGoodDeImgAdapter = new GoodDeImgAdapter(getActivity(), arrayList);
+        imgList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        imgList.setAdapter(mGoodDeImgAdapter);
     }
 
     public void loadHtmlData(String htmlData){
+        imgList.setVisibility(View.GONE);
+        webViewNet.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if (webViewNet.getSettings()!= null){
+                    webViewNet.getSettings().setBlockNetworkImage(true);
+                }
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
+                if (webViewNet.getSettings() != null){
+                    webViewNet.getSettings().setBlockNetworkImage(false);
+                }
+
+
+            }
+
+        });
+        webViewNet.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+                callback.invoke(origin, true, false);
+                super.onGeolocationPermissionsShowPrompt(origin, callback);
+            }
+
+            public void onProgressChanged(WebView view, int newProgress) {
+                EventBus.getDefault().post(new GoodsHeightUpdateEvent());
+                super.onProgressChanged(view, newProgress);
+            }
+        });
         WebViewForHtmlDataUtils.InitSetting(getActivity(), webViewNet, htmlData, new MyAction.OnResult<String>() {
             @Override
             public void invoke(String arg) {
@@ -93,6 +146,7 @@ public class NumberGoodsDetailImgFragment extends BaseMainFragmeng  {
                     webViewNet.setVisibility(View.GONE);
             }
         });
+
         EventBus.getDefault().post(new GoodsHeightUpdateEvent());
     }
 
