@@ -433,14 +433,16 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
 
         String type = getIntent().getStringExtra("type");
         String growth = getIntent().getStringExtra("growth");
-        if (type.equals("19")){
-            mViewPager.setCurrentItem(2, false);
-            curPosition = C.mainPage.NUMBER;
+        if (type!=null&&growth!=null){
+            if (type.equals("19")){
+                mViewPager.setCurrentItem(2, false);
+                curPosition = C.mainPage.NUMBER;
 //                collegeFragment.onResume();
-            numberFragment.onResume();
-            setSysNotificationView();
-            SPUtils.getInstance().put("growth",growth);
-        //   EventBus.getDefault().post(new MyGrowthEvent(growth));
+                numberFragment.onResume();
+                setSysNotificationView();
+                SPUtils.getInstance().put("growth",growth);
+                //   EventBus.getDefault().post(new MyGrowthEvent(growth));
+            }
         }
     }
 
