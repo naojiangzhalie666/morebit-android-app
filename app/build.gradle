@@ -119,17 +119,20 @@ android {
             buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "2"
             dimension "cooperator"
+            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
         pp {
-            buildConfigField "String", "BASE_HOST", '"http://pp.markermall.com"'
+            buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "3"
             dimension "cooperator"
+            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
         //生产环境
         product {
             buildConfigField "String", "BASE_HOST", '"https://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "4"
             dimension "cooperator"
+            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
     }
 
