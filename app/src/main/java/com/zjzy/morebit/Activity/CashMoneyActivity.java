@@ -1,5 +1,6 @@
 package com.zjzy.morebit.Activity;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -287,12 +288,14 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                     protected void onSuccess(CheckWithDrawBean data) {
                         if(null != data && data.getStatus() == 0){
                            commit.setEnabled(false);
+                            commit.setTextColor(Color.parseColor("#333333"));
                             withdrawTv.setVisibility(View.VISIBLE);
                             if(null != data.getMsg() && !TextUtils.isEmpty(data.getMsg())){
                                 withdrawTv.setText(data.getMsg());
                             }
                         }else{
                             commit.setEnabled(true);
+                            commit.setTextColor(Color.parseColor("#FFFFFF"));
                             withdrawTv.setVisibility(View.GONE);
                         }
                     }
