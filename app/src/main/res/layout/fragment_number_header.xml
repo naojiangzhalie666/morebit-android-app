@@ -11,14 +11,15 @@
         android:id="@+id/rl_number_header1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp">
+        android:paddingLeft="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/userIcon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="12dp"
             android:scaleType="fitXY"
             android:src="@color/white"
@@ -33,7 +34,7 @@
             android:id="@+id/user_hui"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/userIcon">
 
@@ -82,7 +83,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-
                 android:background="@drawable/btn_bg_gold"
                 android:gravity="center"
                 android:paddingLeft="10dp"
@@ -97,12 +97,12 @@
 
         <ImageView
             android:id="@+id/user_king"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:src="@mipmap/vip_king"
-            android:layout_below="@+id/userIcon"
+            android:layout_below="@+id/user_hui"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="5dp"
             android:visibility="gone"
             />
         <!--显示成长值-->
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/user_king"
             android:layout_alignLeft="@id/userIcon"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:id="@+id/more_corn_biaozhun"
