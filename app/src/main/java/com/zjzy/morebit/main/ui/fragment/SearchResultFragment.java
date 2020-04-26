@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SearchHotAdapter;
+import com.zjzy.morebit.fragment.SearchResultForJdFragment;
 import com.zjzy.morebit.fragment.SearchResultForPddFragment;
 import com.zjzy.morebit.fragment.SearchResultForTaobaoFragment;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
@@ -85,6 +86,7 @@ public class SearchResultFragment extends BaseMainFragmeng {
     private ArrayList<SearchBean> mSearchBean = new ArrayList<>();
     private SearchResultForTaobaoFragment mSearchTaobaoFragment;
     private SearchResultForPddFragment mSearchPddFragment;
+    private SearchResultForJdFragment mSearchJdFragment;
     private View mView;
     private int mHeadBgHeight;
     private String keyWord = "";
@@ -124,8 +126,8 @@ public class SearchResultFragment extends BaseMainFragmeng {
        mSearchPddFragment = SearchResultForPddFragment.newInstance(2);
        mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_pdd)));
 
-       mSearchPddFragment = SearchResultForPddFragment.newInstance(3);
-       mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_jd)));
+       mSearchJdFragment = SearchResultForJdFragment.newInstance(3);
+       mSearchBean.add(new SearchBean(mSearchJdFragment, getResources().getString(R.string.current_jd)));
        mChannelAdapter =new ChannelAdapter(getChildFragmentManager());
 
        viewPager.setAdapter(mChannelAdapter);
