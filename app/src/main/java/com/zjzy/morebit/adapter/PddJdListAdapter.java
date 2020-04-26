@@ -83,7 +83,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         viewHolder.textvihew_Preco.setText("¥" + MathUtils.getPrice(info.getPriceForPdd()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
-        LoadImgUtils.setImg(mContext, viewHolder.iv_icon, info.getImageUrl());
+        LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getImageUrl());
 //        if(!TextUtils.isEmpty(info.getItemLabeling())  ){
 //            viewHolder. markTv.setVisibility(View.VISIBLE);
 //            viewHolder.markTv.setText(info.getItemLabeling());

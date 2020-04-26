@@ -2,6 +2,7 @@ package com.zjzy.morebit.main.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 import android.widget.LinearLayout;
 
