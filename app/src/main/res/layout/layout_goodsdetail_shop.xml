@@ -8,19 +8,19 @@
 
         <ImageView
             android:id="@+id/shop_img"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="15dp"
-            android:src="@color/huise_jiben"/>
+            android:src="@mipmap/taobao_details_logo"/>
 
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/shop_img"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/shop_img"
             >
 
@@ -34,7 +34,7 @@
                 android:maxLines="1"
                 android:text=""
                 android:textColor="@color/color_333333"
-                android:textSize="15sp"/>
+                android:textSize="16sp"/>
 
 
             <LinearLayout
@@ -48,6 +48,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/shop_taobao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,6 +65,7 @@
                     android:textSize="11sp"/>
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -78,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/shop_img"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/shop_img"
             >
 

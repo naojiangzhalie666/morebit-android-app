@@ -8,7 +8,7 @@
     <View
         android:id="@+id/v_line"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="12dp"
         android:background="@color/color_F8F8F8"/>
     <RelativeLayout
         android:layout_below="@+id/v_line"
@@ -30,7 +30,7 @@
             android:padding="11dp"
             android:background="@color/white"
             android:textColor="@color/color_333333"
-            android:textSize="15sp"
+            android:textSize="16sp"
             />
     </RelativeLayout>
 

@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Activity.ModifyPasswordActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -235,6 +236,7 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
             //密码不正确
             errorTv.setVisibility(View.VISIBLE);
             errorTv.setText("密码不正确");
+            ToastUtils.showLong("密码不正确");
         }
     }
 

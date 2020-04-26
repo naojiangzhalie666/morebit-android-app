@@ -492,7 +492,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             if (Info.getShopType() == 2) {
                 iv_taobao.setImageResource(R.drawable.tianmao);
             } else {
-                iv_taobao.setImageResource(R.drawable.taobao);
+                iv_taobao.setImageResource(R.mipmap.taobao_details_icon);
             }
             if (!StringsUtils.isEmpty(Info.getTitle())) {
                 StringsUtils.retractTitle(iv_taobao, title, Info.getTitle());
@@ -523,7 +523,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
         if (!StringsUtils.isEmpty(Info.getSellerPicture())) {
             Info.setSellerPicture(Info.getSellerPicture());
-            LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
+          //  LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
         }
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
             if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {

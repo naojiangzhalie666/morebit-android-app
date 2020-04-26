@@ -320,7 +320,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="5dp"
+                            android:layout_height="12dp"
                             android:background="@color/color_F8F8F8"/>
 
                         <!--店铺信息-->
@@ -330,7 +330,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="12dp"
                             android:background="@color/color_F8F8F8"/>
 
                         <LinearLayout
@@ -344,7 +344,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="5dp"
+                            android:layout_height="12dp"
                             android:background="@color/color_F8F8F8"/>
 
                         <RelativeLayout
@@ -385,7 +385,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="5dp"
+                            android:layout_height="12dp"
                             android:background="@color/color_F8F8F8"/>
 
                     </LinearLayout>
