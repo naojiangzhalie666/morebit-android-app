@@ -551,15 +551,19 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
 
             if (!TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
-                tv_coupon_time.setText("有效日期" +dateStart.substring(5,7)+"."+dateStart.substring(8,10)
-                        + "-" + dateEnd.substring(5,7)+"."+dateEnd.substring(9,11));
+                tv_coupon_time.setText("有效日期：" +dateStart.substring(5,7)+"."+dateStart.substring(8,10)
+                        + "至" + dateEnd.substring(5,7)+"."+dateEnd.substring(9,11));
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
+
+            if (TextUtils.isEmpty(Info.getCouponStartTime())&&!TextUtils.isEmpty(Info.getCouponEndTime())){
+                tv_coupon_time.setText("有效日期至："+ dateEnd.substring(5,7)+"."+dateEnd.substring(8,10));
+            }
         } else {
             if (!TextUtils.isEmpty(dateEnd) && !TextUtils.isEmpty(dateEnd)) {
-                tv_coupon_time.setText("有效日期 " + dateStart.substring(5,7)+"."+dateStart.substring(8,10)
-                        + "-" + dateEnd.substring(5,7)+"."+dateEnd.substring(8,10));
+                tv_coupon_time.setText("有效日期：" + dateStart.substring(5,7)+"."+dateStart.substring(8,10)
+                        + "至" + dateEnd.substring(5,7)+"."+dateEnd.substring(8,10));
             }
         }
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
@@ -567,6 +571,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             arv_prise.setVisibility(View.VISIBLE);
             coupon_prise.setText( MathUtils.getCouponPrice(Info.getCouponPrice())+"");
             setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
+        }else{
+            arv_prise.setVisibility(View.GONE);
         }
 
         if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
