@@ -124,6 +124,8 @@ public class SearchResultFragment extends BaseMainFragmeng {
        mSearchPddFragment = SearchResultForPddFragment.newInstance(2);
        mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_pdd)));
 
+       mSearchPddFragment = SearchResultForPddFragment.newInstance(3);
+       mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_jd)));
        mChannelAdapter =new ChannelAdapter(getChildFragmentManager());
 
        viewPager.setAdapter(mChannelAdapter);
@@ -138,6 +140,8 @@ public class SearchResultFragment extends BaseMainFragmeng {
                    mType = 1;
                }else if (getResources().getString(R.string.current_pdd).equals(tab.getText())){
                    mType = 2;
+               }else if (getResources().getString(R.string.current_jd).equals(tab.getText())){
+                   mType = 3;
                }
                String currentSearch = etSearch.getText().toString();
                keyWord = currentSearch;
