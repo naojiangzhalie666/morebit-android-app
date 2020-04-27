@@ -116,7 +116,7 @@ public class JdChildFragment extends BaseMainFragmeng {
        // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
       //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
 
-        RxHttp.getInstance().getCommonService().getPddTitle()//获取京东栏目
+        RxHttp.getInstance().getCommonService().getJdTitle()//获取京东栏目
                 .compose(RxUtils.<BaseResponse<List<PddJdTitleTypeItem>>>switchSchedulers())
                 .compose(this.<BaseResponse<List<PddJdTitleTypeItem>>>bindToLifecycle())
                 .subscribe(new DataObserver<List<PddJdTitleTypeItem>>() {
@@ -212,7 +212,7 @@ public class JdChildFragment extends BaseMainFragmeng {
         @Override
         public CharSequence getPageTitle(int position) {
             PddJdTitleTypeItem homeColumn = mHomeColumns.get(position);
-            return homeColumn.getTabName();
+            return homeColumn.getEliteName();
 
         }
 

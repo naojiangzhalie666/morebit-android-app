@@ -177,16 +177,16 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             rl_list.getSwipeList().setRefreshing(true);
         if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
-        programCatItemBean.setCatId(Integer.valueOf(mPddJdTitleTypeItem.getTabNo()));
-        mPresenter.getJdPddGoodsList(this,  programCatItemBean, C.requestType.initData);
+        programCatItemBean.setEliteId(mPddJdTitleTypeItem.getEliteId());
+        mPresenter.getJdGoodsList(this,  programCatItemBean, C.requestType.initData);
     }
 
     @Override
     public void onLoadMore() {
         if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
-        programCatItemBean.setCatId(Integer.valueOf(mPddJdTitleTypeItem.getTabNo()));
-        mPresenter.getJdPddGoodsList(this, programCatItemBean,C.requestType.loadMore);
+        programCatItemBean.setEliteId(mPddJdTitleTypeItem.getEliteId());
+        mPresenter.getJdGoodsList(this, programCatItemBean,C.requestType.loadMore);
     }
 
 
@@ -204,6 +204,16 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
 
     @Override
     public void setPdd(List<ShopGoodInfo> data, int loadType) {
+
+    }
+
+    @Override
+    public void setPddError(int loadType) {
+
+    }
+
+    @Override
+    public void setJd(List<ShopGoodInfo> data, int loadType) {
         rl_list.getListView().refreshComplete(REQUEST_COUNT);
         removeNetworkError(rl_list.getListviewSuper());
         if (loadType == C.requestType.initData) {
@@ -217,7 +227,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     }
 
     @Override
-    public void setPddError(int loadType) {
+    public void setJdError(int loadType) {
         if (loadType == C.requestType.loadMore) {
             rl_list.getListView().setNoMore(true);
         } else {

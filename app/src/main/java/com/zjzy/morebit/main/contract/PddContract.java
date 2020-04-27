@@ -21,10 +21,17 @@ public class PddContract {
         void setPdd(List<ShopGoodInfo> data, int loadType);
 
         void setPddError(int loadType);
+
+        void setJd(List<ShopGoodInfo> data, int loadType);
+
+        void setJdError(int loadType);
     }
 
     public interface Present extends BasePresenter {
 
         void getJdPddGoodsList(RxFragment rxFragmen, ProgramCatItemBean programCatItemBean, int loadType);
+
+        void getJdGoodsList(RxFragment rxFragmen, ProgramCatItemBean programCatItemBean, int loadType);
+
     }
 }

@@ -167,6 +167,16 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
         }
     }
 
+    @Override
+    public void setJd(List<ShopGoodInfo> data, int loadType) {
+
+    }
+
+    @Override
+    public void setJdError(int loadType) {
+
+    }
+
     @Subscribe  //订阅事件
     public void onEventMainThread(MessageEvent event) {
         switch (event.getAction()) {

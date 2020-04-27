@@ -382,18 +382,22 @@ public class BannerInitiateUtils {
             GoodNewsFramgent.startGoodsByBrand(activity, info);  //品牌列表
 
         } else if (type == C.BannerIntentionType.JD) {//京东
-
-        } else if (type == C.BannerIntentionType.PDD) {//拼多多
             Bundle bundle = new Bundle();
             bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-            OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
+            OpenFragmentUtils.goToSimpleFragment(activity, JdChildFragment.class.getName(), bundle);
+
+        } else if (type == C.BannerIntentionType.PDD) {//拼多多
+//            Bundle bundle = new Bundle();
+//            bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+//            OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
+
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+            OpenFragmentUtils.goToSimpleFragment(activity, JdChildFragment.class.getName(), bundle);
         } else if (type == C.BannerIntentionType.NEW_PERSONAL) {//新人免单
             if (LoginUtil.checkIsLogin(activity)) {
-               // activity.startActivity(new Intent(activity, PurchaseActivity.class));
+            activity.startActivity(new Intent(activity, PurchaseActivity.class));
 
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-                OpenFragmentUtils.goToSimpleFragment(activity, JdChildFragment.class.getName(), bundle);
             }
         } else if (type == C.BannerIntentionType.HUNGRY) {//饿了么
 

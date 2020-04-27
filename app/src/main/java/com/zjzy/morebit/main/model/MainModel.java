@@ -253,7 +253,16 @@ public class MainModel extends MvpModel {
                 .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
                 .compose(rxFragmen.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
     }
-
+    /**
+     * 京东商品列表_新接口
+     *
+     * @return
+     */
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getJdGoodsList(RxFragment rxFragmen, ProgramCatItemBean bean) {
+        return RxHttp.getInstance().getGoodsService().getJdGoodsList(bean)
+                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
+                .compose(rxFragmen.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
+    }
 
 
 

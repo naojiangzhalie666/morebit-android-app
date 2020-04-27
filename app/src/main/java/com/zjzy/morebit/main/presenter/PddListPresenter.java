@@ -84,6 +84,42 @@ public class PddListPresenter extends MvpPresenter<MainModel, PddContract.View> 
         sendObservable(loadType, observable);
     }
 
+    @Override
+    public void getJdGoodsList(RxFragment rxFragmen, ProgramCatItemBean programCatItemBean, int loadType) {
+        if (loadType == C.requestType.initData) {
+            page = 1;
+        }
+
+        Observable<BaseResponse<List<ShopGoodInfo>>> observable = null;
+        programCatItemBean.setPage(page);
+        observable = mModel.getJdGoodsList(rxFragmen, programCatItemBean);
+        getObservable(loadType, observable);
+    }
+
+    private void getObservable(final int loadType, Observable<BaseResponse<List<ShopGoodInfo>>> observable) {
+        if (observable == null) {
+            getIView().showFinally();
+            return;
+        }
+        observable.doFinally(new Action() {
+            @Override
+            public void run() throws Exception {
+                getIView().showFinally();
+            }
+        }).subscribe(new DataObserver<List<ShopGoodInfo>>() {
+
+            @Override
+            protected void onDataListEmpty() {
+                getIView().setJdError(loadType);
+            }
+
+            @Override
+            protected void onSuccess(List<ShopGoodInfo> data) {
+                getIView().setJd(data, loadType);
+                page++;
+            }
+        });
+    }
 
 
 }

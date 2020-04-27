@@ -26,7 +26,15 @@ public class ProgramCatItemBean implements Serializable {
 
    private Integer page = 1 ;
    private Integer rows  = 10;
+   private String eliteId="";
 
+    public String getEliteId() {
+        return eliteId;
+    }
+
+    public void setEliteId(String eliteId) {
+        this.eliteId = eliteId;
+    }
 
     public Integer getType() {
         return type;

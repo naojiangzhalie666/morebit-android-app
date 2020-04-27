@@ -14,6 +14,22 @@ public class PddJdTitleTypeItem implements Serializable {
     private String eliteId;//栏目id
     private String eliteName;//栏目名称
 
+    public String getEliteId() {
+        return eliteId;
+    }
+
+    public void setEliteId(String eliteId) {
+        this.eliteId = eliteId;
+    }
+
+    public String getEliteName() {
+        return eliteName;
+    }
+
+    public void setEliteName(String eliteName) {
+        this.eliteName = eliteName;
+    }
+
     public String getTabNo() {
         return tabNo;
     }

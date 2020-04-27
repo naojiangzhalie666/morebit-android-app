@@ -2411,6 +2411,14 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @GET("/api/goods/fans/getJdElite")
+    @POST("/api/goods/fans/getJdElite")
     public Observable<BaseResponse<List<PddJdTitleTypeItem>>> getJdTitle();
+
+    /**
+     * 京东商品列表_新接口
+     */
+    @POST("/api/goods/program/getItemByCatId")
+    Observable<BaseResponse<List<ShopGoodInfo>>> getJdGoodsList(
+            @Body ProgramCatItemBean body
+    );
 }
