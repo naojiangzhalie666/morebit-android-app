@@ -84,7 +84,6 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
     private AreaCodeBean mAreaCode;
     private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86"; //默认是中国的86
-    private TextView ll_userAgreement, privateProtocol;
     private RelativeLayout rl;
 
     @Override
@@ -136,20 +135,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         String phone = getIntent().getStringExtra("phone");
         mAreaCode = (AreaCodeBean) getIntent().getSerializableExtra(C.Extras.COUNTRY);
         rl= (RelativeLayout) findViewById(R.id.rl);
-        privateProtocol = (TextView) findViewById(R.id.privateProtocol);
-        privateProtocol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginUtil.getPrivateProtocol(ModifyPasswordActivity.this);
-            }
-        });
-        ll_userAgreement = (TextView) findViewById(R.id.ll_userAgreement);
-        ll_userAgreement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginUtil.getUserProtocol(ModifyPasswordActivity.this);
-            }
-        });
+
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

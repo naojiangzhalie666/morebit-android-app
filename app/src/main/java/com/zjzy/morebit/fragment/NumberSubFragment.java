@@ -309,7 +309,6 @@ public class NumberSubFragment extends BaseFragment {
     }
     protected void initData() {
         updataUser();
-        getData();
     }
 
     @Override

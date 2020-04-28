@@ -13,44 +13,47 @@
         android:layout_height="0px"
         android:focusable="true"
         android:focusableInTouchMode="true" />
-
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@mipmap/login_head_bg" />
-
     <RelativeLayout
-        android:id="@+id/rl"
+        android:id="@+id/head"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/closs"
-            android:layout_width="wrap_content"
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@mipmap/retrun_white" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/login_head_bg"
+            />
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
 
+            <TextView
+                android:id="@+id/closs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/retrun_white" />
+
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="104dp"
+            android:layout_height="104dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/login_logo_bg"
+            android:layout_marginTop="100dp"
+
+            />
     </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="104dp"
-        android:layout_height="104dp"
-        android:layout_below="@+id/img"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:src="@mipmap/login_logo_bg" />
-
     <TextView
-        android:visibility="gone"
+
         android:id="@+id/tv_bind"
-        android:layout_below="@+id/img"
+        android:layout_below="@+id/head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/number_again"
@@ -68,8 +71,8 @@
         android:id="@+id/rl_c"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
-        android:layout_marginTop="55dp"
+        android:layout_below="@id/head"
+        android:layout_marginTop="95dp"
         android:orientation="vertical">
 
         <ImageView

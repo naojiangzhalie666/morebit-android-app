@@ -127,8 +127,8 @@ public class SearchResultFragment extends BaseMainFragmeng {
        mSearchPddFragment = SearchResultForPddFragment.newInstance(2);
        mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_pdd)));
 
-       mSearchJdFragment = SearchResultForJdFragment.newInstance(3);
-       mSearchBean.add(new SearchBean(mSearchJdFragment, getResources().getString(R.string.current_jd)));
+      // mSearchJdFragment = SearchResultForJdFragment.newInstance(3);
+     //  mSearchBean.add(new SearchBean(mSearchJdFragment, getResources().getString(R.string.current_jd)));
        mChannelAdapter =new ChannelAdapter(getChildFragmentManager());
 
        viewPager.setAdapter(mChannelAdapter);
@@ -143,9 +143,10 @@ public class SearchResultFragment extends BaseMainFragmeng {
                    mType = 1;
                }else if (getResources().getString(R.string.current_pdd).equals(tab.getText())){
                    mType = 2;
-               }else if (getResources().getString(R.string.current_jd).equals(tab.getText())){
-                   mType = 3;
                }
+//               else if (getResources().getString(R.string.current_jd).equals(tab.getText())){
+//                   mType = 3;
+//               }
                String currentSearch = etSearch.getText().toString();
                keyWord = currentSearch;
                sendMsgForChildFragment(mType);
@@ -414,15 +415,16 @@ public class SearchResultFragment extends BaseMainFragmeng {
             SearchGoodsForTaobaoEvent event = new SearchGoodsForTaobaoEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
-        }else if (type==2){
+        }else /*if (type==2)*/{
             SearchGoodsForPddEvent event = new SearchGoodsForPddEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
-        }else{
-            SearchGoodsForJdEvent event = new SearchGoodsForJdEvent();
-            event.setKeyword(keyWord);
-            EventBus.getDefault().post(event);
         }
+//        else{
+//            SearchGoodsForJdEvent event = new SearchGoodsForJdEvent();
+//            event.setKeyword(keyWord);
+//            EventBus.getDefault().post(event);
+//        }
     }
 
     private void addSearchText(String text) {
