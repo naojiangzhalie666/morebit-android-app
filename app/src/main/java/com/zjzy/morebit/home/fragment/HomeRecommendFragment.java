@@ -37,12 +37,6 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.bumptech.glide.Glide;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.trello.rxlifecycle2.components.support.RxFragment;
-import com.wikikii.bannerlib.banner.IndicatorLocation;
-
-import com.wikikii.bannerlib.banner.LoopStyle;
-import com.wikikii.bannerlib.banner.OnDefaultImageViewLoader;
-import com.wikikii.bannerlib.banner.bean.BannerInfo;
-import com.wikikii.bannerlib.banner.listener.OnBannerItemClickListener;
 import com.youth.banner.Transformer;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
@@ -1539,8 +1533,11 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            int moveleft = (int) animation.getAnimatedValue();
-                            floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft + floatIv.getWidth(), moveMarginHeight + 200));
+                            if (animation!=null){
+                                int moveleft = (int) animation.getAnimatedValue();
+                                floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft + floatIv.getWidth(), moveMarginHeight + 200));
+                            }
+
                         }
                     });
                     valueAnimator.start();
@@ -1570,8 +1567,10 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            int moveleft = (int) animation.getAnimatedValue();
-                            floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft - floatIv.getWidth(), moveMarginHeight + 200));
+                            if (animation!=null){
+                                int moveleft = (int) animation.getAnimatedValue();
+                                floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft - floatIv.getWidth(), moveMarginHeight + 200));
+                            }
                         }
                     });
                     valueAnimator.start();

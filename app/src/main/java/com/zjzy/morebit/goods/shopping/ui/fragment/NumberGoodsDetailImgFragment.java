@@ -103,7 +103,7 @@ public class NumberGoodsDetailImgFragment extends BaseMainFragmeng  {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                if (webViewNet.getSettings()!= null){
+                if (webViewNet!=null&&webViewNet.getSettings()!= null){
                     webViewNet.getSettings().setBlockNetworkImage(true);
                 }
             }
@@ -112,7 +112,7 @@ public class NumberGoodsDetailImgFragment extends BaseMainFragmeng  {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
-                if (webViewNet.getSettings() != null){
+                if (webViewNet!=null&&webViewNet.getSettings() != null){
                     webViewNet.getSettings().setBlockNetworkImage(false);
                 }
 
