@@ -174,6 +174,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
             }
         });
 
+        tabList.clear();//防止每次创建都会不停增加
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_tab);
 //        "综合", "券后价", "销量", "奖励"
         tabList.add(new BaseTitleTabBean("综合", false, C.Setting.itemIndex));

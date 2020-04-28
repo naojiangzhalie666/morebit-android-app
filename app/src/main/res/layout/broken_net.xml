@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        style="@style/TopSize">
+
+        <TextView
+            android:id="@+id/txt_head_title"
+            style="@style/TopSizeTitle"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingTop="10dp"
+            android:paddingRight="35dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                style="@style/TopSizeBack"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/net_error"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/rel_top"
+        android:background="@color/color_F8F8F8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="网络请求失败，请检查您的网络设置"
+            android:textColor="#ff999999"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/more_right" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/load_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/load_again" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/load_error"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:text="网络状态待提升，点击重新加载"
+        android:textColor="#ff999999"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重新加载"
+        android:textColor="#ff333333"
+        android:background="@drawable/bg_white_stroke_979797_8dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:paddingRight="@dimen/dp_36"
+        android:paddingLeft="@dimen/dp_36"
+        android:textSize="16sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_centerHorizontal="true"
+
+        />
+
+
+</RelativeLayout>

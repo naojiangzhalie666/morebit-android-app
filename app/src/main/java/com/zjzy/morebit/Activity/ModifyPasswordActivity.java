@@ -3,6 +3,7 @@ package com.zjzy.morebit.Activity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -15,10 +16,12 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -81,6 +84,8 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
     private AreaCodeBean mAreaCode;
     private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86"; //默认是中国的86
+    private TextView ll_userAgreement, privateProtocol;
+    private RelativeLayout rl;
 
     @Override
     public boolean isShowAllSeek() {
@@ -100,7 +105,9 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ImmersionBar.with(this)
-                .statusBarDarkFont(true)
+                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .fitsSystemWindows(false)
+                .statusBarColor(R.color.color_FFD4CF)
                 .init();
         setContentView(R.layout.activity_modify_password);
 
@@ -128,6 +135,27 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         areaCodeBtn = (TextView) findViewById(R.id.areaCodeBtn);
         String phone = getIntent().getStringExtra("phone");
         mAreaCode = (AreaCodeBean) getIntent().getSerializableExtra(C.Extras.COUNTRY);
+        rl= (RelativeLayout) findViewById(R.id.rl);
+        privateProtocol = (TextView) findViewById(R.id.privateProtocol);
+        privateProtocol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginUtil.getPrivateProtocol(ModifyPasswordActivity.this);
+            }
+        });
+        ll_userAgreement = (TextView) findViewById(R.id.ll_userAgreement);
+        ll_userAgreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginUtil.getUserProtocol(ModifyPasswordActivity.this);
+            }
+        });
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         if (!TextUtils.isEmpty(phone)) {
             mEdtPhone.setText(phone);
         }
@@ -135,7 +163,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         mTvPhone = (TextView) findViewById(R.id.tv_phone);
         errorPhoneTv.setText("");
         if (type == MODIFY_PASSWORD) {
-            mTitle.setText(R.string.modify_password);
+            mTitle.setText(R.string.find_password);
             areaCodeTv.setVisibility(View.GONE);
             areaCodeBtn.setVisibility(View.GONE);
             mEdtPhone.setVisibility(View.GONE);
@@ -152,7 +180,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             mTitle.setText(R.string.find_password);
             mEdtPhone.setVisibility(View.VISIBLE);
             areaCodeTv.setVisibility(View.VISIBLE);
-            areaCodeBtn.setVisibility(View.VISIBLE);
+            areaCodeBtn.setVisibility(View.GONE);
             mTvPhone.setVisibility(View.GONE);
             errorPhoneTv.setVisibility(View.VISIBLE);
             if(null != mAreaCode){
@@ -164,7 +192,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         }
 
         mSubmit = (TextView) findViewById(R.id.tv_submit);
-        mSubmit.setEnabled(false);
+      mSubmit.setEnabled(false);
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -357,7 +385,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
                     protected void onSuccess(String data) {
                         ToastUtils.showShort("验证码获取成功");
                         mTvVerfyCode.setTextColor(getResources().getColor(R.color.color_999999));
-                        mTvVerfyCode.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_333333_30dp));
+                        mTvVerfyCode.setBackground(getResources().getDrawable(R.drawable.background_radius_f2f2f2_4dp));
                         ModifyPasswordActivity.Counter counter = new ModifyPasswordActivity.Counter(60 * 1000, 1000); // 第一个参数是倒计时时间，后者为计时间隔，单位毫秒，这里是倒计时
                         counter.start();
                     }
@@ -402,7 +430,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
                 mTvVerfyCode.setEnabled(true);
                 mTvVerfyCode.setText("重新获取");
                 mTvVerfyCode.setTextColor(getResources().getColor(R.color.color_666666));
-                mTvVerfyCode.setBackground(getResources().getDrawable(R.drawable.bg_white_stroke_ffd800_14dp));
+                mTvVerfyCode.setBackground(getResources().getDrawable(R.drawable.bg_color_666666_5dp));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -518,7 +546,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             checkFlag = correctPwd;
         }
         if (null != mEdtPassword && mEdtPassword2 != null && !mEdtPassword.getText().toString().equals(mEdtPassword2.getText().toString().trim())) {
-            errorText = "两次输入的密码不一致";
+            errorText = "两次密码不一致";
             checkFlag = false;
         }
         if (showError) errorReTv.setText(errorText);
@@ -594,8 +622,12 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             if (checkInputEmpty()) {
                 resetErrorTv();
                 mSubmit.setEnabled(true);
+                mSubmit.setBackgroundResource(R.drawable.image_dengluanniu_huangse);
+                mSubmit.setTextColor(Color.WHITE);
             } else {
-                mSubmit.setEnabled(false);
+               mSubmit.setEnabled(false);
+                mSubmit.setBackgroundResource(R.drawable.image_dengluanniu_huise);
+                mSubmit.setTextColor(Color.parseColor("#999999"));
             }
         }
     }

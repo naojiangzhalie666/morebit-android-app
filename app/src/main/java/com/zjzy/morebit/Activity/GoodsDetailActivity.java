@@ -29,6 +29,7 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
+import com.zjzy.morebit.Module.common.Dialog.ProgressDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
@@ -269,6 +270,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mTitles = new String[]{getString(R.string.goods_detail_baby), getString(R.string.goods_detail_recommend), getString(R.string.goods_detail_det)};
         int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.margin_small);
         mConsumerPadding = getResources().getDimensionPixelSize(R.dimen.goods_consumer_itme_padding);
@@ -287,7 +289,8 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         initData(false);
         mPresenter.getSysNotification(this);
         mHandler = new Handler();
-
+        ProgressDialog dialog=new ProgressDialog(this);
+        dialog.show();
     }
 
     private void refreshVipUpdate() {

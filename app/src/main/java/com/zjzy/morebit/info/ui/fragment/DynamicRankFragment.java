@@ -1,5 +1,6 @@
 package com.zjzy.morebit.info.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -93,14 +94,14 @@ public class DynamicRankFragment extends BaseFragment {
                     if (isSelect) {
                         View view = viewpagertab.getTabAt(position);
                         ImageView imageView = view.findViewById(R.id.iv_sort);
-                        imageView.setImageResource(R.drawable.icon_sort_up);
+                        imageView.setImageResource(R.drawable.icon_jiage_up);
                         isSelect = false;
                         mFragments.get(position).setOrder(ASC);
                         mFragments.get(position).getRankFirstData(ASC);
                     } else {
                         View view = viewpagertab.getTabAt(position);
                         ImageView imageView = view.findViewById(R.id.iv_sort);
-                        imageView.setImageResource(R.drawable.icon_sort_down);
+                        imageView.setImageResource(R.drawable.icon_jiage_down);
                         isSelect = true;
                         mFragments.get(position).setOrder(DESC);
                         mFragments.get(position).getRankFirstData(DESC);
@@ -111,11 +112,11 @@ public class DynamicRankFragment extends BaseFragment {
                     for (int i = 0; i < mTitles.length; i++) {
                         View view = viewpagertab.getTabAt(i);
                         ImageView imageView = view.findViewById(R.id.iv_sort);
-                        imageView.setImageResource(R.drawable.icon_sort_default);
+                        imageView.setImageResource(R.drawable.icon_jiage_no);
                     }
                     View view = viewpagertab.getTabAt(position);
                     ImageView imageView = view.findViewById(R.id.iv_sort);
-                    imageView.setImageResource(R.drawable.icon_sort_down);
+                    imageView.setImageResource(R.drawable.icon_jiage_down);
                     mFragments.get(position).setOrder(DESC);
                     mFragments.get(position).getRankFirstData(DESC);
                 }
@@ -124,7 +125,7 @@ public class DynamicRankFragment extends BaseFragment {
         });
         View view = viewpagertab.getTabAt(0);
         ImageView imageView = view.findViewById(R.id.iv_sort);
-        imageView.setImageResource(R.drawable.icon_sort_down);
+        imageView.setImageResource(R.drawable.icon_jiage_down);
 
     }
 

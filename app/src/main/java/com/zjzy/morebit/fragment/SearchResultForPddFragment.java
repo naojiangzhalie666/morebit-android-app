@@ -165,7 +165,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                     getMoreData();
             }
         });
-
+       tabList.clear();
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_pdd_tab);
 //        "综合", "券后价", "销量", "奖励"
         tabList.add(new BaseTitleTabBean("综合", false, ""));

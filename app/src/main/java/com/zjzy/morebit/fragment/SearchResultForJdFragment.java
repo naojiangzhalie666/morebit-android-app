@@ -92,7 +92,7 @@ public class SearchResultForJdFragment extends BaseMainFragmeng {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        mView = inflater.inflate(R.layout.fragment_searchcommodity_pdd, container, false);
+        mView = inflater.inflate(R.layout.fragment_searchcommodity_jd, container, false);
         return mView;
     }
 
@@ -100,7 +100,7 @@ public class SearchResultForJdFragment extends BaseMainFragmeng {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         MyLog.d("setUserVisibleHint", "CircleFragment  " + isVisibleToUser);
-        if (isVisibleToUser && isUserHint && mView != null&&mPushType == 2) {
+        if (isVisibleToUser && isUserHint && mView != null&&mPushType == 3) {
             initView();
             isUserHint = false;
         }

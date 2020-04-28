@@ -2417,7 +2417,7 @@ public interface CommonService {
     /**
      * 京东商品列表_新接口
      */
-    @POST("/api/goods/program/getItemByCatId")
+    @POST("/api/goods/fans/getJdFansGoods")
     Observable<BaseResponse<List<ShopGoodInfo>>> getJdGoodsList(
             @Body ProgramCatItemBean body
     );

@@ -33,6 +33,7 @@ import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
 import com.zjzy.morebit.network.CallBackObserver;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.RxWXHttp;
+import com.zjzy.morebit.pojo.event.SearchGoodsForJdEvent;
 import com.zjzy.morebit.pojo.event.SearchGoodsForPddEvent;
 import com.zjzy.morebit.pojo.event.SearchGoodsForTaobaoEvent;
 import com.zjzy.morebit.pojo.goods.TaobaoSearch;
@@ -413,8 +414,12 @@ public class SearchResultFragment extends BaseMainFragmeng {
             SearchGoodsForTaobaoEvent event = new SearchGoodsForTaobaoEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
-        }else{
+        }else if (type==2){
             SearchGoodsForPddEvent event = new SearchGoodsForPddEvent();
+            event.setKeyword(keyWord);
+            EventBus.getDefault().post(event);
+        }else{
+            SearchGoodsForJdEvent event = new SearchGoodsForJdEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
         }

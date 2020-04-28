@@ -92,6 +92,7 @@ public class PddListPresenter extends MvpPresenter<MainModel, PddContract.View> 
 
         Observable<BaseResponse<List<ShopGoodInfo>>> observable = null;
         programCatItemBean.setPage(page);
+        programCatItemBean.setType(1);
         observable = mModel.getJdGoodsList(rxFragmen, programCatItemBean);
         getObservable(loadType, observable);
     }
