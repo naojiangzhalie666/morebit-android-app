@@ -475,7 +475,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         }
         if (!StringsUtils.isEmpty(Info.getVoucherPrice())) {
             mGoodsInfo.setVoucherPrice(Info.getVoucherPrice());
-            textview_original.setText("" + MathUtils.getVoucherPrice(Info.getVoucherPrice()));
+            textview_original.setText("" + MathUtils.getnum(Info.getVoucherPrice()));
         }
 
         if (StringsUtils.isEmpty(Info.getItemDesc())) {
@@ -507,7 +507,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
         if (!StringsUtils.isEmpty(Info.getPrice())) {
             mGoodsInfo.setPrice(Info.getPrice());
-            text_two.setText(" ¥" + MathUtils.getPrice(Info.getPrice()));
+            text_two.setText(" ¥" + MathUtils.getnum(Info.getPrice()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
         if (!StringsUtils.isEmpty(Info.getSaleMonth())) {
@@ -543,7 +543,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
             mGoodsInfo.setCouponPrice(Info.getCouponPrice());
             arv_prise.setVisibility(View.VISIBLE);
-            coupon_prise.setText(MathUtils.getCouponPrice(Info.getCouponPrice())+"");
+            coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice())+"");
             setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
         }else{
             arv_prise.setVisibility(View.GONE);

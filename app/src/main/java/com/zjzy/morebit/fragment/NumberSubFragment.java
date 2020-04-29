@@ -687,10 +687,12 @@ public class NumberSubFragment extends BaseFragment {
             }else{
                 double  pricedouble  = Double.parseDouble(price);
                 long pricelong = ((Number)pricedouble).longValue();
-                if (pricelong == 0){
-                    tvPrice.setText(price);
-                }else{
-                    tvPrice.setText(String.valueOf(pricelong));
+                if (price.contains(".00")){
+                    String replace = price.replace(".00", "");
+                    tvPrice.setText(replace);
+                }
+                if (pricedouble == 0.0){
+                    tvPrice.setText("0");
                 }
 //                tvPrice.setText(price);
             }

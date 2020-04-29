@@ -138,8 +138,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
         }
         final ViewHolder viewHolder = (ViewHolder) holder;
         LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, MathUtils.getPicture(info), 9);
-        viewHolder.textview_original.setText(mContext.getString(R.string.coupon, MathUtils.getVoucherPrice(info.getVoucherPrice())));
-        viewHolder.textvihew_Preco.setText("" + MathUtils.getPrice(info.getPrice()));
+        viewHolder.textview_original.setText(mContext.getString(R.string.coupon, MathUtils.getnum(info.getVoucherPrice())));
+        viewHolder.textvihew_Preco.setText("" + MathUtils.getnum(info.getPrice()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         String  itemLabeling = info.getItemLabeling();
         if(!TextUtils.isEmpty(info.getMarkValue()) && info.getItemFrom().equals("1") && showHotTag){
@@ -178,7 +178,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_shop_name.setText(info.getShopName());
             }
 
-            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice(info.getCouponPrice())));
+            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum(info.getCouponPrice())));
 
 
             if (info.getType() == 1) {  //如果是收藏商品

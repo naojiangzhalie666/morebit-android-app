@@ -58,7 +58,7 @@ public class MarkermallCirleItmeGoodsAdapter extends BaseMYShareAdapter<Markerma
             return;
         }
         final ShopGoodInfo info = mDatas.getGoods().get(position);
-        holder.tv_coupon_price.setText("券后价"+mContext.getString(R.string.income_yuan,  MathUtils.getVoucherPrice(info.getVoucherPrice())));
+        holder.tv_coupon_price.setText("券后价"+mContext.getString(R.string.income_yuan,  MathUtils.getnum(info.getVoucherPrice())));
         String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser().getCalculationRate(), info.getCommission());
         holder.tv_title.setText(MathUtils.getTitle(info));
 
@@ -74,7 +74,7 @@ public class MarkermallCirleItmeGoodsAdapter extends BaseMYShareAdapter<Markerma
 //        } else {
             holder.tv_share.setText(mContext.getString(R.string.share_price_new, muRatioComPrice));
 //        }
-        holder.tv_price.setText("券额"+mContext.getString(R.string.income_yuan, MathUtils.getPrice(info.getCouponPrice())));
+        holder.tv_price.setText("券额"+mContext.getString(R.string.income_yuan, MathUtils.getnum(info.getCouponPrice())));
 
 
         if (info.getIsExpire() == 1) {//过期
