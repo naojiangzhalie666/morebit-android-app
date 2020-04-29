@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -928,7 +930,6 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             }, 3000);
         }
     }
-
 
 
 }
