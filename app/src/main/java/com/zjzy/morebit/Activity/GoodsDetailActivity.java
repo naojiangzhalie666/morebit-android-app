@@ -520,7 +520,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             shop_name.setText(Info.getShopName());
             mGoodsInfo.setShopName(Info.getShopName());
         }
-
+        
         if (!StringsUtils.isEmpty(Info.getSellerPicture())) {
             Info.setSellerPicture(Info.getSellerPicture());
             LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
@@ -540,13 +540,17 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + " - " + Info.getCouponEndTime());
             }
         }
-        if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
-            mGoodsInfo.setCouponPrice(Info.getCouponPrice());
-            arv_prise.setVisibility(View.VISIBLE);
-            coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice())+"");
-            setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
-        }else{
-            arv_prise.setVisibility(View.GONE);
+
+        if (TextUtils.isEmpty(coupon_prise.getText())) {
+            if (!StringsUtils.isEmpty(Info.getCouponPrice())){
+                mGoodsInfo.setCouponPrice(Info.getCouponPrice());
+                arv_prise.setVisibility(View.VISIBLE);
+                coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice())+"");
+                setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
+            }else{
+                arv_prise.setVisibility(View.GONE);
+            }
+
         }
 
         if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
