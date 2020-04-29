@@ -1,14 +1,20 @@
 package com.zjzy.morebit.utils.UI;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.action.MyAction;
+
+import java.io.ObjectInputStream;
 
 /**
  * Created by fengrs on 2018/7/30.
@@ -16,8 +22,9 @@ import com.zjzy.morebit.utils.action.MyAction;
 
 public class WebViewForHtmlDataUtils {
 
-    public static void  InitSetting(final Activity activity, final WebView webview, final String htmlData,  final MyAction.OnResult<String> action) {
+    public static void InitSetting(final Activity activity, final WebView webview, final String htmlData, final MyAction.OnResult<String> action) {
         if (action != null) action.invoke("");
+
         //声明WebSettings子类
         WebSettings webSettings = webview.getSettings();
         //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
@@ -52,13 +59,14 @@ public class WebViewForHtmlDataUtils {
         // 加载空白error
         webSettings.setDomStorageEnabled(true);
         webview.getSettings().setJavaScriptEnabled(true);
+
         SensorsDataUtil.getInstance().showUpWebView(webview, false);
         //使图片自适应完美解决
         String head = "<head>" +
                 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> " +
                 "<style>*{margin:0;padding:0;}img{max-width: 100%; width:auto; height:auto;}</style>" +
                 "</head>";
-       String content= "<html>"+head +"<body>" + htmlData+ "</body></html>";
+        String content = "<html>" + head + "<body>" + htmlData + "</body></html>";
         // *{margin:0;padding:0这个是关键解决空白问题的代码，完美解决所有问题，
 
         webview.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);

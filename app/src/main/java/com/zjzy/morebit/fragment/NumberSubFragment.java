@@ -266,7 +266,7 @@ public class NumberSubFragment extends BaseFragment {
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
-            user_king.setVisibility(View.VISIBLE);
+            user_king.setVisibility(View.GONE);
 
         }
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
@@ -493,7 +493,7 @@ public class NumberSubFragment extends BaseFragment {
             myGradedView.setText("团队长");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
             rl_duodou_progress.setVisibility(View.GONE);
-            user_king.setVisibility(View.VISIBLE);
+            user_king.setVisibility(View.GONE);
             updateVip.setVisibility(View.GONE);
 
             gradeForLeaderView();
