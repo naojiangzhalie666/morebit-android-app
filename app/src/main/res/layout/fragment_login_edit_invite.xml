@@ -61,6 +61,7 @@
         android:layout_marginTop="20dp"
         android:text="已有账号\n立即绑定"
         android:gravity="center"
+        android:visibility="gone"
         android:textColor="#FF645B"
         android:textSize="@dimen/sp_12"
         android:paddingLeft="10dp"
@@ -200,11 +201,11 @@
         android:layout_marginRight="29dp"
         android:layout_marginBottom="110dp"
         android:layout_alignParentBottom="true"
-        android:background="@mipmap/phone_login_next"
-        android:enabled="true"
+        android:background="@mipmap/next_login_hiu"
+        android:enabled="false"
         android:gravity="center"
         android:text="下一步"
-        android:textColor="@color/white"
+        android:textColor="@color/colcor_999999"
         android:textSize="16sp" />
 
 

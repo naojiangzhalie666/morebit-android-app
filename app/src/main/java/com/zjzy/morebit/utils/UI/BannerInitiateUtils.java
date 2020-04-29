@@ -387,21 +387,23 @@ public class BannerInitiateUtils {
             OpenFragmentUtils.goToSimpleFragment(activity, JdChildFragment.class.getName(), bundle);
 
         } else if (type == C.BannerIntentionType.PDD) {//拼多多
-//            Bundle bundle = new Bundle();
-//            bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-//            OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
-
             Bundle bundle = new Bundle();
             bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-            OpenFragmentUtils.goToSimpleFragment(activity, JdChildFragment.class.getName(), bundle);
+            OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
         } else if (type == C.BannerIntentionType.NEW_PERSONAL) {//新人免单
             if (LoginUtil.checkIsLogin(activity)) {
             activity.startActivity(new Intent(activity, PurchaseActivity.class));
 
             }
         } else if (type == C.BannerIntentionType.HUNGRY) {//饿了么
+            if (LoginUtil.checkIsLogin(activity)) {
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity,false);
+                }else{
+                    getHungryLink((BaseActivity) activity, info);
+                }
+            }
 
-            getHungryLink((BaseActivity) activity, info);
         } else if (type == C.BannerIntentionType.MOUTH) {//口碑
 
             if (LoginUtil.checkIsLogin(activity)) {
@@ -485,13 +487,6 @@ public class BannerInitiateUtils {
                     protected void onSuccess(ActivityLinkBean data) {
                         String activityLink = data.getActivityLink();
                          if (TextUtils.isEmpty(activityLink)) return;
-                        if (!LoginUtil.checkIsLogin((BaseActivity) activity)) {
-                            return;
-                        }
-                        if (TaobaoUtil.isAuth()) {//淘宝授权
-                            TaobaoUtil.getAllianceAppKey((BaseActivity) activity);
-                            return;
-                        }
                        ShowWebActivity.start(activity, info.getUrl() + "?activityLinkTkl=" + data.getActivityLinkTkl() + "&activityLink=" + data.getActivityLink(), info.getTitle(), "28");
               //          ShowWebActivity.start(activity, "http://192.168.3.88:81/#/resta", info.getTitle(), "28");
 

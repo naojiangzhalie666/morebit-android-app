@@ -3,7 +3,9 @@ package com.zjzy.morebit.login.ui;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -131,8 +133,13 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
         if (loginType== C.sendCodeType.WEIXINBIND){
             passwordLogin.setVisibility(View.GONE);
+            tv_title.setText("手机号码注册");
         }
-
+        if (loginType== C.sendCodeType.WEIXINREGISTER){
+            passwordLogin.setVisibility(View.GONE);
+            tv_title.setText("手机号码注册");
+            loginType=1;
+        }
         if (loginType== C.sendCodeType.REGISTER){
             tv_title.setText("手机号码注册");
             passwordLogin.setVisibility(View.GONE);
@@ -175,6 +182,31 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         passwordLogin.setOnClickListener(this);
         mTitle.setText(R.string.input_verifycode);
         tv_title=view.findViewById(R.id.tv_title);
+
+        edtsms.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(edtsms.getText().toString().length()==4){
+                    next_login.setEnabled(true);
+                    next_login.setTextColor(Color.parseColor("#FFFFFF"));
+                    next_login.setBackgroundResource(R.mipmap.phone_login_next);
+                }else{
+                    next_login.setEnabled(false);
+                    next_login.setTextColor(Color.parseColor("#999999"));
+                    next_login.setBackgroundResource(R.mipmap.next_login_hiu);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         mVerificationCodeEditText.setOnVerificationCodeChangedListener(new VerificationAction.OnVerificationCodeChangedListener() {
             @Override
@@ -313,7 +345,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         if (C.requestCode.B10051.equals(errCode) || C.requestCode.B10005.equals(errCode)) {
             //openRegisterDialog();
             //提示已经注册
-            openLoginDialog();
+           // openLoginDialog();
         }
     }
 
@@ -440,7 +472,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         //   mBtnSend.setEnabled(true);
         getmsm.setEnabled(true);
         if (C.requestCode.B10051.equals(code) || C.requestCode.B10005.equals(code)) {
-            openLoginDialog();
+           // openLoginDialog();
         }
     }
 

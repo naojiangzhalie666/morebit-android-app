@@ -8,7 +8,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/> 
-                <data android:scheme="sdkback5b84c09cf69aedb86fd072242b41568f"/>
+                <data android:scheme="sdkback01e5c24bf6ea575ba20939c79e64f654"/>
             </intent-filter>
         </activity>
     </application>

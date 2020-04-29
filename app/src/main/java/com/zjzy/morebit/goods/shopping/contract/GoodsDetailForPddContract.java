@@ -50,6 +50,12 @@ public class GoodsDetailForPddContract {
          */
         void setPromotionUrl(String promotionUrl);
 
+        /**
+         * 拼多多的推广链接。
+         * @param promotionJdUrl
+         */
+        void setPromotionJdUrl(String promotionJdUrl);
+
 
 
     }
@@ -90,5 +96,11 @@ public class GoodsDetailForPddContract {
          * @param rxActivity
          */
         void generatePromotionUrl(BaseActivity rxActivity,Long goodsId,String couponUrl);
+
+        /**
+         * 生成京东领劵链接
+         * @param rxActivity
+         */
+        void generatePromotionJdUrl(BaseActivity rxActivity,String productUrl,String couponUrl);
     }
 }

@@ -76,88 +76,122 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
         viewHolder.ll_bottom.setPadding(0, mBottomPadding, 0, 0);
 
-        LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon,  MathUtils.getPicture(info), 9);
-        //viewHolder.textview.setText(StringsUtils.retractTitle(MathUtils.getTitle(info)));
-//        viewHolder.textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        viewHolder.textview_original.setText("¥" + MathUtils.getVoucherPrice(info.getVoucherPriceForPdd()));
-        viewHolder.textvihew_Preco.setText("¥" + MathUtils.getPrice(info.getPriceForPdd()));
-        viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
-        LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getImageUrl());
-//        if(!TextUtils.isEmpty(info.getItemLabeling())  ){
-//            viewHolder. markTv.setVisibility(View.VISIBLE);
-//            viewHolder.markTv.setText(info.getItemLabeling());
-//        }else{
-//            viewHolder.markTv.setVisibility(View.GONE);
-//        }
-//        //平台补贴
-//        if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(info.getSubsidiesPrice())){
-//            viewHolder.subsidiesPriceRankTv.setVisibility(View.VISIBLE);
-//            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getSubsidiesPrice());
-//            viewHolder.subsidiesPriceRankTv.setText(mContext.getString(R.string.subsidiesPrice, getRatioSubside));
-//            viewHolder.ll_bottom.setPadding(0, 0, 0, 0);
-//        }else{
-//            viewHolder.subsidiesPriceRankTv.setVisibility(View.GONE);
-//            viewHolder.subsidiesPriceRankTv.setText("");
-//        }
+        if (info.getItemSource().equals("1")){//京东
+            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon,  MathUtils.getPicture(info), 9);
+            viewHolder.textview_original.setText("¥" + MathUtils.getVoucherPrice(info.getVoucherPriceForPdd()));
+            viewHolder.textvihew_Preco.setText("¥" + MathUtils.getPrice(info.getPriceForPdd()));
+            viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
-        try {
-            if (C.UserType.member.equals(UserLocalData.getUser((Activity) mContext).getPartner()) ) {
-                viewHolder.ll_prise.setVisibility(View.GONE);
-            } else {
-                if (StringsUtils.isEmpty(info.getCouponPrice().toString())) {
+            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getImageUrl());
+            try {
+                if (C.UserType.member.equals(UserLocalData.getUser((Activity) mContext).getPartner()) ) {
                     viewHolder.ll_prise.setVisibility(View.GONE);
                 } else {
-                    viewHolder.ll_prise.setVisibility(View.VISIBLE);
+                    if (StringsUtils.isEmpty(info.getCouponPrice())) {
+                        viewHolder.ll_prise.setVisibility(View.GONE);
+                    } else {
+                        viewHolder.ll_prise.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
 
-            if (StringsUtils.isEmpty(info.getCouponPrice().toString())) {
-                viewHolder.return_cash.setVisibility(View.GONE);
-            } else {
-                viewHolder.return_cash.setVisibility(View.VISIBLE);
-            }
-            //店铺名称
-            if (!TextUtils.isEmpty(info.getShopName())) {
-                viewHolder.tv_shop_name.setText(info.getShopName());
-            }
+                if (StringsUtils.isEmpty(info.getCouponPrice())) {
+                    viewHolder.return_cash.setVisibility(View.GONE);
+                } else {
+                    viewHolder.return_cash.setVisibility(View.VISIBLE);
+                }
+                //店铺名称
+                if (!TextUtils.isEmpty(info.getShopName())) {
+                    viewHolder.tv_shop_name.setText(info.getShopName());
+                }
 
-            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice((info.getCouponPrice().toString()))));
-            viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    GoodsDetailForPddActivity.start(mContext, info);
-                }
-            });
-            if (C.UserType.vipMember.equals(UserLocalData.getUser((Activity) mContext).getPartner())
-                    || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
-                viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) mContext).getCalculationRate(), info.getCommission())));
-            } else {
-                UserInfo userInfo1 =UserLocalData.getUser();
-                if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                    viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, info.getCommission())));
-                }else{
-                    viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
-                }
+                viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice((info.getCouponPrice()))));
+                viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        GoodsDetailForPddActivity.start(mContext, info);
+                    }
+                });
+                if (C.UserType.vipMember.equals(UserLocalData.getUser((Activity) mContext).getPartner())
+                        || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
+                    viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) mContext).getCalculationRate(), info.getCommission())));
+                } else {
+                    UserInfo userInfo1 =UserLocalData.getUser();
+                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, info.getCommission())));
+                    }else{
+                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
+                    }
 //                viewHolder.commission.setText(mContext.getString(R.string.upgrade_commission));
+                }
+
+                viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));
+
+                viewHolder.pdd_title.setLabelText("京东");
+                viewHolder.pdd_title.setOriginalText(info.getItemTitle());
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));
 
-            //判断是淘宝还是天猫的商品
+        }else{
+            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon,  MathUtils.getPicture(info), 9);
+            viewHolder.textview_original.setText("¥" + MathUtils.getVoucherPrice(info.getVoucherPriceForPdd()));
+            viewHolder.textvihew_Preco.setText("¥" + MathUtils.getPrice(info.getPriceForPdd()));
+            viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
-//            if (info.getItemSource() == 2) {
-//                viewHolder.good_mall_tag.setImageResource(R.drawable.tianmao);
-//            } else {
-//                viewHolder.good_mall_tag.setImageResource(R.drawable.taobao);
-//            }
-//            StringsUtils.retractTitleForPdd(viewHolder.good_pdd_tag,viewHolder.textview,MathUtils.getTitle(info));
+            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getImageUrl());
+            try {
+                if (C.UserType.member.equals(UserLocalData.getUser((Activity) mContext).getPartner()) ) {
+                    viewHolder.ll_prise.setVisibility(View.GONE);
+                } else {
+                    if (StringsUtils.isEmpty(info.getCouponPrice().toString())) {
+                        viewHolder.ll_prise.setVisibility(View.GONE);
+                    } else {
+                        viewHolder.ll_prise.setVisibility(View.VISIBLE);
+                    }
+                }
 
-            viewHolder.pdd_title.setLabelText("拼多多");
-            viewHolder.pdd_title.setOriginalText(MathUtils.getTitle(info));
+                if (StringsUtils.isEmpty(info.getCouponPrice().toString())) {
+                    viewHolder.return_cash.setVisibility(View.GONE);
+                } else {
+                    viewHolder.return_cash.setVisibility(View.VISIBLE);
+                }
+                //店铺名称
+                if (!TextUtils.isEmpty(info.getShopName())) {
+                    viewHolder.tv_shop_name.setText(info.getShopName());
+                }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+                viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice((info.getCouponPrice().toString()))));
+                viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        GoodsDetailForPddActivity.start(mContext, info);
+                    }
+                });
+                if (C.UserType.vipMember.equals(UserLocalData.getUser((Activity) mContext).getPartner())
+                        || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
+                    viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) mContext).getCalculationRate(), info.getCommission())));
+                } else {
+                    UserInfo userInfo1 =UserLocalData.getUser();
+                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, info.getCommission())));
+                    }else{
+                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
+                    }
+//                viewHolder.commission.setText(mContext.getString(R.string.upgrade_commission));
+                }
+
+                viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));
+
+                viewHolder.pdd_title.setLabelText("拼多多");
+                viewHolder.pdd_title.setOriginalText(MathUtils.getTitle(info));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
 
 

@@ -18,7 +18,6 @@ import com.blankj.utilcode.util.SPUtils;
 import com.facebook.stetho.Stetho;
 //import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 
-
 import com.kepler.jd.Listener.AsyncInitListener;
 import com.kepler.jd.login.KeplerApiManager;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -64,8 +63,8 @@ public class App extends Application implements ProtectedMemberKeeper {
     private static Random random = null;
     private static boolean mIsForeground;
     public static Handler mHandler;
-    public static final String kpl_appKey = "5b84c09cf69aedb86fd072242b41568f";//开普勒
-    public static final String kpl_keySecret = "617da19457594139b32796649e7aef38";//开普勒
+    public static final String kpl_appKey = "01e5c24bf6ea575ba20939c79e64f654";//开普勒
+    public static final String kpl_keySecret = "b16e49ca78f74195a7e20ff33e9dc002";//开普勒
   //  public static boolean mIsHotAppUpdataFailure = false;
 //    public static RefWatcher mRefWatcher;
 
@@ -141,22 +140,22 @@ public class App extends Application implements ProtectedMemberKeeper {
     }
 
     private void initKaipule() {
-//        KeplerApiManager.asyncInitSdk((Application) this.getApplicationContext(), kpl_appKey, kpl_keySecret, new AsyncInitListener() {
-//            @Override
-//            public void onSuccess() {
-//                Log.e("Kepler", "Kepler asyncInitSdk onSuccess ");
-//            }
-//
-//
-//            @Override
-//            public void onFailure() {
-//                Log.e("Kepler",
-//                        "Kepler asyncInitSdk 授权失败，请检查lib 工程资源引用；包名,签名证书是否和注册一致");
-//            }
-//        });
-//
-//        String keplerVersion = KeplerApiManager.getKeplerVersion();
-//        Log.e("Kepler", "Kepler asyncInitSdk onSuccess "+keplerVersion);
+        KeplerApiManager.asyncInitSdk((Application) this.getApplicationContext(), kpl_appKey, kpl_keySecret, new AsyncInitListener() {
+            @Override
+            public void onSuccess() {
+                Log.e("Kepler", "Kepler asyncInitSdk onSuccess ");
+            }
+
+
+            @Override
+            public void onFailure() {
+                Log.e("Kepler",
+                        "Kepler asyncInitSdk 授权失败，请检查lib 工程资源引用；包名,签名证书是否和注册一致");
+            }
+        });
+
+        String keplerVersion = KeplerApiManager.getKeplerVersion();
+        Log.e("Kepler", "Kepler asyncInitSdk onSuccess "+keplerVersion);
     }
 
     private void initBaiDuStat() {

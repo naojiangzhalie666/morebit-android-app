@@ -2421,4 +2421,22 @@ public interface CommonService {
     Observable<BaseResponse<List<ShopGoodInfo>>> getJdGoodsList(
             @Body ProgramCatItemBean body
     );
+
+    /**
+     * 京东的领劵链接
+     * @param requestBean
+     * @return
+     */
+    @POST("/api/goods/fans/getJdCoupon")
+    public Observable<BaseResponse<String>> generatePromotionUrlForJd(
+            @Body RequestPromotionUrlBean requestBean );
+
+    /**
+     * 生成京东的分享
+     * @param requestBean
+     * @return
+     */
+    @POST("/api/goods/fans/getJdGenerate")
+    public Observable<BaseResponse<String>> getGenerateForJD(
+            @Body RequestPddShareContent requestBean);
 }

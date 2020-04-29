@@ -81,11 +81,11 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
     }
 
     @Override
-    public void weixinLogin(RxFragment baseFragment, String phone,String yqm_code,  String verifyCode, WeixinInfo weixinInfo) {
+    public void weixinLogin(RxFragment baseFragment, String phone,String verCode,  String areaCode, WeixinInfo weixinInfo) {
         if (AppUtil.isFastCashMoneyClick(500)){
             return;
         }
-        mModel.getWeixinRegister(baseFragment, phone, yqm_code, verifyCode, weixinInfo)
+        mModel.getWeixinRegister(baseFragment, phone, verCode, areaCode, weixinInfo)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {

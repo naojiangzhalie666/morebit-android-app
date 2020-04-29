@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -108,6 +109,30 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
         if (!TextUtils.isEmpty(mPhone)) {
             phoneTv.setText(mPhone);
         }
+        edt_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(edt_password.getText().toString().length()>7){
+                    next_login.setEnabled(true);
+                    next_login.setTextColor(Color.parseColor("#FFFFFF"));
+                    next_login.setBackgroundResource(R.mipmap.phone_login_next);
+                }else{
+                    next_login.setEnabled(false);
+                    next_login.setTextColor(Color.parseColor("#999999"));
+                    next_login.setBackgroundResource(R.mipmap.next_login_hiu);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         showPwIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

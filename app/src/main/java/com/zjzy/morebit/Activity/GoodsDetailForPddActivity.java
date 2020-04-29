@@ -72,6 +72,7 @@ import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
+import com.zjzy.morebit.utils.KaipuleUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
@@ -144,7 +145,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 //    @BindView(R.id.tv_sellel)
 //    TextView tv_sellel;
 //    @BindView(R.id.tv_collect)
-    TextView tv_collect;
+            TextView tv_collect;
     @BindView(R.id.collect_bg)
     ImageView collect_bg;
     @BindView(R.id.shop_img)
@@ -227,6 +228,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
     //拼多多的推广链接。
     private String mPromotionUrl;
+    //京东领劵领劵
+    private String mPromotionJdUrl;
 
     public static void start(Context context, ShopGoodInfo info) {
         Intent intent = new Intent((Activity) context, GoodsDetailForPddActivity.class);
@@ -289,7 +292,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     private void initData(boolean isRefresh) {
         if (mGoodsInfo == null) return;
         mPresenter.getDetailDataForPdd(this, mGoodsInfo, isRefresh);
-        mPresenter.generatePromotionUrl(this,mGoodsInfo.getGoodsId(),mGoodsInfo.getCouponUrl());
+        mPresenter.generatePromotionUrl(this, mGoodsInfo.getGoodsId(), mGoodsInfo.getCouponUrl());
+        mPresenter.generatePromotionJdUrl(this,mGoodsInfo.getProductUrl(),mGoodsInfo.getCouponUrl());
     }
 
     @Override
@@ -310,7 +314,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 .init();
         initBundle();
         initView();
-//        initImgFragment();
+       //initImgFragment(mGoodsInfo.getItemBanner());
         initViewData(mGoodsInfo);
         initData(false);
         mPresenter.getSysNotification(this);
@@ -335,8 +339,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         bundle = getIntent().getExtras();
         if (bundle != null) {
             mGoodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
-            //商铺:拼多多
-            mGoodsInfo.setShopType(3);
+            if (mGoodsInfo.getItemSource().equals("2")) {
+                //商铺:拼多多
+                mGoodsInfo.setShopType(3);
+            }
             //商品Id
             mGoodsInfo.setItemSourceId(mGoodsInfo.getGoodsId().toString());
         }
@@ -514,8 +520,23 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
         mGoodsInfo.setItemSource(Info.getItemSource());
         if (!StringsUtils.isEmpty(Info.getTitle())) {
+            if (Info.getItemSource().equals("1")) {
+                tv_pdd.setText("京东");
+                shop_img.setImageResource(R.mipmap.jd_icon_bg);
+                //示详情图片
+                List<String> imgs = Info.getItemBanner();
+                if (imgs != null && imgs.size() > 0) {
 
-                StringsUtils.retractTitleForPdd(tv_pdd, title, Info.getTitle());
+                    mGoodsDetailForPdd.setGoodsDetails(imgs);
+                    initImgFragment(mGoodsDetailForPdd);
+                    ll_fw.setVisibility(View.GONE);
+                }
+
+            } else {
+                tv_pdd.setText("拼多多");
+                shop_img.setImageResource(R.mipmap.detail_pdd_icon);
+            }
+            StringsUtils.retractTitleForPdd(tv_pdd, title, Info.getTitle());
         }
 
 
@@ -551,21 +572,21 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
 
             if (!TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
-                tv_coupon_time.setText("有效日期" +dateStart.substring(5,7)+"."+dateStart.substring(8,10)
-                        + "-" + dateEnd.substring(5,7)+"."+dateEnd.substring(9,11));
+                tv_coupon_time.setText("有效日期" + dateStart.substring(5, 7) + "." + dateStart.substring(8, 10)
+                        + "-" + dateEnd.substring(5, 7) + "." + dateEnd.substring(9, 11));
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
         } else {
             if (!TextUtils.isEmpty(dateEnd) && !TextUtils.isEmpty(dateEnd)) {
-                tv_coupon_time.setText("有效日期 " + dateStart.substring(5,7)+"."+dateStart.substring(8,10)
-                        + "-" + dateEnd.substring(5,7)+"."+dateEnd.substring(8,10));
+                tv_coupon_time.setText("有效日期 " + dateStart.substring(5, 7) + "." + dateStart.substring(8, 10)
+                        + "-" + dateEnd.substring(5, 7) + "." + dateEnd.substring(8, 10));
             }
         }
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
             mGoodsInfo.setCouponPrice(Info.getCouponPrice());
             arv_prise.setVisibility(View.VISIBLE);
-            coupon_prise.setText( MathUtils.getCouponPrice(Info.getCouponPrice())+"");
+            coupon_prise.setText(MathUtils.getCouponPrice(Info.getCouponPrice()) + "");
             setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
         }
 
@@ -701,7 +722,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             mGoodsInfo.setShopId(info.getShopId());
         }
         String imageUrl = info.getImageUrl();
-        if (!StringsUtils.isEmpty(imageUrl)){
+        if (!StringsUtils.isEmpty(imageUrl)) {
             mGoodsInfo.setPicture(imageUrl);
         }
         if (isSeavDao && !isRefresh) {
@@ -712,7 +733,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
         //示详情图片
         List<String> imgs = info.getItemBanner();
-        if (imgs != null && imgs.size() > 0){
+        if (imgs != null && imgs.size() > 0) {
 
             mGoodsDetailForPdd.setGoodsDetails(imgs);
             initImgFragment(mGoodsDetailForPdd);
@@ -959,6 +980,12 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         mPromotionUrl = promotionUrl;
     }
 
+    @Override
+    public void setPromotionJdUrl(String promotionJdUrl) {
+        mPromotionJdUrl=promotionJdUrl;
+        mGoodsInfo.setClickURL(promotionJdUrl);
+    }
+
     private void setSysNotificationView() {
         rl_urgency_notifi.removeAllViews();
         if (mSysNotificationData == null || mSysNotificationData.size() == 0) return;
@@ -998,29 +1025,38 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 break;
             case R.id.ll_share_money:
                 if (isGoodsLose()) return;
-                    if (mGoodsInfo != null) {
-                        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
-                    }
-                ShareMoneyForPddActivity.start(this,mGoodsInfo,mPromotionUrl);
+                if (mGoodsInfo != null) {
+                    mGoodsInfo.setAdImgUrl(indexbannerdataArray);
+                }
+                ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionUrl);
 
                 break;
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买
-                if (mPromotionUrl != null ){
+                if (mGoodsInfo.getItemSource().equals("1")){//京东
+
+                   if (mPromotionJdUrl!=null){
+                       KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
+                    }
+                }else{//拼多多
+                    if (mPromotionUrl != null) {
 //                    String content = "pinduoduo://com.xunmeng.pinduoduo/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
 //                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(content));
 //                    startActivity(intent);
 //                    mPromotionUrl = "https://mobile.yangkeduo.com/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
-                    if (isHasInstalledPdd() && mPromotionUrl.contains("https://mobile.yangkeduo.com")){
-                        String content = mPromotionUrl.replace("https://mobile.yangkeduo.com",
-                                "pinduoduo://com.xunmeng.pinduoduo");
+                        if (isHasInstalledPdd() && mPromotionUrl.contains("https://mobile.yangkeduo.com")) {
+                            String content = mPromotionUrl.replace("https://mobile.yangkeduo.com",
+                                    "pinduoduo://com.xunmeng.pinduoduo");
 //                        String content = "pinduoduo://com.xunmeng.pinduoduo"+mPromotionUrl.substring(8);
-                        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(content));
-                        startActivity(intent);
-                    }else{
-                        PddWebActivity.start(this,mPromotionUrl,mGoodsInfo.getTitle());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(content));
+                            startActivity(intent);
+                        } else {
+                            PddWebActivity.start(this, mPromotionUrl, mGoodsInfo.getTitle());
+                        }
                     }
                 }
+
+
 
                 break;
 
@@ -1078,7 +1114,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         //todo：修复从足迹到收藏报错
         String couponEndTime = mGoodsInfo.getCouponEndTime();
 
-        if (couponEndTime != null && couponEndTime.length() > 5){
+        if (couponEndTime != null && couponEndTime.length() > 5) {
             couponEndTime = DateTimeUtils.toMMdd(couponEndTime);
             mGoodsInfo.setCouponEndTime(couponEndTime);
         }
@@ -1185,9 +1221,19 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
     /**
      * 判断是否安装拼多多
+     *
      * @return
      */
-    private boolean isHasInstalledPdd(){
-        return  AppUtil.checkHasInstalledApp(this, "com.xunmeng.pinduoduo");
+    private boolean isHasInstalledPdd() {
+        return AppUtil.checkHasInstalledApp(this, "com.xunmeng.pinduoduo");
+    }
+
+    /**
+     * 判断是否安装京东
+     *
+     * @return
+     */
+    private boolean isHasInstalledJd() {
+        return AppUtil.checkHasInstalledApp(this, "com.jingdong.app.mall");
     }
 }

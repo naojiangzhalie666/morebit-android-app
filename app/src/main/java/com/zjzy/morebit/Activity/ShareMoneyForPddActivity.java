@@ -444,15 +444,29 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
     public void getTemplate() {
         setResult(RESULT_OK);
         LoadingView.showDialog(this, "请求中...");
-        GoodsUtil.getGenerateForPDD(this, goodsInfo)
-                .subscribe(new DataObserver<PddShareContent>() {
-                    @Override
-                    protected void onSuccess(PddShareContent data) {
-                        String template = data.getTemplate();
-                        et_copy.setText(template);
 
-                    }
-                });
+        if (goodsInfo.getItemSource().equals("1")){//京东
+            GoodsUtil.getGenerateForJD(this, goodsInfo)
+                    .subscribe(new DataObserver<String>() {
+                        @Override
+                        protected void onSuccess(String data) {
+                            String template = data;
+                            et_copy.setText(template);
+
+                        }
+                    });
+        }else{//拼多多
+            GoodsUtil.getGenerateForPDD(this, goodsInfo)
+                    .subscribe(new DataObserver<PddShareContent>() {
+                        @Override
+                        protected void onSuccess(PddShareContent data) {
+                            String template = data.getTemplate();
+                            et_copy.setText(template);
+
+                        }
+                    });
+        }
+
     }
 
 

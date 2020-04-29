@@ -130,16 +130,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="14dp"
+                android:layout_marginLeft="16dp"
                 android:text="选择图片"
                 android:textColor="@color/color_333333"
-                android:textSize="14sp"/>
+                android:textSize="12sp"/>
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/id_recyclerview_horizontal"
                 android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:scrollbars="none"/>
@@ -163,18 +165,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="14dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="编辑分享文案"
                 android:textColor="@color/color_333333"
-                android:textSize="13sp"/>
+                android:textSize="12sp"/>
 
             <RelativeLayout
                 android:id="@+id/rl_copy_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_f8f8f8_round_6dp"
                 android:orientation="horizontal">

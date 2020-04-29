@@ -45,6 +45,24 @@ public class ShopGoodInfo implements Serializable {
     private String itemVideo="";//抖货视频
     private String itemSale="";//销量
     private String itemId="";//抖货商品id
+    private String productUrl="";
+    private String clickURL="";//京东推广链接
+
+    public String getClickURL() {
+        return clickURL;
+    }
+
+    public void setClickURL(String clickURL) {
+        this.clickURL = clickURL;
+    }
+
+    public String getProductUrl() {
+        return productUrl;
+    }
+
+    public void setProductUrl(String productUrl) {
+        this.productUrl = productUrl;
+    }
 
     public String getItemId() {
         return itemId;

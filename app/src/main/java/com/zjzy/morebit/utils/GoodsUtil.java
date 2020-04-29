@@ -149,6 +149,37 @@ public class GoodsUtil {
                 });
     }
 
+    /**
+     * 获取京东的推广内容
+     * @param activity
+     * @param goodsInfo
+     * @return
+     */
+    public static Observable<BaseResponse<String>> getGenerateForJD(RxAppCompatActivity activity,
+                                                                              ShopGoodInfo goodsInfo) {
+        int isInvitecode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
+        int isDownloadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
+
+        RequestPddShareContent requestBean = new RequestPddShareContent();
+        requestBean.setItemTitle(goodsInfo.getTitle());
+        requestBean.setPrice(goodsInfo.getPriceForPdd());
+        requestBean.setVoucherPrice(goodsInfo.getVoucherPriceForPdd());
+        requestBean.setIsDownLoadUrl(isDownloadUrl);
+        requestBean.setIsInviteCode(isInvitecode);
+        requestBean.setClickURL(goodsInfo.getClickURL());
+
+        return RxHttp.getInstance().getGoodsService().getGenerateForJD(
+                requestBean
+        )
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(activity.<BaseResponse<String>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
 
     public static Observable<BaseResponse<TKLBean>> getGetTkLFinalObservable(RxAppCompatActivity activity, ShopGoodInfo goodsInfo) {
 

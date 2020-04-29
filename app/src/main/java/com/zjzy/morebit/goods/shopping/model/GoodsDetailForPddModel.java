@@ -117,7 +117,7 @@ public class GoodsDetailForPddModel extends MvpModel {
     /**
      * 拼多多
      * @param rxActivity
-     * @param String
+     * @param
      * @return
      */
     public Observable<BaseResponse<String>> generatePromotionUrlForPdd(BaseActivity rxActivity,
@@ -131,6 +131,22 @@ public class GoodsDetailForPddModel extends MvpModel {
                 .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
     }
 
+    /**
+     * 京东
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<String>> generatePromotionUrlForJd(BaseActivity rxActivity,
+                                                                       String productUrl,String couponUrl) {
+        RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
+      //  bean.setType(2);
+        bean.setProductUrl(productUrl);
+        bean.setCouponUrl(couponUrl);
+        return RxHttp.getInstance().getCommonService().generatePromotionUrlForJd(bean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
+    }
 
 
 

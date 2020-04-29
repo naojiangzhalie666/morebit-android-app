@@ -21,7 +21,7 @@ ADDED from /Users/mac/AndroidStudioProjects/android-app/morebit-android-app/kepl
 		ADDED from /Users/mac/AndroidStudioProjects/android-app/morebit-android-app/kepler/src/main/AndroidManifest.xml:7:95-143
 	android:name
 		ADDED from /Users/mac/AndroidStudioProjects/android-app/morebit-android-app/kepler/src/main/AndroidManifest.xml:7:43-94
-intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.DEFAULT+data:scheme:sdkback5b84c09cf69aedb86fd072242b41568f
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.DEFAULT+data:scheme:sdkback01e5c24bf6ea575ba20939c79e64f654
 ADDED from /Users/mac/AndroidStudioProjects/android-app/morebit-android-app/kepler/src/main/AndroidManifest.xml:8:13-12:29
 action#android.intent.action.VIEW
 ADDED from /Users/mac/AndroidStudioProjects/android-app/morebit-android-app/kepler/src/main/AndroidManifest.xml:9:17-68

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
@@ -171,6 +172,30 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         tv_bind=view.findViewById(R.id.tv_bind);//已有账号立即绑定
         privateProtocol = view.findViewById(R.id.privateProtocol);
         ll_userAgreement = view.findViewById(R.id.ll_userAgreement);
+        edtInvite.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(edtInvite.getText().toString().length()==6){
+                    tv_next.setEnabled(true);
+                    tv_next.setTextColor(Color.parseColor("#FFFFFF"));
+                    tv_next.setBackgroundResource(R.mipmap.phone_login_next);
+                }else{
+                    tv_next.setEnabled(false);
+                    tv_next.setTextColor(Color.parseColor("#999999"));
+                    tv_next.setBackgroundResource(R.mipmap.next_login_hiu);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -290,6 +315,10 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                         }
                         if (mInviteUserInfoBean == null) {
                             ViewShowUtils.showShortToast(getActivity(), "信息有误哦,请稍后重试");
+                            return;
+                        }
+                        if (mLoginType == C.sendCodeType.WEIXINREGISTER){
+                            LoginMainFragment.start(getActivity(),1);
                             return;
                         }
                         LoginVerifyCodeFragment.srart(getActivity(), mLoginType, mPhone, mEditInviteText, mWeixinInfo,mAreaCode);

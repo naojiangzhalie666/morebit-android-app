@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.zjzy.morebit.Module.common.Dialog.InvateBindDialog;
 import com.zjzy.morebit.Module.common.Dialog.LoginNotRegeditDialog;
 import com.zjzy.morebit.Module.common.Dialog.ResginDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -49,7 +50,8 @@ import butterknife.OnClick;
  */
 
 public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implements LoginMainContract.View {
-   @BindView(R.id.rl_root)
+    private static int mid=2;
+    @BindView(R.id.rl_root)
     RelativeLayout rl_root;
    @BindView(R.id.next_login)
     TextView next_login;
@@ -74,6 +76,12 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     private String areaCode = "86"; //默认是中国的86
     private AreaCodeBean mAreaCode;
     private boolean wxLoginFlag = false;
+    public static void start(Activity activity,int id) {
+        Bundle bundle = new Bundle();
+        mid=id;
+        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+        OpenFragmentUtils.goToLoginSimpleFragment(activity,LoginMainFragment.class.getName(),bundle);
+    }
     public static void start(Activity activity) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
@@ -116,9 +124,11 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                 if(checkPhone()){
                     next_login.setEnabled(true);
                     next_login.setTextColor(Color.parseColor("#FFFFFF"));
+                    next_login.setBackgroundResource(R.mipmap.phone_login_next);
                 }else{
                     next_login.setEnabled(false);
-                    next_login.setTextColor(Color.parseColor("#FFFFFF"));
+                    next_login.setTextColor(Color.parseColor("#999999"));
+                    next_login.setBackgroundResource(R.mipmap.next_login_hiu);
                 }
             }
 
@@ -219,13 +229,32 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     public void loginError(String code) {
         if (ErrorCodeUtlis.isNuRegister(code)) {
             //用户不存在  跳转到注册页
-
             WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
+
             LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),weixinInfo,mAreaCode);
         }else if(ErrorCodeUtlis.isRegister(code)){
             //手机号已注册
+            final WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
            // LoginPasswordFragment.start(getActivity(),edtPhone.getText().toString().trim(),mAreaCode);
-            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, mWeixinInfo,mAreaCode);
+            final ResginDialog   dialog=  new ResginDialog(getActivity(), "您已注册", "您已注册，立即登录吧！", "取消", "登录", new ResginDialog.OnOkListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mid!=1){
+                        LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, weixinInfo,mAreaCode);
+                    }else{
+                        LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mInvite, weixinInfo,mAreaCode);
+                    }
+
+                }
+            });
+            dialog.setmCancelListener(new ResginDialog.OnCancelListner() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+
         }
     }
 

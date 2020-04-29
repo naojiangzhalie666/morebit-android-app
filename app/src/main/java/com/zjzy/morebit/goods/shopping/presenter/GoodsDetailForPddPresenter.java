@@ -50,7 +50,7 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
     private MainModel mMainModel;
 
     @Override
-    public void getDetailDataForPdd(BaseActivity rxActivity, ShopGoodInfo goodsInfo,final boolean isRefresh) {
+    public void getDetailDataForPdd(BaseActivity rxActivity, ShopGoodInfo goodsInfo, final boolean isRefresh) {
         mModel.getBaseResponseObservableForPdd(rxActivity, goodsInfo)
                 .doFinally(new Action() {
                     @Override
@@ -70,7 +70,7 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
 
     @Override
     public void generatePromotionUrl(BaseActivity rxActivity, Long goodsId, String couponUrl) {
-        mModel.generatePromotionUrlForPdd(rxActivity,goodsId,couponUrl)
+        mModel.generatePromotionUrlForPdd(rxActivity, goodsId, couponUrl)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -82,6 +82,27 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     protected void onSuccess(final String data) {
                         getIView().setPromotionUrl(data);
 //                        getIView().showDetailsView(data, false, isRefresh);
+                    }
+                });
+    }
+
+    /*
+     * 京东领劵链接
+     *
+     * */
+    @Override
+    public void generatePromotionJdUrl(BaseActivity rxActivity, String productUrl, String couponUrl) {
+        mModel.generatePromotionUrlForJd(rxActivity, productUrl, couponUrl)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<String>() {
+                    @Override
+                    protected void onSuccess(final String data) {
+                        getIView().setPromotionJdUrl(data);
                     }
                 });
     }
@@ -127,9 +148,6 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     });
         }
     }
-
-
-
 
 
     /**

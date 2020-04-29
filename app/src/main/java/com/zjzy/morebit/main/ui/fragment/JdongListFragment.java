@@ -80,6 +80,9 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     private ImageView title_coupon_iv;
     private boolean isCoupon = false;//优惠券是否选中
     private boolean isSupport = false;//自营是否选中
+    private String coupon="0";
+    private String self="0";
+
 
 
 
@@ -178,6 +181,22 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
         programCatItemBean.setEliteId(mPddJdTitleTypeItem.getEliteId());
+        if (eSortDirection==0){
+            programCatItemBean.setOrder("desc");
+        }else{
+            programCatItemBean.setOrder("asc");
+        }
+        if (mSortType==1){
+            programCatItemBean.setSort("");
+        }else if (mSortType==2){
+            programCatItemBean.setSort("inOrderCount30DaysSku");
+        }else if (mSortType==3){
+            programCatItemBean.setSort("price");
+        }else if (mSortType==4){
+            programCatItemBean.setSort("commission");
+        }
+        programCatItemBean.setCoupon(coupon);
+        programCatItemBean.setSelf(self);
         mPresenter.getJdGoodsList(this,  programCatItemBean, C.requestType.initData);
     }
 
@@ -186,6 +205,23 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
         programCatItemBean.setEliteId(mPddJdTitleTypeItem.getEliteId());
+        programCatItemBean.setCoupon(coupon);
+        if (eSortDirection==0){
+            programCatItemBean.setOrder("desc");
+        }else{
+            programCatItemBean.setOrder("asc");
+        }
+        if (mSortType==1){
+            programCatItemBean.setSort("");
+        }else if (mSortType==2){
+            programCatItemBean.setSort("inOrderCount30DaysSku");
+        }else if (mSortType==3){
+            programCatItemBean.setSort("price");
+        }else if (mSortType==4){
+            programCatItemBean.setSort("commission");
+        }
+        programCatItemBean.setCoupon(coupon);
+        programCatItemBean.setSelf(self);
         mPresenter.getJdGoodsList(this, programCatItemBean,C.requestType.loadMore);
     }
 
@@ -269,21 +305,27 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             switch (v.getId()){
                 case R.id.title_comprehensive_tv://综合
                     requestClickRadar(null, title_comprehensive_tv, 1);
+                    onReload();
                     break;
                 case R.id.title_sales_volume_ll://销量
                     requestClickRadar(mTitleSalesVolumeIv, mTitleSalesVolumeTv, 2);
+                    onReload();
                     break;
                 case R.id.title_post_coupon_price__ll://价格
                     requestClickRadar(mTitlePostCouponPriceIv, mTitlePostCouponPriceTv, 3);
+                    onReload();
                     break;
                 case R.id.title_commission_ll://奖励
                     requestClickRadar(mTitleCommissionIv, mTitleCommissionTv, 4);
+                    onReload();
                     break;
                 case R.id.title_support_ll://自营
                     clickSupport();
+                    onReload();
                     break;
                 case R.id.title_coupon_ll://优惠券
                     clickCoupro();
+                    onReload();
                     break;
             }
     }
@@ -347,6 +389,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
 
         if (isCoupon) {
             isCoupon = false;
+            coupon="0";
             title_coupon_iv.setImageResource(R.drawable.check_no);
 //            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
 //            mRecyclerView.getSwipeList().setRefreshing(true);
@@ -354,6 +397,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             //重新读取数据
         } else {
             isCoupon = true;
+            coupon="1";
             title_coupon_iv.setImageResource(R.drawable.check_yes);
 //            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
 //            mRecyclerView.getSwipeList().setRefreshing(true);
@@ -369,6 +413,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
 
         if (isSupport) {
             isSupport = false;
+            self="0";
             title_support_iv.setImageResource(R.drawable.check_no);
 //            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
 //            mRecyclerView.getSwipeList().setRefreshing(true);
@@ -376,6 +421,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             //重新读取数据
         } else {
             isSupport = true;
+            self="1";
             title_support_iv.setImageResource(R.drawable.check_yes);
 //            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
 //            mRecyclerView.getSwipeList().setRefreshing(true);

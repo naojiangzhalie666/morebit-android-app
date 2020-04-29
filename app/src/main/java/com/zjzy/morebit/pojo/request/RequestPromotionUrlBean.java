@@ -7,8 +7,19 @@ public class RequestPromotionUrlBean extends RequestBaseBean {
     private int type;
     private Long goodsId;
     private String couponUrl;
+    private String productUrl;
 
-    public int getType() {
+    public String getProductUrl() {
+        return productUrl;
+    }
+
+    public void setProductUrl(String productUrl) {
+        this.productUrl = productUrl;
+    }
+
+    public int getType(
+
+    ) {
         return type;
     }
 

@@ -12,7 +12,42 @@ public class RequestPddShareContent extends RequestBaseBean {
     private String isShortLink;
     private int isInviteCode;
     private int isDownLoadUrl;
+    private String  voucherPrice;
+    private String price;
+    private String itemTitle;
+    private String clickURL;
 
+    public String getClickURL() {
+        return clickURL;
+    }
+
+    public void setClickURL(String clickURL) {
+        this.clickURL = clickURL;
+    }
+
+    public String getItemTitle() {
+        return itemTitle;
+    }
+
+    public void setItemTitle(String itemTitle) {
+        this.itemTitle = itemTitle;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getVoucherPrice() {
+        return voucherPrice;
+    }
+
+    public void setVoucherPrice(String voucherPrice) {
+        this.voucherPrice = voucherPrice;
+    }
 
     public String getGoodsId() {
         return goodsId;

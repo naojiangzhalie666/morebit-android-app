@@ -14,7 +14,7 @@
             android:id="@+id/id_index_gallery_item_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:riv_border_color="@color/white"
             app:riv_border_width="0dp"
             app:riv_corner_radius="6dp"
