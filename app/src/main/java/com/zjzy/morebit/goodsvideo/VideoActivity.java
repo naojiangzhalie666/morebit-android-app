@@ -116,18 +116,14 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         tv_num.setText("销量：" + mGoodsInfo.getItemSale());
         String itemPrice = mGoodsInfo.getItemPrice();
         tv_coupon_price.setText(mGoodsInfo.getItemPrice() + "");
-        if (C.UserType.operator.equals(UserLocalData.getUser(this).getPartner())
-                || C.UserType.vipMember.equals(UserLocalData.getUser(this).getPartner())) {
-            tv_subsidy.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mGoodsInfo.getTkMoney() + "") + "元");
-        } else {
-            UserInfo userInfo1 = UserLocalData.getUser();
-            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                tv_subsidy.setText("预估收益" + MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, mGoodsInfo.getTkMoney() + "") + "元");
-            } else {
+        UserInfo userInfo1 =UserLocalData.getUser();
+        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+            tv_subsidy.setText("登录赚佣金");
+        }else{
+            if (C.UserType.operator.equals(UserLocalData.getUser(this).getPartner())
+                    || C.UserType.vipMember.equals(UserLocalData.getUser(this).getPartner())) {
                 tv_subsidy.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mGoodsInfo.getTkMoney() + "") + "元");
             }
-
-
         }
     }
         private void initView () {

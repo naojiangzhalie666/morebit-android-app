@@ -8,14 +8,23 @@
     android:orientation="vertical"
     android:paddingBottom="10dp">
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/iv_head"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/prushchase_bg" />
+        tools:src="@mipmap/prushchase_bg" />
 
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/bofang"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,7 +47,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:lineSpacingMultiplier="1.2"
-            android:text="抖音强烈推荐…"
+            tools:text="抖音强烈推荐…"
             android:textColor="#ff333333"
             android:textSize="12sp" />
     </RelativeLayout>
@@ -61,7 +70,7 @@
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="299.0"
+            tools:text="299.0"
             android:textColor="#ffdb493e"
             android:textSize="16sp" />
 
@@ -79,7 +88,7 @@
             android:gravity="center"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:text="20元劵"
+            tools:text="20元劵"
             android:textColor="@color/color_FA6400"
             android:textSize="@dimen/sp_10" />
 
@@ -94,7 +103,7 @@
         android:layout_marginRight="8dp"
         android:background="@mipmap/yugu_bg"
         android:gravity="center"
-        android:text="预估收益31.57元"
+        tools:text="预估收益31.57元"
         android:textColor="#ffffffff"
         android:textSize="14sp" />
 

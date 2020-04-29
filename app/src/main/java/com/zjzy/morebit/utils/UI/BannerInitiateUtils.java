@@ -392,7 +392,14 @@ public class BannerInitiateUtils {
             }
         } else if (type == C.BannerIntentionType.HUNGRY) {//饿了么
 
-            getHungryLink((BaseActivity) activity, info);
+            if (LoginUtil.checkIsLogin(activity)) {
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity,false);
+                }else{
+                    getHungryLink((BaseActivity) activity, info);
+                }
+            }
+
         } else if (type == C.BannerIntentionType.MOUTH) {//口碑
 
             if (LoginUtil.checkIsLogin(activity)) {

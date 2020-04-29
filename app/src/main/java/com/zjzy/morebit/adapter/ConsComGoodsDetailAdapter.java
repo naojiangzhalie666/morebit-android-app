@@ -338,7 +338,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_settle_date.setVisibility(View.GONE);
             }
             if ("4".equals(info.getStatus())) {//已失效
-                viewHolder.tv_order_status.setText("失效");
+                viewHolder.tv_order_status.setText("已失效");
             } else if ("3".equals(info.getStatus())) {//已结算
                 viewHolder.tv_order_status.setText("已结算");
 

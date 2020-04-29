@@ -331,6 +331,7 @@
     <string name="update_vip2_earnings">最高可获收益%s元</string>
     <string name="update_vip3_earnings">现享最高收益%s元</string>
     <string name="estimate_earnings">收益%s元</string>
+    <string name="estimate">即可获得收益%s元</string>
     <string name="to_update">去升级</string>
     <string name="update_vip">升级VIP</string>
     <string name="immediately_buy_discounts">立即购买\n(省%s元)</string>
