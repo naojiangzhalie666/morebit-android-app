@@ -11,6 +11,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
@@ -318,7 +319,8 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                             return;
                         }
                         if (mLoginType == C.sendCodeType.WEIXINREGISTER){
-                            LoginMainFragment.start(getActivity(),1);
+                            Log.e("mEditInvitefragment",edtInvite.getText().toString());
+                            LoginMainFragment.start(getActivity(),1,mWeixinInfo,edtInvite.getText().toString());
                             return;
                         }
                         LoginVerifyCodeFragment.srart(getActivity(), mLoginType, mPhone, mEditInviteText, mWeixinInfo,mAreaCode);

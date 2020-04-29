@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.tencent.mm.opensdk.utils.Log;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -135,10 +136,9 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             passwordLogin.setVisibility(View.GONE);
             tv_title.setText("手机号码注册");
         }
-        if (loginType== C.sendCodeType.WEIXINREGISTER){
+        if (loginType== C.sendCodeType.BINDWEIXIN){
             passwordLogin.setVisibility(View.GONE);
             tv_title.setText("手机号码注册");
-            loginType=1;
         }
         if (loginType== C.sendCodeType.REGISTER){
             tv_title.setText("手机号码注册");
@@ -271,8 +271,8 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             case C.sendCodeType.WEIXINREGISTER:
                 mPresenter.weixinRegister(this, edtPhone.getText().toString(), mInvitationCode, edtsms.getText().toString(), mWeixinInfo);
                 break;
-            case C.sendCodeType.WEIXINBIND:
-                mPresenter.weixinLogin(this, edtPhone.getText().toString(), mInvitationCode, edtsms.getText().toString(), mWeixinInfo);
+            case C.sendCodeType.BINDWEIXIN:
+                mPresenter.weixinLogin(this,  edtPhone.getText().toString(), edtsms.getText().toString(), mWeixinInfo);
                 break;
 
 
@@ -356,6 +356,15 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
     @Override
     public void showLoginData(UserInfo userInfo) {
+        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuide, true);
+        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuideCircle, true);
+        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuideMine, true);
+        String s = MyGsonUtils.beanToJson(userInfo);
+        if (TextUtils.isEmpty(s)) {
+            return;
+        }
+        mId = userInfo.getPhone();
+        LoginUtil.LoginSuccess(userInfo, getActivity());
         Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
 //        ActivityLifeHelper.getInstance().finishActivity(LoginSinglePaneActivity.class);
         ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);

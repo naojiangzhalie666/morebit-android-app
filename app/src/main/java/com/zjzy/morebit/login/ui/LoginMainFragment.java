@@ -70,15 +70,18 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
    private ResginDialog dialog;
    private RelativeLayout rl;
     private String mInvite;
-    private WeixinInfo mWeixinInfo;
+    private static  WeixinInfo mWeixinInfo;
 
    private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86"; //默认是中国的86
     private AreaCodeBean mAreaCode;
     private boolean wxLoginFlag = false;
-    public static void start(Activity activity,int id) {
+    private static String mditInviteText;
+    public static void start(Activity activity,int id,WeixinInfo weixinInfo,String mEditInviteText) {
         Bundle bundle = new Bundle();
         mid=id;
+        mWeixinInfo=weixinInfo;
+        mditInviteText=mEditInviteText;
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
         OpenFragmentUtils.goToLoginSimpleFragment(activity,LoginMainFragment.class.getName(),bundle);
     }
@@ -242,7 +245,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                     if (mid!=1){
                         LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, weixinInfo,mAreaCode);
                     }else{
-                        LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mInvite, weixinInfo,mAreaCode);
+                        LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
                     }
 
                 }

@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.tencent.mm.opensdk.utils.Log;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Module.common.Dialog.WxResginDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
@@ -143,6 +144,7 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
             //用户不存在  跳转到注册页
 
             final WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
+            Log.e("loginfragment",weixinInfo+"");
             WxResginDialog dialog = new WxResginDialog(getActivity(), "", "当前微信未绑定多点优选账号\n立即注册绑定，畅享百万优惠", "", new WxResginDialog.OnOkListener() {
                 @Override
                 public void onClick(View view) {

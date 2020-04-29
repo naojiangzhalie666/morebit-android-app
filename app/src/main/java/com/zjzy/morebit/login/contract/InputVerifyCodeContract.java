@@ -25,6 +25,6 @@ public class InputVerifyCodeContract {
         void register(RxFragment baseFragment,String phone, String verifyCode , String invitationCode,String areaCode);
         void login(RxFragment baseFragment,String phone,String verifyCode);
         void weixinRegister(RxFragment baseFragment, String s, String phone, String verifyCode, WeixinInfo weixinInfo);
-        void weixinLogin(RxFragment baseFragment, String s, String phone, String verifyCode, WeixinInfo weixinInfo);
+        void weixinLogin(RxFragment baseFragment, String phone, String verifyCode, WeixinInfo weixinInfo);
     }
 }

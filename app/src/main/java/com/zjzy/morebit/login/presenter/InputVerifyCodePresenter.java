@@ -19,11 +19,11 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
 
 
     @Override
-    public void register(RxFragment baseFragment, String phone, String verifyCode, String invitationCode,String areaCode) {
-        if (AppUtil.isFastCashMoneyClick(500)){
-            return ;
+    public void register(RxFragment baseFragment, String phone, String verifyCode, String invitationCode, String areaCode) {
+        if (AppUtil.isFastCashMoneyClick(500)) {
+            return;
         }
-        mModel.register(baseFragment, phone, verifyCode, invitationCode,areaCode)
+        mModel.register(baseFragment, phone, verifyCode, invitationCode, areaCode)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -56,7 +56,7 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
 
     @Override
     public void weixinRegister(final RxFragment baseFragment, final String phone, String yqm_code, String verifyCode, WeixinInfo weixinInfo) {
-        if (AppUtil.isFastCashMoneyClick(500)){
+        if (AppUtil.isFastCashMoneyClick(500)) {
             return;
         }
 
@@ -67,25 +67,26 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
                         getIView().showFinally();
                     }
                 })
-                 .subscribe(new DataObserver<UserInfo>() {
-                     @Override
-                     protected void onError(String errorMsg, String errCode) {
-                         getIView().showRegisterFailure(errCode);
-                     }
-                     @Override
-                     protected void onSuccess(UserInfo data) {
-                         getIView().showRegisterData(data);
-                     }
-                 });
+                .subscribe(new DataObserver<UserInfo>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().showRegisterFailure(errCode);
+                    }
+
+                    @Override
+                    protected void onSuccess(UserInfo data) {
+                        getIView().showRegisterData(data);
+                    }
+                });
 
     }
 
     @Override
-    public void weixinLogin(RxFragment baseFragment, String phone,String verCode,  String areaCode, WeixinInfo weixinInfo) {
-        if (AppUtil.isFastCashMoneyClick(500)){
+    public void weixinLogin(RxFragment baseFragment, String phone, String verifyCode, WeixinInfo weixinInfo) {
+        if (AppUtil.isFastCashMoneyClick(500)) {
             return;
         }
-        mModel.getWeixinRegister(baseFragment, phone, verCode, areaCode, weixinInfo)
+        mModel.getWeixinLogin(baseFragment, phone, verifyCode, weixinInfo)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -97,6 +98,7 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
                     protected void onError(String errorMsg, String errCode) {
                         getIView().showLoginFailure(errCode);
                     }
+
                     @Override
                     protected void onSuccess(UserInfo data) {
                         getIView().showLoginData(data);

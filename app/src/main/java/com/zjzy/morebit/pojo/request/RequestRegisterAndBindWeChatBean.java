@@ -13,6 +13,15 @@ public class RequestRegisterAndBindWeChatBean extends RequestBaseBean {
     private String province;
     private String city;
     private String sign;
+    private String areaCode;
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
 
     public String getPhone() {
         return phone;
