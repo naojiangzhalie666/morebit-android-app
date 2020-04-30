@@ -33,15 +33,15 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_marginRight="16dp"
-            android:background="@drawable/ordershoyi_bg"
+            android:background="@drawable/tao_shouyi_bg"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="淘宝预估收入"
-                android:textColor="#ff666666"
-                android:textSize="12sp" />
+                android:textColor="#333333"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_marginTop="@dimen/dp_10"
@@ -51,24 +51,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¥ "
-                    android:textColor="#ffff645b"
-                    android:textSize="12sp"
+                    android:textColor="#FF6600"
+                    android:textSize="12dp"
                     />
                 <TextView
                     android:id="@+id/tao_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.0"
-                    android:textColor="#ffff645b"
-                    android:textSize="16sp"
+                    android:textColor="#FF6600"
+                    android:textSize="20dp"
                     />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/ordershoyi_bg"
+            android:background="@drawable/you_shouyi_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -79,8 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="优选积分收益"
-                android:textColor="#ff666666"
-                android:textSize="12sp" />
+                android:textColor="#333333"
+                android:textSize="16dp" />
 
             <LinearLayout
                 android:layout_marginTop="@dimen/dp_10"
@@ -99,16 +97,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.0"
-                    android:textColor="#ffff645b"
-                    android:textSize="16sp"
+                    android:textColor="#EE4139"
+                    android:textSize="20dp"
                     />
             </LinearLayout>
         </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        >
         <LinearLayout
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:background="@drawable/ordershoyi_bg"
+            android:background="@drawable/jd_shouyi_bg"
             android:layout_width="0dp"
+            android:layout_marginRight="16dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -117,9 +125,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="拼多多预估收入"
-                android:textColor="#ff666666"
-                android:textSize="12sp" />
+                android:text="京东预估收入"
+                android:textColor="#333333"
+                android:textSize="16dp" />
 
             <LinearLayout
                 android:layout_marginTop="@dimen/dp_10"
@@ -129,21 +137,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¥ "
-                    android:textColor="#ffff645b"
-                    android:textSize="12sp"
+                    android:textColor="#ED291E"
+                    android:textSize="12dp"
                     />
                 <TextView
-                    android:id="@+id/pin_moeny"
+                    android:id="@+id/jd_moeny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.0"
-                    android:textColor="#ffff645b"
-                    android:textSize="16sp"
+                    android:textColor="#ED291E"
+                    android:textSize="20dp"
                     />
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    <LinearLayout
+        android:paddingTop="8dp"
+        android:background="@drawable/pin_shouyi_bg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拼多多预估收入"
+            android:textColor="#333333"
+            android:textSize="16dp" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥ "
+                android:textColor="#D81E06"
+                android:textSize="12dp"
+                />
+            <TextView
+                android:id="@+id/pin_moeny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textColor="#D81E06"
+                android:textSize="20dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
     <include layout="@layout/earnings_day" />
 
     <LinearLayout

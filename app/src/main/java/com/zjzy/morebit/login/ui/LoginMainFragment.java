@@ -71,6 +71,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
    private RelativeLayout rl;
     private String mInvite;
     private static  WeixinInfo mWeixinInfo;
+    private TextView tv_bind;
 
    private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86"; //默认是中国的86
@@ -109,6 +110,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     @Override
     protected void initView(View view) {
         rl=view.findViewById(R.id.rl);
+        tv_bind=view.findViewById(R.id.tv_bind);
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +139,17 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
             @Override
             public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        if (mid==1){
+            tv_bind.setVisibility(View.VISIBLE);
+
+        }
+        tv_bind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
 
             }
         });

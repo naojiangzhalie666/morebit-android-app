@@ -52,7 +52,22 @@
 
             />
     </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_bind"
+        android:layout_below="@+id/head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/number_again"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:text="已有账号\n立即绑定"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textColor="#FF645B"
+        android:textSize="@dimen/sp_12"
+        android:paddingLeft="10dp"
 
+        />
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"

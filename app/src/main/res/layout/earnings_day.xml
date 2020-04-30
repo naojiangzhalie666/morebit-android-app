@@ -56,10 +56,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
-                android:paddingTop="8dp"
+                android:paddingTop="4dp"
                 android:text="今"
                 android:textSize="@dimen/sp_10"
-                android:textColor="@color/color_DB493E"
+                android:textColor="@color/white"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:id="@+id/icon_today"/>
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="付款笔数"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_12" />
 
                     <TextView
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_333333"
                         android:textSize="@dimen/sp_16" />
                 </LinearLayout>
 
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="积分收益"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_12" />
 
                     <LinearLayout
@@ -116,7 +116,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_16" />
                     </LinearLayout>
 
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="成交预估收入"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_12" />
 
                     <LinearLayout
@@ -144,7 +144,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_12"
                             android:text="¥ "/>
                         <TextView
@@ -152,7 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_16" />
                     </LinearLayout>
 
@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="结算预估收入"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_12" />
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_12"
                             android:text="¥ "/>
                         <TextView
@@ -188,7 +188,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_16"
                             android:text=""
                             />
@@ -220,9 +220,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
-                android:paddingTop="8dp"
+                android:paddingTop="4dp"
                 android:text="昨"
-                android:textColor="#FF8676"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_10"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
@@ -244,7 +244,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="付款笔数"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_12" />
 
                     <TextView
@@ -252,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_333333"
                         android:textSize="@dimen/sp_16" />
                 </LinearLayout>
                 <LinearLayout
@@ -267,7 +267,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="积分收益"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_12" />
 
                     <LinearLayout
@@ -280,7 +280,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_16" />
                     </LinearLayout>
 
@@ -297,7 +297,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="成交预估收入"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_12" />
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -307,7 +307,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_12"
                             android:text="¥ "/>
                         <TextView
@@ -315,7 +315,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_16" />
                     </LinearLayout>
 
@@ -333,7 +333,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="结算预估收入"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_12" />
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -343,7 +343,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_12"
                             android:text="¥ "/>
 
@@ -352,7 +352,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_333333"
                             android:textSize="@dimen/sp_16" />
                     </LinearLayout>
 
