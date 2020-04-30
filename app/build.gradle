@@ -112,7 +112,7 @@ android {
             buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "1"
             dimension "cooperator"
-            buildConfigField "int","IS_IP","0"        //0 环境切换  1不切换   上线前一定要记得换回1
+            buildConfigField "int","IS_IP","1"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
         //测试Uat环境
         uat {
