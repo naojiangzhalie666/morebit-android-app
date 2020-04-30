@@ -280,16 +280,9 @@ public class MathUtils {
         if (TextUtils.isEmpty(rmb)) {
             return "";
         }
-        if(rmb.contains(".")){
-            if (rmb.contains(".00")){
-                return rmb.replace(".00","");
-            }else if (rmb.contains(".0")){
-                return rmb.replace(".0","");
-            }else if (rmb.substring(rmb.length()-1).equals("0")){
-                return rmb.replace("0","");
-            }
-        }else{
-            return rmb;
+        if(rmb.indexOf(".") > 0){
+            rmb = rmb.replaceAll("0+?$", "");//去掉多余的0
+            rmb = rmb.replaceAll("[.]$", "");//如最后一位是.则去掉
         }
         return rmb;
 

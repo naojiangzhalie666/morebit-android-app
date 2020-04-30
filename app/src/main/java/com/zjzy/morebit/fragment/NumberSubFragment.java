@@ -228,7 +228,12 @@ public class NumberSubFragment extends BaseFragment {
 
             @Override
             public void onClick() {
+                if (mUserInfo.getMoreCoin()<360){
+                    ToastUtils.showLong("成长值不足");
+                }else{
                     updateGradePresenter(NumberSubFragment.this,Integer.parseInt(C.UserType.vipMember));
+                }
+
             }
 
         });
@@ -244,7 +249,12 @@ public class NumberSubFragment extends BaseFragment {
 
             @Override
             public void onClick(){
-                updateGradePresenter(NumberSubFragment.this,Integer.parseInt(C.UserType.operator));
+                if (mUserInfo.getMoreCoin()<50000){
+                    ToastUtils.showLong("成长值不足");
+                }else{
+                    updateGradePresenter(NumberSubFragment.this,Integer.parseInt(C.UserType.operator));
+                }
+
             }
 
         });
@@ -286,19 +296,12 @@ public class NumberSubFragment extends BaseFragment {
                 public void onClick(View v) {
                     if (mUserInfo != null){
                         if (C.UserType.member.equals(mUserInfo.getUserType())){
-                            if (mUserInfo.getMoreCoin()<360){
-                                ToastUtils.showLong("成长值不足");
-                            }else{
                                 updateGrade();
 
-                            }
-
                         }else if (C.UserType.vipMember.equals(mUserInfo.getUserType())){
-                            if (mUserInfo.getMoreCoin()<50000){
-                                ToastUtils.showLong("成长值不足");
-                            }else{
+
                                 updateGradeForLeader();
-                            }
+
 
                         }
                     }

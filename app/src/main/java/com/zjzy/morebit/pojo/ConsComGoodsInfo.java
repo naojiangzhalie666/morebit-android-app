@@ -39,6 +39,15 @@ public class ConsComGoodsInfo  implements Serializable{
     private String unit;//规格
     private int type;
     private boolean zeroOrder;//true 是0元购  false 不是
+    private boolean isOnSale; //true 是上架  false过期
+
+    public boolean isOnSale() {
+        return isOnSale;
+    }
+
+    public void setOnSale(boolean onSale) {
+        isOnSale = onSale;
+    }
 
     public boolean isZeroOrder() {
         return zeroOrder;

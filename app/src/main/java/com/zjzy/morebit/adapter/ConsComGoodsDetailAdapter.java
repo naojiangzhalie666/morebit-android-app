@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
@@ -149,7 +150,12 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View v) {
                         //重新购买，商品详情
-                        NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
+                        if (info.isOnSale()){
+                            NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
+                        }else{
+                            ToastUtils.showLong("商品已下架");
+                        }
+
                     }
                 });
                 viewHolder.receiverGoodsTv.setVisibility(View.GONE);
@@ -174,7 +180,11 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View v) {
                         //重新购买，商品详情
-                        NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
+                        if (info.isOnSale()){
+                            NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
+                        }else{
+                            ToastUtils.showLong("商品已下架");
+                        }
                     }
                 });
                 viewHolder.receiverGoodsTv.setVisibility(View.GONE);
@@ -200,7 +210,11 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View v) {
                         //重新购买，商品详情
-                        NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
+                        if (info.isOnSale()){
+                            NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
+                        }else{
+                            ToastUtils.showLong("商品已下架");
+                        }
                     }
                 });
                 viewHolder.tv_num.setVisibility(View.VISIBLE);

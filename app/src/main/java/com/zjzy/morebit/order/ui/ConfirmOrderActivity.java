@@ -443,7 +443,7 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
         if (result.getPayStatus() == 0){
             PayOrderSuccessActivity.start(ConfirmOrderActivity.this,result.getOrderId());
         }else{
-            NumberOrderDetailActivity.startOrderDetailActivity(ConfirmOrderActivity.this,result.getOrderId());
+            NumberOrderDetailActivity.startOrderDetailActivity(ConfirmOrderActivity.this,"",result.getOrderId());
         }
         finish();
     }
