@@ -87,6 +87,11 @@
 
 
                 </LinearLayout>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    />
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -124,20 +129,13 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginBottom="22dp"
-                android:background="@color/color_F1F1F1" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 >
                 <LinearLayout
+                    android:paddingTop="25dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -172,7 +170,13 @@
                     </LinearLayout>
 
                 </LinearLayout>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    />
                 <LinearLayout
+                    android:paddingTop="25dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -209,20 +213,13 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginBottom="22dp"
-                android:background="@color/color_F1F1F1" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 >
                 <LinearLayout
+                    android:paddingTop="25dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -250,7 +247,13 @@
                     </LinearLayout>
 
                 </LinearLayout>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    />
                 <LinearLayout
+                    android:paddingTop="25dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
