@@ -136,6 +136,7 @@ public class BannerInitiateUtils {
                 gotoMenu(activity, imageInfo.getClassId(), imageInfo);  //如果是2类型，class_id就是分类ID
             } else if (open == 3) {   //跳到网页
 //                if (imageInfo.getSuperType()==1){
+                if (LoginUtil.checkIsLogin(activity)) {
                     if (TaobaoUtil.isAuth()) {//淘宝授权
                         TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
                     } else {
@@ -146,7 +147,7 @@ public class BannerInitiateUtils {
 //                    //跳转到网页
 //                    showWebIntent(activity, imageInfo);
 //                }
-
+                }
             } else if (open == 4) {   //跳到分类
                 EventBus.getDefault().post(new OpenCategoryEvent());
                 if (activity instanceof NoticeActivity || activity instanceof SearchActivity || activity instanceof SinglePaneActivity) {
