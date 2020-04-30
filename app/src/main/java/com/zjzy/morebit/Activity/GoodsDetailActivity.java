@@ -453,6 +453,8 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     private boolean isTitleBarSetBg = true;
     private boolean isContinueScrollTabChange = false;
 
+    private boolean isShopImageSetted =false;
+
     /**
      * 初始化界面数据
      *
@@ -520,10 +522,11 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             shop_name.setText(Info.getShopName());
             mGoodsInfo.setShopName(Info.getShopName());
         }
-        
-        if (!StringsUtils.isEmpty(Info.getSellerPicture())) {
+
+        if (!StringsUtils.isEmpty(Info.getSellerPicture()) && !isShopImageSetted) {
             Info.setSellerPicture(Info.getSellerPicture());
             LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
+            isShopImageSetted = true;
         }
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
             if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
