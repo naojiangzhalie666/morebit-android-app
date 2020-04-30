@@ -79,8 +79,8 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon,  MathUtils.getPicture(info), 9);
         //viewHolder.textview.setText(StringsUtils.retractTitle(MathUtils.getTitle(info)));
 //        viewHolder.textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        viewHolder.textview_original.setText("¥" + MathUtils.getVoucherPrice(info.getVoucherPriceForPdd()));
-        viewHolder.textvihew_Preco.setText("¥" + MathUtils.getPrice(info.getPriceForPdd()));
+        viewHolder.textview_original.setText("¥" + MathUtils.getnum(info.getVoucherPriceForPdd()));
+        viewHolder.textvihew_Preco.setText("¥" + MathUtils.getnum(info.getPriceForPdd()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
         LoadImgUtils.setImg(mContext, viewHolder.iv_icon, info.getImageUrl());
@@ -122,7 +122,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_shop_name.setText(info.getShopName());
             }
 
-            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice((info.getCouponPrice().toString()))));
+            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum((info.getCouponPrice().toString()))));
             viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

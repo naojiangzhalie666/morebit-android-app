@@ -2,12 +2,15 @@ package com.zjzy.morebit.utils;
 
 import android.text.TextUtils;
 
+import com.zjzy.morebit.Module.common.Dialog.ProductDialog;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import static com.umeng.analytics.pro.ca.f;
 
 /**
  * Created by fengrs on 2018/7/6.
@@ -17,7 +20,7 @@ public class MathUtils {
     /**
      * 成长值比例
      */
-    public static final int CORN_RATION=1;
+    public static final int CORN_RATION = 1;
 
     /**
      * 转换两位数小时
@@ -77,8 +80,8 @@ public class MathUtils {
     /**
      * 获取自己的补贴佣金金额
      *
-     * @param calculation      比例
-     * @param subsidiesPrice  总补贴
+     * @param calculation    比例
+     * @param subsidiesPrice 总补贴
      * @return
      */
     public static String getMuRatioSubSidiesPrice(String calculation, String subsidiesPrice) {
@@ -90,25 +93,24 @@ public class MathUtils {
     }
 
 
-
-
     /**
-     *   计算平台补贴+佣金
+     * 计算平台补贴+佣金
+     *
      * @param ratioComPrice  佣金
-     * @param subsidiesPrice  补贴金额
+     * @param subsidiesPrice 补贴金额
      * @return
      */
-    public static String getTotleSubSidies(String ratioComPrice,String subsidiesPrice) {
+    public static String getTotleSubSidies(String ratioComPrice, String subsidiesPrice) {
         double calSubsidiesPrice = 0;
         double calRatioComPrice = 0;
-        if(!TextUtils.isEmpty(subsidiesPrice)){
+        if (!TextUtils.isEmpty(subsidiesPrice)) {
             calSubsidiesPrice = Double.parseDouble(subsidiesPrice);
         }
-        if (!TextUtils.isEmpty(ratioComPrice) ) {
+        if (!TextUtils.isEmpty(ratioComPrice)) {
             calRatioComPrice = Double.parseDouble(ratioComPrice);
         }
 
-        double v1 = sum(calSubsidiesPrice,calRatioComPrice);
+        double v1 = sum(calSubsidiesPrice, calRatioComPrice);
         return formatTo2Decimals(v1 + "");
     }
 
@@ -154,25 +156,26 @@ public class MathUtils {
         }
 
 
-        double v = mul(dRatio,getdRatioComPrice);
+        double v = mul(dRatio, getdRatioComPrice);
         return v / 100;
     }
 
     /**
      * 会员商品展示的多豆金额
+     *
      * @param price
      * @return
      */
-    public static String getMorebitCorn(String price){
-        if (TextUtils.isEmpty(price)){
+    public static String getMorebitCorn(String price) {
+        if (TextUtils.isEmpty(price)) {
             return "0";
         }
         long corn = 0;
-        try{
-            corn = (long)(Double.parseDouble(price)*CORN_RATION);
-        }catch (Exception e){
+        try {
+            corn = (long) (Double.parseDouble(price) * CORN_RATION);
+        } catch (Exception e) {
             e.printStackTrace();
-            LogUtils.e("MathUtils","价格转换非法");
+            LogUtils.e("MathUtils", "价格转换非法");
         }
 
         return String.valueOf(corn);
@@ -268,6 +271,53 @@ public class MathUtils {
     }
 
     /**
+     * 获取 价格
+     *
+     * @param
+     * @return
+     */
+    public static String getnum(String rmb) {
+        if (TextUtils.isEmpty(rmb)) {
+            return "";
+        }
+        if(rmb.contains(".")){
+            if (rmb.contains(".00")){
+                return rmb.replace(".00","");
+            }else if (rmb.contains(".0")){
+                return rmb.replace(".0","");
+            }else if (rmb.substring(rmb.length()-1).equals("0")){
+                return rmb.replace("0","");
+            }
+        }else{
+            return rmb;
+        }
+        return rmb;
+
+    }
+
+    /**
+     * 将double格式化为指定小数位的String，不足小数位用0补全
+     *
+     * @param v     需要格式化的数字
+     * @param scale 小数点后保留几位
+     * @return
+     */
+    public static String roundByScale(double v, int scale) {
+        if (scale < 0) {
+            throw new IllegalArgumentException(
+                    "The   scale   must   be   a   positive   integer   or   zero");
+        }
+        if(scale == 0){
+            return new DecimalFormat("0").format(v);
+        }
+        String formatStr = "0.";
+        for(int i=0;i<scale;i++){
+            formatStr = formatStr + "0";
+        }
+        return new DecimalFormat(formatStr).format(v);
+    }
+
+    /**
      * 转换为万  小数
      *
      * @param
@@ -351,7 +401,7 @@ public class MathUtils {
         if (item == null) return "";
         String itemSubhead = item.getItemSubhead();
         if (!TextUtils.isEmpty(itemSubhead)
-        && (itemSubhead != null && !itemSubhead.equals("NULL"))) {
+                && (itemSubhead != null && !itemSubhead.equals("NULL"))) {
             return item.getItemSubhead();
         } else {
             if (!TextUtils.isEmpty(item.getTitle())) {
@@ -387,6 +437,7 @@ public class MathUtils {
 
     /**
      * 获取商品主图
+     *
      * @param item
      * @return
      */
@@ -402,24 +453,26 @@ public class MathUtils {
 
 
     /**
-     *  double相加
+     * double相加
+     *
      * @param d1
      * @param d2
      * @return
      */
-    public static double sum(double d1,double d2){
+    public static double sum(double d1, double d2) {
         BigDecimal bd1 = new BigDecimal(Double.toString(d1));
         BigDecimal bd2 = new BigDecimal(Double.toString(d2));
         return bd1.add(bd2).doubleValue();
     }
 
     /**
-     *  double相乘
+     * double相乘
+     *
      * @param d1
      * @param d2
      * @return
      */
-    public static double mul(double d1,double d2){
+    public static double mul(double d1, double d2) {
         BigDecimal bd1 = new BigDecimal(Double.toString(d1));
         BigDecimal bd2 = new BigDecimal(Double.toString(d2));
         return bd1.multiply(bd2).doubleValue();
@@ -427,11 +480,12 @@ public class MathUtils {
 
     /**
      * 两位小数点格式化
+     *
      * @param price
      * @return
      */
-    public static String formatMoney(double price){
-        NumberFormat format =  new DecimalFormat("######0.00");
+    public static String formatMoney(double price) {
+        NumberFormat format = new DecimalFormat("######0.00");
         return format.format(price);
 
     }

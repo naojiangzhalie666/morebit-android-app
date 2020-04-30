@@ -65,8 +65,8 @@ public class ShoppingListForPddAdapter extends SimpleAdapter<ShopGoodInfo, Simpl
         final ViewHolder viewHolder = (ViewHolder) holder;
         LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, MathUtils.getImageUrl(info), 9);
         viewHolder.textview_original.setText(mContext.getString(R.string.coupon,
-                MathUtils.getVoucherPrice(info.getVoucherPriceForPdd())));
-        viewHolder.textvihew_Preco.setText("" + MathUtils.getPrice(info.getPriceForPdd()));
+                MathUtils.getnum(info.getVoucherPriceForPdd())));
+        viewHolder.textvihew_Preco.setText("" + MathUtils.getnum(info.getPriceForPdd()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
         try {
@@ -90,7 +90,7 @@ public class ShoppingListForPddAdapter extends SimpleAdapter<ShopGoodInfo, Simpl
                 viewHolder.tv_shop_name.setText(info.getShopName());
             }
 
-            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice(info.getCouponPrice())));
+            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum(info.getCouponPrice())));
 
 
 

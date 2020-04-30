@@ -237,7 +237,7 @@ public class ReleaseGoodsActivity extends BaseActivity {
             good_mall_tag.setImageResource(R.drawable.taobao);
         }
 
-        coupon.setText(getString(R.string.yuan, MathUtils.getCouponPrice(mShopGoodInfo.getCouponPrice())));
+        coupon.setText(getString(R.string.yuan, MathUtils.getnum(mShopGoodInfo.getCouponPrice())));
 
         if (C.UserType.operator.equals(UserLocalData.getUser(this).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(this).getPartner())) {
 //            commission.setVisibility(View.VISIBLE);
@@ -256,8 +256,8 @@ public class ReleaseGoodsActivity extends BaseActivity {
         if (!TextUtils.isEmpty(mShopGoodInfo.getShopName())) {
             tv_shop_name.setText(mShopGoodInfo.getShopName());
         }
-        discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(mShopGoodInfo.getVoucherPrice())));
-        price.setText(getString(R.string.income, MathUtils.getPrice(mShopGoodInfo.getPrice())));
+        discount_price.setText(getString(R.string.income, MathUtils.getnum(mShopGoodInfo.getVoucherPrice())));
+        price.setText(getString(R.string.income, MathUtils.getnum(mShopGoodInfo.getPrice())));
         price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
     }
 

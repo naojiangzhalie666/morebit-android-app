@@ -144,7 +144,7 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
                     } else {
                         video_play.setVisibility(View.VISIBLE);
                     }
-                    coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice(item.getCouponPrice())));
+                    coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
                     UserInfo userInfo1 =UserLocalData.getUser();
                     if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
                         commission.setText("登录赚佣金");
@@ -163,8 +163,8 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
                     if (!TextUtils.isEmpty(item.getShopName())) {
                         tv_shop_name.setText(item.getShopName());
                     }
-                    discount_price.setText(mContext.getString(R.string.coupon, MathUtils.getVoucherPrice(item.getVoucherPrice())));
-                    price.setText(mContext.getString(R.string.income, MathUtils.getPrice(item.getPrice())));
+                    discount_price.setText(mContext.getString(R.string.coupon, MathUtils.getnum(item.getVoucherPrice())));
+                    price.setText(mContext.getString(R.string.income, MathUtils.getnum(item.getPrice())));
                     price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                     sales.setText(mContext.getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
 

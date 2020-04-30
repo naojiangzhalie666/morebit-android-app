@@ -31,6 +31,7 @@ import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
@@ -261,9 +262,9 @@ public class ConfirmOrderActivity extends MvpActivity<ConfirmOrderPresenter> imp
         title.setText(mGoodsOrderInfo.getTitle());
         goodsSpec.setText(mGoodsOrderInfo.getSpec());
         goodsCount.setText(getResources().getString(R.string.number_goods_count,String.valueOf(mGoodsOrderInfo.getCount())));
-        goodsTotalPrice.setText(getResources().getString(R.string.number_goods_price,mGoodsOrderInfo.getGoodsTotalPrice()));
-        realPrice.setText(getResources().getString(R.string.number_goods_price,mGoodsOrderInfo.getPayPrice()));
-        price.setText(getResources().getString(R.string.number_goods_price,mGoodsOrderInfo.getPrice()));
+        goodsTotalPrice.setText(getResources().getString(R.string.number_goods_price,MathUtils.getnum(mGoodsOrderInfo.getGoodsTotalPrice())));
+        realPrice.setText(getResources().getString(R.string.number_goods_price,MathUtils.getnum(mGoodsOrderInfo.getPayPrice())));
+        price.setText(getResources().getString(R.string.number_goods_price, MathUtils.getnum(mGoodsOrderInfo.getPrice())));
 
     }
 

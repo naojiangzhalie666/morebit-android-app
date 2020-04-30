@@ -53,17 +53,17 @@ public class NumberAdapter extends BaseMultiItemQuickAdapter<NumberGoods, Number
         String price = goods.getRetailPrice();
 
 
-        double  pricedouble  = Double.parseDouble(price);
+
 
 
         if (TextUtils.isEmpty(price)){
             holder.price.setText("0");
         }else{
 //            holder.price.setText(String.valueOf(((Number)pricedouble).longValue()));
-            holder.price.setText(price);
+            holder.price.setText(MathUtils.getnum(price));
         }
         String moreCoin = MathUtils.getMorebitCorn(price);
-        holder.morebitCorn.setText(mContext.getResources().getString(R.string.number_give_more_corn,moreCoin));
+        holder.morebitCorn.setText(mContext.getResources().getString(R.string.number_give_more_corn,MathUtils.getnum(moreCoin)));
         holder.itemView.setOnClickListener(new View.OnClickListener(){
 
             @Override

@@ -335,7 +335,7 @@ public class BrandSellFragment extends MvpFragment<BrandSellPresenter> implement
             TextView discount_price = holder.viewFinder().view(R.id.discount_price);
             TextView price = holder.viewFinder().view(R.id.price);
             TextView markTv = holder.viewFinder().view(R.id.markTv);
-            price.setText("¥" + MathUtils.getPrice(goods.getPrice()));
+            price.setText("¥" + MathUtils.getnum(goods.getPrice()));
             price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             LoadImgUtils.loadingCornerBitmap(mContext, img, MathUtils.getPicture(goods) );
             if(!TextUtils.isEmpty(goods.getItemLabeling())  ) {
@@ -344,8 +344,8 @@ public class BrandSellFragment extends MvpFragment<BrandSellPresenter> implement
             }else{
                 markTv.setVisibility(View.GONE);
             }
-            discount_price.setText(MathUtils.getVoucherPrice(goods.getVoucherPrice()));
-            discount_coupon.setText(getString(R.string.discount_coupon, MathUtils.getCouponPrice(goods.getCouponPrice())));
+            discount_price.setText(MathUtils.getnum(goods.getVoucherPrice()));
+            discount_coupon.setText(getString(R.string.discount_coupon, MathUtils.getnum(goods.getCouponPrice())));
             title.setText(MathUtils.getTitle(goods));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

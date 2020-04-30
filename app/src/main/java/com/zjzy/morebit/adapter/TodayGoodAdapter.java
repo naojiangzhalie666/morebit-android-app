@@ -94,12 +94,12 @@ public class TodayGoodAdapter extends RecyclerView.Adapter<TodayGoodAdapter.View
 
         //原价
         if (!StringsUtils.isEmpty(info.getPrice())) {
-            holder.text_two.setText(" ¥" + MathUtils.getPrice(info.getPrice()));
+            holder.text_two.setText(" ¥" + MathUtils.getnum(info.getPrice()));
             holder.text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
 
         if (!StringsUtils.isEmpty(info.getVoucherPrice())) {
-            holder.textview_original.setText("¥ " + MathUtils.getVoucherPrice(info.getVoucherPrice()));
+            holder.textview_original.setText("¥ " + MathUtils.getnum(info.getVoucherPrice()));
         }
 
         //平台补贴

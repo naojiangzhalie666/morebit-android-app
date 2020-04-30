@@ -126,7 +126,7 @@ public class GoodsAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> 
             coupon.setVisibility(View.GONE);
         } else {
             coupon.setVisibility(View.VISIBLE);
-            coupon.setText(getString(R.string.yuan, MathUtils.getCouponPrice(item.getCouponPrice())));
+            coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
         }
 
         //判断是淘宝还是天猫的商品
@@ -192,8 +192,8 @@ public class GoodsAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> 
         if (!TextUtils.isEmpty(item.getShopName())) {
             tv_shop_name.setText(item.getShopName());
         }
-        discount_price.setText(getString(R.string.coupon, MathUtils.getVoucherPrice(item.getVoucherPrice())));
-        price.setText(getString(R.string.income, MathUtils.getPrice(item.getPrice())));
+        discount_price.setText(getString(R.string.coupon, MathUtils.getnum(item.getVoucherPrice())));
+        price.setText(getString(R.string.income, MathUtils.getnum(item.getPrice())));
         price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
         if (type == TYPE_OFFICAL_RECOM) { //官方推荐

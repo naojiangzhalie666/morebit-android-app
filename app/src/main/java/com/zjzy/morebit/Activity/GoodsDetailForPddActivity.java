@@ -501,7 +501,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (!StringsUtils.isEmpty(Info.getVoucherPriceForPdd())) {
             mGoodsInfo.setVoucherPriceForPdd(Info.getVoucherPriceForPdd());
             mGoodsInfo.setVoucherPrice(Info.getVoucherPriceForPdd());
-            textview_original.setText("" + MathUtils.getVoucherPrice(Info.getVoucherPriceForPdd()));
+            textview_original.setText("" + MathUtils.getnum(Info.getVoucherPriceForPdd()));
         }
 
 
@@ -528,7 +528,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (!StringsUtils.isEmpty(Info.getPriceForPdd())) {
             mGoodsInfo.setPriceForPdd(Info.getPriceForPdd());
             mGoodsInfo.setPrice(Info.getPriceForPdd());
-            text_two.setText(" ¥" + MathUtils.getPrice(Info.getPriceForPdd()));
+            text_two.setText(" ¥" + MathUtils.getnum(Info.getPriceForPdd()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
         if (!StringsUtils.isEmpty(Info.getSaleMonth())) {
@@ -569,7 +569,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
             mGoodsInfo.setCouponPrice(Info.getCouponPrice());
             arv_prise.setVisibility(View.VISIBLE);
-            coupon_prise.setText( MathUtils.getCouponPrice(Info.getCouponPrice())+"");
+            coupon_prise.setText( MathUtils.getnum(Info.getCouponPrice())+"");
             setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
         }else{
             arv_prise.setVisibility(View.GONE);

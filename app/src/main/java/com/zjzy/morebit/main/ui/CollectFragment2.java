@@ -476,7 +476,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                     ll_return_cash.setVisibility(View.GONE);
                 } else {
                     ll_return_cash.setVisibility(View.VISIBLE);
-                    coupon.setText(getString(R.string.yuan, MathUtils.getCouponPrice(item.getCouponPrice())));
+                    coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
                 }
 //                commission.setVisibility(View.GONE);
                 //店铺名称
@@ -494,8 +494,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                     }
 //                    commission.setText(getString(R.string.upgrade_commission));
                 }
-                discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(item.getVoucherPrice())));
-                price.setText(getString(R.string.income, MathUtils.getPrice(item.getPrice())));
+                discount_price.setText(getString(R.string.income, MathUtils.getnum(item.getVoucherPrice())));
+                price.setText(getString(R.string.income, MathUtils.getnum(item.getPrice())));
                 price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
                 //平台补贴

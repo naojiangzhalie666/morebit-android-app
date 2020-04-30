@@ -77,8 +77,8 @@ public class RankingListAdapter extends RecyclerView.Adapter {
         LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon,  MathUtils.getPicture(info), 9);
         //viewHolder.textview.setText(StringsUtils.retractTitle(MathUtils.getTitle(info)));
         viewHolder.textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        viewHolder.textview_original.setText("¥" + MathUtils.getVoucherPrice(info.getVoucherPrice()));
-        viewHolder.textvihew_Preco.setText("¥" + MathUtils.getPrice(info.getPrice()));
+        viewHolder.textview_original.setText("¥" + MathUtils.getnum(info.getVoucherPrice()));
+        viewHolder.textvihew_Preco.setText("¥" + MathUtils.getnum(info.getPrice()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         if(!TextUtils.isEmpty(info.getItemLabeling())  ){
             viewHolder. markTv.setVisibility(View.VISIBLE);
@@ -109,7 +109,7 @@ public class RankingListAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_shop_name.setText(info.getShopName());
             }
 
-            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice(info.getCouponPrice())));
+            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum(info.getCouponPrice())));
             viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
