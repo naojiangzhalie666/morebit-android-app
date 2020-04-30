@@ -1,6 +1,7 @@
 package com.zjzy.morebit.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -116,7 +117,8 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
         });
         if(TextUtils.isEmpty(info.getRemark())){
             viewHolder.input_remark.setText("填写备注");
-            viewHolder.input_remark.setBackgroundResource(R.drawable.bg_item_fans_remark);
+            viewHolder.input_remark.setTextColor(Color.WHITE);
+            viewHolder.input_remark.setBackgroundResource(R.drawable.item_fans_bg);
             viewHolder.tv_remark.setText(mContext.getString(R.string.fans_remark,"未填写"));
         } else {
             viewHolder.input_remark.setText("修改备注");

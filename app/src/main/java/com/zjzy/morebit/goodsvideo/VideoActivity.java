@@ -8,12 +8,14 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.Activity.ShortVideoPlayActivity;
@@ -145,6 +147,19 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
             img_stop = (ImageView) findViewById(R.id.img_stop);
             r1 = (RelativeLayout) findViewById(R.id.r1);
             r1.setOnClickListener(this);
+            videoView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (videoView.isPlaying()) {
+                        videoView.pause();
+                        img_stop.setVisibility(View.VISIBLE);
+                    } else {
+                        videoView.start();
+                        img_stop.setVisibility(View.GONE);
+                    }
+                    return false;
+                }
+            });
         }
 
         @Override
@@ -196,9 +211,11 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                     if (videoView.isPlaying()) {
                         videoView.pause();
                         img_stop.setVisibility(View.VISIBLE);
+                        ToastUtils.showLong("暂停");
                     } else {
                         videoView.start();
                         img_stop.setVisibility(View.GONE);
+                        ToastUtils.showLong("开始");
                     }
                     break;
             }
