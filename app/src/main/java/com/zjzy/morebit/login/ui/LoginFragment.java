@@ -148,7 +148,8 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
             WxResginDialog dialog = new WxResginDialog(getActivity(), "", "当前微信未绑定多点优选账号\n立即注册绑定，畅享百万优惠", "", new WxResginDialog.OnOkListener() {
                 @Override
                 public void onClick(View view) {
-                    LoginEditInviteFragment.start(getActivity(), "", weixinInfo, mAreaCode);
+                  LoginEditInviteFragment.start(getActivity(), "", weixinInfo, mAreaCode);
+                   // LoginMainFragment.start(getActivity());
                 }
             });
             dialog.show();
