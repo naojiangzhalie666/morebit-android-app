@@ -72,23 +72,20 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
         LoadImgUtils.loadingCornerTop(context, holder.iv_head, list.get(position).getItemPic(), 5);
         holder.commission.setText(list.get(position).getCouponMoney() + "元劵");
         holder.tv_price.setText("" + list.get(position).getItemPrice());
-
-        if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
-                || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())) {
+        UserInfo userInfo1 =UserLocalData.getUser();
+        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+            holder.tv_coupul.setText("登录赚佣金");
+        }else{
+            if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
+                    || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())) {
 //            commission.setVisibility(View.VISIBLE);
-            holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + "") + "元");
-        } else {
-            UserInfo userInfo1 = UserLocalData.getUser();
-            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, list.get(position).getTkMoney() + "") + "元");
-            } else {
-                holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + "") + "元");
+                holder.tv_coupul.setText("预估收益"+ MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney()+"")+"元");
             }
-
+        }
 
 //            commission.setText(getString(R.string.upgrade_commission));
 //            commission.setVisibility(View.GONE);
-        }
+
         //  holder.tv_coupul.setText("预估收益"+list.get(position).getTkMoney()+"元");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

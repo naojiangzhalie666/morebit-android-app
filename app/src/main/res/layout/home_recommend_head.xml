@@ -48,6 +48,12 @@
                         app:indicator_drawable_unselected="@drawable/icon_baidian"
                         app:is_auto_play="true"
                         app:scroll_time="1000"/>
+<!--                    <com.wikikii.bannerlib.banner.LoopLayout-->
+<!--                        android:id="@+id/loop_layout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="140dp"-->
+<!--                        android:visibility="gone"-->
+<!--                        />-->
 
                 </android.support.v7.widget.CardView>
             </com.zjzy.morebit.view.AspectRatioView>
@@ -110,17 +116,17 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:paddingBottom="5dp">
-                 <View android:layout_width="15dp" android:layout_height="1dp" android:background="@color/color_333333" />
+                 <View android:layout_width="60dp" android:layout_height="1dp" android:background="@color/color_DB493E" />
                     <TextView
                         android:id="@+id/recommendTitleTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/markermall_recommend"
-                        android:textSize="@dimen/sp_15"
-                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/sp_16"
+                        android:textColor="@color/color_DB493E"
                         android:layout_marginLeft="6dp"
                         android:layout_marginRight="6dp"/>
-                 <View android:layout_width="15dp" android:layout_height="1dp" android:background="@color/color_333333" />
+                 <View android:layout_width="60dp" android:layout_height="1dp" android:background="@color/color_DB493E" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

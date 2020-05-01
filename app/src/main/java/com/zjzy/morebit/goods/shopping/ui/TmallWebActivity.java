@@ -119,7 +119,7 @@ public class TmallWebActivity extends BaseActivity {
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);//开启DOM缓存，关闭的话H5自身的一些操作是无效的
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setBlockNetworkImage(true);
+        settings.setBlockNetworkImage(false);
         mUrl = getIntent().getStringExtra(C.Extras.WEBURL);
         String title = getIntent().getStringExtra(C.Extras.WEBTITLE);
         if (TextUtils.isEmpty(mUrl)) return;

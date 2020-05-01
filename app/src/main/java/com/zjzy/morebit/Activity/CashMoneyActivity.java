@@ -1,5 +1,6 @@
 package com.zjzy.morebit.Activity;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -50,7 +51,7 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
     private Bundle bundle;
     private TextView freeMoney, commit;
     private EditText inputMoney;
-    private int inType = 1;  // 2为代理佣金提现 1为消费佣金提现
+    private int inType = 1;  // 1为消费佣金提现
     private GetMoneySucessDialog getMoneySucessDialog;
     private boolean isCanSubmit = false;
    private String mTotalMoney;
@@ -68,7 +69,7 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
     private void initBundle() {
         bundle = getIntent().getExtras();
         if (bundle != null) {
-            inType = bundle.getInt("inType", 2);
+            inType = bundle.getInt("inType", 1);
             mTotalMoney = bundle.getString("totalMoney");
         }
     }
@@ -287,12 +288,14 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                     protected void onSuccess(CheckWithDrawBean data) {
                         if(null != data && data.getStatus() == 0){
                            commit.setEnabled(false);
+                            commit.setTextColor(Color.parseColor("#333333"));
                             withdrawTv.setVisibility(View.VISIBLE);
                             if(null != data.getMsg() && !TextUtils.isEmpty(data.getMsg())){
                                 withdrawTv.setText(data.getMsg());
                             }
                         }else{
                             commit.setEnabled(true);
+                            commit.setTextColor(Color.parseColor("#FFFFFF"));
                             withdrawTv.setVisibility(View.GONE);
                         }
                     }

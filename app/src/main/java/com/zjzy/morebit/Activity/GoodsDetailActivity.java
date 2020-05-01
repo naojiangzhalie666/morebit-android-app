@@ -29,7 +29,6 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
-import com.zjzy.morebit.Module.common.Dialog.ProgressDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
@@ -270,7 +269,6 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mTitles = new String[]{getString(R.string.goods_detail_baby), getString(R.string.goods_detail_recommend), getString(R.string.goods_detail_det)};
         int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.margin_small);
         mConsumerPadding = getResources().getDimensionPixelSize(R.dimen.goods_consumer_itme_padding);
@@ -289,8 +287,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         initData(false);
         mPresenter.getSysNotification(this);
         mHandler = new Handler();
-        ProgressDialog dialog=new ProgressDialog(this);
-        dialog.show();
+
     }
 
     private void refreshVipUpdate() {
@@ -456,6 +453,8 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     private boolean isTitleBarSetBg = true;
     private boolean isContinueScrollTabChange = false;
 
+    private boolean isShopImageSetted =false;
+
     /**
      * 初始化界面数据
      *
@@ -478,7 +477,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         }
         if (!StringsUtils.isEmpty(Info.getVoucherPrice())) {
             mGoodsInfo.setVoucherPrice(Info.getVoucherPrice());
-            textview_original.setText("" + MathUtils.getVoucherPrice(Info.getVoucherPrice()));
+            textview_original.setText("" + MathUtils.getnum(Info.getVoucherPrice()));
         }
 
         if (StringsUtils.isEmpty(Info.getItemDesc())) {
@@ -495,7 +494,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             if (Info.getShopType() == 2) {
                 iv_taobao.setImageResource(R.drawable.tianmao);
             } else {
-                iv_taobao.setImageResource(R.mipmap.taobao_details_icon);
+                iv_taobao.setImageResource(R.drawable.taobao);
             }
             if (!StringsUtils.isEmpty(Info.getTitle())) {
                 StringsUtils.retractTitle(iv_taobao, title, Info.getTitle());
@@ -510,7 +509,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
         if (!StringsUtils.isEmpty(Info.getPrice())) {
             mGoodsInfo.setPrice(Info.getPrice());
-            text_two.setText(" ¥" + MathUtils.getPrice(Info.getPrice()));
+            text_two.setText(" ¥" + MathUtils.getnum(Info.getPrice()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
         if (!StringsUtils.isEmpty(Info.getSaleMonth())) {
@@ -524,26 +523,37 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             mGoodsInfo.setShopName(Info.getShopName());
         }
 
-        if (!StringsUtils.isEmpty(Info.getSellerPicture())) {
+        if (!StringsUtils.isEmpty(Info.getSellerPicture()) && !isShopImageSetted) {
             Info.setSellerPicture(Info.getSellerPicture());
-          //  LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
+           // LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
+            isShopImageSetted = true;
         }
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
             if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                tv_coupon_time.setText("有效日期" + Info.getCouponStartTime() + "至 " + Info.getCouponEndTime());
+                tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + "-" + Info.getCouponEndTime());
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
+
+            if (TextUtils.isEmpty(Info.getCouponStartTime())&&!TextUtils.isEmpty(Info.getCouponEndTime())){
+                tv_coupon_time.setText("有效日期至"+ Info.getCouponEndTime());
+            }
         } else {
             if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                tv_coupon_time.setText("有效日期 " + Info.getCouponStartTime() + " 至 " + Info.getCouponEndTime());
+                tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + " - " + Info.getCouponEndTime());
             }
         }
-        if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
-            mGoodsInfo.setCouponPrice(Info.getCouponPrice());
-            arv_prise.setVisibility(View.VISIBLE);
-            coupon_prise.setText(MathUtils.getCouponPrice(Info.getCouponPrice())+"");
-            setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
+
+        if (TextUtils.isEmpty(coupon_prise.getText())) {
+            if (!StringsUtils.isEmpty(Info.getCouponPrice())){
+                mGoodsInfo.setCouponPrice(Info.getCouponPrice());
+                arv_prise.setVisibility(View.VISIBLE);
+                coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice())+"");
+                setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
+            }else{
+                arv_prise.setVisibility(View.GONE);
+            }
+
         }
 
         if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
@@ -994,27 +1004,28 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 break;
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买
-                if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
-                } else {
-                    if (isGoodsLose()) return;
-
-                    if (mGoodsInfo.getGrab_type() == 1) {
-                        showGotoNotification(mGoodsInfo);
-                        return;
-                    }
-                    if (!TextUtils.isEmpty(mGoodsInfo.material) || "11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) { // 物料商品跳转
-                        if ("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) {
-                            mGoodsInfo.material = mGoodsInfo.getComeFrom();
-                        }
-                        mPresenter.materialLinkList(GoodsDetailActivity.this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
+                if (LoginUtil.checkIsLogin(this)) {
+                    if (TaobaoUtil.isAuth()) {//淘宝授权
+                        TaobaoUtil.getAllianceAppKey((BaseActivity) this);
                     } else {
-//                        TaobaoUtil.showByItemId(GoodsDetailActivity.this,mGoodsInfo.getItemSourceId());
-                        GoodsUtil.getCouponInfo(GoodsDetailActivity.this, mGoodsInfo);
-                    }
-                }
-                SensorsDataUtil.getInstance().buy("", "", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
+                        if (isGoodsLose()) return;
 
+                        if (mGoodsInfo.getGrab_type() == 1) {
+                            showGotoNotification(mGoodsInfo);
+                            return;
+                        }
+                        if (!TextUtils.isEmpty(mGoodsInfo.material) || "11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) { // 物料商品跳转
+                            if ("11".equals(mGoodsInfo.getItemSource()) && !TextUtils.isEmpty(mGoodsInfo.getComeFrom())) {
+                                mGoodsInfo.material = mGoodsInfo.getComeFrom();
+                            }
+                            mPresenter.materialLinkList(GoodsDetailActivity.this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
+                        } else {
+//                        TaobaoUtil.showByItemId(GoodsDetailActivity.this,mGoodsInfo.getItemSourceId());
+                            GoodsUtil.getCouponInfo(GoodsDetailActivity.this, mGoodsInfo);
+                        }
+                    }
+                    SensorsDataUtil.getInstance().buy("", "", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
+                }
               //  startActivity(new Intent(this, PurchaseActivity.class));
                 break;
 

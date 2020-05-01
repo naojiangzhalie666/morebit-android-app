@@ -436,10 +436,10 @@ public class GoodsUtil {
         if (StringsUtils.isEmpty(goodsInfo.getCouponPrice())) {
             cop_price.setVisibility(View.INVISIBLE);
         } else {
-            cop_price.setText(activity.getString(R.string.yuan, MathUtils.getCouponPrice(goodsInfo.getCouponPrice())));
+            cop_price.setText(activity.getString(R.string.yuan, MathUtils.getnum(goodsInfo.getCouponPrice())));
         }
-        juanhou_prise.setText("¥" + MathUtils.getSalesPrice(MathUtils.getVoucherPrice(goodsInfo.getVoucherPrice())));
-        yuan_prise.setText("¥ " + MathUtils.getPrice(goodsInfo.getPrice()));
+        juanhou_prise.setText("¥" + MathUtils.getSalesPrice(MathUtils.getnum(goodsInfo.getVoucherPrice())));
+        yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
         if (goodsInfo.getShopType() == 2) {
             goodShopTag.setText("天猫");
         } else if (goodsInfo.getShopType() == 1){

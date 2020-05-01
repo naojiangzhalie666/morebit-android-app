@@ -144,29 +144,27 @@ public class HomeRecommendAdapter extends BaseMultiItemQuickAdapter<HomeRecommen
                     } else {
                         video_play.setVisibility(View.VISIBLE);
                     }
-                    coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice(item.getCouponPrice())));
-                    if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
-                        if(!StringsUtils.isEmpty(item.getCommission())){
-                            commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
-                        } else {
-                            commission.setVisibility(View.GONE);
-                        }
+                    coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
+                    UserInfo userInfo1 =UserLocalData.getUser();
+                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                        commission.setText("登录赚佣金");
+                    }else{
+                        if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
+                            if(!StringsUtils.isEmpty(item.getCommission())){
+                                commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+                            } else {
+                                commission.setVisibility(View.GONE);
+                            }
 
-                    } else {
-                        UserInfo userInfo1 =UserLocalData.getUser();
-                        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                            commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
-                        }else{
-                            commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
                         }
-//                        commission.setText(mContext.getString(R.string.upgrade_commission));
                     }
+
                     //店铺名称
                     if (!TextUtils.isEmpty(item.getShopName())) {
                         tv_shop_name.setText(item.getShopName());
                     }
-                    discount_price.setText(mContext.getString(R.string.coupon, MathUtils.getVoucherPrice(item.getVoucherPrice())));
-                    price.setText(mContext.getString(R.string.income, MathUtils.getPrice(item.getPrice())));
+                    discount_price.setText(mContext.getString(R.string.coupon, MathUtils.getnum(item.getVoucherPrice())));
+                    price.setText(mContext.getString(R.string.income, MathUtils.getnum(item.getPrice())));
                     price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                     sales.setText(mContext.getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
 

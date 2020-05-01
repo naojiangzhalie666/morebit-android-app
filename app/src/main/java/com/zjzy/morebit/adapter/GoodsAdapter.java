@@ -126,7 +126,7 @@ public class GoodsAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> 
             coupon.setVisibility(View.GONE);
         } else {
             coupon.setVisibility(View.VISIBLE);
-            coupon.setText(getString(R.string.yuan, MathUtils.getCouponPrice(item.getCouponPrice())));
+            coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
         }
 
         //判断是淘宝还是天猫的商品
@@ -146,22 +146,36 @@ public class GoodsAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> 
         } else {
             commission.setVisibility(View.VISIBLE);
         }
-        if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner())
-                || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
-//            commission.setVisibility(View.VISIBLE);
-            commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
-        } else {
-            UserInfo userInfo1 =UserLocalData.getUser();
-            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
-            }else{
-                commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+//        if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner())
+//                || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
+////            commission.setVisibility(View.VISIBLE);
+//            commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+//        } else {
+//            UserInfo userInfo1 =UserLocalData.getUser();
+//            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+//                commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
+//            }else{
+//                commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+//            }
+//
+//
+//
+////            commission.setText(getString(R.string.upgrade_commission));
+////            commission.setVisibility(View.GONE);
+//        }
+
+        UserInfo userInfo1 =UserLocalData.getUser();
+        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+            commission.setText("登录赚佣金");
+        }else{
+            if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
+                if(!StringsUtils.isEmpty(item.getCommission())){
+                    commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+                } else {
+                    commission.setVisibility(View.GONE);
+                }
+
             }
-
-
-
-//            commission.setText(getString(R.string.upgrade_commission));
-//            commission.setVisibility(View.GONE);
         }
         //平台补贴
         if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(item.getSubsidiesPrice())){
@@ -178,8 +192,8 @@ public class GoodsAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> 
         if (!TextUtils.isEmpty(item.getShopName())) {
             tv_shop_name.setText(item.getShopName());
         }
-        discount_price.setText(getString(R.string.coupon, MathUtils.getVoucherPrice(item.getVoucherPrice())));
-        price.setText(getString(R.string.income, MathUtils.getPrice(item.getPrice())));
+        discount_price.setText(getString(R.string.coupon, MathUtils.getnum(item.getVoucherPrice())));
+        price.setText(getString(R.string.income, MathUtils.getnum(item.getPrice())));
         price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
         if (type == TYPE_OFFICAL_RECOM) { //官方推荐

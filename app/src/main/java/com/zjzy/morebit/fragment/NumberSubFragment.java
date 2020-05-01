@@ -228,7 +228,12 @@ public class NumberSubFragment extends BaseFragment {
 
             @Override
             public void onClick() {
+                if (mUserInfo.getMoreCoin()<360){
+                    ToastUtils.showLong("成长值不足");
+                }else{
                     updateGradePresenter(NumberSubFragment.this,Integer.parseInt(C.UserType.vipMember));
+                }
+
             }
 
         });
@@ -244,7 +249,12 @@ public class NumberSubFragment extends BaseFragment {
 
             @Override
             public void onClick(){
-                updateGradePresenter(NumberSubFragment.this,Integer.parseInt(C.UserType.operator));
+                if (mUserInfo.getMoreCoin()<50000){
+                    ToastUtils.showLong("成长值不足");
+                }else{
+                    updateGradePresenter(NumberSubFragment.this,Integer.parseInt(C.UserType.operator));
+                }
+
             }
 
         });
@@ -266,7 +276,7 @@ public class NumberSubFragment extends BaseFragment {
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
-            user_king.setVisibility(View.VISIBLE);
+            user_king.setVisibility(View.GONE);
 
         }
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
@@ -286,19 +296,12 @@ public class NumberSubFragment extends BaseFragment {
                 public void onClick(View v) {
                     if (mUserInfo != null){
                         if (C.UserType.member.equals(mUserInfo.getUserType())){
-                            if (mUserInfo.getMoreCoin()<360){
-                                ToastUtils.showLong("成长值不足");
-                            }else{
                                 updateGrade();
 
-                            }
-
                         }else if (C.UserType.vipMember.equals(mUserInfo.getUserType())){
-                            if (mUserInfo.getMoreCoin()<50000){
-                                ToastUtils.showLong("成长值不足");
-                            }else{
+
                                 updateGradeForLeader();
-                            }
+
 
                         }
                     }
@@ -418,9 +421,7 @@ public class NumberSubFragment extends BaseFragment {
                 mAdapter.add(list);
             }
 
-
         }
-
         mAdapter.notifyDataSetChanged();
     }
 
@@ -495,7 +496,7 @@ public class NumberSubFragment extends BaseFragment {
             myGradedView.setText("团队长");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
             rl_duodou_progress.setVisibility(View.GONE);
-            user_king.setVisibility(View.VISIBLE);
+            user_king.setVisibility(View.GONE);
             updateVip.setVisibility(View.GONE);
 
             gradeForLeaderView();
@@ -689,10 +690,12 @@ public class NumberSubFragment extends BaseFragment {
             }else{
                 double  pricedouble  = Double.parseDouble(price);
                 long pricelong = ((Number)pricedouble).longValue();
-                if (pricelong == 0){
-                    tvPrice.setText(price);
-                }else{
-                    tvPrice.setText(String.valueOf(pricelong));
+                if (price.contains(".00")){
+                    String replace = price.replace(".00", "");
+                    tvPrice.setText(replace);
+                }
+                if (pricedouble == 0.0){
+                    tvPrice.setText("0");
                 }
 //                tvPrice.setText(price);
             }

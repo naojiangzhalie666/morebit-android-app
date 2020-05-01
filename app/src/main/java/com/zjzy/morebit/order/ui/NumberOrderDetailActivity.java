@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.LocalData.CommonLocalData;
@@ -219,6 +220,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     private int payStatus =0;
 
     //private Counter mTimer;
+    private String isOnSale;
 
 
     private OrderDetailInfo mInfo;
@@ -257,10 +259,11 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
     };
 
 
-    public static void  startOrderDetailActivity(Activity activity,String orderId){
+    public static void  startOrderDetailActivity(Activity activity,String isOnSale,String orderId){
         //跳转到确认订单页面
         Intent it = new Intent(activity, NumberOrderDetailActivity.class);
         it.putExtra("orderId",orderId);
+        it.putExtra("isOnSale",isOnSale);
         activity.startActivity(it);
 
     }
@@ -631,7 +634,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         orderFinishRebuyLlView.setVisibility(View.GONE);
 
     }
-    private void initOrderStatusClose(OrderDetailInfo info){
+    private void initOrderStatusClose(final OrderDetailInfo info){
         tvDaojishiTime.setVisibility(View.GONE);
         orderDetailView.setImageResource(R.mipmap.order_finish);
         orderDetailTxtView.setText("已关闭");
@@ -654,11 +657,16 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
             @Override
             public void onClick(View v) {
                 //todo:跳转到商品详情页面
-                if (!TextUtils.isEmpty(goodsId)){
-                    NumberGoodsDetailsActivity.start(NumberOrderDetailActivity.this,goodsId);
+                if (isOnSale.equals("true")){
+                    if (!TextUtils.isEmpty(goodsId)){
+                        NumberGoodsDetailsActivity.start(NumberOrderDetailActivity.this,goodsId);
+                    }else{
+                        MyLog.d(TAG,"商品Id为空");
+                    }
                 }else{
-                    MyLog.d(TAG,"商品Id为空");
+                    ToastUtils.showLong("商品已下架");
                 }
+
 
 
             }
@@ -773,6 +781,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
             ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
         }
         mOrderId = getIntent().getStringExtra("orderId");
+          isOnSale = getIntent().getStringExtra("isOnSale");
         headTitle.setText("订单详情");
         //返回按钮
         btnBack.setOnClickListener(new View.OnClickListener(){

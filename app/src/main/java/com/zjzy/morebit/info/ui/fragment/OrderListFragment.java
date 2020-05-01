@@ -130,7 +130,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
             @Override
             public void onPay(String orderId, int position) {
                 //去支付或者取消
-                NumberOrderDetailActivity.startOrderDetailActivity(getActivity(),orderId);
+                NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),orderId);
             }
         });
         consComGoodsDetailAdapter.setOnAdapterClickListener(new ConsComGoodsDetailAdapter.OnAdapterClickListener() {
@@ -144,7 +144,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                     GoodsDetailForPddActivity.start(getActivity(),info);
                 } else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
-                    NumberOrderDetailActivity.startOrderDetailActivity(getActivity(),
+                    NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
                             mListArray.get(position).getOrderSn());
                 }
             }

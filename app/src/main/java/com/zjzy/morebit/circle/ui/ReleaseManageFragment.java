@@ -240,7 +240,7 @@ public class ReleaseManageFragment extends MvpFragment<ReleaseManagePresenter> i
                     good_mall_tag.setImageResource(R.drawable.taobao);
                 }
 
-                coupon.setText(getString(R.string.yuan, MathUtils.getCouponPrice(shopGoodInfo.getCouponPrice())));
+                coupon.setText(getString(R.string.yuan, MathUtils.getnum(shopGoodInfo.getCouponPrice())));
                  MyLog.i("test","commission: " +shopGoodInfo.getCommission());
                  MyLog.i("test","commission1: " +MathUtils.getMuRatioComPrice(UserLocalData.getUser().getCalculationRate(), shopGoodInfo.getCommission()));
                 if (C.UserType.operator.equals(UserLocalData.getUser().getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser().getPartner()) || !TextUtils.isEmpty(shopGoodInfo.getCommission())) {
@@ -255,8 +255,8 @@ public class ReleaseManageFragment extends MvpFragment<ReleaseManagePresenter> i
                 if (!TextUtils.isEmpty(shopGoodInfo.getShopName())) {
                     tv_shop_name.setText(shopGoodInfo.getShopName());
                 }
-                discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(shopGoodInfo.getVoucherPrice())));
-                price.setText(getString(R.string.income, MathUtils.getPrice(shopGoodInfo.getPrice())));
+                discount_price.setText(getString(R.string.income, MathUtils.getnum(shopGoodInfo.getVoucherPrice())));
+                price.setText(getString(R.string.income, MathUtils.getnum(shopGoodInfo.getPrice())));
                 price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             }
 

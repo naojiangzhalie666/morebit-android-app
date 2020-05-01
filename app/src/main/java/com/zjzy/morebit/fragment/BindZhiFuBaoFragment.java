@@ -111,8 +111,8 @@ public class BindZhiFuBaoFragment extends BaseFragment implements View.OnClickLi
             try {
                 tv_yanzhengma.setEnabled(true);
                 tv_yanzhengma.setText("重新获取");
-                tv_yanzhengma.setBackgroundResource(R.drawable.bg_ffe10a_rightround_2dp);
-                tv_yanzhengma.setTextColor(getResources().getColor(R.color.color_000000));
+                tv_yanzhengma.setBackgroundResource(R.drawable.bg_000000_1dpline_yellowbg_round_15dp);
+                tv_yanzhengma.setTextColor(getResources().getColor(R.color.color_FFFFFF));
             } catch (Exception e) {
                 e.printStackTrace();
             }

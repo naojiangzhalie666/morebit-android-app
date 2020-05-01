@@ -231,7 +231,8 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
             if (user == null
             || (user != null && user.getPartner() == null)){
                 String unLoginmuRatioComPrice = MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, data.getCommission());
-                mTv_estimate_earnings.setText(mContext.getString(R.string.estimate_earnings, unLoginmuRatioComPrice));
+                mTv_estimate_earnings.setText("注册会员");
+                mTv_update_earnings.setText("即可获得收益"+unLoginmuRatioComPrice+"元");
             }
         }
     }
@@ -253,7 +254,7 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
                 String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(s,data.getSubsidiesPrice());
                 String totalSubside = MathUtils.getTotleSubSidies(muRatioComPrice,getRatioSubside);
                 mTv_update_earnings.setText(mContext.getString(R.string.update_vip2_earnings, totalSubside));
-            } else {//会员和未登录
+            } else if (C.UserType.member.equals(user.getPartner())){//会员和未登录
                 int integer = Integer.valueOf(C.UserType.vipMember);
                 String s = split[integer];
                 String muRatioComPrice = MathUtils.getMuRatioComPrice(s, data.getCommission());

@@ -223,9 +223,9 @@ public class ShowWebFragment extends BaseFragment {
             if (url != null) {
                 UserInfo user = UserLocalData.getUser(getActivity());
                 if (url.contains("?")) {
-                    url = url + "&token=" + UserLocalData.getToken() + "&inviteCode=" + user.getInviteCode() + "&appVersion=" + C.Setting.app_version;
+                    url = url + "&token=" + UserLocalData.getToken() + "&inviteCode=" + user.getInviteCode() + "&appVersion=" + C.Setting.app_version + "&userId=" + user.getId();
                 } else {
-                    url = url + "?token=" + UserLocalData.getToken() + "&inviteCode=" + user.getInviteCode() + "&appVersion=" + C.Setting.app_version;
+                    url = url + "?token=" + UserLocalData.getToken() + "&inviteCode=" + user.getInviteCode() + "&appVersion=" + C.Setting.app_version + "&userId=" + user.getId();;
                 }
             }
             //            }

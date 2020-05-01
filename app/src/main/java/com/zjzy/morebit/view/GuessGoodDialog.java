@@ -156,7 +156,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             }
 
             if (!StringsUtils.isEmpty(mData.getItemVoucherPrice())) {
-                discount_price.setText(" ¥" + MathUtils.getPrice(mData.getItemVoucherPrice()));
+                discount_price.setText(" ¥" + MathUtils.getnum(mData.getItemVoucherPrice()));
             }
 
 

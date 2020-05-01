@@ -42,7 +42,7 @@
                             android:id="@+id/name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/color_333333"
+                            android:textColor="@color/color_FFFFFF"
                             android:textSize="@dimen/sp_14" />
 
                         <LinearLayout
@@ -61,7 +61,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="3dp"
-                                    android:textColor="@color/color_333333"
+                                    android:textColor="@color/color_FFFFFF"
                                     android:textSize="@dimen/sp_13" />
 
                                 <TextView
@@ -71,7 +71,7 @@
                                     android:background="@drawable/bg_stroke_dadada_solid_ffffff_5dp"
                                     android:gravity="center"
                                     android:text="@string/copy"
-                                    android:textColor="@color/color_333333"
+                                    android:textColor="@color/color_FFD800"
                                     android:textSize="@dimen/sp_12" />
                             </LinearLayout>
 
@@ -88,7 +88,7 @@
                                     android:layout_marginRight="3dp"
                                     android:maxLength="15"
                                     android:ellipsize="end"
-                                    android:textColor="@color/color_333333"
+                                    android:textColor="@color/color_FFFFFF"
                                     android:textSize="@dimen/sp_13" />
 
                                 <TextView
@@ -99,7 +99,7 @@
                                     android:gravity="center"
                                     android:text="@string/copy"
                                     android:layout_marginRight="8dp"
-                                    android:textColor="@color/color_333333"
+                                    android:textColor="@color/color_FFD800"
                                     android:textSize="@dimen/sp_12" />
                             </LinearLayout>
                         </LinearLayout>
@@ -122,14 +122,14 @@
 
                     <ImageButton
                         android:id="@+id/iv_close"
-                        android:layout_width="21dp"
-                        android:layout_height="21dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginRight="6dp"
                         android:layout_marginTop="6dp"
                         android:background="@color/transparent"
-                        android:src="@drawable/icon_guanbi" />
+                        android:src="@drawable/icon_guanbi_off_white" />
 
                 </RelativeLayout>
 

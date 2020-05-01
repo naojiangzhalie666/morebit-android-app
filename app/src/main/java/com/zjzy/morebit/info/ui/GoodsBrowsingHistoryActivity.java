@@ -402,7 +402,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                     ll_return_cash.setVisibility(View.GONE);
                 } else {
                     ll_return_cash.setVisibility(View.VISIBLE);
-                    coupon.setText(getString(R.string.yuan, MathUtils.getCouponPrice(item.getCouponPrice())));
+                    coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
                 }
                 if(position+1<getItems().size()){
                     if(TextUtils.isEmpty(getItem(position+1).getBrowse_time()+"")&&!TextUtils.isEmpty(getItem(position+1).getTime())){
@@ -438,12 +438,12 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 //                }
                 MyLog.i("test", "item.getShopName(): " + item.getShopName() + " url: " + item.getItemPicture());
                 if (shopType == 3){
-                    discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(item.getItemVoucherPrice())));
+                    discount_price.setText(getString(R.string.income, MathUtils.getnum(item.getItemVoucherPrice())));
                 }else{
-                    discount_price.setText(getString(R.string.income, MathUtils.getVoucherPrice(item.getItemVoucherPrice())));
+                    discount_price.setText(getString(R.string.income, MathUtils.getnum(item.getItemVoucherPrice())));
                 }
 
-                price.setText(getString(R.string.income, MathUtils.getPrice(item.getItemPrice())));
+                price.setText(getString(R.string.income, MathUtils.getnum(item.getItemPrice())));
                 price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
 

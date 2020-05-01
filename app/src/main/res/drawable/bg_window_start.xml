@@ -19,7 +19,7 @@
     </item>
     <item >
         <bitmap
-            android:gravity="bottom|right"
+            android:gravity="bottom|center|fill_horizontal"
             android:src="@drawable/app_start_button"/>
     </item>
 </layer-list>

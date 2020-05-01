@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -463,4 +465,7 @@ public class App extends Application implements ProtectedMemberKeeper {
             e.printStackTrace();
         }
     }
+
+
+
 }

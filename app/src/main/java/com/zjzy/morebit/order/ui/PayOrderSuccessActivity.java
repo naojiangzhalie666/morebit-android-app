@@ -57,7 +57,7 @@ public class PayOrderSuccessActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                NumberOrderDetailActivity.startOrderDetailActivity(PayOrderSuccessActivity.this,mOrderId);
+                NumberOrderDetailActivity.startOrderDetailActivity(PayOrderSuccessActivity.this,"",mOrderId);
                 finish();
             }
         });

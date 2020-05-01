@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.bumptech.glide.Glide;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Transformer;
@@ -181,7 +182,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     private TextView tv_limitime;
     private List<PanicBuyTiemBean> mPanicBuyTiemBean;
     private CountDownTimer mCountDownTiemr;
-
+  //  private LoopLayout loopLayout;
+   private List<ImageInfo> list;
     public static HomeRecommendFragment newInstance() {
         Bundle args = new Bundle();
         HomeRecommendFragment fragment = new HomeRecommendFragment();
@@ -581,6 +583,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+               // loopLayout.stopLoop();
                 isLoadData = true;
                 isSetBannerColor = false;
                 page = 1;
@@ -877,6 +880,10 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     private void initBanner() {
         mMakeMoneyBanner = (Banner) mHeadView.findViewById(R.id.banner_make_money);
         mOfficialBanner = mHeadView.findViewById(R.id.banner_offical);
+
+     //   loopLayout = mHeadView.findViewById(R.id.loop_layout);
+
+
     }
 
 
@@ -885,7 +892,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
      */
     private void setModuleView() {
         mTitleBanner = (Banner) mHeadView.findViewById(R.id.roll_view_pager);
-//        mTitleBanner.setBannerAnimation(Transformer.ZoomOutSlide);
+ //       mTitleBanner.setBannerAnimation(Transformer.ZoomOutSlide);
 //        mTitleBanner.setPadding(10,0,10,0);
         mTitleBanner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -1036,6 +1043,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         super.onInvisible();
         if (isAdded()) {
             mTitleBanner.stopAutoPlay();
+         //   loopLayout.stopLoop();
         }
     }
 
@@ -1045,6 +1053,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         super.onVisible();
         if (isAdded()) {
             mTitleBanner.startAutoPlay();
+           // loopLayout.startLoop();
         }
     }
 
@@ -1060,6 +1069,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+       // loopLayout.stopLoop();// 页面销毁时需要停止
     }
 
     @Subscribe  //订阅事件
@@ -1181,7 +1191,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     }
 
     @Override
-    public void onBrandBanner(List<ImageInfo> datas, int back) {
+    public void onBrandBanner(final List<ImageInfo> datas, int back) {
+       list= datas;
         switch (back) {
             case C.UIShowType.Brandsale: //品牌特卖轮播
                 putBannerData((ArrayList) datas, back);
@@ -1210,6 +1221,45 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                 setBannerColors(datas);
                 BannerInitiateUtils.setBrandBanner(getActivity(), datas, mTitleBanner, mAsTitleBanner);
                 putBannerData((ArrayList) datas, back);
+//                loopLayout.setLoop_ms(3000);//轮播的速度(毫秒)
+//                loopLayout.setLoop_duration(400);//滑动的速率(毫秒)
+//                loopLayout.setScaleAnimation(true);// 设置是否需要动画
+//                loopLayout.setLoop_style(LoopStyle.Empty);//轮播的样式-默认empty
+//                loopLayout.setIndicatorLocation(IndicatorLocation.Center);//指示器位置-中Center
+//                loopLayout.initializeData(getActivity());//mAsTitleBanner
+//                // 准备数据
+//                ArrayList<BannerInfo> bannerInfos = new ArrayList<>();
+//                bannerInfos.clear();
+//                for (int i=0;i<datas.size();i++){
+//                    bannerInfos.add(new BannerInfo(datas.get(i).getThumb(),""));
+//                }
+//
+//
+//                // 设置监听
+//                loopLayout.setOnLoadImageViewListener(new OnDefaultImageViewLoader() {
+//                    @Override
+//                    public void onLoadImageView(ImageView view, Object object) {
+//                        LoadImgUtils.loadingCornerBitmap(view.getContext(), view, (String) object);
+//
+////                        Glide.with(view.getContext())
+////                                .load(object)
+////                                .into(view);
+//                    }
+//                });
+//
+//               loopLayout.setOnBannerItemClickListener(new OnBannerItemClickListener() {
+//                   @Override
+//                   public void onBannerClick(int index, ArrayList<BannerInfo> banner) {
+//                       SensorsDataUtil.getInstance().advClickTrack(datas.get(index).getTitle(), datas.get(index).getId() + "", datas.get(index).getOpen() + "", "", index, datas.get(index).getClassId() + "", datas.get(index).getUrl());
+//                       BannerInitiateUtils.gotoAction(getActivity(), datas.get(index));
+//                   }
+//               });
+//                if (bannerInfos.size() == 0) {
+//                    return;
+//                }
+//                //    loopLayout.setOnBannerItemClickListener();
+//                loopLayout.setLoopData(bannerInfos);
+//                loopLayout.startLoop();
                 break;
             case C.UIShowType.HomeIcon:         // 首页ICON配置
                 setCategorys(datas);
@@ -1483,8 +1533,11 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            int moveleft = (int) animation.getAnimatedValue();
-                            floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft + floatIv.getWidth(), moveMarginHeight + 200));
+                            if (animation!=null){
+                                int moveleft = (int) animation.getAnimatedValue();
+                                floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft + floatIv.getWidth(), moveMarginHeight + 200));
+                            }
+
                         }
                     });
                     valueAnimator.start();
@@ -1514,8 +1567,10 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            int moveleft = (int) animation.getAnimatedValue();
-                            floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft - floatIv.getWidth(), moveMarginHeight + 200));
+                            if (animation!=null){
+                                int moveleft = (int) animation.getAnimatedValue();
+                                floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft - floatIv.getWidth(), moveMarginHeight + 200));
+                            }
                         }
                     });
                     valueAnimator.start();

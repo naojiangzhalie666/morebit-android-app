@@ -491,11 +491,11 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         }
         double price = mGoodsInfo.getRetailPrice();
         String priceStr = String.valueOf(price);
-        goodsPrice.setText(priceStr);
+        goodsPrice.setText(MathUtils.getnum(priceStr));
         numberGoodsTitle.setText(goodsInfo.getName());
         srl_view.setRefreshing(false);
-        tvGiveGrowthValue.setText(getResources().getString(R.string.give_growth_value,priceStr));
-        btnBuy.setText(getResources().getString(R.string.number_goods_buy_txt,priceStr));
+        tvGiveGrowthValue.setText(getResources().getString(R.string.give_growth_value,MathUtils.getnum(priceStr)));
+        btnBuy.setText(getResources().getString(R.string.number_goods_buy_txt,MathUtils.getnum(priceStr)));
     }
 
     @Override
@@ -583,7 +583,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
         txtGoodsName.setText(mGoodsInfo.getName());
         txtGoodsRule.setText(mGoodsInfo.getUnit());
-        selectedGoodsPrice.setText(" "+String.valueOf(mGoodsInfo.getRetailPrice()));
+        selectedGoodsPrice.setText(" "+MathUtils.getnum(String.valueOf(mGoodsInfo.getRetailPrice())));
 
         LoadImgUtils.setImg(NumberGoodsDetailsActivity.this, goodsPicView, mGoodsInfo.getPicUrl());
 
