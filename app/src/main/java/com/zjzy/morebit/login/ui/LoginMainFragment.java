@@ -308,7 +308,12 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
             @Override
             public void onClick(View view) {
                 //跳到注册
-              LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
+                if (mid!=1){
+                    LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
+                }else{
+                    LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+                }
+
             }
         });
         dialog.setmCancelListener(new ResginDialog.OnCancelListner() {

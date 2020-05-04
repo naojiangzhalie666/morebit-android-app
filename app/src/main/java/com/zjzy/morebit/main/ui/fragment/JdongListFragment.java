@@ -259,7 +259,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         }
         mData.addAll(data);
         mAdapter.setData(mData);
-        rl_list.notifyDataSetChanged();
+      rl_list.notifyDataSetChanged();
     }
 
     @Override

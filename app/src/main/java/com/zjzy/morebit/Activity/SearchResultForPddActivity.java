@@ -342,7 +342,8 @@ public class SearchResultForPddActivity extends BaseActivity {
                             searchNullTips_ly.setVisibility(View.VISIBLE);
                         }
 
-                        mRecyclerView.notifyDataSetChanged();
+                       // mRecyclerView.notifyDataSetChanged();
+                        mAdapter.notifyItemRangeChanged(0,data.size());
                         if (data != null && data.size() == 0){
                             mRecyclerView.getListView().setNoMore(true);
                         }
@@ -390,7 +391,8 @@ public class SearchResultForPddActivity extends BaseActivity {
                             if (data.size() > 0) {
                                 listArray.addAll(data);
                                 mAdapter.replace(listArray);
-                                mRecyclerView.notifyDataSetChanged();
+                                mAdapter.notifyItemRangeChanged(0,listArray.size());
+                                //mRecyclerView.notifyDataSetChanged();
                             } else {
                                 mRecyclerView.getListView().setNoMore(true);
                             }

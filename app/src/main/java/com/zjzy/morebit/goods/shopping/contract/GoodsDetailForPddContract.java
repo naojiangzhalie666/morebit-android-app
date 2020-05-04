@@ -101,6 +101,14 @@ public class GoodsDetailForPddContract {
          * 生成京东领劵链接
          * @param rxActivity
          */
-        void generatePromotionJdUrl(BaseActivity rxActivity,String productUrl,String couponUrl);
+        void generatePromotionJdUrl(BaseActivity rxActivity,Long goodsId,String couponUrl);
+
+        /**
+         * 京东的商品详情
+         * @param rxActivity
+         * @param goodsInfo
+         * @param isRefresh
+         */
+        void getDetailDataForJd(BaseActivity rxActivity, ShopGoodInfo goodsInfo, boolean isRefresh);
     }
 }

@@ -324,8 +324,8 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                         } else {
                             searchNullTips_ly.setVisibility(View.VISIBLE);
                         }
-
-                        mRecyclerView.notifyDataSetChanged();
+                        mAdapter.notifyItemRangeChanged(0,data.size());
+                       // mRecyclerView.notifyDataSetChanged();
                         if (data != null && data.size() == 0){
                             mRecyclerView.getListView().setNoMore(true);
                         }
@@ -369,7 +369,9 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                             if (data.size() > 0) {
                                 listArray.addAll(data);
                                 mAdapter.replace(listArray);
-                                mRecyclerView.notifyDataSetChanged();
+
+                                mAdapter.notifyItemRangeChanged(0,data.size());
+                              //  mRecyclerView.notifyDataSetChanged();
                             } else {
                                 mRecyclerView.getListView().setNoMore(true);
                             }

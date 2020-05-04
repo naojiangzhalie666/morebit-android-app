@@ -132,18 +132,12 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             }
         }
 
-        if (loginType== C.sendCodeType.WEIXINBIND){
+        if (loginType== C.sendCodeType.WEIXINBIND ||loginType== C.sendCodeType.BINDWEIXIN || loginType== C.sendCodeType.REGISTER ||loginType== C.sendCodeType.WEIXINREGISTER){
             passwordLogin.setVisibility(View.GONE);
             tv_title.setText("手机号码注册");
+            next_login.setText("注册");
         }
-        if (loginType== C.sendCodeType.BINDWEIXIN){
-            passwordLogin.setVisibility(View.GONE);
-            tv_title.setText("手机号码注册");
-        }
-        if (loginType== C.sendCodeType.REGISTER){
-            tv_title.setText("手机号码注册");
-            passwordLogin.setVisibility(View.GONE);
-        }
+
 
         //因为注册的界面已经检查手机和发送验证码才会进来这界面，此条件控制重复发送验证码
 //        if (loginType != C.sendCodeType.REGISTER && loginType != C.sendCodeType.WEIXINREGISTER) {

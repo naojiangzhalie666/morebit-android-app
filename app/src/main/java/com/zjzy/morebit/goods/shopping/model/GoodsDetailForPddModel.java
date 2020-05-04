@@ -130,7 +130,18 @@ public class GoodsDetailForPddModel extends MvpModel {
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
     }
-
+    /**
+     * 京东
+     * @param rxActivity
+     * @param goodsInfo
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForJd(BaseActivity rxActivity, ShopGoodInfo goodsInfo) {
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(new ProgramGetGoodsDetailBean().setType(1)
+                .setGoodsId(goodsInfo.getGoodsId()))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
     /**
      * 京东
      * @param rxActivity
@@ -138,10 +149,10 @@ public class GoodsDetailForPddModel extends MvpModel {
      * @return
      */
     public Observable<BaseResponse<String>> generatePromotionUrlForJd(BaseActivity rxActivity,
-                                                                       String productUrl,String couponUrl) {
+                                                                      Long goodsId,String couponUrl) {
         RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
       //  bean.setType(2);
-        bean.setProductUrl(productUrl);
+        bean.setGoodsId(goodsId);
         bean.setCouponUrl(couponUrl);
         return RxHttp.getInstance().getCommonService().generatePromotionUrlForJd(bean)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())

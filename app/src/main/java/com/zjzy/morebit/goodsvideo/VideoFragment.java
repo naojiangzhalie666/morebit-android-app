@@ -3,8 +3,10 @@ package com.zjzy.morebit.goodsvideo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,15 +85,12 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
 
         }
         rcy_videclass = view.findViewById(R.id.rcy_videclass);
+
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         //设置图标的间距
         SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(20, 2);
-
-
-
         rcy_videclass.setLayoutManager(manager);
         rcy_videclass.addItemDecoration(spaceItemDecorationUtils);
-
         mSwipeList=view.findViewById(R.id.swipeList);
 
 
@@ -100,8 +99,8 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page=1;
                 initData();
-                videoGoodsAdapter.refreshData(list);
-                videoGoodsAdapter.notifyDataSetChanged();
+               // videoGoodsAdapter.refreshData(list);
+                //videoGoodsAdapter.notifyDataSetChanged();
                 refreshLayout.finishRefresh(true);//刷新完成
             }
         });
@@ -143,8 +142,10 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
             videoGoodsAdapter = new VideoGoodsAdapter(getActivity(),shopGoodInfo);
             rcy_videclass.setAdapter(videoGoodsAdapter);
         }else{
+
             videoGoodsAdapter.loadMore(list);
-            videoGoodsAdapter.notifyDataSetChanged();
+          //  ((SimpleItemAnimator)rcy_videclass.getItemAnimator()).setSupportsChangeAnimations(false);
+        //    videoGoodsAdapter.notifyItemRangeChanged(0,list.size());
             mSwipeList.finishLoadMore(true);
         }
 

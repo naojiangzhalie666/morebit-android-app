@@ -354,8 +354,7 @@ public class BannerInitiateUtils {
             Bundle bundle = new Bundle();
             bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
             OpenFragmentUtils.goToSimpleFragment(activity, RankingFragment.class.getName(), bundle);
-        } else if (type == C.BannerIntentionType.DAYRECOMMEND) {
-            // GoodNewsFramgent.startTiemSale(activity, info);
+        } else if (type == C.BannerIntentionType.DAYRECOMMEND) {//优选商城  19
             if (!LoginUtil.checkIsLogin((Activity) activity)) {
                 return;
             }
@@ -413,7 +412,9 @@ public class BannerInitiateUtils {
                     getMouthLink((BaseActivity) activity, info);
                 }
             }
+        }else if (type == C.BannerIntentionType.SHOPMALL) {  //每日推荐 45
 
+            GoodNewsFramgent.startTiemSale(activity, info);
 
         } else {
             showUptate(activity, type);

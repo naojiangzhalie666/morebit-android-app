@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,11 @@ public class ReUseListView extends LinearLayout{
         mRecyclerView = (LRecyclerView) view.findViewById(R.id.mListView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.setPullRefreshEnabled(false);
+        // 第一种，直接取消动画
+        RecyclerView.ItemAnimator animator = mRecyclerView.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
 
         listview_rl = (RelativeLayout)view.findViewById(R.id.listview_rl);
         mGoTop.setOnClickListener(new OnClickListener() {

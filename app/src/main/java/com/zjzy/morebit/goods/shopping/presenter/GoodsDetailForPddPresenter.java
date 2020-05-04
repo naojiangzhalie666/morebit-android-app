@@ -86,13 +86,15 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                 });
     }
 
+
+
     /*
      * 京东领劵链接
      *
      * */
     @Override
-    public void generatePromotionJdUrl(BaseActivity rxActivity, String productUrl, String couponUrl) {
-        mModel.generatePromotionUrlForJd(rxActivity, productUrl, couponUrl)
+    public void generatePromotionJdUrl(BaseActivity rxActivity, Long goodsId, String couponUrl) {
+        mModel.generatePromotionUrlForJd(rxActivity, goodsId, couponUrl)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -103,6 +105,24 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     @Override
                     protected void onSuccess(final String data) {
                         getIView().setPromotionJdUrl(data);
+                    }
+                });
+    }
+
+    @Override
+    public void getDetailDataForJd(BaseActivity rxActivity, ShopGoodInfo goodsInfo, final boolean isRefresh) {
+        mModel.getBaseResponseObservableForJd(rxActivity, goodsInfo)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        getIView().showDetailsView(data, true, isRefresh);
+
                     }
                 });
     }

@@ -46,14 +46,14 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
     //加载数据
     public void loadMore(List<ShopGoodInfo> strings) {
         list.addAll(strings);
-        notifyDataSetChanged();
+        notifyItemRangeChanged(0,strings.size());
     }
 
-    //刷新数据
-    public void refreshData(List<ShopGoodInfo> strings) {
-        list.addAll(0, strings);
-        notifyDataSetChanged();
-    }
+//    //刷新数据
+//    public void refreshData(List<ShopGoodInfo> strings) {
+//        list.addAll(0, strings);
+//        notifyItemRangeChanged(0,strings.size());
+//    }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 //        ShopGoodInfo shopGoodInfo=new ShopGoodInfo();
@@ -69,7 +69,13 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
        // holder.tv_title.setText(list.get(position).getItemTitle());
         StringsUtils.retractTitle( holder.img, holder.tv_title,list.get(position).getItemTitle());
         //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());
-        LoadImgUtils.loadingCornerTop(context, holder.iv_head, list.get(position).getItemPic(), 5);
+
+        if(!list.get(position).getItemPic().equals(holder.iv_head.getTag())){//解决图片加载不闪烁的问题,可以在加载时候，对于已经加载过的item,  采用比对tag方式判断是否需要重新计算高度
+            holder.iv_head.setTag(null);//需要清空tag，否则报错
+            LoadImgUtils.loadingCornerTop(context, holder.iv_head, list.get(position).getItemPic(), 5);
+        }
+
+
         holder.commission.setText(list.get(position).getCouponMoney() + "元劵");
         holder.tv_price.setText("" + list.get(position).getItemPrice());
         UserInfo userInfo1 =UserLocalData.getUser();
@@ -117,4 +123,5 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
 
         }
     }
+
 }

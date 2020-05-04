@@ -62,7 +62,6 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         if (data != null) {
             mDatas.clear();
             mDatas.addAll(data);
-
         }
     }
 

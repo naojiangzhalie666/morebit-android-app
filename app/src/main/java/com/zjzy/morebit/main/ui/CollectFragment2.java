@@ -463,6 +463,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                     //拼多多
                 }else if (item.getShopType() == 3){
                     good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                }else if (item.getShopType()==0){//京东
+                    good_mall_tag.setImageResource(R.mipmap.jdong_icon);
                 }
                 if (!TextUtils.isEmpty(item.getTitle())) {
                     StringsUtils.retractTitle(good_mall_tag,title,item.getTitle());
@@ -544,11 +546,16 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                             ShopGoodInfo shopGoodInfo = (ShopGoodInfo) MyGsonUtils.jsonToBean(MyGsonUtils.beanToJson(item), ShopGoodInfo.class);
 
                             if (shopGoodInfo == null) return;
-                            if (item.getShopType() == 3){
+                            if (item.getShopType() == 3||item.getShopType()==0){
                                 String itemSourceId = item.getItemSourceId();
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                                 GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
+                            }else if (item.getShopType()==0){
+                                String itemSourceId = item.getItemSourceId();
+                                shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                                shopGoodInfo.setItemSource("1");
                                 GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
-                            }else{
+                            } else{
                                 GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
                                     @Override
                                     public void invoke(ShopGoodInfo arg) {
@@ -672,8 +679,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     /**
      * 分享商品
-     * @param item
-     * @param osgData
+     *
      */
     protected void shareGoods() {
         List<ShopGoodInfo> shopGoodInfos = new ArrayList<>();

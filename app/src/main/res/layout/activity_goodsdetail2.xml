@@ -197,7 +197,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
-                                    android:src="@drawable/taobao"/>
+                                    android:src="@mipmap/taobao_details_icon"/>
 
                                 <com.zjzy.morebit.view.CopyTextView
                                     android:id="@+id/title"
