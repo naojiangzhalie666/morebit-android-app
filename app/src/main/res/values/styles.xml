@@ -313,19 +313,21 @@
 
 
         <style name="Dialog_Fullscreen" parent="@android:style/Theme.Dialog">
-            <!-- 有无边框 -->
-            <item name="android:windowFrame">@null</item>
-            <!-- 是否浮现在activity之上 -->
-            <item name="android:windowIsFloating">true</item>
-            <!-- 是否透明 -->
-            <item name="android:windowIsTranslucent">true</item>
-            <!-- 背景透明 -->
-            <item name="android:windowBackground">@color/white</item>
-            <!-- 模糊 -->
-            <item name="android:backgroundDimEnabled">true</item>
-            <!--无标题 -->
+            <item name="android:windowFrame">@null</item><!-- 边框 -->
+            <item name="android:background">#00000000</item>
+            <item name="android:windowBackground">@android:color/transparent</item>
             <item name="android:windowNoTitle">true</item>
+            <item name="android:backgroundDimEnabled">true</item>
+            <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimation</item>
+
         </style>
+
+    <style name="ActionSheetDialogAnimation">
+
+        <item name="android:windowEnterAnimation">@anim/my_self_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/my_self_dialog_out</item>
+
+    </style>
 
 
 </resources>

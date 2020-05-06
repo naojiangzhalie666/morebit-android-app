@@ -10,18 +10,19 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ThreadUtils;
 import com.gyf.barlibrary.ImmersionBar;
-import com.zjzy.morebit.Activity.SearchResultActivity;
-import com.zjzy.morebit.Activity.SearchResultForPddActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.MainActivity;
+import com.zjzy.morebit.Module.common.Dialog.ProgressDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.Logger;
 import com.zjzy.morebit.R;
@@ -66,12 +67,16 @@ public abstract class BaseActivity extends SwipeBaseActivity {
     private NwtWorkRunnable mNwtWorkRunnable;
     protected ImmersionBar mImmersionBar;
     private GuessGoodDialog mGuessGoodDialog;
+    private ProgressDialog dialog;
+    private Runnable mLoadingRunnable;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.e("打开了界面----", this.getClass().getSimpleName());
         //初始化沉浸式
+        mHandler=new Handler();
         if (isImmersionBarEnabled())
             initImmersionBar();
         ActivityLifeHelper.getInstance().addActivity(this);
@@ -503,5 +508,27 @@ public abstract class BaseActivity extends SwipeBaseActivity {
         return res;
     }
 
+    /**
+     * 显示loading框
+     */
 
+    public void showLoadingDialogOnUI() {
+            if (dialog==null){
+                dialog=new ProgressDialog(this);
+            }
+            dialog.show();
+
+
+    }
+
+    /**
+     * 隐藏 loading框
+     */
+    public void dismissLoadingDialog() {
+            if (dialog!=null){
+                dialog.dismiss();
+            }
+
+
+    }
 }

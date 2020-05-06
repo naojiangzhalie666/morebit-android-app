@@ -47,8 +47,8 @@ public class WindowUtils {
         // FLAG_NOT_TOUCH_MODAL不阻塞事件传递到后面的窗口
         // 设置 FLAG_NOT_FOCUSABLE 悬浮窗口较小时，后面的应用图标由不可长按变为可长按
         // 不设置这个flag的话，home页的划屏会有问题
-        params.width = LayoutParams.WRAP_CONTENT;
-        params.height = LayoutParams.WRAP_CONTENT;
+        params.width = LayoutParams.MATCH_PARENT;
+        params.height = LayoutParams.MATCH_PARENT;
         ViewGroup sDecorView = (ViewGroup) ((Activity) context).getWindow().getDecorView();
         if (sDecorView != null) {
             boolean isadd = isIsadd(sDecorView);
@@ -97,15 +97,15 @@ public class WindowUtils {
 
 
     public static View setUpView(final Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_net_work,
+        View view = LayoutInflater.from(context).inflate(R.layout.broken_net,
                 null);
-        view.findViewById(R.id.rl_net).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
-                context.startActivity(intent);
-            }
-        });
+//        view.findViewById(R.id.rl_net).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
+//                context.startActivity(intent);
+//            }
+//        });
 //        view.setFocusableInTouchMode(true);
 //    positiveBtn.setOnClickListener(new OnClickListener() {
 //      @Override

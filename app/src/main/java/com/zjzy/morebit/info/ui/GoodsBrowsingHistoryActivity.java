@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -386,6 +387,9 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                     case 3:
                         good_mall_tag.setImageResource(R.drawable.pdd_icon);
                         break;
+                    case 0:
+                        good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                        break;
                     default:
                         break;
                 }
@@ -479,7 +483,13 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                             if (item.getShopType() == 3){
                                 String itemSourceId = item.getItemSourceId();
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                                shopGoodInfo.setItemSource("2");
                                 GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
+                            }else if (item.getShopType() == 0){
+                                String itemSourceId = item.getItemSourceId();
+                                shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                                shopGoodInfo.setItemSource("1");
+                                GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
                             }else{
                                 GoodsUtil.checkGoods(GoodsBrowsingHistoryActivity.this, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
                                     @Override

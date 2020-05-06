@@ -389,8 +389,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
                     protected void onError(String errorMsg, String errCode) {
                         listArray.clear();
                         mAdapter.setData(listArray);
-                        mAdapter.notifyItemRangeChanged(0,listArray.size());
-                       // mRecyclerView.notifyDataSetChanged();
+                        mRecyclerView.notifyDataSetChanged();
                         if (isOneSwitchConpon) {
                             isOneSwitchConpon = false;
                         } else {
@@ -414,13 +413,11 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
                             mAdapter.setData(shopGoodInfos);
                             //设置是否是代理商
                             UserInfo userInfo = UserLocalData.getUser(getActivity());
-                            mAdapter.notifyItemRangeChanged(0,goodsList.size());
-                          //  mRecyclerView.notifyDataSetChanged();
+                            mRecyclerView.notifyDataSetChanged();
                         } else {
                             listArray.clear();
                             mAdapter.setData(listArray);
-                            mAdapter.notifyItemRangeChanged(0,goodsList.size());
-                          //  mRecyclerView.notifyDataSetChanged();
+                            mRecyclerView.notifyDataSetChanged();
                             if (isOneSwitchConpon) {
                                 isOneSwitchConpon = false;
                             } else {
@@ -480,8 +477,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
                                 List<ShopGoodInfo> shopGoodInfos = partList(goodsList);
                                 mAdapter.setData(shopGoodInfos);
                                 //设置是否是代理商
-                                mAdapter.notifyItemRangeChanged(0,goodsList.size());
-                               // mRecyclerView.notifyDataSetChanged();
+                                mRecyclerView.notifyDataSetChanged();
                             } else {
                                 mRecyclerView.getListView().setNoMore(true);
                             }

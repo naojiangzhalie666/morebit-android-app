@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +31,7 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
+import com.zjzy.morebit.Module.common.Dialog.ProgressDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
@@ -182,7 +185,6 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     RelativeLayout re_tab;
     @BindView(R.id.search_statusbar_rl)
     LinearLayout search_statusbar_rl;
-
 
     private ShopGoodInfo mGoodsInfo;
     private Bundle bundle;
@@ -453,7 +455,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     private boolean isTitleBarSetBg = true;
     private boolean isContinueScrollTabChange = false;
 
-    private boolean isShopImageSetted =false;
+    private boolean isShopImageSetted = false;
 
     /**
      * 初始化界面数据
@@ -525,32 +527,49 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
         if (!StringsUtils.isEmpty(Info.getSellerPicture()) && !isShopImageSetted) {
             Info.setSellerPicture(Info.getSellerPicture());
-           // LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
+            // LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
             isShopImageSetted = true;
         }
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
+
             if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + "-" + Info.getCouponEndTime());
+                if (Info.getCouponStartTime().contains("00:00:00")&&Info.getCouponEndTime().contains("23:59:59")){
+                    tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime().substring(5, 7) + "-" + Info.getCouponStartTime().substring(8, 10)
+                            + "-" + Info.getCouponEndTime().substring(5, 7) + "-" + Info.getCouponEndTime().substring(9, 11));
+                }else{
+                    tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + "-" + Info.getCouponEndTime());
+                }
+
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
 
-            if (TextUtils.isEmpty(Info.getCouponStartTime())&&!TextUtils.isEmpty(Info.getCouponEndTime())){
-                tv_coupon_time.setText("有效日期至"+ Info.getCouponEndTime());
+            if (TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
+                if (Info.getCouponEndTime().contains("23:59:59")){
+                    tv_coupon_time.setText("有效日期至: " +  Info.getCouponEndTime().substring(5, 7) + "-" + Info.getCouponEndTime().substring(9, 11));
+                }else{
+                    tv_coupon_time.setText("有效日期至: " + Info.getCouponEndTime());
+                }
+
             }
         } else {
             if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + " - " + Info.getCouponEndTime());
+                if (Info.getCouponStartTime().contains("00:00:00")&&Info.getCouponEndTime().contains("23:59:59")){
+                    tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime().substring(5, 7) + "-" + Info.getCouponStartTime().substring(8, 10)
+                            + "-" + Info.getCouponEndTime().substring(5, 7) + "-" + Info.getCouponEndTime().substring(9, 11));
+                }else{
+                    tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + "-" + Info.getCouponEndTime());
+                }
             }
         }
 
         if (TextUtils.isEmpty(coupon_prise.getText())) {
-            if (!StringsUtils.isEmpty(Info.getCouponPrice())){
+            if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
                 mGoodsInfo.setCouponPrice(Info.getCouponPrice());
                 arv_prise.setVisibility(View.VISIBLE);
-                coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice())+"");
+                coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice()) + "");
                 setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
-            }else{
+            } else {
                 arv_prise.setVisibility(View.GONE);
             }
 
@@ -935,6 +954,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             GoodsImgDetailBean goodsImgDetailBean = mDetailImgFragment.setModuleDescUrlData(data.getPicUrls(), mGoodsInfo, data.getAnalysisFlag());
             if (goodsImgDetailBean != null) {
                 mGoodsInfo.setPicUrls(goodsImgDetailBean);
+                dismissLoadingDialog();
             }
         }
     }
@@ -1026,7 +1046,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                     }
                     SensorsDataUtil.getInstance().buy("", "", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
                 }
-              //  startActivity(new Intent(this, PurchaseActivity.class));
+                //  startActivity(new Intent(this, PurchaseActivity.class));
                 break;
 
             case R.id.videopaly_btn: //视频播放
@@ -1081,7 +1101,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         //todo：修复从足迹到收藏报错
         String couponEndTime = mGoodsInfo.getCouponEndTime();
 
-        if (couponEndTime != null && couponEndTime.length() > 5){
+        if (couponEndTime != null && couponEndTime.length() > 5) {
             couponEndTime = DateTimeUtils.toMMdd(couponEndTime);
             mGoodsInfo.setCouponEndTime(couponEndTime);
         }
@@ -1105,6 +1125,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         mHandler.removeCallbacksAndMessages(null);
+        dismissLoadingDialog();
         super.onDestroy();
     }
 
@@ -1234,4 +1255,11 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                     }
                 });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showLoadingDialogOnUI();
+    }
+
 }

@@ -52,6 +52,7 @@ public abstract class SimpleAdapter<T, VH extends SimpleViewHolder> extends Base
 
     public void add(List<T> items) {
         mItems.addAll(items);
+        notifyItemRangeChanged(0,items.size());
     }
 
     public T getItem(int position) {

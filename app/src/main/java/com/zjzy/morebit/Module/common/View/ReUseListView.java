@@ -66,12 +66,7 @@ public class ReUseListView extends LinearLayout{
         mRecyclerView = (LRecyclerView) view.findViewById(R.id.mListView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.setPullRefreshEnabled(false);
-        // 第一种，直接取消动画
-        RecyclerView.ItemAnimator animator = mRecyclerView.getItemAnimator();
-        if (animator instanceof SimpleItemAnimator) {
-            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
-        }
-
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         listview_rl = (RelativeLayout)view.findViewById(R.id.listview_rl);
         mGoTop.setOnClickListener(new OnClickListener() {
             @Override

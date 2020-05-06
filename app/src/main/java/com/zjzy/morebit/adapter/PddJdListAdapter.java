@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.lovejjfg.powertext.LabelTextView;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
@@ -41,14 +42,16 @@ import java.util.List;
 public class PddJdListAdapter extends RecyclerView.Adapter {
     private LayoutInflater mInflater;
     private Context mContext;
-    private List<ShopGoodInfo> mDatas = new ArrayList<>();
+    private List<ShopGoodInfo> mDatas;
     private boolean isEditor;//收藏列表是否是编辑状态
     private final int mBottomPadding;
 
-    public PddJdListAdapter(Context context) {
+    public PddJdListAdapter(Context context,List<ShopGoodInfo> data) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
         mBottomPadding = mContext.getResources().getDimensionPixelSize(R.dimen.ranking_adapter_bottom_padding);
+        this.mDatas=data;
+
     }
 
 
@@ -60,8 +63,8 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
     public void setData(List<ShopGoodInfo> data) {
         if (data != null) {
-            mDatas.clear();
             mDatas.addAll(data);
+            notifyItemRangeChanged(0,data.size());
         }
     }
 
@@ -76,73 +79,15 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         viewHolder.ll_bottom.setPadding(0, mBottomPadding, 0, 0);
 
 
-        if (info.getItemSource().equals("1")){//京东
-            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon,  MathUtils.getPicture(info), 9);
+
+            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, MathUtils.getPicture(info), 9);
             viewHolder.textview_original.setText("¥" + MathUtils.getnum(info.getVoucherPriceForPdd()));
             viewHolder.textvihew_Preco.setText("¥" + MathUtils.getnum(info.getPriceForPdd()));
             viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
             LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getImageUrl());
             try {
-                if (C.UserType.member.equals(UserLocalData.getUser((Activity) mContext).getPartner()) ) {
-                    viewHolder.ll_prise.setVisibility(View.GONE);
-                } else {
-                    if (StringsUtils.isEmpty(info.getCouponPrice())) {
-                        viewHolder.ll_prise.setVisibility(View.GONE);
-                    } else {
-                        viewHolder.ll_prise.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                if (StringsUtils.isEmpty(info.getCouponPrice())) {
-                    viewHolder.return_cash.setVisibility(View.GONE);
-                } else {
-                    viewHolder.return_cash.setVisibility(View.VISIBLE);
-                }
-                //店铺名称
-                if (!TextUtils.isEmpty(info.getShopName())) {
-                    viewHolder.tv_shop_name.setText(info.getShopName());
-                }
-
-                viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum((info.getCouponPrice()))));
-                viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        GoodsDetailForPddActivity.start(mContext, info);
-                    }
-                });
-                if (C.UserType.vipMember.equals(UserLocalData.getUser((Activity) mContext).getPartner())
-                        || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
-                    viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) mContext).getCalculationRate(), info.getCommission())));
-                } else {
-                    UserInfo userInfo1 =UserLocalData.getUser();
-                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, info.getCommission())));
-                    }else{
-                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
-                    }
-//                viewHolder.commission.setText(mContext.getString(R.string.upgrade_commission));
-                }
-
-                viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));
-
-                viewHolder.pdd_title.setLabelText("京东");
-                viewHolder.pdd_title.setOriginalText(info.getItemTitle());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        }else{
-            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon,  MathUtils.getPicture(info), 9);
-            viewHolder.textview_original.setText("¥" + MathUtils.getnum(info.getVoucherPriceForPdd()));
-            viewHolder.textvihew_Preco.setText("¥" + MathUtils.getnum(info.getPriceForPdd()));
-            viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-
-            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getImageUrl());
-            try {
-                if (C.UserType.member.equals(UserLocalData.getUser((Activity) mContext).getPartner()) ) {
+                if (C.UserType.member.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
                     viewHolder.ll_prise.setVisibility(View.GONE);
                 } else {
                     if (StringsUtils.isEmpty(info.getCouponPrice().toString())) {
@@ -173,10 +118,10 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
                         || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
                     viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) mContext).getCalculationRate(), info.getCommission())));
                 } else {
-                    UserInfo userInfo1 =UserLocalData.getUser();
+                    UserInfo userInfo1 = UserLocalData.getUser();
                     if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
                         viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, info.getCommission())));
-                    }else{
+                    } else {
                         viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
                     }
 //                viewHolder.commission.setText(mContext.getString(R.string.upgrade_commission));
@@ -194,7 +139,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         }
 
 
-    }
+
 
 
     @Override
@@ -204,7 +149,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView  textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name;
+        TextView textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name;
         ImageView iv_icon;
         LinearLayout return_cash;
         RelativeLayout toDetail, img_rl;
@@ -284,7 +229,6 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         spannableString.setSpan(leadingMarginSpan, 0, description.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
-
 
 
 }

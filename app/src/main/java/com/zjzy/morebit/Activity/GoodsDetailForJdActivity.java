@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -20,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.AppUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
@@ -30,7 +28,6 @@ import com.youth.banner.listener.OnBannerListener;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.MainActivity;
-import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
@@ -40,20 +37,14 @@ import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.ReleaseGoodsActivity;
 import com.zjzy.morebit.contact.EventBusAction;
-import com.zjzy.morebit.goods.shopping.contract.GoodsDetailContract;
 import com.zjzy.morebit.goods.shopping.contract.GoodsDetailForPddContract;
 import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailForPddPresenter;
-import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailPresenter;
 import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
 import com.zjzy.morebit.goods.shopping.ui.fragment.GoodsDetailImgForPddFragment;
-import com.zjzy.morebit.goods.shopping.ui.fragment.GoodsDetailImgFragment;
 import com.zjzy.morebit.goods.shopping.ui.view.GoodsDetailUpdateView;
 import com.zjzy.morebit.info.ui.AppFeedActivity;
-import com.zjzy.morebit.main.model.SearchStatisticsModel;
-import com.zjzy.morebit.main.ui.fragment.GoodsDetailLikeFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
-import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.GoodsDetailForPdd;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
@@ -63,10 +54,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.goods.ConsumerProtectionBean;
-import com.zjzy.morebit.pojo.goods.EvaluatesBean;
-import com.zjzy.morebit.pojo.goods.GoodsImgDetailBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
-import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -80,31 +68,26 @@ import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.StringsUtils;
-import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
-import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.view.AspectRatioView;
-import com.zjzy.morebit.view.goods.ShareMoneySwitchForPddTemplateView;
 import com.zjzy.morebit.view.main.SysNotificationView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.functions.Action;
 
 /**
  * 拼多多商品详情页
  */
 
-public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
+public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
 
     @BindView(R.id.iv_feedback)
     ImageView iv_feedback;
@@ -231,7 +214,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     //京东领劵领劵
     private String mPromotionJdUrl;
     public static void start(Context context, ShopGoodInfo info) {
-        Intent intent = new Intent((Activity) context, GoodsDetailForPddActivity.class);
+        Intent intent = new Intent((Activity) context, GoodsDetailForJdActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(C.Extras.GOODSBEAN, info);
         intent.putExtras(bundle);
@@ -290,9 +273,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
     private void initData(boolean isRefresh) {
         if (mGoodsInfo == null) return;
-        mPresenter.getDetailDataForPdd(this, mGoodsInfo, isRefresh);
         mPresenter.getDetailDataForJd(this, mGoodsInfo, isRefresh);
-        mPresenter.generatePromotionUrl(this, mGoodsInfo.getGoodsId(), mGoodsInfo.getCouponUrl());
         mPresenter.generatePromotionJdUrl(this,mGoodsInfo.getGoodsId(),mGoodsInfo.getCouponUrl());
     }
 
@@ -339,10 +320,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         bundle = getIntent().getExtras();
         if (bundle != null) {
             mGoodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
-            if (mGoodsInfo.getItemSource().equals("2")) {
-                //商铺:拼多多
-                mGoodsInfo.setShopType(3);
-            }else if (mGoodsInfo.getItemSource().equals("1")){
+         if (mGoodsInfo.getItemSource().equals("1")){
                 mGoodsInfo.setShopType(0);
             }
             //商品Id
@@ -394,8 +372,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                         re_tab.setVisibility(View.GONE);
                         re_tab.setAlpha(0);
                         view_bar.setAlpha(0);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForPddActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForPddActivity.this, R.color.white));
+                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.white));
+                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.white));
                     } else {
                         if (re_tab.getVisibility() == View.GONE) {
                             re_tab.setVisibility(View.VISIBLE);
@@ -412,8 +390,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                     if (!isTitleBarSetBg) {
                         re_tab.setAlpha(1);
                         view_bar.setAlpha(1);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForPddActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForPddActivity.this, R.color.white));
+                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.white));
+                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.white));
                     }
                 }
             }
@@ -522,22 +500,9 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
         mGoodsInfo.setItemSource(Info.getItemSource());
         if (!StringsUtils.isEmpty(Info.getTitle())) {
-            if (Info.getItemSource().equals("1")) {
                 tv_pdd.setText("京东");
                 shop_img.setImageResource(R.mipmap.jd_icon_bg);
-//                //示详情图片
-//                List<String> imgs = Info.getItemBanner();
-//                if (imgs != null && imgs.size() > 0) {
-//
-//                    mGoodsDetailForPdd.setGoodsDetails(imgs);
-//                    initImgFragment(mGoodsDetailForPdd);
-//                    ll_fw.setVisibility(View.GONE);
-//                }
 
-            } else {
-                tv_pdd.setText("拼多多");
-                shop_img.setImageResource(R.mipmap.detail_pdd_icon);
-            }
             StringsUtils.retractTitleForPdd(tv_pdd, title, Info.getTitle());
         }
 
@@ -567,7 +532,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
         if (!StringsUtils.isEmpty(Info.getSellerPicture())) {
             Info.setSellerPicture(Info.getSellerPicture());
-          //  LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
+           LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
         }
         String dateStart = Info.getCouponStartTime();
         String dateEnd = Info.getCouponEndTime();
@@ -601,7 +566,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             mGoodsInfo.setCommission(Info.getCommission());
         }
 
-        if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForPddActivity.this).getPartner())) {
+        if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForJdActivity.this).getPartner())) {
             tv_Share_the_money.setText(getString(R.string.now_share));
             setEstimateData();
             setUPdateData();
@@ -609,10 +574,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             if (!StringsUtils.isEmpty(Info.getCommission())) {
                 if (getString(R.string.now_share).equals(tv_Share_the_money.getText())) {
                     mGoodsInfo.setCommission(Info.getCommission());
-                    String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(GoodsDetailForPddActivity.this).getCalculationRate(), Info.getCommission());
+                    String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(GoodsDetailForJdActivity.this).getCalculationRate(), Info.getCommission());
                     setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
                     if (!TextUtils.isEmpty(muRatioComPrice)) {
-                        String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(GoodsDetailForPddActivity.this).getCalculationRate(), Info.getSubsidiesPrice());
+                        String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(GoodsDetailForJdActivity.this).getCalculationRate(), Info.getSubsidiesPrice());
                         String totalSubside = MathUtils.getTotleSubSidies(muRatioComPrice, getRatioSubside);
                         tv_Share_the_money.setText(getString(R.string.goods_share_moeny, totalSubside));
                         setAllIncomeData(muRatioComPrice, getRatioSubside);
@@ -824,7 +789,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                     .setOnBannerListener(new OnBannerListener() {
                         @Override
                         public void OnBannerClick(int position) {
-                            Intent intent = new Intent(GoodsDetailForPddActivity.this, ImagePagerActivity.class);
+                            Intent intent = new Intent(GoodsDetailForJdActivity.this, ImagePagerActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putStringArrayList(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) mBannerList);
                             bundle.putInt(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
@@ -946,12 +911,12 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         mGoodsInfo.setColler(info.getColler());
         if (info.getColler() != 0) {
             tv_collect.setText(getString(R.string.also_collect));
-            tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForPddActivity.this, R.color.color_FF3F29));
+            tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.color_FF3F29));
             collect_bg.setImageResource(R.drawable.icon_shoucanxuanzhong);
             SensorsDataUtil.getInstance().collectProductTrack("", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
         } else {
             collect_bg.setImageResource(R.drawable.icon_shoucang);
-            tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForPddActivity.this, R.color.mmhuisezi));
+            tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.mmhuisezi));
             tv_collect.setText(getString(R.string.collect));
         }
     }
@@ -1012,11 +977,11 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 finish();
                 break;
             case R.id.iv_feedback:
-                if (!LoginUtil.checkIsLogin(GoodsDetailForPddActivity.this)) {
+                if (!LoginUtil.checkIsLogin(GoodsDetailForJdActivity.this)) {
                     return;
                 }
 
-                Intent feedBackIt = new Intent(GoodsDetailForPddActivity.this, AppFeedActivity.class);
+                Intent feedBackIt = new Intent(GoodsDetailForJdActivity.this, AppFeedActivity.class);
                 Bundle feedBackBundle = new Bundle();
                 feedBackBundle.putString("title", "意见反馈");
                 feedBackBundle.putString("fragmentName", "GoodsFeedBackFragment");
@@ -1036,28 +1001,11 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
-                    if (mGoodsInfo.getItemSource().equals("1")) {//京东
 
                         if (mPromotionJdUrl != null) {
                             KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
                         }
-                    } else {//拼多多
-                        if (mPromotionUrl != null) {
-//                    String content = "pinduoduo://com.xunmeng.pinduoduo/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
-//                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(content));
-//                    startActivity(intent);
-//                    mPromotionUrl = "https://mobile.yangkeduo.com/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
-                            if (isHasInstalledPdd() && mPromotionUrl.contains("https://mobile.yangkeduo.com")) {
-                                String content = mPromotionUrl.replace("https://mobile.yangkeduo.com",
-                                        "pinduoduo://com.xunmeng.pinduoduo");
-//                        String content = "pinduoduo://com.xunmeng.pinduoduo"+mPromotionUrl.substring(8);
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(content));
-                                startActivity(intent);
-                            } else {
-                                PddWebActivity.start(this, mPromotionUrl, mGoodsInfo.getTitle());
-                            }
-                        }
-                    }
+
 
                 }
 
@@ -1068,7 +1016,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                     return;
                 }
 
-                Intent it = new Intent(GoodsDetailForPddActivity.this, ShortVideoPlayActivity.class);
+                Intent it = new Intent(GoodsDetailForJdActivity.this, ShortVideoPlayActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(C.Extras.ITEMVIDEOID, mGoodsInfo.getVideoid());
                 it.putExtras(bundle);
@@ -1110,10 +1058,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
         if (mGoodsInfo == null || mGoodsInfo.getGoodsId() == 0
                 || TextUtils.isEmpty(mGoodsInfo.getTitle())) {
-            ViewShowUtils.showShortToast(GoodsDetailForPddActivity.this, "收藏失败,请稍后再试");
+            ViewShowUtils.showShortToast(GoodsDetailForJdActivity.this, "收藏失败,请稍后再试");
             return;
         }
-        LoadingView.showDialog(GoodsDetailForPddActivity.this);
+        LoadingView.showDialog(GoodsDetailForJdActivity.this);
         //todo：修复从足迹到收藏报错
         String couponEndTime = mGoodsInfo.getCouponEndTime();
 
@@ -1149,7 +1097,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         ClearSDdataDialog mDialog = new ClearSDdataDialog(this, R.style.dialog, getString(R.string.hint), "活动马上开始，敬请期待喔~~~", new ClearSDdataDialog.OnOkListener() {
             @Override
             public void onClick(View view, String text) {
-                GoodsUtil.getCouponInfo(GoodsDetailForPddActivity.this, goodsInfo);
+                GoodsUtil.getCouponInfo(GoodsDetailForJdActivity.this, goodsInfo);
             }
         });
         mDialog.setOkTextAndColor(R.color.color_FF4848, "确定");
@@ -1164,7 +1112,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
      * @return
      */
     private boolean isGoodsLose() {
-        if (!LoginUtil.checkIsLogin(GoodsDetailForPddActivity.this)) {
+        if (!LoginUtil.checkIsLogin(GoodsDetailForJdActivity.this)) {
             return true;
         }
         if (AppUtil.isFastClick(200)) {

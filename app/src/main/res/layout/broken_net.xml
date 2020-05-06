@@ -68,13 +68,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/load_error"
-        android:layout_centerInParent="true"
         android:layout_marginTop="16dp"
         android:text="网络状态待提升，点击重新加载"
         android:textColor="#ff999999"
+        android:layout_centerHorizontal="true"
         android:textSize="12sp" />
 
     <TextView
+        android:layout_below="@+id/load_error"
+        android:layout_marginTop="100dp"
         android:id="@+id/tv_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,8 +88,6 @@
         android:paddingRight="@dimen/dp_36"
         android:paddingLeft="@dimen/dp_36"
         android:textSize="16sp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
         android:layout_centerHorizontal="true"
 
         />

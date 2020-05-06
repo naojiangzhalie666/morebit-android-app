@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -321,11 +322,11 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                             listArray.clear();
                             listArray.addAll(data);
                             mAdapter.replace(listArray);
+
                         } else {
                             searchNullTips_ly.setVisibility(View.VISIBLE);
                         }
-                        mAdapter.notifyItemRangeChanged(0,data.size());
-                       // mRecyclerView.notifyDataSetChanged();
+                     mRecyclerView.notifyDataSetChanged();
                         if (data != null && data.size() == 0){
                             mRecyclerView.getListView().setNoMore(true);
                         }
@@ -369,9 +370,8 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                             if (data.size() > 0) {
                                 listArray.addAll(data);
                                 mAdapter.replace(listArray);
+                               // mRecyclerView.notifyDataSetChanged();
 
-                                mAdapter.notifyItemRangeChanged(0,data.size());
-                              //  mRecyclerView.notifyDataSetChanged();
                             } else {
                                 mRecyclerView.getListView().setNoMore(true);
                             }

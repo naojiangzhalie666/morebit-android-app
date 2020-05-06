@@ -3,6 +3,7 @@ package com.zjzy.morebit.main.ui.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -83,8 +84,7 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
     protected void initView(View view) {
         if (getArguments() == null) return;
         mPddJdTitleTypeItem = (PddJdTitleTypeItem) getArguments().getSerializable(PddListFragment.PDDJDTITLETYPEITEM);
-        mAdapter = new PddJdListAdapter(getActivity());
-        rl_list.setAdapter(mAdapter);
+
         rl_list.setOnReLoadListener(this);
 
     }
@@ -142,16 +142,24 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
 
     @Override
     public void setPdd(List<ShopGoodInfo> data, int loadType) {
-        rl_list.getListView().refreshComplete(REQUEST_COUNT);
-        removeNetworkError(rl_list.getListviewSuper());
+
+       rl_list.getListView().refreshComplete(REQUEST_COUNT);
+       removeNetworkError(rl_list.getListviewSuper());
         if (loadType == C.requestType.initData) {
-            mData.clear();
-        } else {
-            rl_list.getListView().refreshComplete(10);
+//           mData.clear();
+//        } else {
+//            rl_list.getListView().refreshComplete(10);
+//        }else{
+            mAdapter = new PddJdListAdapter(getActivity(),data);
+            rl_list.setAdapter(mAdapter);
+
+        }else if (loadType== C.requestType.loadMore){
+
+            //mData.addAll(data);
+            mAdapter.setData(data);
+
         }
-        mData.addAll(data);
-        mAdapter.setData(mData);
-        rl_list.notifyDataSetChanged();
+
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.adapter.JdListAdapter;
 import com.zjzy.morebit.adapter.PddJdListAdapter;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.main.contract.PddContract;
@@ -50,7 +51,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
 
 
     private static final int REQUEST_COUNT = 10;
-    private PddJdListAdapter mAdapter;
+    private JdListAdapter mAdapter;
     private PddJdTitleTypeItem mPddJdTitleTypeItem;
     //销量
     private LinearLayout mTitleSalesVolumeLl;
@@ -116,8 +117,6 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         mTabLayout = (TabLayout) view.findViewById(R.id.tl_tab);
         if (getArguments() == null) return;
         mPddJdTitleTypeItem = (PddJdTitleTypeItem) getArguments().getSerializable(JdongListFragment.PDDJDTITLETYPEITEM);
-        mAdapter = new PddJdListAdapter(getActivity());
-        rl_list.setAdapter(mAdapter);
         rl_list.setOnReLoadListener(this);
 
 
@@ -253,13 +252,16 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         rl_list.getListView().refreshComplete(REQUEST_COUNT);
         removeNetworkError(rl_list.getListviewSuper());
         if (loadType == C.requestType.initData) {
-            mData.clear();
+            //mData.clear();
+            mAdapter = new JdListAdapter(getActivity(),data);
+            rl_list.setAdapter(mAdapter);
         } else {
-            rl_list.getListView().refreshComplete(10);
+           // rl_list.getListView().refreshComplete(10);
+
+            mAdapter.setData(data);
         }
-        mData.addAll(data);
-        mAdapter.setData(mData);
-      rl_list.notifyDataSetChanged();
+
+   //   rl_list.notifyDataSetChanged();
     }
 
     @Override

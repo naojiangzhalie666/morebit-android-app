@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -546,15 +547,16 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                             ShopGoodInfo shopGoodInfo = (ShopGoodInfo) MyGsonUtils.jsonToBean(MyGsonUtils.beanToJson(item), ShopGoodInfo.class);
 
                             if (shopGoodInfo == null) return;
-                            if (item.getShopType() == 3||item.getShopType()==0){
+                            if (item.getShopType() == 3){
                                 String itemSourceId = item.getItemSourceId();
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
-                                 GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
+                                shopGoodInfo.setItemSource("2");
+                                GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
                             }else if (item.getShopType()==0){
                                 String itemSourceId = item.getItemSourceId();
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
                                 shopGoodInfo.setItemSource("1");
-                                GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
+                                GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
                             } else{
                                 GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
                                     @Override
@@ -689,10 +691,10 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             ShopGoodInfo info = mGuessGoodsAdapter.getItem(i);
             if(info.getType()==0){
                 if(info.isSelect()){
-                    if (info.getShopType() != 3){
-                        shopGoodInfos.add(info);
+                    if (info.getShopType() == 3 ||info.getShopType()==0){
+                       isHavePdd = true;
                     }else{
-                        isHavePdd = true;
+                        shopGoodInfos.add(info);
                     }
                 }
 

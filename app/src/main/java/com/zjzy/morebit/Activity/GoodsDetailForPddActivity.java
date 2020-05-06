@@ -230,7 +230,6 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     private String mPromotionUrl;
     //京东领劵领劵
     private String mPromotionJdUrl;
-
     public static void start(Context context, ShopGoodInfo info) {
         Intent intent = new Intent((Activity) context, GoodsDetailForPddActivity.class);
         Bundle bundle = new Bundle();
@@ -292,9 +291,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     private void initData(boolean isRefresh) {
         if (mGoodsInfo == null) return;
         mPresenter.getDetailDataForPdd(this, mGoodsInfo, isRefresh);
-        mPresenter.getDetailDataForJd(this, mGoodsInfo, isRefresh);
         mPresenter.generatePromotionUrl(this, mGoodsInfo.getGoodsId(), mGoodsInfo.getCouponUrl());
-        mPresenter.generatePromotionJdUrl(this,mGoodsInfo.getGoodsId(),mGoodsInfo.getCouponUrl());
     }
 
     @Override
@@ -523,22 +520,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
         mGoodsInfo.setItemSource(Info.getItemSource());
         if (!StringsUtils.isEmpty(Info.getTitle())) {
-            if (Info.getItemSource().equals("1")) {
-                tv_pdd.setText("京东");
-                shop_img.setImageResource(R.mipmap.jd_icon_bg);
-                //示详情图片
-                List<String> imgs = Info.getItemBanner();
-                if (imgs != null && imgs.size() > 0) {
 
-                    mGoodsDetailForPdd.setGoodsDetails(imgs);
-                    initImgFragment(mGoodsDetailForPdd);
-                    ll_fw.setVisibility(View.GONE);
-                }
-
-            } else {
                 tv_pdd.setText("拼多多");
                 shop_img.setImageResource(R.mipmap.detail_pdd_icon);
-            }
+
             StringsUtils.retractTitleForPdd(tv_pdd, title, Info.getTitle());
         }
 
@@ -575,15 +560,15 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
 
             if (!TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
-                tv_coupon_time.setText("有效日期" + dateStart.substring(5, 7) + "." + dateStart.substring(8, 10)
-                        + "-" + dateEnd.substring(5, 7) + "." + dateEnd.substring(9, 11));
+                tv_coupon_time.setText("有效日期: " + dateStart.substring(5, 7) + "-" + dateStart.substring(8, 10)
+                        + "-" + dateEnd.substring(5, 7) + "-" + dateEnd.substring(9, 11));
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
         } else {
             if (!TextUtils.isEmpty(dateEnd) && !TextUtils.isEmpty(dateEnd)) {
-                tv_coupon_time.setText("有效日期 " + dateStart.substring(5, 7) + "." + dateStart.substring(8, 10)
-                        + "-" + dateEnd.substring(5, 7) + "." + dateEnd.substring(8, 10));
+                tv_coupon_time.setText("有效日期: " + dateStart.substring(5, 7) + "-" + dateStart.substring(8, 10)
+                        + "-" + dateEnd.substring(5, 7) + "-" + dateEnd.substring(8, 10));
             }
         }
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
@@ -1037,12 +1022,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
-                    if (mGoodsInfo.getItemSource().equals("1")) {//京东
 
-                        if (mPromotionJdUrl != null) {
-                            KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
-                        }
-                    } else {//拼多多
                         if (mPromotionUrl != null) {
 //                    String content = "pinduoduo://com.xunmeng.pinduoduo/app.html?use_reload=1&launch_url=duo_coupon_landing.html%3Fgoods_id%3D4249333262%26pid%3D9672007_131083858%26cpsSign%3DCC_200322_9672007_131083858_2185d1115d543ff315f28695b09ff65e%26duoduo_type%3D2&campaign=ddjb&cid=launch_dl_force_";
 //                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(content));
@@ -1060,7 +1040,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                         }
                     }
 
-                }
+
 
                 break;
 
@@ -1232,12 +1212,5 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         return AppUtil.checkHasInstalledApp(this, "com.xunmeng.pinduoduo");
     }
 
-    /**
-     * 判断是否安装京东
-     *
-     * @return
-     */
-    private boolean isHasInstalledJd() {
-        return AppUtil.checkHasInstalledApp(this, "com.jingdong.app.mall");
-    }
+
 }
