@@ -78,7 +78,8 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     private int currentTab = 0;
     private TextView tao_money,pin_money,profit_money,tv_today_paymen_total,tv_today_integral,tv_today_estimate_money,tv_today_money
             ,tv_yesterday_payment_total,tv_yestaday_integral,tv_yesterday_estimate_money,tv_yesterday_money,tv_month_estimate_money
-            ,tv_month_money,tv_last__month_estimate_money,tv_last_month_money,tv_month_profit,tv_last_month_profit,tv_day_hint,tv_month_hint;
+            ,tv_month_money,tv_last__month_estimate_money,tv_last_month_money,tv_month_profit,tv_last_month_profit,tv_day_hint,tv_month_hint
+            ,jd_moeny;
     EarningsHintNewsDialog mMonthdialog;
     EarningsHintNewsDialog mDayialog;
     EarningExplainBean mExplainData;
@@ -188,6 +189,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         tao_money=view.findViewById(R.id.tao_money);//淘宝总收益
         pin_money=view.findViewById(R.id.pin_moeny);//拼多多总收益
         profit_money=view.findViewById(R.id.profit_money);//积分总收益
+        jd_moeny=view.findViewById(R.id.jd_moeny);//京东总收益
         tv_today_paymen_total=view.findViewById(R.id.tv_today_paymen_total);//今日付款笔数
         tv_today_integral=view.findViewById(R.id.tv_today_integral);//今日积分收益
         tv_today_estimate_money=view.findViewById(R.id.tv_today_estimate_money);//今日预估收益
@@ -271,6 +273,8 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         tao_money.setText(""+MathUtils.getMoney(data.getTotalTaoBaoEstimateMoney()));
         pin_money.setText(""+MathUtils.getMoney(data.getTotalPddEstimateMoney()));
         profit_money.setText(""+MathUtils.getMoney(data.getTotalIntegral()));
+        jd_moeny.setText(""+MathUtils.getMoney(data.getTotalJdEstimateMoney()));
+
 
 
     }

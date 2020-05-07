@@ -20,6 +20,15 @@ public class MonthEarnings implements Serializable {
     private String totalIntegral=""	;//总积分收益
     private String totalTaoBaoEstimateMoney="";//淘宝预估总收益
     private String totalPddEstimateMoney="";//拼多多预估总收益
+    private String totalJdEstimateMoney="";//京东预估总收益
+
+    public String getTotalJdEstimateMoney() {
+        return totalJdEstimateMoney;
+    }
+
+    public void setTotalJdEstimateMoney(String totalJdEstimateMoney) {
+        this.totalJdEstimateMoney = totalJdEstimateMoney;
+    }
 
     public String getThisMonthIntegral() {
         return thisMonthIntegral;
