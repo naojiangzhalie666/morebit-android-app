@@ -135,15 +135,26 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         if ( loginType== C.sendCodeType.REGISTER){
             passwordLogin.setVisibility(View.GONE);
             tv_title.setText("手机号码注册");
+            edtPhone.setFocusable(false);
 
         }
+        if ( loginType== C.sendCodeType.LOGIN){
+            tv_title.setText("手机号快速登录");
+            edtPhone.setFocusable(false);
 
-        if (loginType== C.sendCodeType.WEIXINBIND ||loginType== C.sendCodeType.BINDWEIXIN || loginType== C.sendCodeType.WEIXINREGISTER){
+        }
+        if (loginType== C.sendCodeType.WEIXINBIND || loginType== C.sendCodeType.WEIXINREGISTER){
+            passwordLogin.setVisibility(View.GONE);
+            tv_title.setText("绑定手机");
+            edtPhone.setFocusable(false);
+        }
+
+        if (loginType== C.sendCodeType.BINDWEIXIN){
             passwordLogin.setVisibility(View.GONE);
             tv_title.setText("");
+            edtPhone.setFocusable(true);
 
         }
-
 
         //因为注册的界面已经检查手机和发送验证码才会进来这界面，此条件控制重复发送验证码
 //        if (loginType != C.sendCodeType.REGISTER && loginType != C.sendCodeType.WEIXINREGISTER) {

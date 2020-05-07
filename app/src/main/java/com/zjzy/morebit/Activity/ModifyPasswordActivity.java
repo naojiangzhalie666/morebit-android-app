@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -48,6 +49,8 @@ import com.zjzy.morebit.utils.encrypt.MD5Utils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.utils.netWork.ErrorCodeUtlis;
 import com.zjzy.morebit.view.ClearEditText;
+
+import java.util.regex.Pattern;
 
 import io.reactivex.functions.Action;
 
@@ -111,6 +114,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         setContentView(R.layout.activity_modify_password);
 
         type = getIntent().getIntExtra("type", 1);
+
         initView();
     }
 
@@ -135,7 +139,6 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         String phone = getIntent().getStringExtra("phone");
         mAreaCode = (AreaCodeBean) getIntent().getSerializableExtra(C.Extras.COUNTRY);
         rl= (RelativeLayout) findViewById(R.id.rl);
-
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,9 +148,10 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         if (!TextUtils.isEmpty(phone)) {
             mEdtPhone.setText(phone);
         }
-
         mTvPhone = (TextView) findViewById(R.id.tv_phone);
         errorPhoneTv.setText("");
+        mEdtPassword.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+        mEdtPassword2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         if (type == MODIFY_PASSWORD) {
             mTitle.setText(R.string.find_password);
             areaCodeTv.setVisibility(View.GONE);
@@ -503,9 +507,14 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             errorText = "请输入密码";
             checkFlag = false;
         }
-        if (null != mEdtPassword && mEdtPassword.getText().toString().trim().length() < 6) {
-            errorText = "密码至少输入6位";
+        if (null != mEdtPassword && mEdtPassword.getText().toString().trim().length() < 8 || mEdtPassword.getText().toString().trim().length() >16 && null != mEdtPassword) {
+            errorText = "密码必须是8-16位的数字、字符组合";
             checkFlag = false;
+        }else{
+            if (!isLetterDigit(mEdtPassword.getText().toString())){
+                errorText = "密码必须是8-16位的数字、字符组合";
+                checkFlag = false;
+            }
         }
         if (showError) errorPwTv.setText(errorText);
         return checkFlag;
@@ -641,5 +650,24 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             }
         }
     }
+
+
+    public static boolean isLetterDigit(String str){
+        boolean isDigit = false;//定义一个boolean值，用来表示是否包含数字
+        boolean isLetter = false;//定义一个boolean值，用来表示是否包含字母
+        for(int i=0 ; i<str.length();i++){
+        if(Character.isDigit(str.charAt(i))){   //用char包装类中的判断数字的方法判断每一个字符
+            isDigit = true;
+        }
+        if(Character.isLetter(str.charAt(i))){  //用char包装类中的判断字母的方法判断每一个字符
+            isLetter = true;
+        }
+    }
+    String regex = "^[a-zA-Z0-9]+$";
+    boolean isRight = isDigit && isLetter&&str.matches(regex);
+ return isRight;
+
+}
+
 
 }

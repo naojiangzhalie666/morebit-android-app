@@ -109,6 +109,8 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
         if (!TextUtils.isEmpty(mPhone)) {
             phoneTv.setText(mPhone);
         }
+        //密码不可见
+        edt_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
         edt_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
