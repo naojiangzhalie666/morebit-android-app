@@ -186,7 +186,7 @@ public class WebJSHook {
         if (TextUtils.isEmpty(url)) {
             return;
         }
-        startShare(url, "", "", true);
+        startShare(url, "", "", false);
     }
 
     /**
@@ -202,7 +202,7 @@ public class WebJSHook {
         if (file == null) {
             showText("分享失败");
         }
-        startShare(file.getPath(), "", "", true);
+        startShare(file.getPath(), "", "", false);
     }
 
     /**
@@ -341,7 +341,7 @@ public class WebJSHook {
         if (file == null && TextUtils.isEmpty(file.getPath())) {
             showText("分享失败");
         }
-        shareSpecialty(title, content, shareType, imgType, file.getPath(), head);
+        shareSpecialty(title, content, shareType, imgType, file.getPath(), "");
     }
 
 
@@ -359,7 +359,7 @@ public class WebJSHook {
     @JavascriptInterface
     public void shareSpecialtyForUrl(final String url, int shareType, int imgType, final String title, final String content, final String head) {
         MyLog.i("WebJSHook", "shareWebpage");
-        shareSpecialty(title, content, shareType, imgType, url, head);
+        shareSpecialty(title, content, shareType, imgType, url, "");
     }
 
 
@@ -591,7 +591,7 @@ public class WebJSHook {
             ShareUtil.shareImg(mFragment.getActivity(), url, ShareUtil.QQType);
         } else {
             String sHead = getHead(head);
-            ShareUtil.App.toQQFriend(mFragment.getActivity(), title, content, sHead, url, null);
+            ShareUtil.App.toQQFriend(mFragment.getActivity(), title, content, "", url, null);
         }
     }
 
@@ -601,7 +601,7 @@ public class WebJSHook {
             ShareUtil.shareImg(mFragment.getActivity(), url, ShareUtil.QQZoneType);
         } else {
             String sHead = getHead(head);
-            ShareUtil.App.toQQRoom(mFragment.getActivity(), title, content, sHead, url, null);
+            ShareUtil.App.toQQRoom(mFragment.getActivity(), title, content, "", url, null);
         }
     }
 
@@ -622,7 +622,7 @@ public class WebJSHook {
             ShareUtil.shareImg(mFragment.getActivity(), url, ShareUtil.WeMomentsType);
         } else {
             String sHead = getHead(head);
-            ShareUtil.App.toWechatMoments(mFragment.getActivity(), title, content, sHead, url, null);
+            ShareUtil.App.toWechatMoments(mFragment.getActivity(), title, content, "", url, null);
         }
     }
 
@@ -632,7 +632,7 @@ public class WebJSHook {
             ShareUtil.shareImg(mFragment.getActivity(), url, ShareUtil.WechatType);
         } else {
             String sHead = getHead(head);
-            ShareUtil.App.toWechatFriend(mFragment.getActivity(), title, content, sHead, url, null);
+            ShareUtil.App.toWechatFriend(mFragment.getActivity(), title, content, "", url, null);
         }
     }
 

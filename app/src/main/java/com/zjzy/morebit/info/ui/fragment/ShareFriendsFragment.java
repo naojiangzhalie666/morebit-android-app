@@ -129,7 +129,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
     @Override
     protected void initData() {
         mInvite_code = UserLocalData.getUser(getActivity()).getInviteCode();
-        mImageUrl = UserLocalData.getUser(getActivity()).getHeadImg();
+        mImageUrl = "";
         if (TextUtils.isEmpty(mImageUrl)) {
             mImageUrl = "applogo";
         }

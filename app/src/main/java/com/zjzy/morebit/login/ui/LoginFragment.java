@@ -44,6 +44,7 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
     private TextView ll_userAgreement,privateProtocol;
     private boolean wxLoginFlag = false;
     private AreaCodeBean mAreaCode;
+    private WeixinInfo mWeixinInfo;
 
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
@@ -108,7 +109,7 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
                 getActivity().finish();
                 break;
             case R.id.phone_ll:
-                LoginMainFragment.start(getActivity());
+                LoginMainFragment.start(getActivity(),2,mWeixinInfo,"");
                 break;
             case R.id.wx_ll:
                 if (AppUtil.isFastClick(1000)) {

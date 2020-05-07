@@ -137,13 +137,16 @@ public class ActivityAdapter extends SimpleAdapter<HandpickBean, SimpleViewHolde
                 coupon.setVisibility(View.VISIBLE);
                 coupon.setText(mContext.getString(R.string.yuan, MathUtils.getCouponPrice(item.getCouponPrice())));
             }
+
+
+
             if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner())
                     || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
                 tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission() + "") + "元");
             } else {
                 UserInfo userInfo1 = UserLocalData.getUser();
                 if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                    tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission() + "") + "元");
+                    tv_coupul.setText("登录赚佣金");
                 } else {
                     tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission() + "") + "元");
                 }

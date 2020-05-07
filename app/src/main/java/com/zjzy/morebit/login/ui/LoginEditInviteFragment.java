@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -173,6 +174,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         tv_bind=view.findViewById(R.id.tv_bind);//已有账号立即绑定
         privateProtocol = view.findViewById(R.id.privateProtocol);
         ll_userAgreement = view.findViewById(R.id.ll_userAgreement);
+        edtInvite.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
         edtInvite.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -181,7 +183,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(edtInvite.getText().toString().length()==6){
+                if(edtInvite.getText().toString().length()==6||edtInvite.getText().toString().length()==11){
                     tv_next.setEnabled(true);
                     tv_next.setTextColor(Color.parseColor("#FFFFFF"));
                     tv_next.setBackgroundResource(R.mipmap.phone_login_next);
@@ -308,7 +310,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
 
                 break;
             case R.id.tv_next:
-                final InvateBindDialog dialog = new InvateBindDialog(getActivity(), tv_invite_name.getText().toString(), "", "", "", new InvateBindDialog.OnOkListener() {
+                final InvateBindDialog dialog = new InvateBindDialog(getActivity(), tv_invite_name.getText().toString()+"-"+"多点优选"+"-"+edtInvite.getText().toString(), "", "", "", new InvateBindDialog.OnOkListener() {
                     @Override
                     public void onClick(View view) {
                         if (AppUtil.isFastClick(500)) {

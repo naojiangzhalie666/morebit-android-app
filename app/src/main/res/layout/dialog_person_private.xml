@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《多点优选用户协议》"
-                android:textColor="@color/color_4479C4"
+                android:textColor="@color/color_F05557"
                 android:textSize="@dimen/sp_13"
                 />
 
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《隐私政策》"
-                android:textColor="@color/color_4479C4"
+                android:textColor="@color/color_F05557"
                 android:textSize="@dimen/sp_13"
                 />
         </LinearLayout>
@@ -151,7 +151,7 @@
             android:id="@+id/ok"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_3276F5"
+            android:background="@color/color_F05557"
             android:layout_weight="1.0"
             android:gravity="center"
             android:text="同意"
