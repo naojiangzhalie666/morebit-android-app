@@ -94,11 +94,11 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         return false;
     }
 
-    public static void start(Activity activity, int type, String phone,AreaCodeBean areaCodeBean) {
+    public static void start(Activity activity, int type, String phone, AreaCodeBean areaCodeBean) {
         Intent intent = new Intent(activity, ModifyPasswordActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("phone", phone);
-        intent.putExtra(C.Extras.COUNTRY,areaCodeBean);
+        intent.putExtra(C.Extras.COUNTRY, areaCodeBean);
         activity.startActivity(intent);
     }
 
@@ -134,11 +134,11 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         mTvVerfyCode = (TextView) findViewById(R.id.tv_verify_code);
         mTitle = (TextView) findViewById(R.id.txt_head_title);
         mEdtPhone = (ClearEditText) findViewById(R.id.edt_phone);
-        areaCodeTv = (TextView)findViewById(R.id.areaCodeTv);
+        areaCodeTv = (TextView) findViewById(R.id.areaCodeTv);
         areaCodeBtn = (TextView) findViewById(R.id.areaCodeBtn);
         String phone = getIntent().getStringExtra("phone");
         mAreaCode = (AreaCodeBean) getIntent().getSerializableExtra(C.Extras.COUNTRY);
-        rl= (RelativeLayout) findViewById(R.id.rl);
+        rl = (RelativeLayout) findViewById(R.id.rl);
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +150,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         }
         mTvPhone = (TextView) findViewById(R.id.tv_phone);
         errorPhoneTv.setText("");
-        mEdtPassword.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+         mEdtPassword.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         mEdtPassword2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         if (type == MODIFY_PASSWORD) {
             mTitle.setText(R.string.find_password);
@@ -162,7 +162,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             errorPhoneTv.setVisibility(View.INVISIBLE);
 
             //修改密码这里后面要增加区号，暂时先默认是中国
-            if(null == mAreaCode){
+            if (null == mAreaCode) {
                 mAreaCode = AreaCodeUtil.getDefaultCode();
             }
 
@@ -173,16 +173,16 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             areaCodeBtn.setVisibility(View.GONE);
             mTvPhone.setVisibility(View.GONE);
             errorPhoneTv.setVisibility(View.VISIBLE);
-            if(null != mAreaCode){
+            if (null != mAreaCode) {
                 phoneLength = mAreaCode.getPhoneLength();
                 areaCode = mAreaCode.getAreaCode();
-                areaCodeTv.setText("+"+mAreaCode.getAreaCode());
+                areaCodeTv.setText("+" + mAreaCode.getAreaCode());
                 mEdtPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(phoneLength)});
             }
         }
 
         mSubmit = (TextView) findViewById(R.id.tv_submit);
-      mSubmit.setEnabled(false);
+        mSubmit.setEnabled(false);
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -328,7 +328,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             @Override
             public void onClick(View view, String text) {
                 //跳到注册
-                LoginEditInviteFragment.start(ModifyPasswordActivity.this, phone, C.sendCodeType.REGISTER,null);
+                LoginEditInviteFragment.start(ModifyPasswordActivity.this, phone, C.sendCodeType.REGISTER, null);
             }
         });
         mLoginDialog.show();
@@ -472,7 +472,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
                 errorPhoneTv.setVisibility(View.VISIBLE);
                 if (showError) errorPhoneTv.setText("请输入正确的手机号");
                 return false;
-            }else if(null != mEdtPhone && inputLength> 0 && inputLength < C.PHONE.MIN_LENGTH){
+            } else if (null != mEdtPhone && inputLength > 0 && inputLength < C.PHONE.MIN_LENGTH) {
                 errorPhoneTv.setVisibility(View.VISIBLE);
                 if (showError) errorPhoneTv.setText("请输入正确的手机号");
                 return false;
@@ -502,19 +502,20 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
     private boolean checkPassword(boolean showError) {
         String errorText = "";
         boolean checkFlag = true;
+        String reg = "[\\pP\\p{Punct}]";
 
         if (null != mEdtPassword && TextUtils.isEmpty(mEdtPassword.getText().toString())) {
             errorText = "请输入密码";
             checkFlag = false;
         }
-        if (null != mEdtPassword && mEdtPassword.getText().toString().trim().length() < 8 || mEdtPassword.getText().toString().trim().length() >16 && null != mEdtPassword) {
-            errorText = "密码必须是8-16位的数字、字符组合";
+        if (null != mEdtPassword && mEdtPassword.getText().toString().trim().length() < 8 || mEdtPassword.getText().toString().trim().length() > 16 && null != mEdtPassword) {
+            errorText = "密码必须是8-16位的数字、字母组合";
             checkFlag = false;
-        }else{
-            if (!isLetterDigit(mEdtPassword.getText().toString())){
-                errorText = "密码必须是8-16位的数字、字符组合";
-                checkFlag = false;
-            }
+        }
+        if (!isLetterDigit(mEdtPassword.getText().toString())/*||mEdtPassword.getText().toString().matches(reg)*/) {
+            errorText = "密码必须是8-16位的数字、字母组合";
+            checkFlag = false;
+
         }
         if (showError) errorPwTv.setText(errorText);
         return checkFlag;
@@ -620,7 +621,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
                 mSubmit.setBackgroundResource(R.drawable.image_dengluanniu_huangse);
                 mSubmit.setTextColor(Color.WHITE);
             } else {
-               mSubmit.setEnabled(false);
+                mSubmit.setEnabled(false);
                 mSubmit.setBackgroundResource(R.drawable.image_dengluanniu_huise);
                 mSubmit.setTextColor(Color.parseColor("#999999"));
             }
@@ -634,40 +635,41 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         //扫描结果回调
         if (requestCode == AreaCodeActivity.REQ_AREACODE && data != null) {
             AreaCodeBean areaCodeBean = (AreaCodeBean) data.getSerializableExtra(C.Extras.COUNTRY);
-            if(null != areaCodeBean){
+            if (null != areaCodeBean) {
                 this.mAreaCode = areaCodeBean;
-                if(!TextUtils.isEmpty(areaCodeBean.getAreaCode())){
+                if (!TextUtils.isEmpty(areaCodeBean.getAreaCode())) {
                     areaCode = areaCodeBean.getAreaCode();
-                    if(!areaCode.equals("86")){
+                    if (!areaCode.equals("86")) {
                         //海外手机最大12位,最小6位
                         phoneLength = C.PHONE.MAX_LENGTH;
-                    }else{
+                    } else {
                         phoneLength = areaCodeBean.getPhoneLength();
                     }
                     mEdtPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(phoneLength)});
-                    areaCodeTv.setText("+"+areaCodeBean.getAreaCode());
+                    areaCodeTv.setText("+" + areaCodeBean.getAreaCode());
                 }
             }
         }
     }
 
 
-    public static boolean isLetterDigit(String str){
+    public static boolean isLetterDigit(String str) {
         boolean isDigit = false;//定义一个boolean值，用来表示是否包含数字
         boolean isLetter = false;//定义一个boolean值，用来表示是否包含字母
-        for(int i=0 ; i<str.length();i++){
-        if(Character.isDigit(str.charAt(i))){   //用char包装类中的判断数字的方法判断每一个字符
-            isDigit = true;
-        }
-        if(Character.isLetter(str.charAt(i))){  //用char包装类中的判断字母的方法判断每一个字符
-            isLetter = true;
-        }
-    }
-    String regex = "^[a-zA-Z0-9]+$";
-    boolean isRight = isDigit && isLetter&&str.matches(regex);
- return isRight;
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isDigit(str.charAt(i))) {   //用char包装类中的判断数字的方法判断每一个字符
+                isDigit = true;
+            }
+            if (Character.isLetter(str.charAt(i))) {  //用char包装类中的判断字母的方法判断每一个字符
+                isLetter = true;
+            }
 
-}
+        }
+        String regex = "^[a-zA-Z0-9]+$";
+        boolean isRight = isDigit && isLetter  && str.matches(regex) ;
+        return isRight;
+
+    }
 
 
 }

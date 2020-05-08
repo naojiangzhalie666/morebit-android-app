@@ -303,6 +303,9 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                                         }
                                         AppUtil.goSetting(getActivity());
 
+                                    }else {
+                                        ViewShowUtils.showShortToast(getActivity(), "请开启相应权限");
+                                        AppUtil.goSetting(getActivity());
                                     }
                                 }
                             }

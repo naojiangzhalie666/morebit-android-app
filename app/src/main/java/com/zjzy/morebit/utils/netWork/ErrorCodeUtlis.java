@@ -28,7 +28,7 @@ public class ErrorCodeUtlis {
      */
     public static boolean isRegister(String errorCode) {
         if (TextUtils.isEmpty(errorCode)) return false;
-        return C.requestCode.B10010.equals(errorCode)||C.requestCode.B10005.equals(errorCode);
+        return C.requestCode.B10010.equals(errorCode)||C.requestCode.B10005.equals(errorCode)||C.requestCode.SUCCESS.equals(errorCode);
     }
 
     /**

@@ -158,12 +158,14 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
         //因为注册的界面已经检查手机和发送验证码才会进来这界面，此条件控制重复发送验证码
 //        if (loginType != C.sendCodeType.REGISTER && loginType != C.sendCodeType.WEIXINREGISTER) {
-//            //请求验证码
-//            mPresenter.checkoutPhone(this, mPhone, loginType, mAreaCode.getAreaCode());
+//
 //        }
-//        countDown();
-        // mTextSend.setText(mPhone);
         edtPhone.setText(mPhone);
+        //请求验证码
+        mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+        //countDown();
+        // mTextSend.setText(mPhone);
+
         accountLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

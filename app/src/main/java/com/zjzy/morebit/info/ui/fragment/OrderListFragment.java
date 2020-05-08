@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -141,8 +142,14 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                 }else if(mTeamType == 4) {
                     ShopGoodInfo info = new ShopGoodInfo();
                     info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
+                    info.setItemSource("2");
                     GoodsDetailForPddActivity.start(getActivity(),info);
-                } else{
+                }else if (mTeamType == 2){
+                    ShopGoodInfo info = new ShopGoodInfo();
+                    info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
+                    info.setItemSource("1");
+                    GoodsDetailForJdActivity.start(getActivity(),info);
+                }else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
                             mListArray.get(position).getOrderSn());
