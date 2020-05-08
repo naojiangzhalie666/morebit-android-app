@@ -1,11 +1,14 @@
 package com.zjzy.morebit.main.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
@@ -43,7 +46,7 @@ import butterknife.BindView;
  * 备注:
  */
 
-public class PddListFragment extends MvpFragment<PddListPresenter> implements PddContract.View, ReUseListView.OnReLoadListener {
+public class PddListFragment extends MvpFragment<PddListPresenter> implements PddContract.View, ReUseListView.OnReLoadListener, View.OnClickListener {
 
     public static String PDDJDTITLETYPEITEM = "PddJdTitleTypeItem"; // 广告加载的跳转info
     @BindView(R.id.mListView)
@@ -55,6 +58,31 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
     private static final int REQUEST_COUNT = 10;
     private PddJdListAdapter mAdapter;
     private PddJdTitleTypeItem mPddJdTitleTypeItem;
+
+    //销量
+    private LinearLayout mTitleSalesVolumeLl;
+    private ImageView mTitleSalesVolumeIv;
+    private TextView mTitleSalesVolumeTv;
+    //券后价
+    private LinearLayout mTitlePostCouponPriceLl;
+    private ImageView mTitlePostCouponPriceIv;
+    private TextView mTitlePostCouponPriceTv;
+    //佣金
+    private LinearLayout mTitleCommissionLl;
+    private ImageView mTitleCommissionIv;
+    private TextView mTitleCommissionTv;
+
+    private LinearLayout title_commission_ll;//奖励
+    private TextView title_comprehensive_tv;
+    //排序方向
+    private int eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;// 0降序  1升序
+    //排序类型
+    private long mSortType = 1;//排序类型 1 综合排序 2 销量排序 3 价格排序 4 奖励排序
+    //优惠券
+    private LinearLayout title_coupon_ll;
+    private ImageView title_coupon_iv;
+    private boolean isCoupon = false;//优惠券是否选中
+    private String coupon="0";
 
 
 
@@ -87,6 +115,35 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
 
         rl_list.setOnReLoadListener(this);
 
+
+        title_comprehensive_tv=view.findViewById(R.id.title_comprehensive_tv);//综合
+
+        mTitleSalesVolumeLl = view.findViewById(R.id.title_sales_volume_ll);//销量
+        mTitleSalesVolumeTv = view.findViewById(R.id.title_sales_volume_tv);
+        mTitleSalesVolumeIv = view.findViewById(R.id.title_sales_volume_iv);
+
+        mTitlePostCouponPriceLl = view.findViewById(R.id.title_post_coupon_price__ll);//价格
+        mTitlePostCouponPriceTv = view.findViewById(R.id.title_post_coupon_price_tv);
+        mTitlePostCouponPriceIv = view.findViewById(R.id.title_post_coupon_price_iv);
+
+        mTitleCommissionLl = view.findViewById(R.id.title_commission_ll);//奖励
+        mTitleCommissionTv = view.findViewById(R.id.title_commission_tv);
+        mTitleCommissionIv = view.findViewById(R.id.title_commission_iv);
+
+
+
+
+        title_coupon_ll=view.findViewById(R.id.title_coupon_ll);//优惠券
+        title_coupon_iv=view.findViewById(R.id.title_coupon_iv);
+
+
+        mTitleSalesVolumeLl.setOnClickListener(this);
+        mTitlePostCouponPriceLl.setOnClickListener(this);
+        mTitleCommissionLl.setOnClickListener(this);
+        title_comprehensive_tv.setOnClickListener(this);
+        title_coupon_ll.setOnClickListener(this);
+
+
     }
 
 
@@ -116,6 +173,21 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
         if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
         programCatItemBean.setCatId(Integer.valueOf(mPddJdTitleTypeItem.getTabNo()));
+        if (eSortDirection==0){
+            programCatItemBean.setOrder("desc");
+        }else{
+            programCatItemBean.setOrder("asc");
+        }
+        if (mSortType==1){
+            programCatItemBean.setSort("");
+        }else if (mSortType==2){
+            programCatItemBean.setSort("inOrderCount30Days");
+        }else if (mSortType==3){
+            programCatItemBean.setSort("price");
+        }else if (mSortType==4){
+            programCatItemBean.setSort("commissionShare");
+        }
+        programCatItemBean.setCoupon(coupon);
         mPresenter.getJdPddGoodsList(this,  programCatItemBean, C.requestType.initData);
     }
 
@@ -124,6 +196,22 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
         if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
         programCatItemBean.setCatId(Integer.valueOf(mPddJdTitleTypeItem.getTabNo()));
+        programCatItemBean.setCoupon(coupon);
+        if (eSortDirection==0){
+            programCatItemBean.setOrder("desc");
+        }else{
+            programCatItemBean.setOrder("asc");
+        }
+        if (mSortType==1){
+            programCatItemBean.setSort("");
+        }else if (mSortType==2){
+            programCatItemBean.setSort("inOrderCount30Days");
+        }else if (mSortType==3){
+            programCatItemBean.setSort("price");
+        }else if (mSortType==4){
+            programCatItemBean.setSort("commissionShare");
+        }
+        programCatItemBean.setCoupon(coupon);
         mPresenter.getJdPddGoodsList(this, programCatItemBean,C.requestType.loadMore);
     }
 
@@ -208,5 +296,108 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.title_comprehensive_tv://综合
+                requestClickRadar(null, title_comprehensive_tv, 1);
+                onReload();
+                break;
+            case R.id.title_sales_volume_ll://销量
+                requestClickRadar(mTitleSalesVolumeIv, mTitleSalesVolumeTv, 2);
+                onReload();
+                break;
+            case R.id.title_post_coupon_price__ll://价格
+                requestClickRadar(mTitlePostCouponPriceIv, mTitlePostCouponPriceTv, 3);
+                onReload();
+                break;
+            case R.id.title_commission_ll://奖励
+                requestClickRadar(mTitleCommissionIv, mTitleCommissionTv, 4);
+                onReload();
+                break;
+            case R.id.title_coupon_ll://优惠券
+                clickCoupro();
+                onReload();
+                break;
+        }
+    }
+
+
+    private void requestClickRadar(ImageView clickIv, TextView textView, int orderType) {
+        if (orderType == 1) {
+            //综合只有降序
+            eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;
+        } else {
+            if (!textView.isSelected()){
+                eSortDirection=C.OrderType.E_UPLIMIT_SORT_DOWN;
+            }else {
+                eSortDirection = eSortDirection == C.OrderType.E_UPLIMIT_SORT_DOWN ? C.OrderType.E_UPLIMIT_SORT_UP : C.OrderType.E_UPLIMIT_SORT_DOWN;
+            }
+        }
+        mSortType = orderType;
+        resetTitleRankDrawable(clickIv, textView, eSortDirection);
+
+//        mLoadMoreHelper.loadData();
+    }
+    private void resetTitleRankDrawable(ImageView clickIv, TextView textView, int eSortDir) {
+        //对点击的重置图
+        mTitleSalesVolumeIv.setImageResource(R.drawable.icon_jiage_no);
+        mTitlePostCouponPriceIv.setImageResource(R.drawable.icon_jiage_no);
+        mTitleCommissionIv.setImageResource(R.drawable.icon_jiage_no);
+
+        mTitleSalesVolumeTv.setSelected(false);
+        mTitlePostCouponPriceTv.setSelected(false);
+        mTitleCommissionTv.setSelected(false);
+        title_comprehensive_tv.setTextColor(Color.parseColor("#999999"));
+        mTitleSalesVolumeTv.setTextColor(Color.parseColor("#999999"));
+        mTitlePostCouponPriceTv.setTextColor(Color.parseColor("#999999"));
+        mTitleCommissionTv.setTextColor(Color.parseColor("#999999"));
+        //对点击的设置 图片
+        if (clickIv != null) {
+            clickIv.setImageResource(getDrawableIdBySortDir(eSortDir));
+        }
+        if (textView != null) {
+            textView.setSelected(true);
+            textView.setTextColor(Color.parseColor("#FF645B"));
+        }
+    }
+
+    private int getDrawableIdBySortDir(int sortDir) {
+        int res = R.drawable.icon_jiage_no;
+        switch (sortDir) {
+            case 0:
+                res = R.drawable.icon_jiage_down;
+                break;
+            case 1:
+                res = R.drawable.icon_jiage_up;
+                break;
+        }
+        return res;
+    }
+
+    /**
+     * 修改优惠卷状态
+     */
+    private void clickCoupro() {
+
+        if (isCoupon) {
+            isCoupon = false;
+            coupon="0";
+            title_coupon_iv.setImageResource(R.drawable.check_no);
+//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
+//            mRecyclerView.getSwipeList().setRefreshing(true);
+            //  getFirstData(keyWord);
+            //重新读取数据
+        } else {
+            isCoupon = true;
+            coupon="1";
+            title_coupon_iv.setImageResource(R.drawable.check_yes);
+//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
+//            mRecyclerView.getSwipeList().setRefreshing(true);
+            //getFirstData(keyWord);
+            //重新读取数据
+        }
     }
 }

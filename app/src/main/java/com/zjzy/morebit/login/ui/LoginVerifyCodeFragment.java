@@ -134,7 +134,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
         if ( loginType== C.sendCodeType.REGISTER){
             passwordLogin.setVisibility(View.GONE);
-            tv_title.setText("手机号码注册");
+            tv_title.setText("手机号码登录");
             edtPhone.setFocusable(false);
 
         }

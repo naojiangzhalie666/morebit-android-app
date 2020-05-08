@@ -4,7 +4,12 @@
               android:layout_height="wrap_content"
               android:background="@color/white"
               android:gravity="center_vertical"
+              android:layout_marginBottom="10dp"
               android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_E5E5E5"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -115,7 +120,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="优惠券"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/colcor_999999"
                 android:textSize="@dimen/sp_12"/>
 
             <ImageView
@@ -126,10 +131,6 @@
                 android:src="@drawable/check_no"/>
         </LinearLayout>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_E5E5E5"/>
 
 
 </LinearLayout>

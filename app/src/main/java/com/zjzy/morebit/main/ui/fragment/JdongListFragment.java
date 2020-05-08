@@ -409,7 +409,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     }
 
     /**
-     * 修改优惠卷状态
+     * 修改自营状态
      */
     private void clickSupport() {
 

@@ -146,7 +146,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         });
         if (mid==1){
             tv_bind.setVisibility(View.VISIBLE);
-            sub_phone.setText("手机号注册");
+            sub_phone.setText("输入手机号");
 
         }else{
             tv_bind.setVisibility(View.GONE);

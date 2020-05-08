@@ -444,8 +444,10 @@ public class GoodsUtil {
             goodShopTag.setText("天猫");
         } else if (goodsInfo.getShopType() == 1){
             goodShopTag.setText("淘宝");
-        }else {
+        }else if (goodsInfo.getShopType()==3){
             goodShopTag.setText("拼多多");
+        }else{
+            goodShopTag.setText("京东");
         }
 
         if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {

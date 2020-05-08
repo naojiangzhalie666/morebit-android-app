@@ -995,7 +995,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
                 if (mGoodsInfo != null) {
                     mGoodsInfo.setAdImgUrl(indexbannerdataArray);
                 }
-                ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionUrl);
+                ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionJdUrl);
 
                 break;
             case R.id.btn_sweepg: //立即购买
