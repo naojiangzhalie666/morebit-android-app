@@ -78,12 +78,14 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     private AreaCodeBean mAreaCode;
     private boolean wxLoginFlag = false;
     private static String mditInviteText;
+    private static String mphone;
     private TextView sub_phone;
-    public static void start(Activity activity,int id,WeixinInfo weixinInfo,String mEditInviteText) {
+    public static void start(Activity activity,String phone,int id,WeixinInfo weixinInfo,String mEditInviteText) {
         Bundle bundle = new Bundle();
         mid=id;
         mWeixinInfo=weixinInfo;
         mditInviteText=mEditInviteText;
+        mphone=phone;
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
         OpenFragmentUtils.goToLoginSimpleFragment(activity,LoginMainFragment.class.getName(),bundle);
     }
@@ -159,6 +161,10 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
             }
         });
+
+        if (!TextUtils.isEmpty(mphone)){
+            edtPhone.setText(mphone);
+        }
     }
 
     @Override
@@ -255,14 +261,17 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     @Override
     public void loginError(String code) {
         WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
-        if (C.requestCode.B10031.equals(code)){//用户未注册
-            LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
-        }else if (C.requestCode.dataNull.equals(code)){//用户已注册
-            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, weixinInfo,mAreaCode);
-        }else if (C.requestCode.B10005.equals(code)){//手机号已注册 绑定微信
-            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
-         //   LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+        if (mid!=2){
+            if (C.requestCode.B10005.equals(code)){//手机号已注册 绑定微信
+                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.REGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+                //   LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+            }
+        }else{
+            if (C.requestCode.B10031.equals(code)){//用户未注册
+                LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
+            }
         }
+
 
 //        if (C.requestCode.SUCCESS.equals(code)){
 //            //手机号已注册
@@ -322,6 +331,13 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
     @Override
     public void goToRegister() {
+        if (mid==2){
+            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, mWeixinInfo,mAreaCode);
+        }else{
+
+        }
+
+
 //        mDialog = new LoginNotRegeditDialog(getActivity(), R.style.dialog, "", "", new LoginNotRegeditDialog.OnOkListener() {
 //            @Override
 //            public void onClick(View view, String text) {

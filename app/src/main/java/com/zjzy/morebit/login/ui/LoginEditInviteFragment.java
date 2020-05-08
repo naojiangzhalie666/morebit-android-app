@@ -325,7 +325,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                         }
                         if (mLoginType == C.sendCodeType.WEIXINREGISTER){
                             Log.e("mEditInvitefragment",edtInvite.getText().toString());
-                            LoginMainFragment.start(getActivity(),1,mWeixinInfo,edtInvite.getText().toString());
+                            LoginMainFragment.start(getActivity(),mPhone,1,mWeixinInfo,edtInvite.getText().toString());
                             return;
                         }
                         LoginVerifyCodeFragment.srart(getActivity(), mLoginType, mPhone, mEditInviteText, mWeixinInfo,mAreaCode);

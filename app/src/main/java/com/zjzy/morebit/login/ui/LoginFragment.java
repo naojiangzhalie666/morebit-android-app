@@ -109,7 +109,7 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
                 getActivity().finish();
                 break;
             case R.id.phone_ll:
-                LoginMainFragment.start(getActivity(),2,mWeixinInfo,"");
+                LoginMainFragment.start(getActivity(),"",2,mWeixinInfo,"");
                 break;
             case R.id.wx_ll:
                 if (AppUtil.isFastClick(1000)) {

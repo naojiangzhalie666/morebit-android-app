@@ -89,6 +89,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     private TextView ll_userAgreement, privateProtocol;
     private TextView getmsm,next_login,passwordLogin,tv_title;
     private ClearEditText edtsms;//验证码
+    private boolean isCheckphone=false;
 
     public static void srart(Activity activity, int loginType, String phone, String invite, WeixinInfo weixinInfo, AreaCodeBean areaCodeBean) {
         Bundle bundle = new Bundle();
@@ -162,7 +163,11 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 //        }
         edtPhone.setText(mPhone);
         //请求验证码
-        mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+        if (!TextUtils.isEmpty(mPhone)){
+            mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+        }else{
+            isCheckphone=true;
+        }
         //countDown();
         // mTextSend.setText(mPhone);
 
@@ -493,8 +498,10 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 //        mNextStep.setClickable(true);
         //   mBtnSend.setEnabled(true);
         getmsm.setEnabled(true);
-        if (C.requestCode.B10051.equals(code) || C.requestCode.B10005.equals(code)) {
-           // openLoginDialog();
+        WeixinInfo weixinInfo=new WeixinInfo();
+        if (C.requestCode.B10031.equals(code)) {
+            ViewShowUtils.showLongToast(getActivity(), "账号未注册，请先注册");
+            LoginEditInviteFragment.start(getActivity(), edtPhone.getText().toString(), weixinInfo, mAreaCode);
         }
     }
 
@@ -526,6 +533,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         getmsm.setBackground(getResources().getDrawable(R.drawable.bg_color_666666_5dp));
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -540,11 +548,17 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
                 break;
             case R.id.getmsm:
                 //点击后置为不可点击状态
-                getmsm.setEnabled(false);
-                getmsm.setTextColor(Color.parseColor("#999999"));
-                getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);
-                LoadingView.showDialog(getActivity(), "请求中...");
-                mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+                if (isCheckphone){
+                    mPresenter.checkoutPhone(this, edtPhone.getText().toString(), 1, mAreaCode.getAreaCode());
+                    isCheckphone=false;
+                }else{
+                    isCheckphone=false;
+                    getmsm.setEnabled(false);
+                    getmsm.setTextColor(Color.parseColor("#999999"));
+                    getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);
+                    LoadingView.showDialog(getActivity(), "请求中...");
+                    mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+                }
                 break;
             case R.id.next_login:
                // ToastUtils.showLong("111");
