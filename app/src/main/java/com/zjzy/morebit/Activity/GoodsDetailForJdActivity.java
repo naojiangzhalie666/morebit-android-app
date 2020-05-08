@@ -555,6 +555,8 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             arv_prise.setVisibility(View.VISIBLE);
             coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice()) + "");
             setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
+        }else{
+            arv_prise.setVisibility(View.GONE);
         }
 
         if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
