@@ -1103,7 +1103,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         String couponEndTime = mGoodsInfo.getCouponEndTime();
 
         if (couponEndTime != null && couponEndTime.length() > 5) {
-            couponEndTime = DateTimeUtils.toMMdd(couponEndTime);
+            couponEndTime = DateTimeUtils.formatMMdd(couponEndTime);
             mGoodsInfo.setCouponEndTime(couponEndTime);
         }
 
