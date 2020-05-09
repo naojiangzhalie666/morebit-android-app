@@ -559,6 +559,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         switch (v.getId()) {
             case R.id.rl:
                 getActivity().finish();
+                isMethodManager(rl);
                 break;
             case R.id.privateProtocol:
                 LoginUtil.getPrivateProtocol((RxAppCompatActivity) getActivity());

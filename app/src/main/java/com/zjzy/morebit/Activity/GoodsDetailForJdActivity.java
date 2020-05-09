@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -329,6 +330,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             }
             //商品Id
             mGoodsInfo.setItemSourceId(mGoodsInfo.getGoodsId().toString());
+            mGoodsInfo.setPriceForPdd(mGoodsInfo.getPrice());
         }
     }
 
@@ -1215,4 +1217,6 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     private boolean isHasInstalledJd() {
         return AppUtil.checkHasInstalledApp(this, "com.jingdong.app.mall");
     }
+
+
 }

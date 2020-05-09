@@ -224,6 +224,7 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
                 break;
             case R.id.rl:
                 getActivity().finish();
+                isMethodManager(rl);
                 break;
             case R.id.next_login:
                 if (AppUtil.isFastClick(1000)) {

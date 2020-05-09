@@ -14,7 +14,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="12dp"
-        app:aspectRatio="3.9"
+        app:aspectRatio="3.6"
         android:layout_below="@id/searchLayout"
         >
 

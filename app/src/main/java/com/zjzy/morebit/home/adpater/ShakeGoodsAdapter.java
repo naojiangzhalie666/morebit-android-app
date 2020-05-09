@@ -38,7 +38,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        // View view= LayoutInflater.from(context).inflate(R.layout.itme_shake_goods,parent,false);
-      View view = View.inflate(context, R.layout.itme_shake_goods, null);
+         View view = View.inflate(context, R.layout.itme_shake_goods, null);
 //        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 //        int widthPixels = metrics.widthPixels;
 //        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
