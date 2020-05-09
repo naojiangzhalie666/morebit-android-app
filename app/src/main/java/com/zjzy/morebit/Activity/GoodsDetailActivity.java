@@ -535,7 +535,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
 
             if (!TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
-                if (startTime.contains("00:00:00")&& endTime.contains("23:59:59")){
+                if (startTime.length() > 10 && endTime.length() > 10){
                     tv_coupon_time.setText("有效日期: " + DateTimeUtils.toMMdd(startTime) + "-" +DateTimeUtils.toMMdd(endTime));
                 }else{
                     tv_coupon_time.setText("有效日期: " + startTime.replace("-",".") +
@@ -547,7 +547,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             }
 
             if (TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
-                if (endTime.contains("23:59:59")){
+                if (endTime.length() > 10 ){
                     tv_coupon_time.setText("有效日期至: " +  DateTimeUtils.toMMdd(endTime));
                 }else{
                     tv_coupon_time.setText("有效日期至: " + endTime.replace("-","."));
@@ -556,7 +556,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             }
         } else {
             if (!TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
-                if (startTime.contains("00:00:00") && endTime.contains("23:59:59")){
+                if (startTime.length() > 10  && endTime.length() > 10){
                     tv_coupon_time.setText("有效日期: " + DateTimeUtils.toMMdd(startTime) + "-" +DateTimeUtils.toMMdd(endTime));
                 }else{
                     tv_coupon_time.setText("有效日期: " + startTime.replace("-",".") +
