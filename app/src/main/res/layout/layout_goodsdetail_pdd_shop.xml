@@ -53,12 +53,12 @@
             <TextView
                 android:id="@+id/tv_describe"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:text="描述相似"
                 android:textColor="@color/color_999999"
-                android:textSize="11sp"
-                android:text="描述相似"/>
+                android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/tv_descTxt_status"

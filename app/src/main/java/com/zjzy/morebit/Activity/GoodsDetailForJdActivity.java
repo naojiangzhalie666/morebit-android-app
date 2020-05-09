@@ -121,13 +121,13 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     ImageView go_top;
     @BindView(R.id.tv_desc)
     TextView tv_desc;
-    @BindView(R.id.tv_describe)
+   // @BindView(R.id.tv_describe)
 //    TextView tv_describe;
 //    @BindView(R.id.tv_logistics)
 //    TextView tv_logistics;
 //    @BindView(R.id.tv_sellel)
 //    TextView tv_sellel;
-//    @BindView(R.id.tv_collect)
+     @BindView(R.id.tv_collect)
             TextView tv_collect;
     @BindView(R.id.collect_bg)
     ImageView collect_bg;
@@ -321,7 +321,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (bundle != null) {
             mGoodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
          if (mGoodsInfo.getItemSource().equals("1")){
-                mGoodsInfo.setShopType(0);
+                mGoodsInfo.setShopType(4);
             }
             //商品Id
             mGoodsInfo.setItemSourceId(mGoodsInfo.getGoodsId().toString());
@@ -912,7 +912,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     public void switchColler(ShopGoodInfo info) {
         mGoodsInfo.setColler(info.getColler());
         if (info.getColler() != 0) {
-            tv_collect.setText(getString(R.string.also_collect));
+              tv_collect.setText(getString(R.string.also_collect));
             tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.color_FF3F29));
             collect_bg.setImageResource(R.drawable.icon_shoucanxuanzhong);
             SensorsDataUtil.getInstance().collectProductTrack("", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());

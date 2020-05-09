@@ -512,11 +512,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             ViewShowUtils.showLongToast(getActivity(), "账号未注册，请先注册");
             LoginEditInviteFragment.start(getActivity(), edtPhone.getText().toString(), mWeixinInfo, mAreaCode);
         }else{//已注册
-            getmsm.setEnabled(false);
-            getmsm.setTextColor(Color.parseColor("#999999"));
-            getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);
-            LoadingView.showDialog(getActivity(), "请求中...");
-            mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+
         }
 
     }
@@ -551,7 +547,11 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
     @Override
     public void goToRegister() {
-
+        getmsm.setEnabled(false);
+        getmsm.setTextColor(Color.parseColor("#999999"));
+        getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);
+        LoadingView.showDialog(getActivity(), "请求中...");
+        mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
     }
 
 

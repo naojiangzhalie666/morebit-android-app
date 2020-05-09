@@ -339,4 +339,5 @@ public class InfoModel extends MvpModel {
     }
 
 
+
 }

@@ -1,5 +1,6 @@
 package com.zjzy.morebit.info.contract;
 
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
@@ -15,11 +16,17 @@ import java.util.List;
 public class OrderListContract {
     public interface View extends BaseView {
         void onSuccessful(List<ConsComGoodsInfo> datas);
+
         void onSearchSuccessful(ConsComGoodsInfo data);
+
         void onSearchSuccessful(List<ConsComGoodsInfo> data);
-        void onFailure( );
+
+        void onFailure();
+
         void onFinally();
+
         void onCheckGoodsSuccessFul(ShopGoodInfo data);
+
         void onReceiveGoodsSuccessFul(Boolean data);
     }
 
@@ -28,5 +35,7 @@ public class OrderListContract {
         void searchGoodsOrder(RxFragment rxFragment, String orderSn, int type,int page);
         void onCheckGoods(RxFragment rxFragment, String itemSourceId);
         void ConfirmReceiveGoods(RxFragment rxFragment,String orderId);
+
+
     }
 }

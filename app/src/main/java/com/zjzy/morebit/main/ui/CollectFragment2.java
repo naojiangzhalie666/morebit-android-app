@@ -464,7 +464,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                     //拼多多
                 }else if (item.getShopType() == 3){
                     good_mall_tag.setImageResource(R.drawable.pdd_icon);
-                }else if (item.getShopType()==0){//京东
+                }else if (item.getShopType()==4){//京东
                     good_mall_tag.setImageResource(R.mipmap.jdong_icon);
                 }
                 if (!TextUtils.isEmpty(item.getTitle())) {
@@ -552,7 +552,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
                                 shopGoodInfo.setItemSource("2");
                                 GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
-                            }else if (item.getShopType()==0){
+                            }else if (item.getShopType()==4){
                                 String itemSourceId = item.getItemSourceId();
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
                                 shopGoodInfo.setItemSource("1");
@@ -691,7 +691,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             ShopGoodInfo info = mGuessGoodsAdapter.getItem(i);
             if(info.getType()==0){
                 if(info.isSelect()){
-                    if (info.getShopType() == 3 ||info.getShopType()==0){
+                    if (info.getShopType() == 3 ||info.getShopType()==4){
                        isHavePdd = true;
                     }else{
                         shopGoodInfos.add(info);

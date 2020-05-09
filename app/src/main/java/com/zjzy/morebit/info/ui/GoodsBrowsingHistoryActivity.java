@@ -387,7 +387,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                     case 3:
                         good_mall_tag.setImageResource(R.drawable.pdd_icon);
                         break;
-                    case 0:
+                    case 4:
                         good_mall_tag.setImageResource(R.mipmap.jdong_icon);
                         break;
                     default:
@@ -485,7 +485,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
                                 shopGoodInfo.setItemSource("2");
                                 GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
-                            }else if (item.getShopType() == 0){
+                            }else if (item.getShopType() == 4){
                                 String itemSourceId = item.getItemSourceId();
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
                                 shopGoodInfo.setItemSource("1");

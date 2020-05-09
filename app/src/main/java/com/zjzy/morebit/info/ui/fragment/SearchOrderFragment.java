@@ -2,6 +2,7 @@ package com.zjzy.morebit.info.ui.fragment;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -47,6 +48,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
     @BindView(R.id.search_et)
     EditText search_et;
     private int type;
+    private boolean isRefresh=false;
     private ConsComGoodsDetailAdapter consComGoodsDetailAdapter;
     List<ConsComGoodsInfo> mListArray = new ArrayList<>();
 

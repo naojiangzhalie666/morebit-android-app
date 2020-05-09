@@ -138,7 +138,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     ImageView go_top;
     @BindView(R.id.tv_desc)
     TextView tv_desc;
-    @BindView(R.id.tv_describe)
+ //   @BindView(R.id.tv_describe)
 //    TextView tv_describe;
 //    @BindView(R.id.tv_logistics)
 //    TextView tv_logistics;
@@ -340,8 +340,6 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             if (mGoodsInfo.getItemSource().equals("2")) {
                 //商铺:拼多多
                 mGoodsInfo.setShopType(3);
-            }else if (mGoodsInfo.getItemSource().equals("1")){
-                mGoodsInfo.setShopType(0);
             }
             //商品Id
             mGoodsInfo.setItemSourceId(mGoodsInfo.getGoodsId().toString());

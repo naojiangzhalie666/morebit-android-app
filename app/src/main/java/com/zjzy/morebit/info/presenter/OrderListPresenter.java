@@ -106,4 +106,7 @@ public class OrderListPresenter extends MvpPresenter<InfoModel, OrderListContrac
                     }
                 });
     }
+
+
+
 }
