@@ -142,13 +142,12 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                 }else if(mTeamType == 4) {
                     ShopGoodInfo info = new ShopGoodInfo();
                     info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
-                    info.setItemSource("2");
-                    GoodsDetailForPddActivity.start(getActivity(),info);
+                    mPresenter.getDetailDataForPdd(OrderListFragment.this, info);
+
                 }else if (mTeamType == 2){
                     ShopGoodInfo info = new ShopGoodInfo();
                     info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
-                    info.setItemSource("1");
-                    GoodsDetailForJdActivity.start(getActivity(),info);
+                    mPresenter.getDetailDataForJd(OrderListFragment.this, info);
                 }else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
@@ -257,6 +256,28 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
         ViewShowUtils.showShortToast(getActivity(),"确认收货成功！");
         page=1;
         getData();
+
+    }
+
+    @Override
+    public void showDetailsView(ShopGoodInfo data, boolean seavDao) {
+        if (data!=null){
+            if ("1".equals(data.getItemSource())){
+                data.setItemSource("1");
+                GoodsDetailForJdActivity.start(getActivity(),data);
+            }else if ("2".equals(data.getItemSource())){
+                data.setItemSource("2");
+                GoodsDetailForPddActivity.start(getActivity(),data);
+            }
+
+        }else{
+            ViewShowUtils.showShortToast(getActivity(),"商品已下架");
+        }
+
+    }
+
+    @Override
+    public void OngetDetailDataFinally() {
 
     }
 

@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -165,6 +167,12 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         if (!TextUtils.isEmpty(mphone)){
             edtPhone.setText(mphone);
         }
+        rl_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isMethodManager(rl_root);
+            }
+        });
     }
 
     @Override
@@ -406,4 +414,5 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         }
 
     }
+
 }

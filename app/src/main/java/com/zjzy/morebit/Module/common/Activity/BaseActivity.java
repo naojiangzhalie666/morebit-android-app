@@ -14,8 +14,10 @@ import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.blankj.utilcode.util.ThreadUtils;
 import com.gyf.barlibrary.ImmersionBar;
@@ -531,4 +533,11 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 
 
     }
+    public void isMethodManager(View view){
+        InputMethodManager im = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        im.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+
+    }
+
+
 }

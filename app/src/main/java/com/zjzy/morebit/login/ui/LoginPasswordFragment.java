@@ -57,6 +57,8 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
     TextView errorTv;
     @BindView(R.id.areaCodeTv)
     TextView areaCodeTv;
+    @BindView(R.id.rl_root)
+    RelativeLayout rl_root;
     private String mEdtPhoneText, mEdtPasswordText;
     private ClearSDdataDialog mDialog;
     private String mPhone;
@@ -160,6 +162,12 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
             phoneLength = mAreaCode.getPhoneLength();
             areaCode = mAreaCode.getAreaCode();
         }
+        rl_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isMethodManager(rl_root);
+            }
+        });
     }
 
 

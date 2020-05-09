@@ -52,6 +52,7 @@ import com.zjzy.morebit.view.ClearEditText;
 
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
 import io.reactivex.functions.Action;
 
 /**
@@ -87,7 +88,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
     private AreaCodeBean mAreaCode;
     private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86"; //默认是中国的86
-    private RelativeLayout rl;
+    private RelativeLayout rl,rl_root;
 
     @Override
     public boolean isShowAllSeek() {
@@ -139,6 +140,13 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
         String phone = getIntent().getStringExtra("phone");
         mAreaCode = (AreaCodeBean) getIntent().getSerializableExtra(C.Extras.COUNTRY);
         rl = (RelativeLayout) findViewById(R.id.rl);
+        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
+        rl_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isMethodManager(rl_root);
+            }
+        });
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

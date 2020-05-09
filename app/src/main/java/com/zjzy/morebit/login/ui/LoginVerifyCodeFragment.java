@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -74,7 +75,8 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     TextView accountLogin;
     @BindView(R.id.areaCodeTv)
     TextView areaCodeTv;
-
+    @BindView(R.id.rl_root)
+    RelativeLayout rl_root;
     private Disposable mdDisposable;
     private int loginType;
     private String mPhone = "";
@@ -210,7 +212,12 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         passwordLogin.setOnClickListener(this);
         mTitle.setText(R.string.input_verifycode);
         tv_title=view.findViewById(R.id.tv_title);
-
+        rl_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isMethodManager(rl_root);
+            }
+        });
         edtsms.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -594,4 +601,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
                 break;
         }
     }
+
+
+
 }

@@ -58,6 +58,7 @@ public class GoodsDetailForPddContract {
 
 
 
+
     }
 
     public interface Present extends BasePresenter {

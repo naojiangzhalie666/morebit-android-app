@@ -28,6 +28,10 @@ public class OrderListContract {
         void onCheckGoodsSuccessFul(ShopGoodInfo data);
 
         void onReceiveGoodsSuccessFul(Boolean data);
+
+        void showDetailsView(ShopGoodInfo data, boolean seavDao);
+        void OngetDetailDataFinally();
+
     }
 
     public interface Present extends BasePresenter {
@@ -35,6 +39,14 @@ public class OrderListContract {
         void searchGoodsOrder(RxFragment rxFragment, String orderSn, int type,int page);
         void onCheckGoods(RxFragment rxFragment, String itemSourceId);
         void ConfirmReceiveGoods(RxFragment rxFragment,String orderId);
+        /**
+         * 京东的商品详情
+         * @param
+         * @param goodsInfo
+         * @param
+         */
+        void getDetailDataForJd(RxFragment rxFragment, ShopGoodInfo goodsInfo);
+        void getDetailDataForPdd(RxFragment rxFragment, ShopGoodInfo goodsInfo);
 
 
     }
