@@ -696,7 +696,7 @@ public class DateTimeUtils {
     }
 
     /**
-     * yyyy-MM-dd HH:mm:ss 数据转换为MM-dd
+     * yyyy-MM-dd HH:mm:ss 数据转换为MM.dd
      * @param time
      * @return
      */
@@ -712,7 +712,22 @@ public class DateTimeUtils {
         return format;
     }
 
-
+    /**
+     * yyyy-MM-dd HH:mm:ss 数据转换为MM-dd
+     * @param time
+     * @return
+     */
+    public static String formatMMdd(String time){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat mmdd = new SimpleDateFormat("MM-dd");
+        String format = null;
+        try {
+            format = mmdd.format(simpleDateFormat.parse(time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return format;
+    }
 
 
 
