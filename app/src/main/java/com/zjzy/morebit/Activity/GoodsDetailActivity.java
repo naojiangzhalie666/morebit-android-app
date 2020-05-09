@@ -956,7 +956,6 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             GoodsImgDetailBean goodsImgDetailBean = mDetailImgFragment.setModuleDescUrlData(data.getPicUrls(), mGoodsInfo, data.getAnalysisFlag());
             if (goodsImgDetailBean != null) {
                 mGoodsInfo.setPicUrls(goodsImgDetailBean);
-                dismissLoadingDialog();
             }
         }
     }
@@ -1127,7 +1126,6 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         mHandler.removeCallbacksAndMessages(null);
-        dismissLoadingDialog();
         super.onDestroy();
     }
 
@@ -1261,7 +1259,6 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     @Override
     protected void onStart() {
         super.onStart();
-        showLoadingDialogOnUI();
     }
 
 }

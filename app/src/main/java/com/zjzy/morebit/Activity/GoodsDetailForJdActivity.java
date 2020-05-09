@@ -121,8 +121,8 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     ImageView go_top;
     @BindView(R.id.tv_desc)
     TextView tv_desc;
-   // @BindView(R.id.tv_describe)
-//    TextView tv_describe;
+    @BindView(R.id.tv_describe)
+    TextView tv_describe;
 //    @BindView(R.id.tv_logistics)
 //    TextView tv_logistics;
 //    @BindView(R.id.tv_sellel)
@@ -177,15 +177,19 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     //服务态度
     @BindView(R.id.tv_servTxt_status)
     TextView tv_servTxt_status;
-
+    @BindView(R.id.tv_servTxt)
+    TextView tv_servTxt;
     //物流状态
     @BindView(R.id.tv_lgstTxt_status)
     TextView tv_lgstTxt_status;
-
+    @BindView(R.id.tv_lgstTxt)
+    TextView tv_lgstTxt;
     @BindView(R.id.re_tab)
     RelativeLayout re_tab;
     @BindView(R.id.search_statusbar_rl)
     LinearLayout search_statusbar_rl;
+    @BindView(R.id.tv_shop_desc)
+    LinearLayout tv_shop_desc;
 
 
     private ShopGoodInfo mGoodsInfo;
@@ -726,13 +730,17 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             initImgFragment(mGoodsDetailForPdd);
         }
 
-        //描述状态
-        tv_desc_status.setText(info.getDescTxt());
-        //服务状态
-        tv_servTxt_status.setText(info.getServTxt());
-        //物流状态
-        tv_lgstTxt_status.setText(info.getLgstTxt());
+        if (TextUtils.isEmpty(info.getDescTxt())){
+            tv_shop_desc.setVisibility(View.GONE);
+        }else{
+            //描述状态
+            tv_desc_status.setText(info.getDescTxt());
+            //服务状态
+            tv_servTxt_status.setText(info.getServTxt());
+            //物流状态
+            tv_lgstTxt_status.setText(info.getLgstTxt());
 
+        }
         getViewLocationOnScreen();
     }
 

@@ -9,18 +9,27 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ConsComGoodsDetailAdapter;
+import com.zjzy.morebit.fragment.PanicBuyFragment;
 import com.zjzy.morebit.info.contract.OrderListContract;
 import com.zjzy.morebit.info.presenter.OrderListPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.goods.FloorBean;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SoftInputUtil;
@@ -174,6 +183,11 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
             public void onItem(int position) {
                 if (type == 1){
                     mPresenter.onCheckGoods(SearchOrderFragment.this,mListArray.get(position).getItemId());
+                }else if (type==3){
+                    ViewShowUtils.showShortToast(getActivity(),"京东商品");
+
+
+
                 }else{
                     ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                 }
