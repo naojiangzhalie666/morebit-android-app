@@ -107,6 +107,41 @@ public class OrderListPresenter extends MvpPresenter<InfoModel, OrderListContrac
                 });
     }
 
+    @Override
+    public void getDetailDataForJd(RxFragment rxFragment, ShopGoodInfo goodsInfo) {
+        mModel.getBaseResponseObservableForJd(rxFragment, goodsInfo)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        getIView().showDetailsView(data, true);
+
+                    }
+                });
+    }
+
+    @Override
+    public void getDetailDataForPdd(RxFragment rxFragment, ShopGoodInfo goodsInfo) {
+        mModel.getBaseResponseObservableForPd(rxFragment, goodsInfo)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        getIView().showDetailsView(data, true);
+
+                    }
+                });
+    }
 
 
 }

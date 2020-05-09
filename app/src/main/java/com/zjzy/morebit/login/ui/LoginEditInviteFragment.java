@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -69,6 +70,8 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
     RelativeLayout rl_invite;
     @BindView(R.id.errorTv)
     TextView errorTv;
+    @BindView(R.id.rl_root)
+    RelativeLayout rl_root;
     private String mEditInviteText = "";
     private String mEditInvite6Text = "";
     private InviteUserInfoBean mInviteUserInfoBean;
@@ -174,6 +177,12 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         tv_bind=view.findViewById(R.id.tv_bind);//已有账号立即绑定
         privateProtocol = view.findViewById(R.id.privateProtocol);
         ll_userAgreement = view.findViewById(R.id.ll_userAgreement);
+        rl_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isMethodManager(rl_root);
+            }
+        });
         edtInvite.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
         edtInvite.addTextChangedListener(new TextWatcher() {
             @Override

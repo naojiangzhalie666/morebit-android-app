@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.SPUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
@@ -133,6 +135,29 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
     }
 
     @Override
+    public void showDetailsView(ShopGoodInfo data, boolean seavDao) {
+
+        if (data!=null){
+            if ("1".equals(data.getItemSource())){
+                data.setItemSource("1");
+                GoodsDetailForJdActivity.start(getActivity(),data);
+            }else if ("2".equals(data.getItemSource())){
+                data.setItemSource("2");
+                GoodsDetailForPddActivity.start(getActivity(),data);
+            }
+
+        }else{
+            ViewShowUtils.showShortToast(getActivity(),"商品已下架");
+        }
+
+    }
+
+    @Override
+    public void OngetDetailDataFinally() {
+
+    }
+
+    @Override
     protected void initData() {
         //虚拟键盘回车键监听
         search_et.setOnKeyListener(new View.OnKeyListener() {
@@ -153,7 +178,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
         if (bundle != null) {
             type = bundle.getInt(C.Extras.order_type, 1);
         }
-        if(1 != type && 10 != type){
+        if(1 != type && 10 != type && 4!=type && 2!=type){
             type = 3;
         }
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);
@@ -183,11 +208,14 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
             public void onItem(int position) {
                 if (type == 1){
                     mPresenter.onCheckGoods(SearchOrderFragment.this,mListArray.get(position).getItemId());
-                }else if (type==3){
-                    ViewShowUtils.showShortToast(getActivity(),"京东商品");
-
-
-
+                }else if (type==2){
+                    ShopGoodInfo mGoodsInfo=new ShopGoodInfo();
+                    mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
+                    mPresenter.getDetailDataForJd(SearchOrderFragment.this, mGoodsInfo);
+                }else if (type==4){
+                    ShopGoodInfo mGoodsInfo=new ShopGoodInfo();
+                    mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
+                    mPresenter.getDetailDataForPdd(SearchOrderFragment.this, mGoodsInfo);
                 }else{
                     ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                 }

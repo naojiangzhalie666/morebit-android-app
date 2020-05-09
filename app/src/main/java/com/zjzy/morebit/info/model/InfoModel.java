@@ -255,7 +255,7 @@ public class InfoModel extends MvpModel {
      * 用户反馈回复消息
      *
      * @param fragment
-     * @param type
+     * @param
      * @param page
      * @return
      */
@@ -338,6 +338,17 @@ public class InfoModel extends MvpModel {
                 .compose(rxFragment.<BaseResponse<Boolean>>bindToLifecycle());
     }
 
-
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForJd(RxFragment rxFragment, ShopGoodInfo goodsInfo) {
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(new ProgramGetGoodsDetailBean().setType(1)
+                .setGoodsId(goodsInfo.getGoodsId()))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForPd(RxFragment rxFragment, ShopGoodInfo goodsInfo) {
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(new ProgramGetGoodsDetailBean().setType(2)
+                .setGoodsId(goodsInfo.getGoodsId()))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
 
 }
