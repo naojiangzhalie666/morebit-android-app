@@ -391,15 +391,7 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
     @Override
     public void showLoginData(UserInfo userInfo) {
-        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuide, true);
-        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuideCircle, true);
-        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuideMine, true);
-        String s = MyGsonUtils.beanToJson(userInfo);
-        if (TextUtils.isEmpty(s)) {
-            return;
-        }
-        mId = userInfo.getPhone();
-        LoginUtil.LoginSuccess(userInfo, getActivity());
+
         Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
 //        ActivityLifeHelper.getInstance().finishActivity(LoginSinglePaneActivity.class);
         ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
