@@ -530,35 +530,37 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
             // LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
             isShopImageSetted = true;
         }
+        String startTime = Info.getCouponStartTime();
+        String endTime = Info.getCouponEndTime();
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
 
-            if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                if (Info.getCouponStartTime().contains("00:00:00")&&Info.getCouponEndTime().contains("23:59:59")){
-                    tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime().substring(5, 7) + "-" + Info.getCouponStartTime().substring(8, 10)
-                            + "-" + Info.getCouponEndTime().substring(5, 7) + "-" + Info.getCouponEndTime().substring(9, 11));
+            if (!TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
+                if (startTime.contains("00:00:00")&& endTime.contains("23:59:59")){
+                    tv_coupon_time.setText("有效日期: " + DateTimeUtils.toMMdd(startTime) + "-" +DateTimeUtils.toMMdd(endTime));
                 }else{
-                    tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + "-" + Info.getCouponEndTime());
+                    tv_coupon_time.setText("有效日期: " + startTime.replace("-",".") +
+                            "-" + endTime.replace("-","."));
                 }
 
-            } else {
+            }else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
 
-            if (TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                if (Info.getCouponEndTime().contains("23:59:59")){
-                    tv_coupon_time.setText("有效日期至: " +  Info.getCouponEndTime().substring(5, 7) + "-" + Info.getCouponEndTime().substring(9, 11));
+            if (TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
+                if (endTime.contains("23:59:59")){
+                    tv_coupon_time.setText("有效日期至: " +  DateTimeUtils.toMMdd(endTime));
                 }else{
-                    tv_coupon_time.setText("有效日期至: " + Info.getCouponEndTime());
+                    tv_coupon_time.setText("有效日期至: " + endTime.replace("-","."));
                 }
 
             }
         } else {
-            if (!TextUtils.isEmpty(Info.getCouponStartTime()) && !TextUtils.isEmpty(Info.getCouponEndTime())) {
-                if (Info.getCouponStartTime().contains("00:00:00")&&Info.getCouponEndTime().contains("23:59:59")){
-                    tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime().substring(5, 7) + "-" + Info.getCouponStartTime().substring(8, 10)
-                            + "-" + Info.getCouponEndTime().substring(5, 7) + "-" + Info.getCouponEndTime().substring(9, 11));
+            if (!TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
+                if (startTime.contains("00:00:00") && endTime.contains("23:59:59")){
+                    tv_coupon_time.setText("有效日期: " + DateTimeUtils.toMMdd(startTime) + "-" +DateTimeUtils.toMMdd(endTime));
                 }else{
-                    tv_coupon_time.setText("有效日期: " + Info.getCouponStartTime() + "-" + Info.getCouponEndTime());
+                    tv_coupon_time.setText("有效日期: " + startTime.replace("-",".") +
+                            "-" + endTime.replace("-","."));
                 }
             }
         }

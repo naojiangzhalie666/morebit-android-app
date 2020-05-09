@@ -702,7 +702,7 @@ public class DateTimeUtils {
      */
     public static String toMMdd(String time){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat mmdd = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat mmdd = new SimpleDateFormat("MM.dd");
         String format = null;
         try {
             format = mmdd.format(simpleDateFormat.parse(time));
@@ -710,5 +710,13 @@ public class DateTimeUtils {
             e.printStackTrace();
         }
         return format;
+    }
+
+
+
+
+
+    public static void main(String[] args) {
+
     }
 }

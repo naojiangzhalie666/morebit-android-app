@@ -539,15 +539,33 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
 
             if (!TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
-                tv_coupon_time.setText("有效日期" + dateStart.substring(5, 7) + "." + dateStart.substring(8, 10)
-                        + "-" + dateEnd.substring(5, 7) + "." + dateEnd.substring(9, 11));
+                if (dateStart.contains("00:00:00")&& dateEnd.contains("23:59:59")){
+                    tv_coupon_time.setText("有效日期: " + DateTimeUtils.toMMdd(dateStart)
+                            + "-" + DateTimeUtils.toMMdd(dateEnd));
+                }else{
+                    tv_coupon_time.setText("有效日期: " + dateStart.replace("-",".") +
+                            "-" + dateEnd.replace("-","."));
+                }
             } else {
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
+            if (TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
+                if (dateEnd.contains("23:59:59")){
+                    tv_coupon_time.setText("有效日期至: " +  DateTimeUtils.toMMdd(dateEnd));
+                }else{
+                    tv_coupon_time.setText("有效日期至: " + dateEnd.replace("-","."));
+                }
+
+            }
         } else {
             if (!TextUtils.isEmpty(dateEnd) && !TextUtils.isEmpty(dateEnd)) {
-                tv_coupon_time.setText("有效日期 " + dateStart.substring(5, 7) + "." + dateStart.substring(8, 10)
-                        + "-" + dateEnd.substring(5, 7) + "." + dateEnd.substring(8, 10));
+                if (dateStart.contains("00:00:00")&& dateEnd.contains("23:59:59")){
+                    tv_coupon_time.setText( DateTimeUtils.toMMdd(dateStart)
+                            + "-" + DateTimeUtils.toMMdd(dateEnd));
+                }else{
+                    tv_coupon_time.setText("有效日期: " + dateStart.replace("-",".") +
+                            "-" + dateEnd.replace("-","."));
+                }
             }
         }
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {

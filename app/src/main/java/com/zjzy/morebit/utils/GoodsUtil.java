@@ -115,6 +115,7 @@ public class GoodsUtil {
 
     /**
      * 获取拼多多的推广内容
+     *
      * @param activity
      * @param goodsInfo
      * @return
@@ -151,12 +152,13 @@ public class GoodsUtil {
 
     /**
      * 获取京东的推广内容
+     *
      * @param activity
      * @param goodsInfo
      * @return
      */
     public static Observable<BaseResponse<String>> getGenerateForJD(RxAppCompatActivity activity,
-                                                                              ShopGoodInfo goodsInfo) {
+                                                                    ShopGoodInfo goodsInfo) {
         int isInvitecode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
         int isDownloadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
 
@@ -394,18 +396,19 @@ public class GoodsUtil {
         vBitmap = null;
         return saveMakePath;
     }
-//    public static Bitmap getViewBitmap(View view) {
+
+    //    public static Bitmap getViewBitmap(View view) {
 //        int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 //        view.measure(me, me);
 //        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
 //        view.buildDrawingCache();
 //        return view.getDrawingCache();
 //    }
-    public static  Bitmap getViewBitmap(View v){
+    public static Bitmap getViewBitmap(View v) {
         if (v == null) {
             return null;
         }
-                int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         v.measure(me, me);
         v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
         Bitmap screenshot;
@@ -442,11 +445,11 @@ public class GoodsUtil {
         yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
         if (goodsInfo.getShopType() == 2) {
             goodShopTag.setText("天猫");
-        } else if (goodsInfo.getShopType() == 1){
+        } else if (goodsInfo.getShopType() == 1) {
             goodShopTag.setText("淘宝");
-        }else if (goodsInfo.getShopType()==3){
+        } else if (goodsInfo.getShopType() == 3) {
             goodShopTag.setText("拼多多");
-        }else{
+        } else {
             goodShopTag.setText("京东");
         }
 
@@ -461,6 +464,7 @@ public class GoodsUtil {
             qrcode_img.setImageBitmap(ewmBitmap);
         return view;
     }
+
     @NonNull
     public static View getPurchasePoster(Activity activity, List<ShopGoodInfo> goodsInfo) {
         View view = LayoutInflater.from(activity).inflate(R.layout.view_new_pruchase_goods_poster, null);
@@ -472,19 +476,19 @@ public class GoodsUtil {
         LinearLayoutManager manager = new LinearLayoutManager(activity);
         rcy_pruchase.setLayoutManager(manager);
         rcy_pruchase.setAdapter(adapter);*/
-       // Bitmap bitmap = getRecycleViewBitmap(rcy_pruchase);
+        // Bitmap bitmap = getRecycleViewBitmap(rcy_pruchase);
 //        ImageView qrcode_img = (ImageView) view.findViewById(R.id.qrcode_img);
 //
         TextView tv_code = (TextView) view.findViewById(R.id.tv_code);
-      //  tv_code.setLayoutParams(layoutParams);
-      //  ImageView img_recycleview = view.findViewById(R.id.img_recycleview);
-     //   img_recycleview.setImageBitmap(bitmap);
+        //  tv_code.setLayoutParams(layoutParams);
+        //  ImageView img_recycleview = view.findViewById(R.id.img_recycleview);
+        //   img_recycleview.setImageBitmap(bitmap);
 
         tv_code.setText(activity.getString(R.string.invitation_code, UserLocalData.getUser().getInviteCode()));
 
 
         //if (ewmBitmap != null)
-          //  qrcode_img.setImageBitmap(ewmBitmap);
+        //  qrcode_img.setImageBitmap(ewmBitmap);
         return view;
     }
 
@@ -555,8 +559,8 @@ public class GoodsUtil {
             h += recycleView.getChildAt(i).getHeight();
         }
         //Log.d(TAG, "实际高度:" + h);
-      //  Log.i("TAG", "getListViewBitmap: ");
-       // Log.d("TAG", "list 高度:" + recycleView.getHeight());
+        //  Log.i("TAG", "getListViewBitmap: ");
+        // Log.d("TAG", "list 高度:" + recycleView.getHeight());
         // 创建对应大小的bitmap
         bitmap = Bitmap.createBitmap(recycleView.getWidth(), h,
                 Bitmap.Config.RGB_565);
@@ -564,6 +568,7 @@ public class GoodsUtil {
         recycleView.draw(canvas);
         return bitmap;
     }
+
     /**
      * 获取二维码
      *
