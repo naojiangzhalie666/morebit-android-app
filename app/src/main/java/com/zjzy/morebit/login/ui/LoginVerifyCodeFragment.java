@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
-import com.tencent.mm.opensdk.utils.Log;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -137,6 +137,10 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             passwordLogin.setVisibility(View.GONE);
             tv_title.setText("手机号码登录");
             edtPhone.setFocusable(false);
+            edtPhone.setText(mPhone);
+            if (!TextUtils.isEmpty(mPhone)){
+                mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+            }
 
         }
         if ( loginType== C.sendCodeType.LOGIN){
@@ -148,12 +152,20 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             passwordLogin.setVisibility(View.GONE);
             tv_title.setText("绑定手机");
             edtPhone.setFocusable(false);
+            edtPhone.setText(mPhone);
+            if (!TextUtils.isEmpty(mPhone)){
+                mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+            }
         }
 
         if (loginType== C.sendCodeType.BINDWEIXIN){
             passwordLogin.setVisibility(View.GONE);
             tv_title.setText("");
             edtPhone.setFocusable(true);
+            edtPhone.setText(mPhone);
+            if (!TextUtils.isEmpty(mPhone)){
+                mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+            }
 
         }
 
@@ -163,11 +175,9 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 //        }
         edtPhone.setText(mPhone);
         //请求验证码
-        if (!TextUtils.isEmpty(mPhone)){
-            mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
-        }else{
-            isCheckphone=true;
-        }
+//      else{
+//            isCheckphone=true;
+//        }
         //countDown();
         // mTextSend.setText(mPhone);
 
@@ -498,11 +508,17 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 //        mNextStep.setClickable(true);
         //   mBtnSend.setEnabled(true);
         getmsm.setEnabled(true);
-        WeixinInfo weixinInfo=new WeixinInfo();
         if (C.requestCode.B10031.equals(code)) {
             ViewShowUtils.showLongToast(getActivity(), "账号未注册，请先注册");
-            LoginEditInviteFragment.start(getActivity(), edtPhone.getText().toString(), weixinInfo, mAreaCode);
+            LoginEditInviteFragment.start(getActivity(), edtPhone.getText().toString(), mWeixinInfo, mAreaCode);
+        }else{//已注册
+            getmsm.setEnabled(false);
+            getmsm.setTextColor(Color.parseColor("#999999"));
+            getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);
+            LoadingView.showDialog(getActivity(), "请求中...");
+            mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
         }
+
     }
 
     @Override
@@ -533,6 +549,11 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         getmsm.setBackground(getResources().getDrawable(R.drawable.bg_color_666666_5dp));
     }
 
+    @Override
+    public void goToRegister() {
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -548,11 +569,9 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
                 break;
             case R.id.getmsm:
                 //点击后置为不可点击状态
-                if (isCheckphone){
-                    mPresenter.checkoutPhone(this, edtPhone.getText().toString(), 1, mAreaCode.getAreaCode());
-                    isCheckphone=false;
+                if ("".equals(mInvitationCode)){
+                    mPresenter.checkoutPhone2(this, edtPhone.getText().toString(), 1, mAreaCode.getAreaCode());
                 }else{
-                    isCheckphone=false;
                     getmsm.setEnabled(false);
                     getmsm.setTextColor(Color.parseColor("#999999"));
                     getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);

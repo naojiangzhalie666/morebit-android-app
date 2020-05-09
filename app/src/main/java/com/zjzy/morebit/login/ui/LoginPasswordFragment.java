@@ -283,6 +283,11 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
 
     }
 
+    @Override
+    public void goToRegister() {
+
+    }
+
     private void openDialog() {  //退出确认弹窗
         mDialog = new ClearSDdataDialog(getActivity(), R.style.dialog, "提示", "该手机号未注册", new ClearSDdataDialog.OnOkListener() {
             @Override

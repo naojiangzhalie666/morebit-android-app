@@ -15,4 +15,5 @@ public interface BaseLoginView extends BaseView{
 
     void sendCodeSuccess(String data);
     void sendCodeFail();
+    void  goToRegister();
 }

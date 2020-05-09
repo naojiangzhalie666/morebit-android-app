@@ -328,4 +328,9 @@ public class InputVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     public void sendCodeFail() {
 
     }
+
+    @Override
+    public void goToRegister() {
+
+    }
 }

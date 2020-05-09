@@ -389,6 +389,11 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
     }
 
     @Override
+    public void goToRegister() {
+
+    }
+
+    @Override
     public void setInviteUserInfo(InviteUserInfoBean data) {
         ViewShowUtils.hideSoftInput(LoginEditInviteFragment.this.getActivity(), edtInvite);
         errorTv.setText("");

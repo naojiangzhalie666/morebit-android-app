@@ -105,6 +105,34 @@ public class BaseSendCodePresenter<M extends MvpModel, V extends BaseLoginView> 
                 });
     }
 
+
+    /**
+     * 校验手机号码
+     *
+     * @param activity
+     * @param phone
+     */
+
+    public void checkoutPhone2(final RxFragment activity, final String phone, final int type,final String areacode) {
+        LoadingView.showDialog(activity.getActivity(), "请求中...");
+        getCheckoutPhoneObservable(activity, phone, type,areacode)
+
+                .subscribe(new DataObserver<String>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().loginError(errCode);
+                    }
+                    @Override
+                    protected void onDataNull() {
+                        onSuccess("");
+                    }
+                    @Override
+                    protected void onSuccess(String data) {
+                        getIView().goToRegister();
+                    }
+                });
+    }
+
     public Observable<BaseResponse<String>> getCheckoutPhoneObservable(final RxFragment activity, final String phone, int type, String areaCode) {
         if (type == C.sendCodeType.WEIXINREGISTER) {
             type = C.sendCodeType.REGISTER;

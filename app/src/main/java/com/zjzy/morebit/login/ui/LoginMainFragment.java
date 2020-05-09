@@ -157,7 +157,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         tv_bind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(),mditInviteText, mWeixinInfo,mAreaCode);
 
             }
         });
@@ -263,7 +263,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
         if (mid!=2){
             if (C.requestCode.B10005.equals(code)){//手机号已注册 绑定微信
-                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.REGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
                 //   LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
             }
         }else{
@@ -334,7 +334,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         if (mid==2){
             LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, mWeixinInfo,mAreaCode);
         }else{
-
+            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
         }
 
 
