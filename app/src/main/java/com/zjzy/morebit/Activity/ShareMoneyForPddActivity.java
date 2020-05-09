@@ -285,6 +285,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 showRuleDialog();
                 break;
             case R.id.makeGoodsPoster: //更换海报
+                goodsInfo.setCouponUrl(promotionUrl);
                 ShareMoneyGetImgActivity.start(this, mPosterPicPath, mPosterPos, goodsInfo);
                 break;
             default:

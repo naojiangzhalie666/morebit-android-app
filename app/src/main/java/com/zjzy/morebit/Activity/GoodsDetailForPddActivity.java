@@ -564,7 +564,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
 
             if (!TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
-                if (dateStart.contains("00:00:00")&& dateEnd.contains("23:59:59")){
+                if (dateStart.length() > 10 && dateEnd.length() >10 ){
                     tv_coupon_time.setText("有效日期: " + DateTimeUtils.toMMdd(dateStart)
                             + "-" + DateTimeUtils.toMMdd(dateEnd));
                 }else{
@@ -578,7 +578,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 tv_coupon_time.setText("D I S C O U N T  C O U P O N");
             }
             if (TextUtils.isEmpty(dateStart) && !TextUtils.isEmpty(dateEnd)) {
-                if (dateEnd.contains("23:59:59")){
+                if (dateEnd.length() > 10 ){
                     tv_coupon_time.setText("有效日期至: " +  DateTimeUtils.toMMdd(dateEnd));
                 }else{
                     tv_coupon_time.setText("有效日期至: " + dateEnd.replace("-","."));
@@ -587,7 +587,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             }
         } else {
             if (!TextUtils.isEmpty(dateEnd) && !TextUtils.isEmpty(dateEnd)) {
-                if (dateStart.contains("00:00:00")&& dateEnd.contains("23:59:59")){
+                if (dateStart.length() > 10 && dateEnd.length() > 10){
                     tv_coupon_time.setText("有效日期: " +  DateTimeUtils.toMMdd(dateStart)
                             + "-" + DateTimeUtils.toMMdd(dateEnd));
                 }else{

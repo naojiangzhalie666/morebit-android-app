@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.zjzy.morebit.Activity.ShareMoneyForPddActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -71,7 +72,7 @@ public class ShareMoneyGetImgActivity extends BaseActivity {
     private int mPosterPos;
     private Bitmap mBitmap;
 
-    public static void start(Activity activity, String posterPicPath, int posterPos, ShopGoodInfo goodsInfo) {
+    public static void start(Activity activity, String posterPicPath, int posterPos, ShopGoodInfo goodsInfo ) {
         Intent intent = new Intent(activity, ShareMoneyGetImgActivity.class);
         intent.putExtra(C.Extras.POSTER_URL, posterPicPath);
         intent.putExtra(C.Extras.POSTER_POS, posterPos);
@@ -90,6 +91,13 @@ public class ShareMoneyGetImgActivity extends BaseActivity {
             ActivityStyleUtil.initSystemBar(this, R.color.color_757575); //设置标题栏颜色值
         }
         initView();
+    }
+    /**
+     * 生成分享海报二维码
+     */
+    private Observable<Bitmap> getShareEWMBitmap(String promotionUrl) {
+
+        return GoodsUtil.getShareEWMBitmapObservable(this, promotionUrl);
     }
 
     /**
@@ -119,7 +127,19 @@ public class ShareMoneyGetImgActivity extends BaseActivity {
             LoadImgUtils.setImg(this, mIvPoterView, mPosterPicPath);
         }
         mPosterPos = getIntent().getIntExtra(C.Extras.POSTER_POS, 0);
-        getShareEWMBitmap();
+        if (mGoodInfo.getShopType() == 3 || mGoodInfo.getShopType() == 4){
+            Observable<Bitmap> emwbitmap =  getShareEWMBitmap(mGoodInfo.getCouponUrl());
+            emwbitmap.subscribe(new CallBackObserver<Bitmap>() {
+                @Override
+                public void onNext(Bitmap bitmap) {
+                    mEwmBitmap = bitmap;
+                }
+            });
+
+        }else{
+            getShareEWMBitmap();
+        }
+
 
         new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.change_img));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
