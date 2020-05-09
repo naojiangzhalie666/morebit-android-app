@@ -74,6 +74,6 @@
         android:background="@drawable/bg_ffd800_round_30dp"
         android:gravity="center"
         android:text="@string/save_img"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_FFFFFF"
         android:textSize="13dp"/>
 </LinearLayout>
