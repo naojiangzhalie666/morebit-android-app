@@ -1,6 +1,7 @@
 package com.zjzy.morebit.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -64,11 +65,13 @@ public class AlterWechatView extends RelativeLayout {
         Drawable drawable = mContext.getResources().getDrawable(R.drawable.icon_dagouxuanzhong);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         textView.setCompoundDrawables(null, null, drawable, null);
+        textView.setTextColor(Color.parseColor("#FFFFFF"));
         relativeLayout.setBackgroundResource(R.drawable.bg_000000_1dpline_yellowbg_round_30dp);
     }
 
     public void setNuSelect(TextView textView, RelativeLayout relativeLayout) {
         textView.setCompoundDrawables(null, null, null, null);
+        textView.setTextColor(Color.parseColor("#333333"));
         relativeLayout.setBackgroundResource(R.drawable.bg_d3d3d3_white_round_30dp);
     }
 
