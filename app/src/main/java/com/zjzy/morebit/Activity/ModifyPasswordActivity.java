@@ -151,6 +151,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
             @Override
             public void onClick(View v) {
                 finish();
+                isMethodManager(rl);
             }
         });
         if (!TextUtils.isEmpty(phone)) {

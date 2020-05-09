@@ -361,6 +361,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                 break;
             case R.id.rl:
                 getActivity().finish();
+                isMethodManager(rl);
                 break;
             case R.id.tv_bind:
                 LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, "", "", mWeixinInfo,mAreaCode);

@@ -37,8 +37,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_333333"
-            android:textSize="13sp"
+            android:textColor="@color/color_999999"
+            android:textSize="12sp"
+            android:lineSpacingMultiplier="1.2"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_marginTop="15dp"
@@ -70,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="查看完整版"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/colcor_999999"
                 android:textSize="@dimen/sp_13"
                 />
 
@@ -79,15 +80,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《多点优选用户协议》"
-                android:textColor="@color/color_F05557"
-                android:textSize="@dimen/sp_13"
-                />
+                android:textColor="@color/color_FFE50B"
+                android:textSize="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="和"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/color_999999"
                 android:textSize="@dimen/sp_13"
                 />
 
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《隐私政策》"
-                android:textColor="@color/color_F05557"
+                android:textColor="@color/color_FFE50B"
                 android:textSize="@dimen/sp_13"
                 />
         </LinearLayout>
@@ -128,7 +128,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="40dp"
         android:visibility="visible"
         android:orientation="horizontal">
 
@@ -151,7 +151,7 @@
             android:id="@+id/ok"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_F05557"
+            android:background="@color/color_FFE50B"
             android:layout_weight="1.0"
             android:gravity="center"
             android:text="同意"

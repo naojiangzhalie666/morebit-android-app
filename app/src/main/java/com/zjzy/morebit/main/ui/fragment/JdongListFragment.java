@@ -185,15 +185,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         }else{
             programCatItemBean.setOrder("asc");
         }
-        if (mSortType==1){
-            programCatItemBean.setSort("");
-        }else if (mSortType==2){
-            programCatItemBean.setSort("inOrderCount30DaysSku");
-        }else if (mSortType==3){
-            programCatItemBean.setSort("price");
-        }else if (mSortType==4){
-            programCatItemBean.setSort("commission");
-        }
+        programCatItemBean.setSort(String.valueOf(mSortType));
         programCatItemBean.setCoupon(coupon);
         programCatItemBean.setSelf(self);
         mPresenter.getJdGoodsList(this,  programCatItemBean, C.requestType.initData);
@@ -210,16 +202,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         }else{
             programCatItemBean.setOrder("asc");
         }
-        if (mSortType==1){
-            programCatItemBean.setSort("");
-        }else if (mSortType==2){
-            programCatItemBean.setSort("inOrderCount30DaysSku");
-        }else if (mSortType==3){
-            programCatItemBean.setSort("price");
-        }else if (mSortType==4){
-            programCatItemBean.setSort("commission");
-        }
-        programCatItemBean.setCoupon(coupon);
+        programCatItemBean.setSort(String.valueOf(mSortType));
         programCatItemBean.setSelf(self);
         mPresenter.getJdGoodsList(this, programCatItemBean,C.requestType.loadMore);
     }
@@ -306,19 +289,19 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     public void onClick(View v) {
             switch (v.getId()){
                 case R.id.title_comprehensive_tv://综合
-                    requestClickRadar(null, title_comprehensive_tv, 1);
+                    requestClickRadar(null, title_comprehensive_tv, 0);
                     onReload();
                     break;
                 case R.id.title_sales_volume_ll://销量
-                    requestClickRadar(mTitleSalesVolumeIv, mTitleSalesVolumeTv, 2);
+                    requestClickRadar(mTitleSalesVolumeIv, mTitleSalesVolumeTv, 4);
                     onReload();
                     break;
                 case R.id.title_post_coupon_price__ll://价格
-                    requestClickRadar(mTitlePostCouponPriceIv, mTitlePostCouponPriceTv, 3);
+                    requestClickRadar(mTitlePostCouponPriceIv, mTitlePostCouponPriceTv, 1);
                     onReload();
                     break;
                 case R.id.title_commission_ll://奖励
-                    requestClickRadar(mTitleCommissionIv, mTitleCommissionTv, 4);
+                    requestClickRadar(mTitleCommissionIv, mTitleCommissionTv, 3);
                     onReload();
                     break;
                 case R.id.title_support_ll://自营
@@ -333,7 +316,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     }
 
     private void requestClickRadar(ImageView clickIv, TextView textView, int orderType) {
-        if (orderType == 1) {
+        if (orderType == 0) {
             //综合只有降序
             eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;
         } else {

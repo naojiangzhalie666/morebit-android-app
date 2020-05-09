@@ -178,7 +178,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
         if (bundle != null) {
             type = bundle.getInt(C.Extras.order_type, 1);
         }
-        if(1 != type && 10 != type && 4!=type && 2!=type){
+        if(1 != type && 10 != type && 4!=type){
             type = 3;
         }
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);
@@ -208,7 +208,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
             public void onItem(int position) {
                 if (type == 1){
                     mPresenter.onCheckGoods(SearchOrderFragment.this,mListArray.get(position).getItemId());
-                }else if (type==2){
+                }else if (type==3){
                     ShopGoodInfo mGoodsInfo=new ShopGoodInfo();
                     mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForJd(SearchOrderFragment.this, mGoodsInfo);

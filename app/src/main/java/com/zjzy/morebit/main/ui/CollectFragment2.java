@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -551,11 +552,13 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                                 String itemSourceId = item.getItemSourceId();
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
                                 shopGoodInfo.setItemSource("2");
+                                shopGoodInfo.setPrice(item.getPrice());
                                 GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
                             }else if (item.getShopType()==4){
                                 String itemSourceId = item.getItemSourceId();
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
                                 shopGoodInfo.setItemSource("1");
+                                shopGoodInfo.setPrice(item.getPrice());
                                 GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
                             } else{
                                 GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {

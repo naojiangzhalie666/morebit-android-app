@@ -120,6 +120,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+                isMethodManager(rl);
             }
         });
         mAreaCode = AreaCodeUtil.getDefaultCode();
