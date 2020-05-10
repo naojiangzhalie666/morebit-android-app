@@ -71,7 +71,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     //排序方向
     private int eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;// 0降序  1升序
     //排序类型
-    private long mSortType = 1;//排序类型 1 综合排序 2 销量排序 3 价格排序 4 奖励排序
+    private long mSortType = 0;//排序类型 1 综合排序 2 销量排序 3 价格排序 4 奖励排序
     //自营
     private LinearLayout title_support_ll;
     private ImageView title_support_iv;

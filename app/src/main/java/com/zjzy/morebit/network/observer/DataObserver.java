@@ -90,7 +90,7 @@ public abstract class DataObserver<T> extends BaseDataObserver<T> {
                 break;
             case C.requestCode.B10019://账号异常去登陆
                 if (isShowError && !TextUtils.isEmpty(data.getMsg())) {
-                    ViewShowUtils.showShortToast(App.getAppContext(), data.getMsg());
+                   // ViewShowUtils.showShortToast(App.getAppContext(), data.getMsg());
                 }
                 if (!ActivityLifeHelper.getInstance().isContainsActivity(LoginSinglePaneActivity.class)) {
                     if (!AppUtil.isFastClick(100)) {
