@@ -811,12 +811,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
                 } else {
                     return;
                 }
-            }/* else {
-                if (!TextUtils.isEmpty(mGoodsInfo.getPicture())) {
-                    getBanner.add(0, StringsUtils.checkHttp(mGoodsInfo.getPicture()));
-                }
-                mGoodsInfo.setBanner(getBanner);
-            }*/
+            }
             for (int i = 0; i < getBanner.size(); i++) {
                 String s = StringsUtils.checkHttp(getBanner.get(i));
                 if (TextUtils.isEmpty(s)) return;
