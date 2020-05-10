@@ -57,7 +57,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.item_pdd_shopping, parent, false));
+        return new ViewHolder(mInflater.inflate(R.layout.item_jd_shopping, parent, false));
     }
 
 
@@ -129,8 +129,9 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
                 viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));
 
-                viewHolder.pdd_title.setLabelText("拼多多");
-                viewHolder.pdd_title.setOriginalText(MathUtils.getTitle(info));
+
+                viewHolder.good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                StringsUtils.retractTitle( viewHolder.good_mall_tag, viewHolder.title,MathUtils.getTitle(info));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -150,21 +151,22 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
     private class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name;
-        ImageView iv_icon;
+        ImageView iv_icon,good_mall_tag;
         LinearLayout return_cash;
         RelativeLayout toDetail, img_rl;
         ImageView select_tag;
         View ll_prise;
         LinearLayout ll_bottom;
-        LabelTextView pdd_title;
+        TextView title;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            pdd_title = (LabelTextView) itemView.findViewById(R.id.pdd_title);
+            title = (TextView) itemView.findViewById(R.id.title);
             tv_shop_name = (TextView) itemView.findViewById(R.id.tv_shop_name);
             textview_original = (TextView) itemView.findViewById(R.id.discount_price);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
+            good_mall_tag = (ImageView) itemView.findViewById(R.id.good_mall_tag);
             textvihew_Preco = (TextView) itemView.findViewById(R.id.price);
             momVolume = (TextView) itemView.findViewById(R.id.sales);
             coupon = (TextView) itemView.findViewById(R.id.coupon);

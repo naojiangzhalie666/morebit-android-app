@@ -58,7 +58,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_share_weixin"
+                    android:src="@drawable/icon_share_money_weixin"
                     android:id="@+id/iv_weChat"/>
 
                 <TextView
@@ -82,7 +82,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_pengyouquan"
+                    android:src="@drawable/icon_share_money_pengyouquan"
                     android:id="@+id/iv_weChat_circle"/>
 
                 <TextView
@@ -106,7 +106,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_weibo"
+                    android:src="@drawable/icon_share_money_weibo"
                     android:id="@+id/iv_weibo"/>
 
                 <TextView
@@ -130,7 +130,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_qq"
+                    android:src="@drawable/icon_share_money_qq"
                     android:id="@+id/iv_qq"/>
 
                 <TextView
@@ -155,7 +155,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/iv_qq_room"
-                    android:src="@drawable/icon_kongjian" />
+                    android:src="@drawable/icon_share_money_kongjian" />
 
                 <TextView
                     android:layout_width="wrap_content"

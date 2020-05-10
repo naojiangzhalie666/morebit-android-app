@@ -141,6 +141,8 @@ public class MineFragment extends BaseMainFragmeng {
     NestedScrollView nestedScrollView;
     @BindView(R.id.rl_set_weixin)
     RelativeLayout rl_set_weixin;
+    @BindView(R.id.my_earnings)
+    LinearLayout my_earnings;
 
 //    @BindView(R.id.tv_role)
 //    TextView tv_role;
@@ -841,12 +843,12 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
     public void showGuideMoney() {
-//        GuideViewUtil.showGuideView(getActivity(), moneyCardView, GuideViewUtil.GUIDE_MONEY, 0, null, new GuideViewUtil.GuideCallback() {
-//            @Override
-//            public void onDissmiss() {
-//                showGuideService();
-//            }
-//        });
+        GuideViewUtil.showGuideView(getActivity(), my_earnings, GuideViewUtil.GUIDE_MONEY, 0, null, new GuideViewUtil.GuideCallback() {
+            @Override
+            public void onDissmiss() {
+                showGuideService();
+            }
+        });
     }
 
     public void showGuideService() {
