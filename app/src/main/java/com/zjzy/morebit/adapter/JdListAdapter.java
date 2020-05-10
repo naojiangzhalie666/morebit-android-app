@@ -116,7 +116,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
                 } else {
                     UserInfo userInfo1 = UserLocalData.getUser();
                     if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, info.getCommission())));
+                        viewHolder.commission.setText("登录赚佣金");
                     } else {
                         viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
                     }
