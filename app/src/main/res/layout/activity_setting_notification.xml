@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="29dp"
         android:text="@string/setting_push_msg_hint"
-        android:textColor="@color/color_666666"
+        android:textColor="@color/color_FFFFFF"
         android:background="#FF645B"
         android:gravity="center_vertical"
         android:paddingLeft="13dp"

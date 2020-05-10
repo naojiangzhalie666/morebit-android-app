@@ -2,6 +2,7 @@ package com.zjzy.morebit.home.fragment;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -184,6 +185,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     private CountDownTimer mCountDownTiemr;
   //  private LoopLayout loopLayout;
    private List<ImageInfo> list;
+
+   private Activity mContext;
     public static HomeRecommendFragment newInstance() {
         Bundle args = new Bundle();
         HomeRecommendFragment fragment = new HomeRecommendFragment();
@@ -214,6 +217,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         if (parent != null) {
             parent.removeView(mView);
         }
+        mContext = getActivity();
         return mView;
     }
 
@@ -922,6 +926,11 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
             public void onPageSelected(int position) {
                 currentBannerPosition = position;
                 if (null != topBannerColors && topBannerColors.size() > 0) {
+                    int size = topBannerColors.size();
+                    if (position >= size){
+                        position = size -1;
+                        currentBannerPosition = position;
+                    }
                     recycleStartColor = topBannerColors.get(position);
                 }
             }
@@ -1521,8 +1530,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
             App.mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mScreenWidth = DensityUtil.getPhoneWidth(getActivity());
-                    int floatleft = mScreenWidth - floatIv.getWidth() - DensityUtil.dip2px(getActivity(), 15);
+                    mScreenWidth = DensityUtil.getPhoneWidth(mContext);
+                    int floatleft = mScreenWidth - floatIv.getWidth() - DensityUtil.dip2px(mContext, 15);
                     int targetLeft = mScreenWidth - 60;
 
 

@@ -255,7 +255,9 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
         if (loadType == C.requestType.loadMore) {
             rl_list.getListView().setNoMore(true);
         } else {
-            mData.clear();
+            if (mData != null){
+                mData.clear();
+            }
             mAdapter.setData(mData);
             rl_list.notifyDataSetChanged();
             showNetworkError(rl_list.getListviewSuper(), false);

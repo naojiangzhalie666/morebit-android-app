@@ -73,7 +73,7 @@
                     android:background="@drawable/submit_buttom_feed"
                     android:gravity="center"
                     android:text="当我没来过"
-                    android:textColor="@color/color_333333"
+                    android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/sp_15" />
             </RelativeLayout>
         </LinearLayout>

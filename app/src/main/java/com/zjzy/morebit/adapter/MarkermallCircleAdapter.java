@@ -765,7 +765,7 @@ public class MarkermallCircleAdapter extends BaseMYShareAdapter<MarkermallCircle
                 if (circleItemInfo != null) {
                     String videoUrl = circleItemInfo.getItemVideoid();
                     List<String> videoUrlList = new ArrayList<>();
-                    if (!StringsUtils.isEmpty(videoUrl)) {
+                    if (!StringsUtils.isEmpty(videoUrl) && videoUrl.contains("/")) {
                         videoUrlList.add(videoUrl);
                         String fileName = videoUrl.substring(videoUrl.lastIndexOf("/") + 1, videoUrl.lastIndexOf("."));
                         String suffix = videoUrl.substring(videoUrl.lastIndexOf(".") + 1, videoUrl.length());
