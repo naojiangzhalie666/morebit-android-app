@@ -1,8 +1,10 @@
 package com.zjzy.morebit.Activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -289,9 +291,21 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         initData(false);
         mPresenter.getSysNotification(this);
         mHandler = new Handler();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("action.Grade");//名字
+        this.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
 
     }
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.Grade")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                refreshVipUpdate();//需要去做的事
+            }
+        }
+    };
     private void refreshVipUpdate() {
         gduv_view.refreshView();
         setEstimateData();

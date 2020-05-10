@@ -9,6 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:layout_marginTop="15dp">
 
         <TextView
@@ -16,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="月预估收入"
+            android:paddingLeft="5dp"
             android:textColor="@color/color_1E1E1E"
             android:textSize="@dimen/sp_16"
             />
@@ -28,6 +30,7 @@
             android:drawableRight="@drawable/more_right"
             android:text="说明"
             android:paddingBottom="2dp"
+            android:paddingRight="10dp"
             android:gravity="center_vertical"
             android:textColor="@color/color_666666"
             android:id="@+id/tv_month_hint"

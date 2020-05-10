@@ -2,6 +2,7 @@ package com.zjzy.morebit.goods.shopping.ui.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -194,6 +195,9 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
             UserLocalData.setUser((Activity) mContext,userInfo);
             EventBus.getDefault().post(new RefreshUserInfoEvent());
             ViewShowUtils.showShortToast(mContext,"升级成功");
+            Intent intent = new Intent();
+            intent.setAction("action.Grade");//要通知的广播名称
+            mContext.sendBroadcast(intent);
         }else{
             MyLog.d("test","用户信息为空");
         }

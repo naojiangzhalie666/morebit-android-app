@@ -1,8 +1,10 @@
 package com.zjzy.morebit.Activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -305,8 +307,22 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         initData(false);
         mPresenter.getSysNotification(this);
         mHandler = new Handler();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("action.Grade");//名字
+        this.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+
 
     }
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.Grade")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                refreshVipUpdate();//需要去做的事
+            }
+        }
+    };
 
     private void refreshVipUpdate() {
         gduv_view.refreshView();
@@ -341,6 +357,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             @Override
             public void onRefresh() {
                 initData(true);
+                refreshVipUpdate();
             }
         });
         if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getVideoid()) || "0".equals(mGoodsInfo.getVideoid())) {
@@ -520,9 +537,14 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         }
 
         if (!StringsUtils.isEmpty(Info.getPriceForPdd())) {
-            mGoodsInfo.setPriceForPdd(Info.getPriceForPdd());
+            mGoodsInfo.setPriceForPdd(Info.getPrice());
             mGoodsInfo.setPrice(Info.getPriceForPdd());
             text_two.setText(" ¥" + MathUtils.getnum(Info.getPriceForPdd()));
+            text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
+        }else {
+            mGoodsInfo.setVoucherPriceForPdd(Info.getVoucherPriceForPdd());
+            mGoodsInfo.setVoucherPrice(Info.getVoucherPriceForPdd());
+            text_two.setText(" ¥" + MathUtils.getnum(Info.getVoucherPriceForPdd()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
         if (!StringsUtils.isEmpty(Info.getSaleMonth())) {
@@ -744,6 +766,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 
         }
         getViewLocationOnScreen();
+
     }
 
 
@@ -1025,6 +1048,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
                 if (mGoodsInfo != null) {
                     mGoodsInfo.setAdImgUrl(indexbannerdataArray);
                 }
+                Log.e("sssss",mPromotionJdUrl+"");
                 ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionJdUrl);
 
                 break;

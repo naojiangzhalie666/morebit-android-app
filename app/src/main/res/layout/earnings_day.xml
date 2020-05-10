@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="日预估收入"
+            android:paddingLeft="3dp"
             android:textColor="@color/color_1E1E1E"
             android:textSize="@dimen/sp_16"
              />
@@ -27,6 +28,7 @@
             android:layout_alignParentRight="true"
             android:drawablePadding="4dp"
             android:paddingBottom="2dp"
+            android:paddingRight="10dp"
             android:drawableRight="@drawable/more_right"
             android:text="说明"
             android:gravity="center_vertical"
@@ -214,6 +216,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/yesterday_shouyi_bg"
             android:paddingRight="@dimen/dp_10"
+            android:layout_marginTop="8dp"
             android:paddingBottom="17dp">
 
             <TextView
