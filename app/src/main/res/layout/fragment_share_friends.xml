@@ -76,7 +76,6 @@
             app:icvp_min_page_scale_offset="0dp"
             app:icvp_scroll_duration="250"/>
 
-
         <LinearLayout
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"

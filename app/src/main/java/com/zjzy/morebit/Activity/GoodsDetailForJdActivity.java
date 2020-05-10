@@ -539,12 +539,8 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (!StringsUtils.isEmpty(Info.getPriceForPdd())) {
             mGoodsInfo.setPriceForPdd(Info.getPrice());
             mGoodsInfo.setPrice(Info.getPriceForPdd());
+            text_two.setVisibility(View.GONE);
             text_two.setText(" ¥" + MathUtils.getnum(Info.getPriceForPdd()));
-            text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
-        }else {
-            mGoodsInfo.setVoucherPriceForPdd(Info.getVoucherPriceForPdd());
-            mGoodsInfo.setVoucherPrice(Info.getVoucherPriceForPdd());
-            text_two.setText(" ¥" + MathUtils.getnum(Info.getVoucherPriceForPdd()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
         if (!StringsUtils.isEmpty(Info.getSaleMonth())) {
@@ -804,10 +800,10 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (info == null) {
             return;
         }
-        if (mBannerList.size() <= 1) {
-            indexbannerdataArray.clear();
-            List<String> getBanner = info.getItemBanner();
 
+        if (mBannerList.size() <=1) {
+            List<String> getBanner = info.getItemBanner();
+            indexbannerdataArray.clear();
             if (getBanner == null || getBanner.size() == 0) {
                 if (!TextUtils.isEmpty(mGoodsInfo.getPicture())) {
                     getBanner = new ArrayList<>();
@@ -815,28 +811,25 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
                 } else {
                     return;
                 }
-            } else {
+            }/* else {
                 if (!TextUtils.isEmpty(mGoodsInfo.getPicture())) {
                     getBanner.add(0, StringsUtils.checkHttp(mGoodsInfo.getPicture()));
                 }
                 mGoodsInfo.setBanner(getBanner);
-            }
+            }*/
             for (int i = 0; i < getBanner.size(); i++) {
                 String s = StringsUtils.checkHttp(getBanner.get(i));
                 if (TextUtils.isEmpty(s)) return;
+                if (s.contains(","))return;
                 if (LoadImgUtils.isPicture(s)) {
                     ImageInfo imageInfo = new ImageInfo();
                     imageInfo.setThumb(getBanner.get(i));
                     indexbannerdataArray.add(imageInfo);
+                    mBannerList.add(indexbannerdataArray.get(i).getThumb());
                 }
             }
-            for (int i = 0; i < indexbannerdataArray.size(); i++) {
-                if (!mBannerList.contains(indexbannerdataArray.get(i).getThumb()))
-                    mBannerList.add(indexbannerdataArray.get(i).getThumb());
-            }
-
             //简单使用
-            mRollViewPager.setImages(mBannerList)
+            mRollViewPager.setImages(getBanner)
                     .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                     .setImageLoader(new GlideImageLoader())
                     .setOnBannerListener(new OnBannerListener() {
@@ -1003,6 +996,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     @Override
     public void setPromotionJdUrl(String promotionJdUrl) {
         mPromotionJdUrl=promotionJdUrl;
+        mGoodsInfo.setPriceForPdd(mGoodsInfo.getPrice());
         mGoodsInfo.setClickURL(promotionJdUrl);
     }
 
@@ -1048,7 +1042,6 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
                 if (mGoodsInfo != null) {
                     mGoodsInfo.setAdImgUrl(indexbannerdataArray);
                 }
-                Log.e("sssss",mPromotionJdUrl+"");
                 ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionJdUrl);
 
                 break;

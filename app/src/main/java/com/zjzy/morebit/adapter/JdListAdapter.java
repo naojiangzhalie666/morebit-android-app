@@ -106,7 +106,6 @@ public class JdListAdapter extends RecyclerView.Adapter {
                 viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         GoodsDetailForJdActivity.start(mContext, info);
                     }
                 });

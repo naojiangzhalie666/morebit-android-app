@@ -163,6 +163,7 @@ public class ImagePagerActivity extends BaseActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putInt(STATE_POSITION, mPager.getCurrentItem());
     }
 

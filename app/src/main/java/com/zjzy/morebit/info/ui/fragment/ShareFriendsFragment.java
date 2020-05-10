@@ -19,9 +19,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -41,13 +48,16 @@ import com.zjzy.morebit.pojo.ShareUrlBaen;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.FileUtils;
+import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PageToUtil;
 import com.zjzy.morebit.utils.QrcodeUtils;
 import com.zjzy.morebit.utils.ReadImgUtils;
+import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.ShareUtil;
+import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.share.ShareMore;
@@ -89,6 +99,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
     private String shareUrl;
     private SharePopwindow shareUrlPopwindow;
     private SharePopwindow sharePosterPopwindow;
+    private Banner roll_view_pager;
 
 
     @BindView(R.id.hicvp)
@@ -117,6 +128,9 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
                         } else {
                             mHorizontalInfiniteCycleViewPager.setCurrentItem(0);
                         }
+
+
+
                         MyLog.i("test", "mUrlsList: " + mUrlsList.size());
                         App.getACache().put(C.sp.SHARE_POSTER + mInvite_code, (ArrayList) mUrlsList);
                     }
@@ -126,6 +140,13 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
         }
     };
 
+    //自定义的图片加载器
+    private class MyLoader extends ImageLoader {
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            Glide.with(context).load((String) path).into(imageView);
+        }
+    }
     @Override
     protected void initData() {
         mInvite_code = UserLocalData.getUser(getActivity()).getInviteCode();
@@ -136,6 +157,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
         inivEWM();
         getBannerData();
     }
+
 
     private void getBannerData() {
         ReadImgUtils.callPermission(getActivity(), new MyAction.OnResult<String>() {
@@ -162,6 +184,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
             }
         });
         initWriteView();
+        roll_view_pager=view.findViewById(R.id.roll_view_pager);
     }
 
     private void initWriteView() {
