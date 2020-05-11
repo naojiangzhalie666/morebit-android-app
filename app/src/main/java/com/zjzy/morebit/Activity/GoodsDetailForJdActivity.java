@@ -87,7 +87,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 拼多多商品详情页
+ * 京东商品详情页
  */
 
 public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
