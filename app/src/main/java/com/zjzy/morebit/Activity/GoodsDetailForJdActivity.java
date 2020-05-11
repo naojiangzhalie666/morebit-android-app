@@ -539,7 +539,6 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (!StringsUtils.isEmpty(Info.getPriceForPdd())) {
             mGoodsInfo.setPriceForPdd(Info.getPrice());
             mGoodsInfo.setPrice(Info.getPriceForPdd());
-            text_two.setVisibility(View.GONE);
             text_two.setText(" ¥" + MathUtils.getnum(Info.getPriceForPdd()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
@@ -1036,6 +1035,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
                 if (isGoodsLose()) return;
                 if (mGoodsInfo != null) {
                     mGoodsInfo.setAdImgUrl(indexbannerdataArray);
+                    mGoodsInfo.setPriceForPdd(mGoodsInfo.getPrice());
                 }
                 ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionJdUrl);
 
@@ -1163,7 +1163,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (mGoodsInfo == null) {
             return true;
         }
-        if (TextUtils.isEmpty(mGoodsInfo.getPriceForPdd())) {
+        if (TextUtils.isEmpty(mGoodsInfo.getVoucherPrice())) {
             ViewShowUtils.showLongToast(this, "商品已经过期，请联系管理员哦");
             return true;
         }
