@@ -111,7 +111,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         MyLog.d("setUserVisibleHint", "CircleFragment  " + isVisibleToUser);
-        if (isVisibleToUser && isUserHint && mView != null&&mPushType == 2) {
+        if (isVisibleToUser && isUserHint && mView != null&&mPushType == 3) {
             initView();
             isUserHint = false;
         }
@@ -122,10 +122,17 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPushType = getArguments().getInt(C.Extras.pushType);
-        if (mPushType == 1) {
+        if (mPushType == 3) {
             initView();
         }
         initBundle();
+        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_pdd_tab);
+//        "综合", "券后价", "销量", "奖励"
+        tabList.add(new BaseTitleTabBean("综合", false, ""));
+        tabList.add(new BaseTitleTabBean("佣金比例", true, C.Setting.sort_commissionShare));
+        tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
+        tabList.add(new BaseTitleTabBean("价格", true, C.Setting.sort_price));
+        initTab(mTabLayout);
 
     }
     private Bundle bundle;
@@ -166,13 +173,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                     getMoreData();
             }
         });
-        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_pdd_tab);
-//        "综合", "券后价", "销量", "奖励"
-        tabList.add(new BaseTitleTabBean("综合", false, ""));
-        tabList.add(new BaseTitleTabBean("佣金比例", true, C.Setting.sort_commissionShare));
-        tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
-        tabList.add(new BaseTitleTabBean("价格", true, C.Setting.sort_price));
-        initTab(mTabLayout);
+
         //默认选择第一个
         reLoadData();
     }
@@ -284,7 +285,9 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
 
         if (TextUtils.isEmpty(keyWords)) {
             mRecyclerView.getSwipeList().setRefreshing(false);
-            ViewShowUtils.showShortToast(getActivity(), "请输入搜索内容");
+            if (!isUserHint){
+                ViewShowUtils.showShortToast(getActivity(), "请输入搜索内容");
+            }
             return;
         }
         keyWord = keyWords;

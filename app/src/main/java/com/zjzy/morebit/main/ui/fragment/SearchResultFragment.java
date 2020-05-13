@@ -123,15 +123,16 @@ public class SearchResultFragment extends BaseMainFragmeng {
        mSearchTaobaoFragment = SearchResultForTaobaoFragment.newInstance(1);
        mSearchBean.add(new SearchBean(mSearchTaobaoFragment, getResources().getString(R.string.current_taobao)));
 
-       mSearchPddFragment = SearchResultForPddFragment.newInstance(2);
+
+       mSearchJdFragment = SearchResultForJdFragment.newInstance(2);
+       mSearchBean.add(new SearchBean(mSearchJdFragment, getResources().getString(R.string.current_jd)));
+
+       mSearchPddFragment = SearchResultForPddFragment.newInstance(3);
        mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_pdd)));
 
-       mSearchJdFragment = SearchResultForJdFragment.newInstance(3);
-       mSearchBean.add(new SearchBean(mSearchJdFragment, getResources().getString(R.string.current_jd)));
        mChannelAdapter =new ChannelAdapter(getChildFragmentManager());
-
+       viewPager.setOffscreenPageLimit(3);
        viewPager.setAdapter(mChannelAdapter);
-
        xTablayout.setupWithViewPager(viewPager);
        xTablayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener (){
 
@@ -141,9 +142,9 @@ public class SearchResultFragment extends BaseMainFragmeng {
                if (getResources().getString(R.string.current_taobao).equals(tab.getText())){
                    mType = 1;
                }else if (getResources().getString(R.string.current_pdd).equals(tab.getText())){
-                   mType = 2;
-               }else if (getResources().getString(R.string.current_jd).equals(tab.getText())){
                    mType = 3;
+               }else if (getResources().getString(R.string.current_jd).equals(tab.getText())){
+                   mType = 2;
            }
                String currentSearch = etSearch.getText().toString();
                keyWord = currentSearch;
@@ -413,11 +414,11 @@ public class SearchResultFragment extends BaseMainFragmeng {
             SearchGoodsForTaobaoEvent event = new SearchGoodsForTaobaoEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
-        }else if (type==2){
+        }else if (type==3){
             SearchGoodsForPddEvent event = new SearchGoodsForPddEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
-        } else if (type==3){
+        } else if (type==2){
             SearchGoodsForJdEvent event = new SearchGoodsForJdEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);

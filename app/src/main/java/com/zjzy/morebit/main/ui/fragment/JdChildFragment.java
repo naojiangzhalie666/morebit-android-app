@@ -1,18 +1,39 @@
 package com.zjzy.morebit.main.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.scwang.smartrefresh.header.DeliveryHeader;
+import com.scwang.smartrefresh.header.DropBoxHeader;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.header.PhoenixHeader;
+import com.scwang.smartrefresh.header.TaurusHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.header.FalsifyHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.wikikii.bannerlib.banner.IndicatorLocation;
+import com.wikikii.bannerlib.banner.LoopLayout;
+import com.wikikii.bannerlib.banner.LoopStyle;
+import com.wikikii.bannerlib.banner.OnDefaultImageViewLoader;
+import com.wikikii.bannerlib.banner.bean.BannerInfo;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
@@ -23,9 +44,12 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
+import com.zjzy.morebit.utils.AutoInterceptViewGroup;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
+import com.zjzy.morebit.view.refresh.MarkermallHeadRefresh;
+import com.zjzy.morebit.view.refresh.NumberlHeadRefresh;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +80,9 @@ public class JdChildFragment extends BaseMainFragmeng {
     private ChannelAdapter mChannelAdapter;
     private SwipeDirectionDetector swipeDirectionDetector;
     private int currentViewPagerPosition = 0;
-
-
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean canRefresh = true;
+    private AppBarLayout mAppBarLt;
     /**
      *jd商品页面
      *
@@ -104,7 +129,7 @@ public class JdChildFragment extends BaseMainFragmeng {
     /**
      * 初始化界面
      */
-    private void initView(View view) {
+    private void initView(final View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //处理全屏显示
             ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
@@ -116,28 +141,11 @@ public class JdChildFragment extends BaseMainFragmeng {
        // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
       //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
 
-        RxHttp.getInstance().getCommonService().getJdTitle()//获取京东栏目
-                .compose(RxUtils.<BaseResponse<List<PddJdTitleTypeItem>>>switchSchedulers())
-                .compose(this.<BaseResponse<List<PddJdTitleTypeItem>>>bindToLifecycle())
-                .subscribe(new DataObserver<List<PddJdTitleTypeItem>>() {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-
-                    }
-
-                    @Override
-                    protected void onSuccess(List<PddJdTitleTypeItem> data) {
-                        if (data != null) {
-                            if (data != null && data.size() != 0) {
-                                initTab(data);
-                            }
-
-                        }
-                    }
-                });
 
 
 
+
+        initTitle();
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,9 +159,84 @@ public class JdChildFragment extends BaseMainFragmeng {
                 startActivity(new Intent(getActivity(), SearchActivity.class));
             }
         });
+        mAppBarLt = view.findViewById(R.id.app_bar_lt);
+        swipeRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setEnabled(true);
+        swipeRefreshLayout.setNestedScrollingEnabled(true);
+        //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
+        swipeRefreshLayout.setProgressViewOffset(true, -0, 100);
+        //设置进度View下拉的结束点，scale 是指设置是否需要放大或者缩小动画
+        swipeRefreshLayout.setProgressViewEndTarget(true, 180);
+        //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
+        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
+        //设置触发刷新的距离
+        swipeRefreshLayout.setDistanceToTriggerSync(200);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+               // initTitle();
+                Intent intent = new Intent();
+                intent.setAction("action.refresh");
+                getActivity().sendBroadcast(intent);
+                initbt();
+            }
+        });
+
+//添加页面滑动监听,控制 SwipeRefreshLayout与ViewPager滑动冲突
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+                if (state == 1) {
+                    swipeRefreshLayout.setEnabled(false);//设置不可触发
+                } else if (state == 2 && canRefresh) {
+                    swipeRefreshLayout.setEnabled(true);//设置可触发
+                }
+            }
+        });
+        mAppBarLt.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                if (i < -150 && canRefresh) {
+                    swipeRefreshLayout.setEnabled(false);//设置可触发
+                    canRefresh = false;
+                } else if (i > -150 && !canRefresh) {
+                    canRefresh = true;
+                    swipeRefreshLayout.setEnabled(true);
+                }
+            }
+        });
+
+
 
     }
 
+    private void initbt() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void initTitle() {
+        RxHttp.getInstance().getCommonService().getJdTitle()//获取京东栏目
+                .compose(RxUtils.<BaseResponse<List<PddJdTitleTypeItem>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<PddJdTitleTypeItem>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<PddJdTitleTypeItem>>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+
+                    }
+
+                    @Override
+                    protected void onSuccess(List<PddJdTitleTypeItem> data) {
+                        if (data != null) {
+                            if (data != null && data.size() != 0) {
+                                swipeRefreshLayout.setRefreshing(false);
+                                initTab(data);
+                            }
+
+                        }
+                    }
+                });
+    }
 
 
     private void setupViewPager(final List<PddJdTitleTypeItem> homeColumns) {
@@ -196,7 +279,7 @@ public class JdChildFragment extends BaseMainFragmeng {
 
     private class ChannelAdapter extends FragmentPagerAdapter {
         private List<PddJdTitleTypeItem> mHomeColumns = new ArrayList<>();
-
+        private   Fragment[] mChildFragments;
         public ChannelAdapter(FragmentManager fm) {
             super(fm);
 
@@ -223,8 +306,19 @@ public class JdChildFragment extends BaseMainFragmeng {
 
         @Override
         public int getCount() {
-            return mHomeColumns.size();
+            return mHomeColumns!=null ? mHomeColumns.size() : 0;
+        }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return ChannelAdapter.POSITION_NONE;
         }
     }
 
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

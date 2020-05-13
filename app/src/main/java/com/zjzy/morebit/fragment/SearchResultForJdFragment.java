@@ -110,7 +110,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         MyLog.d("setUserVisibleHint", "CircleFragment  " + isVisibleToUser);
-        if (isVisibleToUser && isUserHint && mView != null && mPushType ==3) {
+        if (isVisibleToUser && isUserHint && mView != null && mPushType ==2) {
             initView(mView);
             isUserHint = false;
         }
@@ -121,7 +121,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPushType = getArguments().getInt(C.Extras.pushType);
-        if (mPushType == 3) {
+        if (mPushType == 2) {
           initView(mView);
         }
         initBundle();

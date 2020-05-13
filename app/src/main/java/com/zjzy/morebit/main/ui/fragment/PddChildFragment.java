@@ -1,15 +1,19 @@
 package com.zjzy.morebit.main.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +73,9 @@ public class PddChildFragment extends BaseMainFragmeng {
     private ChannelAdapter mChannelAdapter;
     private SwipeDirectionDetector swipeDirectionDetector;
     private int currentViewPagerPosition = 0;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean canRefresh = true;
+    private AppBarLayout mAppBarLt;
 
 
     /**
@@ -113,141 +120,7 @@ public class PddChildFragment extends BaseMainFragmeng {
 
     }
 
-    //初始化拼多多标题。
-    private List<PddJdTitleTypeItem>  initPddTitle(){
 
-        final ArrayList<PddJdTitleTypeItem> data = new ArrayList<>();
-        final PddJdTitleTypeItem item = new PddJdTitleTypeItem();
-
-
-/*
-        PddJdTitleTypeItem item = new PddJdTitleTypeItem();
-        item.setTitle("男装");
-        item.setType(2);
-        item.setCatId(239);
-        data.add(item);
-
-        PddJdTitleTypeItem item1 = new PddJdTitleTypeItem();
-        item1.setTitle("女装/女士精品");
-        item1.setType(2);
-        item1.setCatId(8439);
-        data.add(item1);
-
-        PddJdTitleTypeItem item2 = new PddJdTitleTypeItem();
-        item2.setTitle("办公用品");
-        item2.setType(2);
-        item2.setCatId(2603);
-        data.add(item2);
-
-        PddJdTitleTypeItem item3 = new PddJdTitleTypeItem();
-        item3.setTitle("3c数码配件");
-        item3.setType(2);
-        item3.setCatId(2933);
-        data.add(item3);
-
-        PddJdTitleTypeItem item4 = new PddJdTitleTypeItem();
-        item4.setTitle("男鞋");
-        item4.setType(2);
-        item4.setCatId(8508);
-        data.add(item4);
-
-        PddJdTitleTypeItem item5 = new PddJdTitleTypeItem();
-        item5.setTitle("女鞋");
-        item5.setType(2);
-        item5.setCatId(8509);
-        data.add(item5);
-
-        PddJdTitleTypeItem item6 = new PddJdTitleTypeItem();
-        item6.setTitle("箱包皮具/女包/男包");
-        item6.setType(2);
-        item6.setCatId(8538);
-        data.add(item6);
-
-        PddJdTitleTypeItem item7 = new PddJdTitleTypeItem();
-        item7.setTitle("内衣裤袜");
-        item7.setType(2);
-        item7.setCatId(8583);
-        data.add(item7);
-
-        PddJdTitleTypeItem item8 = new PddJdTitleTypeItem();
-        item8.setTitle("家具");
-        item8.setType(2);
-        item8.setCatId(9324);
-        data.add(item8);
-
-        PddJdTitleTypeItem item9 = new PddJdTitleTypeItem();
-        item9.setTitle("运动");
-        item9.setType(2);
-        item9.setCatId(11685);
-        data.add(item9);
-
-        PddJdTitleTypeItem item10 = new PddJdTitleTypeItem();
-        item10.setTitle("美妆");
-        item10.setType(2);
-        item10.setCatId(18482);
-        data.add(item10);
-
-        PddJdTitleTypeItem item11 = new PddJdTitleTypeItem();
-        item11.setTitle("零食");
-        item11.setType(2);
-        item11.setCatId(6398);
-        data.add(item11);
-
-        PddJdTitleTypeItem item12 = new PddJdTitleTypeItem();
-        item12.setTitle("汽车配件");
-        item12.setType(2);
-        item12.setCatId(7639);
-        data.add(item12);
-
-        PddJdTitleTypeItem item13 = new PddJdTitleTypeItem();
-        item13.setTitle("生鲜");
-        item13.setType(2);
-        item13.setCatId(8172);
-        data.add(item13);
-
-        PddJdTitleTypeItem item14 = new PddJdTitleTypeItem();
-        item14.setTitle("居家日用");
-        item14.setType(2);
-        item14.setCatId(16989);
-        data.add(item14);
-
-        PddJdTitleTypeItem item15 = new PddJdTitleTypeItem();
-        item15.setTitle("清洁用品");
-        item15.setType(2);
-        item15.setCatId(17285);
-        data.add(item15);
-
-        PddJdTitleTypeItem item16 = new PddJdTitleTypeItem();
-        item16.setTitle("生活电器");
-        item16.setType(2);
-        item16.setCatId(6128);
-        data.add(item16);
-
-        PddJdTitleTypeItem item17 = new PddJdTitleTypeItem();
-        item17.setTitle("医药健康");
-        item17.setType(2);
-        item17.setCatId(13176);
-        data.add(item17);
-
-        PddJdTitleTypeItem item18 = new PddJdTitleTypeItem();
-        item18.setTitle("童装");
-        item18.setType(2);
-        item18.setCatId(14966);
-        data.add(item18);
-
-        PddJdTitleTypeItem item19 = new PddJdTitleTypeItem();
-        item19.setTitle("孕产妇用品");
-        item19.setType(2);
-        item19.setCatId(15356);
-        data.add(item19);
-
-        PddJdTitleTypeItem item20 = new PddJdTitleTypeItem();
-        item20.setTitle("玩具");
-        item20.setType(2);
-        item20.setCatId(15083);
-        data.add(item20);*/
-        return data;
-    }
     /**
      * 初始化界面
      */
@@ -299,8 +172,60 @@ public class PddChildFragment extends BaseMainFragmeng {
             }
         });
 
+
+        mAppBarLt = view.findViewById(R.id.app_bar_lt);
+        swipeRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setEnabled(true);
+        swipeRefreshLayout.setNestedScrollingEnabled(true);
+        //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
+        swipeRefreshLayout.setProgressViewOffset(true, -0, 100);
+        //设置进度View下拉的结束点，scale 是指设置是否需要放大或者缩小动画
+        swipeRefreshLayout.setProgressViewEndTarget(true, 180);
+        //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
+        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
+        //设置触发刷新的距离
+        swipeRefreshLayout.setDistanceToTriggerSync(200);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent();
+                intent.setAction("action.refresh");
+                getActivity().sendBroadcast(intent);
+                initbt();
+            }
+        });
+
+//添加页面滑动监听,控制 SwipeRefreshLayout与ViewPager滑动冲突
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+                if (state == 1) {
+                    swipeRefreshLayout.setEnabled(false);//设置不可触发
+                } else if (state == 2 && canRefresh) {
+                    swipeRefreshLayout.setEnabled(true);//设置可触发
+                }
+            }
+        });
+        mAppBarLt.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                if (i < -150 && canRefresh) {
+                    swipeRefreshLayout.setEnabled(false);//设置可触发
+                    canRefresh = false;
+                } else if (i > -150 && !canRefresh) {
+                    canRefresh = true;
+                    swipeRefreshLayout.setEnabled(true);
+                }
+            }
+        });
+
+
     }
 
+    private void initbt() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
 
 
     private void setupViewPager(final List<PddJdTitleTypeItem> homeColumns) {
