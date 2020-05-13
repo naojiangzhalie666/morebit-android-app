@@ -1,85 +1,95 @@
 package com.zjzy.morebit.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.adapter.ShoppingListForPddAdapter;
-import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
-import com.zjzy.morebit.network.BaseResponse;
-import com.zjzy.morebit.network.RxHttp;
-import com.zjzy.morebit.network.RxUtils;
-import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.adapter.JdListAdapter;
+import com.zjzy.morebit.main.contract.PddContract;
+import com.zjzy.morebit.main.presenter.PddListPresenter;
+import com.zjzy.morebit.mvp.base.base.BaseView;
+import com.zjzy.morebit.mvp.base.frame.MvpFragment;
+import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UI.BaseTitleTabBean;
-import com.zjzy.morebit.pojo.event.SearchGoodsForPddEvent;
-import com.zjzy.morebit.pojo.request.RequestSearchForPddBean;
-import com.zjzy.morebit.utils.ActivityStyleUtil;
+import com.zjzy.morebit.pojo.event.SearchGoodsForJdEvent;
 import com.zjzy.morebit.utils.C;
-import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.functions.Action;
 
 /**
  * 京东的搜索结果展示
  */
 
-public class SearchResultForJdFragment extends BaseMainFragmeng {
+public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> implements PddContract.View, ReUseListView.OnReLoadListener, View.OnClickListener {
 
-//    private ShoppingListForPddAdapter mAdapter;
-//    private List<ShopGoodInfo> listArray = new ArrayList<>();
-//    private String keyWord = "";
-//
-//    private static final int REQUEST_COUNT = 10;
-//
-//    private TabLayout mTabLayout;
+    private JdListAdapter mAdapter;
+    private String keyWord = "";
+
+    private static final int REQUEST_COUNT = 10;
+
     private View mView;
-//
-//
-//    private int mPage = 1;
-//
-//    private ArrayList<BaseTitleTabBean> tabList = new ArrayList<>();
-//    private int mSelectedPos;
-//    @BindView(R.id.searchNullTips_ly)
-//    LinearLayout searchNullTips_ly;
-//    @BindView(R.id.listview)
-//    ReUseListView mRecyclerView;
-//    @BindView(R.id.dataList_ly)
-//    LinearLayout dataList_ly;
+    @BindView(R.id.searchNullTips_ly)
+    LinearLayout searchNullTips_ly;
+    @BindView(R.id.listview)
+    ReUseListView mRecyclerView;
+    @BindView(R.id.dataList_ly)
+    LinearLayout dataList_ly;
 
-    boolean isUserHint =true;
+    boolean isUserHint = true;
     private int mPushType;
 
+    //销量
+    private LinearLayout mTitleSalesVolumeLl;
+    private ImageView mTitleSalesVolumeIv;
+    private TextView mTitleSalesVolumeTv;
+    //券后价
+    private LinearLayout mTitlePostCouponPriceLl;
+    private ImageView mTitlePostCouponPriceIv;
+    private TextView mTitlePostCouponPriceTv;
+    //佣金
+    private LinearLayout mTitleCommissionLl;
+    private ImageView mTitleCommissionIv;
+    private TextView mTitleCommissionTv;
 
+    private TextView title_comprehensive_tv;
+    //排序方向
+    private int eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;// 0降序  1升序
+    //排序类型
+    private long mSortType = 0;//排序类型 0 综合排序 2 销量排序 3 价格排序 4 奖励排序
+    //自营
+    private LinearLayout title_support_ll;
+    private ImageView title_support_iv;
 
+    //优惠券
+    private LinearLayout title_coupon_ll;
+    private ImageView title_coupon_iv;
+    private boolean isCoupon = false;//优惠券是否选中
+    private boolean isSupport = false;//自营是否选中
+    private String coupon = "0";
+    private String self = "0";
 
 
     public static SearchResultForJdFragment newInstance(int type) {
-        SearchResultForJdFragment searchResultForPddFragment = new SearchResultForJdFragment();
+        SearchResultForJdFragment searchResultForjdFragment = new SearchResultForJdFragment();
         Bundle args = new Bundle();
         args.putInt(C.Extras.pushType, type);
-        searchResultForPddFragment.setArguments(args);
-        return searchResultForPddFragment;
+        searchResultForjdFragment.setArguments(args);
+        return searchResultForjdFragment;
     }
 
     @Override
@@ -100,8 +110,8 @@ public class SearchResultForJdFragment extends BaseMainFragmeng {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         MyLog.d("setUserVisibleHint", "CircleFragment  " + isVisibleToUser);
-        if (isVisibleToUser && isUserHint && mView != null&&mPushType == 3) {
-            initView();
+        if (isVisibleToUser && isUserHint && mView != null && mPushType ==3) {
+            initView(mView);
             isUserHint = false;
         }
 
@@ -111,271 +121,293 @@ public class SearchResultForJdFragment extends BaseMainFragmeng {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPushType = getArguments().getInt(C.Extras.pushType);
-        if (mPushType == 1) {
-            initView();
+        if (mPushType == 3) {
+          initView(mView);
         }
         initBundle();
 
     }
+
+    @Override
+    protected void initData() {
+
+    }
+
     private Bundle bundle;
+
     private void initBundle() {
         bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
-      //      keyWord = getActivity().getIntent().getStringExtra("keyWord");
-            //mSearchType = getIntent().getIntExtra(KEY_SEARCH_TYPE,SEARCH_APP);
-            //fromSearch = getIntent().getIntExtra(KEY_SEARCH_FROM,FROM_SELF);
+            keyWord = getActivity().getIntent().getStringExtra("keyWord");
         }
     }
 
 
+    public void initView(View view) {
 
-    /**
-     * 重新加载数据
-     */
-    private void reLoadData() {
-      //  getFirstData(keyWord);
+        mRecyclerView.setOnReLoadListener(this);
+        title_comprehensive_tv = view.findViewById(R.id.title_comprehensive_tv);//综合
+
+        mTitleSalesVolumeLl = view.findViewById(R.id.title_sales_volume_ll);//销量
+        mTitleSalesVolumeTv = view.findViewById(R.id.title_sales_volume_tv);
+        mTitleSalesVolumeIv = view.findViewById(R.id.title_sales_volume_iv);
+
+        mTitlePostCouponPriceLl = view.findViewById(R.id.title_post_coupon_price__ll);//价格
+        mTitlePostCouponPriceTv = view.findViewById(R.id.title_post_coupon_price_tv);
+        mTitlePostCouponPriceIv = view.findViewById(R.id.title_post_coupon_price_iv);
+
+        mTitleCommissionLl = view.findViewById(R.id.title_commission_ll);//奖励
+        mTitleCommissionTv = view.findViewById(R.id.title_commission_tv);
+        mTitleCommissionIv = view.findViewById(R.id.title_commission_iv);
+
+
+        title_support_ll = view.findViewById(R.id.title_support_ll);//自营
+        title_support_iv = view.findViewById(R.id.title_support_iv);
+
+        title_coupon_ll = view.findViewById(R.id.title_coupon_ll);//优惠券
+        title_coupon_iv = view.findViewById(R.id.title_coupon_iv);
+
+
+        mTitleSalesVolumeLl.setOnClickListener(this);
+        mTitlePostCouponPriceLl.setOnClickListener(this);
+        mTitleCommissionLl.setOnClickListener(this);
+        title_comprehensive_tv.setOnClickListener(this);
+        title_coupon_ll.setOnClickListener(this);
+        title_support_ll.setOnClickListener(this);
+        getFirstData(keyWord);
+
     }
 
-    public void initView() {
-//        ActivityStyleUtil.initSystemBar(getActivity(), R.color.white); //设置标题栏颜色值
-//        mAdapter = new ShoppingListForPddAdapter(getActivity());
-//        mRecyclerView.setAdapter(mAdapter);
-//
-//        mRecyclerView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                getFirstData(keyWord);
-//            }
-//        });
-//
-//        mRecyclerView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                if (!mRecyclerView.getSwipeList().isRefreshing())
-//                    getMoreData();
-//            }
-//        });
-//
-//        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_pdd_tab);
-////        "综合", "券后价", "销量", "奖励"
-//        tabList.add(new BaseTitleTabBean("综合", false, ""));
-//        tabList.add(new BaseTitleTabBean("佣金比例", true, C.Setting.sort_commissionShare));
-//        tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
-//        tabList.add(new BaseTitleTabBean("价格", true, C.Setting.sort_price));
-//        initTab(mTabLayout);
-//        //默认选择第一个
-//        reLoadData();
+    @Override
+    protected int getViewLayout() {
+        return R.layout.fragment_searchcommodity_jd;
+    }
+
+    @Override
+    public BaseView getBaseView() {
+        return this;
     }
 
 
-    /**
-     * 初始化TabLayout
+    /*
+     * 第一次获取数据
      */
-    private void initTab(final TabLayout tabLayout) {
-//        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-//        tabLayout.setTabTextColors(getResources().getColor(R.color.color_666666), getResources().getColor(R.color.color_666666));
-//        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.top_head));
-//        tabLayout.setSelectedTabIndicatorHeight(DensityUtil.dip2px(getActivity(), 0));
-//
-//        //填充数据
-//        for (int i = 0; i < tabList.size(); i++) {
-//            BaseTitleTabBean bean = tabList.get(i);
-//            if (i == 0 ){
-//                bean.order = "";
-//            }else{
-//                bean.order = C.Setting.descParms;
-//            }
-//
-//            TabLayout.Tab tab = tabLayout.newTab();
-//            tab.setCustomView(R.layout.tablayout_donw_up_item_tv);
-//            TextView textView = (TextView) tab.getCustomView().findViewById(R.id.class_tv);
-//
-//            textView.setText(bean.name);//设置tab上的文字
-//            tab.setTag(i);
-//            tabLayout.addTab(tab);
-//            //初始化上下按钮
-//            LinearLayout linearLayout = (LinearLayout) tab.getCustomView().findViewById(R.id.class_icon_ly);
-//
-//            if (bean.isSelect) {
-//                linearLayout.setVisibility(View.VISIBLE);
-//                switchTab(tabLayout, i, bean, true);
-//            } else {
-//                linearLayout.setVisibility(View.INVISIBLE);
-//            }
+    public void getFirstData(String keyWords) {
 
+        if (TextUtils.isEmpty(keyWords)) {
+            mRecyclerView.getSwipeList().setRefreshing(false);
+            if (!isUserHint){
+                ViewShowUtils.showShortToast(getActivity(), "请输入搜索内容");
+            }
+            return;
         }
+        keyWord = keyWords;
+        mRecyclerView.getListView().setNoMore(false);
+        mRecyclerView.getSwipeList().setRefreshing(true);
+        onReload();
 
-//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//
-//            /**
-//             * 新选
-//             * @param tab
-//             */
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                mSelectedPos = (int) tab.getTag();
-//                BaseTitleTabBean bean = tabList.get(mSelectedPos);
-//                switchTab(tabLayout, mSelectedPos, bean, false);
-//                getFirstData(keyWord);
-//            }
-//
-//            /**
-//             * 当tab从 选择 ->未选择
-//             * @param tab
-//             */
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//                int pos = (int) tab.getTag();
-//                BaseTitleTabBean bean = tabList.get(pos);
-//                bean.order =  C.Setting.descParms;// 清空未选择的状态
-//                switchTab(tabLayout, pos, bean, true);
-//            }
-//
-//            /**
-//             * 复选
-//             * @param tab
-//             */
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//                int getPos = (int) tab.getTag();
-//                BaseTitleTabBean bean = tabList.get(getPos);
-//                if (bean.isSelect) {
-//                    bean.order =  C.Setting.ascParms.equals(bean.order) ?  C.Setting.descParms : C.Setting. ascParms;
-//                    switchTab(tabLayout, getPos, bean, false);
-//                    getFirstData(keyWord);
-//                }
-//            }
-//        });
-//    }
-//
-//    private void switchTab(TabLayout tabLayout, int i, BaseTitleTabBean switchTop, boolean isInit) {
-//        ImageView textIcon1 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_up);
-//     //   ImageView textIcon2 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_down);
-//        if (isInit) {
-//            textIcon1.setImageResource(R.drawable.icon_jiage_no);
-//        //    textIcon2.setImageResource(R.drawable.icon_jiagexia);
-//        } else {
-//            if ( C.Setting.ascParms.equals(switchTop.order)) {
-//                textIcon1.setImageResource(R.drawable.icon_jiage_down);
-//             //   textIcon2.setImageResource(R.drawable.icon_jiagexiaxuanzhong);
-//            } else {
-//                textIcon1.setImageResource(R.drawable.icon_jiage_up);
-//             //   textIcon2.setImageResource(R.drawable.icon_jiagexia);
-//            }
-//        }
-//    }
-//
-//
-//
-//    /*
-//     * 第一次获取数据
-//     */
-//    public void getFirstData(String keyWords) {
-//
-//        if (TextUtils.isEmpty(keyWords)) {
-//            mRecyclerView.getSwipeList().setRefreshing(false);
-//            ViewShowUtils.showShortToast(getActivity(), "请输入搜索内容");
-//            return;
-//        }
-//        keyWord = keyWords;
-//        mPage = 1;
-//        mRecyclerView.getListView().setNoMore(false);
-//        mRecyclerView.getSwipeList().setRefreshing(true);
-//        fristSearch(keyWord);
-//    }
-//
-//    private void fristSearch(String keywords) {
-//        BaseTitleTabBean bean = tabList.get(mSelectedPos);
-//        mRecyclerView.getSwipeList().setRefreshing(true);
-//        mRecyclerView.getListView().setNoMore(false);
-//        getObservable( keywords, bean)
-//                .doFinally(new Action() {
-//                    @Override
-//                    public void run() throws Exception {
-//                        mRecyclerView.getSwipeList().setRefreshing(false);
-//                    }
-//                })
-//                .subscribe(new DataObserver<List<ShopGoodInfo> >() {
-//                    @Override
-//                    protected void onError(String errorMsg, String errCode) {
-//                        searchNullTips_ly.setVisibility(View.VISIBLE);
-//
-//                    }
-//
-//                    @Override
-//                    protected void onSuccess(List<ShopGoodInfo> data) {
-//                        mRecyclerView.getSwipeList().setRefreshing(false);
-//                        dataList_ly.setVisibility(View.VISIBLE);
-//                        if (data != null && data.size() != 0) {
-//                            searchNullTips_ly.setVisibility(View.GONE);
-//                            listArray.clear();
-//                            listArray.addAll(data);
-//                            mAdapter.replace(listArray);
-//                        } else {
-//                            searchNullTips_ly.setVisibility(View.VISIBLE);
-//                        }
-//
-//                        mRecyclerView.notifyDataSetChanged();
-//                        if (data != null && data.size() == 0){
-//                            mRecyclerView.getListView().setNoMore(true);
-//                        }
-//                    }
-//                });
-//    }
-//
-//    private Observable<BaseResponse<List<ShopGoodInfo>>> getObservable(String keywords, BaseTitleTabBean bean) {
-//        RequestSearchForPddBean requestBean = new RequestSearchForPddBean();
-//        requestBean.setSort(bean.where);
-//        requestBean.setOrder(bean.order);
-//        requestBean.setPage(mPage);
-//        requestBean.setKeyword(keywords);
-//        return RxHttp.getInstance().getGoodsService().getSearchGoodsListForPdd(requestBean)
-//                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
-//                .compose(this.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
-//    }
-//
-//    /**
-//     * 加载更多数据
-//     */
-//    public void getMoreData() {
-//        getMoreSearch(keyWord);
-//    }
-//
-//    private void getMoreSearch( String keywords) {
-//        BaseTitleTabBean bean = tabList.get(mSelectedPos);
-//        getObservable(keywords, bean)
-//                .subscribe(new DataObserver<List<ShopGoodInfo>>() {
-//                    @Override
-//                    protected void onDataListEmpty() {
-//                        mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
-//                        mRecyclerView.getListView().setNoMore(true);
-//                    }
-//
-//                    @Override
-//                    protected void onSuccess(List<ShopGoodInfo>  data) {
-//                        mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
-//                        mPage++;
-//                        if (data != null) {
-//                            if (data.size() > 0) {
-//                                listArray.addAll(data);
-//                                mAdapter.replace(listArray);
-//                                mRecyclerView.notifyDataSetChanged();
-//                            } else {
-//                                mRecyclerView.getListView().setNoMore(true);
-//                            }
-//                        }
-//                    }
-//                });
-//    }
-//    @Subscribe  //订阅事件
-//    public void onEventMainThread(SearchGoodsForPddEvent event) {
-//        getFirstData(event.getKeyword());
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        EventBus.getDefault().unregister(this);
-//    }
+    }
 
+    private void fristSearch(String keywords) {
+
+    }
+
+
+    @Subscribe  //订阅事件
+    public void onEventMainThread(SearchGoodsForJdEvent event) {
+        getFirstData(event.getKeyword());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.title_comprehensive_tv://综合
+                requestClickRadar(null, title_comprehensive_tv, 0);
+                onReload();
+                break;
+            case R.id.title_sales_volume_ll://销量
+                requestClickRadar(mTitleSalesVolumeIv, mTitleSalesVolumeTv, 4);
+                onReload();
+                break;
+            case R.id.title_post_coupon_price__ll://价格
+                requestClickRadar(mTitlePostCouponPriceIv, mTitlePostCouponPriceTv, 1);
+                onReload();
+                break;
+            case R.id.title_commission_ll://奖励
+                requestClickRadar(mTitleCommissionIv, mTitleCommissionTv, 3);
+                onReload();
+                break;
+            case R.id.title_support_ll://自营
+                clickSupport();
+                onReload();
+                break;
+            case R.id.title_coupon_ll://优惠券
+                clickCoupro();
+                onReload();
+                break;
+        }
+    }
+
+    private void requestClickRadar(ImageView clickIv, TextView textView, int orderType) {
+        if (orderType == 0) {
+            //综合只有降序
+            eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;
+        } else {
+            if (!textView.isSelected()) {
+                eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;
+            } else {
+                eSortDirection = eSortDirection == C.OrderType.E_UPLIMIT_SORT_DOWN ? C.OrderType.E_UPLIMIT_SORT_UP : C.OrderType.E_UPLIMIT_SORT_DOWN;
+            }
+        }
+        mSortType = orderType;
+        resetTitleRankDrawable(clickIv, textView, eSortDirection);
+
+//        mLoadMoreHelper.loadData();
+    }
+
+    private void resetTitleRankDrawable(ImageView clickIv, TextView textView, int eSortDir) {
+        //对点击的重置图
+        mTitleSalesVolumeIv.setImageResource(R.drawable.icon_jiage_no);
+        mTitlePostCouponPriceIv.setImageResource(R.drawable.icon_jiage_no);
+        mTitleCommissionIv.setImageResource(R.drawable.icon_jiage_no);
+
+        mTitleSalesVolumeTv.setSelected(false);
+        mTitlePostCouponPriceTv.setSelected(false);
+        mTitleCommissionTv.setSelected(false);
+        title_comprehensive_tv.setTextColor(Color.parseColor("#999999"));
+        mTitleSalesVolumeTv.setTextColor(Color.parseColor("#999999"));
+        mTitlePostCouponPriceTv.setTextColor(Color.parseColor("#999999"));
+        mTitleCommissionTv.setTextColor(Color.parseColor("#999999"));
+        //对点击的设置 图片
+        if (clickIv != null) {
+            clickIv.setImageResource(getDrawableIdBySortDir(eSortDir));
+        }
+        if (textView != null) {
+            textView.setSelected(true);
+            textView.setTextColor(Color.parseColor("#FF645B"));
+        }
+    }
+
+    private int getDrawableIdBySortDir(int sortDir) {
+        int res = R.drawable.icon_jiage_no;
+        switch (sortDir) {
+            case 0:
+                res = R.drawable.icon_jiage_down;
+                break;
+            case 1:
+                res = R.drawable.icon_jiage_up;
+                break;
+        }
+        return res;
+    }
+
+    /**
+     * 修改优惠卷状态
+     */
+    private void clickCoupro() {
+
+        if (isCoupon) {
+            isCoupon = false;
+            coupon = "0";
+            title_coupon_iv.setImageResource(R.drawable.check_no);
+        } else {
+            isCoupon = true;
+            coupon = "1";
+            title_coupon_iv.setImageResource(R.drawable.check_yes);
+        }
+    }
+
+    /**
+     * 修改自营状态
+     */
+    private void clickSupport() {
+
+        if (isSupport) {
+            isSupport = false;
+            self = "0";
+            title_support_iv.setImageResource(R.drawable.check_no);
+        } else {
+            isSupport = true;
+            self = "1";
+            title_support_iv.setImageResource(R.drawable.check_yes);
+        }
+    }
+
+    @Override
+    public void onReload() {
+        if (mRecyclerView == null) return;
+        mRecyclerView.getListView().setNoMore(false);
+        if (mRecyclerView.getSwipeList() != null)
+            mRecyclerView.getSwipeList().setRefreshing(true);
+        ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
+        programCatItemBean.setKeyword(keyWord);
+        if (eSortDirection == 0) {
+            programCatItemBean.setOrder("desc");
+        } else {
+            programCatItemBean.setOrder("asc");
+        }
+        programCatItemBean.setSort(String.valueOf(mSortType));
+        programCatItemBean.setCoupon(coupon);
+        programCatItemBean.setSelf(self);
+        mPresenter.getJdGoodsList(this, programCatItemBean, C.requestType.initData);
+    }
+
+    @Override
+    public void onLoadMore() {
+        ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
+        programCatItemBean.setCoupon(coupon);
+        programCatItemBean.setKeyword(keyWord);
+        if (eSortDirection == 0) {
+            programCatItemBean.setOrder("desc");
+        } else {
+            programCatItemBean.setOrder("asc");
+        }
+        programCatItemBean.setSort(String.valueOf(mSortType));
+        programCatItemBean.setSelf(self);
+        mPresenter.getJdGoodsList(this, programCatItemBean, C.requestType.loadMore);
+    }
+
+    ArrayList<ShopGoodInfo> mData = new ArrayList<>();
+
+    @Override
+    public void setPdd(List<ShopGoodInfo> data, int loadType) {
+
+    }
+
+    @Override
+    public void setPddError(int loadType) {
+
+    }
+
+    @Override
+    public void setJd(List<ShopGoodInfo> data, int loadType) {
+        mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
+        removeNetworkError(mRecyclerView.getListviewSuper());
+        if (loadType == C.requestType.initData) {
+            //mData.clear();
+            mAdapter = new JdListAdapter(getActivity(), data);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            // rl_list.getListView().refreshComplete(10);
+
+            mAdapter.setData(data);
+        }
+    }
+
+    @Override
+    public void setJdError(int loadType) {
+
+    }
+
+    @Override
+    public void showFinally() {
+        if (mRecyclerView.getSwipeList() != null)
+            mRecyclerView.getSwipeList().setRefreshing(false);
+    }
 }

@@ -166,7 +166,6 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                     getMoreData();
             }
         });
-       tabList.clear();
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_pdd_tab);
 //        "综合", "券后价", "销量", "奖励"
         tabList.add(new BaseTitleTabBean("综合", false, ""));
@@ -296,42 +295,46 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
     }
 
     private void fristSearch(String keywords) {
-        BaseTitleTabBean bean = tabList.get(mSelectedPos);
-        mRecyclerView.getSwipeList().setRefreshing(true);
-        mRecyclerView.getListView().setNoMore(false);
-        getObservable( keywords, bean)
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        mRecyclerView.getSwipeList().setRefreshing(false);
-                    }
-                })
-                .subscribe(new DataObserver<List<ShopGoodInfo> >() {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        searchNullTips_ly.setVisibility(View.VISIBLE);
-
-                    }
-
-                    @Override
-                    protected void onSuccess(List<ShopGoodInfo> data) {
-                        mRecyclerView.getSwipeList().setRefreshing(false);
-                        dataList_ly.setVisibility(View.VISIBLE);
-                        if (data != null && data.size() != 0) {
-                            searchNullTips_ly.setVisibility(View.GONE);
-                            listArray.clear();
-                            listArray.addAll(data);
-                            mAdapter.replace(listArray);
-
-                        } else {
+        if (tabList!=null&&tabList.size()>0){
+            BaseTitleTabBean bean = tabList.get(mSelectedPos);
+            mRecyclerView.getSwipeList().setRefreshing(true);
+            mRecyclerView.getListView().setNoMore(false);
+            getObservable( keywords, bean)
+                    .doFinally(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            mRecyclerView.getSwipeList().setRefreshing(false);
+                        }
+                    })
+                    .subscribe(new DataObserver<List<ShopGoodInfo> >() {
+                        @Override
+                        protected void onError(String errorMsg, String errCode) {
                             searchNullTips_ly.setVisibility(View.VISIBLE);
+
                         }
-                     mRecyclerView.notifyDataSetChanged();
-                        if (data != null && data.size() == 0){
-                            mRecyclerView.getListView().setNoMore(true);
+
+                        @Override
+                        protected void onSuccess(List<ShopGoodInfo> data) {
+                            mRecyclerView.getSwipeList().setRefreshing(false);
+                            dataList_ly.setVisibility(View.VISIBLE);
+                            if (data != null && data.size() != 0) {
+                                searchNullTips_ly.setVisibility(View.GONE);
+                                listArray.clear();
+                                listArray.addAll(data);
+                                mAdapter.replace(listArray);
+
+                            } else {
+                                searchNullTips_ly.setVisibility(View.VISIBLE);
+                            }
+                            mRecyclerView.notifyDataSetChanged();
+                            if (data != null && data.size() == 0){
+                                mRecyclerView.getListView().setNoMore(true);
+                            }
                         }
-                    }
-                });
+                    });
+        }
+
+
     }
 
     private Observable<BaseResponse<List<ShopGoodInfo>>> getObservable(String keywords, BaseTitleTabBean bean) {

@@ -1169,6 +1169,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         mHandler.removeCallbacksAndMessages(null);
+        unregisterReceiver(mRefreshBroadcastReceiver);
         super.onDestroy();
     }
 

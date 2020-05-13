@@ -148,7 +148,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     boolean isShowMoreHistory = false;
     private int mSearchType = 1;
     private List<SearchHotKeyBean> mSearchHotKeyDatas;
-    private int mPlatFormType = 1;//平台类型 1：淘宝 2：拼多多
+    private int mPlatFormType = 1;//平台类型 1：淘宝 2：拼多多  3:京东
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
