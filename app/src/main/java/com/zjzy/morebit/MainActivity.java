@@ -328,7 +328,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             getHomeRedPackageData();
             mPresenter.getTaobaoLink(MainActivity.this);
             ConfigListUtlis.getConfigList(MainActivity.this, ConfigListUtlis.getConfigAllKey(), null);
-            //mPresenter.getServerTime(MainActivity.this);
+            mPresenter.getServerTime(MainActivity.this);
 
         } catch (Exception e) {
             e.printStackTrace();
