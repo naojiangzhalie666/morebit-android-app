@@ -8,8 +8,17 @@ public   class CheckCouponStatusBean {
 
         private String cookie;//请求cookie值
         private String url;//请求路径
+        private int valideCode;
 
-        public String getCookie() {
+    public int getValideCode() {
+        return valideCode;
+    }
+
+    public void setValideCode(int valideCode) {
+        this.valideCode = valideCode;
+    }
+
+    public String getCookie() {
             return cookie;
         }
 

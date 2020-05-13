@@ -187,6 +187,23 @@ public class DateTimeUtils {
         }
 
     }
+    /**
+     * 获取当前时间
+     *
+     * @return
+     */
+    public static String getNowMMDD(Long time ) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
+            Date curDate = new Date(time);//获取当前时间
+            String str = formatter.format(curDate);
+            return str;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "1/1/1";
+        }
+
+    }
 
     /**
      * 获取当前时间-传入格式 yyyy-MM-dd HH:mm:ss
