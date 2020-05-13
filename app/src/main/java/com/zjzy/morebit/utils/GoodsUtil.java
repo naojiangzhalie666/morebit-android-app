@@ -276,19 +276,23 @@ public class GoodsUtil {
                            String endTime =  goodsInfo.getCouponEndTime();
                            String formatEndTime = "";
                            if (!TextUtils.isEmpty(endTime)){
-                               try {
-                                   formatEndTime = DateTimeUtils.formatMMdd(endTime);
+                               try{
+                                   formatEndTime = DateTimeUtils.formatMMddForEndTime(endTime);
                                }catch (Exception e){
-                                   MyLog.d("lhp","endTime:"+e.getMessage());
+                                   MyLog.d("lhp","e错误："+e.getMessage());
                                }
+
                            }
+
                            String nowTime = DateTimeUtils.getNowMMDD(CommonLocalData.syncServiceTime());
-                            if (endTime != null ){
+                            if (formatEndTime != null  ){
                                 if (formatEndTime.compareToIgnoreCase(nowTime) < 0 ){
                                     TaobaoUtil.showUrl(activity, data.getItemUrl());
                                 }else{
                                     TaobaoUtil.showUrl(activity, data.getCouponUrl());
                                 }
+                            }else{
+                                TaobaoUtil.showUrl(activity, data.getCouponUrl());
                             }
 
                         }
