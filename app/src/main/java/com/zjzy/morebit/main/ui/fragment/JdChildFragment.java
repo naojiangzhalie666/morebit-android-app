@@ -17,23 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.scwang.smartrefresh.header.DeliveryHeader;
-import com.scwang.smartrefresh.header.DropBoxHeader;
-import com.scwang.smartrefresh.header.MaterialHeader;
-import com.scwang.smartrefresh.header.PhoenixHeader;
-import com.scwang.smartrefresh.header.TaurusHeader;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.header.FalsifyHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.wikikii.bannerlib.banner.IndicatorLocation;
-import com.wikikii.bannerlib.banner.LoopLayout;
-import com.wikikii.bannerlib.banner.LoopStyle;
-import com.wikikii.bannerlib.banner.OnDefaultImageViewLoader;
-import com.wikikii.bannerlib.banner.bean.BannerInfo;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -234,9 +217,9 @@ public class JdChildFragment extends BaseMainFragmeng {
 
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
+                        swipeRefreshLayout.setRefreshing(false);
                         if (data != null) {
                             if (data != null && data.size() != 0) {
-                                swipeRefreshLayout.setRefreshing(false);
                                 banner.setImages(data)
                                         .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                                         .setImageLoader(new GlideImageLoader())

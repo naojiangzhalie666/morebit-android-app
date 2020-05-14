@@ -248,9 +248,9 @@ public class PddChildFragment extends BaseMainFragmeng {
 
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
+                        swipeRefreshLayout.setRefreshing(false);
                         if (data != null) {
                             if (data != null && data.size() != 0) {
-                                swipeRefreshLayout.setRefreshing(false);
                                 banner.setImages(data)
                                         .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                                         .setImageLoader(new GlideImageLoader())
