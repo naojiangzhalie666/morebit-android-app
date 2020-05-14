@@ -343,9 +343,10 @@ public class GoodsUtil {
                                                         switch (validCode){
                                                             case 0:
                                                                 int count = retryNnm + 1;
-                                                                putCouponInfo(data, couponUrlData,count);
-                                                                if (count == 2){
+                                                                if (count >= 3 ){
                                                                     TaobaoUtil.showUrl(activity, couponUrlData.getCouponUrl());
+                                                                }else{
+                                                                    putCouponInfo(data, couponUrlData,count);
                                                                 }
                                                                 break;
                                                             case 1://有效优惠券
