@@ -712,7 +712,7 @@ public interface CommonService {
      *
      * @return
      */
-    @POST("/api/user/checkPhone")
+    @POST("/api/user/checkWxAndPhone")
     public Observable<BaseResponse<String>> checkoutPhone(
             @Body RequestCheckOutPhoneBean requestBean);
 
