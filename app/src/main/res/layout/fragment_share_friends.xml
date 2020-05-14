@@ -65,7 +65,8 @@
 
         <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
             android:id="@+id/hicvp"
-            android:layout_width="50dp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_bottom"
             app:icvp_center_page_scale_offset="0dp"
