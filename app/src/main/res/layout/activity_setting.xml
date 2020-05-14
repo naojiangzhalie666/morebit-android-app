@@ -93,7 +93,6 @@
                 android:background="@color/color_F8F8F8" />
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/item9_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

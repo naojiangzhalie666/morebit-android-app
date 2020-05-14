@@ -29,7 +29,7 @@ import io.reactivex.Observable;
  */
 public class LoginModel extends MvpModel {
 
-    public Observable<BaseResponse<UserInfo>> register(RxFragment baseFragment, String phone, String verifyCode, String invitationCode,String areaCode) {
+    public Observable<BaseResponse<UserInfo>> register(RxFragment baseFragment, String phone, String verifyCode, String invitationCode,String areaCode,String oauthWx) {
 
         RequestRegisterloginBean requestBean = new RequestRegisterloginBean();
         requestBean.setPhone(phone);
@@ -37,6 +37,7 @@ public class LoginModel extends MvpModel {
         requestBean.setYqmCodeOrPhone(invitationCode);
         requestBean.setAreaCode(areaCode);
         requestBean.setSign(EncryptUtlis.getSign2(requestBean));
+        requestBean.setOauthWx(oauthWx);
 
         return RxHttp.getInstance().getUsersService()
                 .getRegisterlogin(requestBean)

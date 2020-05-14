@@ -56,9 +56,9 @@ public class C {
     public String getGoodsIp() {
         switch (serverType) {
             case PROD:
-                return BASE_MOREBIT_DEV;
+                return BASE_MOREBIT_PROD;
             case TEST:
-                return BASE_MOREBIT_DEV;
+                return BASE_MOREBIT_TEST;
             case DEV:
                 return BASE_MOREBIT_DEV;
         }
