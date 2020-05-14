@@ -189,7 +189,7 @@ public class PddChildFragment extends BaseMainFragmeng {
             @Override
             public void onRefresh() {
                 Intent intent = new Intent();
-                intent.setAction("action.refresh");
+                intent.setAction("action.refreshpdd");
                 getActivity().sendBroadcast(intent);
                 initbt();
             }

@@ -150,7 +150,7 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
 
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("action.refresh");//名字
+        intentFilter.addAction("action.refreshpdd");//名字
         getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
@@ -160,7 +160,7 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("action.refresh")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+            if (action.equals("action.refreshpdd")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
                 onReload();//需要去做的事
             }
         }

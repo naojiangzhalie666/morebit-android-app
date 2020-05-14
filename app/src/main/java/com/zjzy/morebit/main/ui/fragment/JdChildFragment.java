@@ -176,7 +176,7 @@ public class JdChildFragment extends BaseMainFragmeng {
             public void onRefresh() {
                // initTitle();
                 Intent intent = new Intent();
-                intent.setAction("action.refresh");
+                intent.setAction("action.refreshjd");
                 getActivity().sendBroadcast(intent);
                 initbt();
             }

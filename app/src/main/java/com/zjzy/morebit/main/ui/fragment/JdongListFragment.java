@@ -157,7 +157,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
 
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("action.refresh");//名字
+        intentFilter.addAction("action.refreshjd");//名字
         getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
@@ -167,7 +167,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("action.refresh")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+            if (action.equals("action.refreshjd")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
                 onReload();//需要去做的事
             }
         }
