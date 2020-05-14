@@ -34,7 +34,12 @@ import com.wikikii.bannerlib.banner.LoopLayout;
 import com.wikikii.bannerlib.banner.LoopStyle;
 import com.wikikii.bannerlib.banner.OnDefaultImageViewLoader;
 import com.wikikii.bannerlib.banner.bean.BannerInfo;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
+import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
@@ -42,10 +47,13 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
+import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AutoInterceptViewGroup;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
 import com.zjzy.morebit.view.refresh.MarkermallHeadRefresh;
@@ -74,7 +82,7 @@ public class JdChildFragment extends BaseMainFragmeng {
     @BindView(R.id.iv_right_search)
     ImageView iv_right_search;
 
-    boolean isUserHint =true;
+    boolean isUserHint = true;
     private View mView;
     private int mPushType;
     private ChannelAdapter mChannelAdapter;
@@ -83,8 +91,10 @@ public class JdChildFragment extends BaseMainFragmeng {
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean canRefresh = true;
     private AppBarLayout mAppBarLt;
+    private Banner banner;
+
     /**
-     *jd商品页面
+     * jd商品页面
      *
      * @param type
      * @return
@@ -138,15 +148,12 @@ public class JdChildFragment extends BaseMainFragmeng {
 
         }
 
-       // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
-      //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
-
-
-
+        // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
+        //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
 
 
         initTitle();
-
+        initBanner();
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,7 +167,8 @@ public class JdChildFragment extends BaseMainFragmeng {
             }
         });
         mAppBarLt = view.findViewById(R.id.app_bar_lt);
-        swipeRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        banner = view.findViewById(R.id.banner);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setEnabled(true);
         swipeRefreshLayout.setNestedScrollingEnabled(true);
         //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
@@ -174,11 +182,10 @@ public class JdChildFragment extends BaseMainFragmeng {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-               // initTitle();
+                initBanner();
                 Intent intent = new Intent();
                 intent.setAction("action.refreshjd");
                 getActivity().sendBroadcast(intent);
-                initbt();
             }
         });
 
@@ -207,13 +214,48 @@ public class JdChildFragment extends BaseMainFragmeng {
             }
         });
 
+        //简单使用
 
 
     }
 
-    private void initbt() {
-        swipeRefreshLayout.setRefreshing(false);
+    private void initBanner() {
+        RequestBannerBean requestBean = new RequestBannerBean();
+        requestBean.setType(35);
+        requestBean.setOs(1);
+        RxHttp.getInstance().getCommonService().getBanner(requestBean)//获取京东banner
+                .compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<ImageInfo>>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+
+                    }
+
+                    @Override
+                    protected void onSuccess(List<ImageInfo> data) {
+                        if (data != null) {
+                            if (data != null && data.size() != 0) {
+                                swipeRefreshLayout.setRefreshing(false);
+                                banner.setImages(data)
+                                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                                        .setImageLoader(new GlideImageLoader())
+                                        .setOnBannerListener(new OnBannerListener() {
+                                            @Override
+                                            public void OnBannerClick(int position) {
+
+                                            }
+                                        })
+                                        .isAutoPlay(true)
+                                        .setDelayTime(4000)
+                                        .start();
+                            }
+
+                        }
+                    }
+                });
     }
+
 
     private void initTitle() {
         RxHttp.getInstance().getCommonService().getJdTitle()//获取京东栏目
@@ -229,7 +271,6 @@ public class JdChildFragment extends BaseMainFragmeng {
                     protected void onSuccess(List<PddJdTitleTypeItem> data) {
                         if (data != null) {
                             if (data != null && data.size() != 0) {
-                                swipeRefreshLayout.setRefreshing(false);
                                 initTab(data);
                             }
 
@@ -279,11 +320,13 @@ public class JdChildFragment extends BaseMainFragmeng {
 
     private class ChannelAdapter extends FragmentPagerAdapter {
         private List<PddJdTitleTypeItem> mHomeColumns = new ArrayList<>();
-        private   Fragment[] mChildFragments;
+        private Fragment[] mChildFragments;
+
         public ChannelAdapter(FragmentManager fm) {
             super(fm);
 
         }
+
         public void setHomeColumns(List<PddJdTitleTypeItem> homeColumns) {
             mHomeColumns.clear();
             if (homeColumns == null && homeColumns.size() == 0) {
@@ -306,7 +349,7 @@ public class JdChildFragment extends BaseMainFragmeng {
 
         @Override
         public int getCount() {
-            return mHomeColumns!=null ? mHomeColumns.size() : 0;
+            return mHomeColumns != null ? mHomeColumns.size() : 0;
         }
 
         @Override
@@ -314,7 +357,6 @@ public class JdChildFragment extends BaseMainFragmeng {
             return ChannelAdapter.POSITION_NONE;
         }
     }
-
 
 
     @Override

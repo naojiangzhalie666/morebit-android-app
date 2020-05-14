@@ -21,6 +21,9 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
@@ -32,12 +35,15 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.RankingTitleBean;
 import com.zjzy.morebit.pojo.goods.FloorBean;
 import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
+import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SensorsDataUtil;
@@ -76,6 +82,7 @@ public class PddChildFragment extends BaseMainFragmeng {
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean canRefresh = true;
     private AppBarLayout mAppBarLt;
+    private Banner banner;
 
 
     /**
@@ -133,6 +140,8 @@ public class PddChildFragment extends BaseMainFragmeng {
 
         }
 
+        banner=view.findViewById(R.id.banner);
+
        // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
       //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
 
@@ -158,7 +167,7 @@ public class PddChildFragment extends BaseMainFragmeng {
 
 
 
-
+        initBanner();
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,10 +197,11 @@ public class PddChildFragment extends BaseMainFragmeng {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                initBanner();
                 Intent intent = new Intent();
                 intent.setAction("action.refreshpdd");
                 getActivity().sendBroadcast(intent);
-                initbt();
+
             }
         });
 
@@ -223,10 +233,42 @@ public class PddChildFragment extends BaseMainFragmeng {
 
     }
 
-    private void initbt() {
-        swipeRefreshLayout.setRefreshing(false);
-    }
+    private void initBanner() {
+        RequestBannerBean requestBean = new RequestBannerBean();
+        requestBean.setType(36);
+        requestBean.setOs(1);
+        RxHttp.getInstance().getCommonService().getBanner(requestBean)//获取京东banner
+                .compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<ImageInfo>>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
 
+                    }
+
+                    @Override
+                    protected void onSuccess(List<ImageInfo> data) {
+                        if (data != null) {
+                            if (data != null && data.size() != 0) {
+                                swipeRefreshLayout.setRefreshing(false);
+                                banner.setImages(data)
+                                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                                        .setImageLoader(new GlideImageLoader())
+                                        .setOnBannerListener(new OnBannerListener() {
+                                            @Override
+                                            public void OnBannerClick(int position) {
+
+                                            }
+                                        })
+                                        .isAutoPlay(true)
+                                        .setDelayTime(4000)
+                                        .start();
+                            }
+
+                        }
+                    }
+                });
+    }
 
     private void setupViewPager(final List<PddJdTitleTypeItem> homeColumns) {
 
