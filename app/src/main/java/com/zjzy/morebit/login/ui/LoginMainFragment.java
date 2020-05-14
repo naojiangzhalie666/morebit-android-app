@@ -62,11 +62,6 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
    @BindView(R.id.areaCodeTv)
    TextView areaCodeTv;
 
-   @BindView(R.id.ll_weixin_btn)
-    LinearLayout llWeixinBtn;
-
-   @BindView(R.id.ll_mobile_register)
-   LinearLayout llMobileRegister;
 
    LoginNotRegeditDialog mDialog;
    private ResginDialog dialog;
@@ -187,32 +182,12 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     }
 
 
-    @OnClick({R.id.iv_back, R.id.ll_mobile_register, R.id.ll_weixin_btn,R.id.next_login,R.id.ll_userAgreement,R.id.areaCodeBtn,R.id.privateProtocol})
+    @OnClick({R.id.iv_back, R.id.next_login,R.id.ll_userAgreement,R.id.areaCodeBtn,R.id.privateProtocol})
     public void onclick(View view) {
         switch (view.getId()) {
 
             case R.id.iv_back:
                 getActivity().finish();
-                break;
-            case R.id.ll_mobile_register:
-                //aaaa
-//                ModifyPasswordActivity.start(this, ModifyPasswordActivity.FIND_PASSWORD, "");
-
-              //  LoginEditInviteFragment.start(getActivity(),"",C.sendCodeType.REGISTER,this.mAreaCode);
-                break;
-//            case R.id.login:
-//                LoginPasswordFragment.start(getActivity());
-//                break;
-            case R.id.ll_weixin_btn:
-                if (AppUtil.isFastClick(1000)) {
-                    return;
-                }
-                if (!AppUtil.isWeixinAvilible(getActivity())) {
-                    ViewShowUtils.showShortToast(getActivity(), "请先安装微信客户端");
-                    return;
-                }
-                wxLoginFlag = true;
-                mPresenter.goToWXLogin(this);
                 break;
             case R.id.next_login:
                String  mEditPhone = edtPhone.getText().toString().trim();
@@ -277,7 +252,15 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
             }
         }else{
             if (C.requestCode.B10031.equals(code)){//用户未注册
-                LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
+                if (!AppUtil.isWeixinAvilible(getActivity())) {
+                    ViewShowUtils.showShortToast(getActivity(), "请先安装微信客户端");
+                    return;
+                }
+                mPresenter.goToWXLogin(this);
+               // LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
+
+            }else if (ErrorCodeUtlis.isNuRegister(code)){//微信不存在
+                LoginEditInviteFragment.start(getActivity(), edtPhone.getText().toString().trim(), weixinInfo, mAreaCode);
             }
         }
 
@@ -322,9 +305,11 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
     @Override
     public void loginSucceed(String userJson) {
-        Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
-//        ActivityLifeHelper.getInstance().finishActivity(LoginSinglePaneActivity.class);
-        ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
+//        Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
+//       ActivityLifeHelper.getInstance().finishActivity(LoginSinglePaneActivity.class);
+//        ActivityLifeHelper.getInstance().removeAllActivity(LoginSinglePaneActivity.class);
+
+
     }
 
     @Override
@@ -340,9 +325,9 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
     @Override
     public void goToRegister() {
-        if (mid==2){
+        if (mid==2){//手机号登录
             LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, mWeixinInfo,mAreaCode);
-        }else{
+        }else{//微信注册
             LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
         }
 
