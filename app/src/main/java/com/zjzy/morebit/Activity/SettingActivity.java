@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private RelativeLayout mModifyPassword;
     private ImageView mUserIcon;
     private UnBingdingWechatDialog mUnBingdingWechatDialog;
+    private LinearLayout ll_weichat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +101,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         logout = (TextView) findViewById(R.id.logout);
         item_tabao_tv = (TextView) findViewById(R.id.item_tabao_tv);
 
+
         logout.setOnClickListener(this);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
         mModifyPassword = (RelativeLayout) findViewById(R.id.modify_password);
         mModifyPassword.setOnClickListener(this);
         findViewById(R.id.modify_phone_num).setOnClickListener(this);
+        ll_weichat = (LinearLayout) findViewById(R.id.ll_weichat);
     }
 
     private void initViewData() {
@@ -120,6 +124,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 mUserIcon.setImageResource(R.drawable.head_icon); //显示图片
             }
 
+            if (C.UserType.operator.equals(info.getUserType())){
+                ll_weichat.setVisibility(View.VISIBLE);
+            }else{
+                ll_weichat.setVisibility(View.GONE);
+            }
             //淘宝授权
             if (info.isNeedAuth()) { //是否需要授权
                 item_tabao_rl.setVisibility(View.VISIBLE);
