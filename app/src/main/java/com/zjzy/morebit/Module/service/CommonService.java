@@ -808,6 +808,18 @@ public interface CommonService {
 //            @Field("sign") String sign
     );
 
+
+    /**
+     * 微信校验
+     *
+     * @return
+     */
+    @POST("/api/user/checkWx")
+    public Observable<BaseResponse<String>> getCheckWx(
+            @Body RequestCheckOutPhoneBean requestBean
+//            @Field("oauthWx") String oauthWx,
+//            @Field("sign") String sign
+    );
     /**
      * 超级分类
      *

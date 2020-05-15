@@ -333,4 +333,14 @@ public class InputVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
     public void goToRegister() {
 
     }
+
+    @Override
+    public void getLocalWx(WeixinInfo weixinInfo) {
+
+    }
+
+    @Override
+    public void getWxError(String code) {
+
+    }
 }

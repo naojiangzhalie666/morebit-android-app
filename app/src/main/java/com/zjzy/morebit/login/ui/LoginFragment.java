@@ -135,6 +135,22 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
     public void goToRegister() {
 
     }
+
+    @Override
+    public void getLocalWx(WeixinInfo weixinInfo) {
+
+    }
+
+    @Override
+    public void getWxError(String code) {
+
+    }
+
+    @Override
+    public void goToWx() {
+
+    }
+
     /**
      * 微信未注册
      * @param code

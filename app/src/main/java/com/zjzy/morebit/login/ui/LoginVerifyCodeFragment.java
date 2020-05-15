@@ -141,6 +141,9 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             edtPhone.setFocusable(false);
             edtPhone.setText(mPhone);
             if (!TextUtils.isEmpty(mPhone)){
+                mBtnSend.setEnabled(false);
+                mBtnSend.setTextColor(Color.parseColor("#666666"));
+                mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_666666_30dp);
                 mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
             }
 
@@ -156,6 +159,9 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             edtPhone.setFocusable(false);
             edtPhone.setText(mPhone);
             if (!TextUtils.isEmpty(mPhone)){
+                mBtnSend.setEnabled(false);
+                mBtnSend.setTextColor(Color.parseColor("#666666"));
+                mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_666666_30dp);
                 mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
             }
         }
@@ -166,6 +172,9 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
             edtPhone.setFocusable(true);
             edtPhone.setText(mPhone);
             if (!TextUtils.isEmpty(mPhone)){
+                mBtnSend.setEnabled(false);
+                mBtnSend.setTextColor(Color.parseColor("#666666"));
+                mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_666666_30dp);
                 mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
             }
 
@@ -518,8 +527,11 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         if (C.requestCode.B10031.equals(code)) {
             ViewShowUtils.showLongToast(getActivity(), "账号未注册，请先注册");
             LoginEditInviteFragment.start(getActivity(), edtPhone.getText().toString(), mWeixinInfo, mAreaCode);
-        }else{//已注册
-
+        }else if (C.requestCode.B10358.equals(code)){//已注册  未绑定微信
+            mBtnSend.setEnabled(false);
+            mBtnSend.setTextColor(Color.parseColor("#666666"));
+            mBtnSend.setBackgroundResource(R.drawable.bg_white_stroke_666666_30dp);
+            mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
         }
 
     }
@@ -558,6 +570,16 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         getmsm.setBackgroundResource(R.drawable.background_radius_f2f2f2_4dp);
         LoadingView.showDialog(getActivity(), "请求中...");
         mPresenter.checkoutPhone(this, edtPhone.getText().toString(), loginType, mAreaCode.getAreaCode());
+    }
+
+    @Override
+    public void getLocalWx(WeixinInfo weixinInfo) {
+
+    }
+
+    @Override
+    public void getWxError(String code) {
+
     }
 
 

@@ -470,6 +470,9 @@ public class C {
         public static final String B1000004 = "B1000004"; //查询每日爆款失败
         public static final String B10301 = "B10301"; //不在提现时间
         public static final String B30401 = "B30401"; //天猫国际和飞猪的错误码
+        public static final String B10358 = "B10358"; //此账号未绑定微信号
+        public static final String B10011 = "B10011"; //该微信未注册,跳转到注册界面
+        public static final String B10357 = "B10357"; //
     }
 
 

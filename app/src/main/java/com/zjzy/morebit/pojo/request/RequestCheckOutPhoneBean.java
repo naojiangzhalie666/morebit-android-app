@@ -5,6 +5,15 @@ public class RequestCheckOutPhoneBean extends RequestBaseBean {
     private String phone;
     private int type;
     private String areaCode;
+    private String oauthWx;
+
+    public String getOauthWx() {
+        return oauthWx;
+    }
+
+    public void setOauthWx(String oauthWx) {
+        this.oauthWx = oauthWx;
+    }
 
     public String getAreaCode() {
         return areaCode;

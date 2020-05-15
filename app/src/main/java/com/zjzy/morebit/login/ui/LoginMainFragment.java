@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.tencent.mm.opensdk.utils.Log;
 import com.zjzy.morebit.Module.common.Dialog.InvateBindDialog;
 import com.zjzy.morebit.Module.common.Dialog.LoginNotRegeditDialog;
 import com.zjzy.morebit.Module.common.Dialog.ResginDialog;
@@ -77,6 +78,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     private static String mditInviteText;
     private static String mphone;
     private TextView sub_phone;
+    private String mcode="";
     public static void start(Activity activity,String phone,int id,WeixinInfo weixinInfo,String mEditInviteText) {
         Bundle bundle = new Bundle();
         mid=id;
@@ -245,6 +247,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     @Override
     public void loginError(String code) {
         WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
+        mcode=code;
         if (mid!=2){
             if (C.requestCode.B10005.equals(code)){//手机号已注册 绑定微信
                 LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
@@ -256,50 +259,23 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                     ViewShowUtils.showShortToast(getActivity(), "请先安装微信客户端");
                     return;
                 }
-                mPresenter.goToWXLogin(this);
-               // LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
+
+                mPresenter.goLocalWx(this);//获取本地微信信息
 
             }else if (ErrorCodeUtlis.isNuRegister(code)){//微信不存在
                 LoginEditInviteFragment.start(getActivity(), edtPhone.getText().toString().trim(), weixinInfo, mAreaCode);
+            }else if (C.requestCode.B10358.equals(code)){//此账号未绑定微信
+                if (!AppUtil.isWeixinAvilible(getActivity())) {
+                    ViewShowUtils.showShortToast(getActivity(), "请先安装微信客户端");
+                    return;
+                }
+
+                mPresenter.goLocalWx(this);//获取本地微信信息
             }
         }
 
 
-//        if (C.requestCode.SUCCESS.equals(code)){
-//            //手机号已注册
-//           // final WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
-//            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, weixinInfo,mAreaCode);
-//        } else if (ErrorCodeUtlis.isNuRegister(code)) {
-//            //用户不存在  跳转到注册页
-//           // WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
-//
-//            LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),weixinInfo,mAreaCode);
-//        }else if(ErrorCodeUtlis.isRegister(code)){
-//            //手机号已注册
-//         //   final WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
-//           // LoginPasswordFragment.start(getActivity(),edtPhone.getText().toString().trim(),mAreaCode);
-////            final ResginDialog   dialog=  new ResginDialog(getActivity(), "您已注册", "您已注册，立即登录吧！", "取消", "登录", new ResginDialog.OnOkListener() {
-////                @Override
-////                public void onClick(View view) {
-////
-////
-////                }
-////            });
-////            dialog.setmCancelListener(new ResginDialog.OnCancelListner() {
-////                @Override
-////                public void onClick(View view) {
-////                    dialog.dismiss();
-////                }
-////            });
-////            dialog.show();
-//
-//            if (mid!=1){
-//                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.LOGIN, edtPhone.getText().toString().trim(), mInvite, weixinInfo,mAreaCode);
-//            }else{
-//                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
-//            }
 
-       // }
     }
 
 
@@ -331,35 +307,32 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
             LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
         }
 
+    }
 
-//        mDialog = new LoginNotRegeditDialog(getActivity(), R.style.dialog, "", "", new LoginNotRegeditDialog.OnOkListener() {
-//            @Override
-//            public void onClick(View view, String text) {
-//                //跳到注册
-//                LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
-//            }
-//        });
-//        mDialog.show();
-        //跳到注册
-//        if (mid!=1){
-//            LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(),C.sendCodeType.REGISTER,mAreaCode);
-//        }else{
-//            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
-//        }
-//      dialog=  new ResginDialog(getActivity(), "尚未注册", "您还没有注册喔，快去注册吧！", "取消", "注册", new ResginDialog.OnOkListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//            }
-//        });
-//        dialog.setmCancelListener(new ResginDialog.OnCancelListner() {
-//            @Override
-//            public void onClick(View view) {
-//                dialog.dismiss();
-//            }
-//        });
-//      dialog.show();
+    @Override
+    public void getLocalWx(WeixinInfo weixinInfo) {//获取微信信息成功
+        mWeixinInfo=weixinInfo;
+        mPresenter.checkoutWx(this,weixinInfo.getOpenid());
+    }
+
+    @Override
+    public void getWxError(String code) {//校验微信错误码
+        if (!TextUtils.isEmpty(mcode)){
+            if (C.requestCode.B10031.equals(mcode)&&C.requestCode.B10011.equals(code)){//手机号未注册  微信未绑定
+                LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(), C.sendCodeType.BINDWEIXIN,mWeixinInfo,mAreaCode);
+            }else if (C.requestCode.B10358.equals(mcode)&&C.requestCode.B10011.equals(code)){//已有账号 绑定微信
+                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(),mditInviteText, mWeixinInfo,mAreaCode);
+            }else if (C.requestCode.B10358.equals(mcode)&&C.requestCode.B10357.equals(code)){//
+
+            }else if (C.requestCode.B10031.equals(mcode)&&C.requestCode.B10357.equals(code)){//
+
+            }
+        }
+
+    }
+
+    @Override
+    public void goToWx() {
 
     }
 
