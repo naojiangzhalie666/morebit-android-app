@@ -240,9 +240,9 @@ public class LoginMainPresenter extends BaseLoginPresenter<LoginMainModel, Login
      * @param
      */
 
-    public void checkoutWx(final RxFragment activity,  String oauthWx) {
+    public void checkoutWx(final RxFragment activity,  WeixinInfo weixinInfo) {
         LoadingView.showDialog(activity.getActivity(), "请求中...");
-        getCheckoutWxObservable(activity, oauthWx)
+        getCheckoutWxObservable(activity, weixinInfo)
 
                 .subscribe(new DataObserver<String>() {
                     @Override
@@ -284,11 +284,13 @@ public class LoginMainPresenter extends BaseLoginPresenter<LoginMainModel, Login
     }
 
 
-    public Observable<BaseResponse<String>> getCheckoutWxObservable(final RxFragment activity, String oauthWx) {
+    public Observable<BaseResponse<String>> getCheckoutWxObservable(final RxFragment activity, WeixinInfo weixinInfo) {
         LoadingView.showDialog(activity.getActivity(), "请求中...");
 
         RequestCheckOutPhoneBean requestBean = new RequestCheckOutPhoneBean();
-        requestBean.setOauthWx(oauthWx);
+        requestBean.setOauthWx(weixinInfo.getOpenid());
+        requestBean.setUnionid(weixinInfo.getUnionid());
+
         return RxHttp.getInstance().getUsersService()
                 .getCheckWx(requestBean)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())

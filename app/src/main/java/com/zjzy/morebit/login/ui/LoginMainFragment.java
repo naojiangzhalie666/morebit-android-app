@@ -262,7 +262,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
                 mPresenter.goLocalWx(this);//获取本地微信信息
 
-            }else if (ErrorCodeUtlis.isNuRegister(code)){//微信不存在
+            }else if (ErrorCodeUtlis.isNuRegister(code)){//B10040  微信不存在
                 LoginEditInviteFragment.start(getActivity(), edtPhone.getText().toString().trim(), weixinInfo, mAreaCode);
             }else if (C.requestCode.B10358.equals(code)){//此账号未绑定微信
                 if (!AppUtil.isWeixinAvilible(getActivity())) {
@@ -271,6 +271,8 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                 }
 
                 mPresenter.goLocalWx(this);//获取本地微信信息
+            }else if (C.requestCode.B10323.equals(code)){//扫码来的用户，手机号为空
+
             }
         }
 
@@ -312,7 +314,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     @Override
     public void getLocalWx(WeixinInfo weixinInfo) {//获取微信信息成功
         mWeixinInfo=weixinInfo;
-        mPresenter.checkoutWx(this,weixinInfo.getOpenid());
+        mPresenter.checkoutWx(this,weixinInfo);
     }
 
     @Override

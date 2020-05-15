@@ -131,6 +131,7 @@ public class LoginModel extends MvpModel {
         requestBean.setProvince(weixinInfo.getProvince());
         requestBean.setCity(weixinInfo.getCity());
         requestBean.setAreaCode("");
+        requestBean.setUnionid(weixinInfo.getUnionid());
 
 
 
