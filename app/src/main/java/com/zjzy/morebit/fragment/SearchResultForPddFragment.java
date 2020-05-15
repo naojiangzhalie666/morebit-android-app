@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -68,6 +69,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
 
 
     private int mPage = 1;
+    private boolean isCouponShowOff = false;
 
     private ArrayList<BaseTitleTabBean> tabList = new ArrayList<>();
     private int mSelectedPos;
@@ -77,7 +79,10 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
     ReUseListView mRecyclerView;
     @BindView(R.id.dataList_ly)
     LinearLayout dataList_ly;
-
+    @BindView(R.id.couponIv)
+    ImageView couponIv;
+    @BindView(R.id.couponTv)
+    TextView couponTv;
     boolean isUserHint =true;
     private int mPushType;
 
@@ -275,9 +280,38 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
             }
         }
     }
+    @OnClick({R.id.couponLayout})
+    public void Onclick(View v) {
+        switch (v.getId()) {
+            case R.id.couponLayout:
+                clickCouponSwitch();
+                break;
+            default:
+                break;
+        }
+    }
 
-
-
+    /**
+     * 修改优惠卷状态
+     */
+    private void clickCouponSwitch() {
+        Log.e("isCouponShowOff",isCouponShowOff+"");
+        if (isCouponShowOff) {
+            isCouponShowOff = false;
+            couponIv.setImageResource(R.drawable.icon_search_coupon_unselect);
+            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
+            mRecyclerView.getSwipeList().setRefreshing(true);
+            getFirstData(keyWord);
+            //重新读取数据
+        } else {
+            isCouponShowOff = true;
+            couponIv.setImageResource(R.drawable.icon_search_coupon_select);
+            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
+            mRecyclerView.getSwipeList().setRefreshing(true);
+            getFirstData(keyWord);
+            //重新读取数据
+        }
+    }
     /*
      * 第一次获取数据
      */

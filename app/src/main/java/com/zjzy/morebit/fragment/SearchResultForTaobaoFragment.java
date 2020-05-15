@@ -174,13 +174,12 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
             }
         });
 
-        tabList.clear();//防止每次创建都会不停增加
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_tab);
 //        "综合", "券后价", "销量", "奖励"
         tabList.add(new BaseTitleTabBean("综合", false, C.Setting.itemIndex));
         tabList.add(new BaseTitleTabBean("券后价", true, C.Setting.itemVoucherPrice));
         tabList.add(new BaseTitleTabBean("销量", true, C.Setting.saleMonth));
-//        tabList.add(new BaseTitleTabBean("奖励", false, C.Setting.commission));
+         tabList.add(new BaseTitleTabBean("奖励", true, C.Setting.commission));
 
         initTab(mTabLayout);
 
