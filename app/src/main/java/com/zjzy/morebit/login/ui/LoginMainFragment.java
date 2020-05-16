@@ -249,10 +249,10 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
         mcode=code;
         if (mid!=2){
-            if (C.requestCode.B10005.equals(code)){//手机号已注册 绑定微信
-                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
-                //   LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
-            }
+//            if (C.requestCode.B10005.equals(code)){//手机号已注册 绑定微信
+//                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+//                //   LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+//            }
         }else{
             if (C.requestCode.B10031.equals(code)){//用户未注册
                 if (!AppUtil.isWeixinAvilible(getActivity())) {
@@ -271,7 +271,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                 }
 
                 mPresenter.goLocalWx(this);//获取本地微信信息
-            }else if (C.requestCode.B10323.equals(code)){//扫码来的用户，手机号为空
+            }else if(C.requestCode.B1000007.equals(code)){//该微信已绑定其他用户
 
             }
         }
@@ -319,22 +319,17 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
     @Override
     public void getWxError(String code) {//校验微信错误码
-        if (!TextUtils.isEmpty(mcode)){
-            if (C.requestCode.B10031.equals(mcode)&&C.requestCode.B10011.equals(code)){//手机号未注册  微信未绑定
+           if (C.requestCode.B10011.equals(code)){//该微信未注册,跳转到注册界面
                 LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(), C.sendCodeType.BINDWEIXIN,mWeixinInfo,mAreaCode);
-            }else if (C.requestCode.B10358.equals(mcode)&&C.requestCode.B10011.equals(code)){//已有账号 绑定微信
-                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(),mditInviteText, mWeixinInfo,mAreaCode);
-            }else if (C.requestCode.B10358.equals(mcode)&&C.requestCode.B10357.equals(code)){//
-
-            }else if (C.requestCode.B10031.equals(mcode)&&C.requestCode.B10357.equals(code)){//
-
             }
         }
 
-    }
+
 
     @Override
     public void goToWx() {
+        LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(),mditInviteText, mWeixinInfo,mAreaCode);
+
 
     }
 

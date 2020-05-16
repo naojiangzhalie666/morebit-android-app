@@ -98,6 +98,7 @@ public class LoginModel extends MvpModel {
         requestBean.setProvince(weixinInfo.getProvince());
         requestBean.setCity(weixinInfo.getCity());
         requestBean.setSign(EncryptUtlis.getSign2(requestBean));
+        requestBean.setUnionid(weixinInfo.getUnionid());
 
 
         return RxHttp.getInstance().getCommonService().registerAndBindWeixin(

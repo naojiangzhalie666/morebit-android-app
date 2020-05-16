@@ -157,11 +157,9 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
      */
     @Override
     public void loginError(String code) {
+        WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
         if (ErrorCodeUtlis.isNuRegister(code)) {
             //用户不存在  跳转到注册页
-
-            final WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
-            Log.e("loginfragment",weixinInfo+"");
 //            WxResginDialog dialog = new WxResginDialog(getActivity(), "", "当前微信未绑定多点优选账号\n立即注册绑定，畅享百万优惠", "", new WxResginDialog.OnOkListener() {
 //                @Override
 //                public void onClick(View view) {
@@ -174,6 +172,8 @@ public class LoginFragment extends MvpFragment<LoginMainPresenter> implements Lo
             LoginEditInviteFragment.start(getActivity(), "", weixinInfo, mAreaCode);
 
 
+        }else if (C.requestCode.B10357.equals(code)){//扫码来的用户，手机号为空
+            LoginMainFragment.start(getActivity(),"",1,weixinInfo,"");
         }
     }
 

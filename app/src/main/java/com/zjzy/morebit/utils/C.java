@@ -472,8 +472,11 @@ public class C {
         public static final String B30401 = "B30401"; //天猫国际和飞猪的错误码
         public static final String B10358 = "B10358"; //此账号未绑定微信号
         public static final String B10011 = "B10011"; //该微信未注册,跳转到注册界面
-        public static final String B10357 = "B10357"; //
-        public static final String B10323 = "B10323"; //扫码来的用户，手机号为空
+        public static final String B10357 = "B10357"; //扫码来的用户，手机号为空
+        public static final String B10009 = "B10009"; //此微信已绑定其他用户
+        public static final String B800430 = "B800430"; //该手机号已有用户使用
+        public static final String B1000007 = "B1000007"; //用户未注册，请先注册
+
     }
 
 
