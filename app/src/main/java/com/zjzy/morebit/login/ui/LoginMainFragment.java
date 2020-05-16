@@ -314,7 +314,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     @Override
     public void getLocalWx(WeixinInfo weixinInfo) {//获取微信信息成功
         mWeixinInfo=weixinInfo;
-        mPresenter.checkoutWx(this,weixinInfo);
+        mPresenter.checkoutWx(this,weixinInfo,edtPhone.getText().toString());
     }
 
     @Override
