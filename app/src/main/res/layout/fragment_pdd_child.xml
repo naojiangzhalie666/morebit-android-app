@@ -83,13 +83,32 @@
                         android:focusableInTouchMode="true"
                         android:orientation="vertical">
 
-                        <com.youth.banner.Banner
-                            android:id="@+id/banner"
+                        <com.zjzy.morebit.view.AspectRatioView
+                            android:id="@+id/ar_title_banner"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:background="@drawable/app_start_logo"
-                            />
+                            android:layout_height="wrap_content"
+                            app:aspectRatio="2.5"
+                            >
+                            <android.support.v7.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/transparent"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="5dp"
+                                app:cardElevation="0dp"
+                                app:cardUseCompatPadding="false"
+                                app:contentPadding="0dp">
 
+                            <com.youth.banner.Banner
+                                android:id="@+id/banner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:delay_time="2000"
+                                app:is_auto_play="true"
+                                app:scroll_time="1000"
+                                />
+                            </android.support.v7.widget.CardView>
+                        </com.zjzy.morebit.view.AspectRatioView>
                     </android.support.design.widget.CoordinatorLayout>
 
                 </android.support.design.widget.CollapsingToolbarLayout>

@@ -41,6 +41,8 @@ import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
+import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
+import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.refresh.MarkermallHeadRefresh;
 import com.zjzy.morebit.view.refresh.NumberlHeadRefresh;
 
@@ -77,6 +79,7 @@ public class JdChildFragment extends BaseMainFragmeng {
     private boolean canRefresh = true;
     private AppBarLayout mAppBarLt;
     private Banner banner;
+    private AspectRatioView ar_title_banner;
 
     /**
      * jd商品页面
@@ -153,6 +156,7 @@ public class JdChildFragment extends BaseMainFragmeng {
         });
         mAppBarLt = view.findViewById(R.id.app_bar_lt);
         banner = view.findViewById(R.id.banner);
+        ar_title_banner=view.findViewById(R.id.ar_title_banner);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setEnabled(true);
         swipeRefreshLayout.setNestedScrollingEnabled(true);
@@ -200,7 +204,26 @@ public class JdChildFragment extends BaseMainFragmeng {
         });
 
         //简单使用
+        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == 1) {
+                    swipeRefreshLayout.setEnabled(false);//设置不可触发
+                } else if (state == 2 && canRefresh) {
+                    swipeRefreshLayout.setEnabled(true);//设置可触发
+                }
+            }
+        });
 
     }
 
@@ -220,24 +243,15 @@ public class JdChildFragment extends BaseMainFragmeng {
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         swipeRefreshLayout.setRefreshing(false);
-                        if (data != null) {
-                            if (data != null && data.size() != 0) {
-                                banner.setImages(data)
-                                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-                                        .setImageLoader(new GlideImageLoader())
-                                        .setOnBannerListener(new OnBannerListener() {
-                                            @Override
-                                            public void OnBannerClick(int position) {
 
-                                            }
-                                        })
-                                        .isAutoPlay(true)
-                                        .setDelayTime(4000)
-                                        .start();
+                            if (data != null && data.size() != 0) {
+                              BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner);
+                            }else{
+                                ar_title_banner.setVisibility(View.GONE);
                             }
 
                         }
-                    }
+
                 });
     }
 

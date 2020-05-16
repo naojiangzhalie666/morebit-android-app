@@ -337,14 +337,14 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         Log.e("isCouponShowOff",isCouponShowOff+"");
         if (isCouponShowOff) {
             isCouponShowOff = false;
-            couponIv.setImageResource(R.drawable.icon_search_coupon_unselect);
+            couponIv.setImageResource(R.drawable.check_no);
             couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
             //重新读取数据
         } else {
             isCouponShowOff = true;
-            couponIv.setImageResource(R.drawable.icon_search_coupon_select);
+            couponIv.setImageResource(R.drawable.check_yes);
             couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);

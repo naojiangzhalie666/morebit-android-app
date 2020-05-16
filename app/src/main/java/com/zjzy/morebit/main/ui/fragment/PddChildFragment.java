@@ -48,6 +48,8 @@ import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
+import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
+import com.zjzy.morebit.view.AspectRatioView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +85,7 @@ public class PddChildFragment extends BaseMainFragmeng {
     private boolean canRefresh = true;
     private AppBarLayout mAppBarLt;
     private Banner banner;
-
+    private AspectRatioView ar_title_banner;
 
     /**
      * 拼多多商品页面
@@ -141,6 +143,7 @@ public class PddChildFragment extends BaseMainFragmeng {
         }
 
         banner=view.findViewById(R.id.banner);
+        ar_title_banner=view.findViewById(R.id.ar_title_banner);
 
        // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
       //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
@@ -249,23 +252,11 @@ public class PddChildFragment extends BaseMainFragmeng {
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         swipeRefreshLayout.setRefreshing(false);
-                        if (data != null) {
                             if (data != null && data.size() != 0) {
-                                banner.setImages(data)
-                                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-                                        .setImageLoader(new GlideImageLoader())
-                                        .setOnBannerListener(new OnBannerListener() {
-                                            @Override
-                                            public void OnBannerClick(int position) {
-
-                                            }
-                                        })
-                                        .isAutoPlay(true)
-                                        .setDelayTime(4000)
-                                        .start();
+                                BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner);
+                        }else{
+                                ar_title_banner.setVisibility(View.GONE);
                             }
-
-                        }
                     }
                 });
     }
