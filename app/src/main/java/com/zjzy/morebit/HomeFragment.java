@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageButton;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment;
 import com.zjzy.morebit.goodsvideo.ShopMallActivity;
@@ -68,6 +70,7 @@ import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
+import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
@@ -130,7 +133,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     TextView searchTv;
     @BindView(R.id.searchIconIv)
     ImageView searchIconIv;
-    View noLoginView;
+    View noLoginView,noaurthorView,nonewbuyView;
 
     HomeAdapter mHomeAdapter;
     List<GoodCategoryInfo> mHomeColumns = new ArrayList<>();
@@ -160,6 +163,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     private boolean isShowGuide = false;
     private Handler mHandler;
     private List<HomeRecommendFragment> fragments = new ArrayList<>();
+    private String ischeck;
 
 
     @Override
@@ -200,6 +204,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     public void onResume() {
         super.onResume();
         getDot();
+        getLoginView();
         if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuide() && !isShowGuide) {
             isShowGuide = true;
             new Handler().postDelayed(new Runnable() {
@@ -291,6 +296,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
             }
         });
+
         getLoginView();
     }
 
@@ -319,8 +325,71 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
             }
 
         } else {
-            if(rl_urgency_notifi!=null){
-                rl_urgency_notifi.removeAllViews();
+            if (TaobaoUtil.isAuth()) {//淘宝授权
+                if(noaurthorView==null){
+                    noaurthorView= LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_authorization, null);
+                    noaurthorView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (TimeUtils.isFrequentOperation()){//防止用户多次点击跳两次页面
+                                return;
+                            }
+                            TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity(),false);
+                        }
+                    });
+                }
+                if(rl_urgency_notifi!=null){
+                    rl_urgency_notifi.removeAllViews();
+                    rl_urgency_notifi.addView(noaurthorView);
+                }
+
+            }else{
+                if(rl_urgency_notifi!=null){
+                    rl_urgency_notifi.removeAllViews();
+                }
+                RxHttp.getInstance().getCommonService().checkPruchase()
+                        .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                        .compose(this.<BaseResponse<String>>bindToLifecycle())
+                        .subscribe(new DataObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data) {
+
+                                ischeck= data;
+
+                                if (!TextUtils.isEmpty(ischeck)){
+                                    if (ischeck.equals("true")){//是否有新人首单
+                                        if(nonewbuyView==null){
+                                            nonewbuyView= LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_new_buy, null);
+                                            nonewbuyView.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    if (TimeUtils.isFrequentOperation()){//防止用户多次点击跳两次页面
+                                                        return;
+                                                    }
+                                                    getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));//跳转新人免单
+
+                                                }
+                                            });
+                                        }
+                                        if(rl_urgency_notifi!=null){
+                                            rl_urgency_notifi.removeAllViews();
+                                            rl_urgency_notifi.addView(nonewbuyView);
+                                        }
+
+                                    }else{
+                                        if(rl_urgency_notifi!=null){
+                                            rl_urgency_notifi.removeAllViews();
+                                        }
+
+                                    }
+                                }
+                            }
+                        });
+
+
+
+
+
             }
 
         }
