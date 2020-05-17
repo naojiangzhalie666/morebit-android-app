@@ -6,8 +6,8 @@ ext {
             applicationId    : "com.zjzy.morebit",
             minSdkVersion    : 21,
             targetSdkVersion : 26,
-            versionCode      : 1200,
-            versionName      : "1.2.0"
+            versionCode      : 1201,
+            versionName      : "1.2.1"
     ]
 
     def dependVersion = [
