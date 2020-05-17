@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.App;
+import com.zjzy.morebit.LocalData.CommonLocalData;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.WeChatMomentsHintDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -68,6 +69,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -266,10 +268,35 @@ public class GoodsUtil {
 
                     @Override
                     protected void onSuccess(final CouponUrlBean data) {
-                        TaobaoUtil.showUrl(activity, data.getCouponUrl());
+
                         AppClickAgent.goodsAddClickEvent(activity, "跳转淘宝详情-其他商品");//统计按钮的点击数
-                        if (data.getCheckCouponStatus() != null)
-                            putCouponInfo(data.getCheckCouponStatus(), 1);
+                        if (data.getCheckCouponStatus() != null){
+                            putCouponInfo(data.getCheckCouponStatus(),data, 1);
+                        }else{
+                           String endTime =  goodsInfo.getCouponEndTime();
+                           String formatEndTime = "";
+                           if (!TextUtils.isEmpty(endTime)){
+                               try{
+                                   formatEndTime = DateTimeUtils.formatMMddForEndTime(endTime);
+                               }catch (Exception e){
+                                   MyLog.d("lhp","e错误："+e.getMessage());
+                               }
+
+                           }
+
+                           String nowTime = DateTimeUtils.getNowMMDD(CommonLocalData.syncServiceTime());
+                            if (formatEndTime != null  ){
+                                if (formatEndTime.compareToIgnoreCase(nowTime) < 0 ){
+                                    TaobaoUtil.showUrl(activity, data.getItemUrl());
+                                }else{
+                                    TaobaoUtil.showUrl(activity, data.getCouponUrl());
+                                }
+                            }else{
+                                TaobaoUtil.showUrl(activity, data.getCouponUrl());
+                            }
+
+                        }
+
                     }
 
                     /**
@@ -277,7 +304,8 @@ public class GoodsUtil {
                      *  重试一次
                      * @param data
                      */
-                    private void putCouponInfo(final CheckCouponStatusBean data, final int retryNnm) {
+                    private void putCouponInfo(final CheckCouponStatusBean data, final CouponUrlBean couponUrlData,
+                                               final int retryNnm) {
                         if (data == null || data.getCookie() == null || data.getUrl() == null)
                             return;
                         if (retryNnm > 2)
@@ -300,6 +328,7 @@ public class GoodsUtil {
                                 .subscribe(new CallBackObserver<String>() {
                                     @Override
                                     public void onNext(String json) {
+
                                         //                                        RxHttp.getInstance().getUsersService().uploadCouponInfo(goodsInfo.getItemSourceId(), json, retryNnm, 1)
                                         RxHttp.getInstance().getUsersService().uploadCouponInfo(new RequestUploadCouponInfo().setItemSourceId(goodsInfo.getItemSourceId())
                                                 .setCouponJson(json)
@@ -310,8 +339,26 @@ public class GoodsUtil {
                                                 .subscribe(new DataObserver<CheckCouponStatusBean>(false) {
                                                     @Override
                                                     protected void onSuccess(CheckCouponStatusBean data) {
-                                                        int count = retryNnm + 1;
-                                                        putCouponInfo(data, count);
+                                                        int validCode = data.getValideCode();
+                                                        switch (validCode){
+                                                            case 0:
+                                                                int count = retryNnm + 1;
+                                                                if (count >= 3 ){
+                                                                    TaobaoUtil.showUrl(activity, couponUrlData.getCouponUrl());
+                                                                }else{
+                                                                    putCouponInfo(data, couponUrlData,count);
+                                                                }
+                                                                break;
+                                                            case 1://有效优惠券
+                                                                TaobaoUtil.showUrl(activity, couponUrlData.getCouponUrl());
+                                                                break;
+                                                            case 2://无效优惠券
+                                                                TaobaoUtil.showUrl(activity, couponUrlData.getItemUrl());
+                                                                break;
+                                                             default:
+                                                                 TaobaoUtil.showUrl(activity, couponUrlData.getCouponUrl());
+                                                        }
+
                                                     }
                                                 });
                                     }

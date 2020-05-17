@@ -562,7 +562,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/goods/getCouponUrl")
+    @POST("/api/goods/getCouponUrlOrItem")
     public Observable<BaseResponse<CouponUrlBean>> getCouponUrl(
             @Body RequestCouponUrlBean requestBean);
 //            @Field("itemSourceId") String itemSourceId,

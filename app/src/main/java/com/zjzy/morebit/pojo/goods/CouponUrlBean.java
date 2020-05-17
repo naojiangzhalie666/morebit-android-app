@@ -15,6 +15,15 @@ public class CouponUrlBean {
 
     private CheckCouponStatusBean checkCouponStatus;
     private String couponUrl;
+    private String itemUrl;
+
+    public String getItemUrl() {
+        return itemUrl;
+    }
+
+    public void setItemUrl(String itemUrl) {
+        this.itemUrl = itemUrl;
+    }
 
     public CheckCouponStatusBean getCheckCouponStatus() {
         return checkCouponStatus;

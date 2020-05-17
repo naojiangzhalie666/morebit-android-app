@@ -246,15 +246,19 @@ public class PddChildFragment extends BaseMainFragmeng {
                 .subscribe(new DataObserver<List<ImageInfo>>() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-
+                        ar_title_banner.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         swipeRefreshLayout.setRefreshing(false);
+                        Log.e("pdd",data+"");
+                        if (data!=null){
                             if (data != null && data.size() != 0) {
                                 BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner);
-                        }else{
+                            }
+                        } else{
                                 ar_title_banner.setVisibility(View.GONE);
                             }
                     }

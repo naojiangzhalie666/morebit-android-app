@@ -123,7 +123,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     HomeFragment homePageFragment;
     BaseMainFragmeng superNavigationFragment;
     BaseMainFragmeng circleFragment;
-//    BaseMainFragmeng collegeFragment;
+    //    BaseMainFragmeng collegeFragment;
     BaseMainFragmeng numberFragment;
     BaseMainFragmeng partnerFragment;
     // 底部界面集合
@@ -185,17 +185,17 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 ActivityLifeHelper.getInstance().finishAllActivities();
             }
         };
-        if (!CommonLocalData.getAuthedStatus()){
-            if (mAuthForPersonDialog == null){
-                mAuthForPersonDialog = new AuthForPersonDialog(MainActivity.this,mAuthListener);
+        if (!CommonLocalData.getAuthedStatus()) {
+            if (mAuthForPersonDialog == null) {
+                mAuthForPersonDialog = new AuthForPersonDialog(MainActivity.this, mAuthListener);
                 mAuthForPersonDialog.show();
             }
 
-        }else{
+        } else {
             initAppData();
         }
 
-     //   getDeviceInfo(this);
+        //   getDeviceInfo(this);
 
     }
 
@@ -208,10 +208,10 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             String device_id = null;
             if (checkPermission(context, Manifest.permission.READ_PHONE_STATE)) {
                 device_id = tm.getDeviceId();
-                Log.e("device_id:",device_id+"");
+                Log.e("device_id:", device_id + "");
             }
             String mac = getMac(context);
-            Log.e("mac:",mac+"");
+            Log.e("mac:", mac + "");
             json.put("mac", mac);
             if (TextUtils.isEmpty(device_id)) {
                 device_id = mac;
@@ -313,7 +313,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         }
         return result;
     }
-    private void initAppData(){
+
+    private void initAppData() {
         mHandler = new Handler();
         try {
 
@@ -328,14 +329,14 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             getHomeRedPackageData();
             mPresenter.getTaobaoLink(MainActivity.this);
             ConfigListUtlis.getConfigList(MainActivity.this, ConfigListUtlis.getConfigAllKey(), null);
-            //mPresenter.getServerTime(MainActivity.this);
+            mPresenter.getServerTime(MainActivity.this);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         gotoAd();
         h5Uri = getIntent().getData();
-        AppUtil.sendWebOpenApp(h5Uri,MainActivity.this);
+        AppUtil.sendWebOpenApp(h5Uri, MainActivity.this);
     }
 
 
@@ -350,7 +351,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         if (imageInfo != null) {
 //            SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(),imageInfo.getId()+"",imageInfo.getOpen()+"","我的",0,imageInfo.getClassId()+"",imageInfo.getUrl());
             statisticsStartAdOnclick(imageInfo.getId() + "");
-           SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(),imageInfo.getId()+"",imageInfo.getOpen()+"","闪屏页",0,imageInfo.getClassId()+"",imageInfo.getUrl());
+            SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(), imageInfo.getId() + "", imageInfo.getOpen() + "", "闪屏页", 0, imageInfo.getClassId() + "", imageInfo.getUrl());
             BannerInitiateUtils.gotoAction(this, imageInfo);
         }
     }
@@ -365,10 +366,10 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                     @Override
                     public void run() {
                         if (mHomeRedPackageDialog != null) {
-                                    if(arg.size()>=1){
-                                        SensorsDataUtil.getInstance().exposureViewTrack("首页活动弹窗",arg.get(0).getOpen()+"",arg.get(0).getClassId()+"",arg.get(0).getUrl(),
-                                                arg.get(0).getTitle(),arg.get(0).getId()+"");
-                                    }
+                            if (arg.size() >= 1) {
+                                SensorsDataUtil.getInstance().exposureViewTrack("首页活动弹窗", arg.get(0).getOpen() + "", arg.get(0).getClassId() + "", arg.get(0).getUrl(),
+                                        arg.get(0).getTitle(), arg.get(0).getId() + "");
+                            }
 
                             mHomeRedPackageDialog.show();
                         }
@@ -459,7 +460,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
 
     @Override
     public void showGrayUpgradeView(GrayUpgradeInfo upgradeInfo) {
-        GrayUpgradeDialog grayUpgradeDialog = new GrayUpgradeDialog(this,R.style.dialog,upgradeInfo);
+        GrayUpgradeDialog grayUpgradeDialog = new GrayUpgradeDialog(this, R.style.dialog, upgradeInfo);
         grayUpgradeDialog.show();
     }
 
@@ -560,14 +561,14 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         String type = getIntent().getStringExtra("type");
         String growth = getIntent().getStringExtra("growth");
 
-        if (type!=null&&growth!=null){
-            if (type.equals("19")){
+        if (type != null && growth != null) {
+            if (type.equals("19")) {
                 mViewPager.setCurrentItem(2, false);
                 curPosition = C.mainPage.NUMBER;
 //                collegeFragment.onResume();
                 numberFragment.onResume();
                 setSysNotificationView();
-                SPUtils.getInstance().put("growth",growth);
+                SPUtils.getInstance().put("growth", growth);
                 //   EventBus.getDefault().post(new MyGrowthEvent(growth));
             }
         }
@@ -641,7 +642,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     @Subscribe  //订阅事件
     public void onEventMainThread(MessageEvent event) {
         if (event.getAction().equals(EventBusAction.LOGINA_SUCCEED)) {  //登录成功
-            if(homePageFragment!=null){
+            if (homePageFragment != null) {
                 homePageFragment.getLoginView();
             }
             mPresenter.getSysNotification(this, true);
@@ -665,7 +666,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             mSysNotificationData.clear();
         }
         rl_urgency_notifi.removeAllViews();
-        if(homePageFragment!=null){
+        if (homePageFragment != null) {
             homePageFragment.getLoginView();
         }
     }
@@ -680,6 +681,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         }, 500);
 
     }
+
     @Subscribe
     public void onEventMainThread(OpenNumberEvent event) {
         mHandler.postDelayed(new Runnable() {
@@ -696,11 +698,11 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     public void onEventMainThread(UpdateGradeEvent event) {
         //支付成功以后，根据积分到达的情况升级等级弹窗。
         UserInfo userInfo = UserLocalData.getUser();
-        if (userInfo != null){
-            if (C.UserType.member.equals(userInfo.getUserType())){
+        if (userInfo != null) {
+            if (C.UserType.member.equals(userInfo.getUserType())) {
                 updateGrade();
 
-            }else if (C.UserType.vipMember.equals(userInfo.getUserType())){
+            } else if (C.UserType.vipMember.equals(userInfo.getUserType())) {
                 updateGradeForLeader();
             }
         }
@@ -709,14 +711,14 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     /**
      * 升级vip的弹框
      */
-    private void updateGrade(){
+    private void updateGrade() {
 
-        NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(this,R.style.dialog);
-        leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener(){
+        NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(this, R.style.dialog);
+        leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener() {
 
             @Override
             public void onClick() {
-                updateGradePresenter(MainActivity.this,Integer.parseInt(C.UserType.vipMember));
+                updateGradePresenter(MainActivity.this, Integer.parseInt(C.UserType.vipMember));
             }
 
         });
@@ -726,13 +728,13 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     /**
      * 升级团队长的弹框
      */
-    private void updateGradeForLeader(){
-        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(this,R.style.dialog);
-        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener(){
+    private void updateGradeForLeader() {
+        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(this, R.style.dialog);
+        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener() {
 
             @Override
-            public void onClick(){
-                updateGradePresenter(MainActivity.this,Integer.parseInt(C.UserType.operator));
+            public void onClick() {
+                updateGradePresenter(MainActivity.this, Integer.parseInt(C.UserType.operator));
             }
 
         });
@@ -742,6 +744,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
 
     /**
      * 升级
+     *
      * @param activity
      * @param userType
      */
@@ -759,19 +762,21 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                     @Override
                     protected void onError(String errorMsg, String errCode) {
 //                        super.onError(errorMsg, errCode);
-                        showError(errCode,errorMsg);
+                        showError(errCode, errorMsg);
                     }
 
                     @Override
                     protected void onDataListEmpty() {
 
                     }
+
                     @Override
                     protected void onSuccess(UpdateInfoBean data) {
                         onGradeSuccess(data);
                     }
                 });
     }
+
     /**
      * 用户等级升级
      *
@@ -786,24 +791,25 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
     }
 
-    public void showError(String errorNo,String msg) {
+    public void showError(String errorNo, String msg) {
         MyLog.i("test", "onFailure: " + this);
         if ("B1100007".equals(errorNo)
-                ||"B1100008".equals(errorNo)
-                ||"B1100009".equals(errorNo)
+                || "B1100008".equals(errorNo)
+                || "B1100009".equals(errorNo)
                 || "B1100010".equals(errorNo)) {
-            ViewShowUtils.showShortToast(this,msg);
+            ViewShowUtils.showShortToast(this, msg);
         }
     }
+
     public void onGradeSuccess(UpdateInfoBean info) {
-        if (info != null){
+        if (info != null) {
             UserInfo userInfo = UserLocalData.getUser();
             userInfo.setUserType(String.valueOf(info.getUserType()));
             userInfo.setMoreCoin(info.getMoreCoin());
-            UserLocalData.setUser(this,userInfo);
+            UserLocalData.setUser(this, userInfo);
             EventBus.getDefault().post(new RefreshUserInfoEvent());
-        }else{
-            MyLog.d("test","用户信息为空");
+        } else {
+            MyLog.d("test", "用户信息为空");
         }
 
     }
@@ -837,7 +843,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 break;
             case R.id.rl_shop: //分类
                 mViewPager.setCurrentItem(1, false);
-                curPosition =  C.mainPage.SUPER_NAVIGATION;
+                curPosition = C.mainPage.SUPER_NAVIGATION;
                 superNavigationFragment.onResume();
                 setSysNotificationView();
                 break;
@@ -1056,7 +1062,6 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             }, 3000);
         }
     }
-
 
 
 }

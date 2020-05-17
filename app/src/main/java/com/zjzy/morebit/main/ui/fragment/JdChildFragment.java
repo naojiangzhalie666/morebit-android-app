@@ -237,7 +237,8 @@ public class JdChildFragment extends BaseMainFragmeng {
                 .subscribe(new DataObserver<List<ImageInfo>>() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-
+                        ar_title_banner.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
