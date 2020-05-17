@@ -455,6 +455,8 @@ dependencies {
     //没有使用特殊Header和Footer，可以不加下面这行
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
     implementation project(':kepler')
+    //轮播缩放效果
+    implementation 'com.tokiii:reveal-banner:1.0.2'
 
 
 }

@@ -1,6 +1,10 @@
 package com.zjzy.morebit.main.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -38,7 +42,7 @@ import butterknife.BindView;
 
 /**
  * Created by fengrs on 2018/9/10.
- * 备注:
+ * 备注:京东列表页
  */
 
 public class JdongListFragment extends MvpFragment<PddListPresenter> implements PddContract.View, ReUseListView.OnReLoadListener, View.OnClickListener {
@@ -71,7 +75,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     //排序方向
     private int eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;// 0降序  1升序
     //排序类型
-    private long mSortType = 0;//排序类型 1 综合排序 2 销量排序 3 价格排序 4 奖励排序
+    private long mSortType = 0;//排序类型 0 综合排序 2 销量排序 3 价格排序 4 奖励排序
     //自营
     private LinearLayout title_support_ll;
     private ImageView title_support_iv;
@@ -118,6 +122,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         if (getArguments() == null) return;
         mPddJdTitleTypeItem = (PddJdTitleTypeItem) getArguments().getSerializable(JdongListFragment.PDDJDTITLETYPEITEM);
         rl_list.setOnReLoadListener(this);
+        rl_list.getSwipeList().setEnableRefresh(false);
 
 
         title_comprehensive_tv=view.findViewById(R.id.title_comprehensive_tv);//综合
@@ -150,10 +155,23 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         title_support_ll.setOnClickListener(this);
 
 
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("action.refreshjd");//名字
+        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
 
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.refreshjd")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                onReload();//需要去做的事
+            }
+        }
+    };
 
 
     /**
@@ -283,6 +301,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
     @Override
@@ -376,18 +395,10 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             isCoupon = false;
             coupon="0";
             title_coupon_iv.setImageResource(R.drawable.check_no);
-//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
-//            mRecyclerView.getSwipeList().setRefreshing(true);
-          //  getFirstData(keyWord);
-            //重新读取数据
         } else {
             isCoupon = true;
             coupon="1";
             title_coupon_iv.setImageResource(R.drawable.check_yes);
-//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
-//            mRecyclerView.getSwipeList().setRefreshing(true);
-            //getFirstData(keyWord);
-            //重新读取数据
         }
     }
 
@@ -400,19 +411,14 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             isSupport = false;
             self="0";
             title_support_iv.setImageResource(R.drawable.check_no);
-//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
-//            mRecyclerView.getSwipeList().setRefreshing(true);
-            //  getFirstData(keyWord);
-            //重新读取数据
         } else {
             isSupport = true;
             self="1";
             title_support_iv.setImageResource(R.drawable.check_yes);
-//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
-//            mRecyclerView.getSwipeList().setRefreshing(true);
-            //getFirstData(keyWord);
-            //重新读取数据
         }
     }
+
+
+
 
 }

@@ -118,7 +118,9 @@ public class ReUseListView extends LinearLayout{
      * 刷新数据
      */
     public void notifyDataSetChanged() {
-        lRecyclerViewAdapter.notifyDataSetChanged();
+        if (lRecyclerViewAdapter!=null){
+            lRecyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 
     public LRecyclerView getListView(){

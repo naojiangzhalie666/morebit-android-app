@@ -174,13 +174,12 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
             }
         });
 
-        tabList.clear();//防止每次创建都会不停增加
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_tab);
 //        "综合", "券后价", "销量", "奖励"
         tabList.add(new BaseTitleTabBean("综合", false, C.Setting.itemIndex));
         tabList.add(new BaseTitleTabBean("券后价", true, C.Setting.itemVoucherPrice));
         tabList.add(new BaseTitleTabBean("销量", true, C.Setting.saleMonth));
-//        tabList.add(new BaseTitleTabBean("奖励", false, C.Setting.commission));
+         tabList.add(new BaseTitleTabBean("奖励", true, C.Setting.commission));
 
         initTab(mTabLayout);
 
@@ -338,14 +337,14 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         Log.e("isCouponShowOff",isCouponShowOff+"");
         if (isCouponShowOff) {
             isCouponShowOff = false;
-            couponIv.setImageResource(R.drawable.icon_search_coupon_unselect);
+            couponIv.setImageResource(R.drawable.check_no);
             couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
             //重新读取数据
         } else {
             isCouponShowOff = true;
-            couponIv.setImageResource(R.drawable.icon_search_coupon_select);
+            couponIv.setImageResource(R.drawable.check_yes);
             couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
