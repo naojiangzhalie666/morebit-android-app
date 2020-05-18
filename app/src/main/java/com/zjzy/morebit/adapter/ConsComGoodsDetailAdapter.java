@@ -261,6 +261,10 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (!info.isSelf()){
+            viewHolder.shipGoodsTv.setVisibility(View.GONE);
+            viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
+        }
         viewHolder.iten_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
