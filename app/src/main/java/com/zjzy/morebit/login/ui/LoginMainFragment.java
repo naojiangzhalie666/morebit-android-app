@@ -272,9 +272,6 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                 mPresenter.goLocalWx(this);//获取本地微信信息
             }
         }
-
-
-
     }
 
 
