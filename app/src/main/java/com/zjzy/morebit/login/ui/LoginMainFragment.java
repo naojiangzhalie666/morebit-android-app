@@ -249,10 +249,9 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
         WeixinInfo weixinInfo = mPresenter.getWeixinInfo();
         mcode=code;
         if (mid!=2){
-//            if (C.requestCode.B10005.equals(code)){//手机号已注册 绑定微信
-//                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
-//                //   LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
-//            }
+            if (C.requestCode.B10005.equals(code)){//手机号已注册 绑定微信
+                LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(), mditInviteText, mWeixinInfo,mAreaCode);
+            }
         }else{
             if (C.requestCode.B10031.equals(code)){//用户未注册
                 if (!AppUtil.isWeixinAvilible(getActivity())) {
@@ -325,7 +324,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
 
     @Override
-    public void goToWx() {
+    public void goToWx() {//成功 扫码来的用户
         LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(),mditInviteText, mWeixinInfo,mAreaCode);
 
 
