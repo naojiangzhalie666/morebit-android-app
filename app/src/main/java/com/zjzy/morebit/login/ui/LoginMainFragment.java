@@ -271,8 +271,6 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                 }
 
                 mPresenter.goLocalWx(this);//获取本地微信信息
-            }else if(C.requestCode.B1000007.equals(code)){//该微信已绑定其他用户
-
             }
         }
 
@@ -319,7 +317,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
     @Override
     public void getWxError(String code) {//校验微信错误码
-           if (C.requestCode.B10011.equals(code)){//该微信未注册,跳转到注册界面
+           if (C.requestCode.B1000007.equals(code)){//该微信未注册,跳转到注册界面
                 LoginEditInviteFragment.start(getActivity(),edtPhone.getText().toString().trim(), C.sendCodeType.BINDWEIXIN,mWeixinInfo,mAreaCode);
             }
         }
