@@ -801,7 +801,7 @@ public interface CommonService {
      *
      * @return
      */
-    @POST("/api/user/login/wechat")
+    @POST("/api/user/login/wechatForNew")
     public Observable<BaseResponse<UserInfo>> getWeixiLogin(
             @Body RequestWeixiLoginBean requestBean
 //            @Field("oauthWx") String oauthWx,
@@ -1005,7 +1005,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/user/wechatRegister")
+    @POST("/api/user/wechatRegisterAndBindPhone")
 
     public Observable<BaseResponse<UserInfo>> registerAndBindWeixin(
             @Body RequestRegisterAndBindWeChatBean requestBean
@@ -1030,7 +1030,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/user/wechatBindPhone")
+    @POST("/api/user/wechatRegisterAndBindPhone")
 
     public Observable<BaseResponse<UserInfo>> LoginAndBindWeixin(
             @Body RequestRegisterAndBindWeChatBean requestBean
