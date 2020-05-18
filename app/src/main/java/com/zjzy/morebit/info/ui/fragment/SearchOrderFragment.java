@@ -2,6 +2,7 @@ package com.zjzy.morebit.info.ui.fragment;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -228,6 +229,32 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
                 }else{
                     ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                 }
+            }
+        });
+
+        consComGoodsDetailAdapter.setOnSelfOrderClickListener(new ConsComGoodsDetailAdapter.OnSelfOrderClickListener() {
+            @Override
+            public void onReceiveGoods(String orderId, int position) {
+                //确认收货
+                mPresenter.ConfirmReceiveGoods(SearchOrderFragment.this,orderId);
+            }
+
+            @Override
+            public void onShip(String orderId, int position) {
+                //调用查看物流接口
+                String originUrl = mListArray.get(position).getShipUrl();
+                if (!TextUtils.isEmpty(originUrl)){
+                    originUrl = originUrl+"?orderId="+orderId;
+                    ShowWebActivity.start(getActivity(),originUrl,"物流信息");
+                }else{
+                    MyLog.d("test","物流url为空");
+                }
+            }
+
+            @Override
+            public void onPay(String orderId, int position) {
+                //去支付或者取消
+                NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),orderId);
             }
         });
     }

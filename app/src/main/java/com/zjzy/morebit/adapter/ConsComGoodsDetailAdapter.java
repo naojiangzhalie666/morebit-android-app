@@ -157,6 +157,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
 
             } else if ("3".equals(info.getStatus())) {//已结算
                 viewHolder.tv_order_status.setText("已结算");
+                Log.e("wwww","物流");
                 viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
                 viewHolder.shipGoodsTv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -179,6 +180,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                         }
                     }
                 });
+
                 viewHolder.receiverGoodsTv.setVisibility(View.GONE);
                 viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
 
@@ -215,6 +217,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_date.setVisibility(View.GONE);
             } else if ("6".equals(info.getStatus())) {
                 viewHolder.tv_order_status.setText("待收货");
+                Log.e("wwww","物流");
                 viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
                 viewHolder.receiverGoodsTv.setVisibility(View.VISIBLE);
                 viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
