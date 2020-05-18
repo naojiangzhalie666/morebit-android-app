@@ -36,6 +36,7 @@ import com.app.hubert.guide.listener.OnLayoutInflatedListener;
 import com.app.hubert.guide.listener.OnPageChangedListener;
 import com.app.hubert.guide.model.GuidePage;
 import com.app.hubert.guide.model.HighLight;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Activity.SearchActivity;
@@ -313,8 +314,9 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         });
 
         getLoginView();
-        if (newPurchase==true){
-            Log.e("page","newpurchase:"+newPurchase);
+        boolean newPurchase = SPUtils.getInstance().getBoolean("newPurchase");
+        Log.e("page",newPurchase+"新人来了");
+        if (newPurchase){
             getPurchase();
         }
 
@@ -920,7 +922,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                         @Override
                         public void onShowed(Controller controller) {
                             Log.e("page", "NewbieGuide onShowed: ");
-                            newPurchase=true;
                             //引导层显示
                         }
 
@@ -929,6 +930,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                             Log.e("page", "NewbieGuide  onRemoved: ");
                             //引导层消失（多页切换不会触发）
                             getPurchase();
+                            SPUtils.getInstance().put("newPurchase",true);
                         }
                     })
                     .setOnPageChangedListener(new OnPageChangedListener() {
