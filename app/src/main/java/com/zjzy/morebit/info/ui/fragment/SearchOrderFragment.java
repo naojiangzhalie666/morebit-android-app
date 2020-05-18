@@ -14,6 +14,7 @@ import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
@@ -27,6 +28,7 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.order.ui.NumberOrderDetailActivity;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.FloorBean;
@@ -216,6 +218,13 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
                     ShopGoodInfo mGoodsInfo=new ShopGoodInfo();
                     mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForPdd(SearchOrderFragment.this, mGoodsInfo);
+                } else if (type==10){
+                    if (mListArray.get(position).isSelf()){//进订单
+                        NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
+                                mListArray.get(position).getOrderSn());
+                    }else{//进商品
+                        NumberGoodsDetailsActivity.start(getActivity(), mListArray.get(position).getItemId());
+                    }
                 }else{
                     ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                 }
