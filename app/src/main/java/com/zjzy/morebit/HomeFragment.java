@@ -228,6 +228,8 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         }
     }
 
+
+
     private void initData() {
         GoodCategoryInfo good = new GoodCategoryInfo();
         good.setName(getString(R.string.choiceness));
@@ -309,6 +311,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         });
 
         getLoginView();
+        getPurchase();//新人弹框
     }
 
     public void getLoginView() {
@@ -1034,6 +1037,52 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
         }
 
+
+    }
+
+    private void getPurchase() {//新人弹框
+        Animation enterAnimation = new AlphaAnimation(0f, 1f);
+        enterAnimation.setDuration(300);
+        enterAnimation.setFillAfter(true);
+
+        Animation exitAnimation = new AlphaAnimation(1f, 0f);
+        exitAnimation.setDuration(300);
+        exitAnimation.setFillAfter(true);
+
+        NewbieGuide.with(this)
+                .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
+                .setShowCounts(3)
+                .addGuidePage(//添加一页引导页
+                        GuidePage.newInstance()//创建一个实例
+                                .setLayoutRes(R.layout.view_pruchase_guide)//设置引导页布局
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView diss = view.findViewById(R.id.diss);
+                                        diss.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                controller.remove();
+
+                                            }
+                                        });
+                                        ImageView purchase_bg = view.findViewById(R.id.purchase_bg);
+                                        purchase_bg.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
+                                                controller.remove();
+                                            }
+                                        });
+
+                                    }
+
+                                })
+                                .setEverywhereCancelable(false)
+                                .setEnterAnimation(enterAnimation)//进入动画
+                                .setExitAnimation(exitAnimation)//退出动画
+                ).show();
 
     }
 
