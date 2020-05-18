@@ -115,15 +115,6 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             } else {
                 viewHolder.order_goods_unit.setText("");
             }
-            //佣金
-            String commission = info.getCommission();
-            if (!TextUtils.isEmpty(commission) && !commission.equals("0") && !commission.equals("null")) {
-                viewHolder.number_yongjin_tv.setVisibility(View.GONE);
-                viewHolder.number_yongjin_tv.setText(mContext.getResources().getString(R.string.order_yongjin, commission));
-            } else {
-                viewHolder.number_yongjin_tv.setText("");
-                viewHolder.number_yongjin_tv.setVisibility(View.GONE);
-            }
 
             //订单
             String orderNo = info.getOrderSn();
@@ -260,6 +251,13 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (!info.isSelf()){
+            viewHolder.shipGoodsTv.setVisibility(View.GONE);
+            viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
+            viewHolder.tv_num.setVisibility(View.GONE);
+            viewHolder.receiverGoodsTv.setVisibility(View.GONE);
+
         }
         viewHolder.iten_rl.setOnClickListener(new View.OnClickListener() {
             @Override

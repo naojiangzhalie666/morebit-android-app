@@ -153,7 +153,7 @@
                 android:background="@mipmap/czz_bg"
                 android:textSize="10sp"
                 />
-            <TextView
+        <!--    <TextView
                 android:visibility="gone"
                 android:id="@+id/number_yongjin_tv"
                 android:layout_width="wrap_content"
@@ -172,7 +172,7 @@
                 android:paddingTop="2dp"
                 android:textColor="@color/color_EE403A"
                 android:background="@drawable/bg_yujin_item"
-                android:textSize="10sp" />
+                android:textSize="10sp" />-->
 
             <RelativeLayout
 

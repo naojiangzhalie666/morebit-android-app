@@ -227,6 +227,7 @@
                         android:textSize="@dimen/sp_12"
                         android:layout_below="@id/ll_goods_price"/>
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/goods_yugushouyi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

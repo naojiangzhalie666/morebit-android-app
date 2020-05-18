@@ -688,16 +688,7 @@ public class NumberSubFragment extends BaseFragment {
             if (TextUtils.isEmpty(price)){
                 tvPrice.setText("0");
             }else{
-                double  pricedouble  = Double.parseDouble(price);
-                long pricelong = ((Number)pricedouble).longValue();
-                if (price.contains(".00")){
-                    String replace = price.replace(".00", "");
-                    tvPrice.setText(replace);
-                }
-                if (pricedouble == 0.0){
-                    tvPrice.setText("0");
-                }
-//                tvPrice.setText(price);
+                tvPrice.setText(MathUtils.getnum(price));
             }
             String moreCoin = MathUtils.getMorebitCorn(price);
             morebitCorn.setText(mContext.getResources().getString(R.string.give_growth_value,moreCoin));

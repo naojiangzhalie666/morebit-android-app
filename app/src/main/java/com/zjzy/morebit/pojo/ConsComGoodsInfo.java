@@ -40,6 +40,16 @@ public class ConsComGoodsInfo  implements Serializable{
     private int type;
     private boolean zeroOrder;//true 是0元购  false 不是
     private boolean isOnSale; //true 是上架  false过期
+    private boolean isSelf; //ture 自购 false 非自购
+
+    public boolean isSelf() {
+        return isSelf;
+    }
+
+    public void setSelf(boolean self) {
+        isSelf = self;
+    }
+
 
     public boolean isOnSale() {
         return isOnSale;
