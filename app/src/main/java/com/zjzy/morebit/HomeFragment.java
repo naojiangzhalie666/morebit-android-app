@@ -71,6 +71,7 @@ import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ConfigListUtlis;
+import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GuideViewUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -78,6 +79,7 @@ import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
+import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
@@ -175,6 +177,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     private Handler mHandler;
     private List<HomeRecommendFragment> fragments = new ArrayList<>();
     private String ischeck;
+    private boolean newPurchase=false;
 
 
     @Override
@@ -221,13 +224,12 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                   showGuideSearch();
+                    showGuideSearch();
                 }
             }, 500);
 
         }
     }
-
 
 
     private void initData() {
@@ -311,7 +313,11 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         });
 
         getLoginView();
-        getPurchase();//新人弹框
+        if (newPurchase==true){
+            Log.e("page","newpurchase:"+newPurchase);
+            getPurchase();
+        }
+
     }
 
     public void getLoginView() {
@@ -898,7 +904,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     }
 
     public void showGuideSearch() {//新人引导页面
-        if (null != search_rl) {
+        Log.e("page", "NewbieGuide onShowed: ");
             // GuideViewUtil.showGuideView(getActivity(), search_rl, GuideViewUtil.GUIDE_SEARCH, 0, this.mGuideNextCallback, null);
             Animation enterAnimation = new AlphaAnimation(0f, 1f);
             enterAnimation.setDuration(300);
@@ -914,6 +920,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                         @Override
                         public void onShowed(Controller controller) {
                             Log.e("page", "NewbieGuide onShowed: ");
+                            newPurchase=true;
                             //引导层显示
                         }
 
@@ -921,6 +928,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                         public void onRemoved(Controller controller) {
                             Log.e("page", "NewbieGuide  onRemoved: ");
                             //引导层消失（多页切换不会触发）
+                            getPurchase();
                         }
                     })
                     .setOnPageChangedListener(new OnPageChangedListener() {
@@ -946,6 +954,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                                                 public void onClick(View v) {
                                                     controller.remove();
 
+
                                                 }
                                             });
 
@@ -968,6 +977,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                                                 @Override
                                                 public void onClick(View v) {
                                                     controller.remove();
+
 
                                                 }
                                             });
@@ -992,6 +1002,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                                                 @Override
                                                 public void onClick(View v) {
                                                     controller.remove();
+
                                                 }
                                             });
 
@@ -1031,58 +1042,82 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                                     .setLayoutRes(R.layout.view_start_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
                                     .setEnterAnimation(enterAnimation)//进入动画
                                     .setExitAnimation(exitAnimation)//退出动画
+
+
                     )
                     .show();//显示引导层(至少需要一页引导页才能显示)
 
 
-        }
 
 
     }
 
     private void getPurchase() {//新人弹框
-        Animation enterAnimation = new AlphaAnimation(0f, 1f);
+        Log.e("page","新人");
+        final Animation enterAnimation = new AlphaAnimation(0f, 1f);
         enterAnimation.setDuration(300);
         enterAnimation.setFillAfter(true);
 
-        Animation exitAnimation = new AlphaAnimation(1f, 0f);
+        final Animation exitAnimation = new AlphaAnimation(1f, 0f);
         exitAnimation.setDuration(300);
         exitAnimation.setFillAfter(true);
+        RxHttp.getInstance().getCommonService().checkPruchase()
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(this.<BaseResponse<String>>bindToLifecycle())
+                .subscribe(new DataObserver<String>() {
+                    @Override
+                    protected void onSuccess(String data) {
+                        Log.e("page",data+"新人");
+                        ischeck = data;
+                        Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
+                        String ymdhhmmss = DateTimeUtils.getYmdhhmmss(String.valueOf(serverTime));
 
-        NewbieGuide.with(this)
-                .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
-                .setShowCounts(3)
-                .addGuidePage(//添加一页引导页
-                        GuidePage.newInstance()//创建一个实例
-                                .setLayoutRes(R.layout.view_pruchase_guide)//设置引导页布局
-                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                    @Override
-                                    public void onLayoutInflated(View view, final Controller controller) {
-                                        //引导页布局填充后回调，用于初始化
-                                        ImageView diss = view.findViewById(R.id.diss);
-                                        diss.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                controller.remove();
+                        if (!TextUtils.isEmpty(ischeck)) {
+                            if (ischeck.equals("true")) {//是否有新人首单
+                                if (DateTimeUtils.IsToday(ymdhhmmss)) {//判断是否是当天
+                                    Log.e("page",ymdhhmmss+"新人");
+                                    NewbieGuide.with(getActivity())
+                                            .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
+                                            .setShowCounts(3)
+                                            .addGuidePage(//添加一页引导页
+                                                    GuidePage.newInstance()//创建一个实例
+                                                            .setLayoutRes(R.layout.view_pruchase_guide)//设置引导页布局
+                                                            .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                                                @Override
+                                                                public void onLayoutInflated(View view, final Controller controller) {
+                                                                    //引导页布局填充后回调，用于初始化
+                                                                    ImageView diss = view.findViewById(R.id.diss);
+                                                                    diss.setOnClickListener(new View.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(View v) {
+                                                                            controller.remove();
 
-                                            }
-                                        });
-                                        ImageView purchase_bg = view.findViewById(R.id.purchase_bg);
-                                        purchase_bg.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
-                                                controller.remove();
-                                            }
-                                        });
+                                                                        }
+                                                                    });
+                                                                    ImageView purchase_bg = view.findViewById(R.id.purchase_bg);
+                                                                    purchase_bg.setOnClickListener(new View.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(View v) {
+                                                                            getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
+                                                                            controller.remove();
+                                                                        }
+                                                                    });
 
-                                    }
+                                                                }
 
-                                })
-                                .setEverywhereCancelable(false)
-                                .setEnterAnimation(enterAnimation)//进入动画
-                                .setExitAnimation(exitAnimation)//退出动画
-                ).show();
+                                                            })
+                                                            .setEverywhereCancelable(false)
+                                                            .setEnterAnimation(enterAnimation)//进入动画
+                                                            .setExitAnimation(exitAnimation)//退出动画
+                                            ).show();
+
+                                }
+                            }
+                        }
+
+                    }
+                });
+
 
     }
 

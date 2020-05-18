@@ -2,6 +2,7 @@ package com.zjzy.morebit.utils;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.blankj.utilcode.util.TimeUtils;
 import com.zjzy.morebit.App;
@@ -444,13 +445,14 @@ public class DateTimeUtils {
                         - pre.get(Calendar.DAY_OF_YEAR);
 
                 if (diffDay == 0) {
+                    Log.e("wwwww","当天");
                     return true;
                 }
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+        Log.e("wwwww","不是当天");
         return false;
     }
 
@@ -679,6 +681,7 @@ public class DateTimeUtils {
         if ((day == -1 || day != curDay)) {
             SharedPreferencesUtils.put(App.getAppContext(), C.sp.DIALOG_USER_IS_UPGRADE_TIME+ UserLocalData.getUser().getPhone(), curDay);
             return true;
+
         } else {
             return false;
         }
