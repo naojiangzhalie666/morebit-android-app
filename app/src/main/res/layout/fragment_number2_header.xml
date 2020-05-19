@@ -72,9 +72,11 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <RelativeLayout
+            android:id="@+id/vip_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background_3d3d3b_radius_8dp"
@@ -141,7 +143,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:visibility="gone"
+
                 android:id="@+id/vip_reward"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="12dp"
@@ -268,8 +270,15 @@
                 />
 
         </RelativeLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/vip_rl"
+            android:id="@+id/vip_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
         <TextView
-
+            android:layout_alignBottom="@id/vip_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@mipmap/vip_promotion"
