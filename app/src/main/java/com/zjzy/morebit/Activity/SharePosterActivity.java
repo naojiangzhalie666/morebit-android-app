@@ -411,8 +411,8 @@ public class SharePosterActivity extends BaseActivity implements View.OnClickLis
                         @Override
                         protected void onSuccess(ShareUrlBaen data) {
                             for (int i = 0; i < arrMpInfo.size(); i++) {
-                                if (!TextUtils.isEmpty(data.getWxRegisterlink())) {
-                                    downloadPicture(data.getWxRegisterlink(), arrMpInfo.get(i));
+                                if (!TextUtils.isEmpty(data.getLink())) {
+                                    downloadPicture(data.getLink(), arrMpInfo.get(i));
                                 }
                             }
                         }

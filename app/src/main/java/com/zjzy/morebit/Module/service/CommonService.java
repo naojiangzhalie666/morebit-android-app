@@ -1005,7 +1005,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/user/wechatRegisterAndBindPhone")
+    @POST("/api/user/wechatRegisterForNew")
 
     public Observable<BaseResponse<UserInfo>> registerAndBindWeixin(
             @Body RequestRegisterAndBindWeChatBean requestBean
@@ -1030,7 +1030,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/user/wechatRegisterAndBindPhone")
+    @POST("/api/user/wechatBindPhoneForNew")
 
     public Observable<BaseResponse<UserInfo>> LoginAndBindWeixin(
             @Body RequestRegisterAndBindWeChatBean requestBean

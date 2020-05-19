@@ -291,8 +291,8 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
                         @Override
                         protected void onSuccess(ShareUrlBaen data) {
                             for (int i = 0; i < mImageInfos.size(); i++) {
-                                if (!TextUtils.isEmpty(data.getWxRegisterlink())) {
-                                    downloadPicture(data.getWxRegisterlink(), mImageInfos.get(i));
+                                if (!TextUtils.isEmpty(data.getLink())) {
+                                    downloadPicture(data.getLink(), mImageInfos.get(i));
                                 }
                             }
                         }
