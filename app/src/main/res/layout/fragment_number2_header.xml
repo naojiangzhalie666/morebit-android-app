@@ -6,8 +6,8 @@
 <!--背景图-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#EDCFB1"
+        android:layout_height="180dp"
+        android:background="@mipmap/vip_bg"
         >
 
         <LinearLayout
@@ -66,7 +66,243 @@
 
 
     </RelativeLayout>
+<!--vip-->
+    <RelativeLayout
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_3d3d3b_radius_8dp"
+            >
+            <ImageView
+                android:id="@+id/huiyuan1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/huiyuan1"
+                android:layout_centerHorizontal="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/getgrowth"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:text="获取成长值"
+                android:textColor="#ffb66d44"
+                android:textSize="12sp"
+                android:gravity="center"
+                />
+
+            <!--显示成长值-->
+            <RelativeLayout
+                android:layout_below="@+id/huiyuan1"
+                android:id="@+id/rl_duodou_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp">
+
+                <TextView
+                    android:id="@+id/more_corn_biaozhun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="5dp"
+                    android:text="成长值：0/50000"
+                    android:textColor="@color/color_E9C8A7"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_growth_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="5dp"
+                    android:text="立即升级尊享高佣收益"
+                    android:textColor="@color/color_E9C8A7"
+                    android:textSize="@dimen/sp_12" />
+
+                <com.zjzy.morebit.view.HorzProgressView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/horzProgressView"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_below="@id/more_corn_biaozhun"
+                    android:layout_marginTop="24dp"
+                    app:liys_progress_line_inDrawable="@drawable/vip_progress_bg"
+                    app:liys_progress_line_max="100"
+                    app:liys_progress_line_outColor="@color/color_E9C8A7"
+                    app:liys_progress_line_progress="20" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/vip_reward"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_below="@+id/rl_duodou_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginRight="12dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="52dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_ffedd0b3_radius_4dp"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="自购优选商品"
+                        android:textColor="#ff3c3c3a"
+                        android:textSize="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="900"
+                        android:textColor="#ff3c3c3a"
+                        android:textSize="16dp"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginRight="12dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="52dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_ffedd0b3_radius_4dp"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="结算奖励"
+                        android:textColor="#ff3c3c3a"
+                        android:textSize="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="900"
+                        android:textColor="#ff3c3c3a"
+                        android:textSize="16dp"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginRight="12dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="52dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_ffedd0b3_radius_4dp"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推荐直属VIP"
+                        android:textColor="#ff3c3c3a"
+                        android:textSize="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="900"
+                        android:textColor="#ff3c3c3a"
+                        android:textSize="16dp"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="52dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_ffedd0b3_radius_4dp"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推荐间接VIP"
+                        android:textColor="#ff3c3c3a"
+                        android:textSize="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="900"
+                        android:textColor="#ff3c3c3a"
+                        android:textSize="16dp"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/vip_more_growth"
+                android:layout_below="@+id/vip_reward"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您还需要46400成长值即可升级团队长"
+                android:textColor="#fffae2cb"
+                android:textSize="18dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="36dp"
+                />
+
+        </RelativeLayout>
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/vip_promotion"
+            android:layout_centerHorizontal="true"
+            android:text="立即晋升"
+            android:textColor="#ff3c3c3a"
+            android:textSize="16dp"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+<!-- 团队长-->
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_width="match_parent"
+        android:background="@mipmap/tuanduizhang_bg"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/get_operator_growth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/getgrowth"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:text="成长值: 3658"
+            android:textColor="#ffb66d44"
+            android:textSize="12sp"
+            android:gravity="center"
+            />
+    </RelativeLayout>
 
 
 </RelativeLayout>
