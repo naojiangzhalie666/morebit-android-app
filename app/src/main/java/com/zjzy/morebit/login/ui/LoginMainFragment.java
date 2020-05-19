@@ -322,7 +322,13 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
 
     @Override
     public void goToWx() {//成功 扫码来的用户
-        LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(),mditInviteText, mWeixinInfo,mAreaCode);
+
+        if (C.requestCode.B10358.equals(mcode)){
+            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.BINDWEIXIN, edtPhone.getText().toString().trim(),mditInviteText, mWeixinInfo,mAreaCode);
+        }else{
+            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, edtPhone.getText().toString().trim(),mditInviteText, mWeixinInfo,mAreaCode);
+        }
+
 
 
     }
