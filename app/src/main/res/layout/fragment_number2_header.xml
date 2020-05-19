@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--背景图-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#EDCFB1"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="12dp"
+            >
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/userIcon"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:scaleType="fitXY"
+            android:src="@color/white"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="2dp"
+            app:riv_corner_radius="0dip"
+            android:layout_centerHorizontal="true"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:src="@mipmap/icon_vip"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/vip_kefu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/vip_text_kefu"
+            android:layout_alignParentRight="true"
+            android:text="专属导师客服"
+            android:textColor="#ffedd0b3"
+            android:textSize="12dp"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
