@@ -10,11 +10,15 @@
         android:background="#EDCFB1"
         >
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_marginLeft="30dp"
             android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/touxiang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             >
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/userIcon"
@@ -34,7 +38,20 @@
                 android:layout_marginTop="34dp"
                 android:src="@mipmap/icon_vip"/>
         </RelativeLayout>
-
+        <TextView
+           android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@+id/touxiang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我是昵称我是昵"
+            android:ellipsize="end"
+            android:maxEms="6"
+            android:layout_marginLeft="25dp"
+            android:maxLines="1"
+            android:textColor="#ff3d3c3a"
+            android:textSize="16sp"
+            />
+        </LinearLayout>
         <TextView
             android:id="@+id/vip_kefu"
             android:layout_width="wrap_content"
@@ -46,6 +63,8 @@
             android:textSize="12dp"
             android:gravity="center"
             />
+
+
     </RelativeLayout>
 
 
