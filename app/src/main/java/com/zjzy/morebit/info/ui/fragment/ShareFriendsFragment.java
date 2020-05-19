@@ -247,7 +247,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
                 if (mUrlsList.size() >= 1) {
                     //设置图片加载地址
                    mHorizontalInfiniteCycleViewPager.setAdapter(new HorizontalPagerAdapter(getActivity(), mUrlsList));
-                    if (mUrlsList.size() > 1){}
+                    if (mUrlsList.size() > 1)
                        mHorizontalInfiniteCycleViewPager.setCurrentItem(1);
                 } else {
                     ViewShowUtils.showShortToast(getActivity(), "加载出错,请退出页面重试");
@@ -291,8 +291,8 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
                         @Override
                         protected void onSuccess(ShareUrlBaen data) {
                             for (int i = 0; i < mImageInfos.size(); i++) {
-                                if (!TextUtils.isEmpty(data.getLink())) {
-                                    downloadPicture(data.getLink(), mImageInfos.get(i));
+                                if (!TextUtils.isEmpty(data.getWxRegisterlink())) {
+                                    downloadPicture(data.getWxRegisterlink(), mImageInfos.get(i));
                                 }
                             }
                         }
@@ -567,7 +567,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
                 .subscribe(new DataObserver<ShareUrlBaen>() {
                     @Override
                     protected void onSuccess(final ShareUrlBaen data) {
-                        shareUrl = data.getLink();
+                        shareUrl = data.getWxRegisterlink();
                         shareText = data.getSharp();
                     }
                 });

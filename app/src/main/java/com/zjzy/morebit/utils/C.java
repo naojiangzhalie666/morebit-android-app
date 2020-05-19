@@ -53,18 +53,28 @@ public class C {
         return instance;
     }
 
-    public String getGoodsIp() {
-        switch (serverType) {
-            case PROD:
-                return BASE_MOREBIT_PROD;
-            case TEST:
-                return BASE_MOREBIT_TEST;
-            case DEV:
-                return BASE_MOREBIT_DEV;
-        }
-        return BASE_MOREBIT_PROD;
+//    public String getGoodsIp() {
+//        switch (serverType) {
+//            case PROD:
+//                return BASE_MOREBIT_PROD;
+//            case TEST:
+//                return BASE_MOREBIT_TEST;
+//            case DEV:
+//                return BASE_MOREBIT_DEV;
+//        }
+//        return BASE_MOREBIT_PROD;
+//    }
+public String getGoodsIp() {
+    switch (serverType) {
+        case PROD:
+            return BASE_MOREBIT_DEV;
+        case TEST:
+            return BASE_MOREBIT_DEV;
+        case DEV:
+            return BASE_MOREBIT_DEV;
     }
-
+    return BASE_MOREBIT_DEV;
+}
     public static class UrlV2 {
         //用户模块调用
      //   public static final String USERS = BASE_MOREBIT;
