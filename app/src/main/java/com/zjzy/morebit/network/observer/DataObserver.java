@@ -111,6 +111,7 @@ public abstract class DataObserver<T> extends BaseDataObserver<T> {
             case C.requestCode.B10040://用户未绑定微信
             case C.requestCode.B10357://扫码来的用户，手机号为空
             case C.requestCode.B10005://号码已被注册 前去微信绑定
+            case C.requestCode.B10358://此账号未绑定微信号
 
                 onError(data.getMsg() + "", data.getCode());
                 break;
