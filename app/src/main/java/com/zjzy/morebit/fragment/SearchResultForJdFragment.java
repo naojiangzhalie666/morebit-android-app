@@ -60,6 +60,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     boolean isUserHint = true;
     private int mPushType;
+    private List<ShopGoodInfo> listArray = new ArrayList<>();
 
     //销量
     private LinearLayout mTitleSalesVolumeLl;
@@ -399,7 +400,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     public void setJd(List<ShopGoodInfo> data, int loadType) {
-        if (data!=null && data.size() != 0){
+        Log.e("ffffff","333空白");
             if (page==1) {
                 //mData.clear();
                 mAdapter = new JdListAdapter(getActivity(), data);
@@ -409,12 +410,12 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
                 mAdapter.setData(data);
                 mSwipeList.finishLoadMore(false);
             }
-        }
-
     }
 
     @Override
     public void setJdError(int loadType) {
+        mAdapter = new JdListAdapter(getActivity(), listArray);
+        mRecyclerView.setAdapter(mAdapter);
 //        dataList_ly.setVisibility(View.GONE);
 //        searchNullTips_ly.setVisibility(View.VISIBLE);
     }
