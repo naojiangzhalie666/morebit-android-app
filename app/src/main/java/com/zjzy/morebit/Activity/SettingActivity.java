@@ -131,7 +131,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             }
             //淘宝授权
             if (info.isNeedAuth()) { //是否需要授权
-                item_tabao_rl.setVisibility(View.VISIBLE);
+                item_tabao_rl.setVisibility(View.GONE);
             } else {
                 item_tabao_rl.setVisibility(View.GONE);
             }

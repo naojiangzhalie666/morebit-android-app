@@ -194,6 +194,7 @@
 
             <!--淘宝绑定-->
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/item_tabao_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
