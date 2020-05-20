@@ -2,7 +2,10 @@ package com.zjzy.morebit.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.JdListAdapter;
@@ -46,7 +53,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     @BindView(R.id.searchNullTips_ly)
     LinearLayout searchNullTips_ly;
     @BindView(R.id.listview)
-    ReUseListView mRecyclerView;
+    RecyclerView mRecyclerView;
     @BindView(R.id.dataList_ly)
     LinearLayout dataList_ly;
 
@@ -82,6 +89,9 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     private boolean isSupport = false;//自营是否选中
     private String coupon = "0";
     private String self = "0";
+    private int page=1;
+    private SmartRefreshLayout mSwipeList;
+
 
 
     public static SearchResultForJdFragment newInstance(int type) {
@@ -144,8 +154,6 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
 
     public void initView(View view) {
-
-        mRecyclerView.setOnReLoadListener(this);
         title_comprehensive_tv = view.findViewById(R.id.title_comprehensive_tv);//综合
 
         mTitleSalesVolumeLl = view.findViewById(R.id.title_sales_volume_ll);//销量
@@ -175,6 +183,18 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         title_coupon_ll.setOnClickListener(this);
         title_support_ll.setOnClickListener(this);
         getFirstData(keyWord);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        //设置图标的间距
+        mRecyclerView.setLayoutManager(manager);
+        mSwipeList=view.findViewById(R.id.swipeList);
+        mSwipeList.setEnableRefresh(false);
+        mSwipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                onReload();
+            }
+        });
 
     }
 
@@ -195,15 +215,15 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     public void getFirstData(String keyWords) {
 
         if (TextUtils.isEmpty(keyWords)) {
-            mRecyclerView.getSwipeList().setRefreshing(false);
+         //   mRecyclerView.getSwipeList().setRefreshing(false);
             if (!isUserHint){
                 ViewShowUtils.showShortToast(getActivity(), "请输入搜索内容");
             }
             return;
         }
         keyWord = keyWords;
-        mRecyclerView.getListView().setNoMore(false);
-        mRecyclerView.getSwipeList().setRefreshing(true);
+      //  mRecyclerView.getListView().setNoMore(false);
+      //  mRecyclerView.getSwipeList().setRefreshing(true);
         onReload();
 
     }
@@ -341,11 +361,8 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     public void onReload() {
-        if (mRecyclerView == null) return;
-        mRecyclerView.getListView().setNoMore(false);
-        if (mRecyclerView.getSwipeList() != null)
-            mRecyclerView.getSwipeList().setRefreshing(true);
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
+        programCatItemBean.setPage(page);
         programCatItemBean.setKeyword(keyWord);
         if (eSortDirection == 0) {
             programCatItemBean.setOrder("desc");
@@ -387,9 +404,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     public void setJd(List<ShopGoodInfo> data, int loadType) {
-        mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
-        removeNetworkError(mRecyclerView.getListviewSuper());
-        if (loadType == C.requestType.initData) {
+        if (page==1) {
             //mData.clear();
             mAdapter = new JdListAdapter(getActivity(), data);
             mRecyclerView.setAdapter(mAdapter);
@@ -407,7 +422,5 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     public void showFinally() {
-        if (mRecyclerView.getSwipeList() != null)
-            mRecyclerView.getSwipeList().setRefreshing(false);
     }
 }
