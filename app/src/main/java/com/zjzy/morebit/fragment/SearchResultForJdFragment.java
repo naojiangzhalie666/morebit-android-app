@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.JdListAdapter;
@@ -42,7 +43,7 @@ import butterknife.BindView;
  * 京东的搜索结果展示
  */
 
-public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> implements PddContract.View, ReUseListView.OnReLoadListener, View.OnClickListener {
+public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> implements PddContract.View, View.OnClickListener {
 
     private JdListAdapter mAdapter;
     private String keyWord = "";
@@ -187,7 +188,14 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         //设置图标的间距
         mRecyclerView.setLayoutManager(manager);
         mSwipeList=view.findViewById(R.id.swipeList);
-        mSwipeList.setEnableRefresh(false);
+        mSwipeList.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page=1;
+                onReload();
+                refreshLayout.finishRefresh(true);//刷新完成
+            }
+        });
         mSwipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -224,6 +232,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         keyWord = keyWords;
       //  mRecyclerView.getListView().setNoMore(false);
       //  mRecyclerView.getSwipeList().setRefreshing(true);
+        page=1;
         onReload();
 
     }
@@ -359,7 +368,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         }
     }
 
-    @Override
+
     public void onReload() {
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
         programCatItemBean.setPage(page);
@@ -375,22 +384,8 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         mPresenter.getJdGoodsList(this, programCatItemBean, C.requestType.initData);
     }
 
-    @Override
-    public void onLoadMore() {
-        ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
-        programCatItemBean.setCoupon(coupon);
-        programCatItemBean.setKeyword(keyWord);
-        if (eSortDirection == 0) {
-            programCatItemBean.setOrder("desc");
-        } else {
-            programCatItemBean.setOrder("asc");
-        }
-        programCatItemBean.setSort(String.valueOf(mSortType));
-        programCatItemBean.setSelf(self);
-        mPresenter.getJdGoodsList(this, programCatItemBean, C.requestType.loadMore);
-    }
 
-    ArrayList<ShopGoodInfo> mData = new ArrayList<>();
+
 
     @Override
     public void setPdd(List<ShopGoodInfo> data, int loadType) {
@@ -404,20 +399,24 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     public void setJd(List<ShopGoodInfo> data, int loadType) {
-        if (page==1) {
-            //mData.clear();
-            mAdapter = new JdListAdapter(getActivity(), data);
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            // rl_list.getListView().refreshComplete(10);
-
-            mAdapter.setData(data);
+        if (data!=null && data.size() != 0){
+            if (page==1) {
+                //mData.clear();
+                mAdapter = new JdListAdapter(getActivity(), data);
+                mRecyclerView.setAdapter(mAdapter);
+            } else {
+                // rl_list.getListView().refreshComplete(10);
+                mAdapter.setData(data);
+                mSwipeList.finishLoadMore(false);
+            }
         }
+
     }
 
     @Override
     public void setJdError(int loadType) {
-
+//        dataList_ly.setVisibility(View.GONE);
+//        searchNullTips_ly.setVisibility(View.VISIBLE);
     }
 
     @Override

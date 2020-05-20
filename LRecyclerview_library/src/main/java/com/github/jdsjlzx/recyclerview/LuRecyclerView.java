@@ -259,12 +259,6 @@ public class LuRecyclerView extends RecyclerView {
         mFootView.setVisibility(GONE);
     }
     /**
-     * 隐藏footerview
-     */
-    public void setRemoveLoadMoreFooter() {
-        mFootView.setVisibility(GONE);
-    }
-    /**
      * 到底加载是否可用
      */
     public void setLoadMoreEnabled(boolean enabled) {

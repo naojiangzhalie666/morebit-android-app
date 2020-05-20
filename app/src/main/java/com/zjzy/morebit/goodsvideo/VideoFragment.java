@@ -4,14 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Module.common.View.ReUseGridView;
+import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.goodsvideo.adapter.VideoGoodsAdapter;
 import com.zjzy.morebit.goodsvideo.contract.VideoContract;
@@ -29,11 +31,12 @@ import java.util.List;
  */
 public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoContract.View  {
 
-    private ReUseGridView rcy_videclass;
+    private RecyclerView rcy_videclass;
     private String cid="1";
     private VideoGoodsAdapter videoGoodsAdapter;
     private int page=1;
     private List<ShopGoodInfo>  list;
+    private SwipeRefreshLayout  swipeList;
 
 
     public static VideoFragment newInstance(String name,String id) {
@@ -75,17 +78,17 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
 
         }
         rcy_videclass = view.findViewById(R.id.rcy_videclass);
+        swipeList=view.findViewById(R.id.swipeList);
 
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         //设置图标的间距
         SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(20, 2);
-        rcy_videclass.getListView().setRemoveLoadMoreFooter();
-        rcy_videclass.getListView().setLayoutManager(manager);
-        rcy_videclass.getListView().addItemDecoration(spaceItemDecorationUtils);
-//        rcy_videclass.getSwipeList().setEnableLoadMore(true);
-//        rcy_videclass.getSwipeList().setEnableRefresh(true);
-//        rcy_videclass.getListView().setRemoveLoadMoreFooter();
-        rcy_videclass.getSwipeList().setOnRefreshListener(new OnRefreshListener() {
+
+        rcy_videclass.setLayoutManager(manager);
+        rcy_videclass.addItemDecoration(spaceItemDecorationUtils);
+
+
+        swipeList.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page=1;
@@ -93,14 +96,17 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
                 refreshLayout.finishRefresh(true);//刷新完成
             }
         });
-        rcy_videclass.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
+        swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore() {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 page++;
                 initData();
             }
         });
+
     }
+
+
 
     @Override
     protected int getViewLayout() {
@@ -131,7 +137,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
         }else{
 
             videoGoodsAdapter.loadMore(list);
-            rcy_videclass.getSwipeList().finishLoadMore(false);
+            swipeList.finishLoadMore(false);
         }
 
 
