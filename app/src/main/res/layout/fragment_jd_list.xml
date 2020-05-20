@@ -12,12 +12,16 @@
 
         <include layout="@layout/title_sort_layout"/>
 
-
-    <com.zjzy.morebit.Module.common.View.ReUseListView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/swipeList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/mListView"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"/>
+        />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>
