@@ -15,7 +15,7 @@ public class C {
     public static final String BASE_MOREBIT_DEV = "http://api.dev.morebit.com.cn";//开发
     public static final String BASE_MOREBIT_TEST = "http://api.test.morebit.com.cn";//测试
     public static final String BASE_MOREBIT_PROD = "https://api.morebit.com.cn";//正式
-
+    public static final String BASE_HOST = BuildConfig.BASE_HOST;
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;
 
@@ -54,15 +54,16 @@ public class C {
     }
 
     public String getGoodsIp() {
-        switch (serverType) {
-            case PROD:
-                return BASE_MOREBIT_PROD;
-            case TEST:
-                return BASE_MOREBIT_TEST;
-            case DEV:
-                return BASE_MOREBIT_DEV;
-        }
-        return BASE_MOREBIT_PROD;
+//        switch (serverType) {
+//            case PROD:
+//                return BASE_MOREBIT_PROD;
+//            case TEST:
+//                return BASE_MOREBIT_TEST;
+//            case DEV:
+//                return BASE_MOREBIT_DEV;
+//        }
+//        return BASE_MOREBIT_PROD;
+        return BASE_HOST;
     }
 
     public static class UrlV2 {
