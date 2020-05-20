@@ -414,8 +414,12 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     public void setJdError(int loadType) {
-        mAdapter = new JdListAdapter(getActivity(), listArray);
-        mRecyclerView.setAdapter(mAdapter);
+        if (page==1){
+            mAdapter = new JdListAdapter(getActivity(), listArray);
+            mRecyclerView.setAdapter(mAdapter);
+        }else{
+            mSwipeList.finishLoadMore(false);
+        }
 //        dataList_ly.setVisibility(View.GONE);
 //        searchNullTips_ly.setVisibility(View.VISIBLE);
     }

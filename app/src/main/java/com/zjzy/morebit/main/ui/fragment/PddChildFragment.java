@@ -232,6 +232,27 @@ public class PddChildFragment extends BaseMainFragmeng {
                 }
             }
         });
+        //简单使用
+        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == 1) {
+                    swipeRefreshLayout.setEnabled(false);//设置不可触发
+                } else if (state == 2 && canRefresh) {
+                    swipeRefreshLayout.setEnabled(true);//设置可触发
+                }
+            }
+        });
 
 
     }
