@@ -103,7 +103,7 @@ public class NumberSubFragment extends BaseFragment {
     private ImageView user_king;
     private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2;
     private ImageView grade,img_vip,img_tuanduizhang;
-    private LinearLayout vip_reward;
+    private LinearLayout vip_reward,ll4,ll5,ll3;
     private RelativeLayout vip_rl1,vip_rl3;
     private View view1,view2;
 
@@ -127,6 +127,7 @@ public class NumberSubFragment extends BaseFragment {
             initTan();
              initData();
             initPush();
+            refreshData();
         }
         return mView;
     }
@@ -206,6 +207,9 @@ public class NumberSubFragment extends BaseFragment {
         view2=headView.findViewById(R.id.view2);
         tv_huiyuan2=headView.findViewById(R.id.tv_huiyuan2);
         tv_vip2=headView.findViewById(R.id.tv_vip2);
+        ll3=headView.findViewById(R.id.ll3);
+        ll4=headView.findViewById(R.id.ll4);
+        ll5=headView.findViewById(R.id.ll5);
     }
 
     private void updataUser() {
@@ -375,6 +379,31 @@ public class NumberSubFragment extends BaseFragment {
         img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang2);
         view1.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
         view2.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
+        tv_huiyuan2.setText("会员权益");
+        tv_vip2.setText("VIP专享权益");
+        ll3.setBackgroundResource(R.mipmap.huiyuan3);
+        ll4.setVisibility(View.VISIBLE);
+        ll5.setVisibility(View.GONE);
+        tv_huiyuan2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_huiyuan2.setTextSize(18);
+                tv_vip2.setTextSize(16);
+                tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
+                tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
+                ll3.setBackgroundResource(R.mipmap.huiyuan3);
+            }
+        });
+        tv_vip2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_huiyuan2.setTextSize(16);
+                tv_vip2.setTextSize(18);
+                tv_vip2.setTextColor(Color.parseColor("#EFD3B7"));
+                tv_huiyuan2.setTextColor(Color.parseColor("#CFC5BA"));
+                ll3.setBackgroundResource(R.mipmap.vip_bg3);
+            }
+        });
 
     }
 
@@ -392,6 +421,31 @@ public class NumberSubFragment extends BaseFragment {
         img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang2);
         view1.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
         view2.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
+        tv_huiyuan2.setText("VIP专享权益");
+        tv_vip2.setText("团队长尊享权益");
+        ll3.setBackgroundResource(R.mipmap.vip_bg3);
+        ll4.setVisibility(View.VISIBLE);
+        ll5.setVisibility(View.GONE);
+        tv_huiyuan2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_huiyuan2.setTextSize(18);
+                tv_vip2.setTextSize(16);
+                tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
+                tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
+                ll3.setBackgroundResource(R.mipmap.vip_bg3);
+            }
+        });
+        tv_vip2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_huiyuan2.setTextSize(16);
+                tv_vip2.setTextSize(18);
+                tv_vip2.setTextColor(Color.parseColor("#EFD3B7"));
+                tv_huiyuan2.setTextColor(Color.parseColor("#CFC5BA"));
+                ll3.setBackgroundResource(R.mipmap.tuanduizhang_bg3);
+            }
+        });
     }
 
     /**
@@ -408,6 +462,9 @@ public class NumberSubFragment extends BaseFragment {
         tv_vip.setTextColor(Color.parseColor("#765F5F"));
         view1.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
         view2.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
+        ll3.setBackgroundResource(R.mipmap.tuanduizhang_bg3);
+        ll4.setVisibility(View.GONE);
+        ll5.setVisibility(View.VISIBLE);
 
 
     }
@@ -489,8 +546,14 @@ public class NumberSubFragment extends BaseFragment {
             }
             moreCoinBiaozhun.setText(coin1);
             Long growthValue = 50000 - info.getMoreCoin();
-            tvGrowthValue.setText(getResources().getString(R.string.vip_growth_value,
+            if (growthValue>0){
+                tvGrowthValue.setVisibility(View.VISIBLE);
+                tvGrowthValue.setText(getResources().getString(R.string.vip_growth_value,
                         growthValue.toString()));
+            }else{
+                tvGrowthValue.setVisibility(View.INVISIBLE);
+            }
+
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
             gradeForLeaderView();
@@ -507,10 +570,15 @@ public class NumberSubFragment extends BaseFragment {
                 coin1 = "成长值：" +"0/360";
                 return;
             }
+            Long growthValue = 360 - coin;
             moreCoinBiaozhun.setText(coin1);
+            if (growthValue>0){
+                tvGrowthValue.setVisibility(View.VISIBLE);
                 tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
-                        String.valueOf(360-coin)));
-
+                        growthValue.toString()));
+            }else{
+                tvGrowthValue.setVisibility(View.INVISIBLE);
+            }
             gradeForNumberView();
         }
 
