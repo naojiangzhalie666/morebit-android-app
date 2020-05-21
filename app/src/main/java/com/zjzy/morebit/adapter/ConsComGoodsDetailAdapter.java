@@ -258,6 +258,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             viewHolder.shipGoodsTv.setVisibility(View.GONE);
             viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
             viewHolder.tv_num.setVisibility(View.GONE);
+            viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
+
         }else{
             viewHolder.shipGoodsTv.setVisibility(View.VISIBLE);
             viewHolder.go_goods_detail_tv.setVisibility(View.VISIBLE);
