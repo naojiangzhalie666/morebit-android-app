@@ -103,7 +103,7 @@ import butterknife.OnClick;
 import io.reactivex.functions.Action;
 
 /**
- * 拼多多商品详情页
+ * 拼多多商品详情页 11
  */
 
 public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
@@ -1169,6 +1169,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         mHandler.removeCallbacksAndMessages(null);
+        unregisterReceiver(mRefreshBroadcastReceiver);
         super.onDestroy();
     }
 

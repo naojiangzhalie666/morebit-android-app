@@ -1,5 +1,6 @@
 package com.zjzy.morebit.info.ui.fragment;
 
+import android.app.Activity;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -150,8 +152,13 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                     mPresenter.getDetailDataForJd(OrderListFragment.this, info);
                 }else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
-                    NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
-                            mListArray.get(position).getOrderSn());
+                    if (mListArray.get(position).isSelf()){
+                        NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
+                                mListArray.get(position).getOrderSn());
+                    }else{
+                        NumberGoodsDetailsActivity.start(getActivity(), mListArray.get(position).getItemId());
+                    }
+
                 }
             }
 

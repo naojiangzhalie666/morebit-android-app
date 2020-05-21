@@ -39,7 +39,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
     private LayoutInflater mInflater;
     private Context mContext;
     private List<ShopGoodInfo> mDatas;
-    private boolean isEditor;//收藏列表是否是编辑状态
+
     private final int mBottomPadding;
 
     public JdListAdapter(Context context, List<ShopGoodInfo> data) {
@@ -60,6 +60,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
     public void setData(List<ShopGoodInfo> data) {
         if (data != null) {
             mDatas.addAll(data);
+            notifyItemRangeChanged(0,data.size());
         }
     }
 
@@ -71,7 +72,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
 
         final ViewHolder viewHolder = (ViewHolder) holder;
 
-        viewHolder.ll_bottom.setPadding(0, mBottomPadding, 0, 0);
+        viewHolder.ll_bottom.setPadding(0, 10, 0, 0);
 
 
 
@@ -178,36 +179,8 @@ public class JdListAdapter extends RecyclerView.Adapter {
     }
 
 
-    private OnAdapterClickListener onAdapterClickListener;
-
-    public interface OnAdapterClickListener {
-        void onItem(int position);
-
-        void onLongItem(int position);
-    }
-
-    public void setOnAdapterClickListener(OnAdapterClickListener listener) {
-        onAdapterClickListener = listener;
-    }
-
-    private OnSelectTagListener onSelectTagListener;
-
-    public interface OnSelectTagListener {
-        public void onSelect(int position);
-    }
-
-    public void setOnSelectTagListener(OnSelectTagListener listener) {
-        onSelectTagListener = listener;
-    }
 
 
-    public boolean isEditor() {
-        return isEditor;
-    }
-
-    public void setEditor(boolean editor) {
-        isEditor = editor;
-    }
 
 //
 //    tvDes.setText(getSpannableString(label, description));

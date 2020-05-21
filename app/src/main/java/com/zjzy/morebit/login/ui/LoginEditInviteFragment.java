@@ -123,6 +123,17 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         OpenFragmentUtils.goToLoginSimpleFragment(activity, LoginEditInviteFragment.class.getName(), bundle);
     }
 
+    public static void start(Activity activity, String phone, int loginType, WeixinInfo weixinInfo, AreaCodeBean areaCodeBean) {
+        Bundle bundle = new Bundle();
+        if (weixinInfo != null) {
+            bundle.putSerializable(C.Extras.OAUTH_WX, weixinInfo);
+        }
+        bundle.putString(C.Extras.PHONE, phone);
+        bundle.putSerializable(C.Extras.AREACODE, areaCodeBean);
+        bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+        bundle.putInt(C.Extras.loginType, loginType);
+        OpenFragmentUtils.goToLoginSimpleFragment(activity, LoginEditInviteFragment.class.getName(), bundle);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -336,6 +347,9 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                             Log.e("mEditInvitefragment",edtInvite.getText().toString());
                             LoginMainFragment.start(getActivity(),mPhone,1,mWeixinInfo,edtInvite.getText().toString());
                             return;
+                        }else if (mLoginType== C.sendCodeType.BINDWEIXIN){
+                            LoginVerifyCodeFragment.srart(getActivity(), C.sendCodeType.WEIXINREGISTER, mPhone, mEditInviteText, mWeixinInfo,mAreaCode);
+                            return;
                         }
                         LoginVerifyCodeFragment.srart(getActivity(), mLoginType, mPhone, mEditInviteText, mWeixinInfo,mAreaCode);
                       //  LoginEditPhoneFragment.start(getActivity(), mLoginType, mEditInviteText, mPhone, mWeixinInfo, mAreaCode);
@@ -400,6 +414,16 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
 
     @Override
     public void goToRegister() {
+
+    }
+
+    @Override
+    public void getLocalWx(WeixinInfo weixinInfo) {
+
+    }
+
+    @Override
+    public void getWxError(String code) {
 
     }
 

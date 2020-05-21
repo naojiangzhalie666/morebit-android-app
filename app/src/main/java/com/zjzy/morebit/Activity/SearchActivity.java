@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -65,6 +66,7 @@ import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.goods.TaobaoSearch;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.pojo.pddjd.SearchItem;
+import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ConfigListUtlis;
 import com.zjzy.morebit.utils.DensityUtil;
@@ -148,7 +150,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     boolean isShowMoreHistory = false;
     private int mSearchType = 1;
     private List<SearchHotKeyBean> mSearchHotKeyDatas;
-    private int mPlatFormType = 1;//平台类型 1：淘宝 2：拼多多
+    private int mPlatFormType = 1;//平台类型 1：淘宝 2：拼多多  3:京东
+    @BindView(R.id.status_bar)
+    View status_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +163,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     }
 
     public void inview() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //处理全屏显示
+            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
+            viewParams.height = ActivityStyleUtil.getStatusBarHeight(this);
+            status_bar.setLayoutParams(viewParams);
+        }
         mTaobaoSearchData = new ArrayList<>();
         ImmersionBar.with(this)
                 .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题

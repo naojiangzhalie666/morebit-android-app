@@ -122,12 +122,12 @@ public class FansActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                    if(position==1){
-                       rl_top.setBackgroundColor( ContextCompat.getColor(FansActivity.this, R.color.color_FFD800));
-                       status_bar.setBackgroundColor(ContextCompat.getColor(FansActivity.this, R.color.color_FFD800));
+                       rl_top.setBackgroundColor( ContextCompat.getColor(FansActivity.this, R.color.white));
+                       status_bar.setBackgroundColor(ContextCompat.getColor(FansActivity.this, R.color.white));
                   //     tabLayoutBg.setColor( ContextCompat.getColor(FansActivity.this, R.color.color_ECECEC));
                    } else {
-                       rl_top.setBackgroundColor( ContextCompat.getColor(FansActivity.this, R.color.color_FFD800));
-                       status_bar.setBackgroundColor(ContextCompat.getColor(FansActivity.this, R.color.color_FFD800));
+                       rl_top.setBackgroundColor( ContextCompat.getColor(FansActivity.this, R.color.white));
+                       status_bar.setBackgroundColor(ContextCompat.getColor(FansActivity.this, R.color.white));
                     //   tabLayoutBg.setColor( ContextCompat.getColor(FansActivity.this, R.color.white));
                    }
             }
@@ -180,10 +180,11 @@ public class FansActivity extends BaseActivity {
 //           tabLayoutBg = (GradientDrawable) tabLayout.getBackground();
 //        }
         //滑动渐变
-        int topBgColor = (int) evaluatorSearch.evaluate(percent, ContextCompat.getColor(this, R.color.color_FFD800), ContextCompat.getColor(this, R.color.color_FFD800));
-        int colorTabLyout = (int) evaluatorTabLyout.evaluate(percent, ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.color_ECECEC));
-        int color = (int) evaluator.evaluate(percent, ContextCompat.getColor(this, R.color.color_FFD800), ContextCompat.getColor(this, R.color.color_FFD800));
+        int topBgColor = (int) evaluatorSearch.evaluate(percent, ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.white));
+        int colorTabLyout = (int) evaluatorTabLyout.evaluate(percent, ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.white));
+        int color = (int) evaluator.evaluate(percent, ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.white));
      //  tabLayoutBg.setColor(colorTabLyout);
+        tabLayout.setIndicatorColor(ContextCompat.getColor(this, R.color.color_F05557));
        rl_top.setBackgroundColor(topBgColor);
         status_bar.setBackgroundColor(color);
     }

@@ -373,15 +373,6 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         //商品信息
         LoadImgUtils.setImg(NumberOrderDetailActivity.this,imgGoodsView,info.getGoodsUrl());
         goodsNameView.setText(info.getDetail());
-        String commission = info.getCommission();
-        if (TextUtils.isEmpty(commission)){
-            goodsYugushouyi.setVisibility(View.GONE);
-        }else{
-            goodsYugushouyi.setVisibility(View.VISIBLE);
-            goodsYugushouyi.setText(getResources().getString(R.string.number_goods_yugushouyi,
-                    commission));
-        }
-
         double goodsPrice = info.getGoodsPrice();
         int number = info.getNumber();
         goodsPriceView.setText(getResources().getString(R.string.number_goods_price,

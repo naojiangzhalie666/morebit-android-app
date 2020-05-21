@@ -19,11 +19,11 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
 
 
     @Override
-    public void register(RxFragment baseFragment, String phone, String verifyCode, String invitationCode, String areaCode) {
+    public void register(RxFragment baseFragment, String phone, String verifyCode, String invitationCode, String areaCode,String oauthWx) {
         if (AppUtil.isFastCashMoneyClick(500)) {
             return;
         }
-        mModel.register(baseFragment, phone, verifyCode, invitationCode, areaCode)
+        mModel.register(baseFragment, phone, verifyCode, invitationCode, areaCode,oauthWx)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {

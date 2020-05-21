@@ -188,6 +188,23 @@ public class DateTimeUtils {
         }
 
     }
+    /**
+     * 获取当前时间
+     *
+     * @return
+     */
+    public static String getNowMMDD(Long time ) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
+            Date curDate = new Date(time);//获取当前时间
+            String str = formatter.format(curDate);
+            return str;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "1/1/1";
+        }
+
+    }
 
     /**
      * 获取当前时间-传入格式 yyyy-MM-dd HH:mm:ss
@@ -732,7 +749,27 @@ public class DateTimeUtils {
         return format;
     }
 
+    /**
+     * yyyy-MM-dd HH:mm:ss 数据转换为MM-dd
+     * @param time
+     * @return
+     */
+    public static String formatMMddForEndTime(String time){
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat mmdd = new SimpleDateFormat("MM-dd");
+        String format = null;
+        try {
+            if (time != null && time.length() > 5){
+                format = mmdd.format(simpleDateFormat.parse(time));
+            }else{
+                format = time;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return format;
+    }
 
     public static void main(String[] args) {
 

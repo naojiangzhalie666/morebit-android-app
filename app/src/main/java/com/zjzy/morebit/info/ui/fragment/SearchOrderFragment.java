@@ -2,6 +2,7 @@ package com.zjzy.morebit.info.ui.fragment;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
@@ -27,6 +29,7 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.order.ui.NumberOrderDetailActivity;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.FloorBean;
@@ -216,9 +219,42 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
                     ShopGoodInfo mGoodsInfo=new ShopGoodInfo();
                     mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForPdd(SearchOrderFragment.this, mGoodsInfo);
+                } else if (type==10){
+                    if (mListArray.get(position).isSelf()){//进订单
+                        NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
+                                mListArray.get(position).getOrderSn());
+                    }else{//进商品
+                        NumberGoodsDetailsActivity.start(getActivity(), mListArray.get(position).getItemId());
+                    }
                 }else{
                     ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                 }
+            }
+        });
+
+        consComGoodsDetailAdapter.setOnSelfOrderClickListener(new ConsComGoodsDetailAdapter.OnSelfOrderClickListener() {
+            @Override
+            public void onReceiveGoods(String orderId, int position) {
+                //确认收货
+                mPresenter.ConfirmReceiveGoods(SearchOrderFragment.this,orderId);
+            }
+
+            @Override
+            public void onShip(String orderId, int position) {
+                //调用查看物流接口
+                String originUrl = mListArray.get(position).getShipUrl();
+                if (!TextUtils.isEmpty(originUrl)){
+                    originUrl = originUrl+"?orderId="+orderId;
+                    ShowWebActivity.start(getActivity(),originUrl,"物流信息");
+                }else{
+                    MyLog.d("test","物流url为空");
+                }
+            }
+
+            @Override
+            public void onPay(String orderId, int position) {
+                //去支付或者取消
+                NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),orderId);
             }
         });
     }

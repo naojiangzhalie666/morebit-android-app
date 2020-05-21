@@ -81,12 +81,12 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
 //                }
 
 
-        if (BuildConfig.IS_IP==0){
-            mMSearviceIpRl.setVisibility(View.VISIBLE);
-           // SPUtils.getInstance().put(C.Extras.KEY_SHOW_DEVELOPER_SETTING,true);
-        }else{
+//        if (BuildConfig.IS_IP==0){
+//            mMSearviceIpRl.setVisibility(View.VISIBLE);
+//           // SPUtils.getInstance().put(C.Extras.KEY_SHOW_DEVELOPER_SETTING,true);
+//        }else{
             mMSearviceIpRl.setVisibility(View.GONE);
-        }
+//        }
        // showDevlep = SPUtils.getInstance().getBoolean(C.Extras.KEY_SHOW_DEVELOPER_SETTING, false);
 
     }

@@ -30,6 +30,15 @@ public class ProgramCatItemBean implements Serializable {
     private String sort;
     private String self;
     private String coupon;
+    private String keyword;
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     public String getOrder() {
         return order;

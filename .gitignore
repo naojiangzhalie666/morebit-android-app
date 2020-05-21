@@ -8,3 +8,8 @@
 /captures
 .externalNativeBuild
 /.idea
+<<<<<<< HEAD
+kepler/build
+=======
+kepler/build
+>>>>>>> dev-1.3.0

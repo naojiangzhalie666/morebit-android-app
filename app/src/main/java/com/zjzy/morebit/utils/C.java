@@ -15,7 +15,7 @@ public class C {
     public static final String BASE_MOREBIT_DEV = "http://api.dev.morebit.com.cn";//开发
     public static final String BASE_MOREBIT_TEST = "http://api.test.morebit.com.cn";//测试
     public static final String BASE_MOREBIT_PROD = "https://api.morebit.com.cn";//正式
-
+    public static final String BASE_HOST = BuildConfig.BASE_HOST;
     //本地
 //    public static final String BASE_YUMIN = BuildConfig.BASE_HOST;
 
@@ -53,38 +53,28 @@ public class C {
         return instance;
     }
 
- /*   public String getGoodsIp() {
-        switch (serverType) {
-            case PROD:
-                return BASE_MOREBIT_PROD;
-            case TEST:
-                return BASE_MOREBIT_TEST;
-            case DEV:
-                return BASE_MOREBIT_DEV;
-        }
-        return BASE_MOREBIT_PROD;
-    }*/
-
     public String getGoodsIp() {
-        switch (serverType) {
-            case PROD:
-                return BASE_MOREBIT_TEST;
-            case TEST:
-                return BASE_MOREBIT_TEST;
-            case DEV:
-                return BASE_MOREBIT_TEST;
-        }
-        return BASE_MOREBIT_TEST;
+//        switch (serverType) {
+//            case PROD:
+//                return BASE_MOREBIT_PROD;
+//            case TEST:
+//                return BASE_MOREBIT_TEST;
+//            case DEV:
+//                return BASE_MOREBIT_DEV;
+//        }
+//        return BASE_MOREBIT_PROD;
+        return BASE_HOST;
     }
+
     public static class UrlV2 {
         //用户模块调用
-     //   public static final String USERS = BASE_MOREBIT;
+        //   public static final String USERS = BASE_MOREBIT;
         //商品模块调用
-     //   public static final String GOODS = BASE_MOREBIT;
+        //   public static final String GOODS = BASE_MOREBIT;
         //系统模块
-    //    public static final String SYSTE = BASE_MOREBIT;
+        //    public static final String SYSTE = BASE_MOREBIT;
         //订单模块
-     //   public static final String ORDERS = BASE_MOREBIT;
+        //   public static final String ORDERS = BASE_MOREBIT;
     }
 
     public static class Setting {
@@ -481,6 +471,13 @@ public class C {
         public static final String B1000004 = "B1000004"; //查询每日爆款失败
         public static final String B10301 = "B10301"; //不在提现时间
         public static final String B30401 = "B30401"; //天猫国际和飞猪的错误码
+        public static final String B10358 = "B10358"; //此账号未绑定微信号
+        public static final String B10011 = "B10011"; //该微信未注册,跳转到注册界面
+        public static final String B10357 = "B10357"; //扫码来的用户，手机号为空
+        public static final String B10009 = "B10009"; //此微信已绑定其他用户
+        public static final String B800430 = "B800430"; //该手机号已有用户使用
+        public static final String B1000007 = "B1000007"; //用户未注册，请先注册
+
     }
 
 
