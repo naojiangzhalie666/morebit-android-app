@@ -54,7 +54,7 @@ public class NumberSwipeRefreshLayout extends SmartRefreshLayout {
 
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         headRefresh = new NumberlHeadRefresh(context);
-        headRefresh.setBackgroundColor(Color.parseColor("#333333"));
+        headRefresh.setBackgroundColor(Color.parseColor("#EDCFB1"));
         headRefresh.setLayoutParams(layoutParams);
         addView(headRefresh, 0);
 

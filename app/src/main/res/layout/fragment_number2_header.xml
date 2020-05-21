@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<!--    <android.support.v4.widget.NestedScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
 
     <!--背景图-->
@@ -43,6 +43,7 @@
                     app:riv_oval="true" />
 
                 <ImageView
+                    android:id="@+id/grade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="34dp"
@@ -50,6 +51,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -83,6 +85,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/vip_rl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -133,7 +136,7 @@
                         android:textSize="@dimen/sp_12" />
 
                     <TextView
-                        android:id="@+id/tv_growth_value"
+                        android:id="@+id/vip_more_growth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -156,7 +159,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
-
+                    android:visibility="gone"
                     android:id="@+id/vip_reward"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -269,7 +272,7 @@
 
 
                 <TextView
-                    android:id="@+id/vip_more_growth"
+                    android:id="@+id/tv_growth_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/vip_reward"
@@ -291,6 +294,7 @@
                 android:orientation="horizontal" />
 
             <TextView
+                android:id="@+id/btn_number_update_vip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/vip_ll"
@@ -303,6 +307,7 @@
         </RelativeLayout>
         <!-- 团队长-->
         <RelativeLayout
+            android:id="@+id/vip_rl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -451,6 +456,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/rl3"
         android:layout_below="@+id/ll3"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
@@ -483,6 +489,63 @@
         </LinearLayout>
 
     </RelativeLayout>
-    </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:id="@+id/rl4"
+            android:layout_below="@+id/rl3"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="技能课程"
+                android:textColor="#ff49a3ef"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv_more"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更多"
+                android:drawablePadding="4dp"
+                android:drawableRight="@mipmap/vip_more"
+                android:layout_alignParentRight="true"
+                android:textColor="#ff999999"
+                android:textSize="12sp"
+                />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/tv_more"
+                android:background="#03A9F4"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/rl4"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="爆款热销"
+                android:textColor="#fff05557"
+                android:drawableRight="@mipmap/vip_you"
+                android:drawableLeft="@mipmap/vip_zuo"
+                android:drawablePadding="12dp"
+                android:textSize="16dp"
+                />
+
+        </LinearLayout>
+
+
+<!--    </RelativeLayout>-->
+<!--    </android.support.v4.widget.NestedScrollView>-->
 </RelativeLayout>

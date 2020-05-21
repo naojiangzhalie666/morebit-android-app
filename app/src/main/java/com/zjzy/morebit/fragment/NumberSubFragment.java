@@ -83,7 +83,6 @@ public class NumberSubFragment extends BaseFragment {
     HorzProgressView mHorzProgressView;
 //    ImageView leader_icon;
 
-    RelativeLayout rl_duodou_progress;
     TextView updateVip;
     View headView ;
     TextView userName;
@@ -102,6 +101,9 @@ public class NumberSubFragment extends BaseFragment {
     private int page = 1;
     private ImageView user_king;
     private String extra;
+    private ImageView grade;
+    private LinearLayout vip_reward;
+    private RelativeLayout vip_rl1,vip_rl3;
 
 
 
@@ -117,11 +119,11 @@ public class NumberSubFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         if (mView == null) {
             mView = inflater.inflate(R.layout.fragment_number_sub, container, false);
-            headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number_header, null);
+            headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number2_header, null);
             initHeadView(headView);
             initView(mView);
             initTan();
-            initData();
+             initData();
             initPush();
         }
         return mView;
@@ -158,7 +160,7 @@ public class NumberSubFragment extends BaseFragment {
             @Override
             public void onReload() {
                 page = 1;
-                refreshData();
+                 refreshData();
             }
 
             @Override
@@ -182,31 +184,24 @@ public class NumberSubFragment extends BaseFragment {
 
 
     private void initHeadView(View headView){
-
-        txtWelcome = (TextView)headView.findViewById(R.id.txt_number_welcome_hint);
         userName = (TextView)headView.findViewById(R.id.user_name);
         mUserIcon = (RoundedImageView)headView.findViewById(R.id.userIcon);
-        myGradedView = (TextView)headView.findViewById(R.id.tv_user_type);
-//        numberGradeName = (TextView)headView.findViewById(R.id.number_grade_name);
-        moreCoinBiaozhun = (TextView)headView.findViewById(R.id.more_corn_biaozhun);
-        cardNumber = (RoundedImageView)headView.findViewById(R.id.card_number);
-        cardVip = (RoundedImageView)headView.findViewById(R.id.card_vip);
-        cardLeader = (RoundedImageView)headView.findViewById(R.id.card_leader);
-        mHorzProgressView = (HorzProgressView)headView.findViewById(R.id.horzProgressView);
-        rl_duodou_progress = (RelativeLayout)headView.findViewById(R.id.rl_duodou_progress);
-
-        updateVip = (TextView) headView.findViewById(R.id.btn_number_update_vip);
-        tvUserType= (TextView)headView.findViewById(R.id.tv_user_type);
-        llUserGrade = (LinearLayout)headView.findViewById(R.id.ll_user_grade);
+         moreCoinBiaozhun = (TextView)headView.findViewById(R.id.more_corn_biaozhun);
+         mHorzProgressView = (HorzProgressView)headView.findViewById(R.id.horzProgressView);
+//
+         updateVip = (TextView) headView.findViewById(R.id.btn_number_update_vip);
         tvGrowthValue = (TextView)headView.findViewById(R.id.tv_growth_value);
-        user_king = headView.findViewById(R.id.user_king);
+        grade=(ImageView) headView.findViewById(R.id.grade);
+        vip_reward=headView.findViewById(R.id.vip_reward);
+        vip_rl1=headView.findViewById(R.id.vip_rl1);
+        vip_rl3=headView.findViewById(R.id.vip_rl3);
     }
 
     private void updataUser() {
 
         UserInfo  mUserInfo = UserLocalData.getUser(getActivity());
         if (mUserInfo != null) {
-            initViewData(mUserInfo);
+          initViewData(mUserInfo);
         }
 
 
@@ -214,7 +209,7 @@ public class NumberSubFragment extends BaseFragment {
     }
 
     private void getData() {
-        getNumberGoodsListPresenter(this, page);
+         getNumberGoodsListPresenter(this, page);
     }
 
 
@@ -264,28 +259,14 @@ public class NumberSubFragment extends BaseFragment {
 
     private void initViewData(UserInfo info) {
 
-        if (C.UserType.member.equals(info.getPartner())) {
-            tvUserType.setText("会员");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
-            user_king.setVisibility(View.GONE);
 
-        } else if (C.UserType.vipMember.equals(info.getPartner())) {
-            tvUserType.setText("VIP");
-            llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
-            user_king.setVisibility(View.GONE);
-        } else if (C.UserType.operator.equals(info.getPartner())) {
-            tvUserType.setText("团队长");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
-            user_king.setVisibility(View.GONE);
-
-        }
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
             mUserIcon.setImageResource(R.drawable.head_icon);
         } else {
             LoadImgUtils.setImgCircle(getActivity(), mUserIcon, info.getHeadImg(), R.drawable.head_icon);
         }
         userName.setText(info.getNickName());
-        refreshUserInfo(info);
+         refreshUserInfo(info);
         String userType = info.getUserType();
         if (C.UserType.operator.equals(userType)){
             updateVip.setVisibility(View.GONE);
@@ -317,7 +298,7 @@ public class NumberSubFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshData();
+       refreshData();
 
     }
 
@@ -373,11 +354,11 @@ public class NumberSubFragment extends BaseFragment {
      * number的view
      */
     private void gradeForNumberView(){
+        vip_rl1.setVisibility(View.VISIBLE);
+        vip_rl3.setVisibility(View.GONE);
+        vip_reward.setVisibility(View.GONE);
+        grade.setImageResource(R.mipmap.icon_huiyuan);
 
-          cardNumber.setVisibility(View.VISIBLE);
-          cardVip.setVisibility(View.GONE);
-          cardLeader.setVisibility(View.GONE);
-        txtWelcome.setText(getResources().getString(R.string.number_welcome_hint));
 
     }
 
@@ -385,21 +366,20 @@ public class NumberSubFragment extends BaseFragment {
      * vip的view
      */
     private void gradeForVipView(){
-        cardVip.setVisibility(View.VISIBLE);
-        cardNumber.setVisibility(View.GONE);
-        cardLeader.setVisibility(View.GONE);
-        txtWelcome.setText(getResources().getString(R.string.vip_welcome_hint));
-
+        grade.setImageResource(R.mipmap.icon_vip);
+        vip_reward.setVisibility(View.VISIBLE);
+        vip_rl1.setVisibility(View.VISIBLE);
+        vip_rl3.setVisibility(View.GONE);
     }
 
     /**
      * 团队长的view
      */
     private void gradeForLeaderView(){
-        cardNumber.setVisibility(View.GONE);
-        cardVip.setVisibility(View.GONE);
-        cardLeader.setVisibility(View.VISIBLE);
-        txtWelcome.setText(getResources().getString(R.string.tuandui_welcome_hint));
+        vip_rl1.setVisibility(View.GONE);
+        vip_rl3.setVisibility(View.VISIBLE);
+        grade.setImageResource(R.mipmap.icon_tuanduizhang);
+        vip_reward.setVisibility(View.GONE);
 
     }
 
@@ -469,12 +449,8 @@ public class NumberSubFragment extends BaseFragment {
         }
 
         if (C.UserType.vipMember.equals(info.getUserType())){
-            rl_duodou_progress.setVisibility(View.VISIBLE);
             mHorzProgressView.setMax(50000.00);
             mHorzProgressView.setCurrentNum(info.getMoreCoin());
-            llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
-            myGradedView.setText("VIP");
-            updateVip.setVisibility(View.VISIBLE);
             Long moreCoin = info.getMoreCoin();
             String coin1 ;
             if (moreCoin == null){
@@ -484,24 +460,12 @@ public class NumberSubFragment extends BaseFragment {
             }
             moreCoinBiaozhun.setText(coin1);
             Long growthValue = 50000 - info.getMoreCoin();
-            if (growthValue > 0 ){
-                tvGrowthValue.setText(getResources().getString(R.string.vip_growth_value,
+            tvGrowthValue.setText(getResources().getString(R.string.vip_growth_value,
                         growthValue.toString()));
-            }else {
-                tvGrowthValue.setText("立即升级尊享高佣权益");
-            }
-            user_king.setVisibility(View.GONE);
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
-            myGradedView.setText("团队长");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
-            rl_duodou_progress.setVisibility(View.GONE);
-            user_king.setVisibility(View.GONE);
-            updateVip.setVisibility(View.GONE);
-
             gradeForLeaderView();
         }else{
-            rl_duodou_progress.setVisibility(View.VISIBLE);
             mHorzProgressView.setMax(360.00);
             Long coin = info.getMoreCoin();
             String coin1 ;
@@ -513,19 +477,11 @@ public class NumberSubFragment extends BaseFragment {
                 coin1 = "成长值：" +"0/360";
                 return;
             }
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
-            user_king.setVisibility(View.GONE);
             moreCoinBiaozhun.setText(coin1);
-            if (coin < 360){
                 tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
                         String.valueOf(360-coin)));
-            }else{
-                tvGrowthValue.setText("立即升级尊享高佣权益");
-            }
-           // leader_icon.setVisibility(View.GONE);
-            myGradedView.setText("会员");
+
             gradeForNumberView();
-            updateVip.setVisibility(View.VISIBLE);
         }
 
 
