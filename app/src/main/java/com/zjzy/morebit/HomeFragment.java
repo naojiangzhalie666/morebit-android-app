@@ -940,7 +940,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                             //引导页切换，page为当前页位置，从0开始
                         }
                     })
-                    .alwaysShow(false)//是否每次都显示引导层，默认false，只显示一次
+                    .alwaysShow(true)//是否每次都显示引导层，默认false，只显示一次
                     .setShowCounts(1)
                     .addGuidePage(//添加一页引导页
                             GuidePage.newInstance()//创建一个实例
