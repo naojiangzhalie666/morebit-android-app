@@ -93,6 +93,7 @@
                 android:background="@color/color_F8F8F8" />
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/item9_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -193,6 +194,7 @@
 
             <!--淘宝绑定-->
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/item_tabao_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -243,6 +245,7 @@
             <View style="@style/line_f1f1f1"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/ll_weichat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

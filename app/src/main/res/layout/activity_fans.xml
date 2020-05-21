@@ -17,14 +17,14 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:background="@color/color_FFD800">
+        android:background="@color/white">
         <ImageView
             android:id="@+id/iv_back"
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/btn_title_return_icon_white" />
+            android:src="@drawable/icon_return" />
 
 
         <com.flyco.tablayout.SlidingTabLayout
@@ -33,11 +33,11 @@
             android:layout_height="27dp"
             android:layout_centerInParent="true"
             tl:tl_indicator_width="20dp"
-            tl:tl_bar_color="@color/color_F7F7F7"
+            tl:tl_bar_color="#FF645B"
             tl:tl_bar_stroke_width="10dp"
             tl:tl_tab_padding="15dp"
-            tl:tl_textSelectColor="@color/color_FFFFFF"
-            tl:tl_textUnselectColor="@color/color_FFFFFF"
+            tl:tl_textSelectColor="#FF645B"
+            tl:tl_textUnselectColor="#333333"
             tl:tl_textsize="16sp" />
 
 
@@ -47,8 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/icon_college_search_white" />
+            android:padding="10dp"
+            android:src="@mipmap/btn_search_black" />
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager

@@ -17,6 +17,15 @@ public class UpdateInfoBean implements Serializable {
      * 当前用户的剩余多豆
      */
     private Long moreCoin;
+    private String calculationRate;//佣金比例
+
+    public String getCalculationRate() {
+        return calculationRate;
+    }
+
+    public void setCalculationRate(String calculationRate) {
+        this.calculationRate = calculationRate;
+    }
 
     public Integer getUserType() {
         return userType;

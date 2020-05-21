@@ -45,7 +45,7 @@ public class WechatUtil {
             req.path = url;
         }
         req.userName = userName;//小程序原始id
-        req.miniprogramType = BuildConfig.ENV_TYPE == 4 ? WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE : WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW;
+        req.miniprogramType = BuildConfig.ENV_TYPE == 3 ? WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE : WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW;
         iwxapi.sendReq(req);
     }
 }

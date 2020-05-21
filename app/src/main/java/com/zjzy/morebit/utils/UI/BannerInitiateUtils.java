@@ -573,6 +573,10 @@ public class BannerInitiateUtils {
         setBrandBanner(activity, data, banner, aspectRatioView, BannerConfig.RIGHT);
     }
 
+    public static void setJpBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView) {
+        setBrandBanner(activity, data, banner, aspectRatioView, BannerConfig.NOT_INDICATOR);
+    }
+
     public static void setBrandBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView, int bannerConfigType) {
         final int bannerId = banner.getId();
         if (data == null || data.size() == 0) {

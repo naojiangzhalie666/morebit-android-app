@@ -89,6 +89,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
             viewHolder.createTime.setText(info.getCreateTime());
         }
 
+        viewHolder.name.setText(info.getNickName());
 
         viewHolder.userLevel.setText(info.getGrade());
         if(C.UserType.member.equals(info.getUserType()+"")){
@@ -142,7 +143,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView userIcon;
-        TextView phone, userLevel, createTime, people_count,tv_remark,input_remark,authorization;
+        TextView phone, userLevel, createTime, people_count,tv_remark,input_remark,authorization,name;
         View bottomLine;
         RelativeLayout item_ly;
 
@@ -159,6 +160,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
             input_remark = (TextView) itemView.findViewById(R.id.input_remark);
             people_count = (TextView) itemView.findViewById(R.id.people_count);
             authorization=itemView.findViewById(R.id.authorization);
+            name = (TextView) itemView.findViewById(R.id.name);
         }
     }
 

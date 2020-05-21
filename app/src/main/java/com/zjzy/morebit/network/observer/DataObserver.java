@@ -101,7 +101,7 @@ public abstract class DataObserver<T> extends BaseDataObserver<T> {
 
             case C.requestCode.B10035://  不存在的邀请码
             case C.requestCode.B10003://密码不正确不做提示
-            case C.requestCode.B10005://登录跳转不做提示
+          //  case C.requestCode.B10005://登录跳转不做提示
             case C.requestCode.B10010:
             case C.requestCode.B10031:
             case C.requestCode.B10051:
@@ -109,6 +109,10 @@ public abstract class DataObserver<T> extends BaseDataObserver<T> {
             case C.requestCode.B1000004:
             case C.requestCode.B30401:
             case C.requestCode.B10040://用户未绑定微信
+            case C.requestCode.B10357://扫码来的用户，手机号为空
+            case C.requestCode.B10005://号码已被注册 前去微信绑定
+            case C.requestCode.B10358://此账号未绑定微信号
+
                 onError(data.getMsg() + "", data.getCode());
                 break;
             default:

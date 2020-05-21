@@ -51,26 +51,38 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我是昵称啊啊"
+                    android:textColor="#ff333333"
+                    android:maxEms="6"
+                    android:ellipsize="end"
+                    android:textSize="14sp"
+                    />
+                <TextView
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
-                    android:gravity="left"
+                   android:layout_toRightOf="@+id/name"
                     android:lineSpacingExtra="4dp"
                     android:lines="1"
                     android:maxLines="1"
-                    android:text=""
-                    android:textColor="@color/color_333333"
+                    android:text="15600716026"
+                    android:textColor="@color/color_999999"
+                    android:layout_marginLeft="12dp"
                     android:textSize="15sp" />
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/userLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_toRightOf="@+id/phone"
                     android:background="@drawable/bg_corners_ff645b_30"
                     android:gravity="center"

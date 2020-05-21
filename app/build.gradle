@@ -103,37 +103,31 @@ android {
         //多渠道包的输出目录，默认为new File(project.buildDir,"channel")
         baseOutputDir = new File(project.buildDir, "apk")
         //多渠道包的命名规则，默认为：${appName}-${versionName}-${versionCode}-${flavorName}-${buildType}
-        apkNameFormat = "morebit1.0" + '-${versionName}-${versionCode}-${flavorName}-${buildType}'
+        apkNameFormat = "morebit" + '-${versionName}-${versionCode}-${flavorName}-${buildType}'
     }
     flavorDimensions "cooperator"
     productFlavors {
         //开发环境
-        develop {
-            buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
+        flavors_develop {
+            buildConfigField "String", "BASE_HOST", '"http://api.dev.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "1"
             dimension "cooperator"
-            buildConfigField "int", "IS_IP", "0"        //0 环境切换  1不切换   上线前一定要记得换回1
+
 
         }
         //测试Uat环境
-        uat {
-            buildConfigField "String", "BASE_HOST", '"http://api.morebit.com.cn"'
+        flavors_uat {
+            buildConfigField "String", "BASE_HOST", '"http://api.test.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "2"
             dimension "cooperator"
-            buildConfigField "int", "IS_IP", "0"        //0 环境切换  1不切换   上线前一定要记得换回1
+
         }
-        pp {
-            buildConfigField "String", "BASE_HOST", '"http://pp.markermall.com"'
+
+        //生产环境
+        flavors_product {
+            buildConfigField "String", "BASE_HOST", '"https://api.morebit.com.cn"'
             buildConfigField "int", "ENV_TYPE", "3"
             dimension "cooperator"
-            buildConfigField "int", "IS_IP", "0"        //0 环境切换  1不切换   上线前一定要记得换回1
-        }
-        //生产环境
-        product {
-            buildConfigField "String", "BASE_HOST", '"https://api.morebit.com.cn"'
-            buildConfigField "int", "ENV_TYPE", "4"
-            dimension "cooperator"
-            buildConfigField "int", "IS_IP", "1"        //0 环境切换  1不切换   上线前一定要记得换回1
         }
     }
 
@@ -455,6 +449,8 @@ dependencies {
     //没有使用特殊Header和Footer，可以不加下面这行
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
     implementation project(':kepler')
+    //轮播缩放效果
+    implementation 'com.tokiii:reveal-banner:1.0.2'
 
 
 }

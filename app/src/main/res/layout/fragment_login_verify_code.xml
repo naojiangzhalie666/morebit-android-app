@@ -4,201 +4,324 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_root"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    >
 
-    <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="0px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
-
-    <RelativeLayout
-        android:id="@+id/head"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@mipmap/login_head_bg"
-            />
+        android:layout_height="match_parent">
         <RelativeLayout
-            android:id="@+id/rl"
+            android:id="@+id/rl_root"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="0px"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+            <RelativeLayout
+                android:id="@+id/head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/login_head_bg"
+                    />
+                <RelativeLayout
+                    android:id="@+id/rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/closs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/retrun_white" />
+
+                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/login_logo_bg"
+                    android:layout_marginTop="100dp"
+
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/rl_c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/head"
+                android:layout_marginTop="95dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/login_head_icon"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="38dp"
+                    android:text="手机号快速登录"
+                    android:textColor="#ff333333"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="38dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="34dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/areaCodeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+86"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/sp_16" />
+
+                    <com.zjzy.morebit.view.ClearEditText
+                        android:id="@+id/edtPhone"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="9dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="请输入手机号码"
+                        android:inputType="number"
+                        android:maxLength="11"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/color_3A3A3A"
+                        android:textColorHint="@color/color_C0C0C0"
+                        android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                        android:textSize="16sp"
+                        app:deleteImg="@drawable/clean_icon" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="33dp"
+                    android:layout_marginRight="33dp"
+                    android:background="@color/colcor_D3D3D3" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="38dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="34dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <com.zjzy.morebit.view.ClearEditText
+                        android:id="@+id/edtsms"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="输入验证码"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/color_3A3A3A"
+                        android:textColorHint="@color/color_C0C0C0"
+                        android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                        android:textSize="16sp"
+                        app:deleteImg="@drawable/clean_icon" />
+
+
+                    <TextView
+                        android:id="@+id/getmsm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="获取验证码"
+                        android:background="@drawable/bg_color_666666_5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="33dp"
+                    android:layout_marginRight="33dp"
+                    android:background="@color/colcor_D3D3D3" />
+
+                <TextView
+                    android:id="@+id/passwordLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="23dp"
+                    android:padding="10dp"
+                    android:text="@string/login_account"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/closs"
-                android:layout_width="wrap_content"
+                android:id="@+id/next_login"
+                android:layout_below="@+id/rl_c"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:background="@mipmap/retrun_white" />
+                android:layout_marginLeft="29dp"
+                android:layout_marginRight="29dp"
+                android:layout_marginTop="66dp"
+                android:layout_marginBottom="50dp"
+                android:background="@mipmap/next_login_hiu"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="登录"
+                android:textColor="@color/colcor_999999"
+                android:textSize="16sp" />
 
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:visibility="gone"
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:src="@drawable/icon_login_back" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:textColor="@color/color_333333"
+                        android:textSize="33sp"
+                        tools:text="@string/login_input_very_code" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/very_code_sended"
+                            android:textColor="@color/color_999999"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:text="+86"
+                            android:textColor="@color/color_FFD800"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/text_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/color_FFD800"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
+                    <com.jkb.vcedittext.VerificationCodeEditText
+                        android:id="@+id/verification_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:inputType="number"
+                        android:textColor="@color/color_333333"
+                        android:textIsSelectable="true"
+                        android:textSize="24sp"
+                        app:bottomLineHeight="1dp"
+                        app:bottomLineNormalColor="@color/color_999999"
+                        app:bottomLineSelectedColor="@color/color_999999"
+                        app:figures="4"
+                        app:selectedBackgroundColor="@color/transparent"
+                        app:verCodeMargin="20dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp">
+
+                        <TextView
+                            android:id="@+id/accountLogin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:padding="10dp"
+                            android:text="@string/login_account"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/sp_14"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            android:id="@+id/send"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="34dp"
+                            android:background="@drawable/bg_white_stroke_333333_30dp"
+                            android:enabled="false"
+                            android:paddingLeft="14dp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="14dp"
+                            android:paddingBottom="4dp"
+                            android:text="@string/send_msg"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/sp_14" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/login_logo_bg"
-            android:layout_marginTop="100dp"
-
-            />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/rl_c"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/head"
-        android:layout_marginTop="95dp"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/login_head_icon"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="38dp"
-            android:text="手机号快速登录"
-            android:textColor="#ff333333"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="38dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="34dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/areaCodeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+86"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/sp_16" />
-
-            <com.zjzy.morebit.view.ClearEditText
-                android:id="@+id/edtPhone"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="9dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="请输入手机号码"
-                android:inputType="number"
-                android:maxLength="11"
-                android:paddingRight="10dp"
-                android:textColor="@color/color_3A3A3A"
-                android:textColorHint="@color/color_C0C0C0"
-                android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
-                android:textSize="16sp"
-                app:deleteImg="@drawable/clean_icon" />
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="33dp"
-            android:layout_marginRight="33dp"
-            android:background="@color/colcor_D3D3D3" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="38dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="34dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-
-            <com.zjzy.morebit.view.ClearEditText
-                android:id="@+id/edtsms"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="输入验证码"
-                android:inputType="number"
-                android:maxLength="4"
-                android:paddingRight="10dp"
-                android:textColor="@color/color_3A3A3A"
-                android:textColorHint="@color/color_C0C0C0"
-                android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
-                android:textSize="16sp"
-                app:deleteImg="@drawable/clean_icon" />
-
-
-            <TextView
-                android:id="@+id/getmsm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="获取验证码"
-                android:background="@drawable/bg_color_666666_5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp"
-                />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="33dp"
-            android:layout_marginRight="33dp"
-            android:background="@color/colcor_D3D3D3" />
-
-        <TextView
-            android:id="@+id/passwordLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="23dp"
-            android:padding="10dp"
-            android:text="@string/login_account"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/sp_12" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/next_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="29dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="29dp"
-        android:layout_marginBottom="110dp"
-        android:background="@mipmap/next_login_hiu"
-        android:enabled="false"
-        android:gravity="center"
-        android:text="登录"
-        android:textColor="@color/colcor_999999"
-        android:textSize="16sp" />
-
-
+    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
 
@@ -214,7 +337,7 @@
             android:layout_height="wrap_content"
             android:text="注册或登录即代表您已同意"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/ll_userAgreement"
@@ -222,14 +345,14 @@
             android:layout_height="wrap_content"
             android:text="《多点优选用户协议》"
             android:textColor="@color/color_EE403A"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="和"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/privateProtocol"
@@ -237,124 +360,6 @@
             android:layout_height="wrap_content"
             android:text="《隐私政策》"
             android:textColor="@color/color_EE403A"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="12dp" />
     </LinearLayout>
-
-
-    <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:visibility="gone"
-        android:orientation="vertical"
-        >
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:src="@drawable/icon_login_back" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:textColor="@color/color_333333"
-                android:textSize="33sp"
-                tools:text="@string/login_input_very_code" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/very_code_sended"
-                    android:textColor="@color/color_999999"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="+86"
-                    android:textColor="@color/color_FFD800"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/text_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/color_FFD800"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-
-            <com.jkb.vcedittext.VerificationCodeEditText
-                android:id="@+id/verification_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:inputType="number"
-                android:textColor="@color/color_333333"
-                android:textIsSelectable="true"
-                android:textSize="24sp"
-                app:bottomLineHeight="1dp"
-                app:bottomLineNormalColor="@color/color_999999"
-                app:bottomLineSelectedColor="@color/color_999999"
-                app:figures="4"
-                app:selectedBackgroundColor="@color/transparent"
-                app:verCodeMargin="20dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:id="@+id/accountLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:padding="10dp"
-                    android:text="@string/login_account"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/send"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="34dp"
-                    android:background="@drawable/bg_white_stroke_333333_30dp"
-                    android:enabled="false"
-                    android:paddingLeft="14dp"
-                    android:paddingTop="4dp"
-                    android:paddingRight="14dp"
-                    android:paddingBottom="4dp"
-                    android:text="@string/send_msg"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_14" />
-            </RelativeLayout>
-
-
-        </LinearLayout>
-    </LinearLayout>
-
-
 </RelativeLayout>

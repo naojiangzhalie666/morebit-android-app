@@ -4,6 +4,15 @@ public class RequestWeixiLoginBean extends RequestBaseBean {
 
     private String oauthWx;
     private String sign;
+    private String unionid;
+
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
+    }
 
     public String getOauthWx() {
         return oauthWx;

@@ -5,6 +5,24 @@ public class RequestCheckOutPhoneBean extends RequestBaseBean {
     private String phone;
     private int type;
     private String areaCode;
+    private String oauthWx;
+    private String unionid;
+
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
+    }
+
+    public String getOauthWx() {
+        return oauthWx;
+    }
+
+    public void setOauthWx(String oauthWx) {
+        this.oauthWx = oauthWx;
+    }
 
     public String getAreaCode() {
         return areaCode;

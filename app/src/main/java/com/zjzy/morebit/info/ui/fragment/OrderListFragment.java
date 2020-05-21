@@ -1,5 +1,6 @@
 package com.zjzy.morebit.info.ui.fragment;
 
+import android.app.Activity;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;

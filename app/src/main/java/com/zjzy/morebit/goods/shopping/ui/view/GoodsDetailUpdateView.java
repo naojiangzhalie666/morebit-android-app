@@ -192,6 +192,7 @@ public class GoodsDetailUpdateView extends RelativeLayout implements View.OnClic
             UserInfo userInfo = UserLocalData.getUser();
             userInfo.setUserType(String.valueOf(info.getUserType()));
             userInfo.setMoreCoin(info.getMoreCoin());
+            userInfo.setCalculation(info.getCalculationRate());
             UserLocalData.setUser((Activity) mContext,userInfo);
             EventBus.getDefault().post(new RefreshUserInfoEvent());
             ViewShowUtils.showShortToast(mContext,"升级成功");

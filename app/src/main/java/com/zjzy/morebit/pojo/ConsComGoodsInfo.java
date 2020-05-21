@@ -50,7 +50,6 @@ public class ConsComGoodsInfo  implements Serializable{
         isSelf = self;
     }
 
-
     public boolean isOnSale() {
         return isOnSale;
     }

@@ -282,6 +282,16 @@ public class LoginEditPhoneFragment extends MvpFragment<LoginEditPhonePresenter>
     }
 
     @Override
+    public void getLocalWx(WeixinInfo weixinInfo) {
+
+    }
+
+    @Override
+    public void getWxError(String code) {
+
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //扫描结果回调

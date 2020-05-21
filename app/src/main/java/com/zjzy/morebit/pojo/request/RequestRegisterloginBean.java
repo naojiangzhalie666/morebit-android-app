@@ -7,6 +7,15 @@ public class RequestRegisterloginBean extends  RequestBaseBean{
     private String yqmCodeOrPhone;
     private String sign;
     private String areaCode;
+    private String oauthWx;
+
+    public String getOauthWx() {
+        return oauthWx;
+    }
+
+    public void setOauthWx(String oauthWx) {
+        this.oauthWx = oauthWx;
+    }
 
     public String getAreaCode() {
         return areaCode;
