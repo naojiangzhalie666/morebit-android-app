@@ -1,6 +1,7 @@
 package com.zjzy.morebit.fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -100,10 +101,11 @@ public class NumberSubFragment extends BaseFragment {
     UserInfo mUserInfo;
     private int page = 1;
     private ImageView user_king;
-    private String extra;
-    private ImageView grade;
+    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2;
+    private ImageView grade,img_vip,img_tuanduizhang;
     private LinearLayout vip_reward;
     private RelativeLayout vip_rl1,vip_rl3;
+    private View view1,view2;
 
 
 
@@ -195,6 +197,15 @@ public class NumberSubFragment extends BaseFragment {
         vip_reward=headView.findViewById(R.id.vip_reward);
         vip_rl1=headView.findViewById(R.id.vip_rl1);
         vip_rl3=headView.findViewById(R.id.vip_rl3);
+        get_operator_growth=headView.findViewById(R.id.get_operator_growth);
+        img_vip=headView.findViewById(R.id.img_vip);
+        tv_vip=headView.findViewById(R.id.tv_vip);
+        img_tuanduizhang=headView.findViewById(R.id.img_tuanduizhang);
+        tv_tuanduizhang=headView.findViewById(R.id.tv_tuanduizhang);
+        view1=headView.findViewById(R.id.view1);
+        view2=headView.findViewById(R.id.view2);
+        tv_huiyuan2=headView.findViewById(R.id.tv_huiyuan2);
+        tv_vip2=headView.findViewById(R.id.tv_vip2);
     }
 
     private void updataUser() {
@@ -358,7 +369,12 @@ public class NumberSubFragment extends BaseFragment {
         vip_rl3.setVisibility(View.GONE);
         vip_reward.setVisibility(View.GONE);
         grade.setImageResource(R.mipmap.icon_huiyuan);
-
+        img_vip.setImageResource(R.mipmap.vip2);
+        tv_vip.setTextColor(Color.parseColor("#C4C1C1"));
+        tv_tuanduizhang.setTextColor(Color.parseColor("#C4C1C1"));
+        img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang2);
+        view1.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
+        view2.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
 
     }
 
@@ -370,6 +386,12 @@ public class NumberSubFragment extends BaseFragment {
         vip_reward.setVisibility(View.VISIBLE);
         vip_rl1.setVisibility(View.VISIBLE);
         vip_rl3.setVisibility(View.GONE);
+        img_vip.setImageResource(R.mipmap.vip3);
+        tv_vip.setTextColor(Color.parseColor("#765F5F"));
+        tv_tuanduizhang.setTextColor(Color.parseColor("#C4C1C1"));
+        img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang2);
+        view1.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
+        view2.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
     }
 
     /**
@@ -380,6 +402,13 @@ public class NumberSubFragment extends BaseFragment {
         vip_rl3.setVisibility(View.VISIBLE);
         grade.setImageResource(R.mipmap.icon_tuanduizhang);
         vip_reward.setVisibility(View.GONE);
+        tv_tuanduizhang.setTextColor(Color.parseColor("#765F5F"));
+        img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang3);
+        img_vip.setImageResource(R.mipmap.vip3);
+        tv_vip.setTextColor(Color.parseColor("#765F5F"));
+        view1.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
+        view2.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
+
 
     }
 
@@ -465,6 +494,7 @@ public class NumberSubFragment extends BaseFragment {
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
             gradeForLeaderView();
+            get_operator_growth.setText("成长值： "+info.getMoreCoin());
         }else{
             mHorzProgressView.setMax(360.00);
             Long coin = info.getMoreCoin();
