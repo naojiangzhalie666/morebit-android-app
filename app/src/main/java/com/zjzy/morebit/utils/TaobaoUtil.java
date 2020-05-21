@@ -19,6 +19,7 @@ import com.alibaba.baichuan.trade.biz.AlibcConstants;
 import com.alibaba.baichuan.trade.biz.core.taoke.AlibcTaokeParams;
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
+import com.tencent.mm.opensdk.utils.Log;
 import com.zjzy.morebit.Activity.ChannelWebActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Activity.WebViewActivity;

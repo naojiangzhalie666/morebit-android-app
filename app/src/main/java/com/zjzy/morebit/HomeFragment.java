@@ -178,7 +178,8 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     private Handler mHandler;
     private List<HomeRecommendFragment> fragments = new ArrayList<>();
     private String ischeck;
-    private boolean newPurchase=false;
+    private boolean newPurchase = false;
+
 
 
     @Override
@@ -315,10 +316,12 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
         getLoginView();
         boolean newPurchase = SPUtils.getInstance().getBoolean("newPurchase");
-        Log.e("page",newPurchase+"新人来了");
-        if (newPurchase){
+        Log.e("page", newPurchase + "新人来了");
+        if (newPurchase) {
             getPurchase();
         }
+
+
 
     }
 
@@ -353,9 +356,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                     noaurthorView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-                                return;
-                            }
                             TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity(), false);
                         }
                     });
@@ -505,7 +505,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         public Fragment getItem(int position) {
             GoodCategoryInfo homeColumn = mHomeColumns.get(position);
             if (getString(R.string.choiceness).equals(homeColumn.getName())) {
-                HomeRecommendFragment homeRecommendFragment = HomeRecommendFragment.newInstance();
+                HomeRecommendFragment  homeRecommendFragment = HomeRecommendFragment.newInstance();
                 homeRecommendFragment.setUpdateColorCallback(HomeFragment.this);
                 fragments.add(homeRecommendFragment);
                 return homeRecommendFragment;
@@ -907,155 +907,220 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
     public void showGuideSearch() {//新人引导页面
         Log.e("page", "NewbieGuide onShowed: ");
-            // GuideViewUtil.showGuideView(getActivity(), search_rl, GuideViewUtil.GUIDE_SEARCH, 0, this.mGuideNextCallback, null);
-            Animation enterAnimation = new AlphaAnimation(0f, 1f);
-            enterAnimation.setDuration(300);
-            enterAnimation.setFillAfter(true);
+        // GuideViewUtil.showGuideView(getActivity(), search_rl, GuideViewUtil.GUIDE_SEARCH, 0, this.mGuideNextCallback, null);
+        Animation enterAnimation = new AlphaAnimation(0f, 1f);
+        enterAnimation.setDuration(300);
+        enterAnimation.setFillAfter(true);
 
-            Animation exitAnimation = new AlphaAnimation(1f, 0f);
-            exitAnimation.setDuration(300);
-            exitAnimation.setFillAfter(true);
+        Animation exitAnimation = new AlphaAnimation(1f, 0f);
+        exitAnimation.setDuration(300);
+        exitAnimation.setFillAfter(true);
 
-            NewbieGuide.with(this)
-                    .setLabel("page")//设置引导层标示区分不同引导层，必传！否则报错
-                    .setOnGuideChangedListener(new OnGuideChangedListener() {
-                        @Override
-                        public void onShowed(Controller controller) {
-                            Log.e("page", "NewbieGuide onShowed: ");
-                            //引导层显示
-                        }
+        NewbieGuide.with(this)
+                .setLabel("page")//设置引导层标示区分不同引导层，必传！否则报错
+                .setOnGuideChangedListener(new OnGuideChangedListener() {
+                    @Override
+                    public void onShowed(Controller controller) {
+                        Log.e("page", "NewbieGuide onShowed: ");
+                        //引导层显示
+                    }
 
-                        @Override
-                        public void onRemoved(Controller controller) {
-                            Log.e("page", "NewbieGuide  onRemoved: ");
-                            //引导层消失（多页切换不会触发）
-                            getPurchase();
-                            SPUtils.getInstance().put("newPurchase",true);
-                        }
-                    })
-                    .setOnPageChangedListener(new OnPageChangedListener() {
-                        @Override
-                        public void onPageChanged(int page) {
-                            Log.e("page", "NewbieGuide  onPageChanged: " + page);
-                            //引导页切换，page为当前页位置，从0开始
-                        }
-                    })
-                    .alwaysShow(true)//是否每次都显示引导层，默认false，只显示一次
-                    .setShowCounts(1)
-                    .addGuidePage(//添加一页引导页
-                            GuidePage.newInstance()//创建一个实例
-                                    .addHighLight(search_rl, HighLight.Shape.ROUND_RECTANGLE)
-                                    .setLayoutRes(R.layout.view_search_guide)//设置引导页布局
-                                    .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            //引导页布局填充后回调，用于初始化
-                                            ImageView search_jump = view.findViewById(R.id.search_jump);
-                                            search_jump.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    controller.remove();
-
-
+                    @Override
+                    public void onRemoved(Controller controller) {
+                        Log.e("page", "NewbieGuide  onRemoved: ");
+                        //引导层消失（多页切换不会触发）
+                        getPurchase();
+                        SPUtils.getInstance().put("newPurchase", true);
+                    }
+                })
+                .setOnPageChangedListener(new OnPageChangedListener() {
+                    @Override
+                    public void onPageChanged(int page) {
+                        Log.e("page", "NewbieGuide  onPageChanged: " + page);
+                        //引导页切换，page为当前页位置，从0开始
+                    }
+                })
+                .alwaysShow(true)//是否每次都显示引导层，默认false，只显示一次
+                .setShowCounts(1)
+                .addGuidePage(//添加一页引导页
+                        GuidePage.newInstance()//创建一个实例
+                                .setLayoutRes(R.layout.view_search_guide)//设置引导页布局
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        RelativeLayout rl = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
                                                 }
-                                            });
+                                                controller.remove();
+
+                                            }
+                                        });
+//                                            rl.setOnClickListener(new View.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(View v) {
+//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+//                                                        return;
+//                                                    }
+//                                                    controller.remove();
+//                                                }
+//                                            });
 
 
-                                        }
+                                    }
 
-                                    })
-                                    .setEnterAnimation(enterAnimation)//进入动画
-                                    .setExitAnimation(exitAnimation)//退出动画
-                    )
-                    .addGuidePage(
-                            GuidePage.newInstance()
-                                    .setLayoutRes(R.layout.view_news_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
-                                    .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            //引导页布局填充后回调，用于初始化
-                                            ImageView search_jump = view.findViewById(R.id.search_jump);
-                                            search_jump.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    controller.remove();
-
-
+                                })
+//                                    .setEnterAnimation(enterAnimation)//进入动画
+//                                    .setExitAnimation(exitAnimation)//退出动画
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_news_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        RelativeLayout rl = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
                                                 }
-                                            });
+                                                controller.remove();
 
+                                            }
+                                        });
+//                                            rl.setOnClickListener(new View.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(View v) {
+//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+//                                                        return;
+//                                                    }
+//                                                    controller.remove();
+//                                                }
+//                                            });
 
-                                        }
+                                    }
 
-                                    })
-                                    .setEnterAnimation(enterAnimation)//进入动画
-                                    .setExitAnimation(exitAnimation)//退出动画
-                    )
+                                })
+//                                    .setEnterAnimation(enterAnimation)//进入动画
+//                                    .setExitAnimation(exitAnimation)//退出动画
+                )
 
-                    .addGuidePage(
-                            GuidePage.newInstance()
-                                    .setLayoutRes(R.layout.view_icon_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
-                                    .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            //引导页布局填充后回调，用于初始化
-                                            ImageView search_jump = view.findViewById(R.id.search_jump);
-                                            search_jump.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    controller.remove();
-
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_icon_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        RelativeLayout rl = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
                                                 }
-                                            });
+                                                controller.remove();
+
+                                            }
+                                        });
+//                                            rl.setOnClickListener(new View.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(View v) {
+//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+//                                                        return;
+//                                                    }
+//                                                    controller.remove();
+//                                                }
+//                                            });
 
 
-                                        }
+                                    }
 
-                                    })
-                                    .setEnterAnimation(enterAnimation)//进入动画
-                                    .setExitAnimation(exitAnimation)//退出动画
+                                })
+//                                    .setEnterAnimation(enterAnimation)//进入动画
+//                                    .setExitAnimation(exitAnimation)//退出动画
 
-                    )
-                    .addGuidePage(
-                            GuidePage.newInstance()
-                                    .setLayoutRes(R.layout.view_circle_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
-                                    .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            //引导页布局填充后回调，用于初始化
-                                            ImageView search_jump = view.findViewById(R.id.search_jump);
-                                            search_jump.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    controller.remove();
-
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_circle_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        RelativeLayout rl = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
                                                 }
-                                            });
+                                                controller.remove();
+
+                                            }
+                                        });
+//                                            rl.setOnClickListener(new View.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(View v) {
+//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+//                                                        return;
+//                                                    }
+//                                                    controller.remove();
+//                                                }
+//                                            });
 
 
-                                        }
+                                    }
 
-                                    })
-                                    .setEnterAnimation(enterAnimation)//进入动画
-                                    .setExitAnimation(exitAnimation)//退出动画
-                    )
-                    .addGuidePage(
-                            GuidePage.newInstance()
-                                    .setLayoutRes(R.layout.view_start_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
-                                    .setEnterAnimation(enterAnimation)//进入动画
-                                    .setExitAnimation(exitAnimation)//退出动画
+                                })
+//                                    .setEnterAnimation(enterAnimation)//进入动画
+//                                    .setExitAnimation(exitAnimation)//退出动画
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_start_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+//                                    .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+//                                        @Override
+//                                        public void onLayoutInflated(View view, final Controller controller) {
+//                                            //引导页布局填充后回调，用于初始化
+//                                            RelativeLayout rl = view.findViewById(R.id.rl);
+//                                            rl.setOnClickListener(new View.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(View v) {
+//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+//                                                        return;
+//                                                    }
+//                                                    controller.remove();
+//                                                }
+//                                            });
+//
+//
+//                                        }
+//
+//                                    })
+//                                    .setEnterAnimation(enterAnimation)//进入动画
+//                                    .setExitAnimation(exitAnimation)//退出动画
 
 
-                    )
-                    .show();//显示引导层(至少需要一页引导页才能显示)
-
-
+                )
+                .show();//显示引导层(至少需要一页引导页才能显示)
 
 
     }
 
     private void getPurchase() {//新人弹框
-        Log.e("page","新人");
+        Log.e("page", "新人");
         final Animation enterAnimation = new AlphaAnimation(0f, 1f);
         enterAnimation.setDuration(300);
         enterAnimation.setFillAfter(true);
@@ -1069,7 +1134,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                 .subscribe(new DataObserver<String>() {
                     @Override
                     protected void onSuccess(String data) {
-                        Log.e("page",data+"新人");
+                        Log.e("page", data + "新人");
                         ischeck = data;
                         Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
                         String ymdhhmmss = DateTimeUtils.getYmdhhmmss(String.valueOf(serverTime));
@@ -1077,9 +1142,10 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                         if (!TextUtils.isEmpty(ischeck)) {
                             if (ischeck.equals("true")) {//是否有新人首单
                                 if (DateTimeUtils.IsToday(ymdhhmmss)) {//判断是否是当天
-                                    Log.e("page",ymdhhmmss+"新人");
+                                    Log.e("page", ymdhhmmss + "新人");
                                     NewbieGuide.with(getActivity())
                                             .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
+                                            .alwaysShow(true)
                                             .setShowCounts(3)
                                             .addGuidePage(//添加一页引导页
                                                     GuidePage.newInstance()//创建一个实例
@@ -1100,6 +1166,9 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                                                                     purchase_bg.setOnClickListener(new View.OnClickListener() {
                                                                         @Override
                                                                         public void onClick(View v) {
+                                                                            if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                                                return;
+                                                                            }
                                                                             getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
                                                                             controller.remove();
                                                                         }
