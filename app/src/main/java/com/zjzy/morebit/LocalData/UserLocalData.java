@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.R;
@@ -164,6 +165,7 @@ public class UserLocalData {
 
     public static boolean isShowGuide(){
         boolean isshow = (boolean) SharedPreferencesUtils.get(App.getAppContext(), C.sp.isShowGuide, false);
+        Log.e("jjjjjj","isshow:"+isshow);
         return isshow;
     }
 

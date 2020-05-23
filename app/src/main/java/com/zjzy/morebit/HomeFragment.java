@@ -221,12 +221,15 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         super.onResume();
         getDot();
         getLoginView();
+        Log.e("jjjjjj","show:"+UserLocalData.isShowGuide());
+        Log.e("jjjjjj","showgide:"+isShowGuide);
         if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuide() && !isShowGuide) {
             isShowGuide = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     showGuideSearch();
+                    Log.e("jjjjjj","真的假的");
                 }
             }, 500);
 
@@ -906,16 +909,9 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     }
 
     public void showGuideSearch() {//新人引导页面
+        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuide, false);
         Log.e("page", "NewbieGuide onShowed: ");
         // GuideViewUtil.showGuideView(getActivity(), search_rl, GuideViewUtil.GUIDE_SEARCH, 0, this.mGuideNextCallback, null);
-        Animation enterAnimation = new AlphaAnimation(0f, 1f);
-        enterAnimation.setDuration(300);
-        enterAnimation.setFillAfter(true);
-
-        Animation exitAnimation = new AlphaAnimation(1f, 0f);
-        exitAnimation.setDuration(300);
-        exitAnimation.setFillAfter(true);
-
         NewbieGuide.with(this)
                 .setLabel("page")//设置引导层标示区分不同引导层，必传！否则报错
                 .setOnGuideChangedListener(new OnGuideChangedListener() {
@@ -950,7 +946,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                                     public void onLayoutInflated(View view, final Controller controller) {
                                         //引导页布局填充后回调，用于初始化
                                         ImageView search_jump = view.findViewById(R.id.search_jump);
-                                        RelativeLayout rl = view.findViewById(R.id.rl);
                                         search_jump.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -961,22 +956,12 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
                                             }
                                         });
-//                                            rl.setOnClickListener(new View.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(View v) {
-//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-//                                                        return;
-//                                                    }
-//                                                    controller.remove();
-//                                                }
-//                                            });
 
 
                                     }
 
                                 })
-//                                    .setEnterAnimation(enterAnimation)//进入动画
-//                                    .setExitAnimation(exitAnimation)//退出动画
+//
                 )
                 .addGuidePage(
                         GuidePage.newInstance()
@@ -986,7 +971,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                                     public void onLayoutInflated(View view, final Controller controller) {
                                         //引导页布局填充后回调，用于初始化
                                         ImageView search_jump = view.findViewById(R.id.search_jump);
-                                        RelativeLayout rl = view.findViewById(R.id.rl);
                                         search_jump.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -997,21 +981,11 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
                                             }
                                         });
-//                                            rl.setOnClickListener(new View.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(View v) {
-//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-//                                                        return;
-//                                                    }
-//                                                    controller.remove();
-//                                                }
-//                                            });
+//
 
                                     }
 
                                 })
-//                                    .setEnterAnimation(enterAnimation)//进入动画
-//                                    .setExitAnimation(exitAnimation)//退出动画
                 )
 
                 .addGuidePage(
@@ -1022,7 +996,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                                     public void onLayoutInflated(View view, final Controller controller) {
                                         //引导页布局填充后回调，用于初始化
                                         ImageView search_jump = view.findViewById(R.id.search_jump);
-                                        RelativeLayout rl = view.findViewById(R.id.rl);
                                         search_jump.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -1033,22 +1006,11 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
                                             }
                                         });
-//                                            rl.setOnClickListener(new View.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(View v) {
-//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-//                                                        return;
-//                                                    }
-//                                                    controller.remove();
-//                                                }
-//                                            });
 
 
                                     }
 
                                 })
-//                                    .setEnterAnimation(enterAnimation)//进入动画
-//                                    .setExitAnimation(exitAnimation)//退出动画
 
                 )
                 .addGuidePage(
@@ -1070,49 +1032,13 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
                                             }
                                         });
-//                                            rl.setOnClickListener(new View.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(View v) {
-//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-//                                                        return;
-//                                                    }
-//                                                    controller.remove();
-//                                                }
-//                                            });
-
-
                                     }
 
                                 })
-//                                    .setEnterAnimation(enterAnimation)//进入动画
-//                                    .setExitAnimation(exitAnimation)//退出动画
                 )
                 .addGuidePage(
                         GuidePage.newInstance()
                                 .setLayoutRes(R.layout.view_start_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
-//                                    .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-//                                        @Override
-//                                        public void onLayoutInflated(View view, final Controller controller) {
-//                                            //引导页布局填充后回调，用于初始化
-//                                            RelativeLayout rl = view.findViewById(R.id.rl);
-//                                            rl.setOnClickListener(new View.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(View v) {
-//                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-//                                                        return;
-//                                                    }
-//                                                    controller.remove();
-//                                                }
-//                                            });
-//
-//
-//                                        }
-//
-//                                    })
-//                                    .setEnterAnimation(enterAnimation)//进入动画
-//                                    .setExitAnimation(exitAnimation)//退出动画
-
-
                 )
                 .show();//显示引导层(至少需要一页引导页才能显示)
 
