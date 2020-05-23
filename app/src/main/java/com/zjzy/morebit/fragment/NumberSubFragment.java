@@ -3,6 +3,9 @@ package com.zjzy.morebit.fragment;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.NumberReUseGridView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
+import com.zjzy.morebit.adapter.SkillAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.network.BaseResponse;
@@ -106,6 +110,8 @@ public class NumberSubFragment extends BaseFragment {
     private LinearLayout vip_reward,ll4,ll5,ll3;
     private RelativeLayout vip_rl1,vip_rl3;
     private View view1,view2;
+    private RecyclerView skill_rcy;
+    private SkillAdapter skillAdapter;
 
 
 
@@ -210,6 +216,14 @@ public class NumberSubFragment extends BaseFragment {
         ll3=headView.findViewById(R.id.ll3);
         ll4=headView.findViewById(R.id.ll4);
         ll5=headView.findViewById(R.id.ll5);
+        skill_rcy=headView.findViewById(R.id.skill_rcy);
+        skillAdapter=new SkillAdapter(getActivity());
+        LinearLayoutManager manager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        skill_rcy.setLayoutManager(manager);
+        skill_rcy.setAdapter(skillAdapter);
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(skill_rcy);
+
     }
 
     private void updataUser() {
