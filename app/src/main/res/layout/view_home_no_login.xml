@@ -21,12 +21,9 @@
             android:gravity="center"
             android:layout_height="match_parent">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_weight="0.05"
-                android:layout_height="wrap_content"/>
 
             <ImageView
+                android:layout_marginLeft="12dp"
                 android:src="@drawable/circle_default_head"
                 android:layout_width="28dp"
                 android:layout_height="28dp"/>
@@ -52,12 +49,10 @@
                 android:paddingBottom="4dp"
                 android:textColor="@color/white"
                 android:textSize="12sp"
+                android:layout_marginRight="12dp"
                 />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_weight="0.064"
-                android:layout_height="wrap_content"/>
+
         </LinearLayout>
     </com.zjzy.morebit.view.AspectRatioView>
 
