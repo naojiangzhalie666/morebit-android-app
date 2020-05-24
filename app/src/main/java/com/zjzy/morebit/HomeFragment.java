@@ -179,6 +179,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     private List<HomeRecommendFragment> fragments = new ArrayList<>();
     private String ischeck;
     private boolean newPurchase = false;
+    private int num=0;
 
 
 
@@ -221,15 +222,13 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         super.onResume();
         getDot();
         getLoginView();
-        Log.e("jjjjjj","show:"+UserLocalData.isShowGuide());
-        Log.e("jjjjjj","showgide:"+isShowGuide);
         if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuide() && !isShowGuide) {
             isShowGuide = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     showGuideSearch();
-                    Log.e("jjjjjj","真的假的");
+                    SPUtils.getInstance().remove("num");
                 }
             }, 500);
 
@@ -323,8 +322,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         if (newPurchase) {
             getPurchase();
         }
-
-
 
     }
 
@@ -1047,13 +1044,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
     private void getPurchase() {//新人弹框
         Log.e("page", "新人");
-        final Animation enterAnimation = new AlphaAnimation(0f, 1f);
-        enterAnimation.setDuration(300);
-        enterAnimation.setFillAfter(true);
-
-        final Animation exitAnimation = new AlphaAnimation(1f, 0f);
-        exitAnimation.setDuration(300);
-        exitAnimation.setFillAfter(true);
         RxHttp.getInstance().getCommonService().checkPruchase()
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(this.<BaseResponse<String>>bindToLifecycle())
@@ -1064,50 +1054,56 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                         ischeck = data;
                         Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
                         String ymdhhmmss = DateTimeUtils.getYmdhhmmss(String.valueOf(serverTime));
-
                         if (!TextUtils.isEmpty(ischeck)) {
                             if (ischeck.equals("true")) {//是否有新人首单
                                 if (DateTimeUtils.IsToday(ymdhhmmss)) {//判断是否是当天
-                                    Log.e("page", ymdhhmmss + "新人");
-                                    NewbieGuide.with(getActivity())
-                                            .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
-                                            .alwaysShow(true)
-                                            .setShowCounts(3)
-                                            .addGuidePage(//添加一页引导页
-                                                    GuidePage.newInstance()//创建一个实例
-                                                            .setLayoutRes(R.layout.view_pruchase_guide)//设置引导页布局
-                                                            .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                                                @Override
-                                                                public void onLayoutInflated(View view, final Controller controller) {
-                                                                    //引导页布局填充后回调，用于初始化
-                                                                    ImageView diss = view.findViewById(R.id.diss);
-                                                                    diss.setOnClickListener(new View.OnClickListener() {
-                                                                        @Override
-                                                                        public void onClick(View v) {
-                                                                            controller.remove();
 
-                                                                        }
-                                                                    });
-                                                                    ImageView purchase_bg = view.findViewById(R.id.purchase_bg);
-                                                                    purchase_bg.setOnClickListener(new View.OnClickListener() {
-                                                                        @Override
-                                                                        public void onClick(View v) {
-                                                                            if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-                                                                                return;
+                                    num = SPUtils.getInstance().getInt("num");
+                                    Log.e("page", num + "num");
+                                    if (num<2){
+                                        NewbieGuide.with(getActivity())
+                                                .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
+                                                .alwaysShow(true)
+                                                .setShowCounts(1)
+                                                .addGuidePage(//添加一页引导页
+                                                        GuidePage.newInstance()//创建一个实例
+                                                                .setLayoutRes(R.layout.view_pruchase_guide)//设置引导页布局
+                                                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                                                    @Override
+                                                                    public void onLayoutInflated(View view, final Controller controller) {
+                                                                        //引导页布局填充后回调，用于初始化
+                                                                        ImageView diss = view.findViewById(R.id.diss);
+                                                                        diss.setOnClickListener(new View.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(View v) {
+                                                                                controller.remove();
+
                                                                             }
-                                                                            getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
-                                                                            controller.remove();
-                                                                        }
-                                                                    });
+                                                                        });
+                                                                        ImageView purchase_bg = view.findViewById(R.id.purchase_bg);
+                                                                        purchase_bg.setOnClickListener(new View.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(View v) {
+                                                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                                                    return;
+                                                                                }
+                                                                                getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
+                                                                                controller.remove();
+                                                                            }
+                                                                        });
+                                                                    }
 
-                                                                }
+                                                                })
+                                                                .setEverywhereCancelable(false)
 
-                                                            })
-                                                            .setEverywhereCancelable(false)
-                                                            .setEnterAnimation(enterAnimation)//进入动画
-                                                            .setExitAnimation(exitAnimation)//退出动画
-                                            ).show();
 
+                                                ).show();
+                                        SPUtils.getInstance().put("num", num+1);
+                                    }
+
+
+                                }else{
+                                    SPUtils.getInstance().put("num", 0);
                                 }
                             }
                         }
