@@ -68,6 +68,7 @@
         android:orientation="vertical">
         <!--分类-->
         <include layout="@layout/view_layout_home_recommend_category"
+            android:id="@+id/fenlei"
             />
         <!-- 最火-->
         <include layout="@layout/view_layout_hot_text"/>
