@@ -229,7 +229,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                   showGuideSearch();
+                    showGuideSearch();
                     SPUtils.getInstance().remove("num");
                 }
             }, 500);
@@ -988,7 +988,8 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
                 .addGuidePage(
                         GuidePage.newInstance()
-                                .addHighLight(icon, HighLight.Shape.ROUND_RECTANGLE)
+
+                                .addHighLight(icon, HighLight.Shape.ROUND_RECTANGLE,35,0,null)
                                 .setLayoutRes(R.layout.view_icon_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
                                 .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
                                     @Override
