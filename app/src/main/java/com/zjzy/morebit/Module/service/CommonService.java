@@ -2439,4 +2439,12 @@ public interface CommonService {
     @POST("/api/goods/fans/getJdGenerate")
     public Observable<BaseResponse<String>> getGenerateForJD(
             @Body RequestPddShareContent requestBean);
+
+    /**
+     * 获取用户详情
+     *
+     * @return
+     */
+    @POST("/api/user/operator/userDetails")
+    public Observable<BaseResponse<UserInfo>> getUserDetails();
 }

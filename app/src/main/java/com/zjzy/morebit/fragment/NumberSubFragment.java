@@ -104,7 +104,7 @@ public class NumberSubFragment extends BaseFragment {
 
     UserInfo mUserInfo;
     private int page = 1;
-    private ImageView user_king;
+    private ImageView huiyuan1;
     private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2;
     private ImageView grade,img_vip,img_tuanduizhang;
     private LinearLayout vip_reward,ll4,ll5,ll3;
@@ -183,7 +183,7 @@ public class NumberSubFragment extends BaseFragment {
 
         mReUseGridView.setAdapterAndHeadView(headView, mAdapter);
 
-
+        mReUseGridView.setNestedScrollingEnabled(false);
 
 
 
@@ -223,6 +223,9 @@ public class NumberSubFragment extends BaseFragment {
         skill_rcy.setAdapter(skillAdapter);
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(skill_rcy);
+        skill_rcy.setNestedScrollingEnabled(false);
+        huiyuan1=headView.findViewById(R.id.huiyuan1);
+
 
     }
 
@@ -383,6 +386,7 @@ public class NumberSubFragment extends BaseFragment {
      * number的view
      */
     private void gradeForNumberView(){
+        huiyuan1.setImageResource(R.mipmap.huiyuan1);
         vip_rl1.setVisibility(View.VISIBLE);
         vip_rl3.setVisibility(View.GONE);
         vip_reward.setVisibility(View.GONE);
@@ -425,6 +429,7 @@ public class NumberSubFragment extends BaseFragment {
      * vip的view
      */
     private void gradeForVipView(){
+        huiyuan1.setImageResource(R.mipmap.vip1);
         grade.setImageResource(R.mipmap.icon_vip);
         vip_reward.setVisibility(View.VISIBLE);
         vip_rl1.setVisibility(View.VISIBLE);
