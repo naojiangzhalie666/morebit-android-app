@@ -229,7 +229,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                  //  showGuideSearch();
+                    showGuideSearch();
                     SPUtils.getInstance().remove("num");
                 }
             }, 500);
@@ -324,8 +324,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         if (newPurchase) {
             getPurchase();
         }
-
-        showGuideSearch();
     }
 
     public void getLoginView() {
