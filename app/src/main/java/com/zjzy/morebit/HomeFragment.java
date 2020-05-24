@@ -1036,6 +1036,25 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                 .addGuidePage(
                         GuidePage.newInstance()
                                 .setLayoutRes(R.layout.view_start_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        RelativeLayout search_jump = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+                                    }
+
+                                })
+                                .setEverywhereCancelable(false)
                 )
                 .show();//显示引导层(至少需要一页引导页才能显示)
 
