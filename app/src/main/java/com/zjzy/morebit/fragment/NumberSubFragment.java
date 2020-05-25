@@ -113,7 +113,7 @@ public class NumberSubFragment extends BaseFragment {
     UserInfo mUserInfo;
     private int page = 1;
     private ImageView huiyuan1;
-    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,vip_settlement,vip_directly,vip_intermedium,tv_more;
+    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,vip_settlement,vip_directly,vip_intermedium,tv_more,getMorce;
     private ImageView grade,img_vip,img_tuanduizhang;
     private LinearLayout vip_reward,ll4,ll5,ll3;
     private RelativeLayout vip_rl1,vip_rl3;
@@ -240,10 +240,17 @@ public class NumberSubFragment extends BaseFragment {
         GridLayoutManager manager2=new GridLayoutManager(getActivity(),2);
         activity_rcy.setLayoutManager(manager2);
         tv_more = headView.findViewById(R.id.tv_more);
+        getMorce=headView.findViewById(R.id.getMorce);
         tv_more.setOnClickListener(new View.OnClickListener() {//跳转技能课堂
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), SkillClassActivity.class));
+            }
+        });
+        getMorce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mReUseGridView.getListView().smoothScrollToPosition(1);
             }
         });
 
