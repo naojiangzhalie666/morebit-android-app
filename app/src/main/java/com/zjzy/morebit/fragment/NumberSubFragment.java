@@ -683,6 +683,21 @@ public class NumberSubFragment extends BaseFragment {
                 .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
     }
     /**
+     * 用户详情
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<UserInfo>> getUserDetails(RxFragment fragment) {
+        UserInfo bean = new UserInfo();
+        UserInfo  mUserInfo = UserLocalData.getUser(getActivity());
+        bean.setId(mUserInfo.getId());
+
+        return RxHttp.getInstance().getGoodsService().getUserDetails(bean)
+                .compose(RxUtils.<BaseResponse<UserInfo>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UserInfo>>bindToLifecycle());
+    }
+    /**
      * 用户等级升级
      *
      * @param fragment

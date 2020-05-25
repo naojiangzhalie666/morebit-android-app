@@ -2446,5 +2446,5 @@ public interface CommonService {
      * @return
      */
     @POST("/api/user/operator/userDetails")
-    public Observable<BaseResponse<UserInfo>> getUserDetails();
+    public Observable<BaseResponse<UserInfo>> getUserDetails( @Body UserInfo requestBean);
 }
