@@ -194,9 +194,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         } else {
             initAppData();
         }
-
-        //   getDeviceInfo(this);
-
+     //   getDeviceInfo(this);
+        mPresenter.getServerTime(this);//获取服务端时间
     }
 
 

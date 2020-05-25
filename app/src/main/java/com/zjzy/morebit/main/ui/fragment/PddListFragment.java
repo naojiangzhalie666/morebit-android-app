@@ -1,6 +1,10 @@
 package com.zjzy.morebit.main.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -114,7 +118,7 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
         mPddJdTitleTypeItem = (PddJdTitleTypeItem) getArguments().getSerializable(PddListFragment.PDDJDTITLETYPEITEM);
 
         rl_list.setOnReLoadListener(this);
-
+        rl_list.getSwipeList().setEnableRefresh(false);
 
         title_comprehensive_tv=view.findViewById(R.id.title_comprehensive_tv);//综合
 
@@ -144,8 +148,23 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
         title_coupon_ll.setOnClickListener(this);
 
 
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("action.refreshpdd");//名字
+        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
+
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.refreshpdd")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                onReload();//需要去做的事
+            }
+        }
+    };
 
 
 
@@ -239,7 +258,9 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
 //            rl_list.getListView().refreshComplete(10);
 //        }else{
             mAdapter = new PddJdListAdapter(getActivity(),data);
-            rl_list.setAdapter(mAdapter);
+            if (mAdapter!=null){
+                rl_list.setAdapter(mAdapter);
+            }
 
         }else if (loadType== C.requestType.loadMore){
 
@@ -298,6 +319,7 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
     @Override
@@ -402,4 +424,6 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
             //重新读取数据
         }
     }
+
+
 }

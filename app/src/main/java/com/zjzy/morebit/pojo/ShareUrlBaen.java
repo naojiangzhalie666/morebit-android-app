@@ -9,6 +9,15 @@ public class ShareUrlBaen {
     private  String sharp=""; //推广语
     private  String message="";// 通讯录分享
     private  String extension =""; //推广语
+    private  String wxRegisterlink="";//微信注册链接
+
+    public String getWxRegisterlink() {
+        return wxRegisterlink;
+    }
+
+    public void setWxRegisterlink(String wxRegisterlink) {
+        this.wxRegisterlink = wxRegisterlink;
+    }
 
     public String getExtension() {
         return extension;

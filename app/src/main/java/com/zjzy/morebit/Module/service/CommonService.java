@@ -712,7 +712,7 @@ public interface CommonService {
      *
      * @return
      */
-    @POST("/api/user/checkPhone")
+    @POST("/api/user/checkWxAndPhone")
     public Observable<BaseResponse<String>> checkoutPhone(
             @Body RequestCheckOutPhoneBean requestBean);
 
@@ -801,13 +801,25 @@ public interface CommonService {
      *
      * @return
      */
-    @POST("/api/user/login/wechat")
+    @POST("/api/user/login/wechatForNew")
     public Observable<BaseResponse<UserInfo>> getWeixiLogin(
             @Body RequestWeixiLoginBean requestBean
 //            @Field("oauthWx") String oauthWx,
 //            @Field("sign") String sign
     );
 
+
+    /**
+     * 微信校验
+     *
+     * @return
+     */
+    @POST("/api/user/checkWx")
+    public Observable<BaseResponse<String>> getCheckWx(
+            @Body RequestCheckOutPhoneBean requestBean
+//            @Field("oauthWx") String oauthWx,
+//            @Field("sign") String sign
+    );
     /**
      * 超级分类
      *
@@ -993,7 +1005,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/user/wechatRegister")
+    @POST("/api/user/wechatRegisterForNew")
 
     public Observable<BaseResponse<UserInfo>> registerAndBindWeixin(
             @Body RequestRegisterAndBindWeChatBean requestBean
@@ -1018,7 +1030,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/user/wechatBindPhone")
+    @POST("/api/user/wechatBindPhoneForNew")
 
     public Observable<BaseResponse<UserInfo>> LoginAndBindWeixin(
             @Body RequestRegisterAndBindWeChatBean requestBean
@@ -2453,5 +2465,12 @@ public interface CommonService {
      * @return
      */
     @POST("/api/system/commercial/getVipSkillClass")
-    public Observable<BaseResponse<List<Article>>> getVipSkillClass( @Body UserInfo requestBean);
+    public Observable<BaseResponse<List<Article>>> getVipSkillClass(@Body RequestBannerBean requestBean);
+    /**
+     * 获取vip楼层
+     *
+     * @return
+     */
+    @POST("/api/system/graphicInfo/sorting/getVipFloor")
+    public Observable<BaseResponse<List<ImageInfo>>> getVipFloor(@Body RequestBannerBean requestBean);
 }

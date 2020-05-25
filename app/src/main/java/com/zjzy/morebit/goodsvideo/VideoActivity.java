@@ -211,11 +211,9 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                     if (videoView.isPlaying()) {
                         videoView.pause();
                         img_stop.setVisibility(View.VISIBLE);
-                        ToastUtils.showLong("暂停");
                     } else {
                         videoView.start();
                         img_stop.setVisibility(View.GONE);
-                        ToastUtils.showLong("开始");
                     }
                     break;
             }

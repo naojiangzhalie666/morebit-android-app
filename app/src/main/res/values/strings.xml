@@ -228,6 +228,7 @@
     <string name="please_login">请先登录</string>
     <string name="now_share">立即分享</string>
     <string name="now_sharen">立即\n分享</string>
+    <string name="now_login">登录赚佣金</string>
 
     <string name="panic_buy">限时秒杀</string>
     <string name="mini_withdraw">注：最低提现金额为1元</string>

@@ -14,6 +14,15 @@ public class RequestRegisterAndBindWeChatBean extends RequestBaseBean {
     private String city;
     private String sign;
     private String areaCode;
+    private String unionid;
+
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
+    }
 
     public String getAreaCode() {
         return areaCode;

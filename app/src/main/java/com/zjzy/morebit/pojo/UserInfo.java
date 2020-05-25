@@ -65,6 +65,15 @@ public class UserInfo implements Serializable {
     private Long directCoin;//直接推荐成长值
     private Long indirectCoin;//间接推荐成长值
     private Long settleCoin;//结算成长值
+    private Long selfCoin;//自购成长值
+
+    public Long getSelfCoin() {
+        return selfCoin;
+    }
+
+    public void setSelfCoin(Long selfCoin) {
+        this.selfCoin = selfCoin;
+    }
 
     public Long getDirectCoin() {
         return directCoin;

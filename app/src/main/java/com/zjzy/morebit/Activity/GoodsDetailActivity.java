@@ -1140,6 +1140,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         mHandler.removeCallbacksAndMessages(null);
+        unregisterReceiver(mRefreshBroadcastReceiver);
         super.onDestroy();
     }
 

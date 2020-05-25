@@ -259,7 +259,6 @@ public class LuRecyclerView extends RecyclerView {
         mFootView = loadMoreFooter.getFootView();
         mFootView.setVisibility(GONE);
     }
-
     /**
      * 到底加载是否可用
      */

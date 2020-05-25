@@ -76,7 +76,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
         final ViewHolder viewHolder = (ViewHolder) holder;
 
-        viewHolder.ll_bottom.setPadding(0, mBottomPadding, 0, 0);
+        viewHolder.ll_bottom.setPadding(0, 10, 0, 0);
 
 
 

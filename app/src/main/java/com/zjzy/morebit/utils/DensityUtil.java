@@ -39,10 +39,13 @@ public class DensityUtil {
      */
     public static int getPhoneWidth(Context context){
         Resources resources = context.getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        float density = dm.density;
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
+        int width=0;
+        if (resources!=null){
+            DisplayMetrics dm = resources.getDisplayMetrics();
+              width = dm.widthPixels;
+            float density = dm.density;
+            int height = dm.heightPixels;
+        }
         return width;
     }
 

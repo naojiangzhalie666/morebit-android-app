@@ -1,14 +1,27 @@
 package com.zjzy.morebit.main.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
@@ -27,6 +40,7 @@ import com.zjzy.morebit.pojo.event.LogoutEvent;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DensityUtil;
+import com.zjzy.morebit.utils.SpaceItemDecorationUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -38,16 +52,17 @@ import butterknife.BindView;
 
 /**
  * Created by fengrs on 2018/9/10.
- * 备注:
+ * 备注:京东列表页
  */
 
-public class JdongListFragment extends MvpFragment<PddListPresenter> implements PddContract.View, ReUseListView.OnReLoadListener, View.OnClickListener {
+public class JdongListFragment extends MvpFragment<PddListPresenter> implements PddContract.View, View.OnClickListener {
 
     public static String PDDJDTITLETYPEITEM = "PddJdTitleTypeItem"; // 广告加载的跳转info
     @BindView(R.id.mListView)
-    ReUseListView rl_list;
+    RecyclerView rl_list;
     private TabLayout mTabLayout;
     private ArrayList<BaseTitleTabBean> tabList = new ArrayList<>();
+    private SmartRefreshLayout mSwipeList;
 
 
     private static final int REQUEST_COUNT = 10;
@@ -71,7 +86,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     //排序方向
     private int eSortDirection = C.OrderType.E_UPLIMIT_SORT_DOWN;// 0降序  1升序
     //排序类型
-    private long mSortType = 0;//排序类型 1 综合排序 2 销量排序 3 价格排序 4 奖励排序
+    private long mSortType = 0;//排序类型 0 综合排序 2 销量排序 3 价格排序 4 奖励排序
     //自营
     private LinearLayout title_support_ll;
     private ImageView title_support_iv;
@@ -83,6 +98,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     private boolean isSupport = false;//自营是否选中
     private String coupon="0";
     private String self="0";
+    private int page=1;
 
 
 
@@ -107,7 +123,6 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
     }
 
 
@@ -117,8 +132,6 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         mTabLayout = (TabLayout) view.findViewById(R.id.tl_tab);
         if (getArguments() == null) return;
         mPddJdTitleTypeItem = (PddJdTitleTypeItem) getArguments().getSerializable(JdongListFragment.PDDJDTITLETYPEITEM);
-        rl_list.setOnReLoadListener(this);
-
 
         title_comprehensive_tv=view.findViewById(R.id.title_comprehensive_tv);//综合
 
@@ -150,10 +163,45 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         title_support_ll.setOnClickListener(this);
 
 
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("action.refreshjd");//名字
+        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        //设置图标的间距
+        rl_list.setLayoutManager(manager);
+        mSwipeList=view.findViewById(R.id.swipeList);
+        mSwipeList.setEnableRefresh(false);
+        mSwipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                onReload();
+            }
+        });
+
+
+
     }
 
 
 
+
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.refreshjd")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                referShload();//刷新
+            }
+        }
+    };
+
+    private void referShload() {
+        page=1;
+        onReload();
+    }
 
 
     /**
@@ -171,15 +219,11 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         return this;
     }
 
-    @Override
+
     public void onReload() {
-        if (rl_list == null) return;
-        rl_list.getListView().setNoMore(false);
-        if (rl_list.getSwipeList() != null)
-            rl_list.getSwipeList().setRefreshing(true);
-        if (mPddJdTitleTypeItem == null) return;
         ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
         programCatItemBean.setEliteId(mPddJdTitleTypeItem.getEliteId());
+        programCatItemBean.setPage(page);
         if (eSortDirection==0){
             programCatItemBean.setOrder("desc");
         }else{
@@ -191,21 +235,21 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
         mPresenter.getJdGoodsList(this,  programCatItemBean, C.requestType.initData);
     }
 
-    @Override
-    public void onLoadMore() {
-        if (mPddJdTitleTypeItem == null) return;
-        ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
-        programCatItemBean.setEliteId(mPddJdTitleTypeItem.getEliteId());
-        programCatItemBean.setCoupon(coupon);
-        if (eSortDirection==0){
-            programCatItemBean.setOrder("desc");
-        }else{
-            programCatItemBean.setOrder("asc");
-        }
-        programCatItemBean.setSort(String.valueOf(mSortType));
-        programCatItemBean.setSelf(self);
-        mPresenter.getJdGoodsList(this, programCatItemBean,C.requestType.loadMore);
-    }
+
+//    public void onLoadMore() {
+//        if (mPddJdTitleTypeItem == null) return;
+//        ProgramCatItemBean programCatItemBean = new ProgramCatItemBean();
+//        programCatItemBean.setEliteId(mPddJdTitleTypeItem.getEliteId());
+//        programCatItemBean.setCoupon(coupon);
+//        if (eSortDirection==0){
+//            programCatItemBean.setOrder("desc");
+//        }else{
+//            programCatItemBean.setOrder("asc");
+//        }
+//        programCatItemBean.setSort(String.valueOf(mSortType));
+//        programCatItemBean.setSelf(self);
+//        mPresenter.getJdGoodsList(this, programCatItemBean,C.requestType.loadMore);
+//    }
 
 
 
@@ -214,8 +258,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
 
     @Override
     public void showFinally() {
-        if (rl_list.getSwipeList() != null)
-            rl_list.getSwipeList().setRefreshing(false);
+
 
     }
 
@@ -232,57 +275,26 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
 
     @Override
     public void setJd(List<ShopGoodInfo> data, int loadType) {
-        rl_list.getListView().refreshComplete(REQUEST_COUNT);
-        removeNetworkError(rl_list.getListviewSuper());
-        if (loadType == C.requestType.initData) {
-            //mData.clear();
-            mAdapter = new JdListAdapter(getActivity(),data);
-            rl_list.setAdapter(mAdapter);
-        } else {
-           // rl_list.getListView().refreshComplete(10);
-
+        if (page==1) {
+            mAdapter = new JdListAdapter(getActivity(), data);
+            if (mAdapter!=null){
+                rl_list.setAdapter(mAdapter);
+            }
+        } else  {
             mAdapter.setData(data);
+            mSwipeList.finishLoadMore(true);
         }
-
-   //   rl_list.notifyDataSetChanged();
     }
-
     @Override
     public void setJdError(int loadType) {
-        if (loadType == C.requestType.loadMore) {
-            rl_list.getListView().setNoMore(true);
-        } else {
-            mData.clear();
-            mAdapter.setData(mData);
-            rl_list.notifyDataSetChanged();
-            showNetworkError(rl_list.getListviewSuper(), false);
-
-        }
     }
 
-    @Subscribe  //订阅事件
-    public void onEventMainThread(MessageEvent event) {
-        switch (event.getAction()) {
-            case EventBusAction.LOGINA_SUCCEED:
-                if (rl_list != null)
-                    rl_list.notifyDataSetChanged();
-                break;
-
-        }
-    }
-
-
-    @Subscribe  //订阅事件
-    public void onEventMainThread(LogoutEvent event) {
-        if (rl_list != null)
-            rl_list.notifyDataSetChanged();
-    }
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
     @Override
@@ -376,18 +388,10 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             isCoupon = false;
             coupon="0";
             title_coupon_iv.setImageResource(R.drawable.check_no);
-//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
-//            mRecyclerView.getSwipeList().setRefreshing(true);
-          //  getFirstData(keyWord);
-            //重新读取数据
         } else {
             isCoupon = true;
             coupon="1";
             title_coupon_iv.setImageResource(R.drawable.check_yes);
-//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
-//            mRecyclerView.getSwipeList().setRefreshing(true);
-            //getFirstData(keyWord);
-            //重新读取数据
         }
     }
 
@@ -400,19 +404,14 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             isSupport = false;
             self="0";
             title_support_iv.setImageResource(R.drawable.check_no);
-//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
-//            mRecyclerView.getSwipeList().setRefreshing(true);
-            //  getFirstData(keyWord);
-            //重新读取数据
         } else {
             isSupport = true;
             self="1";
             title_support_iv.setImageResource(R.drawable.check_yes);
-//            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
-//            mRecyclerView.getSwipeList().setRefreshing(true);
-            //getFirstData(keyWord);
-            //重新读取数据
         }
     }
+
+
+
 
 }

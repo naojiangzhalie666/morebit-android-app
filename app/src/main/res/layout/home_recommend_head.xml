@@ -67,7 +67,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <!--分类-->
-        <include layout="@layout/view_layout_home_recommend_category"/>
+        <include layout="@layout/view_layout_home_recommend_category"
+            android:id="@+id/fenlei"
+            />
         <!-- 最火-->
         <include layout="@layout/view_layout_hot_text"/>
         <!--官方推荐-->

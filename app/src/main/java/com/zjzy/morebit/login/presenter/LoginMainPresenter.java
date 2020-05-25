@@ -45,11 +45,23 @@ public class LoginMainPresenter extends BaseLoginPresenter<LoginMainModel, Login
     private static final int MSG_AUTH_COMPLETE = 5;
     private RxFragment mRxFragment;
     private WeixinInfo mWeixinInfo;
+    private boolean localwx;
 
     @Override
     public void goToWXLogin(RxFragment rxFragment) {
         LoadingView.showDialog(rxFragment.getActivity(), "");
         this.mRxFragment = rxFragment;
+        localwx=true;
+        Wechat plat = new Wechat();
+        plat.removeAccount(true);
+        authorize(plat, rxFragment);
+    }
+
+    @Override
+    public void goLocalWx(RxFragment rxFragment) {
+        LoadingView.showDialog(rxFragment.getActivity(), "");
+        this.mRxFragment = rxFragment;
+        localwx=false;
         Wechat plat = new Wechat();
         plat.removeAccount(true);
         authorize(plat, rxFragment);
@@ -157,7 +169,11 @@ public class LoginMainPresenter extends BaseLoginPresenter<LoginMainModel, Login
                     public void onNext(String baseResponse) {
                         super.onNext(baseResponse);
                         WeixinInfo weixinInfo = JSON.parseObject(baseResponse, WeixinInfo.class);
-                        weixinLogic(weixinInfo);
+                        getIView().getLocalWx(weixinInfo);
+                        if (localwx){
+                            weixinLogic(weixinInfo);
+                        }
+                        LoadingView.dismissDialog();
                     }
 
                     @Override
@@ -217,6 +233,32 @@ public class LoginMainPresenter extends BaseLoginPresenter<LoginMainModel, Login
                 });
     }
 
+    /**
+     * 校验微信
+     *
+     * @param activity
+     * @param
+     */
+
+    public void checkoutWx(final RxFragment activity,  WeixinInfo weixinInfo,String phone) {
+        LoadingView.showDialog(activity.getActivity(), "请求中...");
+        getCheckoutWxObservable(activity, weixinInfo,phone)
+
+                .subscribe(new DataObserver<String>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().getWxError(errCode);
+                    }
+                    @Override
+                    protected void onDataNull() {
+                        onSuccess("");
+                    }
+                    @Override
+                    protected void onSuccess(String data) {
+                        getIView().goToWx();
+                    }
+                });
+    }
 
     public Observable<BaseResponse<String>> getCheckoutPhoneObservable(final RxFragment activity, final String phone, int type,String areaCode) {
         LoadingView.showDialog(activity.getActivity(), "请求中...");
@@ -231,6 +273,28 @@ public class LoginMainPresenter extends BaseLoginPresenter<LoginMainModel, Login
 
         return RxHttp.getInstance().getUsersService()
                 .checkoutPhone(requestBean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(activity.<BaseResponse<String>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
+
+
+    public Observable<BaseResponse<String>> getCheckoutWxObservable(final RxFragment activity, WeixinInfo weixinInfo,String phone) {
+        LoadingView.showDialog(activity.getActivity(), "请求中...");
+
+        RequestCheckOutPhoneBean requestBean = new RequestCheckOutPhoneBean();
+        requestBean.setOauthWx(weixinInfo.getOpenid());
+        requestBean.setUnionid(weixinInfo.getUnionid());
+        requestBean.setPhone(phone);
+
+
+        return RxHttp.getInstance().getUsersService()
+                .getCheckWx(requestBean)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(activity.<BaseResponse<String>>bindToLifecycle())
                 .doFinally(new Action() {

@@ -151,7 +151,7 @@ public class InputVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         ViewShowUtils.hideSoftInput(getActivity(), mVerificationCodeEditText);
         switch (loginType) {
             case C.sendCodeType.REGISTER:
-                mPresenter.register(this, mPhone, mVerificationCodeEditText.getText().toString(), mInvitationCode,null);
+                mPresenter.register(this, mPhone, mVerificationCodeEditText.getText().toString(), mInvitationCode,null,mWeixinInfo.getOpenid());
                 break;
             case C.sendCodeType.LOGIN:
                 mPresenter.login(this, mPhone, mVerificationCodeEditText.getText().toString());
@@ -331,6 +331,16 @@ public class InputVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
 
     @Override
     public void goToRegister() {
+
+    }
+
+    @Override
+    public void getLocalWx(WeixinInfo weixinInfo) {
+
+    }
+
+    @Override
+    public void getWxError(String code) {
 
     }
 }

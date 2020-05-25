@@ -30,17 +30,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:background="@color/color_FFD800"
-                        android:layout_height="100dp"/>
+
 
                     <LinearLayout
                         android:id="@+id/liner"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:background="@mipmap/fans_bg"
-                        android:layout_marginTop="20dp"
+                        android:background="@mipmap/fans_bg2"
                         android:layout_marginBottom="10dp"
                         android:orientation="vertical"
                         >
@@ -51,7 +47,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="8dp"
                             android:text="0"
-                            android:textColor="@color/color_FFED25"
+                            android:textColor="@color/white"
                             android:textSize="40sp" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -59,7 +55,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
                             android:text="@string/my_team"
-                            android:textColor="@color/content_text_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/sp_16" />
 
 
@@ -223,7 +219,7 @@
                     app:tl_indicator_height="2dp"
                     app:tl_indicator_width="14dp"
                     app:tl_tab_space_equal="true"
-                    app:tl_textSelectColor="@color/content_text_color"
+                    app:tl_textSelectColor="#F05557"
                     app:tl_textUnselectColor="@color/color_999999"
                     app:tl_textsize="@dimen/sp_15" />
 

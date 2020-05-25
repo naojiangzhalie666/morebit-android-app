@@ -127,6 +127,7 @@ public class MainPresenter extends MvpPresenter<MainModel, MainContract.View> im
                     @Override
                     protected void onSuccess(Long data) {
                         MyLog.d("test","服务器当前时间:"+DateTimeUtils.getYmdhhmmss(String.valueOf(data)));
+                        Log.e("wwww","服务器时间："+data);
                         CommonLocalData.saveServiceTime(data);
                         CommonLocalData.saveClientTime();
                     }

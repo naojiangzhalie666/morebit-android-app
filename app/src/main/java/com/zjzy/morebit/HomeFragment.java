@@ -15,11 +15,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageButton;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -27,10 +29,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.app.hubert.guide.NewbieGuide;
+import com.app.hubert.guide.core.Controller;
+import com.app.hubert.guide.listener.OnGuideChangedListener;
+import com.app.hubert.guide.listener.OnLayoutInflatedListener;
+import com.app.hubert.guide.listener.OnPageChangedListener;
+import com.app.hubert.guide.model.GuidePage;
+import com.app.hubert.guide.model.HighLight;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment;
 import com.zjzy.morebit.goodsvideo.ShopMallActivity;
@@ -60,6 +72,7 @@ import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ConfigListUtlis;
+import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GuideViewUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -67,7 +80,9 @@ import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
+import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
+import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
@@ -88,10 +103,12 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Action;
 
+import static com.alibaba.mtl.appmonitor.AppMonitor.TAG;
+
 
 /**
  * Created by YangBoTian on 2018/9/10.
- *
+ * <p>
  * 首页fragment
  */
 
@@ -130,7 +147,9 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     TextView searchTv;
     @BindView(R.id.searchIconIv)
     ImageView searchIconIv;
-    View noLoginView;
+    @BindView(R.id.icon)
+    ImageView icon;
+    View noLoginView, noaurthorView, nonewbuyView;
 
     HomeAdapter mHomeAdapter;
     List<GoodCategoryInfo> mHomeColumns = new ArrayList<>();
@@ -160,6 +179,10 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     private boolean isShowGuide = false;
     private Handler mHandler;
     private List<HomeRecommendFragment> fragments = new ArrayList<>();
+    private String ischeck;
+    private boolean newPurchase = false;
+    private int num=0;
+
 
 
     @Override
@@ -200,17 +223,20 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     public void onResume() {
         super.onResume();
         getDot();
+        getLoginView();
         if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuide() && !isShowGuide) {
             isShowGuide = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     showGuideSearch();
+                    SPUtils.getInstance().remove("num");
                 }
             }, 500);
 
         }
     }
+
 
     private void initData() {
         GoodCategoryInfo good = new GoodCategoryInfo();
@@ -291,21 +317,27 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
 
             }
         });
+
         getLoginView();
+        boolean newPurchase = SPUtils.getInstance().getBoolean("newPurchase");
+        Log.e("page", newPurchase + "新人来了");
+        if (newPurchase) {
+            getPurchase();
+        }
     }
 
-    public void getLoginView(){
+    public void getLoginView() {
         boolean isLogin = LoginUtil.checkIsLogin(getActivity(), false);
         if (!isLogin) {
-            if(getActivity()==null){
+            if (getActivity() == null) {
                 return;
             }
-            if(noLoginView==null){
-                noLoginView= LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_login, null);
+            if (noLoginView == null) {
+                noLoginView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_login, null);
                 noLoginView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (TimeUtils.isFrequentOperation()){//防止用户多次点击跳两次页面
+                        if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
                             return;
                         }
                         LoginUtil.goToPasswordLogin(getActivity());
@@ -313,14 +345,71 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                 });
             }
 
-            if(rl_urgency_notifi!=null){
+            if (rl_urgency_notifi != null) {
                 rl_urgency_notifi.removeAllViews();
                 rl_urgency_notifi.addView(noLoginView);
             }
 
         } else {
-            if(rl_urgency_notifi!=null){
-                rl_urgency_notifi.removeAllViews();
+            if (TaobaoUtil.isAuth()) {//淘宝授权
+                if (noaurthorView == null) {
+                    noaurthorView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_authorization, null);
+                    noaurthorView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity(), false);
+                        }
+                    });
+                }
+                if (rl_urgency_notifi != null) {
+                    rl_urgency_notifi.removeAllViews();
+                    rl_urgency_notifi.addView(noaurthorView);
+                }
+
+            } else {
+                if (rl_urgency_notifi != null) {
+                    rl_urgency_notifi.removeAllViews();
+                }
+                RxHttp.getInstance().getCommonService().checkPruchase()
+                        .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                        .compose(this.<BaseResponse<String>>bindToLifecycle())
+                        .subscribe(new DataObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data) {
+
+                                ischeck = data;
+
+                                if (!TextUtils.isEmpty(ischeck)) {
+                                    if (ischeck.equals("true")) {//是否有新人首单
+                                        if (nonewbuyView == null) {
+                                            nonewbuyView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_new_buy, null);
+                                            nonewbuyView.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                        return;
+                                                    }
+                                                    getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));//跳转新人免单
+
+                                                }
+                                            });
+                                        }
+                                        if (rl_urgency_notifi != null) {
+                                            rl_urgency_notifi.removeAllViews();
+                                            rl_urgency_notifi.addView(nonewbuyView);
+                                        }
+
+                                    } else {
+                                        if (rl_urgency_notifi != null) {
+                                            rl_urgency_notifi.removeAllViews();
+                                        }
+
+                                    }
+                                }
+                            }
+                        });
+
+
             }
 
         }
@@ -417,7 +506,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         public Fragment getItem(int position) {
             GoodCategoryInfo homeColumn = mHomeColumns.get(position);
             if (getString(R.string.choiceness).equals(homeColumn.getName())) {
-                HomeRecommendFragment homeRecommendFragment = HomeRecommendFragment.newInstance();
+                HomeRecommendFragment  homeRecommendFragment = HomeRecommendFragment.newInstance();
                 homeRecommendFragment.setUpdateColorCallback(HomeFragment.this);
                 fragments.add(homeRecommendFragment);
                 return homeRecommendFragment;
@@ -493,12 +582,12 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     }
 
     private void gotoCategory() {
-        ConfigListUtlis.getConfigList(this,ConfigListUtlis.getConfigAllKey(), new MyAction.One<List<SystemConfigBean>>() {
+        ConfigListUtlis.getConfigList(this, ConfigListUtlis.getConfigAllKey(), new MyAction.One<List<SystemConfigBean>>() {
             @Override
             public void invoke(List<SystemConfigBean> arg) {
                 SystemConfigBean bean = ConfigListUtlis.getSystemConfigBean(C.ConfigKey.CATEGORY_URL);
-                if(bean!=null){
-                    ShowWebActivity.start(getActivity(),bean.getSysValue(),"分类");
+                if (bean != null) {
+                    ShowWebActivity.start(getActivity(), bean.getSysValue(), "分类");
                 }
             }
         });
@@ -535,7 +624,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     }
 
 
-
     /**
      * 获取首页头部分类数据(超级分类）
      *
@@ -569,7 +657,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     /**
      * 获取商品的分佣比例
      */
-    public void getCommissionPercent(){
+    public void getCommissionPercent() {
         ConfigModel.getInstance().getConfigForKey((RxAppCompatActivity) getActivity(), C.SysConfig.COMMISSION_PERCENT)
                 .subscribe(new DataObserver<HotKeywords>() {
                     @Override
@@ -582,6 +670,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
                     }
                 });
     }
+
     /**
      * 红包轮播
      */
@@ -719,7 +808,9 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
      * @param changeColor
      */
     private void setTopBg(boolean ischange, int changeColor, boolean ischangeTab) {
-        if (this == null){return;}
+        if (this == null) {
+            return;
+        }
         lastChangeBg = ischange;
         if (sumDy > 300) {
             ischange = false;
@@ -727,10 +818,10 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         }
         if (mArcBgView != null) {
             if (mArcBgView.getColor() != changeColor) {
-                if(changeColor == getResources().getColor(R.color.white)){
+                if (changeColor == getResources().getColor(R.color.white)) {
                     perfectArcBg.setVisibility(View.GONE);
                     mArcBgView.setVisibility(View.GONE);
-                }else{
+                } else {
                     perfectArcBg.setVisibility(View.VISIBLE);
                     mArcBgView.setVisibility(View.VISIBLE);
                 }
@@ -759,7 +850,6 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     }
 
     /**
-     *
      * @param ischangeDefault default 是底色是白，文字是红，指示线也是红
      */
     private void setXTabLayoutColor(boolean ischangeDefault) {
@@ -770,8 +860,8 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
             home_msg.setImageResource(R.drawable.icon_xiaoxi_black);
             btn_service.setImageResource(R.drawable.icon_home_service_black);
             mMoreCategoryBtn.setImageResource(R.drawable.icon_quanbu_yellow);
-            search_rl.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.bg_input_white_round_30dp));
-            searchTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_999999));
+            search_rl.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_input_white_round_30dp));
+            searchTv.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_999999));
             searchIconIv.setImageResource(R.drawable.icon_sousuo);
         } else {
             mXTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
@@ -779,8 +869,8 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
             home_msg.setImageResource(R.drawable.icon_xiaoxi);
             btn_service.setImageResource(R.drawable.icon_home_service);
             mMoreCategoryBtn.setImageResource(R.drawable.icon_quanbu);
-            search_rl.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.bg_input_white_trans_30dp));
-            searchTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.white));
+            search_rl.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_input_white_trans_30dp));
+            searchTv.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
             searchIconIv.setImageResource(R.drawable.icon_home_top_search);
         }
 
@@ -816,14 +906,238 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         this.mGuideNextCallback = mGuideNextCallback;
     }
 
-    public void showGuideSearch() {
-        if (null != search_rl) {
-            GuideViewUtil.showGuideView(getActivity(), search_rl, GuideViewUtil.GUIDE_SEARCH, 0, this.mGuideNextCallback, null);
-        }
+    public void showGuideSearch() {//新人引导页面
+        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuide, false);
+        Log.e("page", "NewbieGuide onShowed: ");
+        // GuideViewUtil.showGuideView(getActivity(), search_rl, GuideViewUtil.GUIDE_SEARCH, 0, this.mGuideNextCallback, null);
+        NewbieGuide.with(this)
+                .setLabel("page")//设置引导层标示区分不同引导层，必传！否则报错
+                .setOnGuideChangedListener(new OnGuideChangedListener() {
+                    @Override
+                    public void onShowed(Controller controller) {
+                        Log.e("page", "NewbieGuide onShowed: ");
+                        //引导层显示
+                    }
+
+                    @Override
+                    public void onRemoved(Controller controller) {
+                        Log.e("page", "NewbieGuide  onRemoved: ");
+                        //引导层消失（多页切换不会触发）
+                        getPurchase();
+                        SPUtils.getInstance().put("newPurchase", true);
+                    }
+                })
+                .setOnPageChangedListener(new OnPageChangedListener() {
+                    @Override
+                    public void onPageChanged(int page) {
+                        Log.e("page", "NewbieGuide  onPageChanged: " + page);
+                        //引导页切换，page为当前页位置，从0开始
+                    }
+                })
+                .alwaysShow(true)//是否每次都显示引导层，默认false，只显示一次
+                .setShowCounts(1)
+                .addGuidePage(//添加一页引导页
+                        GuidePage.newInstance()//创建一个实例
+                                .setLayoutRes(R.layout.view_search_guide)//设置引导页布局
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+
+
+                                    }
+
+                                })
+//
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_news_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+//
+
+                                    }
+
+                                })
+                )
+
+                .addGuidePage(
+                        GuidePage.newInstance()
+
+                                .addHighLight(icon, HighLight.Shape.ROUND_RECTANGLE,35,0,null)
+                                .setLayoutRes(R.layout.view_icon_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+
+
+                                    }
+
+                                })
+
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_circle_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        RelativeLayout rl = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+                                    }
+
+                                })
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_start_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        RelativeLayout search_jump = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+                                    }
+
+                                })
+                                .setEverywhereCancelable(false)
+                )
+                .show();//显示引导层(至少需要一页引导页才能显示)
+
+
+    }
+
+    private void getPurchase() {//新人弹框
+        Log.e("page", "新人");
+        RxHttp.getInstance().getCommonService().checkPruchase()
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(this.<BaseResponse<String>>bindToLifecycle())
+                .subscribe(new DataObserver<String>() {
+                    @Override
+                    protected void onSuccess(String data) {
+                        Log.e("page", data + "新人");
+                        ischeck = data;
+                        Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
+                        String ymdhhmmss = DateTimeUtils.getYmdhhmmss(String.valueOf(serverTime));
+                        if (!TextUtils.isEmpty(ischeck)) {
+                            if (ischeck.equals("true")) {//是否有新人首单
+                                if (DateTimeUtils.IsToday(ymdhhmmss)) {//判断是否是当天
+
+                                    num = SPUtils.getInstance().getInt("num");
+                                    Log.e("page", num + "num");
+                                    if (num<2){
+                                        NewbieGuide.with(getActivity())
+                                                .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
+                                                .alwaysShow(true)
+                                                .setShowCounts(1)
+                                                .addGuidePage(//添加一页引导页
+                                                        GuidePage.newInstance()//创建一个实例
+                                                                .setLayoutRes(R.layout.view_pruchase_guide)//设置引导页布局
+                                                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                                                    @Override
+                                                                    public void onLayoutInflated(View view, final Controller controller) {
+                                                                        //引导页布局填充后回调，用于初始化
+                                                                        ImageView diss = view.findViewById(R.id.diss);
+                                                                        diss.setOnClickListener(new View.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(View v) {
+                                                                                controller.remove();
+
+                                                                            }
+                                                                        });
+                                                                        ImageView purchase_bg = view.findViewById(R.id.purchase_bg);
+                                                                        purchase_bg.setOnClickListener(new View.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(View v) {
+                                                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                                                    return;
+                                                                                }
+                                                                                getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
+                                                                                controller.remove();
+                                                                            }
+                                                                        });
+                                                                    }
+
+                                                                })
+                                                                .setEverywhereCancelable(false)
+
+
+                                                ).show();
+                                        SPUtils.getInstance().put("num", num+1);
+                                    }
+
+
+                                }else{
+                                    SPUtils.getInstance().put("num", 0);
+                                }
+                            }
+                        }
+
+                    }
+                });
+
+
     }
 
     private void addRecommendGoodsView(final ImageInfo imageInfo, final int index) {
-        if(getActivity()==null){
+        if (getActivity() == null) {
             return;
         }
         View recommendGoodsView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_recommend_goods, null);
@@ -853,7 +1167,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         recommendGoodsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BannerInitiateUtils.gotoAction(getActivity(),imageInfo);
+                BannerInitiateUtils.gotoAction(getActivity(), imageInfo);
             }
         });
         if (mHandler == null) {
@@ -873,8 +1187,8 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
         App.getACache().put(C.sp.CLESE_RECOMMEND_GOODS + UserLocalData.getUser().getPhone() + id, index);
         if (rl_urgency_notifi != null)
             rl_urgency_notifi.removeAllViews();
-        if(null != mHomeAdapter && fragments.size()>0){
-            HomeRecommendFragment homeRecommendFragment =  fragments.get(0);
+        if (null != mHomeAdapter && fragments.size() > 0) {
+            HomeRecommendFragment homeRecommendFragment = fragments.get(0);
             homeRecommendFragment.setTopButtonPosition();
         }
     }
@@ -882,8 +1196,8 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     public void cleseRecommendGoodsView() {
 //        if (rl_urgency_notifi != null)
 //            rl_urgency_notifi.removeAllViews();
-        if(null != mHomeAdapter && fragments.size()>0){
-            HomeRecommendFragment homeRecommendFragment =  fragments.get(0);
+        if (null != mHomeAdapter && fragments.size() > 0) {
+            HomeRecommendFragment homeRecommendFragment = fragments.get(0);
             homeRecommendFragment.setTopButtonPosition();
         }
     }
@@ -891,10 +1205,10 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(!isVisibleToUser){
-            if(null != mHomeAdapter && fragments.size()>0){
-                MyLog.i("test","setUserVisibleHint");
-                HomeRecommendFragment homeRecommendFragment =  fragments.get(0);
+        if (!isVisibleToUser) {
+            if (null != mHomeAdapter && fragments.size() > 0) {
+                MyLog.i("test", "setUserVisibleHint");
+                HomeRecommendFragment homeRecommendFragment = fragments.get(0);
                 homeRecommendFragment.setUserVisibleHint(isVisibleToUser);
             }
         }

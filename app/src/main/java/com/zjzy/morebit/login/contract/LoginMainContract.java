@@ -11,9 +11,11 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 public class LoginMainContract {
     public interface View extends BaseLoginView {
         void goToRegister();
+        void goToWx();
     }
 
     public interface Present extends BasePresenter {
         void goToWXLogin(RxFragment activity);
+        void goLocalWx(RxFragment activity);
     }
 }

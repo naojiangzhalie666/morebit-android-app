@@ -1,8 +1,10 @@
 package com.zjzy.morebit.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +23,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
+import com.zjzy.morebit.Activity.SkillClassActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
@@ -28,6 +31,7 @@ import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.NumberReUseGridView;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.adapter.ActivityFloorAdapter;
 import com.zjzy.morebit.adapter.SimpleAdapter;
 import com.zjzy.morebit.adapter.SkillAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
@@ -36,6 +40,8 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.Article;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
@@ -43,6 +49,7 @@ import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.C;
@@ -106,13 +113,14 @@ public class NumberSubFragment extends BaseFragment {
     UserInfo mUserInfo;
     private int page = 1;
     private ImageView huiyuan1;
-    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,vip_settlement,vip_directly,vip_intermedium;
+    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,vip_settlement,vip_directly,vip_intermedium,tv_more;
     private ImageView grade,img_vip,img_tuanduizhang;
     private LinearLayout vip_reward,ll4,ll5,ll3;
     private RelativeLayout vip_rl1,vip_rl3;
     private View view1,view2;
-    private RecyclerView skill_rcy;
+    private RecyclerView skill_rcy,activity_rcy;
     private SkillAdapter skillAdapter;
+    private ActivityFloorAdapter  floorAdapter;
 
 
 
@@ -218,10 +226,8 @@ public class NumberSubFragment extends BaseFragment {
         ll4=headView.findViewById(R.id.ll4);
         ll5=headView.findViewById(R.id.ll5);
         skill_rcy=headView.findViewById(R.id.skill_rcy);
-        skillAdapter=new SkillAdapter(getActivity());
         LinearLayoutManager manager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         skill_rcy.setLayoutManager(manager);
-        skill_rcy.setAdapter(skillAdapter);
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(skill_rcy);
         skill_rcy.setNestedScrollingEnabled(false);
@@ -230,6 +236,16 @@ public class NumberSubFragment extends BaseFragment {
         vip_settlement=headView.findViewById(R.id.vip_settlement);//结算
         vip_directly=headView.findViewById(R.id.vip_directly);//直属
         vip_intermedium=headView.findViewById(R.id.vip_intermedium);//间属
+        activity_rcy=headView.findViewById(R.id.activity_rcy);//活动专区
+        GridLayoutManager manager2=new GridLayoutManager(getActivity(),2);
+        activity_rcy.setLayoutManager(manager2);
+        tv_more = headView.findViewById(R.id.tv_more);
+        tv_more.setOnClickListener(new View.OnClickListener() {//跳转技能课堂
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SkillClassActivity.class));
+            }
+        });
 
 
     }
@@ -330,6 +346,7 @@ public class NumberSubFragment extends BaseFragment {
     }
     protected void initData() {
         updataUser();
+
     }
 
     @Override
@@ -394,6 +411,36 @@ public class NumberSubFragment extends BaseFragment {
 
                     }
                 });
+
+        getSkillClass(this).compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<Article>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<Article>>() {
+                    @Override
+                    protected void onSuccess(List<Article> data) {
+                        if (data!=null){
+                            skillAdapter=new SkillAdapter(getActivity(),data);
+                            if (skillAdapter!=null){
+                                skill_rcy.setAdapter(skillAdapter);
+                            }
+
+                        }
+                    }
+                });
+
+        getVipFloor(this).compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<ImageInfo>>() {
+                    @Override
+                    protected void onSuccess(List<ImageInfo> data) {
+                        if (data!=null){
+                            floorAdapter=new ActivityFloorAdapter(getActivity(),data);
+                            if (floorAdapter!=null){
+                                activity_rcy.setAdapter(floorAdapter);
+                            }
+
+                        }
+                    }
+                });
         getData();
     }
     //获取用户详情
@@ -401,7 +448,7 @@ public class NumberSubFragment extends BaseFragment {
         vip_intermedium.setText(data.getIndirectCoin()+"");//间属
         vip_directly.setText(data.getDirectCoin()+"");//直属
         vip_settlement.setText(data.getSettleCoin()+"");//结算
-        vip_optional.setText(data.getMoreCoin()+"");//自购
+        vip_optional.setText(data.getSettleCoin()+"");//自购
     }
 
 
@@ -704,6 +751,35 @@ public class NumberSubFragment extends BaseFragment {
         return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
                 .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
                 .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
+    }
+
+    /**
+     * 获取楼层
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<List<ImageInfo>>> getVipFloor(RxFragment fragment) {
+        RequestBannerBean requestBean = new RequestBannerBean();
+        requestBean.setOs(1);
+
+        return RxHttp.getInstance().getGoodsService().getVipFloor(requestBean)
+                .compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<ImageInfo>>>bindToLifecycle());
+    }
+    /**
+     * 获取技能课程
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<List<Article>>> getSkillClass(RxFragment fragment) {
+        RequestBannerBean requestBean = new RequestBannerBean();
+        requestBean.setOs(1);
+
+        return RxHttp.getInstance().getGoodsService().getVipSkillClass(requestBean)
+                .compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<Article>>>bindToLifecycle());
     }
     /**
      * 用户详情

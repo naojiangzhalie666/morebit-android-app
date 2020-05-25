@@ -99,7 +99,6 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
     private String shareUrl;
     private SharePopwindow shareUrlPopwindow;
     private SharePopwindow sharePosterPopwindow;
-    private Banner roll_view_pager;
 
 
     @BindView(R.id.hicvp)
@@ -110,6 +109,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
     LinearLayout mLlWrite;
     String shareText = App.getAppContext().getString(R.string.shareapp_text);
     private String mRuleUrl;
+
 
     @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
@@ -140,13 +140,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
         }
     };
 
-    //自定义的图片加载器
-    private class MyLoader extends ImageLoader {
-        @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            Glide.with(context).load((String) path).into(imageView);
-        }
-    }
+
     @Override
     protected void initData() {
         mInvite_code = UserLocalData.getUser(getActivity()).getInviteCode();
@@ -184,7 +178,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
             }
         });
         initWriteView();
-        roll_view_pager=view.findViewById(R.id.roll_view_pager);
+
     }
 
     private void initWriteView() {
@@ -216,7 +210,6 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
     public void onSuccessful(List<ImageInfo> datas) {
         mImageInfos = datas;
         loadingPicture();
-
     }
 
     private void loadingPicture() {
@@ -252,9 +245,10 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
                     }
                 }
                 if (mUrlsList.size() >= 1) {
-                    mHorizontalInfiniteCycleViewPager.setAdapter(new HorizontalPagerAdapter(getActivity(), mUrlsList));
+                    //设置图片加载地址
+                   mHorizontalInfiniteCycleViewPager.setAdapter(new HorizontalPagerAdapter(getActivity(), mUrlsList));
                     if (mUrlsList.size() > 1)
-                        mHorizontalInfiniteCycleViewPager.setCurrentItem(1);
+                       mHorizontalInfiniteCycleViewPager.setCurrentItem(1);
                 } else {
                     ViewShowUtils.showShortToast(getActivity(), "加载出错,请退出页面重试");
                 }
@@ -297,8 +291,8 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
                         @Override
                         protected void onSuccess(ShareUrlBaen data) {
                             for (int i = 0; i < mImageInfos.size(); i++) {
-                                if (!TextUtils.isEmpty(data.getLink())) {
-                                    downloadPicture(data.getLink(), mImageInfos.get(i));
+                                if (!TextUtils.isEmpty(data.getWxRegisterlink())) {
+                                    downloadPicture(data.getWxRegisterlink(), mImageInfos.get(i));
                                 }
                             }
                         }
@@ -573,7 +567,7 @@ public class ShareFriendsFragment extends MvpFragment<ShareFriendsPresenter> imp
                 .subscribe(new DataObserver<ShareUrlBaen>() {
                     @Override
                     protected void onSuccess(final ShareUrlBaen data) {
-                        shareUrl = data.getLink();
+                        shareUrl = data.getWxRegisterlink();
                         shareText = data.getSharp();
                     }
                 });

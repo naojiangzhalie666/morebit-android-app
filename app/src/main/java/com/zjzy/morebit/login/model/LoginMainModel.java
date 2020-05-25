@@ -34,6 +34,7 @@ public class LoginMainModel extends MvpModel {
 
         RequestWeixiLoginBean requestBean = new RequestWeixiLoginBean();
         requestBean.setOauthWx(weixinInfo.getOpenid());
+        requestBean.setUnionid(weixinInfo.getUnionid());
         String sign = EncryptUtlis.getSign2(requestBean);
         requestBean.setSign(sign);
         return RxHttp.getInstance().getUsersService()
