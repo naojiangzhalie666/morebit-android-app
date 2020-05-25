@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.blankj.utilcode.util.ThreadUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.MainActivity;
@@ -33,9 +37,12 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.requestbodybean.RequestAnalysisTKL;
+import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -58,6 +65,8 @@ import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 
 /**
  * 基础activity
@@ -280,7 +289,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
         searchDialog = new  SearchGoodsDialog(BaseActivity.this, R.style.dialog, "", getClipStr, new SearchGoodsDialog.OnCloseListener() {
             @Override
             public void onClick(Dialog dialog, String text) {
-                String textTrim = getClipStr.trim();
+                final String textTrim = getClipStr.trim();
                 ArrayList<String> asObject = (ArrayList<String>) App.getACache().getAsObject(C.sp.searchHotKey);
                 if (asObject == null) {
                     asObject = new ArrayList<>();
@@ -297,8 +306,30 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                     asObject.add(0, textTrim);
                 }
                 App.getACache().put(C.sp.searchHotKey, asObject);
-                //跳转到搜索页面
-                gotoSearchResultPage(textTrim);
+
+                if (textTrim.contains("https://item.m.jd.com/product/")){
+                    String stextTrim="";
+                    String substring = textTrim.substring(0, textTrim.indexOf(".html"));
+                    stextTrim= substring.replace("https://item.m.jd.com/product/","");
+
+                    getBaseResponseObservableForJd(BaseActivity.this, stextTrim)
+                            .doFinally(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                }
+                            })
+                            .subscribe(new DataObserver<ShopGoodInfo>() {
+                                @Override
+                                protected void onSuccess(final ShopGoodInfo data) {
+                                  showDetailsView(data,textTrim);
+
+                                }
+                            });
+                }else{
+                    //跳转到搜索页面
+                    gotoSearchResultPage(textTrim);
+                }
+
 //                Intent intent = new Intent(BaseActivity.this, SearchResultForPddActivity.class);
 //                Bundle bundle = new Bundle();
 //                bundle.putString("keyWord", textTrim);
@@ -318,6 +349,25 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 
             }
         }
+    }
+
+    private void showDetailsView(ShopGoodInfo data, String textTrim) {
+        if (data!=null){
+            data.setItemSource("1");
+            GoodsDetailForJdActivity.start(BaseActivity.this,data);
+        }else{
+            //跳转到搜索页面
+            gotoSearchResultPage(textTrim);
+        }
+
+    }
+
+
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForJd(BaseActivity rxActivityt, String  goodsId) {
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(new ProgramGetGoodsDetailBean().setType(1)
+                .setGoodsId(Long.valueOf(goodsId)))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivityt.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
     private void gotoSearchResultPage(String keywords){
         Bundle bundle = new Bundle();
