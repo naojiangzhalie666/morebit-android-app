@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,12 +70,16 @@ public class MarkermallCirleItmeGoodsAdapter extends BaseMYShareAdapter<Markerma
             holder.markTv.setVisibility(View.GONE);
         }
         LoadImgUtils.loadingCornerBitmap(mContext, holder.iv_head, MathUtils.getPicture(info));
-//        if (TextUtils.isEmpty(UserLocalData.getUser(mContext).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(mContext).getPartner())) {
-//            holder.tv_share.setText(mContext.getString(R.string.now_share));
-//        } else {
+        if (TextUtils.isEmpty(UserLocalData.getUser(mContext).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(mContext).getPartner())) {
+            holder.tv_share.setText(mContext.getString(R.string.now_login));
+        } else {
             holder.tv_share.setText(mContext.getString(R.string.share_price_new, muRatioComPrice));
-//        }
+        }
         holder.tv_price.setText("券额"+mContext.getString(R.string.income_yuan, MathUtils.getnum(info.getCouponPrice())));
+        if (MathUtils.getnum(info.getCouponPrice()).equals("0")){
+            holder.tv_price.setVisibility(View.GONE);
+            holder.tv_coupon_price.setText("活动价"+mContext.getString(R.string.income_yuan,  MathUtils.getnum(info.getVoucherPrice())));
+        }
 
 
         if (info.getIsExpire() == 1) {//过期
