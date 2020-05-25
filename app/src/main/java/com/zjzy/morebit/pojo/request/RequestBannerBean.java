@@ -6,8 +6,8 @@ public class RequestBannerBean extends RequestBaseBean {
 
     private int type;
     private int os = C.Setting.os;
-    private int page;
-    private int rows;
+    private int page=1;
+    private int rows=10;
 
     public int getPage() {
         return page;

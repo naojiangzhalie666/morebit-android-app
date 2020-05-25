@@ -89,6 +89,7 @@ public class SkillClassActivity extends BaseActivity {
             public void onRefresh() {
                 page=1;
                 initBanner();
+                swipeRefreshLayout.setRefreshing(false);
 
             }
         });
