@@ -37,6 +37,7 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
@@ -105,7 +106,7 @@ public class NumberSubFragment extends BaseFragment {
     UserInfo mUserInfo;
     private int page = 1;
     private ImageView huiyuan1;
-    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2;
+    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,vip_settlement,vip_directly,vip_intermedium;
     private ImageView grade,img_vip,img_tuanduizhang;
     private LinearLayout vip_reward,ll4,ll5,ll3;
     private RelativeLayout vip_rl1,vip_rl3;
@@ -225,6 +226,10 @@ public class NumberSubFragment extends BaseFragment {
         snapHelper.attachToRecyclerView(skill_rcy);
         skill_rcy.setNestedScrollingEnabled(false);
         huiyuan1=headView.findViewById(R.id.huiyuan1);
+        vip_optional=headView.findViewById(R.id.vip_optional);//自选商品
+        vip_settlement=headView.findViewById(R.id.vip_settlement);//结算
+        vip_directly=headView.findViewById(R.id.vip_directly);//直属
+        vip_intermedium=headView.findViewById(R.id.vip_intermedium);//间属
 
 
     }
@@ -377,9 +382,27 @@ public class NumberSubFragment extends BaseFragment {
             public void onError() {
             }
         });
+        getUserDetails(this).doFinally(new Action() {
+            @Override
+            public void run() throws Exception {
+            }
+        })
+                .subscribe(new DataObserver<UserInfo>() {
+                    @Override
+                    protected void onSuccess( UserInfo data) {
+                      showDetailsView(data);
+
+                    }
+                });
         getData();
     }
-
+    //获取用户详情
+    private void showDetailsView(UserInfo data) {
+        vip_intermedium.setText(data.getIndirectCoin()+"");//间属
+        vip_directly.setText(data.getDirectCoin()+"");//直属
+        vip_settlement.setText(data.getSettleCoin()+"");//结算
+        vip_optional.setText(data.getMoreCoin()+"");//自购
+    }
 
 
     /**

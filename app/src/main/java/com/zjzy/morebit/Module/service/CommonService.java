@@ -2447,4 +2447,11 @@ public interface CommonService {
      */
     @POST("/api/user/operator/userDetails")
     public Observable<BaseResponse<UserInfo>> getUserDetails( @Body UserInfo requestBean);
+    /**
+     * 获取技能课堂内容
+     *
+     * @return
+     */
+    @POST("/api/system/commercial/getVipSkillClass")
+    public Observable<BaseResponse<List<Article>>> getVipSkillClass( @Body UserInfo requestBean);
 }
