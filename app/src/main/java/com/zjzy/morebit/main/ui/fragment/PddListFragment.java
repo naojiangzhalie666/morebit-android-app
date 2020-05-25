@@ -258,7 +258,9 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
 //            rl_list.getListView().refreshComplete(10);
 //        }else{
             mAdapter = new PddJdListAdapter(getActivity(),data);
-            rl_list.setAdapter(mAdapter);
+            if (mAdapter!=null){
+                rl_list.setAdapter(mAdapter);
+            }
 
         }else if (loadType== C.requestType.loadMore){
 

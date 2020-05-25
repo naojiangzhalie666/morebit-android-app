@@ -277,7 +277,9 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     public void setJd(List<ShopGoodInfo> data, int loadType) {
         if (page==1) {
             mAdapter = new JdListAdapter(getActivity(), data);
-            rl_list.setAdapter(mAdapter);
+            if (mAdapter!=null){
+                rl_list.setAdapter(mAdapter);
+            }
         } else  {
             mAdapter.setData(data);
             mSwipeList.finishLoadMore(true);

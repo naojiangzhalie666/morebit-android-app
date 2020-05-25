@@ -18,6 +18,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.CircleDayHotFragment;
 import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -70,9 +71,11 @@ public class MarkermallCirleItmeGoodsAdapter extends BaseMYShareAdapter<Markerma
             holder.markTv.setVisibility(View.GONE);
         }
         LoadImgUtils.loadingCornerBitmap(mContext, holder.iv_head, MathUtils.getPicture(info));
-        if (TextUtils.isEmpty(UserLocalData.getUser(mContext).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(mContext).getPartner())) {
+
+        UserInfo userInfo1 =UserLocalData.getUser();
+        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             holder.tv_share.setText(mContext.getString(R.string.now_login));
-        } else {
+        }else{
             holder.tv_share.setText(mContext.getString(R.string.share_price_new, muRatioComPrice));
         }
         holder.tv_price.setText("券额"+mContext.getString(R.string.income_yuan, MathUtils.getnum(info.getCouponPrice())));
