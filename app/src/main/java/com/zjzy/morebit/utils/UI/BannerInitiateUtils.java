@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.Activity.MyMaterialActivity;
 import com.zjzy.morebit.Activity.OneFragmentDefaultActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
@@ -415,6 +418,11 @@ public class BannerInitiateUtils {
         }else if (type == C.BannerIntentionType.SHOPMALL) {  //每日推荐 45
 
             GoodNewsFramgent.startTiemSale(activity, info);
+
+        }else if (type == C.BannerIntentionType.KOALA) {  //考拉 46
+            if (TextUtils.isEmpty(info.getUrl())) return;
+            Log.e("ksjs",info.getUrl()+info.getTitle());
+            KoalaWebActivity.start(activity, info.getUrl(), info.getTitle());
 
         } else {
             showUptate(activity, type);

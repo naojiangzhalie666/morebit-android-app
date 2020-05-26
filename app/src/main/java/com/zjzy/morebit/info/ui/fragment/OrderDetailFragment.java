@@ -122,6 +122,12 @@ public class OrderDetailFragment extends BaseFragment {
                 titles = getResources().getStringArray(R.array.taobao_order_type);
                 mTablayout.setTabPadding(25);
                 break;
+            //考拉
+            case C.OrderType.KAOLA:
+                mTvTitle.setText("考拉海购订单");
+                titles = getResources().getStringArray(R.array.taobao_order_type);
+                mTablayout.setTabPadding(25);
+                break;
         }
 
 
