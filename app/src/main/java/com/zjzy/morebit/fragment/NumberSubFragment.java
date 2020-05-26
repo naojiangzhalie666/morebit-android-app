@@ -120,7 +120,7 @@ public class NumberSubFragment extends BaseFragment {
     private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,vip_settlement,vip_directly,vip_intermedium,tv_more,getMorce;
     private ImageView grade,img_vip,img_tuanduizhang;
     private LinearLayout vip_reward,ll4,ll5,ll3;
-    private RelativeLayout vip_rl1,vip_rl3;
+    private RelativeLayout vip_rl1,vip_rl3,rl3,rl4;
     private View view1,view2;
     private RecyclerView skill_rcy,activity_rcy;
     private SkillAdapter skillAdapter;
@@ -231,6 +231,8 @@ public class NumberSubFragment extends BaseFragment {
         ll3=headView.findViewById(R.id.ll3);
         ll4=headView.findViewById(R.id.ll4);
         ll5=headView.findViewById(R.id.ll5);
+        rl3=headView.findViewById(R.id.rl3);
+        rl4=headView.findViewById(R.id.rl4);
         skill_rcy=headView.findViewById(R.id.skill_rcy);
         LinearLayoutManager manager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         skill_rcy.setLayoutManager(manager);
@@ -366,11 +368,13 @@ public class NumberSubFragment extends BaseFragment {
                     @Override
                     protected void onSuccess(List<Article> data) {
                         if (data!=null){
+                            rl4.setVisibility(View.VISIBLE);
                             skillAdapter=new SkillAdapter(getActivity(),data);
                             if (skillAdapter!=null){
                                 skill_rcy.setAdapter(skillAdapter);
                             }
-
+                        }else{
+                            rl4.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -475,11 +479,14 @@ public class NumberSubFragment extends BaseFragment {
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         if (data!=null){
+                            rl3.setVisibility(View.VISIBLE);
                             floorAdapter=new ActivityFloorAdapter(getActivity(),data);
                             if (floorAdapter!=null){
                                 activity_rcy.setAdapter(floorAdapter);
                             }
 
+                        }else{
+                            rl3.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -490,7 +497,7 @@ public class NumberSubFragment extends BaseFragment {
         vip_intermedium.setText(data.getIndirectCoin()+"");//间属
         vip_directly.setText(data.getDirectCoin()+"");//直属
         vip_settlement.setText(data.getSettleCoin()+"");//结算
-        vip_optional.setText(data.getSettleCoin()+"");//自购
+        vip_optional.setText(data.getSelfCoin()+"");//自购
     }
 
 
