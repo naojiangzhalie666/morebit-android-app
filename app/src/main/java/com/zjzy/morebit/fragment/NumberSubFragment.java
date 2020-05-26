@@ -179,6 +179,7 @@ public class NumberSubFragment extends BaseFragment {
             public void onReload() {
                 page = 1;
                  refreshData();
+                initData();
             }
 
             @Override
@@ -353,6 +354,20 @@ public class NumberSubFragment extends BaseFragment {
     }
     protected void initData() {
         updataUser();
+        getSkillClass(this).compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<Article>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<Article>>() {
+                    @Override
+                    protected void onSuccess(List<Article> data) {
+                        if (data!=null){
+                            skillAdapter=new SkillAdapter(getActivity(),data);
+                            if (skillAdapter!=null){
+                                skill_rcy.setAdapter(skillAdapter);
+                            }
+
+                        }
+                    }
+                });
 
     }
 
@@ -419,20 +434,7 @@ public class NumberSubFragment extends BaseFragment {
                     }
                 });
 
-        getSkillClass(this).compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
-                .compose(this.<BaseResponse<List<Article>>>bindToLifecycle())
-                .subscribe(new DataObserver<List<Article>>() {
-                    @Override
-                    protected void onSuccess(List<Article> data) {
-                        if (data!=null){
-                            skillAdapter=new SkillAdapter(getActivity(),data);
-                            if (skillAdapter!=null){
-                                skill_rcy.setAdapter(skillAdapter);
-                            }
 
-                        }
-                    }
-                });
 
         getVipFloor(this).compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
                 .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
