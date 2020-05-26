@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
@@ -46,6 +47,7 @@ public class SkillClassActivity extends BaseActivity {
     private SkillClassAdapter skillAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SmartRefreshLayout mSwipeList;
+    private LinearLayout btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,13 @@ public class SkillClassActivity extends BaseActivity {
         });
 
     rcy.setNestedScrollingEnabled(false);
+        btn_back= (LinearLayout) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -44,6 +45,7 @@ import com.zjzy.morebit.pojo.Article;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
@@ -51,7 +53,9 @@ import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestInviteCodeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
+import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -121,6 +125,7 @@ public class NumberSubFragment extends BaseFragment {
     private RecyclerView skill_rcy,activity_rcy;
     private SkillAdapter skillAdapter;
     private ActivityFloorAdapter  floorAdapter;
+    private TextView vip_kefu;
 
 
 
@@ -242,6 +247,7 @@ public class NumberSubFragment extends BaseFragment {
         activity_rcy.setLayoutManager(manager2);
         tv_more = headView.findViewById(R.id.tv_more);
         getMorce=headView.findViewById(R.id.getMorce);
+        vip_kefu=headView.findViewById(R.id.vip_kefu);//专属客服
         tv_more.setOnClickListener(new View.OnClickListener() {//跳转技能课堂
             @Override
             public void onClick(View v) {
@@ -368,6 +374,33 @@ public class NumberSubFragment extends BaseFragment {
                         }
                     }
                 });
+
+        RequestInviteCodeBean requestBean = new RequestInviteCodeBean();
+        requestBean.setWxShowType(1);
+        RxHttp.getInstance().getCommonService().getServiceQrcode(requestBean)
+                .compose(RxUtils.<BaseResponse<TeamInfo>>switchSchedulers())
+                .compose(this.<BaseResponse<TeamInfo>>bindToLifecycle())
+                .subscribe(new DataObserver<TeamInfo>() {
+                    @Override
+                    protected void onSuccess(TeamInfo data) {
+                        if (data != null) {
+                            if (!TextUtils.isEmpty(data.getWxNumber())){
+                                copyWx(data);
+                            }
+                        }
+                    }
+                });
+
+    }
+
+    private void copyWx(final TeamInfo data) {
+        vip_kefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtil.coayText(getActivity(),   data.getWxNumber());
+                Toast.makeText(getActivity(), "微信号复制成功，快去添加吧", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
