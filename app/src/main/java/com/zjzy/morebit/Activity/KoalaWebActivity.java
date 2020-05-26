@@ -7,6 +7,8 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -124,10 +126,20 @@ public class KoalaWebActivity extends BaseActivity {
                             if (mIsStop) {
                                 return;
                             }
-                            // 按下home键,执行这个方法会报错
-                            Instrumentation inst = new Instrumentation();
-                            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-                        }
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (web.canGoBack()) {
+                                        web.goBack();//返回上个页面
+                                        return;
+                                    } else {
+                                        finish();
+                                    }
+                                }
+                            });
+
+
+                            }
                     }).start();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -191,8 +203,7 @@ public class KoalaWebActivity extends BaseActivity {
     }
 
     private void goodsInfo(String shopid) {
-
-        startActivity(new Intent(this,GoodsDetailForKoalaActivity.class));
+        GoodsDetailForKoalaActivity.start(this,shopid);
 
     }
 
@@ -257,4 +268,13 @@ public class KoalaWebActivity extends BaseActivity {
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && web.canGoBack()) {
+            web.goBack();//返回上个页面
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+
+    }
 }

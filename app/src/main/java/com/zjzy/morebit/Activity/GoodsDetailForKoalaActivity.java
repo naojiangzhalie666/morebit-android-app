@@ -47,6 +47,7 @@ import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
 import com.zjzy.morebit.pojo.GoodsDetailForPdd;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ReleaseManage;
@@ -103,8 +104,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     TextView title;
     @BindView(R.id.btn_sweepg)
     LinearLayout btn_sweepg;
-    @BindView(R.id.momVolume)
-    TextView momVolume;
     @BindView(R.id.tv_pdd)
     TextView tv_pdd;
     @BindView(R.id.roll_view_pager)
@@ -113,8 +112,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
     @BindView(R.id.go_top)
     ImageView go_top;
-     @BindView(R.id.tv_collect)
-     TextView tv_collect;
+    @BindView(R.id.tv_collect)
+    TextView tv_collect;
     @BindView(R.id.collect_bg)
     ImageView collect_bg;
     @BindView(R.id.videopaly_btn)
@@ -134,8 +133,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     GoodsDetailUpdateView gduv_view;
     @BindView(R.id.tv_buy)
     TextView tv_buy;
-    @BindView(R.id.tv_line)
-    TextView tv_line;
     @BindView(R.id.fl_img)
     FrameLayout fl_img;
     @BindView(R.id.tablayout)
@@ -144,7 +141,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     RelativeLayout re_tab;
     @BindView(R.id.search_statusbar_rl)
     LinearLayout search_statusbar_rl;
-
 
 
     private String shopid;
@@ -171,6 +167,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
     //京东领劵领劵
     private String mPromotionJdUrl;
+
     public static void start(Context context, String id) {
         Intent intent = new Intent((Activity) context, GoodsDetailForKoalaActivity.class);
         Bundle bundle = new Bundle();
@@ -188,7 +185,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     public void onEventMainThread(MessageEvent event) {
         switch (event.getAction()) {
             case EventBusAction.LOGINA_SUCCEED:
-                initData(false);
+                initData();
                 mPresenter.getSysNotification(this);
                 refreshVipUpdate();
                 break;
@@ -219,10 +216,9 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
     }
 
-    private void initData(boolean isRefresh) {
-        if (mGoodsInfo == null) return;
-        mPresenter.getDetailDataForJd(this, mGoodsInfo, isRefresh);
-        mPresenter.generatePromotionJdUrl(this,mGoodsInfo.getGoodsId(),mGoodsInfo.getCouponUrl());
+    private void initData() {
+        UserInfo  mUserInfo = UserLocalData.getUser(this);
+        mPresenter.generateDetailForKaola(this,shopid,mUserInfo.getId());
     }
 
     @Override
@@ -244,7 +240,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         initBundle();
         initView();
         initViewData(mGoodsInfo);
-        initData(false);
+        initData();
         mPresenter.getSysNotification(this);
         mHandler = new Handler();
         IntentFilter intentFilter = new IntentFilter();
@@ -253,6 +249,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
 
     }
+
     private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
 
         @Override
@@ -290,15 +287,11 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData(true);
+                initData();
                 refreshVipUpdate();
             }
         });
-        if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getVideoid()) || "0".equals(mGoodsInfo.getVideoid())) {
-            videopaly_btn.setVisibility(View.GONE);
-        } else {
-            videopaly_btn.setVisibility(View.VISIBLE);
-        }
+
         go_top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -432,24 +425,14 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             return;
         }
         setGoodsAdImg(Info);
-        if (!TextUtils.isEmpty(Info.getComeFrom())) {
-            mGoodsInfo.setComeFrom(Info.getComeFrom());
-        }
-        if (!TextUtils.isEmpty(Info.getItemSource())) {
-            mGoodsInfo.setItemSource(Info.getItemSource());
-        }
-        if (!StringsUtils.isEmpty(Info.getTitle())) {
-            mGoodsInfo.setTitle(Info.getTitle());
-        }
-        if (!StringsUtils.isEmpty(Info.getVoucherPriceForPdd())) {
-            mGoodsInfo.setVoucherPriceForPdd(Info.getVoucherPriceForPdd());
-            mGoodsInfo.setVoucherPrice(Info.getVoucherPriceForPdd());
-            textview_original.setText("" + MathUtils.getnum(Info.getVoucherPriceForPdd()));
-        }
 
 
-
-
+        if (!StringsUtils.isEmpty(Info.getGoodsTitle())) {
+            mGoodsInfo.setGoodsTitle(Info.getGoodsTitle());
+        }
+        if (!StringsUtils.isEmpty(Info.getCurrentPrice())) {
+            textview_original.setText("" + MathUtils.getnum(Info.getCurrentPrice()));
+        }
 
 
         if (UserLocalData.getUser().getReleasePermission() == 1) {
@@ -458,24 +441,15 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             findViewById(R.id.iv_release_goods).setVisibility(View.GONE);
         }
 
-        if (!StringsUtils.isEmpty(Info.getPriceForPdd())) {
-            mGoodsInfo.setPriceForPdd(Info.getPrice());
-            mGoodsInfo.setPrice(Info.getPriceForPdd());
-            text_two.setText(" ¥" + MathUtils.getnum(Info.getPriceForPdd()));
+        if (!StringsUtils.isEmpty(Info.getMarketPrice())) {
+
+            text_two.setText(" ¥" + MathUtils.getnum(Info.getMarketPrice()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
-        if (!StringsUtils.isEmpty(Info.getSaleMonth())) {
-            mGoodsInfo.setSaleMonth(Info.getSaleMonth());
-
-            momVolume.setText(getString(R.string.sales, MathUtils.getSales(Info.getSaleMonth())));
-        }
 
 
-
-
-
-        if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
-            mGoodsInfo.setSubsidiesPrice(Info.getSubsidiesPrice());
+        if (!TextUtils.isEmpty(Info.getCommission())) {
+            mGoodsInfo.setCommission(Info.getCommission());
             tv_Share_the_money.setText(getString(R.string.now_share));
         }
 
@@ -578,9 +552,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             return;
         }
         initViewData(info);
-        if (!StringsUtils.isEmpty(info.getCouponUrl())) {
-            mGoodsInfo.setCouponUrl(info.getCouponUrl());
-        }
         if (info.getColler() != 0) {
             switchColler(info);
         }
@@ -635,21 +606,13 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             return;
         }
 
-        if (mBannerList.size() <=1) {
-            List<String> getBanner = info.getItemBanner();
+        if (mBannerList.size() <= 1) {
+            List<String> getBanner = info.getImageList();
             indexbannerdataArray.clear();
-            if (getBanner == null || getBanner.size() == 0) {
-                if (!TextUtils.isEmpty(mGoodsInfo.getPicture())) {
-                    getBanner = new ArrayList<>();
-                    getBanner.add(StringsUtils.checkHttp(mGoodsInfo.getPicture()));
-                } else {
-                    return;
-                }
-            }
             for (int i = 0; i < getBanner.size(); i++) {
                 String s = StringsUtils.checkHttp(getBanner.get(i));
                 if (TextUtils.isEmpty(s)) return;
-                if (s.contains(","))return;
+                if (s.contains(",")) return;
                 if (LoadImgUtils.isPicture(s)) {
                     ImageInfo imageInfo = new ImageInfo();
                     imageInfo.setThumb(getBanner.get(i));
@@ -668,7 +631,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                             Bundle bundle = new Bundle();
                             bundle.putStringArrayList(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) mBannerList);
                             bundle.putInt(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
-                            bundle.putString(ImagePagerActivity.TAOBAO_ID, mGoodsInfo.getItemSourceId());
+                            bundle.putString(ImagePagerActivity.TAOBAO_ID, info.getItemSourceId());
                             intent.putExtras(bundle);
                             startActivity(intent);
                         }
@@ -680,7 +643,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     }
 
 
-
     /**
      * 切换收藏ui
      *
@@ -689,10 +651,10 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     public void switchColler(ShopGoodInfo info) {
         mGoodsInfo.setColler(info.getColler());
         if (info.getColler() != 0) {
-              tv_collect.setText(getString(R.string.also_collect));
+            tv_collect.setText(getString(R.string.also_collect));
             tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.color_FF3F29));
             collect_bg.setImageResource(R.drawable.icon_shoucanxuanzhong);
-            SensorsDataUtil.getInstance().collectProductTrack("", mGoodsInfo.getItemSourceId(), mGoodsInfo.getTitle(), mGoodsInfo.getPrice());
+            SensorsDataUtil.getInstance().collectProductTrack("", mGoodsInfo.getItemSourceId(), mGoodsInfo.getGoodsTitle(), mGoodsInfo.getCurrentPrice());
         } else {
             collect_bg.setImageResource(R.drawable.icon_shoucang);
             tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.mmhuisezi));
@@ -728,9 +690,16 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
     @Override
     public void setPromotionJdUrl(String promotionJdUrl) {
-        mPromotionJdUrl=promotionJdUrl;
-        mGoodsInfo.setPriceForPdd(mGoodsInfo.getPrice());
-        mGoodsInfo.setClickURL(promotionJdUrl);
+
+    }
+
+    /*
+     *
+     * 考拉详情数据
+     * */
+    @Override
+    public void setDetaisData(ShopGoodInfo data) {
+        mGoodsInfo=data;
     }
 
     private void setSysNotificationView() {
@@ -774,7 +743,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 if (isGoodsLose()) return;
                 if (mGoodsInfo != null) {
                     mGoodsInfo.setAdImgUrl(indexbannerdataArray);
-                    mGoodsInfo.setPriceForPdd(mGoodsInfo.getPrice());
+                    mGoodsInfo.setMarketPrice(mGoodsInfo.getMarketPrice());
                 }
                 ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionJdUrl);
 
@@ -782,25 +751,13 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             case R.id.btn_sweepg: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
 
-                        if (mPromotionJdUrl != null) {
-                            KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
-                        }
+                    if (mPromotionJdUrl != null) {
+                        KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
+                    }
 
 
                 }
 
-                break;
-
-            case R.id.videopaly_btn: //视频播放
-                if (TextUtils.isEmpty(mGoodsInfo.getVideoid())) {
-                    return;
-                }
-
-                Intent it = new Intent(GoodsDetailForKoalaActivity.this, ShortVideoPlayActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(C.Extras.ITEMVIDEOID, mGoodsInfo.getVideoid());
-                it.putExtras(bundle);
-                startActivity(it);
                 break;
             case R.id.collect_ly: //收藏
                 if (isGoodsLose()) return;
@@ -846,16 +803,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         mPresenter.switchCollect(this, mGoodsInfo);
     }
 
-//    /**
-//     * 跳转到店铺优惠券
-//     */
-//    private void goToShopCoupon() {
-//        if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getShopId())) {
-//            return;
-//        }
-//        LoadingView.showDialog(this);
-//        mPresenter.getShopList(this, mGoodsInfo);
-//    }
 
 
     @Override
@@ -865,8 +812,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         unregisterReceiver(mRefreshBroadcastReceiver);
         super.onDestroy();
     }
-
-
 
 
     /**
@@ -884,7 +829,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         if (mGoodsInfo == null) {
             return true;
         }
-        if (TextUtils.isEmpty(mGoodsInfo.getVoucherPrice())) {
+        if (TextUtils.isEmpty(mGoodsInfo.getCurrentPrice())) {
             ViewShowUtils.showLongToast(this, "商品已经过期，请联系管理员哦");
             return true;
         }

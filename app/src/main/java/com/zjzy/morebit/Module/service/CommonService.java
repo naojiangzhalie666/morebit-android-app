@@ -1,6 +1,7 @@
 package com.zjzy.morebit.Module.service;
 
 import com.zjzy.morebit.pojo.ActivityLinkBean;
+import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
@@ -83,6 +84,7 @@ import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
+import com.zjzy.morebit.pojo.request.RequesKoalaBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
 import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
@@ -2451,4 +2453,34 @@ public interface CommonService {
     @POST("/api/goods/fans/getJdGenerate")
     public Observable<BaseResponse<String>> getGenerateForJD(
             @Body RequestPddShareContent requestBean);
+
+    /**
+     * 获取用户详情
+     *
+     * @return
+     */
+    @POST("/api/user/operator/userDetails")
+    public Observable<BaseResponse<UserInfo>> getUserDetails( @Body UserInfo requestBean);
+    /**
+     * 获取技能课堂内容
+     *
+     * @return
+     */
+    @POST("/api/system/commercial/getVipSkillClass")
+    public Observable<BaseResponse<List<Article>>> getVipSkillClass(@Body RequestBannerBean requestBean);
+    /**
+     * 获取vip楼层
+     *
+     * @return
+     */
+    @POST("/api/system/graphicInfo/sorting/getVipFloor")
+    public Observable<BaseResponse<List<ImageInfo>>> getVipFloor(@Body RequestBannerBean requestBean);
+
+    /**
+     * 获取考拉海购-商品详情
+     *
+     * @return
+     */
+   @POST("/api/goods/getKaoLaGoodsDetail")
+    public Observable<BaseResponse<ShopGoodInfo>> getKaoLaGoodsDetail(@Body RequesKoalaBean requestBean);
 }

@@ -62,6 +62,42 @@ public class UserInfo implements Serializable {
     private String birthDate;// 生日
     private int sex;//0未知，1男，2女
     private Long moreCoin;//多豆
+    private Long directCoin;//直接推荐成长值
+    private Long indirectCoin;//间接推荐成长值
+    private Long settleCoin;//结算成长值
+    private Long selfCoin;//自购成长值
+
+    public Long getSelfCoin() {
+        return selfCoin;
+    }
+
+    public void setSelfCoin(Long selfCoin) {
+        this.selfCoin = selfCoin;
+    }
+
+    public Long getDirectCoin() {
+        return directCoin;
+    }
+
+    public void setDirectCoin(Long directCoin) {
+        this.directCoin = directCoin;
+    }
+
+    public Long getIndirectCoin() {
+        return indirectCoin;
+    }
+
+    public void setIndirectCoin(Long indirectCoin) {
+        this.indirectCoin = indirectCoin;
+    }
+
+    public Long getSettleCoin() {
+        return settleCoin;
+    }
+
+    public void setSettleCoin(Long settleCoin) {
+        this.settleCoin = settleCoin;
+    }
 
     public Long getMoreCoin() {
         return moreCoin;

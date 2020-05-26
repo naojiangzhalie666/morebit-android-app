@@ -12,9 +12,11 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.RxWXHttp;
+import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.request.RequesKoalaBean;
 import com.zjzy.morebit.pojo.request.RequestGoodsCollectBean;
 import com.zjzy.morebit.pojo.request.RequestMaterialLink;
 import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
@@ -167,5 +169,20 @@ public class GoodsDetailForPddModel extends MvpModel {
                 .compose(rxActivity.<BaseResponse<ReleaseGoodsPermission>>bindToLifecycle());
     }
 
+
+    /**
+     * 考拉海购
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForKaoLa(BaseActivity rxActivity, String  goodsId,String userId) {
+        RequesKoalaBean requesKoalaBean = new RequesKoalaBean();
+        requesKoalaBean .setUserId(userId);
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getKaoLaGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
 
 }

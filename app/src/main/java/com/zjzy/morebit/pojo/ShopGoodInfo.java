@@ -48,6 +48,74 @@ public class ShopGoodInfo implements Serializable {
     private String productUrl="";
     private String clickURL="";//京东推广链接
 
+    /*
+    * 考拉详情
+    * */
+    private List<String> imageList;//轮播
+    private List<String> detailImgList;//图文详情中的图片
+    private String goodsTitle;//标题
+    private String goodsDetailUrl;//商品详情链接
+    private String purchaseLink;//购买链接
+    private String currentPrice;//现价
+    private String marketPrice;//原价
+
+
+    public List<String> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<String> imageList) {
+        this.imageList = imageList;
+    }
+
+    public List<String> getDetailImgList() {
+        return detailImgList;
+    }
+
+    public void setDetailImgList(List<String> detailImgList) {
+        this.detailImgList = detailImgList;
+    }
+
+    public String getGoodsTitle() {
+        return goodsTitle;
+    }
+
+    public void setGoodsTitle(String goodsTitle) {
+        this.goodsTitle = goodsTitle;
+    }
+
+    public String getGoodsDetailUrl() {
+        return goodsDetailUrl;
+    }
+
+    public void setGoodsDetailUrl(String goodsDetailUrl) {
+        this.goodsDetailUrl = goodsDetailUrl;
+    }
+
+    public String getPurchaseLink() {
+        return purchaseLink;
+    }
+
+    public void setPurchaseLink(String purchaseLink) {
+        this.purchaseLink = purchaseLink;
+    }
+
+    public String getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(String currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
+    public String getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(String marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
     public String getClickURL() {
         return clickURL;
     }

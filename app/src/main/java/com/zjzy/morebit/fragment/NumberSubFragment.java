@@ -1,7 +1,13 @@
 package com.zjzy.morebit.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -17,6 +24,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
+import com.zjzy.morebit.Activity.SkillClassActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
@@ -24,21 +32,30 @@ import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.NumberReUseGridView;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.adapter.ActivityFloorAdapter;
 import com.zjzy.morebit.adapter.SimpleAdapter;
+import com.zjzy.morebit.adapter.SkillAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.Article;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestInviteCodeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
+import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -83,7 +100,6 @@ public class NumberSubFragment extends BaseFragment {
     HorzProgressView mHorzProgressView;
 //    ImageView leader_icon;
 
-    RelativeLayout rl_duodou_progress;
     TextView updateVip;
     View headView ;
     TextView userName;
@@ -100,8 +116,16 @@ public class NumberSubFragment extends BaseFragment {
 
     UserInfo mUserInfo;
     private int page = 1;
-    private ImageView user_king;
-    private String extra;
+    private ImageView huiyuan1;
+    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,vip_settlement,vip_directly,vip_intermedium,tv_more,getMorce;
+    private ImageView grade,img_vip,img_tuanduizhang;
+    private LinearLayout vip_reward,ll4,ll5,ll3;
+    private RelativeLayout vip_rl1,vip_rl3;
+    private View view1,view2;
+    private RecyclerView skill_rcy,activity_rcy;
+    private SkillAdapter skillAdapter;
+    private ActivityFloorAdapter  floorAdapter;
+    private TextView vip_kefu;
 
 
 
@@ -117,12 +141,13 @@ public class NumberSubFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         if (mView == null) {
             mView = inflater.inflate(R.layout.fragment_number_sub, container, false);
-            headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number_header, null);
+            headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number2_header, null);
             initHeadView(headView);
             initView(mView);
             initTan();
-            initData();
+             initData();
             initPush();
+            refreshData();
         }
         return mView;
     }
@@ -158,7 +183,8 @@ public class NumberSubFragment extends BaseFragment {
             @Override
             public void onReload() {
                 page = 1;
-                refreshData();
+                 refreshData();
+                initData();
             }
 
             @Override
@@ -172,7 +198,7 @@ public class NumberSubFragment extends BaseFragment {
 
         mReUseGridView.setAdapterAndHeadView(headView, mAdapter);
 
-
+        mReUseGridView.setNestedScrollingEnabled(false);
 
 
 
@@ -182,31 +208,67 @@ public class NumberSubFragment extends BaseFragment {
 
 
     private void initHeadView(View headView){
-
-        txtWelcome = (TextView)headView.findViewById(R.id.txt_number_welcome_hint);
         userName = (TextView)headView.findViewById(R.id.user_name);
         mUserIcon = (RoundedImageView)headView.findViewById(R.id.userIcon);
-        myGradedView = (TextView)headView.findViewById(R.id.tv_user_type);
-//        numberGradeName = (TextView)headView.findViewById(R.id.number_grade_name);
-        moreCoinBiaozhun = (TextView)headView.findViewById(R.id.more_corn_biaozhun);
-        cardNumber = (RoundedImageView)headView.findViewById(R.id.card_number);
-        cardVip = (RoundedImageView)headView.findViewById(R.id.card_vip);
-        cardLeader = (RoundedImageView)headView.findViewById(R.id.card_leader);
-        mHorzProgressView = (HorzProgressView)headView.findViewById(R.id.horzProgressView);
-        rl_duodou_progress = (RelativeLayout)headView.findViewById(R.id.rl_duodou_progress);
-
-        updateVip = (TextView) headView.findViewById(R.id.btn_number_update_vip);
-        tvUserType= (TextView)headView.findViewById(R.id.tv_user_type);
-        llUserGrade = (LinearLayout)headView.findViewById(R.id.ll_user_grade);
+         moreCoinBiaozhun = (TextView)headView.findViewById(R.id.more_corn_biaozhun);
+         mHorzProgressView = (HorzProgressView)headView.findViewById(R.id.horzProgressView);
+//
+         updateVip = (TextView) headView.findViewById(R.id.btn_number_update_vip);
         tvGrowthValue = (TextView)headView.findViewById(R.id.tv_growth_value);
-        user_king = headView.findViewById(R.id.user_king);
+        grade=(ImageView) headView.findViewById(R.id.grade);
+        vip_reward=headView.findViewById(R.id.vip_reward);
+        vip_rl1=headView.findViewById(R.id.vip_rl1);
+        vip_rl3=headView.findViewById(R.id.vip_rl3);
+        get_operator_growth=headView.findViewById(R.id.get_operator_growth);
+        img_vip=headView.findViewById(R.id.img_vip);
+        tv_vip=headView.findViewById(R.id.tv_vip);
+        img_tuanduizhang=headView.findViewById(R.id.img_tuanduizhang);
+        tv_tuanduizhang=headView.findViewById(R.id.tv_tuanduizhang);
+        view1=headView.findViewById(R.id.view1);
+        view2=headView.findViewById(R.id.view2);
+        tv_huiyuan2=headView.findViewById(R.id.tv_huiyuan2);
+        tv_vip2=headView.findViewById(R.id.tv_vip2);
+        ll3=headView.findViewById(R.id.ll3);
+        ll4=headView.findViewById(R.id.ll4);
+        ll5=headView.findViewById(R.id.ll5);
+        skill_rcy=headView.findViewById(R.id.skill_rcy);
+        LinearLayoutManager manager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        skill_rcy.setLayoutManager(manager);
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(skill_rcy);
+        skill_rcy.setNestedScrollingEnabled(false);
+        huiyuan1=headView.findViewById(R.id.huiyuan1);
+        vip_optional=headView.findViewById(R.id.vip_optional);//自选商品
+        vip_settlement=headView.findViewById(R.id.vip_settlement);//结算
+        vip_directly=headView.findViewById(R.id.vip_directly);//直属
+        vip_intermedium=headView.findViewById(R.id.vip_intermedium);//间属
+        activity_rcy=headView.findViewById(R.id.activity_rcy);//活动专区
+        GridLayoutManager manager2=new GridLayoutManager(getActivity(),2);
+        activity_rcy.setLayoutManager(manager2);
+        tv_more = headView.findViewById(R.id.tv_more);
+        getMorce=headView.findViewById(R.id.getMorce);
+        vip_kefu=headView.findViewById(R.id.vip_kefu);//专属客服
+        tv_more.setOnClickListener(new View.OnClickListener() {//跳转技能课堂
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SkillClassActivity.class));
+            }
+        });
+        getMorce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mReUseGridView.getListView().smoothScrollToPosition(1);
+            }
+        });
+
+
     }
 
     private void updataUser() {
 
         UserInfo  mUserInfo = UserLocalData.getUser(getActivity());
         if (mUserInfo != null) {
-            initViewData(mUserInfo);
+          initViewData(mUserInfo);
         }
 
 
@@ -214,7 +276,7 @@ public class NumberSubFragment extends BaseFragment {
     }
 
     private void getData() {
-        getNumberGoodsListPresenter(this, page);
+         getNumberGoodsListPresenter(this, page);
     }
 
 
@@ -264,28 +326,14 @@ public class NumberSubFragment extends BaseFragment {
 
     private void initViewData(UserInfo info) {
 
-        if (C.UserType.member.equals(info.getPartner())) {
-            tvUserType.setText("会员");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
-            user_king.setVisibility(View.GONE);
 
-        } else if (C.UserType.vipMember.equals(info.getPartner())) {
-            tvUserType.setText("VIP");
-            llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
-            user_king.setVisibility(View.GONE);
-        } else if (C.UserType.operator.equals(info.getPartner())) {
-            tvUserType.setText("团队长");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
-            user_king.setVisibility(View.GONE);
-
-        }
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
             mUserIcon.setImageResource(R.drawable.head_icon);
         } else {
             LoadImgUtils.setImgCircle(getActivity(), mUserIcon, info.getHeadImg(), R.drawable.head_icon);
         }
         userName.setText(info.getNickName());
-        refreshUserInfo(info);
+         refreshUserInfo(info);
         String userType = info.getUserType();
         if (C.UserType.operator.equals(userType)){
             updateVip.setVisibility(View.GONE);
@@ -312,12 +360,54 @@ public class NumberSubFragment extends BaseFragment {
     }
     protected void initData() {
         updataUser();
+        getSkillClass(this).compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<Article>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<Article>>() {
+                    @Override
+                    protected void onSuccess(List<Article> data) {
+                        if (data!=null){
+                            skillAdapter=new SkillAdapter(getActivity(),data);
+                            if (skillAdapter!=null){
+                                skill_rcy.setAdapter(skillAdapter);
+                            }
+
+                        }
+                    }
+                });
+
+        RequestInviteCodeBean requestBean = new RequestInviteCodeBean();
+        requestBean.setWxShowType(1);
+        RxHttp.getInstance().getCommonService().getServiceQrcode(requestBean)
+                .compose(RxUtils.<BaseResponse<TeamInfo>>switchSchedulers())
+                .compose(this.<BaseResponse<TeamInfo>>bindToLifecycle())
+                .subscribe(new DataObserver<TeamInfo>() {
+                    @Override
+                    protected void onSuccess(TeamInfo data) {
+                        if (data != null) {
+                            if (!TextUtils.isEmpty(data.getWxNumber())){
+                                copyWx(data);
+                            }
+                        }
+                    }
+                });
+
+    }
+
+    private void copyWx(final TeamInfo data) {
+        vip_kefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtil.coayText(getActivity(),   data.getWxNumber());
+                Toast.makeText(getActivity(), "微信号复制成功，快去添加吧", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refreshData();
+       refreshData();
 
     }
 
@@ -364,20 +454,86 @@ public class NumberSubFragment extends BaseFragment {
             public void onError() {
             }
         });
+        getUserDetails(this).doFinally(new Action() {
+            @Override
+            public void run() throws Exception {
+            }
+        })
+                .subscribe(new DataObserver<UserInfo>() {
+                    @Override
+                    protected void onSuccess( UserInfo data) {
+                      showDetailsView(data);
+
+                    }
+                });
+
+
+
+        getVipFloor(this).compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
+                .subscribe(new DataObserver<List<ImageInfo>>() {
+                    @Override
+                    protected void onSuccess(List<ImageInfo> data) {
+                        if (data!=null){
+                            floorAdapter=new ActivityFloorAdapter(getActivity(),data);
+                            if (floorAdapter!=null){
+                                activity_rcy.setAdapter(floorAdapter);
+                            }
+
+                        }
+                    }
+                });
         getData();
     }
-
+    //获取用户详情
+    private void showDetailsView(UserInfo data) {
+        vip_intermedium.setText(data.getIndirectCoin()+"");//间属
+        vip_directly.setText(data.getDirectCoin()+"");//直属
+        vip_settlement.setText(data.getSettleCoin()+"");//结算
+        vip_optional.setText(data.getSettleCoin()+"");//自购
+    }
 
 
     /**
      * number的view
      */
     private void gradeForNumberView(){
-
-          cardNumber.setVisibility(View.VISIBLE);
-          cardVip.setVisibility(View.GONE);
-          cardLeader.setVisibility(View.GONE);
-        txtWelcome.setText(getResources().getString(R.string.number_welcome_hint));
+        huiyuan1.setImageResource(R.mipmap.huiyuan1);
+        vip_rl1.setVisibility(View.VISIBLE);
+        vip_rl3.setVisibility(View.GONE);
+        vip_reward.setVisibility(View.GONE);
+        grade.setImageResource(R.mipmap.icon_huiyuan);
+        img_vip.setImageResource(R.mipmap.vip2);
+        tv_vip.setTextColor(Color.parseColor("#C4C1C1"));
+        tv_tuanduizhang.setTextColor(Color.parseColor("#C4C1C1"));
+        img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang2);
+        view1.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
+        view2.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
+        tv_huiyuan2.setText("会员权益");
+        tv_vip2.setText("VIP专享权益");
+        ll3.setBackgroundResource(R.mipmap.huiyuan3);
+        ll4.setVisibility(View.VISIBLE);
+        ll5.setVisibility(View.GONE);
+        tv_huiyuan2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_huiyuan2.setTextSize(18);
+                tv_vip2.setTextSize(16);
+                tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
+                tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
+                ll3.setBackgroundResource(R.mipmap.huiyuan3);
+            }
+        });
+        tv_vip2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_huiyuan2.setTextSize(16);
+                tv_vip2.setTextSize(18);
+                tv_vip2.setTextColor(Color.parseColor("#EFD3B7"));
+                tv_huiyuan2.setTextColor(Color.parseColor("#CFC5BA"));
+                ll3.setBackgroundResource(R.mipmap.vip_bg3);
+            }
+        });
 
     }
 
@@ -385,21 +541,62 @@ public class NumberSubFragment extends BaseFragment {
      * vip的view
      */
     private void gradeForVipView(){
-        cardVip.setVisibility(View.VISIBLE);
-        cardNumber.setVisibility(View.GONE);
-        cardLeader.setVisibility(View.GONE);
-        txtWelcome.setText(getResources().getString(R.string.vip_welcome_hint));
-
+        huiyuan1.setImageResource(R.mipmap.vip1);
+        grade.setImageResource(R.mipmap.icon_vip);
+        vip_reward.setVisibility(View.VISIBLE);
+        vip_rl1.setVisibility(View.VISIBLE);
+        vip_rl3.setVisibility(View.GONE);
+        img_vip.setImageResource(R.mipmap.vip3);
+        tv_vip.setTextColor(Color.parseColor("#765F5F"));
+        tv_tuanduizhang.setTextColor(Color.parseColor("#C4C1C1"));
+        img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang2);
+        view1.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
+        view2.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
+        tv_huiyuan2.setText("VIP专享权益");
+        tv_vip2.setText("团队长尊享权益");
+        ll3.setBackgroundResource(R.mipmap.vip_bg3);
+        ll4.setVisibility(View.VISIBLE);
+        ll5.setVisibility(View.GONE);
+        tv_huiyuan2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_huiyuan2.setTextSize(18);
+                tv_vip2.setTextSize(16);
+                tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
+                tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
+                ll3.setBackgroundResource(R.mipmap.vip_bg3);
+            }
+        });
+        tv_vip2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_huiyuan2.setTextSize(16);
+                tv_vip2.setTextSize(18);
+                tv_vip2.setTextColor(Color.parseColor("#EFD3B7"));
+                tv_huiyuan2.setTextColor(Color.parseColor("#CFC5BA"));
+                ll3.setBackgroundResource(R.mipmap.tuanduizhang_bg3);
+            }
+        });
     }
 
     /**
      * 团队长的view
      */
     private void gradeForLeaderView(){
-        cardNumber.setVisibility(View.GONE);
-        cardVip.setVisibility(View.GONE);
-        cardLeader.setVisibility(View.VISIBLE);
-        txtWelcome.setText(getResources().getString(R.string.tuandui_welcome_hint));
+        vip_rl1.setVisibility(View.GONE);
+        vip_rl3.setVisibility(View.VISIBLE);
+        grade.setImageResource(R.mipmap.icon_tuanduizhang);
+        vip_reward.setVisibility(View.GONE);
+        tv_tuanduizhang.setTextColor(Color.parseColor("#765F5F"));
+        img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang3);
+        img_vip.setImageResource(R.mipmap.vip3);
+        tv_vip.setTextColor(Color.parseColor("#765F5F"));
+        view1.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
+        view2.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
+        ll3.setBackgroundResource(R.mipmap.tuanduizhang_bg3);
+        ll4.setVisibility(View.GONE);
+        ll5.setVisibility(View.VISIBLE);
+
 
     }
 
@@ -469,12 +666,8 @@ public class NumberSubFragment extends BaseFragment {
         }
 
         if (C.UserType.vipMember.equals(info.getUserType())){
-            rl_duodou_progress.setVisibility(View.VISIBLE);
             mHorzProgressView.setMax(50000.00);
             mHorzProgressView.setCurrentNum(info.getMoreCoin());
-            llUserGrade.setBackgroundResource(R.drawable.bg_gray_grade_vip);
-            myGradedView.setText("VIP");
-            updateVip.setVisibility(View.VISIBLE);
             Long moreCoin = info.getMoreCoin();
             String coin1 ;
             if (moreCoin == null){
@@ -484,24 +677,19 @@ public class NumberSubFragment extends BaseFragment {
             }
             moreCoinBiaozhun.setText(coin1);
             Long growthValue = 50000 - info.getMoreCoin();
-            if (growthValue > 0 ){
+            if (growthValue>0){
+                tvGrowthValue.setVisibility(View.VISIBLE);
                 tvGrowthValue.setText(getResources().getString(R.string.vip_growth_value,
                         growthValue.toString()));
-            }else {
-                tvGrowthValue.setText("立即升级尊享高佣权益");
+            }else{
+                tvGrowthValue.setVisibility(View.INVISIBLE);
             }
-            user_king.setVisibility(View.GONE);
+
             gradeForVipView();
         }else if (C.UserType.operator.equals(info.getUserType())) {
-            myGradedView.setText("团队长");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leader_2dp);
-            rl_duodou_progress.setVisibility(View.GONE);
-            user_king.setVisibility(View.GONE);
-            updateVip.setVisibility(View.GONE);
-
             gradeForLeaderView();
+            get_operator_growth.setText("成长值： "+info.getMoreCoin());
         }else{
-            rl_duodou_progress.setVisibility(View.VISIBLE);
             mHorzProgressView.setMax(360.00);
             Long coin = info.getMoreCoin();
             String coin1 ;
@@ -513,19 +701,16 @@ public class NumberSubFragment extends BaseFragment {
                 coin1 = "成长值：" +"0/360";
                 return;
             }
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_member_2dp);
-            user_king.setVisibility(View.GONE);
+            Long growthValue = 360 - coin;
             moreCoinBiaozhun.setText(coin1);
-            if (coin < 360){
+            if (growthValue>0){
+                tvGrowthValue.setVisibility(View.VISIBLE);
                 tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
-                        String.valueOf(360-coin)));
+                        growthValue.toString()));
             }else{
-                tvGrowthValue.setText("立即升级尊享高佣权益");
+                tvGrowthValue.setVisibility(View.INVISIBLE);
             }
-           // leader_icon.setVisibility(View.GONE);
-            myGradedView.setText("会员");
             gradeForNumberView();
-            updateVip.setVisibility(View.VISIBLE);
         }
 
 
@@ -608,6 +793,50 @@ public class NumberSubFragment extends BaseFragment {
         return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
                 .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
                 .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
+    }
+
+    /**
+     * 获取楼层
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<List<ImageInfo>>> getVipFloor(RxFragment fragment) {
+        RequestBannerBean requestBean = new RequestBannerBean();
+        requestBean.setOs(1);
+
+        return RxHttp.getInstance().getGoodsService().getVipFloor(requestBean)
+                .compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<ImageInfo>>>bindToLifecycle());
+    }
+    /**
+     * 获取技能课程
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<List<Article>>> getSkillClass(RxFragment fragment) {
+        RequestBannerBean requestBean = new RequestBannerBean();
+        requestBean.setOs(1);
+
+        return RxHttp.getInstance().getGoodsService().getVipSkillClass(requestBean)
+                .compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<Article>>>bindToLifecycle());
+    }
+    /**
+     * 用户详情
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<UserInfo>> getUserDetails(RxFragment fragment) {
+        UserInfo bean = new UserInfo();
+        UserInfo  mUserInfo = UserLocalData.getUser(getActivity());
+        bean.setId(mUserInfo.getId());
+
+        return RxHttp.getInstance().getGoodsService().getUserDetails(bean)
+                .compose(RxUtils.<BaseResponse<UserInfo>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UserInfo>>bindToLifecycle());
     }
     /**
      * 用户等级升级

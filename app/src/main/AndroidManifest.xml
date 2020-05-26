@@ -81,9 +81,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+
         <activity android:name=".Activity.KoalaWebActivity"
             android:hardwareAccelerated="true"
             ></activity>
+
+        <activity android:name=".Activity.SkillClassActivity"></activity>
+
         <activity android:name=".goodsvideo.ShopMallActivity" />
         <activity android:name=".goodsvideo.VideoClassActivity" />
         <activity

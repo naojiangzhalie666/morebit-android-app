@@ -24,6 +24,7 @@ import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.GoodsBrowsHistory;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.TaobaoGoodBean;
@@ -123,6 +124,27 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     protected void onSuccess(final ShopGoodInfo data) {
                         getIView().showDetailsView(data, true, isRefresh);
 
+                    }
+                });
+    }
+
+    /*
+    *
+    * 考拉详情
+    * */
+    @Override
+    public void generateDetailForKaola(BaseActivity rxActivity, String goodsId, String userId) {
+        mModel.getBaseResponseObservableForKaoLa(rxActivity, goodsId, userId)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        getIView().setDetaisData(data);
                     }
                 });
     }
