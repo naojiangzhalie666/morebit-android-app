@@ -56,10 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:lines="2"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_14"
-            tools:text="持家有道,赚钱有方的人都在使用多点优选，多点优选推荐～" />
+            tools:text="点优选，多点优选推荐～" />
         <TextView
             android:id="@+id/tv_study_num"
             android:layout_width="wrap_content"
@@ -106,9 +106,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:includeFontPadding="false"
+                android:layout_toRightOf="@+id/tv_share_sum"
+                android:layout_marginLeft="32dp"
                 android:textColor="@color/colcor_999999"
                 android:drawableLeft="@drawable/faquan_collect"
-                android:layout_alignParentRight="true"
                 android:drawablePadding="4dp"
                 android:layout_marginRight="16dp"
                 android:textSize="11sp"

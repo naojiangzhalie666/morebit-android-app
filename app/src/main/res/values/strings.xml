@@ -469,8 +469,8 @@
     <string name="auth_private_all"><![CDATA[<font color="#333333">和《</font><font color="#FF645B">隐私协议</font><font color="#333333">》</font>]]></string>
     <string name="number_goods_buy_txt">购买立得%1$s成长值</string>
     <string name="give_growth_value">送%1$s成长值</string>
-    <string name="vip_growth_value">您还需要%1$s成长值才能成为团队长</string>
-    <string name="number_growth_value">您还需要%1$s成长值才能成为VIP</string>
+    <string name="vip_growth_value">您还需要%1$s成长值即可成为团队长</string>
+    <string name="number_growth_value">您还需要%1$s成长值即可成为VIP</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

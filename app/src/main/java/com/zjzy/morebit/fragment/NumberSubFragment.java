@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,6 +63,8 @@ import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.RecyclerViewSpacesItemDecoration;
+import com.zjzy.morebit.utils.SpaceItemDecorationUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.view.HorzProgressView;
@@ -69,6 +72,7 @@ import com.zjzy.morebit.view.HorzProgressView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -118,9 +122,10 @@ public class NumberSubFragment extends BaseFragment {
     UserInfo mUserInfo;
     private int page = 1;
     private ImageView huiyuan1;
-    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,vip_settlement,vip_directly,vip_intermedium,tv_more,getMorce;
+    private TextView get_operator_growth,tv_vip,tv_tuanduizhang,tv_huiyuan2,tv_vip2,vip_optional,
+            vip_settlement,vip_directly,vip_intermedium,tv_more,getMorce,tv_operator,tv_huo,tv_skill,tv_bao;
     private ImageView grade,img_vip,img_tuanduizhang;
-    private LinearLayout vip_reward,ll4,ll5,ll3;
+    private LinearLayout vip_reward,ll4,ll5,ll3,hy,vip,tdz;
     private RelativeLayout vip_rl1,vip_rl3,rl3,rl4;
     private View view1,view2;
     private RecyclerView skill_rcy,activity_rcy;
@@ -251,6 +256,20 @@ public class NumberSubFragment extends BaseFragment {
         tv_more = headView.findViewById(R.id.tv_more);
         getMorce=headView.findViewById(R.id.getMorce);
         vip_kefu=headView.findViewById(R.id.vip_kefu);//专属客服
+        hy=headView.findViewById(R.id.hy);
+        vip=headView.findViewById(R.id.vip);
+        tdz=headView.findViewById(R.id.tdz);
+        tv_operator=headView.findViewById(R.id.tv_operator);
+        tv_huo=headView.findViewById(R.id.tv_huo);
+        tv_skill=headView.findViewById(R.id.tv_skill);
+        tv_bao=headView.findViewById(R.id.tv_bao);
+
+        userName.getPaint().setFakeBoldText(true);
+        updateVip.getPaint().setFakeBoldText(true);
+        tv_operator.getPaint().setFakeBoldText(true);
+        tv_huo.getPaint().setFakeBoldText(true);
+        tv_skill.getPaint().setFakeBoldText(true);
+        tv_bao.getPaint().setFakeBoldText(true);
         tv_more.setOnClickListener(new View.OnClickListener() {//跳转技能课堂
             @Override
             public void onClick(View v) {
@@ -523,6 +542,10 @@ public class NumberSubFragment extends BaseFragment {
         vip_reward.setVisibility(View.GONE);
         grade.setImageResource(R.mipmap.icon_huiyuan);
         img_vip.setImageResource(R.mipmap.vip2);
+        TextPaint tp3 = tv_vip.getPaint();
+        TextPaint tp4 = tv_tuanduizhang.getPaint();
+        tp3.setFakeBoldText(false);
+        tp4.setFakeBoldText(false);
         tv_vip.setTextColor(Color.parseColor("#C4C1C1"));
         tv_tuanduizhang.setTextColor(Color.parseColor("#C4C1C1"));
         img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang2);
@@ -530,9 +553,15 @@ public class NumberSubFragment extends BaseFragment {
         view2.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
         tv_huiyuan2.setText("会员权益");
         tv_vip2.setText("VIP专享权益");
-        ll3.setBackgroundResource(R.mipmap.huiyuan3);
+        hy.setVisibility(View.VISIBLE);
+        tdz.setVisibility(View.GONE);
+        vip.setVisibility(View.GONE);
         ll4.setVisibility(View.VISIBLE);
         ll5.setVisibility(View.GONE);
+        final TextPaint tp = tv_huiyuan2.getPaint();
+        final TextPaint tp2 = tv_vip2.getPaint();
+        tp.setFakeBoldText(true);
+        tp2.setFakeBoldText(false);
         tv_huiyuan2.setTextSize(18);
         tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
         tv_vip2.setTextSize(16);
@@ -542,9 +571,13 @@ public class NumberSubFragment extends BaseFragment {
             public void onClick(View v) {
                 tv_huiyuan2.setTextSize(18);
                 tv_vip2.setTextSize(16);
+                tp.setFakeBoldText(true);
+                tp2.setFakeBoldText(false);
                 tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
                 tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
-                ll3.setBackgroundResource(R.mipmap.huiyuan3);
+                hy.setVisibility(View.VISIBLE);
+                tdz.setVisibility(View.GONE);
+                vip.setVisibility(View.GONE);
             }
         });
         tv_vip2.setOnClickListener(new View.OnClickListener() {
@@ -552,9 +585,13 @@ public class NumberSubFragment extends BaseFragment {
             public void onClick(View v) {
                 tv_huiyuan2.setTextSize(16);
                 tv_vip2.setTextSize(18);
+                tp.setFakeBoldText(false);
+                tp2.setFakeBoldText(true);
                 tv_vip2.setTextColor(Color.parseColor("#EFD3B7"));
                 tv_huiyuan2.setTextColor(Color.parseColor("#CFC5BA"));
-                ll3.setBackgroundResource(R.mipmap.vip_bg3);
+                hy.setVisibility(View.GONE);
+                tdz.setVisibility(View.GONE);
+                vip.setVisibility(View.VISIBLE);
             }
         });
 
@@ -570,6 +607,10 @@ public class NumberSubFragment extends BaseFragment {
         vip_rl1.setVisibility(View.VISIBLE);
         vip_rl3.setVisibility(View.GONE);
         img_vip.setImageResource(R.mipmap.vip3);
+        TextPaint tp3 = tv_vip.getPaint();
+        TextPaint tp4 = tv_tuanduizhang.getPaint();
+        tp3.setFakeBoldText(true);
+        tp4.setFakeBoldText(false);
         tv_vip.setTextColor(Color.parseColor("#765F5F"));
         tv_tuanduizhang.setTextColor(Color.parseColor("#C4C1C1"));
         img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang2);
@@ -577,9 +618,15 @@ public class NumberSubFragment extends BaseFragment {
         view2.setBackgroundResource(R.drawable.background_f2f2f2_radius_1dp);
         tv_huiyuan2.setText("VIP专享权益");
         tv_vip2.setText("团队长尊享权益");
-        ll3.setBackgroundResource(R.mipmap.vip_bg3);
+        hy.setVisibility(View.GONE);
+        tdz.setVisibility(View.GONE);
+        vip.setVisibility(View.VISIBLE);
         ll4.setVisibility(View.VISIBLE);
         ll5.setVisibility(View.GONE);
+        final TextPaint tp = tv_huiyuan2.getPaint();
+        final TextPaint tp2 = tv_vip2.getPaint();
+        tp.setFakeBoldText(true);
+        tp2.setFakeBoldText(false);
         tv_huiyuan2.setTextSize(18);
         tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
         tv_vip2.setTextSize(16);
@@ -589,9 +636,13 @@ public class NumberSubFragment extends BaseFragment {
             public void onClick(View v) {
                 tv_huiyuan2.setTextSize(18);
                 tv_vip2.setTextSize(16);
+                tp.setFakeBoldText(true);
+                tp2.setFakeBoldText(false);
                 tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
                 tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
-                ll3.setBackgroundResource(R.mipmap.vip_bg3);
+                hy.setVisibility(View.GONE);
+                tdz.setVisibility(View.GONE);
+                vip.setVisibility(View.VISIBLE);
             }
         });
         tv_vip2.setOnClickListener(new View.OnClickListener() {
@@ -599,9 +650,13 @@ public class NumberSubFragment extends BaseFragment {
             public void onClick(View v) {
                 tv_huiyuan2.setTextSize(16);
                 tv_vip2.setTextSize(18);
+                tp.setFakeBoldText(false);
+                tp2.setFakeBoldText(true);
                 tv_vip2.setTextColor(Color.parseColor("#EFD3B7"));
                 tv_huiyuan2.setTextColor(Color.parseColor("#CFC5BA"));
-                ll3.setBackgroundResource(R.mipmap.tuanduizhang_bg3);
+                hy.setVisibility(View.GONE);
+                tdz.setVisibility(View.VISIBLE);
+                vip.setVisibility(View.GONE);
             }
         });
     }
@@ -617,10 +672,16 @@ public class NumberSubFragment extends BaseFragment {
         tv_tuanduizhang.setTextColor(Color.parseColor("#765F5F"));
         img_tuanduizhang.setImageResource(R.mipmap.tuanduizhang3);
         img_vip.setImageResource(R.mipmap.vip3);
+        TextPaint tp3 = tv_vip.getPaint();
+        TextPaint tp4 = tv_tuanduizhang.getPaint();
+        tp3.setFakeBoldText(true);
+        tp4.setFakeBoldText(true);
         tv_vip.setTextColor(Color.parseColor("#765F5F"));
         view1.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
         view2.setBackgroundResource(R.drawable.background_fff2e5_radius_1dp);
-        ll3.setBackgroundResource(R.mipmap.tuanduizhang_bg3);
+        hy.setVisibility(View.GONE);
+        tdz.setVisibility(View.VISIBLE);
+        vip.setVisibility(View.GONE);
         ll4.setVisibility(View.GONE);
         ll5.setVisibility(View.VISIBLE);
 
@@ -934,7 +995,7 @@ public class NumberSubFragment extends BaseFragment {
 
             String img = goods.getPicUrl();
             if (!TextUtils.isEmpty(img)) {
-                LoadImgUtils.setImg(mContext, pic, img);
+                LoadImgUtils.loadingCornerTop(mContext, pic, img,4);
             }
             desc.setText(goods.getName());
             String price = goods.getRetailPrice();

@@ -29,16 +29,17 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                >
+
                 <TextView
                     android:id="@+id/mainTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="爱逛街"
-                    android:textSize="14sp"
-                    android:maxLength="7"
-                    android:textStyle="bold"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="6dp"
-                    android:textColor="@color/color_CC50EE"/>
+                    android:maxLength="7"
+                    android:text="爱逛街"
+                    android:textColor="@color/color_CC50EE"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/subTitle"
                     android:layout_width="wrap_content"
