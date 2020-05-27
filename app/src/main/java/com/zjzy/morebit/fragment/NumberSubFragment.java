@@ -533,6 +533,10 @@ public class NumberSubFragment extends BaseFragment {
         ll3.setBackgroundResource(R.mipmap.huiyuan3);
         ll4.setVisibility(View.VISIBLE);
         ll5.setVisibility(View.GONE);
+        tv_huiyuan2.setTextSize(18);
+        tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
+        tv_vip2.setTextSize(16);
+        tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
         tv_huiyuan2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -576,6 +580,10 @@ public class NumberSubFragment extends BaseFragment {
         ll3.setBackgroundResource(R.mipmap.vip_bg3);
         ll4.setVisibility(View.VISIBLE);
         ll5.setVisibility(View.GONE);
+        tv_huiyuan2.setTextSize(18);
+        tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
+        tv_vip2.setTextSize(16);
+        tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
         tv_huiyuan2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
