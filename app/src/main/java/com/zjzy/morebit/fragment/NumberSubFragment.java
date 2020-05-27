@@ -479,12 +479,15 @@ public class NumberSubFragment extends BaseFragment {
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         if (data!=null){
-                            rl3.setVisibility(View.VISIBLE);
-                            floorAdapter=new ActivityFloorAdapter(getActivity(),data);
-                            if (floorAdapter!=null){
-                                activity_rcy.setAdapter(floorAdapter);
+                            if (data.size()<2){
+                                rl3.setVisibility(View.GONE);
+                            }else{
+                                rl3.setVisibility(View.VISIBLE);
+                                floorAdapter=new ActivityFloorAdapter(getActivity(),data);
+                                if (floorAdapter!=null){
+                                    activity_rcy.setAdapter(floorAdapter);
+                                }
                             }
-
                         }else{
                             rl3.setVisibility(View.GONE);
                         }
