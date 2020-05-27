@@ -25,12 +25,19 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.main.ui.fragment.ShowWebFragment;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.Article;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.event.WebViewEvent;
 import com.zjzy.morebit.pojo.event.WebViewUpdataColorEvent;
+import com.zjzy.morebit.pojo.request.RequesKoalaBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.LogUtils;
 import com.zjzy.morebit.utils.MyLog;
@@ -47,6 +54,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 
 /*
 *
@@ -178,7 +187,7 @@ public class KoalaWebActivity extends BaseActivity {
             }
 
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String newurl) {
+            public boolean shouldOverrideUrlLoading(final WebView view, final String newurl) {
                 try {
 
                     if (!TextUtils.isEmpty(newurl)) {
@@ -186,7 +195,24 @@ public class KoalaWebActivity extends BaseActivity {
                             String shopid = "";
                             String substring = newurl.substring(0, newurl.indexOf(".html"));
                             shopid = substring.replace("https://m-goods.kaola.com/product/", "");
-                            goodsInfo(shopid);//跳转考拉详情
+
+                            final String finalShopid = shopid;
+                            getBaseResponseObservableForKaoLa(KoalaWebActivity.this,shopid, UserLocalData.getUser(KoalaWebActivity.this).getId())
+                                    .doFinally(new Action() {
+                                        @Override
+                                        public void run() throws Exception {
+                                        }
+                                    })
+                                    .subscribe(new DataObserver<ShopGoodInfo>() {
+                                        @Override
+                                        protected void onSuccess(final ShopGoodInfo data) {
+                                           if (data.getCommission()!=null){
+                                               goodsInfo(finalShopid);//分佣商品跳转考拉详情
+                                           }else{
+                                               view.loadUrl(newurl); //无分佣商品
+                                           }
+                                        }
+                                    });
                             return true;
                         }
 
@@ -202,6 +228,21 @@ public class KoalaWebActivity extends BaseActivity {
 
     }
 
+
+    /**
+     * 考拉海购
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForKaoLa(BaseActivity rxActivity, String  goodsId, String userId) {
+        RequesKoalaBean requesKoalaBean = new RequesKoalaBean();
+        requesKoalaBean .setUserId(userId);
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getKaoLaGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
     private void goodsInfo(String shopid) {
         GoodsDetailForKoalaActivity.start(this,shopid);
 

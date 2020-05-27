@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
+import com.tencent.mm.opensdk.utils.Log;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -239,7 +240,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 .init();
         initBundle();
         initView();
-        initViewData(mGoodsInfo);
         initData();
         mPresenter.getSysNotification(this);
         mHandler = new Handler();
@@ -350,15 +350,15 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
                 MyLog.d("setOnScrollChangeListener  ", "mIngHeight " + mIngHeight);
                 MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
-                if (tablayout == null || mListHeight == 0 || mIngHeight == 0 || isContinueScrollTabChange) {
+                if (tablayout == null || mListHeight == 0 || isContinueScrollTabChange) {
                     return;
                 }
 
                 int currentTab = tablayout.getCurrentTab();
-                if (scrollY <= mIngHeight) {
+                if (scrollY <= mListHeight) {
                     if (currentTab != 0)
                         tablayout.setCurrentTab(0);
-                } else if (scrollY > mIngHeight) {
+                } else if (scrollY > mListHeight) {
                     if (currentTab != 1)
                         tablayout.setCurrentTab(1);
                 }
@@ -548,25 +548,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
      */
     @Override
     public void showDetailsView(ShopGoodInfo info, boolean isSeavDao, boolean isRefresh) {
-        if (info == null) {
-            return;
-        }
-        initViewData(info);
-        if (info.getColler() != 0) {
-            switchColler(info);
-        }
 
-
-        //示详情图片
-        List<String> imgs = info.getItemBanner();
-        if (imgs != null && imgs.size() > 0) {
-
-            mGoodsDetailForPdd.setGoodsDetails(imgs);
-            initImgFragment(mGoodsDetailForPdd);
-        }
-
-
-        getViewLocationOnScreen();
 
     }
 
@@ -608,17 +590,20 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
         if (mBannerList.size() <= 1) {
             List<String> getBanner = info.getImageList();
+
             indexbannerdataArray.clear();
             for (int i = 0; i < getBanner.size(); i++) {
                 String s = StringsUtils.checkHttp(getBanner.get(i));
                 if (TextUtils.isEmpty(s)) return;
-                if (s.contains(",")) return;
-                if (LoadImgUtils.isPicture(s)) {
+                //http://kaola-pop.oss.kaolacdn.com/01a2a565-a565-4bbc-9aa3-4b8560f60a2a.jpg
+                Log.e("ssss",s+"1");
+                Log.e("ssss",getBanner.get(i)+"2");
+
                     ImageInfo imageInfo = new ImageInfo();
                     imageInfo.setThumb(getBanner.get(i));
                     indexbannerdataArray.add(imageInfo);
                     mBannerList.add(indexbannerdataArray.get(i).getThumb());
-                }
+
             }
             //简单使用
             mRollViewPager.setImages(getBanner)
@@ -700,6 +685,23 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     @Override
     public void setDetaisData(ShopGoodInfo data) {
         mGoodsInfo=data;
+        if (mGoodsInfo == null) {
+            return;
+        }
+        initViewData(mGoodsInfo);
+        if (mGoodsInfo.getColler() != 0) {
+            switchColler(mGoodsInfo);
+        }
+
+
+        //示详情图片
+        List<String> imgs = mGoodsInfo.getDetailImgList();
+        if (imgs != null && imgs.size() > 0) {
+            mGoodsDetailForPdd.setGoodsDetails(imgs);
+            initImgFragment(mGoodsDetailForPdd);
+        }
+        StringsUtils.retractTitleForPdd(tv_pdd, title,data.getGoodsTitle());
+        getViewLocationOnScreen();
     }
 
     private void setSysNotificationView() {
@@ -787,7 +789,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     private void sumbitCollect() {
 
         if (mGoodsInfo == null || mGoodsInfo.getGoodsId() == 0
-                || TextUtils.isEmpty(mGoodsInfo.getTitle())) {
+                || TextUtils.isEmpty(mGoodsInfo.getGoodsTitle())) {
             ViewShowUtils.showShortToast(GoodsDetailForKoalaActivity.this, "收藏失败,请稍后再试");
             return;
         }
@@ -800,7 +802,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             mGoodsInfo.setCouponEndTime(couponEndTime);
         }
 
-        mPresenter.switchCollect(this, mGoodsInfo);
+        mPresenter.switchKaolaCollect(this, mGoodsInfo);
     }
 
 

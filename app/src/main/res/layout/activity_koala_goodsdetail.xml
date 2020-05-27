@@ -168,7 +168,7 @@
                                     android:background="@drawable/bg_pdd_icon"
                                     android:paddingLeft="2dp"
                                     android:paddingRight="2dp"
-                                    android:text="拼多多"
+                                    android:text="考拉"
                                     android:textColor="@color/color_FFFFFF"
                                     android:textSize="@dimen/sp_9" />
 

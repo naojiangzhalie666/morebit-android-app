@@ -449,6 +449,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                  View line = holder.viewFinder().view(R.id.line);
                 LinearLayout ll_return_cash = holder.viewFinder().view(R.id.ll_return_cash);
                 TextView subsidiesPriceTv = holder.viewFinder().view(R.id.subsidiesPriceTv);
+                LinearLayout ll_shop_name=holder.viewFinder().view(R.id.ll_shop_name);
 
 //                if (!TextUtils.isEmpty(item.getItemPicture())) {
                 LoadImgUtils.setImg(mContext, goods_bg, item.getPicture());
@@ -458,16 +459,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 //                browse_time.setText(TimeUtils.millis2String(item.getBrowse_time()));
                 //判断是淘宝还是天猫的商品
 
-                if (item.getShopType()==2) {
-                    good_mall_tag.setImageResource(R.drawable.tianmao);
-                } else if (item.getShopType() == 1) {
-                    good_mall_tag.setImageResource(R.drawable.taobao);
-                    //拼多多
-                }else if (item.getShopType() == 3){
-                    good_mall_tag.setImageResource(R.drawable.pdd_icon);
-                }else if (item.getShopType()==4){//京东
-                    good_mall_tag.setImageResource(R.mipmap.jdong_icon);
-                }
+
                 if (!TextUtils.isEmpty(item.getTitle())) {
                     StringsUtils.retractTitle(good_mall_tag,title,item.getTitle());
                 }
@@ -539,6 +531,21 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                     }
                 });
                 checkbox.setSelected(item.isSelect());
+                if (item.getShopType()==2) {
+                    good_mall_tag.setImageResource(R.drawable.tianmao);
+                } else if (item.getShopType() == 1) {
+                    good_mall_tag.setImageResource(R.drawable.taobao);
+                    //拼多多
+                }else if (item.getShopType() == 3){
+                    good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                }else if (item.getShopType()==4){//京东
+                    good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                }else if (item.getShopType()==5){//考拉
+                    good_mall_tag.setImageResource(R.mipmap.kaola);
+                    ll_shop_name.setVisibility(View.INVISIBLE);
+                    sales.setVisibility(View.GONE);
+
+                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

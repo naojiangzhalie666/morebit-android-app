@@ -29,6 +29,7 @@ public class GoodsDetailForPddContract {
 
         void switchColler(ShopGoodInfo data);
 
+
         void OngetDetailDataFinally();
 
         void checkPermission(ReleaseGoodsPermission data);
@@ -85,7 +86,7 @@ public class GoodsDetailForPddContract {
          * @param goodsInfo
          */
         void switchCollect(BaseActivity rxActivity, ShopGoodInfo goodsInfo);
-
+        void  switchKaolaCollect(BaseActivity rxActivity, ShopGoodInfo goodsInfo);
 
 
         void saveGoodsHistor(BaseActivity activity, ShopGoodInfo itemSourceId);
