@@ -186,6 +186,100 @@
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        >
+        <LinearLayout
+            android:paddingTop="8dp"
+            android:background="@mipmap/kaola_shouyi_bg"
+            android:layout_width="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="考拉预估收入"
+                android:textColor="#333333"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥ "
+                    android:textColor="#ED291E"
+                    android:textSize="12dp"
+                    />
+                <TextView
+                    android:id="@+id/kaola_moeny"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"
+                    android:textColor="#ED291E"
+                    android:textSize="20dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="8dp"
+            android:background="@mipmap/more_shouyi_bg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更多收入"
+                android:textColor="#ED291E"
+                android:textSize="16dp" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="敬请期待"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥ "
+                    android:textColor="#D81E06"
+                    android:textSize="12dp"
+                    />
+                <TextView
+                    android:id="@+id/more_moeny"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"
+                    android:textColor="#D81E06"
+                    android:textSize="20dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
     <include layout="@layout/earnings_day" />
 
     <LinearLayout

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
@@ -150,6 +151,8 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                     ShopGoodInfo info = new ShopGoodInfo();
                     info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForJd(OrderListFragment.this, info);
+                }else if (mTeamType == 5){
+                    GoodsDetailForKoalaActivity.start(getActivity(),mListArray.get(position).getItemId());
                 }else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     if (mListArray.get(position).isSelf()){
