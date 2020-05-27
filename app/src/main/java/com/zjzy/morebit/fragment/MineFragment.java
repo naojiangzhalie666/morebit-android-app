@@ -24,6 +24,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.App;
@@ -476,6 +477,7 @@ public class MineFragment extends BaseMainFragmeng {
                             AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
                         }else{
                             PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
+                            ToastUtils.showLong("请先绑定支付宝!");
                         }
 
                     }
