@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -366,6 +367,10 @@ public class NumberSubFragment extends BaseFragment {
                 .compose(this.<BaseResponse<List<Article>>>bindToLifecycle())
                 .subscribe(new DataObserver<List<Article>>() {
                     @Override
+                    protected void onDataListEmpty() {
+                        rl4.setVisibility(View.GONE);
+                    }
+                    @Override
                     protected void onSuccess(List<Article> data) {
                         if (data!=null){
                             rl4.setVisibility(View.VISIBLE);
@@ -476,6 +481,10 @@ public class NumberSubFragment extends BaseFragment {
         getVipFloor(this).compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
                 .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
                 .subscribe(new DataObserver<List<ImageInfo>>() {
+                    @Override
+                    protected void onDataListEmpty() {
+                        rl3.setVisibility(View.GONE);
+                    }
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         if (data!=null){
