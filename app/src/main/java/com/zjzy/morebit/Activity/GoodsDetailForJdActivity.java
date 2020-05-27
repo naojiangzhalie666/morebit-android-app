@@ -995,7 +995,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     }
 
     @Override
-    public void setDetaisData(ShopGoodInfo data) {
+    public void setDetaisData(ShopGoodInfo data,boolean isSeavDao, boolean isRefresh) {
 
     }
 

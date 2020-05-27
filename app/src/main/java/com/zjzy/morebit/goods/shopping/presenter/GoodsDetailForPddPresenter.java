@@ -128,12 +128,15 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                 });
     }
 
+
+
+
     /*
     *
     * 考拉详情
     * */
-    @Override
-    public void generateDetailForKaola(BaseActivity rxActivity, String goodsId, String userId) {
+
+    public void generateDetailForKaola(BaseActivity rxActivity, String goodsId, String userId, final boolean isRefresh) {
         mModel.getBaseResponseObservableForKaoLa(rxActivity, goodsId, userId)
                 .doFinally(new Action() {
                     @Override
@@ -144,7 +147,7 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                 .subscribe(new DataObserver<ShopGoodInfo>() {
                     @Override
                     protected void onSuccess(final ShopGoodInfo data) {
-                        getIView().setDetaisData(data);
+                        getIView().setDetaisData(data,true,isRefresh);
                     }
                 });
     }

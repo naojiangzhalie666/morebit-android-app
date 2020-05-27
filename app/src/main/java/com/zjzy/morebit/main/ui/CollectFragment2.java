@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -567,7 +568,9 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                                 shopGoodInfo.setItemSource("1");
                                 shopGoodInfo.setPrice(item.getPrice());
                                 GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
-                            } else{
+                            } else if (item.getShopType()==5){
+                                GoodsDetailForKoalaActivity.start(getActivity(),shopGoodInfo.getItemSourceId());
+                            }else{
                                 GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
                                     @Override
                                     public void invoke(ShopGoodInfo arg) {
@@ -701,7 +704,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             ShopGoodInfo info = mGuessGoodsAdapter.getItem(i);
             if(info.getType()==0){
                 if(info.isSelect()){
-                    if (info.getShopType() == 3 ||info.getShopType()==4){
+                    if (info.getShopType() == 3 ||info.getShopType()==4 ||info.getShopType()==5){
                        isHavePdd = true;
                     }else{
                         shopGoodInfos.add(info);

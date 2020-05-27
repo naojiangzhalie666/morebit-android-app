@@ -62,7 +62,7 @@ public class GoodsDetailForPddContract {
          * 考拉详情
          * @param
          */
-        void setDetaisData(ShopGoodInfo data);
+        void setDetaisData(ShopGoodInfo data,boolean seavDao, boolean isRefresh);
 
 
 
@@ -124,6 +124,6 @@ public class GoodsDetailForPddContract {
          * 考拉商品详情
          * @param rxActivity
          */
-        void generateDetailForKaola(BaseActivity rxActivity,String goodsId,String userId);
+        void generateDetailForKaola(BaseActivity rxActivity,String goodsId,String userId, boolean isRefresh);
     }
 }

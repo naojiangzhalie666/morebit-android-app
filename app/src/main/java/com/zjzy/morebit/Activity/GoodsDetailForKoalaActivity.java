@@ -186,7 +186,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     public void onEventMainThread(MessageEvent event) {
         switch (event.getAction()) {
             case EventBusAction.LOGINA_SUCCEED:
-                initData();
+                initData(false);
                 mPresenter.getSysNotification(this);
                 refreshVipUpdate();
                 break;
@@ -217,9 +217,9 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
     }
 
-    private void initData() {
+    private void initData(boolean isRefresh) {
         UserInfo  mUserInfo = UserLocalData.getUser(this);
-        mPresenter.generateDetailForKaola(this,shopid,mUserInfo.getId());
+        mPresenter.generateDetailForKaola(this,shopid,mUserInfo.getId(),isRefresh);
     }
 
     @Override
@@ -240,7 +240,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 .init();
         initBundle();
         initView();
-        initData();
+        initData(false);
         mPresenter.getSysNotification(this);
         mHandler = new Handler();
         IntentFilter intentFilter = new IntentFilter();
@@ -287,7 +287,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData();
+                initData(true);
                 refreshVipUpdate();
             }
         });
@@ -683,7 +683,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
      * 考拉详情数据
      * */
     @Override
-    public void setDetaisData(ShopGoodInfo data) {
+    public void setDetaisData(ShopGoodInfo data,boolean isSeavDao, boolean isRefresh) {
         mGoodsInfo=data;
         if (mGoodsInfo == null) {
             return;
@@ -692,14 +692,35 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         if (mGoodsInfo.getColler() != 0) {
             switchColler(mGoodsInfo);
         }
-
-
         //示详情图片
         List<String> imgs = mGoodsInfo.getDetailImgList();
         if (imgs != null && imgs.size() > 0) {
             mGoodsDetailForPdd.setGoodsDetails(imgs);
             initImgFragment(mGoodsDetailForPdd);
         }
+        if (!StringsUtils.isEmpty(data.getMarketPrice())) {
+            mGoodsInfo.setItemPrice(data.getMarketPrice());
+        }
+        if (!StringsUtils.isEmpty(data.getCurrentPrice())) {
+            mGoodsInfo.setItemVoucherPrice(data.getCurrentPrice());
+        }
+        if (!StringsUtils.isEmpty(data.getGoodsTitle())) {
+            mGoodsInfo.setItemTitle(data.getGoodsTitle());
+        }
+        if (!StringsUtils.isEmpty(String.valueOf(data.getGoodsId()))) {
+            mGoodsInfo.setItemSourceId(String.valueOf(data.getGoodsId()));
+        }
+        if (!StringsUtils.isEmpty(imgs.get(0))) {
+            mGoodsInfo.setPicture(imgs.get(0));
+        }
+        if (isSeavDao && !isRefresh) {
+            SensorsDataUtil.getInstance().browseProductTrack("", String.valueOf(data.getGoodsId()));
+            if (LoginUtil.checkIsLogin(this, false) && !TextUtils.isEmpty(mGoodsInfo.getGoodsTitle()) && !TextUtils.isEmpty(mGoodsInfo.getImageList().get(0))) {
+                mPresenter.saveGoodsHistor(this, mGoodsInfo);
+            }
+        }
+
+
         StringsUtils.retractTitleForPdd(tv_pdd, title,data.getGoodsTitle());
         getViewLocationOnScreen();
     }
@@ -745,16 +766,17 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 if (isGoodsLose()) return;
                 if (mGoodsInfo != null) {
                     mGoodsInfo.setAdImgUrl(indexbannerdataArray);
-                    mGoodsInfo.setMarketPrice(mGoodsInfo.getMarketPrice());
+                    mGoodsInfo.setPrice(mGoodsInfo.getMarketPrice());
+                    mGoodsInfo.setVoucherPrice(mGoodsInfo.getCurrentPrice());
+                    mGoodsInfo.setTitle(mGoodsInfo.getGoodsTitle());
                 }
-                ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionJdUrl);
+                ShareMoneyForKaolaActivity.start(this, mGoodsInfo, mGoodsInfo.getPurchaseLink());
 
                 break;
             case R.id.btn_sweepg: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
-
-                    if (mPromotionJdUrl != null) {
-                        KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
+                    if (mGoodsInfo.getPurchaseLink() != null) {
+                        ShowWebActivity.start(this, mGoodsInfo.getPurchaseLink(), "");
                     }
 
 

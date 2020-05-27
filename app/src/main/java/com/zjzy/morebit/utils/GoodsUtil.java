@@ -186,6 +186,40 @@ public class GoodsUtil {
                 });
     }
 
+
+    /**
+     * 获取koala的推广内容
+     *
+     * @param activity
+     * @param goodsInfo
+     * @return
+     */
+    public static Observable<BaseResponse<String>> getGenerateForKaola(RxAppCompatActivity activity,
+                                                                    ShopGoodInfo goodsInfo) {
+        int isInvitecode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
+        int isDownloadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
+
+        RequestPddShareContent requestBean = new RequestPddShareContent();
+        requestBean.setItemTitle(goodsInfo.getGoodsTitle());
+        requestBean.setPrice(goodsInfo.getMarketPrice());
+        requestBean.setVoucherPrice(goodsInfo.getCurrentPrice());
+        requestBean.setIsDownLoadUrl(isDownloadUrl);
+        requestBean.setIsInviteCode(isInvitecode);
+        requestBean.setClickURL(goodsInfo.getPurchaseLink());
+
+        return RxHttp.getInstance().getGoodsService().getGenerateForKaola(
+                requestBean
+        )
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(activity.<BaseResponse<String>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
+
     public static Observable<BaseResponse<TKLBean>> getGetTkLFinalObservable(RxAppCompatActivity activity, ShopGoodInfo goodsInfo) {
 
 
@@ -491,16 +525,6 @@ public class GoodsUtil {
         }
         juanhou_prise.setText("¥" + MathUtils.getSalesPrice(MathUtils.getnum(goodsInfo.getVoucherPrice())));
         yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
-        if (goodsInfo.getShopType() == 2) {
-            goodShopTag.setText("天猫");
-        } else if (goodsInfo.getShopType() == 1) {
-            goodShopTag.setText("淘宝");
-        } else if (goodsInfo.getShopType() == 3) {
-            goodShopTag.setText("拼多多");
-        } else {
-            goodShopTag.setText("京东");
-        }
-
         if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {
             StringsUtils.retractTitle(title, title, goodsInfo.getTitle());
         }
@@ -508,6 +532,20 @@ public class GoodsUtil {
         if (!"0".equals(goodsInfo.getSaleMonth())) {
             tv_sales.setText("销量:  " + MathUtils.getSales(goodsInfo.getSaleMonth()));
         }
+        if (goodsInfo.getShopType() == 2) {
+            goodShopTag.setText("天猫");
+        } else if (goodsInfo.getShopType() == 1) {
+            goodShopTag.setText("淘宝");
+        } else if (goodsInfo.getShopType() == 3) {
+            goodShopTag.setText("拼多多");
+        } else if(goodsInfo.getShopType() == 4){
+            goodShopTag.setText("京东");
+        } else if(goodsInfo.getShopType() == 5){
+            goodShopTag.setText("考拉");
+            tv_sales.setVisibility(View.GONE);
+        }
+
+        Log.e("private","二维码"+ewmBitmap);
         if (ewmBitmap != null)
             qrcode_img.setImageBitmap(ewmBitmap);
         return view;

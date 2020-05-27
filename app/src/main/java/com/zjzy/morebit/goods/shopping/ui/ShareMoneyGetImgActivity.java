@@ -127,7 +127,7 @@ public class ShareMoneyGetImgActivity extends BaseActivity {
             LoadImgUtils.setImg(this, mIvPoterView, mPosterPicPath);
         }
         mPosterPos = getIntent().getIntExtra(C.Extras.POSTER_POS, 0);
-        if (mGoodInfo.getShopType() == 3 || mGoodInfo.getShopType() == 4){
+        if (mGoodInfo.getShopType() == 3 || mGoodInfo.getShopType() == 4||mGoodInfo.getShopType()==5){
             Observable<Bitmap> emwbitmap =  getShareEWMBitmap(mGoodInfo.getCouponUrl());
             emwbitmap.subscribe(new CallBackObserver<Bitmap>() {
                 @Override

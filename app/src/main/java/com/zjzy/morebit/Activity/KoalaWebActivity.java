@@ -206,7 +206,7 @@ public class KoalaWebActivity extends BaseActivity {
                                     .subscribe(new DataObserver<ShopGoodInfo>() {
                                         @Override
                                         protected void onSuccess(final ShopGoodInfo data) {
-                                           if (data.getCommission()!=null){
+                                           if (data.getCommission()!=null&&!data.getCommission().equals("0")){
                                                goodsInfo(finalShopid);//分佣商品跳转考拉详情
                                            }else{
                                                view.loadUrl(newurl); //无分佣商品

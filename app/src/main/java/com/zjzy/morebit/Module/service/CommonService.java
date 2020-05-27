@@ -2455,6 +2455,16 @@ public interface CommonService {
             @Body RequestPddShareContent requestBean);
 
     /**
+     * 生成考拉的分享
+     * @param requestBean
+     * @return
+     */
+    @POST("/api/goods/getKaoLaGenerate")
+    public Observable<BaseResponse<String>> getGenerateForKaola(
+            @Body RequestPddShareContent requestBean);
+
+
+    /**
      * 获取用户详情
      *
      * @return
