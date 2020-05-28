@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -59,6 +60,7 @@ import com.zjzy.morebit.pojo.requestbodybean.RequestInviteCodeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
@@ -251,8 +253,11 @@ public class NumberSubFragment extends BaseFragment {
         vip_directly=headView.findViewById(R.id.vip_directly);//直属
         vip_intermedium=headView.findViewById(R.id.vip_intermedium);//间属
         activity_rcy=headView.findViewById(R.id.activity_rcy);//活动专区
+        //SpaceItemDecoration spaceItemDecoration = new SpaceItemDecoration(24);
+        activity_rcy.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
         GridLayoutManager manager2=new GridLayoutManager(getActivity(),2);
         activity_rcy.setLayoutManager(manager2);
+
         tv_more = headView.findViewById(R.id.tv_more);
         getMorce=headView.findViewById(R.id.getMorce);
         vip_kefu=headView.findViewById(R.id.vip_kefu);//专属客服

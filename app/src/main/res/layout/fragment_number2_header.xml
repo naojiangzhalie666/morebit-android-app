@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <android.support.v4.widget.NestedScrollView
@@ -522,12 +523,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll3"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp">
+
+                android:layout_marginTop="20dp"
+
+                >
 
                 <TextView
+                    android:layout_marginLeft="12dp"
                     android:id="@+id/tv_huo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -538,6 +540,8 @@
                 <android.support.v7.widget.RecyclerView
                     android:layout_marginTop="12dp"
                     android:id="@+id/activity_rcy"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_below="@+id/tv_huo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -558,8 +562,8 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/tv_skill"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="12dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="技能课程"
