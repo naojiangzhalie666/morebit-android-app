@@ -19,10 +19,24 @@
         tools:src="@mipmap/prushchase_bg" />
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/bofang"
             android:layout_centerInParent="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99.90万"
+            android:textColor="#ffffffff"
+            android:textSize="12sp"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/background_000000_radius_10dp"
             />
     </RelativeLayout>
 
