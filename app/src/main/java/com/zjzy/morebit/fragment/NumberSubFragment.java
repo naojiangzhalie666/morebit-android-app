@@ -344,27 +344,6 @@ public class NumberSubFragment extends BaseFragment {
         });
 
 
-        mReUseGridView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                int firstVisibleItemPosition = manager.findFirstVisibleItemPosition();
-                if (firstVisibleItemPosition > 3) {
-                    go_top.setVisibility(View.VISIBLE);
-                } else {
-                    go_top.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                //获取当前RecyclerView显示的第一个条目的位置
-
-
-            }
-        });
-
     }
 
     private void updataUser() {
