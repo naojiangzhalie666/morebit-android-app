@@ -101,6 +101,7 @@ public class NumberSubFragment extends BaseFragment {
 
     TextView tvUserType;
 
+    private ImageView go_top;
     //    @BindView(R.id.ll_user_grade)
     LinearLayout llUserGrade;
 
@@ -131,7 +132,7 @@ public class NumberSubFragment extends BaseFragment {
     private TextView get_operator_growth, tv_vip, tv_tuanduizhang, tv_huiyuan2, tv_vip2, vip_optional,
             vip_settlement, vip_directly, vip_intermedium, tv_more, getMorce, tv_operator, tv_huo, tv_skill, tv_bao;
     private ImageView grade, img_vip, img_tuanduizhang;
-    private LinearLayout vip_reward, ll4, ll5, ll3, hy, vip, tdz;
+    private LinearLayout vip_reward, ll4, ll5, ll3, hy, vip, tdz, ll6;
     private RelativeLayout vip_rl1, vip_rl3, rl3, rl4;
     private View view1, view2;
     private RecyclerView skill_rcy, activity_rcy;
@@ -198,6 +199,7 @@ public class NumberSubFragment extends BaseFragment {
 
 
     private void initHeadView(View headView) {
+        go_top = headView.findViewById(R.id.go_top);
         mReUseGridView = (RecyclerView) headView.findViewById(R.id.mReUseGridView);
         swipeRefreshLayout = (SwipeRefreshLayout) headView.findViewById(R.id.swipeRefreshLayout);
         netscrollview = headView.findViewById(R.id.netscrollview);
@@ -210,7 +212,7 @@ public class NumberSubFragment extends BaseFragment {
         //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
         swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
         //设置触发刷新的距离
-        swipeRefreshLayout.setDistanceToTriggerSync(100);
+        swipeRefreshLayout.setDistanceToTriggerSync(200);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -223,26 +225,41 @@ public class NumberSubFragment extends BaseFragment {
         });
 
 
-                netscrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        netscrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 //判断是否滑到的底部
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                            page++;
-                            getData();
+                    page++;
+                    getData();
 
                 }
+
+
+
+                if (scrollY > 1000) {
+                    Log.e("=====", "下滑");
+                    go_top.setVisibility(View.VISIBLE);
+                }
+                if (scrollY < oldScrollY) {
+                    Log.e("=====", "上滑");
+                }
+
+                if (scrollY == 0) {
+                    Log.e("=====", "滑倒顶部");
+                    go_top.setVisibility(View.GONE);
+                }
+
+
             }
         });
 
 
-
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+        final GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         //设置图标的间距
-       // SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(10, 2);
+        // SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(10, 2);
         mReUseGridView.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 2)));
         mReUseGridView.setLayoutManager(manager);
-
 
 
         mReUseGridView.setNestedScrollingEnabled(false);
@@ -296,6 +313,7 @@ public class NumberSubFragment extends BaseFragment {
         tv_huo = headView.findViewById(R.id.tv_huo);
         tv_skill = headView.findViewById(R.id.tv_skill);
         tv_bao = headView.findViewById(R.id.tv_bao);
+        ll6 = headView.findViewById(R.id.ll6);
 
         userName.getPaint().setFakeBoldText(true);
         updateVip.getPaint().setFakeBoldText(true);
@@ -312,10 +330,40 @@ public class NumberSubFragment extends BaseFragment {
         getMorce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mReUseGridView.smoothScrollToPosition(1);
+                netscrollview.smoothScrollTo(0, ll6.getTop());
+            }
+
+
+        });
+
+        go_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                netscrollview.scrollTo(0,0);
             }
         });
 
+
+        mReUseGridView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int firstVisibleItemPosition = manager.findFirstVisibleItemPosition();
+                if (firstVisibleItemPosition > 3) {
+                    go_top.setVisibility(View.VISIBLE);
+                } else {
+                    go_top.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //获取当前RecyclerView显示的第一个条目的位置
+
+
+            }
+        });
 
     }
 

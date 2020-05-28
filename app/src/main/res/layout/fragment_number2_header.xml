@@ -4,7 +4,9 @@
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/netscrollview"
         android:layout_width="match_parent"
@@ -598,6 +600,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/ll6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl4"
@@ -634,4 +637,13 @@
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
+        <ImageView
+            android:id="@+id/go_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_list_zhiding"/>
+</RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
