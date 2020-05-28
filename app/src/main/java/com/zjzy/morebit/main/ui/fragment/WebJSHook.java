@@ -13,6 +13,7 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
+import com.zjzy.morebit.Activity.ShareHungryActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -242,6 +243,16 @@ public class WebJSHook {
     public void shareWebpage(final String title, final String content, final String url) {
         MyLog.i("WebJSHook", "shareWebpage");
         startShare(url, title, content, false);
+    }
+
+    /**
+     * 分享饿了么
+     */
+    @JavascriptInterface
+    public void shareEle() {
+        MyLog.i("WebJSHook", "shareEle");
+        mFragment.getActivity().startActivity(new Intent(mFragment.getActivity(), ShareHungryActivity.class));
+
     }
 
     /**
