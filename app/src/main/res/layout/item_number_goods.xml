@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:attr="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.CardView
+    <com.zyp.cardview.YcCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?attr/selectableItemBackgroundBorderless"
-        app:cardCornerRadius="5dp"
-        android:layout_margin="5dp"
-        app:cardElevation="1dp"
+        app:ycCardCornerRadius="5dp"
+        app:ycCardElevation="3dp"
+        app:ycCardPreventCornerOverlap="false"
+        app:ycStartShadowColor="@color/colcor_D3D3D3"
         app:cardUseCompatPadding="false"
         app:cardBackgroundColor="@color/color_FFFFFF">
     <RelativeLayout
@@ -47,7 +48,7 @@
                 android:maxLines="2"
                 android:text="商品简介商品简介商品简介"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_14" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -101,5 +102,5 @@
 
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </com.zyp.cardview.YcCardView>
     </LinearLayout>
