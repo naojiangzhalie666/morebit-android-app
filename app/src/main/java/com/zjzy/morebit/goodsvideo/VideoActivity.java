@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -15,28 +14,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
-import com.zjzy.morebit.Activity.ShortVideoPlayActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.goods.shopping.contract.GoodsDetailContract;
-import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailPresenter;
-import com.zjzy.morebit.mvp.base.base.BaseView;
-import com.zjzy.morebit.mvp.base.frame.MvpActivity;
-import com.zjzy.morebit.pojo.ImageInfo;
-import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
+import com.zjzy.morebit.goodsvideo.adapter.VideoDouAdapter;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.TKLBean;
-import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
-import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -44,10 +33,6 @@ import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
-
-import java.util.List;
-
-import static com.zjzy.morebit.utils.C.requestType.initData;
 
 /*
  * 视频播放页
@@ -62,6 +47,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private Bundle bundle;
     private ShopGoodInfo mGoodsInfo;
     private TKLBean mTKLBean;
+    private VideoDouAdapter douAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
