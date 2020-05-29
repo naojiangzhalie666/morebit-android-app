@@ -48,6 +48,7 @@ import com.zjzy.morebit.pojo.goods.CheckCouponStatusBean;
 import com.zjzy.morebit.pojo.goods.CouponUrlBean;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
+import com.zjzy.morebit.pojo.goods.ShareUrlMoreBaen;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestCheckGoodsBean;
 import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
@@ -760,6 +761,120 @@ public class GoodsUtil {
                                         if (goodsBitmap != null) {
 
                                             String s = saveGoodsImg(activity, goodsInfo, goodsBitmap, data.getExtension() == null ? "" : data.getExtension(), shareUrl);
+                                            map.put(goodsInfo.getItemSourceId(), s);
+
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    LogUtils.Log("GoodsUtil", "LoadImgToBitmap  onError + " + e.getMessage());
+                                }
+                                return map;
+                            }
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doFinally(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                LogUtils.Log("GoodsUtil", "dismissDialog  3");
+                                LoadingView.dismissDialog();
+                            }
+                        })
+                        .subscribe(new CallBackObserver<Map<String, String>>() {
+                            @Override
+                            public void onNext(Map<String, String> map) {
+                                LogUtils.Log("GoodsUtil", "map  onNext " + map.size());
+                                ArrayList<String> urlList = new ArrayList();
+                                for (ShopGoodInfo info : list) {
+                                    String taobao = info.getItemSourceId();
+                                    if (!TextUtils.isEmpty(taobao)) {
+                                        String s = map.get(taobao);
+                                        urlList.add(s);
+                                    }
+
+                                }
+                                if (urlList.size() != 0) {
+                                    toShareActionPosterList(activity, urlList, action);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                e.printStackTrace();
+                                ViewShowUtils.showShortToast(activity, "存在商品已下架，无法分享");
+                                LogUtils.Log("GoodsUtil", "map  onNext  onError " + e.getMessage());
+
+                            }
+                        });
+
+
+            }
+
+            @Override
+            public void onError() {
+            }
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+    }
+    // 获取淘口令
+    public static void SharePosterList3(final Activity activity, final List<ShopGoodInfo> osgData, final MyAction.OnResult<String> action) {
+        RequestPermissionUtlis.requestOne(activity, new MyAction.OnResult<String>() {
+            @Override
+            public void invoke(String arg) {
+                LoadingView.showDialog(activity);
+                if (osgData == null || osgData.size() == 0) {
+                    LogUtils.Log("GoodsUtil", "dismissDialog  1");
+                    LoadingView.dismissDialog();
+                    return;
+                }
+                String ids = "";
+                final List<ShopGoodInfo> list = new ArrayList<>();// 去掉过期商品
+                for (int i = 0; i < osgData.size(); i++) {
+                    ShopGoodInfo shopGoodInfo = osgData.get(i);
+                    if (shopGoodInfo.getIsExpire() == 1) {//过期
+                        continue;
+                    }
+                    if (!TextUtils.isEmpty(shopGoodInfo.getItemSourceId())) { // 添加 ids
+                        list.add(shopGoodInfo);
+                        if (i == osgData.size() - 1) {
+                            ids = ids + shopGoodInfo.getItemSourceId();
+                        } else {
+                            ids = ids + shopGoodInfo.getItemSourceId() + ",";
+                        }
+                    }
+                }
+                if (TextUtils.isEmpty(ids) || list.size() == 0) {
+                    LogUtils.Log("GoodsUtil", "dismissDialog  2");
+                    ViewShowUtils.showShortToast(activity, activity.getResources().getString(R.string.goodsShertError));
+                    LoadingView.dismissDialog();
+                    return;
+                }
+                ShareMore.getShareGoodsUrlMoreObservable((RxAppCompatActivity) activity, osgData, ids)
+
+                        .observeOn(Schedulers.io())
+                        .map(new Function<BaseResponse<List<ShareUrlMoreBaen>>, Map<String, String>>() {
+                            @Override
+                            public Map<String, String> apply(final BaseResponse<List<ShareUrlMoreBaen>> shareUrlListBaen) throws Exception {
+                                if (shareUrlListBaen == null || !C.requestCode.SUCCESS.equals(shareUrlListBaen.getCode())) {
+                                    return null;
+                                }
+                                List<ShareUrlMoreBaen> data = shareUrlListBaen.getData();
+                               // ShareUrlMoreBaen data = (ShareUrlMoreBaen) shareUrlListBaen.getData();
+                                if (data == null || data.get(0).getShareUrl() == null || data.size() == 0) {
+                                    return null;
+                                }
+                                final Map<String, String> map = new HashMap<>();
+                                try {
+                                    for (int i = 0; i < data.size(); i++) {
+                                        if (list.size() - 1 < i) {
+                                            continue;
+                                        }
+                                        final ShopGoodInfo goodsInfo = list.get(i);
+                                        final String shareUrl = data.get(i).getShareUrl();
+                                        Bitmap goodsBitmap = LoadImgUtils.getImgBitmapOnIo(activity, goodsInfo.getPicture());
+                                        if (goodsBitmap != null) {
+
+                                            String s = saveGoodsImg(activity, goodsInfo, goodsBitmap, "", shareUrl);
                                             map.put(goodsInfo.getItemSourceId(), s);
 
                                         }

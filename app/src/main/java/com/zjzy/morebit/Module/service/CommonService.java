@@ -12,6 +12,7 @@ import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.pojo.goods.FloorBean;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
+import com.zjzy.morebit.pojo.goods.ShareUrlMoreBaen;
 import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
 import com.zjzy.morebit.pojo.order.OrderSyncResult;
@@ -190,6 +191,7 @@ import com.zjzy.morebit.pojo.requestbodybean.RequestOfficialRecommend;
 import com.zjzy.morebit.pojo.requestbodybean.RequestOsBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestPage;
 import com.zjzy.morebit.pojo.requestbodybean.RequestShareGoods;
+import com.zjzy.morebit.pojo.requestbodybean.RequestShareMoreGoods;
 import com.zjzy.morebit.pojo.requestbodybean.RequestShopId;
 import com.zjzy.morebit.pojo.requestbodybean.RequestSystemStaticPage;
 import com.zjzy.morebit.pojo.requestbodybean.RequestThreeGoodsClassify;
@@ -1129,6 +1131,18 @@ public interface CommonService {
     @POST("/api/goods/share/getItemLinks")
     Observable<BaseResponse<ShareUrlListBaen>> getShareGoodsUrlListObservable(
             @Body RequestShareGoods requestShareGoods
+    );
+
+
+    /**
+     * 收藏  多商品分享链接
+     *
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/goods/share/listItemShareLink")
+    Observable<BaseResponse<List<ShareUrlMoreBaen>>> getShareGoodsUrlMoreObservable(
+            @Body RequestShareMoreGoods requestShareGoods
     );
 
 

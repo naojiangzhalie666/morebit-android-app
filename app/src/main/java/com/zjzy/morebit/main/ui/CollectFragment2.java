@@ -704,11 +704,12 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             ShopGoodInfo info = mGuessGoodsAdapter.getItem(i);
             if(info.getType()==0){
                 if(info.isSelect()){
-                    if (info.getShopType() == 3 ||info.getShopType()==4 ||info.getShopType()==5){
-                       isHavePdd = true;
-                    }else{
-                        shopGoodInfos.add(info);
-                    }
+                    shopGoodInfos.add(info);
+//                    if (info.getShopType() == 3 ||info.getShopType()==4 ||info.getShopType()==5){
+//                       isHavePdd = true;
+//                    }else{
+//
+//                    }
                 }
 
 
@@ -719,10 +720,10 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             ViewShowUtils.showShortToast(getActivity(),"最多可以选9个商品");
             return;
         }
-        if (isHavePdd){
-            ViewShowUtils.showShortToast(getActivity(),"暂时仅支持分享淘宝系商品");
-        }
-        GoodsUtil.SharePosterList2(getActivity(), shopGoodInfos, new MyAction.OnResult<String>() {
+//        if (isHavePdd){
+//            ViewShowUtils.showShortToast(getActivity(),"暂时仅支持分享淘宝系商品");
+//        }
+        GoodsUtil.SharePosterList3(getActivity(), shopGoodInfos, new MyAction.OnResult<String>() {
             @Override
             public void invoke(String arg) {
                 LoadingView.dismissDialog();
