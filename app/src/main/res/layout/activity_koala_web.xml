@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,13 +8,18 @@
     android:fitsSystemWindows="true"
     tools:context=".Activity.KoalaWebActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <View
         android:id="@+id/view_bar"
         android:background="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="0dp"/>
 
-    <include layout="@layout/toolbar_actionbar_web" />
+    <include layout="@layout/toolbar_actionbar_web"
+        />
 
     <View
         android:id="@+id/view_line"
@@ -25,5 +30,37 @@
         android:id="@+id/web"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingLeft="38dp"
+        android:paddingRight="38dp"
+        android:paddingTop="10dp">
+    <RelativeLayout
+        android:id="@+id/buyRl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/submit_buttom_999999"
+
+        >
+        <TextView
+            android:id="@+id/directBuyTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:text="@string/search_no_concessional"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            />
+    </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

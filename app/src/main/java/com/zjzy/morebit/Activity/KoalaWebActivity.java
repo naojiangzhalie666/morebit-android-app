@@ -73,6 +73,7 @@ public class KoalaWebActivity extends BaseActivity {
     private String title = "";
     private Bundle bundle;
     private WebView web;
+    private RelativeLayout rl_bottom_view,buyRl;
 
 
     public static void start(Activity activity, String url, String title) {
@@ -103,6 +104,8 @@ public class KoalaWebActivity extends BaseActivity {
     }
 
     private void initView() {
+        buyRl= (RelativeLayout) findViewById(R.id.buyRl);
+        rl_bottom_view= (RelativeLayout) findViewById(R.id.rl_bottom_view);
         mViewBar=findViewById(R.id.view_bar);
         mViewLine=findViewById(R.id.view_line);
         mRlToolbar= (RelativeLayout) findViewById(R.id.ll_toolbar);
@@ -210,6 +213,15 @@ public class KoalaWebActivity extends BaseActivity {
                                                goodsInfo(finalShopid);//分佣商品跳转考拉详情
                                            }else{
                                                view.loadUrl(newurl); //无分佣商品
+                                               rl_bottom_view.setVisibility(View.VISIBLE);
+                                               buyRl.setOnClickListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View v) {
+                                                       view.loadUrl(newurl); //无分佣商品
+                                                       rl_bottom_view.setVisibility(View.GONE);
+                                                   }
+                                               });
+
                                            }
                                         }
                                     });

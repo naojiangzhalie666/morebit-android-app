@@ -81,18 +81,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-<<<<<<< HEAD
+
 
         <activity android:name=".Activity.KoalaWebActivity"
             android:hardwareAccelerated="true"
             ></activity>
 
-        <activity android:name=".Activity.SkillClassActivity"></activity>
-
-=======
         <activity android:name=".Activity.ShareHungryActivity"></activity>
         <activity android:name=".Activity.SkillClassActivity" />
->>>>>>> dev-pian
+
         <activity android:name=".goodsvideo.ShopMallActivity" />
         <activity android:name=".goodsvideo.VideoClassActivity" />
         <activity
