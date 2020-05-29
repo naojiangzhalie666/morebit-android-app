@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/netscrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -22,7 +28,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="12dp">
 
                     <RelativeLayout
@@ -69,10 +75,13 @@
                 <TextView
                     android:id="@+id/vip_kefu"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="24dp"
                     android:layout_alignParentRight="true"
-                    android:background="@mipmap/vip_text_kefu"
+                    android:background="@drawable/bg_3d3d3b_1dpline_round_8dp"
                     android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:text="专属导师客服"
                     android:textColor="#ffedd0b3"
                     android:textSize="12dp" />
@@ -109,12 +118,14 @@
                         <TextView
                             android:id="@+id/getMorce"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="24dp"
                             android:layout_alignParentRight="true"
-                            android:layout_marginTop="10dp"
-                            android:background="@mipmap/getgrowth"
+                            android:background="@drawable/bg_e9c8a7_1dpline_round_8dp"
                             android:gravity="center"
                             android:text="获取成长值"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:layout_marginTop="10dp"
                             android:textColor="#ffb66d44"
                             android:textSize="12sp" />
 
@@ -308,6 +319,7 @@
                         android:background="@mipmap/vip_promotion"
                         android:gravity="center"
                         android:text="立即晋升"
+                        android:typeface="sans"
                         android:textColor="#ff3c3c3a"
                         android:textSize="16dp" />
                 </RelativeLayout>
@@ -325,10 +337,12 @@
                     <TextView
                         android:id="@+id/get_operator_growth"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="24dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:background="@mipmap/getgrowth"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:background="@drawable/bg_e9c8a7_1dpline_round_8dp"
                         android:gravity="center"
                         android:text="成长值: 3658"
                         android:textColor="#ffb66d44"
@@ -360,6 +374,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="会员"
+                        android:textStyle="bold"
                         android:textColor="#ff765f5f"
                         android:textSize="16dp" />
                 </LinearLayout>
@@ -433,15 +448,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll2"
-                android:layout_marginTop="8dp"
-                android:background="@mipmap/huiyuan3"
-                android:gravity="center_horizontal">
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+               android:background="@drawable/bg_3d3d3b_round_8dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/ll5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:visibility="gone">
 
@@ -458,15 +475,13 @@
                 <LinearLayout
                     android:id="@+id/ll4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="12dp">
+                    android:layout_height="44dp"
+                    >
 
                     <TextView
                         android:id="@+id/tv_huiyuan2"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="会员权益"
@@ -482,13 +497,29 @@
                     <TextView
                         android:id="@+id/tv_vip2"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="VIP专享权益"
                         android:textColor="#ffcfc5ba"
                         android:textSize="16dp" />
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#EFD3B7" />
+                <include layout="@layout/item_hyquanyi"
+                    android:id="@+id/hy"
+                    />
+                <include layout="@layout/item_vipquanyi"
+                    android:id="@+id/vip"
+                    android:visibility="gone"
+                    />
+                <include layout="@layout/item_tdzquanyi"
+                    android:id="@+id/tdz"
+                    android:visibility="gone"
+                    />
 
             </LinearLayout>
 
@@ -497,21 +528,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll3"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="12dp">
+
+                android:layout_marginTop="20dp"
+
+                >
 
                 <TextView
+                    android:layout_marginLeft="12dp"
                     android:id="@+id/tv_huo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动专区"
-                    android:layout_marginLeft="12dp"
                     android:textColor="#fff05557"
                     android:textSize="16dp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_marginTop="12dp"
                     android:id="@+id/activity_rcy"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_below="@+id/tv_huo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -526,41 +561,56 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="技能课程"
-                    android:textColor="#ff49a3ef"
-                    android:textSize="16sp" />
+                <RelativeLayout
+                    android:id="@+id/rl6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_skill"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="技能课程"
+                        android:layout_centerVertical="true"
+                        android:textColor="#ff49a3ef"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tv_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawableRight="@mipmap/vip_more"
-                    android:drawablePadding="4dp"
-                    android:padding="10dp"
-                    android:text="更多"
-                    android:textColor="#ff999999"
-                    android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/tv_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/vip_more"
+                        android:drawablePadding="4dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:text="更多"
+                        android:layout_centerInParent="true"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/skill_rcy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_more" />
+                    android:layout_below="@+id/rl6" />
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/ll6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl4"
                 android:layout_marginTop="28dp"
                 android:layout_marginBottom="20dp"
+                android:orientation="vertical"
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_bao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@mipmap/vip_zuo"
@@ -570,9 +620,30 @@
                     android:textColor="#fff05557"
                     android:textSize="16dp" />
 
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/mReUseGridView"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+
             </LinearLayout>
 
 
         </RelativeLayout>
+
     </android.support.v4.widget.NestedScrollView>
+        <ImageView
+            android:id="@+id/go_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_list_zhiding"/>
 </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="false">
+        <shape>
+            <gradient
+                android:startColor="#3D3D3B"
+                android:endColor="#3D3D3B"
+                 />
+            <item android:name="android:shadowColor">#80c3c3c3</item>
+            <item android:name="android:shadowDx">0</item>
+            <item android:name="android:shadowDy">0</item>
+            <!--<stroke android:width="1dp" android:color="@color/color_000000" />&lt;!&ndash;边框颜色&ndash;&gt;-->
+            <!--<solid android:color="@color/top_head" />&lt;!&ndash;填充色&ndash;&gt;-->
+            <corners
+                android:radius="8dp"
+                />
+        </shape>
+    </item>
+
+</selector>
+

@@ -61,10 +61,11 @@
                     android:paddingRight="14dp"
                     android:paddingTop="4dp"
                     android:text="全部店铺优惠"
-                    android:textColor="@color/color_333333"
+                    android:textColor="@color/color_999999"
                     android:textSize="11sp"/>
 
                 <TextView
+                    android:id="@+id/tv_jiantou"
                     android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

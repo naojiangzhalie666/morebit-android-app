@@ -24,6 +24,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.App;
@@ -76,6 +77,7 @@ import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
+import com.zjzy.morebit.utils.PageToUtil;
 import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
@@ -461,6 +463,7 @@ public class MineFragment extends BaseMainFragmeng {
                 break;
 
             case R.id.tv_withdraw: //提现
+                UserInfo info = UserLocalData.getUser(getActivity());
                 if (TextUtils.isEmpty(mTotalMoney)){
                     mTotalMoney = "0";
                 }
@@ -470,7 +473,13 @@ public class MineFragment extends BaseMainFragmeng {
                     if (TaobaoUtil.isAuth()) {   //淘宝授权
                         TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
                     } else {
-                        AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
+                        if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
+                            AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
+                        }else{
+                            PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
+                            ToastUtils.showLong("请先绑定支付宝!");
+                        }
+
                     }
                 }
 

@@ -54,7 +54,7 @@ public class ActivityFloorAdapter extends RecyclerView.Adapter<ActivityFloorAdap
         ActivityFloorAdapter.ViewHolder viewHolder = (ActivityFloorAdapter.ViewHolder) holder;
         if (!TextUtils.isEmpty(imageInfo.getPicture()) && imageInfo.getId()!=-1) {
             viewHolder.imageView.setVisibility(View.VISIBLE);
-            LoadImgUtils.setImg(mContext, viewHolder.imageView, imageInfo.getPicture());
+            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.imageView, imageInfo.getPicture(),8);
         }else{
             viewHolder.imageView.setVisibility(View.GONE);
         }

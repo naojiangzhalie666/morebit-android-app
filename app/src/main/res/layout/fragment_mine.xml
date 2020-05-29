@@ -213,7 +213,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:text="@string/order_search"
+                                    android:text="订单找回"
                                     android:textColor="@color/color_333333"
                                     android:textSize="@dimen/sp_12" />
                             </LinearLayout>

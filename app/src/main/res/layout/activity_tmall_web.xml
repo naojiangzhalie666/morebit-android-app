@@ -57,7 +57,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/submit_buttom_feed"
-
                 >
 
                 <TextView
@@ -78,7 +77,7 @@
                 android:id="@+id/buyRl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/btn_buttom_direct"
+                android:background="@drawable/submit_buttom_999999"
                 android:visibility="gone"
                 >
 

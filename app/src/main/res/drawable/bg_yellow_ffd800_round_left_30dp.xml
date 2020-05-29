@@ -2,7 +2,12 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <solid android:color="@color/color_FFD800" /><!--填充色-->
+
+    <gradient
+        android:angle="315"
+    android:endColor="#FFAD48"
+    android:startColor="#FF7420" /><!--//开始颜色//结束颜色//从左到友渐变-->
+<!--    <solid android:color="@color/color_FFD800" />&lt;!&ndash;填充色&ndash;&gt;-->
     <corners
         android:bottomLeftRadius="30dp"
         android:topLeftRadius="30dp" />

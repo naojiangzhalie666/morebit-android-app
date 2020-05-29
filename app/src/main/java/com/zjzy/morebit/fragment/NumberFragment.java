@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
@@ -81,6 +82,8 @@ public class NumberFragment extends BaseMainFragmeng  {
             status_bar.setLayoutParams(viewParams);
             status_bar.setBackgroundResource(R.color.transparent);
         }
+        TextView tv = view.findViewById(R.id.txt_head_title);
+        tv.getPaint().setFakeBoldText(true);
         viewPager.setAdapter(new NumbersGoodsAdapter(getChildFragmentManager()));
     }
 

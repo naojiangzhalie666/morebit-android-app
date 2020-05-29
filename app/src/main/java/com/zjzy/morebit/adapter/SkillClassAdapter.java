@@ -48,7 +48,7 @@ public class SkillClassAdapter extends RecyclerView.Adapter<SkillClassAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Article article = list.get(position);
         if (!TextUtils.isEmpty(article.getImage())) {
-            LoadImgUtils.setImg(context, holder.img, article.getImage());
+            LoadImgUtils.loadingCornerBitmap(context, holder.img, article.getImage(),8);
         }
         holder.tv_title.setText(article.getTitle());
         int finalStudyNum = article.getStudyNum() + article.getVirtualStudy();
