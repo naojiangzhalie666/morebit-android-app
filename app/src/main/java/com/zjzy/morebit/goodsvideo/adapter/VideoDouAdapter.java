@@ -12,6 +12,9 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
+
+import java.util.List;
 
 /*
 *
@@ -19,11 +22,13 @@ import com.zjzy.morebit.R;
 * */
 public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHolder> {
     private Context context;
+    private List<ShopGoodInfo> data;
 
 
 
-    public VideoDouAdapter(Context context) {
+    public VideoDouAdapter(Context context,List<ShopGoodInfo> data) {
         this.context = context;
+        this.data=data;
 
 
     }
@@ -37,6 +42,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
 
     }
 
