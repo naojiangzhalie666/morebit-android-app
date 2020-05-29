@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="left|center_vertical"
-            android:text="搜索商品名或粘贴淘宝标题"
+            android:text="粘贴商品标题搜索隐藏优惠券"
             android:paddingLeft="31dp"
             android:textColor="@color/white"
             android:textSize="12sp" />
