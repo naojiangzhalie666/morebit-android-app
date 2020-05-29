@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,8 +47,8 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private RelativeLayout r1;
     private Bundle bundle;
     private ShopGoodInfo mGoodsInfo;
-    private TKLBean mTKLBean;
     private VideoDouAdapter douAdapter;
+    private RecyclerView rcy_video;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,23 +118,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
 
     private void initView() {
         ActivityStyleUtil.initSystemBar(VideoActivity.this, R.color.color_757575); //设置标题栏颜色值
-        closs = (TextView) findViewById(R.id.closs);
-        closs.setOnClickListener(this);
-        videoView = (VideoView) findViewById(R.id.videoView);//视频
-        iv_head = (ImageView) findViewById(R.id.iv_head);//主图
-        tv_title = (TextView) findViewById(R.id.tv_title);//标题
-        tv_price = (TextView) findViewById(R.id.tv_price);//优惠券
-        tv_subsidy = (TextView) findViewById(R.id.tv_subsidy);//预估收益
-        tv_num = (TextView) findViewById(R.id.tv_num);//销量
-        tv_coupon_price = (TextView) findViewById(R.id.tv_coupon_price);//商品价格
-        tv_buy = (TextView) findViewById(R.id.tv_buy);//立即购买
-        tv_share = (TextView) findViewById(R.id.tv_share);//分享
-        tv_buy.setOnClickListener(this);
-        tv_share.setOnClickListener(this);
-        videoView.setOnClickListener(this);
-        img_stop = (ImageView) findViewById(R.id.img_stop);
-        r1 = (RelativeLayout) findViewById(R.id.r1);
-        r1.setOnClickListener(this);
+        rcy_video= (RecyclerView) findViewById(R.id.rcy_video);
         videoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -152,36 +137,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.closs://返回
-                finish();
-                break;
-            case R.id.r1://返回
-                finish();
-                break;
-            case R.id.tv_buy://跳转分享
-                if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
-                } else {
-                    if (isGoodsLose()) return;
 
-                    if (mTKLBean == null) {
-                        LoadingView.showDialog(this, "");
-                        GoodsUtil.getTaoKouLing(VideoActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
-                            @Override
-                            public void invoke(TKLBean arg) {
-                                mTKLBean = arg;
-                            }
-
-                            @Override
-                            public void onError() {
-                            }
-                        });
-                    } else {
-                        ShareMoneyActivity.start(this, mGoodsInfo, mTKLBean);
-                    }
-                }
-
-                break;
             case R.id.tv_share://进入淘宝详情
                 if (TaobaoUtil.isAuth()) {//淘宝授权
                     TaobaoUtil.getAllianceAppKey((BaseActivity) this);
@@ -206,27 +162,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    /**
-     * 商品是否过期
-     *
-     * @return
-     */
-    private boolean isGoodsLose() {
-        if (!LoginUtil.checkIsLogin(VideoActivity.this)) {
-            return true;
-        }
-        if (AppUtil.isFastClick(200)) {
-            return true;
-        }
-        if (mGoodsInfo == null) {
-            return true;
-        }
-        if (TextUtils.isEmpty(mGoodsInfo.getPrice())) {
-            ViewShowUtils.showLongToast(this, "商品已经过期，请联系管理员哦");
-            return true;
-        }
-        return false;
-    }
+
 
     @Override
     protected void onPause() {
