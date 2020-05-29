@@ -78,7 +78,7 @@
                 android:id="@+id/buyRl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/btn_buttom_direct"
+                android:background="@drawable/submit_buttom_feed"
                 android:visibility="gone"
                 >
 
