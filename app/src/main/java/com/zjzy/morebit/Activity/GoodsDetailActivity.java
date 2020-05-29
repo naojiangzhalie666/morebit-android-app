@@ -187,6 +187,10 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     RelativeLayout re_tab;
     @BindView(R.id.search_statusbar_rl)
     LinearLayout search_statusbar_rl;
+    @BindView(R.id.shop_taobao)
+    TextView shop_taobao;
+    @BindView(R.id.tv_jiantou)
+    TextView tv_jiantou;
 
     private ShopGoodInfo mGoodsInfo;
     private Bundle bundle;
@@ -331,7 +335,8 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
     private void initView() {
         initTab();
-
+        tv_jiantou.setVisibility(View.VISIBLE);
+        shop_taobao.setVisibility(View.VISIBLE);
         srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

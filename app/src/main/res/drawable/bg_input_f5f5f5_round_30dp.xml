@@ -3,8 +3,8 @@
 
     <item android:state_pressed="false">
         <shape>
-            <stroke android:width="0dp" android:color="@color/color_F5F5F5" /><!--边框颜色-->
-            <solid android:color="@color/color_F5F5F5" /><!--填充色-->
+            <stroke android:width="0dp" android:color="@color/color_F2F2F2" /><!--边框颜色-->
+            <solid android:color="@color/color_F2F2F2" /><!--填充色-->
             <corners
                 android:topRightRadius="30dp"
                 android:bottomLeftRadius="30dp"

@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/rel_top"
-        android:background="@color/colcor_black_333333"
+        android:background="@color/color_EDCFB1"
         android:layout_height="50dp"
         android:layout_width="match_parent"
         >
@@ -16,9 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="优选会员"
-            android:textStyle="bold"
             android:textSize="@dimen/sp_18"
-            android:textColor="@color/item_view_normal_color"
+            android:textColor="@color/color_333333"
             android:layout_centerInParent="true"/>
 
 

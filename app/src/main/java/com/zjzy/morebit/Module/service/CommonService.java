@@ -2451,4 +2451,26 @@ public interface CommonService {
     @POST("/api/goods/fans/getJdGenerate")
     public Observable<BaseResponse<String>> getGenerateForJD(
             @Body RequestPddShareContent requestBean);
+
+    /**
+     * 获取用户详情
+     *
+     * @return
+     */
+    @POST("/api/user/operator/userDetails")
+    public Observable<BaseResponse<UserInfo>> getUserDetails( @Body UserInfo requestBean);
+    /**
+     * 获取技能课堂内容
+     *
+     * @return
+     */
+    @POST("/api/system/commercial/getVipSkillClass")
+    public Observable<BaseResponse<List<Article>>> getVipSkillClass(@Body RequestBannerBean requestBean);
+    /**
+     * 获取vip楼层
+     *
+     * @return
+     */
+    @POST("/api/system/graphicInfo/sorting/getVipFloor")
+    public Observable<BaseResponse<List<ImageInfo>>> getVipFloor(@Body RequestBannerBean requestBean);
 }

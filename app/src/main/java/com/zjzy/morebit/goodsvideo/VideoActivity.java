@@ -52,7 +52,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_video);
+        setContentView(R.layout.activity_video);
         initBundle();
         initView();
         initData();
@@ -104,106 +104,108 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         tv_num.setText("销量：" + mGoodsInfo.getItemSale());
         String itemPrice = mGoodsInfo.getItemPrice();
         tv_coupon_price.setText(mGoodsInfo.getItemPrice() + "");
-        UserInfo userInfo1 =UserLocalData.getUser();
+        UserInfo userInfo1 = UserLocalData.getUser();
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             tv_subsidy.setText("登录赚佣金");
-        }else{
+        } else {
             if (C.UserType.operator.equals(UserLocalData.getUser(this).getPartner())
                     || C.UserType.vipMember.equals(UserLocalData.getUser(this).getPartner())) {
                 tv_subsidy.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mGoodsInfo.getTkMoney() + "") + "元");
             }
         }
     }
-        private void initView () {
-            ActivityStyleUtil.initSystemBar(VideoActivity.this, R.color.color_757575); //设置标题栏颜色值
-            closs = (TextView) findViewById(R.id.closs);
-            closs.setOnClickListener(this);
-            videoView = (VideoView) findViewById(R.id.videoView);//视频
-            iv_head = (ImageView) findViewById(R.id.iv_head);//主图
-            tv_title = (TextView) findViewById(R.id.tv_title);//标题
-            tv_price = (TextView) findViewById(R.id.tv_price);//优惠券
-            tv_subsidy = (TextView) findViewById(R.id.tv_subsidy);//预估收益
-            tv_num = (TextView) findViewById(R.id.tv_num);//销量
-            tv_coupon_price = (TextView) findViewById(R.id.tv_coupon_price);//商品价格
-            tv_buy = (TextView) findViewById(R.id.tv_buy);//立即购买
-            tv_share = (TextView) findViewById(R.id.tv_share);//分享
-            tv_buy.setOnClickListener(this);
-            tv_share.setOnClickListener(this);
-            videoView.setOnClickListener(this);
-            img_stop = (ImageView) findViewById(R.id.img_stop);
-            r1 = (RelativeLayout) findViewById(R.id.r1);
-            r1.setOnClickListener(this);
-            videoView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (videoView.isPlaying()) {
-                        videoView.pause();
-                        img_stop.setVisibility(View.VISIBLE);
-                    } else {
-                        videoView.start();
-                        img_stop.setVisibility(View.GONE);
-                    }
-                    return false;
+
+    private void initView() {
+        ActivityStyleUtil.initSystemBar(VideoActivity.this, R.color.color_757575); //设置标题栏颜色值
+        closs = (TextView) findViewById(R.id.closs);
+        closs.setOnClickListener(this);
+        videoView = (VideoView) findViewById(R.id.videoView);//视频
+        iv_head = (ImageView) findViewById(R.id.iv_head);//主图
+        tv_title = (TextView) findViewById(R.id.tv_title);//标题
+        tv_price = (TextView) findViewById(R.id.tv_price);//优惠券
+        tv_subsidy = (TextView) findViewById(R.id.tv_subsidy);//预估收益
+        tv_num = (TextView) findViewById(R.id.tv_num);//销量
+        tv_coupon_price = (TextView) findViewById(R.id.tv_coupon_price);//商品价格
+        tv_buy = (TextView) findViewById(R.id.tv_buy);//立即购买
+        tv_share = (TextView) findViewById(R.id.tv_share);//分享
+        tv_buy.setOnClickListener(this);
+        tv_share.setOnClickListener(this);
+        videoView.setOnClickListener(this);
+        img_stop = (ImageView) findViewById(R.id.img_stop);
+        r1 = (RelativeLayout) findViewById(R.id.r1);
+        r1.setOnClickListener(this);
+        videoView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (videoView.isPlaying()) {
+                    videoView.pause();
+                    img_stop.setVisibility(View.VISIBLE);
+                } else {
+                    videoView.start();
+                    img_stop.setVisibility(View.GONE);
                 }
-            });
-        }
+                return false;
+            }
+        });
+    }
 
-        @Override
-        public void onClick (View v){
-            switch (v.getId()) {
-                case R.id.closs://返回
-                    finish();
-                    break;
-                case R.id.r1://返回
-                    finish();
-                    break;
-                case R.id.tv_buy://跳转分享
-                    if (TaobaoUtil.isAuth()) {//淘宝授权
-                        TaobaoUtil.getAllianceAppKey((BaseActivity) this);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.closs://返回
+                finish();
+                break;
+            case R.id.r1://返回
+                finish();
+                break;
+            case R.id.tv_buy://跳转分享
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
+                } else {
+                    if (isGoodsLose()) return;
+
+                    if (mTKLBean == null) {
+                        LoadingView.showDialog(this, "");
+                        GoodsUtil.getTaoKouLing(VideoActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
+                            @Override
+                            public void invoke(TKLBean arg) {
+                                mTKLBean = arg;
+                            }
+
+                            @Override
+                            public void onError() {
+                            }
+                        });
                     } else {
-                        if (isGoodsLose()) return;
-
-                        if (mTKLBean == null) {
-                            LoadingView.showDialog(this, "");
-                            GoodsUtil.getTaoKouLing(VideoActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
-                                @Override
-                                public void invoke(TKLBean arg) {
-                                    mTKLBean = arg;
-                                }
-
-                                @Override
-                                public void onError() {
-                                }
-                            });
-                        } else {
-                            ShareMoneyActivity.start(this, mGoodsInfo, mTKLBean);
-                        }
+                        ShareMoneyActivity.start(this, mGoodsInfo, mTKLBean);
                     }
+                }
 
-                    break;
-                case R.id.tv_share://进入淘宝详情
-                    if (TaobaoUtil.isAuth()) {//淘宝授权
-                        TaobaoUtil.getAllianceAppKey((BaseActivity) this);
-                    } else {
+                break;
+            case R.id.tv_share://进入淘宝详情
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) this);
+                } else {
 //                        TaobaoUtil.showUrl(this, mGoodsInfo.getCouponUrl());
-               //         mPresenter.materialLinkList(this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
+                    //         mPresenter.materialLinkList(this, mGoodsInfo.getItemSourceId(), mGoodsInfo.material);
                     //    GoodsDetailActivity.start(this, mGoodsInfo);
 
-                        GoodsUtil.getCouponInfo(this, mGoodsInfo);
-                    }
+                    GoodsUtil.getCouponInfo(this, mGoodsInfo);
+                }
 
-                    break;
-                case R.id.videoView://点击视频播放暂停
-                    if (videoView.isPlaying()) {
-                        videoView.pause();
-                        img_stop.setVisibility(View.VISIBLE);
-                    } else {
-                        videoView.start();
-                        img_stop.setVisibility(View.GONE);
-                    }
-                    break;
-            }
+                break;
+            case R.id.videoView://点击视频播放暂停
+                if (videoView.isPlaying()) {
+                    videoView.pause();
+                    img_stop.setVisibility(View.VISIBLE);
+                } else {
+                    videoView.start();
+                    img_stop.setVisibility(View.GONE);
+                }
+                break;
         }
+    }
+
     /**
      * 商品是否过期
      *
@@ -225,40 +227,41 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         }
         return false;
     }
-        @Override
-        protected void onPause () {
-            super.onPause();
-            if (null != videoView && videoView.isPlaying()) {
-                videoView.stopPlayback();
-                videoView.pause();
-            }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (null != videoView && videoView.isPlaying()) {
+            videoView.stopPlayback();
+            videoView.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != videoView) {
+            videoView.stopPlayback();
+            videoView = null;
         }
 
-        @Override
-        protected void onDestroy () {
-            super.onDestroy();
-            if (null != videoView) {
-                videoView.stopPlayback();
-                videoView = null;
-            }
+    }
 
+
+    public static void start(Context context, ShopGoodInfo info) {
+        Intent intent = new Intent((Activity) context, VideoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(C.Extras.GOODSBEAN, info);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+    private void initBundle() {
+        bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mGoodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
         }
-
-
-
-    public static void start (Context context, ShopGoodInfo info){
-            Intent intent = new Intent((Activity) context, VideoActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(C.Extras.GOODSBEAN, info);
-            intent.putExtras(bundle);
-            context.startActivity(intent);
-        }
-        private void initBundle () {
-            bundle = getIntent().getExtras();
-            if (bundle != null) {
-                mGoodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
-            }
-        }
+    }
 
 
 }
