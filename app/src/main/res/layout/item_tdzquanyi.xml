@@ -51,13 +51,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/tdz2"
+            android:src="@mipmap/tdz3"
             />
         <TextView
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="优惠福利"
+            android:text="自购奖励"
             android:textColor="#ffeccfb1"
             android:textSize="12sp"
             />
@@ -65,7 +65,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="吃喝玩乐都省钱"
+            android:text="自购收益最高提高45%"
             android:textColor="#ffeccfb1"
             android:textSize="10sp"
             />
@@ -82,13 +82,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/tdz3"
+            android:src="@mipmap/vip10"
             />
         <TextView
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="自购奖励"
+            android:text="官方专属群"
             android:textColor="#ffeccfb1"
             android:textSize="12sp"
             />
@@ -96,7 +96,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="自购收益最高45%"
+            android:text="专属导师一对一辅导"
             android:textColor="#ffeccfb1"
             android:textSize="10sp"
             />
@@ -150,76 +150,6 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/tdz5"
-                />
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="间接奖励"
-                android:textColor="#ffeccfb1"
-                android:textSize="12sp"
-                />
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="整个团队36.67%奖励"
-                android:textColor="#ffeccfb1"
-                android:textSize="10sp"
-                />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/tdz6"
-                />
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="团队奖励"
-                android:textColor="#ffeccfb1"
-                android:textSize="12sp"
-                />
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="享所有会员VIP奖励"
-                android:textColor="#ffeccfb1"
-                android:textSize="10sp"
-                />
-
-
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:src="@mipmap/vip7"
                 />
             <TextView
@@ -241,6 +171,79 @@
 
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tdz2"
+                />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="特殊福利"
+                android:textColor="#ffeccfb1"
+                android:textSize="12sp"
+                />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="特殊福利等你来"
+                android:textColor="#ffeccfb1"
+                android:textSize="10sp"
+                />
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tdz5"
+                />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="间接奖励"
+                android:textColor="#ffeccfb1"
+                android:textSize="12sp"
+                />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="享整个团队\n36.67%奖励"
+                android:textColor="#ffeccfb1"
+                android:textSize="10sp"
+                />
+
+
+        </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -257,7 +260,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="官方专属群"
+                android:text="团队奖励"
                 android:textColor="#ffeccfb1"
                 android:textSize="12sp"
                 />
@@ -265,7 +268,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="专属导师一对一辅导"
+                android:gravity="center"
+                android:text="最高享所有vip\n会员团队奖励的58%"
                 android:textColor="#ffeccfb1"
                 android:textSize="10sp"
                 />
@@ -293,10 +297,11 @@
                 android:textSize="12sp"
                 />
             <TextView
+                android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="直属团队长团队奖励"
+                android:text="享直属团队长的\n团队奖励的16.67%"
                 android:textColor="#ffeccfb1"
                 android:textSize="10sp"
                 />

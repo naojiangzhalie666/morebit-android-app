@@ -166,6 +166,7 @@ import com.zjzy.morebit.pojo.request.RequestVideoId;
 import com.zjzy.morebit.pojo.request.RequestWechatCodeBean;
 import com.zjzy.morebit.pojo.request.RequestWeixiLoginBean;
 import com.zjzy.morebit.pojo.request.RequestWhatLike;
+import com.zjzy.morebit.pojo.request.WxCodeBean;
 import com.zjzy.morebit.pojo.request.base.RequestBaseTypeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestAnalysisTKL;
 import com.zjzy.morebit.pojo.requestbodybean.RequestCheckWithdrawBean;
@@ -2473,4 +2474,11 @@ public interface CommonService {
      */
     @POST("/api/system/graphicInfo/sorting/getVipFloor")
     public Observable<BaseResponse<List<ImageInfo>>> getVipFloor(@Body RequestBannerBean requestBean);
+    /**
+     * 获取饿了么二维码
+     *
+     * @return
+     */
+    @POST("/api/marketing/official/getQRcode")
+    public Observable<BaseResponse<WxCodeBean>> getQRcode(@Body RequestActivityLinkBean requestBean);
 }

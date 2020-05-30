@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -25,9 +26,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.CommonLocalData;
@@ -64,10 +67,16 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -90,6 +99,9 @@ import okhttp3.Response;
  */
 
 public class GoodsUtil {
+
+
+    private static Bitmap bitmap;
 
 
     public static void getTaoKouLing(final RxAppCompatActivity activity, final ShopGoodInfo goodsInfo, final MyAction.OnResult<TKLBean> action) {// 获取淘口令
@@ -445,6 +457,37 @@ public class GoodsUtil {
         return saveMakePath;
     }
 
+    /**
+     * 生成虚拟页面数据并保存为图片
+     *
+     * @param activity
+     * @throws Exception
+     */
+    public static String saveHungryGoodsImg(Activity activity,Bitmap img) throws Exception {
+        //设置布局数据
+        View view = getHungryPoster(activity,img);
+        Bitmap vBitmap = getViewBitmap(view);
+        //保存图片到本地
+        String saveMakePath = SdDirPath.IMAGE_CACHE_PATH + "goodqr_" + System.currentTimeMillis() + ".jpg";
+        File file = new File(saveMakePath);
+
+        vBitmap.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(file));
+        vBitmap.recycle();
+        vBitmap = null;
+        return saveMakePath;
+    }
+
+    private static View getHungryPoster(Activity activity,Bitmap img) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.view_hungry_poster, null);
+
+        ImageView share_img = (ImageView) view.findViewById(R.id.share_img2);
+        if (img!=null)
+            share_img.setImageBitmap(img);
+
+        return view;
+    }
+
+
     //    public static Bitmap getViewBitmap(View view) {
 //        int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 //        view.measure(me, me);
@@ -641,6 +684,34 @@ public class GoodsUtil {
             return QrcodeUtils.createQRCodeWithLogo(ewmUrl, qrSize, bitmap);
         }
     }
+//网络图转化为bitmap
+public static Bitmap returnBitMap(final String url){
+
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            URL imageurl = null;
+
+            try {
+                imageurl = new URL(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            try {
+                HttpURLConnection conn = (HttpURLConnection)imageurl.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream is = conn.getInputStream();
+                 bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }).start();
+
+    return bitmap;
+}
 
     /**
      * 获取二维码
