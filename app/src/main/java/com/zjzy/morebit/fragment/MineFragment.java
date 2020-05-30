@@ -429,12 +429,19 @@ public class MineFragment extends BaseMainFragmeng {
                 break;
             case R.id.order_search:
                 ImageInfo orderSearch = mLocalData.get("2");
-//                if (orderSearch == null){
-//                    ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
-//                }else{
-//
-//                }
-                BannerInitiateUtils.gotoAction(getActivity(), orderSearch);
+                if (orderSearch == null){
+                  //  ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
+                    ImageInfo orderSearch2 = new ImageInfo();
+                    orderSearch2.setOpen(3);
+                    orderSearch2.setUrl("https://helper.morebit.com.cn/#/search");
+                    orderSearch2.setSubTitle("找回订单");
+                    orderSearch2.setTitle("订单查询");
+                    orderSearch2.setSort(2);
+                    BannerInitiateUtils.gotoAction(getActivity(), orderSearch2);
+                }else{
+                    BannerInitiateUtils.gotoAction(getActivity(), orderSearch);
+                }
+
                 break;
             case R.id.my_footmarker:
                 ImageInfo footMarker = mLocalData.get("3");
