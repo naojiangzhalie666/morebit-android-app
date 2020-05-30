@@ -114,7 +114,12 @@ public class ShareHungryActivity extends BaseActivity implements View.OnClickLis
         txt_head_title.setTextSize(18);
         txt_head_title.getPaint().setFakeBoldText(true);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(this);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         weixinFriend = (LinearLayout) findViewById(R.id.weixinFriend);
         weixinFriend.setOnClickListener(this);
         weixinCircle = (LinearLayout) findViewById(R.id.weixinCircle);
@@ -140,9 +145,6 @@ public class ShareHungryActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         if (shareHundry!=null){
         switch (v.getId()){
-            case R.id.btn_back:
-                finish();
-                break;
             case R.id.weixinFriend://微信
                 ShareUtil.Image.toWechatFriend(ShareHungryActivity.this, shareHundry, null);
                 break;
