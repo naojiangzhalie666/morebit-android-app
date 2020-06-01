@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.dueeeke.videoplayer.player.IjkVideoView;
+import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -43,12 +45,21 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
     private Context context;
     private List<ShopGoodInfo> data;
     private TKLBean mTKLBean;
+    private final PlayerConfig playerConfig;
 
 
 
     public VideoDouAdapter(Context context,List<ShopGoodInfo> data) {
         this.context = context;
         this.data=data;
+        playerConfig = new PlayerConfig.Builder()
+                .enableCache()
+                .usingSurfaceView()
+                .savingProgress()
+                .disableAudioFocus()
+                .setLooping()
+                .addToPlayerManager()
+                .build();
 
 
     }
@@ -68,6 +79,9 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
         }else{
             holder.img_collect.setImageResource(R.mipmap.video_select);
         }
+        holder.videoView.setUrl(mGoodsInfo.getItemVideo());
+        holder.videoView.setPlayerConfig(playerConfig);
+        holder.videoView.setScreenScale(IjkVideoView.SCREEN_SCALE_CENTER_CROP);
         LoadImgUtils.loadingCornerBitmap(context, holder.iv_head, mGoodsInfo.getItemPic());
         holder.tv_title.setText(mGoodsInfo.getItemTitle());
         holder.tv_price.setText(mGoodsInfo.getCouponMoney() + "元劵");
@@ -155,13 +169,13 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView closs, tv_title, tv_price, tv_subsidy, tv_num, tv_coupon_price, tv_buy, tv_share;
-        private VideoView videoView;
+        private IjkVideoView videoView;
         private ImageView iv_head, img_stop,img_share,img_collect,img_xia;
         private RelativeLayout r1;
         public ViewHolder(View itemView) {
             super(itemView);
             closs = (TextView) itemView.findViewById(R.id.closs);
-            videoView = (VideoView) itemView.findViewById(R.id.videoView);//视频
+            videoView = (IjkVideoView) itemView.findViewById(R.id.videoView);//视频
             iv_head = (ImageView) itemView.findViewById(R.id.iv_head);//主图
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);//标题
             tv_price = (TextView) itemView.findViewById(R.id.tv_price);//优惠券

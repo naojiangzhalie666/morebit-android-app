@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/r1">
 
-        <VideoView
+        <com.dueeeke.videoplayer.player.IjkVideoView
             android:id="@+id/videoView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"

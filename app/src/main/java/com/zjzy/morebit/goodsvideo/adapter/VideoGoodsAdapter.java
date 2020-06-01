@@ -96,7 +96,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoActivity.start(context, videoBean);
+                VideoActivity.start(context, (List<ShopGoodInfo>) list);
             }
         });
 
