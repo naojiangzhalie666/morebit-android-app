@@ -208,6 +208,7 @@ public class C {
         //商品
         public static final String TAOBAO = "TAOBAO"; // 淘宝Id
         public static final String GOODSBEAN = "GOODSBEAN"; // 一个商品
+        public static final String VIDEOBEAN = "VIDEOBEAN"; // 一个视频id
         public static final String TKLDATA = "TKLDATA"; // 淘口令数据
         public static final String PDDPROMOTIONDATA = "PDDPROMOTIONDATA"; // 拼多多数据
         public static final String ITEMVIDEOID = "ITEMVIDEOID"; // 视频地址

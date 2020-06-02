@@ -6,6 +6,7 @@
     android:background="@color/color_000000">
 
     <RelativeLayout
+        android:visibility="invisible"
         android:id="@+id/r1"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -26,7 +27,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/r1">
 
-        <com.dueeeke.videoplayer.player.IjkVideoView
+        <VideoView
             android:id="@+id/videoView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -36,6 +37,19 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="70dp"
             android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/first_img"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp"
+            android:layout_centerVertical="true" />
+
+
 
     </RelativeLayout>
     <LinearLayout

@@ -11,6 +11,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,8 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.dueeeke.videoplayer.player.IjkVideoView;
-import com.dueeeke.videoplayer.player.VideoViewManager;
+
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -56,7 +57,10 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private VideoDouAdapter douAdapter;
     private RecyclerView rcy_video;
     private List<ShopGoodInfo> data=new ArrayList<>();
-    private IjkVideoView mVideoView;
+    private VideoView mVideoView;
+    private int videoId;
+    private int mCurPos;
+    private ImageView closs,first_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +79,10 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView() {
-        ActivityStyleUtil.initSystemBar(VideoActivity.this, R.color.color_757575); //设置标题栏颜色值
+        ActivityStyleUtil.initSystemBar(VideoActivity.this, R.color.black); //设置标题栏颜色值
         rcy_video= (RecyclerView) findViewById(R.id.rcy_video);
+        closs = (ImageView) findViewById(R.id.closs);
+        closs.setOnClickListener(this);
         douAdapter = new VideoDouAdapter(this,data);
         PagerLayoutManager mLayoutManager = new PagerLayoutManager(this, OrientationHelper.VERTICAL);
         rcy_video.setLayoutManager(mLayoutManager);
@@ -84,11 +90,12 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         mLayoutManager.setOnViewPagerListener(new OnViewPagerListener() {
             @Override
             public void onInitComplete(View view) {
-                playVideo(0, view);
+                playVideo(videoId, view);
             }
 
             @Override
             public void onPageSelected(int position, boolean isBottom, View view) {
+                if (mCurPos == position) return;
                 playVideo(position, view);
             }
 
@@ -104,12 +111,16 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
+        rcy_video.scrollToPosition(videoId);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.closs:
+                finish();
+                break;
 
 
         }
@@ -122,7 +133,13 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private void playVideo(int position, View view) {
         if (view != null) {
             mVideoView = view.findViewById(R.id.videoView);
+            first_img=view.findViewById(R.id.first_img);
+            Uri uri = Uri.parse(data.get(position).getItemVideo());
+            mVideoView.setVideoURI(uri);
+            mVideoView.requestFocus();
             mVideoView.start();
+            mCurPos = position;
+
         }
     }
 
@@ -131,7 +148,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
      */
     private void releaseVideo(View view) {
         if (view != null) {
-            IjkVideoView videoView = view.findViewById(R.id.videoView);
+            VideoView videoView = view.findViewById(R.id.videoView);
             videoView.stopPlayback();
         }
     }
@@ -155,13 +172,17 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        VideoViewManager.instance().releaseVideoPlayer();
+        if (mVideoView != null) {
+            mVideoView.stopPlayback();
+            mVideoView=null;
+        }
     }
 
-    public static void start(Context context, List<ShopGoodInfo> info) {
+    public static void start(Context context, List<ShopGoodInfo> info,int videoId) {
         Intent intent = new Intent((Activity) context, VideoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(C.Extras.GOODSBEAN, (Serializable) info);
+        bundle.putSerializable(C.Extras.VIDEOBEAN, videoId);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
@@ -170,6 +191,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         bundle = getIntent().getExtras();
         if (bundle != null) {
             data = (List<ShopGoodInfo>) bundle.getSerializable(C.Extras.GOODSBEAN);
+            videoId= (int) bundle.getSerializable(C.Extras.VIDEOBEAN);
         }
     }
 
