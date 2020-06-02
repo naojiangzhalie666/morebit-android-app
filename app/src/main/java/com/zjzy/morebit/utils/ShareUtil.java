@@ -1,12 +1,19 @@
 package com.zjzy.morebit.utils;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.contact.SdDirPath;
 
@@ -261,6 +268,8 @@ public class ShareUtil {
     }
 
     public static class App {
+
+
         public static void toWechatFriend(Activity activity, String title, String text, String image, String url, PlatformActionListener platformActionListener) { //分享到好友
            MyLog.i("test","title: " +title+"  text: " +text+" image: " +image+" url: " +url);
             Wechat.ShareParams sp = new Wechat.ShareParams();
@@ -286,6 +295,23 @@ public class ShareUtil {
                 wechat.setPlatformActionListener(platformActionListener);
             wechat.share(sp);
         }
+
+        public static void toWechatFriendVideo(Activity activity, String url, PlatformActionListener platformActionListener) { //分享到好友
+          //  MyLog.i("test","title: " +title+"  text: " +text+" image: " +image+" url: " +url);
+            Wechat.ShareParams sp = new Wechat.ShareParams();
+            sp.setShareType(Platform.SHARE_FILE);
+            sp.setText("");
+            sp.setTitle("");
+            sp.setFilePath(url);
+            Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
+            if (platformActionListener == null)
+                wechat.setPlatformActionListener(new MyPlatformActionListener(activity));
+            else
+                wechat.setPlatformActionListener(platformActionListener);
+            wechat.share(sp);
+        }
+
+
 
         public static void toWechatMoments(Activity activity, String title, String text, String image, String url, PlatformActionListener platformActionListener) {  //分享到朋友圈
             WechatMoments.ShareParams sp = new WechatMoments.ShareParams();
@@ -492,6 +518,118 @@ public class ShareUtil {
                 Image.toSinaWeibo(activity, url, new MyPlatformActionListener(activity));
                 break;
         }
+    }
+
+
+    // 调用系統方法分享文件
+    public static void shareWxFile(Context context, File file) {
+        if (null != file && file.exists()) {
+            Intent share = new Intent(Intent.ACTION_SEND);
+            Uri uri = null;
+            // 判断版本大于等于7.0
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                // "项目包名.fileprovider"即是在清单文件中配置的authorities
+                uri = FileProvider.getUriForFile(context, "com.zjzy.morebit.provider", file);
+                // 给目标应用一个临时授权
+                share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } else {
+                uri = Uri.fromFile(file);
+            }
+            ComponentName comp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.tools.ShareImgUI");
+            share.putExtra(Intent.EXTRA_STREAM, uri);
+            share.setType(getMimeType(file.getAbsolutePath()));//此处可发送多种文件
+            share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            share.setComponent(comp);
+            context.startActivity(share);
+        }
+
+
+    }
+/*
+*
+*  if (appType == WEICHAT) {
+            ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
+            intent.setComponent(comp);
+        } else if (appType == WEICHAT_CIRCE) {
+            ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
+            intent.setComponent(comp);
+        } else if (appType == QQ) {
+            ComponentName comp = new ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
+            intent.setComponent(comp);
+        } else if (appType == QQ_CIRCE) {
+            ComponentName comp = new ComponentName("com.qzone", "com.qzonex.module.operation.ui.QZonePublishMoodActivity");
+            intent.setComponent(comp);
+        }
+
+* */
+    // 调用系統方法分享文件
+    public static void shareQqFile(Context context, File file) {
+        if (null != file && file.exists()) {
+            Intent share = new Intent(Intent.ACTION_SEND);
+            Uri uri = null;
+            // 判断版本大于等于7.0
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                // "项目包名.fileprovider"即是在清单文件中配置的authorities
+                uri = FileProvider.getUriForFile(context, "com.zjzy.morebit.provider", file);
+                // 给目标应用一个临时授权
+                share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } else {
+                uri = Uri.fromFile(file);
+            }
+            ComponentName comp = new ComponentName("com.tencent.mobileqq","com.tencent.mobileqq.activity.JumpActivity");
+            share.putExtra(Intent.EXTRA_STREAM, uri);
+            share.setType(getMimeType(file.getAbsolutePath()));//此处可发送多种文件
+            share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            share.setComponent(comp);
+            context.startActivity(share);
+        }
+
+
+    }
+    // 调用系統方法分享文件
+    public static void shareWxCircle(Context context, File file) {
+        if (null != file && file.exists()) {
+            Intent share = new Intent(Intent.ACTION_SEND);
+            Uri uri = null;
+            // 判断版本大于等于7.0
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                // "项目包名.fileprovider"即是在清单文件中配置的authorities
+                uri = FileProvider.getUriForFile(context, "com.zjzy.morebit.provider", file);
+                // 给目标应用一个临时授权
+                share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } else {
+                uri = Uri.fromFile(file);
+            }
+            ComponentName comp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.tools.ShareToTimeLineUI");
+            share.putExtra(Intent.EXTRA_STREAM, uri);
+            share.setType(getMimeType(file.getAbsolutePath()));//此处可发送多种文件
+            share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            share.setComponent(comp);
+            context.startActivity(share);
+        }
+
+
+    }
+    // 根据文件后缀名获得对应的MIME类型。
+    private static String getMimeType(String filePath) {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        String mime = "*/*";
+        if (filePath != null) {
+            try {
+                mmr.setDataSource(filePath);
+                mime = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE);
+            } catch (IllegalStateException e) {
+                return mime;
+            } catch (IllegalArgumentException e) {
+                return mime;
+            } catch (RuntimeException e) {
+                return mime;
+            }
+        }
+        return mime;
     }
 
 

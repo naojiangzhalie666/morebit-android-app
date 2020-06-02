@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_ffffff_12dp"
+        android:orientation="vertical"
+      >
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/video_share_close"
+            android:layout_alignParentRight="true"
+            android:padding="12dp"
+            />
+
+<TextView
+    android:id="@+id/tv_share"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginRight="30dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:lineSpacingMultiplier="1.2"
+    android:layout_centerHorizontal="true"
+    android:text="[2020新款女装气质慵懒风显瘦荷叶
+边收腰赫本小黑裙拉链黑色连衣裙]
+[原价] 139元\n
+[券后价] 99元\n
+復至此条评论，(dXQg1Q8QUZh),
+[淘寶]即可把我带回家\n
+[邀请码] ZMX7IA\n
+[下载链接]\n
+https://a.app.qq.com/o/simple.jsp?
+pkaname=com. zizv. .morebit"
+    android:textColor="@color/color_333333"
+    android:textSize="16sp"
+    />
+
+
+
+            <TextView
+                android:layout_below="@+id/tv_share"
+                android:layout_marginTop="45dp"
+                android:id="@+id/btn_ok"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/background_radius_haibao_10dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="立即分享"
+                android:textStyle="bold"
+                android:textColor="#ffffffff"
+                android:textSize="16sp" />
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

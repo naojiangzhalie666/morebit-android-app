@@ -1,6 +1,13 @@
 package com.zjzy.morebit.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.BuildConfig;
@@ -9,6 +16,8 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.io.File;
 
 /**
  * @Author: wuchaowen
@@ -48,4 +57,5 @@ public class WechatUtil {
         req.miniprogramType = BuildConfig.ENV_TYPE == 3 ? WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE : WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW;
         iwxapi.sendReq(req);
     }
+
 }
