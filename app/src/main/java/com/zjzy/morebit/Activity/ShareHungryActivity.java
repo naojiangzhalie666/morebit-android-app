@@ -4,31 +4,48 @@ import android.Manifest;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.contact.SdDirPath;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ActivityLinkBean;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
+import com.zjzy.morebit.pojo.request.WxCodeBean;
 import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
+import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.ShareUtil;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.sys.RequestPermissionUtlis;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import static com.zjzy.morebit.utils.C.requestType.initData;
 
 /*
 *
@@ -39,6 +56,7 @@ public class ShareHungryActivity extends BaseActivity implements View.OnClickLis
     private TextView txt_head_title;
     private LinearLayout btn_back,weixinFriend,weixinCircle,sinaWeibo,qqFriend,qqRoom,ll_more;
     private String shareHundry;
+    private ImageView share_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +67,59 @@ public class ShareHungryActivity extends BaseActivity implements View.OnClickLis
                 .statusBarColor(R.color.white)
                 .init();
         initView();
+        initData();
+    }
+
+    private void initData() {
+        LoadingView.showDialog(this, "请求中...");
+        RequestActivityLinkBean bean = new RequestActivityLinkBean();
+        bean.setActivityId("1579491209717");
+        RxHttp.getInstance().getGoodsService()
+                .getQRcode(bean)
+                .compose(RxUtils.<BaseResponse<WxCodeBean>>switchSchedulers())
+                .compose(this.<BaseResponse<WxCodeBean>>bindToLifecycle())
+                .subscribe(new DataObserver<WxCodeBean>() {
+                    @Override
+                    protected void onSuccess(WxCodeBean data) {
+                        String activityLink = data.getWxQrcodeUrl();
+                        if (TextUtils.isEmpty(activityLink)) return;
+                            Glide.with(ShareHungryActivity.this)
+                                    .asBitmap()
+                                    .load(activityLink)
+                                    .into(new SimpleTarget<Bitmap>() {
+                                              @Override
+                                              public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                                  share_img.setImageBitmap(resource);
+                                                  if (resource!=null){
+                                                      try {
+                                                          shareHundry = GoodsUtil.saveHungryGoodsImg(ShareHungryActivity.this, resource);
+                                                      } catch (Exception e) {
+                                                          e.printStackTrace();
+                                                      }
+                                                  }
+                                                  LoadingView.dismissDialog();
+                                              }
+                                          });
+                                          //  LoadImgUtils.setViewBackground(ShareHungryActivity.this, share_img, activityLink);
+
+                    }
+                });
+
     }
 
     private void initView() {
-
+        share_img= (ImageView) findViewById(R.id.share_img);
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setText("饿了么");
         txt_head_title.setTextSize(18);
         txt_head_title.getPaint().setFakeBoldText(true);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(this);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         weixinFriend = (LinearLayout) findViewById(R.id.weixinFriend);
         weixinFriend.setOnClickListener(this);
         weixinCircle = (LinearLayout) findViewById(R.id.weixinCircle);
@@ -73,16 +134,17 @@ public class ShareHungryActivity extends BaseActivity implements View.OnClickLis
         ll_more.setOnClickListener(this);
         Resources resources = getResources();
         Bitmap bmp = BitmapFactory.decodeResource(resources, R.mipmap.pianyuanbaoyou);
-        shareHundry = FileUtils.savePhoto(bmp, SdDirPath.IMAGE_CACHE_PATH, "appshare");
+       // shareHundry = FileUtils.savePhoto(bmp, SdDirPath.IMAGE_CACHE_PATH, "appshare");
 
     }
 
+
+
+
     @Override
     public void onClick(View v) {
+        if (shareHundry!=null){
         switch (v.getId()){
-            case R.id.btn_back:
-                finish();
-                break;
             case R.id.weixinFriend://微信
                 ShareUtil.Image.toWechatFriend(ShareHungryActivity.this, shareHundry, null);
                 break;
@@ -101,6 +163,7 @@ public class ShareHungryActivity extends BaseActivity implements View.OnClickLis
             case R.id.ll_more://更多
                 permission(ShareUtil.MoreType);
                 break;
+        }
         }
     }
 
@@ -144,4 +207,6 @@ public class ShareHungryActivity extends BaseActivity implements View.OnClickLis
             Toast.makeText(ShareHungryActivity.this, "分享失败", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

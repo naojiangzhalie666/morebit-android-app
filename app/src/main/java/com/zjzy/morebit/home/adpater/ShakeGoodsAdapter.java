@@ -88,7 +88,12 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 3;
+        if (list.size()<3){
+            return list.size();
+        }else{
+            return 3;
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

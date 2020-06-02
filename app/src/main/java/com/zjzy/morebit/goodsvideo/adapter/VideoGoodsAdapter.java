@@ -4,11 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.goodsvideo.VideoActivity;
@@ -78,15 +80,20 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
 
         holder.commission.setText(list.get(position).getCouponMoney() + "元劵");
         holder.tv_price.setText("" + list.get(position).getItemPrice());
-        UserInfo userInfo1 =UserLocalData.getUser();
-        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-            holder.tv_coupul.setText("登录赚佣金");
-        }else{
-            if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
-                    || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())) {
-//            commission.setVisibility(View.VISIBLE);
-                holder.tv_coupul.setText("预估收益"+ MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney()+"")+"元");
+
+
+
+        if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
+                || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())) {  holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + "") + "元");
+        } else {
+            UserInfo userInfo1 = UserLocalData.getUser();
+            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                holder.tv_coupul.setText("登录赚佣金");
+            } else {
+                holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + "") + "元");
             }
+
+
         }
 
 //            commission.setText(getString(R.string.upgrade_commission));

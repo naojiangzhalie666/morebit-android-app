@@ -388,9 +388,11 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         Context mContext;
         private boolean isEditor;//收藏列表是否是编辑状态
 
+
         public CollectAdapter(Context context) {
             super(context);
             mContext = context;
+
         }
 
         @Override
@@ -400,7 +402,6 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             }
             return 0;
         }
-
         @Override
         public void onBindViewHolder(SimpleViewHolder holder, int position) {
             final ShopGoodInfo item = getItem(position);
@@ -585,6 +586,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                     }
                 });
             }
+
+
 
 
         }
