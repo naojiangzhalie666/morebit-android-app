@@ -32,35 +32,40 @@
         android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_bottom_view"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
+         android:visibility="gone"
         android:background="@color/white"
-        android:paddingBottom="10dp"
-        android:paddingLeft="38dp"
-        android:paddingRight="38dp"
-        android:paddingTop="10dp">
-    <RelativeLayout
-        android:id="@+id/buyRl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/submit_buttom_999999"
 
-        >
+    >
+
         <TextView
-            android:id="@+id/directBuyTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/color_999999"
             android:gravity="center"
             android:drawablePadding="5dp"
-            android:text="@string/search_no_concessional"
+            android:text="该商品未参加推广 无法获取佣金"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="14sp"
             />
-    </RelativeLayout>
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/directBuyTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:text="点击购买"
+            android:background="@color/top_head"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            />
+
+    </LinearLayout>
 </RelativeLayout>

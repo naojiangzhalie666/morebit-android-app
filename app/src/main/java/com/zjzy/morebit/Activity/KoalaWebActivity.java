@@ -20,6 +20,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -75,7 +76,8 @@ public class KoalaWebActivity extends BaseActivity {
     private String title = "";
     private Bundle bundle;
     private WebView web;
-    private RelativeLayout rl_bottom_view,buyRl;
+    private LinearLayout rl_bottom_view;
+        private TextView directBuyTv;
 
 
     public static void start(Activity activity, String url, String title) {
@@ -106,8 +108,8 @@ public class KoalaWebActivity extends BaseActivity {
     }
 
     private void initView() {
-        buyRl= (RelativeLayout) findViewById(R.id.buyRl);
-        rl_bottom_view= (RelativeLayout) findViewById(R.id.rl_bottom_view);
+        directBuyTv= (TextView) findViewById(R.id.directBuyTv);
+        rl_bottom_view= (LinearLayout) findViewById(R.id.rl_bottom_view);
         mViewBar=findViewById(R.id.view_bar);
         mViewLine=findViewById(R.id.view_line);
         mRlToolbar= (RelativeLayout) findViewById(R.id.ll_toolbar);
@@ -191,7 +193,7 @@ public class KoalaWebActivity extends BaseActivity {
                 super.onPageFinished(view, url);
                 if (url.contains("https://m-goods.kaola.com/product/") ) {
                     rl_bottom_view.setVisibility(View.VISIBLE);
-                    buyRl.setOnClickListener(new View.OnClickListener() {
+                    directBuyTv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             rl_bottom_view.setVisibility(View.GONE);
