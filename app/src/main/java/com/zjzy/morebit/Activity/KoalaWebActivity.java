@@ -189,21 +189,8 @@ public class KoalaWebActivity extends BaseActivity {
             }
 
             @Override
-            public void onPageFinished(WebView view, String url) {
+            public void onPageFinished(final WebView view, final String url) {
                 super.onPageFinished(view, url);
-                if (url.contains("https://m-goods.kaola.com/product/") ) {
-                    rl_bottom_view.setVisibility(View.VISIBLE);
-                    directBuyTv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            rl_bottom_view.setVisibility(View.GONE);
-                        }
-                    });
-
-                } else {
-                    rl_bottom_view.setVisibility(View.GONE);
-                }
-
             }
 
             @Override
@@ -230,6 +217,15 @@ public class KoalaWebActivity extends BaseActivity {
                                                goodsInfo(finalShopid);//分佣商品跳转考拉详情
                                            }else{
                                                view.loadUrl(newurl); //无分佣商品
+                                               rl_bottom_view.setVisibility(View.VISIBLE);
+                                               directBuyTv.setOnClickListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View v) {
+                                                       view.loadUrl(newurl);
+                                                       rl_bottom_view.setVisibility(View.GONE);
+
+                                                   }
+                                               });
 
                                            }
                                         }

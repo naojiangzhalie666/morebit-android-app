@@ -721,7 +721,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         }
 
 
-        StringsUtils.retractTitleForPdd(tv_pdd, title,data.getGoodsTitle());
+        StringsUtils.retractKaoLaTitle(tv_pdd, title,data.getGoodsTitle());
         getViewLocationOnScreen();
     }
 

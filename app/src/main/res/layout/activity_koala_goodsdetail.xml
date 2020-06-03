@@ -166,8 +166,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
                                     android:background="@drawable/bg_pdd_icon"
-                                    android:paddingLeft="2dp"
-                                    android:paddingRight="2dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
                                     android:text="考拉"
                                     android:textColor="@color/color_FFFFFF"
                                     android:textSize="@dimen/sp_9" />
@@ -176,7 +176,6 @@
                                     android:id="@+id/title"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="2dp"
                                     android:layout_marginRight="2dp"
                                     android:ellipsize="end"
                                     android:lineSpacingExtra="3dp"
