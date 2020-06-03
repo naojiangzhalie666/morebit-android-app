@@ -778,19 +778,13 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 if (LoginUtil.checkIsLogin(this)) {
                   //  mGoodsInfo.getPurchaseLink().replace("https","")
                     Log.e("uuu",mGoodsInfo.getPurchaseLink());
-                    String replace = mGoodsInfo.getPurchaseLink().replace("https", "kaola");
+                    String replace = mGoodsInfo.getGoodsDetail().replace("https", "kaola");
                     if (isHasInstalledKaola()){
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("kaola://cps.kaola.com/cps/zhuankeLogin?unionId=zhuanke_701333583&tc1=245995&showWapBanner=0&targetUrl=https://m-goods.kaola.com/product/1805054.html"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(replace));
                         startActivity(intent);
                     }else{
-                        ShowWebActivity.start(this,/* mGoodsInfo.getPurchaseLink()*/"https://goods.kaola.com/product/5222113.html?spm=a2v0d.13659821.0.0.139a4f74IOfRkN&kpm=MTAwMg%3D%3D.MjAyMTM%3D.MjM0NjcyOQ%3D%3D.Mg%3D%3D%40%40Xw%3D%3D&_h5da=true", "");
+                        ShowWebActivity.start(this,mGoodsInfo.getGoodsDetail(), "");
                     }
-
-//                    if (mGoodsInfo.getPurchaseLink() != null) {
-//                        ShowWebActivity.start(this,/* mGoodsInfo.getPurchaseLink()*/"https://goods.kaola.com/product/5222113.html?spm=a2v0d.13659821.0.0.139a4f74IOfRkN&kpm=MTAwMg%3D%3D.MjAyMTM%3D.MjM0NjcyOQ%3D%3D.Mg%3D%3D%40%40Xw%3D%3D&_h5da=true", "");
-//                    }
-
-
                 }
 
                 break;

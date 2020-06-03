@@ -58,7 +58,15 @@ public class ShopGoodInfo implements Serializable {
     private String purchaseLink;//购买链接
     private String currentPrice;//现价
     private String marketPrice;//原价
+    private String goodsDetail;//原商品详情链接
 
+    public String getGoodsDetail() {
+        return goodsDetail;
+    }
+
+    public void setGoodsDetail(String goodsDetail) {
+        this.goodsDetail = goodsDetail;
+    }
 
     public List<String> getImageList() {
         return imageList;
