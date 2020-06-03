@@ -40,6 +40,7 @@ import com.zjzy.morebit.pojo.event.WebViewUpdataColorEvent;
 import com.zjzy.morebit.pojo.request.RequesKoalaBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.LogUtils;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.StringsUtils;
@@ -210,7 +211,7 @@ public class KoalaWebActivity extends BaseActivity {
                                     .subscribe(new DataObserver<ShopGoodInfo>() {
                                         @Override
                                         protected void onSuccess(final ShopGoodInfo data) {
-                                           if (data.getCommission()!=null&&!data.getCommission().equals("0")){
+                                           if (data.getCommission()!=null&&!MathUtils.getnum(data.getCommission()).equals("0")){
                                                goodsInfo(finalShopid);//分佣商品跳转考拉详情
                                            }else{
                                                view.loadUrl(newurl); //无分佣商品
