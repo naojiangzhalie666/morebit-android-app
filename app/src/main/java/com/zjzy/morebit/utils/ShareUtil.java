@@ -579,32 +579,7 @@ public class ShareUtil {
             }
             ComponentName comp = new ComponentName("com.tencent.mobileqq","com.tencent.mobileqq.activity.JumpActivity");
             share.putExtra(Intent.EXTRA_STREAM, uri);
-            share.setType(getMimeType(file.getAbsolutePath()));//此处可发送多种文件
-            share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            share.setComponent(comp);
-            context.startActivity(share);
-        }
-
-
-    }
-    // 调用系統方法分享文件
-    public static void shareWxCircle(Context context, File file) {
-        if (null != file && file.exists()) {
-            Intent share = new Intent(Intent.ACTION_SEND);
-            Uri uri = null;
-            // 判断版本大于等于7.0
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                // "项目包名.fileprovider"即是在清单文件中配置的authorities
-                uri = FileProvider.getUriForFile(context, "com.zjzy.morebit.provider", file);
-                // 给目标应用一个临时授权
-                share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            } else {
-                uri = Uri.fromFile(file);
-            }
-            ComponentName comp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.tools.ShareToTimeLineUI");
-            share.putExtra(Intent.EXTRA_STREAM, uri);
-            share.setType(getMimeType(file.getAbsolutePath()));//此处可发送多种文件
+           share.setType(getMimeType(file.getAbsolutePath()));//此处可发送多种文件
             share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             share.setComponent(comp);

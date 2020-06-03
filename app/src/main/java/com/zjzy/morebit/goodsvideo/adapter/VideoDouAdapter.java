@@ -3,6 +3,8 @@ package com.zjzy.morebit.goodsvideo.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -127,6 +129,18 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                 mPlayer.setLooping(true);
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.videoView.isPlaying()) {
+                    holder.videoView.pause();
+                    holder.img_stop.setVisibility(View.VISIBLE);
+                } else {
+                    holder.videoView.start();
+                    holder.img_stop.setVisibility(View.GONE);
+                }
+            }
+        });
         LoadImgUtils.loadingCornerBitmap(context, holder.iv_head, mGoodsInfo.getItemPic());
         holder.tv_title.setText(mGoodsInfo.getItemTitle());
         holder.tv_price.setText(mGoodsInfo.getCouponMoney() + "元劵");
@@ -222,7 +236,12 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                             openWechat();
                             break;
                         case R.id.qqFriend: //分享到QQ
-                            ShareUtil.shareQqFile(context,new File(path));
+                            if (isQQClientAvailable(context)){
+                                ShareUtil.shareQqFile(context,new File(path));
+                            }else{
+                                ToastUtils.showLong("请先安装QQ客户端");
+                            }
+
                             break;
                         case R.id.qqRoom: //分享到QQ空间
                             openQQ();
@@ -458,5 +477,26 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                 }
             };
         }
+
+
+    /**
+     * 判断qq是否可用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isQQClientAvailable(Context context) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mobileqq")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }
