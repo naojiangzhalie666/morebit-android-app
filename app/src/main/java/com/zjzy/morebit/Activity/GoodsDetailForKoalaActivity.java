@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -775,9 +776,19 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 break;
             case R.id.btn_sweepg: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
-                    if (mGoodsInfo.getPurchaseLink() != null) {
-                        ShowWebActivity.start(this, mGoodsInfo.getPurchaseLink(), "");
+                  //  mGoodsInfo.getPurchaseLink().replace("https","")
+                    Log.e("uuu",mGoodsInfo.getPurchaseLink());
+                    String replace = mGoodsInfo.getPurchaseLink().replace("https", "kaola");
+                    if (isHasInstalledKaola()){
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("kaola://cps.kaola.com/cps/zhuankeLogin?unionId=zhuanke_701333583&tc1=245995&showWapBanner=0&targetUrl=https://m-goods.kaola.com/product/1805054.html"));
+                        startActivity(intent);
+                    }else{
+                        ShowWebActivity.start(this,/* mGoodsInfo.getPurchaseLink()*/"https://goods.kaola.com/product/5222113.html?spm=a2v0d.13659821.0.0.139a4f74IOfRkN&kpm=MTAwMg%3D%3D.MjAyMTM%3D.MjM0NjcyOQ%3D%3D.Mg%3D%3D%40%40Xw%3D%3D&_h5da=true", "");
                     }
+
+//                    if (mGoodsInfo.getPurchaseLink() != null) {
+//                        ShowWebActivity.start(this,/* mGoodsInfo.getPurchaseLink()*/"https://goods.kaola.com/product/5222113.html?spm=a2v0d.13659821.0.0.139a4f74IOfRkN&kpm=MTAwMg%3D%3D.MjAyMTM%3D.MjM0NjcyOQ%3D%3D.Mg%3D%3D%40%40Xw%3D%3D&_h5da=true", "");
+//                    }
 
 
                 }
@@ -875,5 +886,12 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         return true;
     }
 
-
+    /**
+     * 判断是否安装考拉
+     *
+     * @return
+     */
+    private boolean isHasInstalledKaola() {
+        return AppUtil.checkHasInstalledApp(this, "com.kaola");
+    }
 }

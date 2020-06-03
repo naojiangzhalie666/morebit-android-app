@@ -221,7 +221,17 @@ public class KoalaWebActivity extends BaseActivity {
                                                directBuyTv.setOnClickListener(new View.OnClickListener() {
                                                    @Override
                                                    public void onClick(View v) {
-                                                       view.loadUrl(newurl);
+                                                       if (newurl.contains("https://m-goods.kaola.com/product/")){
+                                                           String replace = newurl.replace("https://m-goods.kaola.com", "kaola://goods.kaola.com");
+                                                           if (isHasInstalledKaola()){
+                                                               Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(replace));
+                                                               startActivity(intent);
+                                                           }else{
+                                                               view.loadUrl(newurl);
+                                                           }
+
+
+                                                       }
                                                        rl_bottom_view.setVisibility(View.GONE);
 
                                                    }
@@ -335,5 +345,14 @@ public class KoalaWebActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
 
+    }
+
+    /**
+     * 判断是否安装考拉
+     *
+     * @return
+     */
+    private boolean isHasInstalledKaola() {
+        return AppUtil.checkHasInstalledApp(this, "com.kaola");
     }
 }
