@@ -143,6 +143,7 @@ public class KoalaWebActivity extends BaseActivity {
                                 public void run() {
                                     if (web.canGoBack()) {
                                         web.goBack();//返回上个页面
+                                        rl_bottom_view.setVisibility(View.GONE);
                                         return;
                                     } else {
                                         finish();
@@ -325,6 +326,7 @@ public class KoalaWebActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && web.canGoBack()) {
             web.goBack();//返回上个页面
+            rl_bottom_view.setVisibility(View.GONE);
             return true;
         }
         return super.onKeyDown(keyCode, event);

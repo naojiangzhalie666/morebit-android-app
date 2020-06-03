@@ -1433,6 +1433,7 @@ public static Bitmap returnBitMap(final String url){
 
     }
 
+
     /**
      * 将图片存到本地
      */

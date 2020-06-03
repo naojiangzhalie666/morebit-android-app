@@ -715,7 +715,7 @@ public class LoadImgUtils {
         if (picture.startsWith("http")) {
             if (picture.endsWith("jpg") ||
                     picture.endsWith("png")||
-                    picture.endsWith("jpeg")||picture.contains("?x-oss-process")) {
+                    picture.endsWith("jpeg")||picture.contains("?x-oss-process")||picture.startsWith("http://kaola-pop.oss.kaolacdn.com")) {
                 return true;
             } else {
                 return false;

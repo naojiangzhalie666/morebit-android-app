@@ -535,13 +535,22 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 checkbox.setSelected(item.isSelect());
                 if (item.getShopType()==2) {
                     good_mall_tag.setImageResource(R.drawable.tianmao);
+                    ll_shop_name.setVisibility(View.VISIBLE);
+                    sales.setVisibility(View.VISIBLE);
                 } else if (item.getShopType() == 1) {
                     good_mall_tag.setImageResource(R.drawable.taobao);
+                    ll_shop_name.setVisibility(View.VISIBLE);
+                    sales.setVisibility(View.VISIBLE);
                     //拼多多
                 }else if (item.getShopType() == 3){
                     good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                    ll_shop_name.setVisibility(View.VISIBLE);
+                    sales.setVisibility(View.VISIBLE);
                 }else if (item.getShopType()==4){//京东
                     good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                    ll_shop_name.setVisibility(View.VISIBLE);
+                    sales.setVisibility(View.VISIBLE);
+
                 }else if (item.getShopType()==5){//考拉
                     good_mall_tag.setImageResource(R.mipmap.kaola);
                     ll_shop_name.setVisibility(View.INVISIBLE);
