@@ -51,6 +51,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -188,7 +189,19 @@ public class KoalaWebActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                SensorsDataUtil.getInstance().injectJsSdk(view);
+                if (url.contains("https://m-goods.kaola.com/product/") ) {
+                    rl_bottom_view.setVisibility(View.VISIBLE);
+                    buyRl.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rl_bottom_view.setVisibility(View.GONE);
+                        }
+                    });
+
+                } else {
+                    rl_bottom_view.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -200,7 +213,7 @@ public class KoalaWebActivity extends BaseActivity {
                             String shopid = "";
                             String substring = newurl.substring(0, newurl.indexOf(".html"));
                             shopid = substring.replace("https://m-goods.kaola.com/product/", "");
-
+                            Log.e("uuuu",newurl+"列表");
                             final String finalShopid = shopid;
                             getBaseResponseObservableForKaoLa(KoalaWebActivity.this,shopid, UserLocalData.getUser(KoalaWebActivity.this).getId())
                                     .doFinally(new Action() {
@@ -215,14 +228,6 @@ public class KoalaWebActivity extends BaseActivity {
                                                goodsInfo(finalShopid);//分佣商品跳转考拉详情
                                            }else{
                                                view.loadUrl(newurl); //无分佣商品
-                                               rl_bottom_view.setVisibility(View.VISIBLE);
-                                               buyRl.setOnClickListener(new View.OnClickListener() {
-                                                   @Override
-                                                   public void onClick(View v) {
-                                                       view.loadUrl(newurl); //无分佣商品
-                                                       rl_bottom_view.setVisibility(View.GONE);
-                                                   }
-                                               });
 
                                            }
                                         }
