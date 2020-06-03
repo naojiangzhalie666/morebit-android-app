@@ -74,7 +74,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
             holder.iv_head.setTag(null);//需要清空tag，否则报错
             LoadImgUtils.loadingCornerTop(context, holder.iv_head, list.get(position).getItemPic(), 5);
         }
-
+        holder.tv_num.setText(MathUtils.getSales(videoBean.getDyLikeCount()));
 
         holder.commission.setText(list.get(position).getCouponMoney() + "元劵");
         holder.tv_price.setText("" + list.get(position).getItemPrice());
@@ -110,7 +110,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_head,img;
-        private TextView tv_title, commission, tv_price, tv_coupul;
+        private TextView tv_title, commission, tv_price, tv_coupul,tv_num;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -120,6 +120,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
             tv_price = itemView.findViewById(R.id.tv_price);//价格
             tv_coupul = itemView.findViewById(R.id.tv_coupul);//预估收益
             img=itemView.findViewById(R.id.img);
+            tv_num=itemView.findViewById(R.id.tv_num);
 
         }
     }
