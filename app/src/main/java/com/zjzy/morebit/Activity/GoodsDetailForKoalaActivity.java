@@ -526,11 +526,11 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         UserInfo user = UserLocalData.getUser();
         boolean isLogin = LoginUtil.checkIsLogin(this, false);
         boolean invalidMoney = MathUtils.checkoutInvalidMoney(couponPrice);// 是否有券
-        if (!isLogin && !invalidMoney) {//（1）未登录，商品没券：立即购买
+        if (!isLogin /*&& !invalidMoney*/) {//（1）未登录，商品没券：立即购买
             tv_buy.setText(getString(R.string.immediately_buy));
-        } else if (isLogin && !invalidMoney && C.UserType.member.equals(user.getPartner())) {//（6）已登录，普通会员，商品没券：立即购买
+        }/* else if (isLogin && !invalidMoney && C.UserType.member.equals(user.getPartner())) {//（6）已登录，普通会员，商品没券：立即购买
             tv_buy.setText(getString(R.string.immediately_buy));
-        } else {
+        }*/ else {
             double allDiscountsMoney = MathUtils.allDiscountsMoney(user.getCalculationRate(), commission, couponPrice);
             String discountsMoneyStr = MathUtils.formatTo2Decimals(allDiscountsMoney + "");
             String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(user.getCalculationRate(), subsidiesPrice);
