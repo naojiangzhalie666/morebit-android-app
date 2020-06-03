@@ -1492,7 +1492,8 @@ public static Bitmap returnBitMap(final String url){
                     out.close();
                 }
                 if (isUpdataImgToTK) {
-                    updataImgToTK(context, f, picName + ".jpg");
+                  //  updataImgToTK(context, f, picName + ".jpg");
+                    MediaStore.Images.Media.insertImage(context.getContentResolver(), f.getAbsolutePath(), picName + ".jpg", null);
                 }
 //                if(null != bm && !bm.isRecycled()){
 //                    bm.recycle();
