@@ -778,7 +778,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 if (LoginUtil.checkIsLogin(this)) {
                   //  mGoodsInfo.getPurchaseLink().replace("https","")
                     Log.e("uuu",mGoodsInfo.getPurchaseLink());
-                    String replace = mGoodsInfo.getGoodsDetail().replace("https", "kaola");
+                    String replace = mGoodsInfo.getGoodsDetail().replace("https://", "kaola://");
+                    Log.e("uuu",mGoodsInfo.getGoodsDetail());
                     if (isHasInstalledKaola()){
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(replace));
                         startActivity(intent);
