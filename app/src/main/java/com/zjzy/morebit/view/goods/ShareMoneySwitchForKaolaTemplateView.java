@@ -70,9 +70,10 @@ public class ShareMoneySwitchForKaolaTemplateView extends LinearLayout {
                     @Override
                     public void onClick(View v) {
                         boolean isSelector = (boolean) imageView.getTag();
-                        if (finalI == 0 ){
-                            App.getACache().put(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL, "1");
-                        }else if (finalI == 1){
+//                        if (finalI == 0 ){
+//                            App.getACache().put(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL, "1");
+//                        }else
+                            if (finalI == 1){
                             imageView.setSelected(!isSelector);
                             imageView.setTag(!isSelector);
                             App.getACache().put(C.sp.SHARE_MOENY_IS_INVITECODE, (boolean) imageView.getTag() ? "1" : "0");

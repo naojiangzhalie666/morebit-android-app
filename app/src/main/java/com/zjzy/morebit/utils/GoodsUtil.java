@@ -216,7 +216,7 @@ public class GoodsUtil {
         requestBean.setItemTitle(goodsInfo.getGoodsTitle());
         requestBean.setPrice(goodsInfo.getMarketPrice());
         requestBean.setVoucherPrice(goodsInfo.getCurrentPrice());
-        requestBean.setIsDownLoadUrl(isDownloadUrl);
+        requestBean.setIsDownLoadUrl(1);
         requestBean.setIsInviteCode(isInvitecode);
         requestBean.setClickURL(goodsInfo.getPurchaseLink());
 
