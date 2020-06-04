@@ -126,7 +126,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
         if (null != mData) {
             setGoodsAdImg(mData);
             if (!TextUtils.isEmpty(mData.getItemPicture())) {
-                LoadImgUtils.setImg(mContext, imageView, mData.getItemPicture());
+                LoadImgUtils.loadingCornerBitmap(mContext, imageView, mData.getItemPicture());
             }
             if (!TextUtils.isEmpty(mData.getItemTitle())) {
                 title.setVisibility(View.VISIBLE);
@@ -156,7 +156,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             }
 
             if (!StringsUtils.isEmpty(mData.getItemVoucherPrice())) {
-                discount_price.setText(" ¥" + MathUtils.getnum(mData.getItemVoucherPrice()));
+                discount_price.setText("" + MathUtils.getnum(mData.getItemVoucherPrice()));
             }
 
 

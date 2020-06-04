@@ -8,7 +8,7 @@
 
 <RelativeLayout
     android:layout_width="260dp"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="6dp"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_editoneline_dialog_whilebg_10dp"
     android:orientation="vertical"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/color_333333"
-                android:textSize="13sp"
+                android:textSize="12dp"
                 android:maxLines="2"
                 android:ellipsize="end"/>
             <TextView
@@ -91,19 +91,28 @@
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp">
                    <TextView
+                       android:layout_width="8dp"
+                       android:layout_height="17dp"
+                       android:text="¥ "
+                       android:layout_marginRight="3dp"
+                       android:textColor="@color/color_F05557"
+                       android:textSize="12sp"
+                       android:textStyle="bold"
+                       />
+                   <TextView
                        android:id="@+id/discount_price"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text=""
-                       android:layout_marginRight="3dp"
-                       android:textColor="@color/color_FF1456"
-                       android:textSize="17sp"/>
+                       tools:text="29.9"
+                       android:textStyle="bold"
+                       android:textColor="@color/color_F05557"
+                       android:textSize="18dp"/>
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text="抢购"
-                       android:textColor="@color/color_FF1456"
-                       android:textSize="@dimen/sp_11"/>
+                       android:text="  抢购"
+                       android:textColor="@color/color_F05557"
+                       android:textSize="12dp"/>
                </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
