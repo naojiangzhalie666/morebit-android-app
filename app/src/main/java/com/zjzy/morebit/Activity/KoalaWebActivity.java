@@ -77,7 +77,7 @@ public class KoalaWebActivity extends BaseActivity {
     private Bundle bundle;
     private WebView web;
     private LinearLayout rl_bottom_view;
-        private TextView directBuyTv;
+        private TextView directBuyTv,tv_no;
 
 
     public static void start(Activity activity, String url, String title) {
@@ -118,7 +118,13 @@ public class KoalaWebActivity extends BaseActivity {
         mIvRefresh= (ImageView) findViewById(R.id.iv_refresh);
         mIvOff= (ImageView) findViewById(R.id.iv_off);
         web= (WebView) findViewById(R.id.web);
+        tv_no= (TextView) findViewById(R.id.tv_no);
+        tv_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
         WebSettings webSettings = web.getSettings();
 
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //设置缓存
