@@ -287,7 +287,6 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.makeGoodsPoster: //更换海报
                 goodsInfo.setCouponUrl(promotionUrl);
-                Log.e("private",promotionUrl+"京东");
                 ShareMoneyGetImgActivity.start(this, mPosterPicPath, mPosterPos, goodsInfo);
                 break;
             default:

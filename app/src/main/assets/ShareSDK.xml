@@ -48,30 +48,6 @@
             Plurk          http://www.plurk.com/API
     -->
 
-<<<<<<< HEAD
-    <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false, -->
-
-    <SinaWeibo
-        Id="1"
-        SortId="1"
-        AppKey="3053796898"
-        AppSecret="3713389fd89fde4635742cd79ebd4da2"
-        RedirectUrl="http://sj.qq.com/myapp/detail.htm?apkName=com.zjzy.morebit"
-        ShareByAppClient="true"
-        Enable="true" />
-
-    <TencentWeibo
-        Id="2" 
-        SortId="2"
-        AppKey="3053796898"
-        AppSecret="3713389fd89fde4635742cd79ebd4da2"
-        RedirectUri="http://sharesdk.cn"
-        Enable="true" />
-    
-    <QZone
-        Id="3"
-        SortId="3"
-=======
 	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false, -->
 
 	<SinaWeibo
@@ -94,7 +70,6 @@
 	<QZone
 		Id="3"
 		SortId="3"
->>>>>>> master
 		AppId="1110082083"
 		AppKey="u8nqsrMdKdEhsD5Z"
 		ShareByAppClient="true"
@@ -112,38 +87,6 @@
         默认值为false。此外，微信收藏不支持此字段。wx4868b35061f87885
     -->
 	<!--要分享微信小应用程序时用userName,path-->
-<<<<<<< HEAD
-    <Wechat
-        Id="4"
-        SortId="4"
-        AppId="wx0d185820ca66c15b"
-        AppSecret="fb1629807d0a05c4486859e44a8f3a57"
-        Enable="true" />
-    
-    <WechatMoments
-        Id="5"
-        SortId="5"
-        AppId="wx0d185820ca66c15b"
-        AppSecret="fb1629807d0a05c4486859e44a8f3a57"
-        Enable="true" />
-        
-	<WechatFavorite
-        Id="6"
-        SortId="6"
-        AppId="wx0d185820ca66c15b"
-        AppSecret="fb1629807d0a05c4486859e44a8f3a57"
-        Enable="true" />
-    
-	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
-
-	<QQ
-        Id="7"
-        SortId="7"
-		AppId="1110082083"
-		AppKey="u8nqsrMdKdEhsD5Z"
-        ShareByAppClient="true"
-        Enable="true" />
-=======
 	<Wechat
 		Id="4"
 		SortId="4"
@@ -174,7 +117,6 @@
 		AppKey="u8nqsrMdKdEhsD5Z"
 		ShareByAppClient="true"
 		Enable="true" />
->>>>>>> master
 	<!--BypassApproval="true"-->
 	<Facebook
 		Id="8"
