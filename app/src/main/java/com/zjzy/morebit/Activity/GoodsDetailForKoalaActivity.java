@@ -711,8 +711,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         if (!StringsUtils.isEmpty(String.valueOf(data.getGoodsId()))) {
             mGoodsInfo.setItemSourceId(String.valueOf(data.getGoodsId()));
         }
-        if (!StringsUtils.isEmpty(imgs.get(0))) {
-            mGoodsInfo.setPicture(imgs.get(0));
+        if (!StringsUtils.isEmpty(mGoodsInfo.getImageList().get(0))) {
+            mGoodsInfo.setPicture(mGoodsInfo.getImageList().get(0));
         }
         if (isSeavDao && !isRefresh) {
             SensorsDataUtil.getInstance().browseProductTrack("", String.valueOf(data.getGoodsId()));

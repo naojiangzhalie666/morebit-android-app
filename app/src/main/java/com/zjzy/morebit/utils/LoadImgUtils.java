@@ -92,7 +92,6 @@ public class LoadImgUtils {
         try {
             final RequestOptions options = new RequestOptions()
                     .dontAnimate()
-                    .centerCrop()
                     .placeholder(placeholderRes)
                     .error(placeholderRes);
 
@@ -104,7 +103,8 @@ public class LoadImgUtils {
                     .asBitmap()
                     .load(url)
                     .apply(options2)
-                    .into(new SimpleTarget<Bitmap>() {
+                    .into(new TransformationUtils(iv));
+                    /*.into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             int imageHeight = resource.getHeight();
@@ -126,7 +126,7 @@ public class LoadImgUtils {
                                         .into(iv);
                             }
                             }
-                    });
+                    });*/
         } catch (Exception e) {
             e.printStackTrace();
         } catch (OutOfMemoryError outOfMemoryError) {
