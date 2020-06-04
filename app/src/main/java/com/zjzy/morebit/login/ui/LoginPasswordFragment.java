@@ -2,22 +2,29 @@ package com.zjzy.morebit.login.ui;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.uuzuche.lib_zxing.DisplayUtil;
 import com.zjzy.morebit.Activity.ModifyPasswordActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.R;
@@ -71,6 +78,7 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
     private String areaCode = "86";
     private RelativeLayout rl;//返回键
     private TextView next_login;
+    private NestedScrollView netscroll;
     @Override
     protected int getViewLayout() {
         return R.layout.activity_login_password1;
@@ -106,6 +114,31 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
         mAreaCode = (AreaCodeBean) getArguments().getSerializable(C.Extras.COUNTRY);
         mEdtPhoneText = mPhone.trim();
         rl=view.findViewById(R.id.rl);
+
+
+
+
+        rl_root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
+
+            //当键盘弹出隐藏的时候会 调用此方法。
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                //获取当前界面可视部分
+              getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+                //获取屏幕的高度
+                int screenHeight =  getActivity().getWindow().getDecorView().getRootView().getHeight();
+                //此处就是用来获取键盘的高度的， 在键盘没有弹出的时候 此高度为0 键盘弹出的时候为一个正数
+                int heightDifference = screenHeight - r.bottom;
+                if (heightDifference>0){
+                    rl_root.scrollTo(0,100);
+                }else{
+                    rl_root.scrollTo(0,0);
+                }
+                Log.d("Keyboard Size", "Size: " + heightDifference);
+            }
+
+        });
         next_login=view.findViewById(R.id.next_login);
 
         if (!TextUtils.isEmpty(mPhone)) {
@@ -168,6 +201,7 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
                 isMethodManager(rl_root);
             }
         });
+
     }
 
 
@@ -324,6 +358,7 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
 //        });
         mDialog.show();
     }
+
 
 
 

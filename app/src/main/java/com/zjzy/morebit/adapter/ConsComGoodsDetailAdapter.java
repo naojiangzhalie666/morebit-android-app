@@ -275,7 +275,13 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         if (TextUtils.isEmpty(info.getItemImg())) {
             viewHolder.pic.setImageResource(R.drawable.icon_default);
         } else {
-            LoadImgUtils.setImg(mContext, viewHolder.pic, info.getItemImg());
+            if (info.getItemImg().startsWith("//")){
+                String replace = info.getItemImg().replace("//", "http://");
+                LoadImgUtils.setImg(mContext, viewHolder.pic, replace);
+            }else{
+                LoadImgUtils.setImg(mContext, viewHolder.pic, info.getItemImg());
+            }
+
         }
 
 
