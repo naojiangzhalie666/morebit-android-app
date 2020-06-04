@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.LeadingMarginSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -131,8 +133,8 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             }
             if (!TextUtils.isEmpty(mData.getItemTitle())) {
                 title.setVisibility(View.VISIBLE);
-
-                StringsUtils.retractGuessTitle(good_mall_tag,title,mData.getItemTitle());
+                retractTitle(title,mData.getItemTitle());
+              //  StringsUtils.retractGuessTitle(good_mall_tag,title,mData.getItemTitle());
             } else {
                 title.setVisibility(View.GONE);
             }
@@ -368,6 +370,19 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             String allDiscountsMoneyStr = MathUtils.formatTo2Decimals(allDiscountsMoney + "");
             buyTv.setText("省 " + allDiscountsMoneyStr + "元");
         }
+    }
+
+
+    private  void retractTitle(  final TextView tv, final String title){
+        if(TextUtils.isEmpty(title)){
+            return;
+        }
+
+        SpannableString spannableString = new SpannableString(title);
+        LeadingMarginSpan.Standard what = new LeadingMarginSpan.Standard(40  , 0);
+        spannableString.setSpan(what, 0, title.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        tv.setText(spannableString);
+
     }
 
 }
