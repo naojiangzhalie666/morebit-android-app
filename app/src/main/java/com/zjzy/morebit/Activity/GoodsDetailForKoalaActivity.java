@@ -776,16 +776,16 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 break;
             case R.id.btn_sweepg: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
-                  //  mGoodsInfo.getPurchaseLink().replace("https","")
-                    Log.e("uuu",mGoodsInfo.getPurchaseLink());
-                    String replace = mGoodsInfo.getGoodsDetail().replace("https://", "kaola://");
-                    Log.e("uuu",mGoodsInfo.getGoodsDetail());
-                    if (isHasInstalledKaola()){
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(replace));
-                        startActivity(intent);
-                    }else{
-                        ShowWebActivity.start(this,mGoodsInfo.getGoodsDetail(), "");
+                    if (mGoodsInfo.getGoodsDetail()!=null){
+                        String burl = mGoodsInfo.getGoodsDetail().replace("https://", "kaola://");
+                        if (isHasInstalledKaola()){
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(burl));
+                            startActivity(intent);
+                        }else{
+                            ShowWebActivity.start(this,mGoodsInfo.getGoodsDetail(), "");
+                        }
                     }
+
                 }
 
                 break;
