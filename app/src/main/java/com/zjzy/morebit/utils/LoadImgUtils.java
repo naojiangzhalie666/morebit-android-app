@@ -14,10 +14,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -83,18 +85,48 @@ public class LoadImgUtils {
 
     }
 
-    public static void setImg(Context context, ImageView iv, String url, int placeholderRes) {
+    public static void setImg(final Context context, final ImageView iv, final String url, int placeholderRes) {
         if (context == null || iv == null) {
             return;
         }
         try {
-            RequestOptions options = new RequestOptions()
+            final RequestOptions options = new RequestOptions()
+                    .dontAnimate()
+                    .centerCrop()
+                    .placeholder(placeholderRes)
+                    .error(placeholderRes);
+
+            final RequestOptions options2 = new RequestOptions()
+                    .dontAnimate()
                     .placeholder(placeholderRes)
                     .error(placeholderRes);
             Glide.with(context)
+                    .asBitmap()
                     .load(url)
-                    .apply(options)
-                    .into(iv);
+                    .apply(options2)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            int imageHeight = resource.getHeight();
+                            if(imageHeight > 4096) {
+                                imageHeight = 4096;
+                                ViewGroup.LayoutParams layoutParams = iv.getLayoutParams();
+                                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                                layoutParams.height = imageHeight;
+                                iv.setLayoutParams(layoutParams);
+                                Glide.with(context)
+                                        .load(url)
+                                        .apply(options)
+                                        .into(iv);
+
+                            }else{
+                                Glide.with(context)
+                                        .load(url)
+                                        .apply(options2)
+                                        .into(iv);
+                            }
+                            }
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         } catch (OutOfMemoryError outOfMemoryError) {
@@ -715,7 +747,7 @@ public class LoadImgUtils {
         if (picture.startsWith("http")) {
             if (picture.endsWith("jpg") ||
                     picture.endsWith("png")||
-                    picture.endsWith("jpeg")||picture.contains("?x-oss-process")||picture.startsWith("http://kaola-pop.oss.kaolacdn.com")) {
+                    picture.endsWith("jpeg")||picture.contains("?x-oss-process")||picture.startsWith("http://kaola-pop.oss.kaolacdn.com")||picture.contains("haitao")) {
                 return true;
             } else {
                 return false;
