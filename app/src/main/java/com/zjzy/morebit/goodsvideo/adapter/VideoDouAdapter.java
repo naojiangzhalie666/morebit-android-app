@@ -236,11 +236,12 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                             openWechat();
                             break;
                         case R.id.qqFriend: //分享到QQ
-                            if (isQQClientAvailable(context)){
-                                ShareUtil.shareQqFile(context,new File(path));
-                            }else{
-                                ToastUtils.showLong("请先安装QQ客户端");
-                            }
+//                            if (isQQClientAvailable(context)){
+//                                ShareUtil.shareQqFile(context,new File(path));
+//                            }else{
+//                                ToastUtils.showLong("请先安装QQ客户端");
+//                            }
+                            openQQ();
 
                             break;
                         case R.id.qqRoom: //分享到QQ空间
@@ -293,7 +294,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
 
     private void openQQ() {
         if (!AppUtil.isQQClientAvailable(context)) {
-            ViewShowUtils.showShortToast(context, "请先安装微信客户端");
+            ViewShowUtils.showShortToast(context, "请先安装QQ客户端");
             return;
         }
 //        ComponentName componet = new ComponentName("com.tencent.mobileqq");
