@@ -36,8 +36,8 @@
             >
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:src="@drawable/icon_default"
             android:scaleType="fitXY"/>
         </android.support.v7.widget.CardView>
@@ -47,15 +47,29 @@
             android:orientation="vertical"
             android:layout_toRightOf="@id/cardview"
             android:layout_marginLeft="8dp">
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/color_333333"
-                android:textSize="12dp"
-                android:maxLines="2"
-                android:ellipsize="end"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/good_mall_tag"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/guess_tao_icon"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text=" 维达抽纸箱批大 包家用实惠装纸巾…"
+                    android:textStyle="bold"
+                    android:textColor="@color/color_333333"
+                    android:textSize="12dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
+
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/coupon"
                 android:layout_width="wrap_content"

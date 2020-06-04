@@ -51,7 +51,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
     private OnComissionListener listener;
     private ShopGoodInfo mData;
-    private ImageView imageView;
+    private ImageView imageView,good_mall_tag;
     private TextView title;
     private TextView coupon;
     private TextView commission;
@@ -121,6 +121,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
         commission = findViewById(R.id.commission);
         discount_price = findViewById(R.id.discount_price);
         buyTv = findViewById(R.id.buyTv);
+        good_mall_tag=findViewById(R.id.good_mall_tag);
         commissionTv.setText("分享");
         buyTv.setText("购买");
         if (null != mData) {
@@ -130,7 +131,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             }
             if (!TextUtils.isEmpty(mData.getItemTitle())) {
                 title.setVisibility(View.VISIBLE);
-                title.setText(mData.getItemTitle());
+                StringsUtils.retractTitle(good_mall_tag,title,mData.getItemTitle());
             } else {
                 title.setVisibility(View.GONE);
             }
