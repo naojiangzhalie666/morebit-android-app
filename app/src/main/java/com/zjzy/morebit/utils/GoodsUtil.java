@@ -51,6 +51,7 @@ import com.zjzy.morebit.pojo.goods.CheckCouponStatusBean;
 import com.zjzy.morebit.pojo.goods.CouponUrlBean;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
+import com.zjzy.morebit.pojo.goods.ShareUrlMoreBaen;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestCheckGoodsBean;
 import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
@@ -186,6 +187,40 @@ public class GoodsUtil {
         requestBean.setClickURL(goodsInfo.getClickURL());
 
         return RxHttp.getInstance().getGoodsService().getGenerateForJD(
+                requestBean
+        )
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(activity.<BaseResponse<String>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
+
+
+    /**
+     * 获取koala的推广内容
+     *
+     * @param activity
+     * @param goodsInfo
+     * @return
+     */
+    public static Observable<BaseResponse<String>> getGenerateForKaola(RxAppCompatActivity activity,
+                                                                    ShopGoodInfo goodsInfo) {
+        int isInvitecode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
+        int isDownloadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
+
+        RequestPddShareContent requestBean = new RequestPddShareContent();
+        requestBean.setItemTitle(goodsInfo.getGoodsTitle());
+        requestBean.setPrice(goodsInfo.getMarketPrice());
+        requestBean.setVoucherPrice(goodsInfo.getCurrentPrice());
+        requestBean.setIsDownLoadUrl(1);
+        requestBean.setIsInviteCode(isInvitecode);
+        requestBean.setClickURL(goodsInfo.getPurchaseLink());
+
+        return RxHttp.getInstance().getGoodsService().getGenerateForKaola(
                 requestBean
         )
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
@@ -534,16 +569,6 @@ public class GoodsUtil {
         }
         juanhou_prise.setText("¥" + MathUtils.getSalesPrice(MathUtils.getnum(goodsInfo.getVoucherPrice())));
         yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
-        if (goodsInfo.getShopType() == 2) {
-            goodShopTag.setText("天猫");
-        } else if (goodsInfo.getShopType() == 1) {
-            goodShopTag.setText("淘宝");
-        } else if (goodsInfo.getShopType() == 3) {
-            goodShopTag.setText("拼多多");
-        } else {
-            goodShopTag.setText("京东");
-        }
-
         if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {
             StringsUtils.retractTitle(title, title, goodsInfo.getTitle());
         }
@@ -551,6 +576,20 @@ public class GoodsUtil {
         if (!"0".equals(goodsInfo.getSaleMonth())) {
             tv_sales.setText("销量:  " + MathUtils.getSales(goodsInfo.getSaleMonth()));
         }
+        if (goodsInfo.getShopType() == 2) {
+            goodShopTag.setText("天猫");
+        } else if (goodsInfo.getShopType() == 1) {
+            goodShopTag.setText("淘宝");
+        } else if (goodsInfo.getShopType() == 3) {
+            goodShopTag.setText("拼多多");
+        } else if(goodsInfo.getShopType() == 4){
+            goodShopTag.setText("京东");
+        } else if(goodsInfo.getShopType() == 5){
+            goodShopTag.setText("考拉");
+            tv_sales.setVisibility(View.GONE);
+        }
+
+        Log.e("private","二维码"+ewmBitmap);
         if (ewmBitmap != null)
             qrcode_img.setImageBitmap(ewmBitmap);
         return view;
@@ -793,6 +832,120 @@ public static Bitmap returnBitMap(final String url){
                                         if (goodsBitmap != null) {
 
                                             String s = saveGoodsImg(activity, goodsInfo, goodsBitmap, data.getExtension() == null ? "" : data.getExtension(), shareUrl);
+                                            map.put(goodsInfo.getItemSourceId(), s);
+
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    LogUtils.Log("GoodsUtil", "LoadImgToBitmap  onError + " + e.getMessage());
+                                }
+                                return map;
+                            }
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doFinally(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                LogUtils.Log("GoodsUtil", "dismissDialog  3");
+                                LoadingView.dismissDialog();
+                            }
+                        })
+                        .subscribe(new CallBackObserver<Map<String, String>>() {
+                            @Override
+                            public void onNext(Map<String, String> map) {
+                                LogUtils.Log("GoodsUtil", "map  onNext " + map.size());
+                                ArrayList<String> urlList = new ArrayList();
+                                for (ShopGoodInfo info : list) {
+                                    String taobao = info.getItemSourceId();
+                                    if (!TextUtils.isEmpty(taobao)) {
+                                        String s = map.get(taobao);
+                                        urlList.add(s);
+                                    }
+
+                                }
+                                if (urlList.size() != 0) {
+                                    toShareActionPosterList(activity, urlList, action);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                e.printStackTrace();
+                                ViewShowUtils.showShortToast(activity, "存在商品已下架，无法分享");
+                                LogUtils.Log("GoodsUtil", "map  onNext  onError " + e.getMessage());
+
+                            }
+                        });
+
+
+            }
+
+            @Override
+            public void onError() {
+            }
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+    }
+    // 获取淘口令
+    public static void SharePosterList3(final Activity activity, final List<ShopGoodInfo> osgData, final MyAction.OnResult<String> action) {
+        RequestPermissionUtlis.requestOne(activity, new MyAction.OnResult<String>() {
+            @Override
+            public void invoke(String arg) {
+                LoadingView.showDialog(activity);
+                if (osgData == null || osgData.size() == 0) {
+                    LogUtils.Log("GoodsUtil", "dismissDialog  1");
+                    LoadingView.dismissDialog();
+                    return;
+                }
+                String ids = "";
+                final List<ShopGoodInfo> list = new ArrayList<>();// 去掉过期商品
+                for (int i = 0; i < osgData.size(); i++) {
+                    ShopGoodInfo shopGoodInfo = osgData.get(i);
+                    if (shopGoodInfo.getIsExpire() == 1) {//过期
+                        continue;
+                    }
+                    if (!TextUtils.isEmpty(shopGoodInfo.getItemSourceId())) { // 添加 ids
+                        list.add(shopGoodInfo);
+                        if (i == osgData.size() - 1) {
+                            ids = ids + shopGoodInfo.getItemSourceId();
+                        } else {
+                            ids = ids + shopGoodInfo.getItemSourceId() + ",";
+                        }
+                    }
+                }
+                if (TextUtils.isEmpty(ids) || list.size() == 0) {
+                    LogUtils.Log("GoodsUtil", "dismissDialog  2");
+                    ViewShowUtils.showShortToast(activity, activity.getResources().getString(R.string.goodsShertError));
+                    LoadingView.dismissDialog();
+                    return;
+                }
+                ShareMore.getShareGoodsUrlMoreObservable((RxAppCompatActivity) activity, osgData, ids)
+
+                        .observeOn(Schedulers.io())
+                        .map(new Function<BaseResponse<List<ShareUrlMoreBaen>>, Map<String, String>>() {
+                            @Override
+                            public Map<String, String> apply(final BaseResponse<List<ShareUrlMoreBaen>> shareUrlListBaen) throws Exception {
+                                if (shareUrlListBaen == null || !C.requestCode.SUCCESS.equals(shareUrlListBaen.getCode())) {
+                                    return null;
+                                }
+                                List<ShareUrlMoreBaen> data = shareUrlListBaen.getData();
+                               // ShareUrlMoreBaen data = (ShareUrlMoreBaen) shareUrlListBaen.getData();
+                                if (data == null || data.get(0).getShareUrl() == null || data.size() == 0) {
+                                    return null;
+                                }
+                                final Map<String, String> map = new HashMap<>();
+                                try {
+                                    for (int i = 0; i < data.size(); i++) {
+                                        if (list.size() - 1 < i) {
+                                            continue;
+                                        }
+                                        final ShopGoodInfo goodsInfo = list.get(i);
+                                        final String shareUrl = data.get(i).getShareUrl();
+                                        Bitmap goodsBitmap = LoadImgUtils.getImgBitmapOnIo(activity, goodsInfo.getPicture());
+                                        if (goodsBitmap != null) {
+
+                                            String s = saveGoodsImg(activity, goodsInfo, goodsBitmap, "", shareUrl);
                                             map.put(goodsInfo.getItemSourceId(), s);
 
                                         }
@@ -1280,6 +1433,7 @@ public static Bitmap returnBitMap(final String url){
 
     }
 
+
     /**
      * 将图片存到本地
      */
@@ -1338,7 +1492,8 @@ public static Bitmap returnBitMap(final String url){
                     out.close();
                 }
                 if (isUpdataImgToTK) {
-                    updataImgToTK(context, f, picName + ".jpg");
+                  //  updataImgToTK(context, f, picName + ".jpg");
+                    MediaStore.Images.Media.insertImage(context.getContentResolver(), f.getAbsolutePath(), picName + ".jpg", null);
                 }
 //                if(null != bm && !bm.isRecycled()){
 //                    bm.recycle();

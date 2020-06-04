@@ -39,6 +39,8 @@ public class OrderTeamActivity extends BaseActivity {
 
     @BindView(R.id.ll_pdd_order)
     LinearLayout llPddOrder;
+    @BindView(R.id.ll_kl_order)
+    LinearLayout llklOrder;
 
     public static void start(Activity activity) {
         //跳转到订单类型列表
@@ -103,6 +105,17 @@ public class OrderTeamActivity extends BaseActivity {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(C.Extras.order_type,C.OrderType.PDD);
+                OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
+                        OrderDetailFragment.class.getName(), bundle);
+            }
+        });
+        //考拉
+        llklOrder.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(C.Extras.order_type,C.OrderType.KAOLA);
                 OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
                         OrderDetailFragment.class.getName(), bundle);
             }

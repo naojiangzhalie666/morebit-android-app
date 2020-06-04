@@ -315,6 +315,7 @@ public class C {
         public static final int HUNGRY = 43;//饿了么
         public static final int MOUTH = 44;//口碑
         public static final int SHOPMALL = 45;//优选商城
+        public static final int KOALA = 46;//考拉海购
 
     }
 
@@ -706,6 +707,7 @@ public class C {
         public static final int YUXUAN = 10;
         public static final int JD = 2;
         public static final int PDD = 4;
+        public static final int KAOLA = 5;
 
 
         public static final  int E_UPLIMIT_SORT_DOWN=0;//降序

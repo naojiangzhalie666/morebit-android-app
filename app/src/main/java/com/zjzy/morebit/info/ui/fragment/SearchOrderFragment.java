@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
@@ -181,7 +182,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
         if (bundle != null) {
             type = bundle.getInt(C.Extras.order_type, 1);
         }
-        if(1 != type && 10 != type && 4!=type){
+        if(1 != type && 10 != type && 4!=type && 5!=type){
             type = 3;
         }
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);
@@ -219,6 +220,8 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
                     ShopGoodInfo mGoodsInfo=new ShopGoodInfo();
                     mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForPdd(SearchOrderFragment.this, mGoodsInfo);
+                }else if (type==5){
+                    GoodsDetailForKoalaActivity.start(getActivity(),mListArray.get(position).getItemId());
                 } else if (type==10){
                     if (mListArray.get(position).isSelf()){//进订单
                         NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),

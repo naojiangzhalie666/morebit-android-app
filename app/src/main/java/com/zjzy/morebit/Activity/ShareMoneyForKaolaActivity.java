@@ -27,7 +27,6 @@ import com.zjzy.morebit.adapter.ShareMoneyAdapter;
 import com.zjzy.morebit.goods.shopping.ui.ShareMoneyGetImgActivity;
 import com.zjzy.morebit.goods.shopping.ui.dialog.ShareFriendsDialog;
 import com.zjzy.morebit.main.model.ConfigModel;
-import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CallBackObserver;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.HotKeywords;
@@ -35,10 +34,7 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.ShareMoenyPosterEvent;
-import com.zjzy.morebit.pojo.goods.EditTemplateInfo;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
-import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
-import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -46,18 +42,15 @@ import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
-import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PageToUtil;
 import com.zjzy.morebit.utils.ShareUtil;
-import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
-import com.zjzy.morebit.utils.share.ShareMore;
 import com.zjzy.morebit.utils.sys.RequestPermissionUtlis;
 import com.zjzy.morebit.view.ConsCommissionRuleDialog;
+import com.zjzy.morebit.view.goods.ShareMoneySwitchForKaolaTemplateView;
 import com.zjzy.morebit.view.goods.ShareMoneySwitchForPddTemplateView;
-import com.zjzy.morebit.view.goods.ShareMoneySwitchTemplateView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -69,7 +62,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.BiFunction;
@@ -77,10 +69,10 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 分享拼多多推广链接
+ * 分享考拉推广链接
  */
 
-public class ShareMoneyForPddActivity extends BaseActivity implements View.OnClickListener {
+public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnClickListener {
 
     public static String goodsDataText = "goodsDataText";
 
@@ -106,7 +98,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
 
     public static void start(Activity context, ShopGoodInfo info, String promotionUrl) {
         if (promotionUrl == null || info == null) return;
-        Intent sharemoney = new Intent(context, ShareMoneyForPddActivity.class);
+        Intent sharemoney = new Intent(context, ShareMoneyForKaolaActivity.class);
         Bundle bundle1 = new Bundle();
         bundle1.putSerializable(C.Extras.GOODSBEAN, info);
         bundle1.putSerializable(C.Extras.PDDPROMOTIONDATA, promotionUrl);
@@ -119,7 +111,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        setContentView(R.layout.activity_pdd_share_money);
+        setContentView(R.layout.activity_kaola_share_money);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             goodsInfo = (ShopGoodInfo) bundle.getSerializable(C.Extras.GOODSBEAN);
@@ -205,7 +197,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
         //代理商显示代理佣金
         incomeMoney = (TextView) findViewById(R.id.incomeMoney);
 
-        UserInfo userInfo = UserLocalData.getUser(ShareMoneyForPddActivity.this);
+        UserInfo userInfo = UserLocalData.getUser(ShareMoneyForKaolaActivity.this);
 //        if (C.UserType.member.equals(userInfo.getPartner())) { //消费者
 //            rule_ly.setVisibility(View.GONE);
 //        } else {
@@ -215,7 +207,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
 //            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
             incomeMoney.setText("您的奖励预计为: " + discountsMoneyStr + "元");
 //        }
-        ShareMoneySwitchForPddTemplateView viewSwitch = (ShareMoneySwitchForPddTemplateView) findViewById(R.id.view_swicht);
+        ShareMoneySwitchForKaolaTemplateView viewSwitch = (ShareMoneySwitchForKaolaTemplateView) findViewById(R.id.view_swicht);
         viewSwitch.setAction(new MyAction.One<Integer>() {
             @Override
             public void invoke(Integer arg) {
@@ -273,8 +265,8 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 startShare(ShareUtil.QQZoneType);
                 break;
             case R.id.sinaWeibo:
-                if (!AppUtil.isWeiboClientAvailable(ShareMoneyForPddActivity.this)) {
-                    ViewShowUtils.showShortToast(ShareMoneyForPddActivity.this, "请先安装微博客户端");
+                if (!AppUtil.isWeiboClientAvailable(ShareMoneyForKaolaActivity.this)) {
+                    ViewShowUtils.showShortToast(ShareMoneyForKaolaActivity.this, "请先安装微博客户端");
                     return;
                 }
                 startShare(ShareUtil.WeiboType);
@@ -287,7 +279,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.makeGoodsPoster: //更换海报
                 goodsInfo.setCouponUrl(promotionUrl);
-                Log.e("private",promotionUrl+"京东");
+                Log.e("private",promotionUrl+"考拉");
                 ShareMoneyGetImgActivity.start(this, mPosterPicPath, mPosterPos, goodsInfo);
                 break;
             default:
@@ -300,12 +292,12 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
             mShareFriendsDialog = new ShareFriendsDialog(this, new ShareFriendsDialog.OnCloseListener() {
                 @Override
                 public void onClick() {
-                    if (!AppUtil.isWeixinAvilible(ShareMoneyForPddActivity.this)) {
-                        ViewShowUtils.showShortToast(ShareMoneyForPddActivity.this, "请先安装微信客户端");
+                    if (!AppUtil.isWeixinAvilible(ShareMoneyForKaolaActivity.this)) {
+                        ViewShowUtils.showShortToast(ShareMoneyForKaolaActivity.this, "请先安装微信客户端");
                         return;
                     }
                     //跳转微信
-                    PageToUtil.goToWeixin(ShareMoneyForPddActivity.this);
+                    PageToUtil.goToWeixin(ShareMoneyForKaolaActivity.this);
 
                 }
             });
@@ -335,7 +327,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                         public void onSuccess(HotKeywords data) {
                             String sysValue = data.getSysValue();
                             if (!TextUtils.isEmpty(sysValue)) {
-                                consCommissionRuleDialog = new ConsCommissionRuleDialog(ShareMoneyForPddActivity.this, R.style.dialog, "规则说明", sysValue, null);
+                                consCommissionRuleDialog = new ConsCommissionRuleDialog(ShareMoneyForKaolaActivity.this, R.style.dialog, "规则说明", sysValue, null);
                                 consCommissionRuleDialog.show();
                             }
                         }
@@ -357,7 +349,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
             return;
         }
         if (ticknum == 0) {
-            Toast.makeText(ShareMoneyForPddActivity.this, "请选择你要分享的图片", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShareMoneyForKaolaActivity.this, "请选择你要分享的图片", Toast.LENGTH_SHORT).show();
             return;
         }
         ArrayList<String> arrayList = new ArrayList<>();
@@ -395,7 +387,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
             AppUtil.coayText(this, et_copy.getText().toString());
             final ArrayList<File> mUrlArrayList = new ArrayList<>();
             if (ticknum == 0) {
-                Toast.makeText(ShareMoneyForPddActivity.this, "请选择你要分享的图片", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShareMoneyForKaolaActivity.this, "请选择你要分享的图片", Toast.LENGTH_SHORT).show();
                 return;
             }
             LoadingView.showDialog(this, "");
@@ -404,7 +396,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 if (imageInfo != null && imageInfo.isChecked) {
                     String fileName = "";
                     fileName = FileUtils.getPictureName(imageInfo.getPicture());
-                    GoodsUtil.saveImg(ShareMoneyForPddActivity.this, imageInfo.getPicture(), fileName,
+                    GoodsUtil.saveImg(ShareMoneyForKaolaActivity.this, imageInfo.getPicture(), fileName,
                             new MyAction.OnResultTwo<File, Integer>() {
                                 @Override
                                 public void invoke(File arg, Integer arg1) {
@@ -413,10 +405,10 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                                     }
 
                                     if (ticknum == mUrlArrayList.size()) {
-                                        ShareMoneyForPddActivity.this.runOnUiThread(new Runnable() {
+                                        ShareMoneyForKaolaActivity.this.runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                GoodsUtil.originalShareImage(ShareMoneyForPddActivity.this, mUrlArrayList, type);
+                                                GoodsUtil.originalShareImage(ShareMoneyForKaolaActivity.this, mUrlArrayList, type);
                                             }
                                         });
                                     }
@@ -431,7 +423,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(ShareMoneyForPddActivity.this, "分享失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShareMoneyForKaolaActivity.this, "分享失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -447,9 +439,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
     public void getTemplate() {
         setResult(RESULT_OK);
         LoadingView.showDialog(this, "请求中...");
-
-        if (goodsInfo.getItemSource().equals("1")){//京东
-            GoodsUtil.getGenerateForJD(this, goodsInfo)
+            GoodsUtil.getGenerateForKaola(this, goodsInfo)
                     .subscribe(new DataObserver<String>() {
                         @Override
                         protected void onSuccess(String data) {
@@ -458,18 +448,6 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
 
                         }
                     });
-        }else{//拼多多
-            GoodsUtil.getGenerateForPDD(this, goodsInfo)
-                    .subscribe(new DataObserver<PddShareContent>() {
-                        @Override
-                        protected void onSuccess(PddShareContent data) {
-                            String template = data.getTemplate();
-                            et_copy.setText(template);
-
-                        }
-                    });
-        }
-
     }
 
 
@@ -478,7 +456,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
      */
     private Observable<Bitmap> getShareEWMBitmap(String promotionUrl) {
 
-        return GoodsUtil.getShareEWMBitmapObservable(ShareMoneyForPddActivity.this, promotionUrl);
+        return GoodsUtil.getShareEWMBitmapObservable(ShareMoneyForKaolaActivity.this, promotionUrl);
     }
 
 
@@ -503,7 +481,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                     index = goodsInfo.getAdImgUrl().size();
                 }
                 String finalDownPath = goodsInfo.getAdImgUrl().get(index).getPicture();
-                Observable<Bitmap> flowable1 = LoadImgUtils.getImgToBitmapObservable(ShareMoneyForPddActivity.this, finalDownPath);
+                Observable<Bitmap> flowable1 = LoadImgUtils.getImgToBitmapObservable(ShareMoneyForKaolaActivity.this, finalDownPath);
                 Observable<Bitmap> flowable2 = getShareEWMBitmap(promotionUrl);
 
                 Observable.zip(flowable1, flowable2, new BiFunction<Bitmap, Bitmap, String>() {
@@ -511,10 +489,10 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                     public String apply(Bitmap bitmap, Bitmap ewmBitmap) throws Exception {
                         MyLog.threadName();
                         if (bitmap == null) {
-                            ViewShowUtils.showShortToast(ShareMoneyForPddActivity.this, "生成失败");
+                            ViewShowUtils.showShortToast(ShareMoneyForKaolaActivity.this, "生成失败");
                             return null;
                         }
-                        return GoodsUtil.saveGoodsImg(ShareMoneyForPddActivity.this, goodsInfo, bitmap, ewmBitmap, mExtension);
+                        return GoodsUtil.saveGoodsImg(ShareMoneyForKaolaActivity.this, goodsInfo, bitmap, ewmBitmap, mExtension);
                     }
                 })
                         .observeOn(AndroidSchedulers.mainThread())
@@ -530,7 +508,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onError() {
-                AppUtil.goSetting(ShareMoneyForPddActivity.this);
+                AppUtil.goSetting(ShareMoneyForKaolaActivity.this);
             }
         }, false, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
@@ -560,9 +538,9 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                             Bitmap bitmap = null;
                             File img = null;
                             try {
-                                bitmap = LoadImgUtils.getImgBitmapOnIo1(ShareMoneyForPddActivity.this, s);
+                                bitmap = LoadImgUtils.getImgBitmapOnIo1(ShareMoneyForKaolaActivity.this, s);
                                 String pictureName = FileUtils.getPictureName(s);
-                                img = GoodsUtil.saveBitmapToFile(ShareMoneyForPddActivity.this, bitmap, pictureName);
+                                img = GoodsUtil.saveBitmapToFile(ShareMoneyForKaolaActivity.this, bitmap, pictureName);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -595,9 +573,9 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
 
                         if (urlList.size() != 0) {
                             if (sharePlatform == ShareUtil.WeMomentsType && urlList.size() > 1) {
-                                ViewShowUtils.showShortToast(ShareMoneyForPddActivity.this, ShareMoneyForPddActivity.this.getString(R.string.save_succeed));
+                                ViewShowUtils.showShortToast(ShareMoneyForKaolaActivity.this, ShareMoneyForKaolaActivity.this.getString(R.string.save_succeed));
                             } else {
-                                GoodsUtil.sysShareImage(ShareMoneyForPddActivity.this, urlList, sharePlatform);
+                                GoodsUtil.sysShareImage(ShareMoneyForKaolaActivity.this, urlList, sharePlatform);
                                 LoadingView.dismissDialog();
                             }
                         }

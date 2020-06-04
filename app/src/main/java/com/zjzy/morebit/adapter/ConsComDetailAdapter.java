@@ -70,15 +70,19 @@ public class ConsComDetailAdapter extends RecyclerView.Adapter {
             viewHolder.record.setText(info.getRemark());
             if (info.getType() == 1) {  //支出
                 viewHolder.account.setText(mContext.getString(R.string.commission_expend, info.getChangeAmount()));
-                viewHolder.account.setTextColor(ContextCompat.getColor(mContext, R.color.color_333333));
-                viewHolder.icon_type.setImageResource(R.drawable.icon_tixian);
+                viewHolder.account.setTextColor(ContextCompat.getColor(mContext, R.color.color_DB493E));
+              //  viewHolder.icon_type.setImageResource(R.drawable.icon_tixian);
             } else if (info.getType() == 2) {  //收入
-                viewHolder.account.setTextColor(ContextCompat.getColor(mContext, R.color.color_FA9120));
-                viewHolder.icon_type.setImageResource(R.drawable.icon_yong);
+                viewHolder.account.setTextColor(ContextCompat.getColor(mContext, R.color.color_DB493E));
+               // viewHolder.icon_type.setImageResource(R.drawable.icon_yong);
                 viewHolder.account.setText(mContext.getString(R.string.commission_income, info.getChangeAmount()));
             }
             viewHolder.record_time.setText(DateTimeUtils.getTheMonth(info.getYearMonthDay(),DateTimeUtils.FORMAT_PATTERN_YEAR_MONTH_DAY_WITHOUT_TEXT,DateTimeUtils.FORMAT_PATTERN_MONTH_DAY_WITHOUT_TEXT)+" "+info.getHourBranchSeconds());
            viewHolder.tv_hint.setText(info.getReason());
+
+           if (position==mDatas.size()-1){
+               viewHolder.view.setVisibility(View.GONE);
+           }
         }
 
     }
@@ -91,6 +95,7 @@ public class ConsComDetailAdapter extends RecyclerView.Adapter {
     private class ViewHolder extends RecyclerView.ViewHolder {
         TextView record_time, account, record,tv_hint;
         ImageView icon_type;
+        View view;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +104,7 @@ public class ConsComDetailAdapter extends RecyclerView.Adapter {
             record = (TextView) itemView.findViewById(R.id.name);
             tv_hint = (TextView) itemView.findViewById(R.id.tv_hint);
             icon_type = itemView.findViewById(R.id.icon_type);
+            view=itemView.findViewById(R.id.view);
         }
     }
 

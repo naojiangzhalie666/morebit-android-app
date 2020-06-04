@@ -1,7 +1,9 @@
 package com.zjzy.morebit.utils;
 
+import android.content.Context;
 import android.text.Layout;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.LeadingMarginSpan;
 import android.view.View;
@@ -273,6 +275,55 @@ public class StringsUtils {
         }
     }
 
+    /**
+     *     左边图片右边文字换行不错位
+     * @param title      标题
+     * @return
+     */
+    public static void retractKaoLaTitle(final View icon, final TextView tv, final String title){
+        if(TextUtils.isEmpty(title)){
+            return;
+        }
+        if(sWidth == 0){
+            icon.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    sWidth = icon.getWidth() +App.getAppContext().getResources().getDimensionPixelSize(R.dimen.margin_small);
+                    retractTitle(tv,title);
+                    icon.getViewTreeObserver().removeOnPreDrawListener(
+                            this);
+                    return false;
+                }
+            });
+        }else{
+            retractTitle(tv,title);
+        }
+    }
+
+    /**
+     *     左边图片右边文字换行不错位
+     * @param title      标题
+     * @return
+     */
+    public static void retractGuessTitle(final View icon, final TextView tv, final String title){
+        if(TextUtils.isEmpty(title)){
+            return;
+        }
+        if(sWidth == 0){
+            icon.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    sWidth = icon.getWidth();
+                    retractTitle(tv,title);
+                    icon.getViewTreeObserver().removeOnPreDrawListener(
+                            this);
+                    return false;
+                }
+            });
+        }else{
+            retractTitle(tv,title);
+        }
+    }
     private static void retractTitle(  final TextView tv, final String title){
         if(TextUtils.isEmpty(title)){
             return;
@@ -284,7 +335,19 @@ public class StringsUtils {
         tv.setText(spannableString);
 
     }
-
+    /**
+     * 首行缩进的SpannableString
+     *
+     * @param description 描述信息
+     */
+    private static SpannableString getSpannableString(Context context,String description) {
+        SpannableString spannableString = new SpannableString(description);
+        int dimension =(int) context.getResources().getDimension(R.dimen.good_mall_wide);
+        int padding = (int) context.getResources().getDimension(R.dimen.good_mall_wide_padding);
+        LeadingMarginSpan leadingMarginSpan = new LeadingMarginSpan.Standard(dimension + padding, 0);//仅首行缩进
+        spannableString.setSpan(leadingMarginSpan, 0, description.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return spannableString;
+    }
 
 
     /**

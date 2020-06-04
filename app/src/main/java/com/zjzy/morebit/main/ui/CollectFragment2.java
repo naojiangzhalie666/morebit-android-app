@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -450,6 +451,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                  View line = holder.viewFinder().view(R.id.line);
                 LinearLayout ll_return_cash = holder.viewFinder().view(R.id.ll_return_cash);
                 TextView subsidiesPriceTv = holder.viewFinder().view(R.id.subsidiesPriceTv);
+                LinearLayout ll_shop_name=holder.viewFinder().view(R.id.ll_shop_name);
 
 //                if (!TextUtils.isEmpty(item.getItemPicture())) {
                 LoadImgUtils.setImg(mContext, goods_bg, item.getPicture());
@@ -459,16 +461,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 //                browse_time.setText(TimeUtils.millis2String(item.getBrowse_time()));
                 //判断是淘宝还是天猫的商品
 
-                if (item.getShopType()==2) {
-                    good_mall_tag.setImageResource(R.drawable.tianmao);
-                } else if (item.getShopType() == 1) {
-                    good_mall_tag.setImageResource(R.drawable.taobao);
-                    //拼多多
-                }else if (item.getShopType() == 3){
-                    good_mall_tag.setImageResource(R.drawable.pdd_icon);
-                }else if (item.getShopType()==4){//京东
-                    good_mall_tag.setImageResource(R.mipmap.jdong_icon);
-                }
+
                 if (!TextUtils.isEmpty(item.getTitle())) {
                     StringsUtils.retractTitle(good_mall_tag,title,item.getTitle());
                 }
@@ -540,6 +533,30 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                     }
                 });
                 checkbox.setSelected(item.isSelect());
+                if (item.getShopType()==2) {
+                    good_mall_tag.setImageResource(R.drawable.tianmao);
+                    ll_shop_name.setVisibility(View.VISIBLE);
+                    sales.setVisibility(View.VISIBLE);
+                } else if (item.getShopType() == 1) {
+                    good_mall_tag.setImageResource(R.drawable.taobao);
+                    ll_shop_name.setVisibility(View.VISIBLE);
+                    sales.setVisibility(View.VISIBLE);
+                    //拼多多
+                }else if (item.getShopType() == 3){
+                    good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                    ll_shop_name.setVisibility(View.VISIBLE);
+                    sales.setVisibility(View.VISIBLE);
+                }else if (item.getShopType()==4){//京东
+                    good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                    ll_shop_name.setVisibility(View.VISIBLE);
+                    sales.setVisibility(View.VISIBLE);
+
+                }else if (item.getShopType()==5){//考拉
+                    good_mall_tag.setImageResource(R.mipmap.kaola);
+                    ll_shop_name.setVisibility(View.INVISIBLE);
+                    sales.setVisibility(View.GONE);
+
+                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -561,7 +578,9 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                                 shopGoodInfo.setItemSource("1");
                                 shopGoodInfo.setPrice(item.getPrice());
                                 GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
-                            } else{
+                            } else if (item.getShopType()==5){
+                                GoodsDetailForKoalaActivity.start(getActivity(),shopGoodInfo.getItemSourceId());
+                            }else{
                                 GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
                                     @Override
                                     public void invoke(ShopGoodInfo arg) {
@@ -697,11 +716,12 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             ShopGoodInfo info = mGuessGoodsAdapter.getItem(i);
             if(info.getType()==0){
                 if(info.isSelect()){
-                    if (info.getShopType() == 3 ||info.getShopType()==4){
-                       isHavePdd = true;
-                    }else{
-                        shopGoodInfos.add(info);
-                    }
+                    shopGoodInfos.add(info);
+//                    if (info.getShopType() == 3 ||info.getShopType()==4 ||info.getShopType()==5){
+//                       isHavePdd = true;
+//                    }else{
+//
+//                    }
                 }
 
 
@@ -712,10 +732,10 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             ViewShowUtils.showShortToast(getActivity(),"最多可以选9个商品");
             return;
         }
-        if (isHavePdd){
-            ViewShowUtils.showShortToast(getActivity(),"暂时仅支持分享淘宝系商品");
-        }
-        GoodsUtil.SharePosterList2(getActivity(), shopGoodInfos, new MyAction.OnResult<String>() {
+//        if (isHavePdd){
+//            ViewShowUtils.showShortToast(getActivity(),"暂时仅支持分享淘宝系商品");
+//        }
+        GoodsUtil.SharePosterList3(getActivity(), shopGoodInfos, new MyAction.OnResult<String>() {
             @Override
             public void invoke(String arg) {
                 LoadingView.dismissDialog();
