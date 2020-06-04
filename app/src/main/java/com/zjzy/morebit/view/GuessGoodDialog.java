@@ -131,6 +131,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             }
             if (!TextUtils.isEmpty(mData.getItemTitle())) {
                 title.setVisibility(View.VISIBLE);
+
                 StringsUtils.retractGuessTitle(good_mall_tag,title,mData.getItemTitle());
             } else {
                 title.setVisibility(View.GONE);

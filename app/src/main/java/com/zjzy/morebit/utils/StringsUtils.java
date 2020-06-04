@@ -313,7 +313,7 @@ public class StringsUtils {
             icon.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
-                    sWidth = icon.getWidth();
+                    sWidth = icon.getWidth() +App.getAppContext().getResources().getDimensionPixelSize(R.dimen.margin_guess);
                     retractTitle(tv,title);
                     icon.getViewTreeObserver().removeOnPreDrawListener(
                             this);
@@ -334,19 +334,6 @@ public class StringsUtils {
         spannableString.setSpan(what, 0, title.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
         tv.setText(spannableString);
 
-    }
-    /**
-     * 首行缩进的SpannableString
-     *
-     * @param description 描述信息
-     */
-    private static SpannableString getSpannableString(Context context,String description) {
-        SpannableString spannableString = new SpannableString(description);
-        int dimension =(int) context.getResources().getDimension(R.dimen.good_mall_wide);
-        int padding = (int) context.getResources().getDimension(R.dimen.good_mall_wide_padding);
-        LeadingMarginSpan leadingMarginSpan = new LeadingMarginSpan.Standard(dimension + padding, 0);//仅首行缩进
-        spannableString.setSpan(leadingMarginSpan, 0, description.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        return spannableString;
     }
 
 
