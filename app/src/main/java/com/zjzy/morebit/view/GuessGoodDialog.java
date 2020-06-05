@@ -128,6 +128,14 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
         buyTv.setText("购买");
         if (null != mData) {
             setGoodsAdImg(mData);
+            if (!TextUtils.isEmpty(mData.getItemVoucherPrice())) {
+                discount_price.setText("" + MathUtils.getnum(mData.getItemVoucherPrice()));
+            }
+            if (mData.getShopType()==1){
+                good_mall_tag.setImageResource(R.mipmap.guess_tao_icon);
+            }else if (mData.getShopType()==4){
+                good_mall_tag.setImageResource(R.mipmap.guess_jd_icon);
+            }
             if (!TextUtils.isEmpty(mData.getItemPicture())) {
                 LoadImgUtils.loadingCornerBitmap(mContext, imageView, mData.getItemPicture());
             }
@@ -159,9 +167,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
 //                commission.setText(mContext.getString(R.string.upgrade_commission));
             }
 
-            if (!StringsUtils.isEmpty(mData.getItemVoucherPrice())) {
-                discount_price.setText("" + MathUtils.getnum(mData.getItemVoucherPrice()));
-            }
+
 
 
             if (TextUtils.isEmpty(UserLocalData.getUser(mContext).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(mContext).getPartner())) {
@@ -179,6 +185,10 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             }
 
         }
+//        if ("1".equals(mData.getItemSource())){//京东
+//            good_mall_tag.setImageResource(R.mipmap.guess_jd_icon);
+//        }else
+
         commissionTv.setOnClickListener(this);
         buyTv.setOnClickListener(this);
 
