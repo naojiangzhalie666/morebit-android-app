@@ -503,6 +503,10 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                         @Override
                         protected void onSuccess(final ShopGoodInfo data) {
                             if (data.getCommission()!=null&&!MathUtils.getnum(data.getCommission()).equals("0")){
+                                data.setItemPicture(data.getImageList().get(0));
+                                data.setShopType(5);
+                                data.setItemVoucherPrice(data.getCurrentPrice());
+                                data.setItemTitle(data.getGoodsTitle());
                                 openGuessDialog(data);
                             }else{
                                 openSearchDialog(s);
@@ -531,7 +535,9 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                         @Override
                         protected void onSuccess(final ShopGoodInfo data) {
                             if (data != null) {
-                                data.setItemSource("1");
+                                data.setItemPicture(data.getImageUrl());
+                                data.setShopType(3);
+                                data.setItemVoucherPrice(data.getVoucherPriceForPdd());
                                 openGuessDialog(data);
                             } else {
                                 //跳转到搜索页面
@@ -563,7 +569,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                             if (data != null) {
                                 data.setItemPicture(data.getImageUrl());
                                 data.setShopType(4);
-                                data.setItemVoucherPrice(data.getVoucherPrice());
+                                data.setItemVoucherPrice(data.getVoucherPriceForPdd());
                                 openGuessDialog(data);
                             } else {
                                 //跳转到搜索页面
