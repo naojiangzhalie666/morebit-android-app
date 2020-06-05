@@ -78,7 +78,7 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/bg_search_bg"
                     android:gravity="left|center_vertical"
-                    android:hint="搜索商品名或粘贴淘宝标题"
+                    android:hint="粘贴商品标题搜索隐藏优惠券"
                     android:imeOptions="actionSearch"
                     android:paddingLeft="40dp"
                     app:deleteImg="@drawable/input_search_text_delete_icon"

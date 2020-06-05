@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,6 +23,7 @@ import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 
@@ -79,8 +82,15 @@ public class DownloadDialog extends Dialog {
             public void onClick(View v) {
                 if(type == DOWNLOADING_COMPLETE||type == DOWNLOADING_ERROR){
                     Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.setType("image/*");
+                    if (Build.VERSION.SDK_INT < 19) {
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+                    } else {
+                        intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+                    }
+//                    intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+//                    intent.setType("image/*");
                     mContext.startActivity(intent);
                 }
                     dismiss();
@@ -106,17 +116,18 @@ public class DownloadDialog extends Dialog {
     private void download() {
 //        FileDownloader.setup(mContext);
         downloadListener =createLis();
+        DownloadManage.getInstance().multitaskStart(mImgUrls,/*SdDirPath.IMAGE_CACHE_PATH+fileName+"."+suffix,*/downloadListener);
 //        final FileDownloadQueueSet queueSet = new FileDownloadQueueSet(downloadListener);
 //        final List<BaseDownloadTask> tasks = new ArrayList<>();
 //        MyLog.i("test","cache: " + PathUtils.getExternalAppCachePath());
-        for(int i=0;i<mImgUrls.size();i++){
-            String fileName = mImgUrls.get(i).substring(mImgUrls.get(i).lastIndexOf("/")+1,mImgUrls.get(i).lastIndexOf("."));
-            String suffix = mImgUrls.get(i).substring(mImgUrls.get(i).lastIndexOf(".")+1,mImgUrls.get(i).length());
-//            MyLog.i("test","suffix: " +suffix+"  fileName: " +fileName);
-//            MyLog.i("test","paht: " +SdDirPath.IMAGE_CACHE_PATH+fileName+"."+suffix);
-            DownloadManage.getInstance().start(mImgUrls.get(i),SdDirPath.IMAGE_CACHE_PATH+fileName+"."+suffix,downloadListener);
-//          tasks.add(FileDownloader.getImpl().create(mImgUrls.get(i)).setPath( SdDirPath.IMAGE_CACHE_PATH+fileName+".jpg").setTag(i + 1));
-        }
+//        for(int i=0;i<mImgUrls.size();i++){
+//            String fileName = mImgUrls.get(i).substring(mImgUrls.get(i).lastIndexOf("/")+1,mImgUrls.get(i).lastIndexOf("."));
+//            String suffix = mImgUrls.get(i).substring(mImgUrls.get(i).lastIndexOf(".")+1,mImgUrls.get(i).length());
+////            MyLog.i("test","suffix: " +suffix+"  fileName: " +fileName);
+////            MyLog.i("test","paht: " +SdDirPath.IMAGE_CACHE_PATH+fileName+"."+suffix);
+//            DownloadManage.getInstance().start(mImgUrls.get(i),SdDirPath.IMAGE_CACHE_PATH+fileName+"."+suffix,downloadListener);
+////          tasks.add(FileDownloader.getImpl().create(mImgUrls.get(i)).setPath( SdDirPath.IMAGE_CACHE_PATH+fileName+".jpg").setTag(i + 1));
+//        }
 //        queueSet.disableCallbackProgressTimes();
 //        queueSet.downloadSequentially(tasks);
 //        queueSet.setAutoRetryTimes(1);
@@ -201,7 +212,12 @@ public class DownloadDialog extends Dialog {
                       btn_cancel.setBackgroundResource(R.drawable.bg_solid_ececec_30dp);
                       mBtnConfirm.setVisibility(View.GONE);
                   }
-                GoodsUtil.updataImgToTK(mContext,new File(task.getPath()),task.getFilename());
+               // GoodsUtil.updataImgToTK(mContext,new File(task.getPath()),task.getFilename());
+                try {
+                    MediaStore.Images.Media.insertImage(mContext.getContentResolver(), task.getPath(), task.getFilename(), null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

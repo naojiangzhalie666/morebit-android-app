@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -68,6 +69,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
     TextView editor;
     @BindView(R.id.toolbar_right_img)
     ImageView toolbar_right_img;
+
     private List<GoodsBrowsHistory> listArray = new ArrayList<>();
     GoodsHistoryAdapter mAdapter;
     private boolean isAllSelect;
@@ -365,6 +367,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                 ImageView goods_bg = holder.viewFinder().view(R.id.goods_bg);
                 ImageView video_play = holder.viewFinder().view(R.id.video_play);
                 ImageView good_mall_tag = holder.viewFinder().view(R.id.good_mall_tag);
+                LinearLayout ll_shop_name=holder.viewFinder().view(R.id.ll_shop_name);
                 View line = holder.viewFinder().view(R.id.line);
                 final ImageView checkbox = holder.viewFinder().view(R.id.checkbox);
                 LinearLayout ll_return_cash = holder.viewFinder().view(R.id.ll_return_cash);
@@ -377,22 +380,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 //                browse_time.setText(TimeUtils.millis2String(item.getBrowse_time()));
                 //判断是淘宝还是天猫的商品
                 int shopType = item.getShopType();
-                switch (shopType){
-                    case 2:
-                        good_mall_tag.setImageResource(R.drawable.tianmao);
-                        break;
-                    case 1:
-                        good_mall_tag.setImageResource(R.drawable.taobao);
-                        break;
-                    case 3:
-                        good_mall_tag.setImageResource(R.drawable.pdd_icon);
-                        break;
-                    case 4:
-                        good_mall_tag.setImageResource(R.mipmap.jdong_icon);
-                        break;
-                    default:
-                        break;
-                }
+
 
                 if (!TextUtils.isEmpty(item.getItemTitle())) {
                     StringsUtils.retractTitle(good_mall_tag,title,item.getItemTitle());
@@ -449,6 +437,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 
                 price.setText(getString(R.string.income, MathUtils.getnum(item.getItemPrice())));
                 price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+
                 sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
 
                 if (isEditor) {
@@ -471,6 +460,27 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                     }
                 });
                 checkbox.setSelected(item.isSelect());
+                switch (shopType){
+                    case 2:
+                        good_mall_tag.setImageResource(R.drawable.tianmao);
+                        break;
+                    case 1:
+                        good_mall_tag.setImageResource(R.drawable.taobao);
+                        break;
+                    case 3:
+                        good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                        break;
+                    case 4:
+                        good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                        break;
+                    case 5:
+                        good_mall_tag.setImageResource(R.mipmap.kaola);
+                        sales.setVisibility(View.GONE);
+                        ll_shop_name.setVisibility(View.INVISIBLE);
+                        break;
+                    default:
+                        break;
+                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -490,6 +500,8 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                                 shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
                                 shopGoodInfo.setItemSource("1");
                                 GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
+                            }else if (item.getShopType() == 5){
+                                GoodsDetailForKoalaActivity.start(GoodsBrowsingHistoryActivity.this,shopGoodInfo.getItemSourceId());
                             }else{
                                 GoodsUtil.checkGoods(GoodsBrowsingHistoryActivity.this, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
                                     @Override

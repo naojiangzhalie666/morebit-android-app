@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".Activity.ShareHungryActivity">
+    <include layout="@layout/view_hungry_poster"
+        />
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:background="#AFDBFF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <include
+        android:id="@+id/top"
+        layout="@layout/top" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/pianyuanbaoyou"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            >
+            <ImageView
+                android:layout_above="@+id/share_tv"
+                android:id="@+id/share_img"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+
+                />
+
+            <TextView
+                android:id="@+id/share_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/white"
+                android:text="微信扫码 立即领劵"
+                android:textSize="16dp"
+                android:paddingBottom="20dp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="100dp">
+    <include
+        layout="@layout/layout_share_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+/>
+    </LinearLayout>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

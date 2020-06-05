@@ -72,7 +72,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
     private TKLBean mTKLBean;
     private CommercialShareDialog shareDialog;
     private FileDownloadListener downloadListener  = createLis();
-    private String path;
+    private String path,template ;
 
     public VideoDouAdapter(Context context,List<ShopGoodInfo> data) {
         this.context = context;
@@ -230,21 +230,16 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                 if (path!=null){
                     switch (v.getId()) {
                         case R.id.weixinFriend: //分享到好友
+                            AppUtil.coayTextPutNative((Activity) context,template);
                             ShareUtil.shareWxFile(context,new File(path));
                             break;
                         case R.id.weixinCircle: //分享到朋友圈
+                            AppUtil.coayTextPutNative((Activity) context,template);
                             openWechat();
                             break;
                         case R.id.qqFriend: //分享到QQ
-//                            if (isQQClientAvailable(context)){
-//                                ShareUtil.shareQqFile(context,new File(path));
-//                            }else{
-//                                ToastUtils.showLong("请先安装QQ客户端");
-//                            }
-                            openQQ();
-
-                            break;
                         case R.id.qqRoom: //分享到QQ空间
+                            AppUtil.coayTextPutNative((Activity) context,template);
                             openQQ();
                             break;
                         case R.id.sinaWeibo: //分享到新浪微博
@@ -348,7 +343,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                 .subscribe(new DataObserver<TKLBean>() {
                     @Override
                     protected void onSuccess(TKLBean data) {
-                        String template = data.getTemplate();
+                         template = data.getTemplate();
                         Log.e("ssss",template+"");
                         VideoShareDialog videoShareDialog = new VideoShareDialog(context, template, new VideoShareDialog.OnOkListener() {
                             @Override

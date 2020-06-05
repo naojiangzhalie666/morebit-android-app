@@ -254,6 +254,7 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
                 linear_more.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        data.clear();
                         linear_more.setVisibility(View.GONE);
                         data.addAll(shopGoodInfo);
                         adapter.notifyDataSetChanged();

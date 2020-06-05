@@ -397,7 +397,7 @@
     <string name="mine_text_withdraw">可提现余额  %1$s</string>
     <string name="circle_fack_min_text">最少输入10个字符</string>
     <string name="fliggy_title">飞猪无返佣说明</string>
-    <string name="fliggy_content">1.未换取登机牌登机，机票订单将无返佣\n2.根据淘宝网的规定，订单在成交后产生退款，则退款的部分无返利。最终结算的佣金基数按原成交价减去买家申请维权退款时最终发起的金额计算\n3.汽车票、火车票、酒店（信用住）、无跟单，无返佣4.电脑端下单飞猪的机票订单，整单无返佣\n5.如没有收到订单返佣，请在下单后7天内到【我的】-【订单查询】找回订单</string>
+    <string name="fliggy_content">1.未换取登机牌登机，机票订单将无返佣\n2.根据淘宝网的规定，订单在成交后产生退款，则退款的部分无返利。最终结算的佣金基数按原成交价减去买家申请维权退款时最终发起的金额计算\n3.汽车票、火车票、酒店（信用住）、无跟单，无返佣\n4.电脑端下单飞猪的机票订单，整单无返佣\n5.如没有收到订单返佣，请在下单后7天内到【我的】-【订单找回】找回订单</string>
     <string name="feedback_input_text">请输入反馈意见(最多%1$s字哦)</string>
     <string name="downloading_local">正在保存到本地...</string>
     <string name="circle_search_hint">搜你想要</string>

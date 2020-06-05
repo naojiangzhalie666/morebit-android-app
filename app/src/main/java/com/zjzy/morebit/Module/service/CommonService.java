@@ -1,6 +1,7 @@
 package com.zjzy.morebit.Module.service;
 
 import com.zjzy.morebit.pojo.ActivityLinkBean;
+import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
@@ -11,6 +12,7 @@ import com.zjzy.morebit.pojo.address.AllRegionInfoList;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.pojo.goods.FloorBean;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
+import com.zjzy.morebit.pojo.goods.ShareUrlMoreBaen;
 import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
 import com.zjzy.morebit.pojo.order.OrderSyncResult;
@@ -83,6 +85,7 @@ import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
+import com.zjzy.morebit.pojo.request.RequesKoalaBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
 import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
@@ -166,6 +169,7 @@ import com.zjzy.morebit.pojo.request.RequestVideoId;
 import com.zjzy.morebit.pojo.request.RequestWechatCodeBean;
 import com.zjzy.morebit.pojo.request.RequestWeixiLoginBean;
 import com.zjzy.morebit.pojo.request.RequestWhatLike;
+import com.zjzy.morebit.pojo.request.WxCodeBean;
 import com.zjzy.morebit.pojo.request.base.RequestBaseTypeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestAnalysisTKL;
 import com.zjzy.morebit.pojo.requestbodybean.RequestCheckWithdrawBean;
@@ -188,6 +192,7 @@ import com.zjzy.morebit.pojo.requestbodybean.RequestOfficialRecommend;
 import com.zjzy.morebit.pojo.requestbodybean.RequestOsBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestPage;
 import com.zjzy.morebit.pojo.requestbodybean.RequestShareGoods;
+import com.zjzy.morebit.pojo.requestbodybean.RequestShareMoreGoods;
 import com.zjzy.morebit.pojo.requestbodybean.RequestShopId;
 import com.zjzy.morebit.pojo.requestbodybean.RequestSystemStaticPage;
 import com.zjzy.morebit.pojo.requestbodybean.RequestThreeGoodsClassify;
@@ -1127,6 +1132,18 @@ public interface CommonService {
     @POST("/api/goods/share/getItemLinks")
     Observable<BaseResponse<ShareUrlListBaen>> getShareGoodsUrlListObservable(
             @Body RequestShareGoods requestShareGoods
+    );
+
+
+    /**
+     * 收藏  多商品分享链接
+     *
+     * @return
+     */
+    //    @FormUrlEncoded
+    @POST("/api/goods/share/listItemShareLink")
+    Observable<BaseResponse<List<ShareUrlMoreBaen>>> getShareGoodsUrlMoreObservable(
+            @Body RequestShareMoreGoods requestShareGoods
     );
 
 
@@ -2453,6 +2470,16 @@ public interface CommonService {
             @Body RequestPddShareContent requestBean);
 
     /**
+     * 生成考拉的分享
+     * @param requestBean
+     * @return
+     */
+    @POST("/api/goods/getKaoLaGenerate")
+    public Observable<BaseResponse<String>> getGenerateForKaola(
+            @Body RequestPddShareContent requestBean);
+
+
+    /**
      * 获取用户详情
      *
      * @return
@@ -2473,4 +2500,19 @@ public interface CommonService {
      */
     @POST("/api/system/graphicInfo/sorting/getVipFloor")
     public Observable<BaseResponse<List<ImageInfo>>> getVipFloor(@Body RequestBannerBean requestBean);
+
+    /**
+     * 获取考拉海购-商品详情
+     *
+     * @return
+     */
+   @POST("/api/goods/getKaoLaGoodsDetail")
+    public Observable<BaseResponse<ShopGoodInfo>> getKaoLaGoodsDetail(@Body RequesKoalaBean requestBean);
+    /**
+     * 获取饿了么二维码
+     *
+     * @return
+     */
+    @POST("/api/marketing/official/getQRcode")
+    public Observable<BaseResponse<WxCodeBean>> getQRcode(@Body RequestActivityLinkBean requestBean);
 }

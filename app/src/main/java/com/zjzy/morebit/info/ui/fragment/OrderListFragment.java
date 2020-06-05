@@ -11,9 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -24,10 +27,16 @@ import com.zjzy.morebit.info.contract.OrderListContract;
 import com.zjzy.morebit.info.presenter.OrderListPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.order.ui.NumberOrderDetailActivity;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.event.OrderLoadDataEvent;
+import com.zjzy.morebit.pojo.request.RequesKoalaBean;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
@@ -40,6 +49,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 
 /**
  * Created by YangBoTian on 2018/9/12.
@@ -138,7 +149,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
         });
         consComGoodsDetailAdapter.setOnAdapterClickListener(new ConsComGoodsDetailAdapter.OnAdapterClickListener() {
             @Override
-            public void onItem(int position) {
+            public void onItem(final int position) {
                 if (mTeamType == 1){
                     mPresenter.onCheckGoods(OrderListFragment.this, mListArray.get(position).getItemId());
                 }else if(mTeamType == 4) {
@@ -150,6 +161,24 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                     ShopGoodInfo info = new ShopGoodInfo();
                     info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForJd(OrderListFragment.this, info);
+                }else if (mTeamType == 5){
+                    getBaseResponseObservableForKaoLa(OrderListFragment.this, mListArray.get(position).getItemId(), UserLocalData.getUser(getActivity()).getId())
+                            .doFinally(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                }
+                            })
+                            .subscribe(new DataObserver<ShopGoodInfo>() {
+                                @Override
+                                protected void onSuccess(final ShopGoodInfo data) {
+                                    if (data.getCommission() != null && !MathUtils.getnum(data.getCommission()).equals("0")) {
+                                        GoodsDetailForKoalaActivity.start(getActivity(),mListArray.get(position).getItemId());//分佣商品跳转考拉详情
+                                    } else {
+                                        KoalaWebActivity.start(getActivity(), data.getGoodsDetail(), "考拉");
+                                    }
+                                }
+
+                            });
                 }else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     if (mListArray.get(position).isSelf()){
@@ -165,7 +194,20 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
 
         });
     }
-
+    /**
+     * 考拉海购
+     * @param rxFragment
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForKaoLa(RxFragment rxFragment, String  goodsId, String userId) {
+        RequesKoalaBean requesKoalaBean = new RequesKoalaBean();
+        requesKoalaBean .setUserId(userId);
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getKaoLaGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
     public void refreshData() {
         page = 1;
         mReUseListView.getListView().setNoMore(false);

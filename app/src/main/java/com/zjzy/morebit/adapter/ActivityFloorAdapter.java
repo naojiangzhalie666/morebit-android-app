@@ -71,7 +71,12 @@ public class ActivityFloorAdapter extends RecyclerView.Adapter<ActivityFloorAdap
 
     @Override
     public int getItemCount() {
-          return 2;
+        if (mDatas.size()<2){
+            return mDatas.size();
+        }else{
+            return 2;
+        }
+
     }
 
 

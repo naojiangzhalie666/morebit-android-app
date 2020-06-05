@@ -6,9 +6,12 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.pojo.ShareUrlBaen;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
+import com.zjzy.morebit.pojo.goods.ShareUrlMoreBaen;
 import com.zjzy.morebit.pojo.goods.ShareUrlStringBaen;
+import com.zjzy.morebit.pojo.request.RequestShareGoodsMoreUrlBean;
 import com.zjzy.morebit.pojo.request.RequestShareGoodsUrlBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestShareGoods;
+import com.zjzy.morebit.pojo.requestbodybean.RequestShareMoreGoods;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -59,6 +62,27 @@ public class ShareMore {
         return RxHttp.getInstance().getCommonService().getShareGoodsUrlListObservable(requestShareGoods)
                 .compose(RxUtils.<BaseResponse<ShareUrlListBaen>>switchSchedulers())
                 .compose(activity.<BaseResponse<ShareUrlListBaen>>bindToLifecycle());
+
+    }
+
+
+    /**
+     * 收藏多商品分享链接
+     */
+    public static Observable<BaseResponse<List<ShareUrlMoreBaen>>> getShareGoodsUrlMoreObservable(RxAppCompatActivity activity, List<ShopGoodInfo> goods, String ids) {
+        ArrayList<RequestShareGoodsMoreUrlBean> requestShareGoodsUrlBeans = new ArrayList<>();
+        for (int i = 0; i < goods.size(); i++) {
+            ShopGoodInfo info = goods.get(i);
+            if (info.getIsExpire() == 1) {//过期
+                continue;
+            }
+            requestShareGoodsUrlBeans.add(new RequestShareGoodsMoreUrlBean(String.valueOf(info.getShopType()), info.getItemSourceId(),info.getCouponUrl()));
+        }
+        RequestShareMoreGoods requestShareGoods = new RequestShareMoreGoods();
+        requestShareGoods.setItemShareVo(requestShareGoodsUrlBeans);
+        return RxHttp.getInstance().getCommonService().getShareGoodsUrlMoreObservable(requestShareGoods)
+                .compose(RxUtils.<BaseResponse<List<ShareUrlMoreBaen>>>switchSchedulers())
+                .compose(activity.<BaseResponse<List<ShareUrlMoreBaen>>>bindToLifecycle());
 
     }
 

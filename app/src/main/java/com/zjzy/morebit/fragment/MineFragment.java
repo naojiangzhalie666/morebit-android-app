@@ -430,10 +430,18 @@ public class MineFragment extends BaseMainFragmeng {
             case R.id.order_search:
                 ImageInfo orderSearch = mLocalData.get("2");
                 if (orderSearch == null){
-                    ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
+                  //  ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
+                    ImageInfo orderSearch2 = new ImageInfo();
+                    orderSearch2.setOpen(3);
+                    orderSearch2.setUrl("https://helper.morebit.com.cn/#/search");
+                    orderSearch2.setSubTitle("找回订单");
+                    orderSearch2.setTitle("订单查询");
+                    orderSearch2.setSort(2);
+                    BannerInitiateUtils.gotoAction(getActivity(), orderSearch2);
                 }else{
                     BannerInitiateUtils.gotoAction(getActivity(), orderSearch);
                 }
+
                 break;
             case R.id.my_footmarker:
                 ImageInfo footMarker = mLocalData.get("3");
@@ -463,25 +471,48 @@ public class MineFragment extends BaseMainFragmeng {
                 break;
 
             case R.id.tv_withdraw: //提现
-                UserInfo info = UserLocalData.getUser(getActivity());
-                if (TextUtils.isEmpty(mTotalMoney)){
-                    mTotalMoney = "0";
-                }
-                if(Double.parseDouble(mTotalMoney) < 1){
-                    ViewShowUtils.showShortToast(getActivity(),"不足1元，无法提现");
-                } else {
-                    if (TaobaoUtil.isAuth()) {   //淘宝授权
-                        TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
-                    } else {
-                        if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
-                            AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
-                        }else{
-                            PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
-                            ToastUtils.showLong("请先绑定支付宝!");
-                        }
+                mInfoModel.checkWithdrawTime(this)
+                        .subscribe(new DataObserver<String>(false) {
+                            @Override
+                            protected void onSuccess(String data) {
+                                UserInfo info = UserLocalData.getUser(getActivity());
+                                if (TextUtils.isEmpty(mTotalMoney)){
+                                    mTotalMoney = "0";
+                                }
+                                if(Double.parseDouble(mTotalMoney) < 1){
+                                    ViewShowUtils.showShortToast(getActivity(),"不足1元，无法提现");
+                                } else {
+                                    if (TaobaoUtil.isAuth()) {   //淘宝授权
+                                        TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
+                                    } else {
+                                        if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
+                                            AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
+                                        }else{
+                                            PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
+                                            ToastUtils.showLong("请先绑定支付宝!");
+                                        }
 
-                    }
-                }
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            protected void onError(String errorMsg, String errCode) {
+                                MyLog.i("test", "errCode: " + errCode);
+                                double money = 0;
+                                try {
+                                    money = Double.parseDouble(mTotalMoney);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (C.requestCode.B10301.equals(errCode)) {//因为成功的话data会为空，所以判断下
+                                    ToastUtils.showLong("提现时间为每月25,26,27,28,29,30,31号");
+                                }
+
+                            }
+                        });
 
                 break;
             case R.id.userIcon: //个人设置

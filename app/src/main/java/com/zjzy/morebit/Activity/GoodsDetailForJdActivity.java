@@ -994,6 +994,11 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         mGoodsInfo.setClickURL(promotionJdUrl);
     }
 
+    @Override
+    public void setDetaisData(ShopGoodInfo data,boolean isSeavDao, boolean isRefresh) {
+
+    }
+
     private void setSysNotificationView() {
         rl_urgency_notifi.removeAllViews();
         if (mSysNotificationData == null || mSysNotificationData.size() == 0) return;

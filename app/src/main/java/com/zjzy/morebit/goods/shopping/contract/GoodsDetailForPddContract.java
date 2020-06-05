@@ -5,6 +5,7 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.mvp.base.base.BasePresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
@@ -27,6 +28,7 @@ public class GoodsDetailForPddContract {
         void showDetailsView(ShopGoodInfo data, boolean seavDao, boolean isRefresh);
 
         void switchColler(ShopGoodInfo data);
+
 
         void OngetDetailDataFinally();
 
@@ -56,6 +58,12 @@ public class GoodsDetailForPddContract {
          */
         void setPromotionJdUrl(String promotionJdUrl);
 
+        /**
+         * 考拉详情
+         * @param
+         */
+        void setDetaisData(ShopGoodInfo data,boolean seavDao, boolean isRefresh);
+
 
 
 
@@ -78,7 +86,7 @@ public class GoodsDetailForPddContract {
          * @param goodsInfo
          */
         void switchCollect(BaseActivity rxActivity, ShopGoodInfo goodsInfo);
-
+        void  switchKaolaCollect(BaseActivity rxActivity, ShopGoodInfo goodsInfo);
 
 
         void saveGoodsHistor(BaseActivity activity, ShopGoodInfo itemSourceId);
@@ -111,5 +119,11 @@ public class GoodsDetailForPddContract {
          * @param isRefresh
          */
         void getDetailDataForJd(BaseActivity rxActivity, ShopGoodInfo goodsInfo, boolean isRefresh);
+
+        /**
+         * 考拉商品详情
+         * @param rxActivity
+         */
+        void generateDetailForKaola(BaseActivity rxActivity,String goodsId,String userId, boolean isRefresh);
     }
 }

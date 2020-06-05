@@ -14,10 +14,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -83,7 +85,7 @@ public class LoadImgUtils {
 
     }
 
-    public static void setImg(Context context, ImageView iv, String url, int placeholderRes) {
+    public static void setImg(final Context context, final ImageView iv, final String url, int placeholderRes) {
         if (context == null || iv == null) {
             return;
         }
@@ -95,6 +97,7 @@ public class LoadImgUtils {
                     .load(url)
                     .apply(options)
                     .into(iv);
+
         } catch (Exception e) {
             e.printStackTrace();
         } catch (OutOfMemoryError outOfMemoryError) {
@@ -105,6 +108,28 @@ public class LoadImgUtils {
     }
 
 
+    public static void setKaoImg(final Context context, final ImageView iv, final String url, int placeholderRes) {
+        if (context == null || iv == null) {
+            return;
+        }
+        try {
+             RequestOptions options = new RequestOptions()
+                    .dontAnimate()
+                    .placeholder(placeholderRes)
+                    .error(placeholderRes);
+            Glide.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .apply(options)
+                    .into(new TransformationUtils(iv));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (OutOfMemoryError outOfMemoryError) {
+            System.gc();
+            Logger.e("Glide 加载图片 OOM");
+        }
+
+    }
     /**
      * 添加加载回调的Listener
      * @param context
@@ -715,7 +740,7 @@ public class LoadImgUtils {
         if (picture.startsWith("http")) {
             if (picture.endsWith("jpg") ||
                     picture.endsWith("png")||
-                    picture.endsWith("jpeg")) {
+                    picture.endsWith("jpeg")||picture.contains("?x-oss-process")||picture.startsWith("http://kaola-pop.oss.kaolacdn.com")||picture.contains("haitao")) {
                 return true;
             } else {
                 return false;

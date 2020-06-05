@@ -24,6 +24,7 @@ import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.GoodsBrowsHistory;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.TaobaoGoodBean;
@@ -127,6 +128,30 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                 });
     }
 
+
+
+
+    /*
+    *
+    * 考拉详情
+    * */
+
+    public void generateDetailForKaola(BaseActivity rxActivity, String goodsId, String userId, final boolean isRefresh) {
+        mModel.getBaseResponseObservableForKaoLa(rxActivity, goodsId, userId)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        getIView().setDetaisData(data,true,isRefresh);
+                    }
+                });
+    }
+
     /**
      * 切换收藏
      *
@@ -156,6 +181,47 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     });
         } else {
             mModel.getGoodsCollectForPdd(rxActivity, goodsInfo)
+                    .subscribe(new DataObserver<Integer>() {
+                        @Override
+                        protected void onSuccess(Integer data) {
+                            UserLocalData.isCollect = true;
+                            goodsInfo.setColler(data);
+                            getIView().switchColler(goodsInfo);
+                            ViewShowUtils.showShortToast(rxActivity, rxActivity.getString(R.string.collect_succeed));
+
+                        }
+                    });
+        }
+    }
+
+    /*
+    *
+    * 考拉收藏
+    * */
+    @Override
+    public void switchKaolaCollect(final BaseActivity rxActivity, final ShopGoodInfo goodsInfo) {
+
+        if (goodsInfo.getColler() != 0) {
+            if (mMainModel == null) {
+                mMainModel = new MainModel();
+            }
+            mMainModel.delUserCollection(rxActivity, goodsInfo.getColler() + "")
+                    .subscribe(new DataObserver<String>(false) {
+                        @Override
+                        protected void onDataNull() {
+                            onSuccess("");
+                        }
+
+                        @Override
+                        protected void onSuccess(String data) {
+                            UserLocalData.isCollect = true;
+                            goodsInfo.setColler(0);
+                            getIView().switchColler(goodsInfo);
+                            ViewShowUtils.showShortToast(rxActivity, rxActivity.getString(R.string.cancel_collect_succeed));
+                        }
+                    });
+        } else {
+            mModel.getGoodsCollectForKaola(rxActivity, goodsInfo)
                     .subscribe(new DataObserver<Integer>() {
                         @Override
                         protected void onSuccess(Integer data) {
