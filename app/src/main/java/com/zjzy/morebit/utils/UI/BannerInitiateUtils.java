@@ -583,8 +583,8 @@ public class BannerInitiateUtils {
         setBrandBanner(activity, data, banner, aspectRatioView, BannerConfig.RIGHT);
     }
 
-    public static void setJpBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView,boolean jdBanner) {
-        setBrandJpBanner(activity, data, banner, aspectRatioView, BannerConfig.NOT_INDICATOR,jdBanner);
+    public static void setJpBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView) {
+        setBrandJpBanner(activity, data, banner, aspectRatioView, BannerConfig.NOT_INDICATOR);
     }
 
     public static void setBrandBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView, int bannerConfigType) {
@@ -643,7 +643,7 @@ public class BannerInitiateUtils {
                 .start();
     }
 
-    public static void setBrandJpBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView, int bannerConfigType, final boolean jdBanner) {
+    public static void setBrandJpBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView, int bannerConfigType) {
         final int bannerId = banner.getId();
         if (data == null || data.size() == 0) {
             return;
@@ -681,11 +681,7 @@ public class BannerInitiateUtils {
 //                        cEvent.addKeyValue("1000","value1").addKeyValue("key2","value2");
 //                        JAnalyticsInterface.onEvent(getActivity(), cEvent);
                         if (data.get(position).getOpen()==3){
-                            if (jdBanner){
-                                getJpBanner((BaseActivity) activity,data.get(position).getType(),data.get(position).getUrl(),data.get(position));
-                            }else{
-                                getJpBanner((BaseActivity) activity,data.get(position).getType(), String.valueOf(data.get(position).getId()),data.get(position));
-                            }
+                            getJpBanner((BaseActivity) activity,data.get(position).getType(),data.get(position).getUrl(),data.get(position));
                         }else{
                             ImageInfo imageInfo = data.get(position);
                             String mudule = "";

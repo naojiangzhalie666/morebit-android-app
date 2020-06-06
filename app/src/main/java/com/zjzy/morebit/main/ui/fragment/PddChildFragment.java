@@ -277,7 +277,7 @@ public class PddChildFragment extends BaseMainFragmeng {
                         Log.e("pdd",data+"");
                         if (data!=null){
                             if (data != null && data.size() != 0) {
-                                BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner,false);
+                                BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner);
                             }
                         } else{
                                 ar_title_banner.setVisibility(View.GONE);
