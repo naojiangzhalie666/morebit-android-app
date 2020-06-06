@@ -96,12 +96,15 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
         mGoodsInfo.setItemTitle(mGoodsInfo.getItemTitle());
         mGoodsInfo.setItemDesc(mGoodsInfo.getItemDesc());
         mGoodsInfo.setItemPicture(mGoodsInfo.getItemPic());
-        mGoodsInfo.setPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
+        mGoodsInfo.setItemPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
         mGoodsInfo.setCouponPrice(mGoodsInfo.getCouponMoney());
         mGoodsInfo.setItemVoucherPrice(mGoodsInfo.getItemPrice());
         mGoodsInfo.setSaleMonth(TextUtils.isEmpty(mGoodsInfo.getSaleMonth()) ? "0" : mGoodsInfo.getSaleMonth());
         mGoodsInfo.setCouponUrl(mGoodsInfo.getCouponUrl());
         mGoodsInfo.setCommission(mGoodsInfo.getTkMoney());
+        Log.e("ko",mGoodsInfo.getItemPrice()+"");
+        Log.e("ko",mGoodsInfo.getPrice()+"");
+        Log.e("ko",mGoodsInfo.getItemVoucherPrice()+"");
         indexbannerdataArray.clear();
         ImageInfo imageInfo = new ImageInfo();
         imageInfo.setThumb(mGoodsInfo.getItemPic());
@@ -136,7 +139,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                 mPlayer.setLooping(true);
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.videoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (holder.videoView.isPlaying()) {
@@ -148,12 +151,13 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                 }
             }
         });
+
         LoadImgUtils.loadingCornerBitmap(context, holder.iv_head, mGoodsInfo.getItemPic());
         holder.tv_title.setText(mGoodsInfo.getItemTitle());
         holder.tv_price.setText(mGoodsInfo.getCouponMoney() + "元劵");
         holder.tv_num.setText("销量：" + mGoodsInfo.getItemSale());
         String itemPrice = mGoodsInfo.getItemPrice();
-        holder.tv_coupon_price.setText(mGoodsInfo.getItemPrice() + "");
+        holder.tv_coupon_price.setText(mGoodsInfo.getItemVoucherPrice() + "");
         UserInfo userInfo1 = UserLocalData.getUser();
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             holder.tv_subsidy.setText("登录赚佣金");

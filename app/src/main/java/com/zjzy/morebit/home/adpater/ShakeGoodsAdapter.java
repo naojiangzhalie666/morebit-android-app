@@ -59,6 +59,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
         mlist.add(imglist);
         videoBean.setAdImgUrl(mlist);
         holder.tv_title.setText(list.get(position).getItemTitle());
+        holder.tv_num.setText(MathUtils.getSales(videoBean.getDyLikeCount()));
         //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());
         LoadImgUtils.loadingCornerTop(context, holder.iv_head,list.get(position).getItemPic(),5);
         holder.commission.setText(list.get(position).getCouponMoney()+"元劵");
@@ -98,7 +99,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_head;
-        private TextView tv_title,commission,tv_price,tv_coupul;
+        private TextView tv_title,commission,tv_price,tv_coupul,tv_num;
         public ViewHolder(View itemView) {
             super(itemView);
             iv_head=itemView.findViewById(R.id.iv_head);//主图
@@ -106,6 +107,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
             commission=itemView.findViewById(R.id.commission);//优惠券
             tv_price=itemView.findViewById(R.id.tv_price);//价格
             tv_coupul=itemView.findViewById(R.id.tv_coupul);//预估收益
+            tv_num=itemView.findViewById(R.id.tv_num);//点赞数
 
         }
     }

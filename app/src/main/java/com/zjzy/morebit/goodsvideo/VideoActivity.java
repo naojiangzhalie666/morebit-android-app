@@ -63,7 +63,8 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private VideoView mVideoView;
     private int videoId;
     private int mCurPos;
-    private ImageView closs, first_img;
+    private ImageView closs, first_img,img_stop;
+    private int currentPosition;
 
 
     @Override
@@ -140,11 +141,14 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         if (view != null) {
             mVideoView = view.findViewById(R.id.videoView);
             first_img = view.findViewById(R.id.first_img);
+            img_stop=view.findViewById(R.id.img_stop);
+            img_stop.setVisibility(View.GONE);
             Uri uri = Uri.parse(data.get(position).getItemVideo());
             mVideoView.setVideoURI(uri);
             mVideoView.requestFocus();
             mVideoView.start();
             mCurPos = position;
+
 
 
         }
@@ -164,7 +168,10 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     public void onResume() {
         super.onResume();
         if (mVideoView != null) {
-            mVideoView.resume();
+            mVideoView.seekTo(currentPosition);
+            mVideoView.start();
+
+
         }
     }
 
@@ -173,6 +180,8 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         super.onPause();
         if (mVideoView != null) {
             mVideoView.pause();
+            currentPosition = mVideoView.getCurrentPosition();
+            Log.e("ko", "2");
         }
     }
 
@@ -182,6 +191,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         if (mVideoView != null) {
             mVideoView.stopPlayback();
             mVideoView = null;
+            Log.e("ko", "3");
         }
     }
 
