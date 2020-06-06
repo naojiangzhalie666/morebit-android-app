@@ -42,6 +42,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestVideoGoodsBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -49,6 +50,7 @@ import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
+import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
@@ -77,6 +79,11 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private int currentPosition;
     private  PagerLayoutManager mLayoutManager;
     private String cid;
+    private TextView tv_title, tv_price, tv_subsidy, tv_num, tv_coupon_price, tv_buy, tv_share;
+    private VideoView videoView;
+    private ImageView iv_head, img_share,img_collect,img_xia;
+    private TKLBean mTKLBean;
+    List<ImageInfo> indexbannerdataArray = new ArrayList<>();
 
 
 
@@ -100,9 +107,15 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         ActivityStyleUtil.initSystemBar(VideoActivity.this, R.color.black); //设置标题栏颜色值
         rcy_video = (RecyclerView) findViewById(R.id.rcy_video);
         closs = (ImageView) findViewById(R.id.closs);
-
-
         closs.setOnClickListener(this);
+        iv_head = (ImageView) findViewById(R.id.iv_head);//主图
+        tv_title = (TextView)findViewById(R.id.tv_title);//标题
+        tv_price = (TextView)findViewById(R.id.tv_price);//优惠券
+        tv_subsidy = (TextView)findViewById(R.id.tv_subsidy);//预估收益
+        tv_num = (TextView)findViewById(R.id.tv_num);//销量
+        tv_coupon_price = (TextView)findViewById(R.id.tv_coupon_price);//商品价格
+        tv_buy = (TextView)findViewById(R.id.tv_buy);//立即购买
+        tv_share = (TextView)findViewById(R.id.tv_share);//分享
         douAdapter = new VideoDouAdapter(this, data);
           mLayoutManager = new PagerLayoutManager(this, OrientationHelper.VERTICAL);
         rcy_video.setLayoutManager(mLayoutManager);
@@ -152,6 +165,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         });
 
         rcy_video.scrollToPosition(videoId);
+        goodsDetais(videoId);
 
     }
 
@@ -191,10 +205,110 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
             mVideoView.requestFocus();
             mVideoView.start();
             mCurPos = position;
-
-
-
+           goodsDetais(position);
         }
+    }
+
+    private void goodsDetais(int position) {
+        final ShopGoodInfo mGoodsInfo=data.get(position);
+        mGoodsInfo.setItemSourceId(mGoodsInfo.getItemId());
+        mGoodsInfo.setItemTitle(mGoodsInfo.getItemTitle());
+        mGoodsInfo.setItemDesc(mGoodsInfo.getItemDesc());
+        mGoodsInfo.setItemPicture(mGoodsInfo.getItemPic());
+        mGoodsInfo.setItemPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
+        mGoodsInfo.setCouponPrice(mGoodsInfo.getCouponMoney());
+        mGoodsInfo.setItemVoucherPrice(mGoodsInfo.getItemPrice());
+        mGoodsInfo.setSaleMonth(TextUtils.isEmpty(mGoodsInfo.getSaleMonth()) ? "0" : mGoodsInfo.getSaleMonth());
+        mGoodsInfo.setCouponUrl(mGoodsInfo.getCouponUrl());
+        mGoodsInfo.setCommission(mGoodsInfo.getTkMoney());
+        Log.e("ko",mGoodsInfo.getItemPrice()+"");
+        Log.e("ko",mGoodsInfo.getPrice()+"");
+        Log.e("ko",mGoodsInfo.getItemVoucherPrice()+"");
+
+        getBaseResponseObservable(this, mGoodsInfo)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        List<String> getBanner = data.getItemBanner();
+                        indexbannerdataArray.clear();
+                        for (int i = 0; i < getBanner.size(); i++) {
+                            String s = StringsUtils.checkHttp(getBanner.get(i));
+                            if (TextUtils.isEmpty(s)) return;
+                            if (LoadImgUtils.isPicture(s)) {
+                                ImageInfo imageInfo = new ImageInfo();
+                                imageInfo.setThumb(getBanner.get(i));
+                                indexbannerdataArray.add(imageInfo);
+                            }
+                        }
+                        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
+
+                    }
+                });
+
+
+        LoadImgUtils.loadingCornerBitmap(this,iv_head, mGoodsInfo.getItemPic());
+        tv_title.setText(mGoodsInfo.getItemTitle());
+        tv_price.setText(mGoodsInfo.getCouponMoney() + "元劵");
+        tv_num.setText("销量：" + mGoodsInfo.getItemSale());
+        String itemPrice = mGoodsInfo.getItemPrice();
+        tv_coupon_price.setText(mGoodsInfo.getItemVoucherPrice() + "");
+        UserInfo userInfo1 = UserLocalData.getUser();
+        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+            tv_subsidy.setText("登录赚佣金");
+        } else {
+            if (C.UserType.operator.equals(UserLocalData.getUser(this).getPartner())
+                    || C.UserType.vipMember.equals(UserLocalData.getUser(this).getPartner())) {
+                tv_subsidy.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mGoodsInfo.getTkMoney() + "") + "元");
+            }
+        }
+
+        tv_buy.setOnClickListener(new View.OnClickListener() {//购买
+            @Override
+            public void onClick(View v) {
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey(VideoActivity.this);
+                } else {
+                    if (isGoodsLose(mGoodsInfo)) return;
+
+                    if (mTKLBean == null) {
+                        LoadingView.showDialog(VideoActivity.this, "");
+                        GoodsUtil.getTaoKouLing( VideoActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
+                            @Override
+                            public void invoke(TKLBean arg) {
+                                mTKLBean = arg;
+                            }
+
+                            @Override
+                            public void onError() {
+                            }
+                        });
+                    } else {
+                        ShareMoneyActivity.start(VideoActivity.this, mGoodsInfo, mTKLBean);
+                    }
+                }
+            }
+        });
+
+        tv_share.setOnClickListener(new View.OnClickListener() {//分享
+            @Override
+            public void onClick(View v) {
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey( VideoActivity.this);
+                } else {
+                    GoodsUtil.getCouponInfo(VideoActivity.this, mGoodsInfo);
+                }
+
+            }
+        });
+
+
+
     }
 
     /**
@@ -224,7 +338,6 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         if (mVideoView != null) {
             mVideoView.pause();
             currentPosition = mVideoView.getCurrentPosition();
-            Log.e("ko", "2");
         }
     }
 
@@ -234,7 +347,6 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         if (mVideoView != null) {
             mVideoView.stopPlayback();
             mVideoView = null;
-            Log.e("ko", "3");
         }
     }
 
@@ -274,5 +386,35 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                 .getVideoGoods(requestBean)
                 .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
+    }
+
+    /**
+     * 商品是否过期
+     *
+     * @return
+     * @param mGoodsInfo
+     */
+    private boolean isGoodsLose(ShopGoodInfo mGoodsInfo) {
+        if (!LoginUtil.checkIsLogin(this)) {
+            return true;
+        }
+        if (AppUtil.isFastClick(200)) {
+            return true;
+        }
+        if (mGoodsInfo == null) {
+            return true;
+        }
+        if (TextUtils.isEmpty(mGoodsInfo.getPrice())) {
+            ViewShowUtils.showLongToast(this, "商品已经过期，请联系管理员哦");
+            return true;
+        }
+        return false;
+    }
+
+    //淘宝详情
+    private Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservable(BaseActivity rxActivity, ShopGoodInfo goodsInfo) {
+        return RxHttp.getInstance().getCommonService().getDetailData(new RequestItemSourceId().setItemSourceId(goodsInfo.getItemSourceId()).setItemFrom(goodsInfo.getItemFrom()))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
 }

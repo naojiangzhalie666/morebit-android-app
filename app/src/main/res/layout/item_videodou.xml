@@ -130,6 +130,7 @@
 
     </LinearLayout>
     <RelativeLayout
+        android:visibility="invisible"
         android:id="@+id/rl_goods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

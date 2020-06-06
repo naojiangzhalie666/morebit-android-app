@@ -102,19 +102,19 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
         mGoodsInfo.setSaleMonth(TextUtils.isEmpty(mGoodsInfo.getSaleMonth()) ? "0" : mGoodsInfo.getSaleMonth());
         mGoodsInfo.setCouponUrl(mGoodsInfo.getCouponUrl());
         mGoodsInfo.setCommission(mGoodsInfo.getTkMoney());
-        Log.e("ko",mGoodsInfo.getItemPrice()+"");
-        Log.e("ko",mGoodsInfo.getPrice()+"");
-        Log.e("ko",mGoodsInfo.getItemVoucherPrice()+"");
-        indexbannerdataArray.clear();
-        ImageInfo imageInfo = new ImageInfo();
-        imageInfo.setThumb(mGoodsInfo.getItemPic());
-        indexbannerdataArray.add(imageInfo);
-        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
-        if (mGoodsInfo.getColler()==0){
-            holder.img_collect.setImageResource(R.mipmap.video_unselect);
-        }else{
-            holder.img_collect.setImageResource(R.mipmap.video_select);
-        }
+//        Log.e("ko",mGoodsInfo.getItemPrice()+"");
+//        Log.e("ko",mGoodsInfo.getPrice()+"");
+//        Log.e("ko",mGoodsInfo.getItemVoucherPrice()+"");
+//        indexbannerdataArray.clear();
+//        ImageInfo imageInfo = new ImageInfo();
+//        imageInfo.setThumb(mGoodsInfo.getItemPic());
+//        indexbannerdataArray.add(imageInfo);
+//        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
+//        if (mGoodsInfo.getColler()==0){
+//            holder.img_collect.setImageResource(R.mipmap.video_unselect);
+//        }else{
+//            holder.img_collect.setImageResource(R.mipmap.video_select);
+//        }
         LoadImgUtils.loadingCornerTop(context, holder.first_img,mGoodsInfo.getItemVideoPic(),0);
         holder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {//监听视频是否渲染
             @Override
@@ -152,7 +152,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
             }
         });
 
-        LoadImgUtils.loadingCornerBitmap(context, holder.iv_head, mGoodsInfo.getItemPic());
+       /* LoadImgUtils.loadingCornerBitmap(context, holder.iv_head, mGoodsInfo.getItemPic());
         holder.tv_title.setText(mGoodsInfo.getItemTitle());
         holder.tv_price.setText(mGoodsInfo.getCouponMoney() + "元劵");
         holder.tv_num.setText("销量：" + mGoodsInfo.getItemSale());
@@ -206,7 +206,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                 }
 
             }
-        });
+        });*/
 
         holder.ll_share.setOnClickListener(new View.OnClickListener() {//分享
             @Override
