@@ -680,23 +680,24 @@ public class BannerInitiateUtils {
 //                        CountEvent cEvent = new CountEvent("1000");
 //                        cEvent.addKeyValue("1000","value1").addKeyValue("key2","value2");
 //                        JAnalyticsInterface.onEvent(getActivity(), cEvent);
-                        if (data.get(position).getOpen()==3){
-                            getJpBanner((BaseActivity) activity,data.get(position).getType(),data.get(position).getUrl(),data.get(position));
-                        }else{
-                            ImageInfo imageInfo = data.get(position);
-                            String mudule = "";
-                            if (bannerId == R.id.roll_view_pager) {
-                                mudule = C.BigData.AD_A;
-                            } else if (bannerId == R.id.banner_offical) {
-                                mudule = C.BigData.AD_B;
-                            } else if (bannerId == R.id.banner_make_money) {
-                                mudule = C.BigData.AD_C;
+                        if (LoginUtil.checkIsLogin(activity)) {
+                            if (data.get(position).getOpen() == 3) {
+                                getJpBanner((BaseActivity) activity, data.get(position).getType(), data.get(position).getUrl(), data.get(position));
+                            } else {
+                                ImageInfo imageInfo = data.get(position);
+                                String mudule = "";
+                                if (bannerId == R.id.roll_view_pager) {
+                                    mudule = C.BigData.AD_A;
+                                } else if (bannerId == R.id.banner_offical) {
+                                    mudule = C.BigData.AD_B;
+                                } else if (bannerId == R.id.banner_make_money) {
+                                    mudule = C.BigData.AD_C;
+                                }
+                                SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(), imageInfo.getId() + "", imageInfo.getOpen() + "", mudule, position, imageInfo.getClassId() + "", imageInfo.getUrl());
+                                BannerInitiateUtils.gotoAction(activity, imageInfo);
+
                             }
-                            SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(), imageInfo.getId() + "", imageInfo.getOpen() + "", mudule, position, imageInfo.getClassId() + "", imageInfo.getUrl());
-                            BannerInitiateUtils.gotoAction(activity, imageInfo);
-
                         }
-
                     }
                 })
                 .isAutoPlay(true)
