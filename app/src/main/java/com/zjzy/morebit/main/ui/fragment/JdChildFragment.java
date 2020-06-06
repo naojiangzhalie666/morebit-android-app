@@ -246,7 +246,7 @@ public class JdChildFragment extends BaseMainFragmeng {
                         swipeRefreshLayout.setRefreshing(false);
 
                             if (data != null && data.size() != 0) {
-                              BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner);
+                              BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner,true);
                             }else{
                                 ar_title_banner.setVisibility(View.GONE);
                             }
