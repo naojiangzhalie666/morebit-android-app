@@ -1,5 +1,6 @@
 package com.zjzy.morebit.goodsvideo.adapter;
 
+import android.content.Context;
 import android.view.View;
 
 public interface OnViewPagerListener {
@@ -16,5 +17,5 @@ public interface OnViewPagerListener {
     /**
      * 选中
      */
-    void onPageSelected(int position, boolean isBottom, View view);
+    void onPageSelected(int position, boolean isBottom, View view, Context context);
 }

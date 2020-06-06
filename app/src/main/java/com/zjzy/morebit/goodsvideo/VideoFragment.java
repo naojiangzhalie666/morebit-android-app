@@ -138,7 +138,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
         if (shopGoodInfo!=null&& shopGoodInfo.size() != 0){
             searchNullTips_ly.setVisibility(View.GONE);
             if (page==1){
-                videoGoodsAdapter = new VideoGoodsAdapter(getActivity(),shopGoodInfo);
+                videoGoodsAdapter = new VideoGoodsAdapter(getActivity(),shopGoodInfo,cid,page);
                 rcy_videclass.setAdapter(videoGoodsAdapter);
             }else{
 

@@ -11,9 +11,11 @@ public class PagerLayoutManager  extends LinearLayoutManager {
     private OnViewPagerListener mOnViewPagerListener;
     private RecyclerView mRecyclerView;
     private int mDrift;//位移，用来判断移动方向
+    private Context context;
 
     public PagerLayoutManager(Context context, int orientation) {
         super(context, orientation, false);
+        this.context=context;
         init();
     }
 
@@ -55,7 +57,7 @@ public class PagerLayoutManager  extends LinearLayoutManager {
                 if (viewIdle != null) {
                     int positionIdle = getPosition(viewIdle);
                     if (mOnViewPagerListener != null && getChildCount() == 1) {
-                        mOnViewPagerListener.onPageSelected(positionIdle, positionIdle == getItemCount() - 1, viewIdle);
+                        mOnViewPagerListener.onPageSelected(positionIdle, positionIdle == getItemCount() - 1, viewIdle,context);
                     }
                 }
                 break;

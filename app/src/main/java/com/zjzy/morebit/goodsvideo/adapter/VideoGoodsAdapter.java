@@ -29,9 +29,14 @@ import java.util.List;
 public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.ViewHolder> {
     private Context context;
     private List<ShopGoodInfo> list;
-    public VideoGoodsAdapter(Context context,List<ShopGoodInfo> list) {
+    private String cid;
+    private  int page;
+
+    public VideoGoodsAdapter(Context context, List<ShopGoodInfo> list, String cid, int page) {
         this.context = context;
         this.list = list;
+        this.cid=cid;
+        this.page=page;
     }
 
 
@@ -103,7 +108,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoActivity.start(context, (List<ShopGoodInfo>) list,position);
+                VideoActivity.start(context, (List<ShopGoodInfo>) list,position,cid,page);
             }
         });
 

@@ -80,7 +80,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoActivity.start(context,(List<ShopGoodInfo>)list,position);
+                VideoActivity.start(context,(List<ShopGoodInfo>)list,position,"0",1);
             }
         });
 
