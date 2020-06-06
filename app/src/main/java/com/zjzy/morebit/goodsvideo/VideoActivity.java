@@ -15,12 +15,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -29,6 +31,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.goodsvideo.adapter.OnViewPagerListener;
 import com.zjzy.morebit.goodsvideo.adapter.PagerLayoutManager;
 import com.zjzy.morebit.goodsvideo.adapter.VideoDouAdapter;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.TKLBean;
@@ -56,11 +59,12 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private Bundle bundle;
     private VideoDouAdapter douAdapter;
     private RecyclerView rcy_video;
-    private List<ShopGoodInfo> data=new ArrayList<>();
+    private List<ShopGoodInfo> data = new ArrayList<>();
     private VideoView mVideoView;
     private int videoId;
     private int mCurPos;
-    private ImageView closs,first_img;
+    private ImageView closs, first_img;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +84,12 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
 
     private void initView() {
         ActivityStyleUtil.initSystemBar(VideoActivity.this, R.color.black); //设置标题栏颜色值
-        rcy_video= (RecyclerView) findViewById(R.id.rcy_video);
+        rcy_video = (RecyclerView) findViewById(R.id.rcy_video);
         closs = (ImageView) findViewById(R.id.closs);
+
+
         closs.setOnClickListener(this);
-        douAdapter = new VideoDouAdapter(this,data);
+        douAdapter = new VideoDouAdapter(this, data);
         PagerLayoutManager mLayoutManager = new PagerLayoutManager(this, OrientationHelper.VERTICAL);
         rcy_video.setLayoutManager(mLayoutManager);
         rcy_video.setAdapter(douAdapter);
@@ -133,12 +139,13 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private void playVideo(int position, View view) {
         if (view != null) {
             mVideoView = view.findViewById(R.id.videoView);
-            first_img=view.findViewById(R.id.first_img);
+            first_img = view.findViewById(R.id.first_img);
             Uri uri = Uri.parse(data.get(position).getItemVideo());
             mVideoView.setVideoURI(uri);
             mVideoView.requestFocus();
             mVideoView.start();
             mCurPos = position;
+
 
         }
     }
@@ -174,11 +181,11 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         super.onDestroy();
         if (mVideoView != null) {
             mVideoView.stopPlayback();
-            mVideoView=null;
+            mVideoView = null;
         }
     }
 
-    public static void start(Context context, List<ShopGoodInfo> info,int videoId) {
+    public static void start(Context context, List<ShopGoodInfo> info, int videoId) {
         Intent intent = new Intent((Activity) context, VideoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(C.Extras.GOODSBEAN, (Serializable) info);
@@ -191,7 +198,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         bundle = getIntent().getExtras();
         if (bundle != null) {
             data = (List<ShopGoodInfo>) bundle.getSerializable(C.Extras.GOODSBEAN);
-            videoId= (int) bundle.getSerializable(C.Extras.VIDEOBEAN);
+            videoId = (int) bundle.getSerializable(C.Extras.VIDEOBEAN);
         }
     }
 

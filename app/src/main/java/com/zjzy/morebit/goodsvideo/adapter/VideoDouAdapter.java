@@ -35,6 +35,7 @@ import com.zjzy.morebit.contact.SdDirPath;
 import com.zjzy.morebit.fragment.CircleDayHotFragment;
 import com.zjzy.morebit.goodsvideo.VideoActivity;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.MarkermallCircleItemInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
@@ -73,6 +74,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
     private CommercialShareDialog shareDialog;
     private FileDownloadListener downloadListener  = createLis();
     private String path,template ;
+    List<ImageInfo> indexbannerdataArray = new ArrayList<>();
 
     public VideoDouAdapter(Context context,List<ShopGoodInfo> data) {
         this.context = context;
@@ -94,12 +96,17 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
         mGoodsInfo.setItemTitle(mGoodsInfo.getItemTitle());
         mGoodsInfo.setItemDesc(mGoodsInfo.getItemDesc());
         mGoodsInfo.setItemPicture(mGoodsInfo.getItemPic());
-        mGoodsInfo.setItemPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
+        mGoodsInfo.setPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
         mGoodsInfo.setCouponPrice(mGoodsInfo.getCouponMoney());
         mGoodsInfo.setItemVoucherPrice(mGoodsInfo.getItemPrice());
         mGoodsInfo.setSaleMonth(TextUtils.isEmpty(mGoodsInfo.getSaleMonth()) ? "0" : mGoodsInfo.getSaleMonth());
         mGoodsInfo.setCouponUrl(mGoodsInfo.getCouponUrl());
         mGoodsInfo.setCommission(mGoodsInfo.getTkMoney());
+        indexbannerdataArray.clear();
+        ImageInfo imageInfo = new ImageInfo();
+        imageInfo.setThumb(mGoodsInfo.getItemPic());
+        indexbannerdataArray.add(imageInfo);
+        mGoodsInfo.setAdImgUrl(indexbannerdataArray);
         if (mGoodsInfo.getColler()==0){
             holder.img_collect.setImageResource(R.mipmap.video_unselect);
         }else{
