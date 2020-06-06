@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -37,6 +39,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
     private int page=1;
     private List<ShopGoodInfo>  list;
     private SwipeRefreshLayout  swipeList;
+    private LinearLayout searchNullTips_ly;
 
 
     public static VideoFragment newInstance(String name,String id) {
@@ -79,6 +82,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
         }
         rcy_videclass = view.findViewById(R.id.rcy_videclass);
         swipeList=view.findViewById(R.id.swipeList);
+        searchNullTips_ly=view.findViewById(R.id.searchNullTips_ly);
 
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         //设置图标的间距
@@ -131,20 +135,26 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
     @Override
     public void onVideoGoodsSuccess(List<ShopGoodInfo> shopGoodInfo) {
         list=  shopGoodInfo;
-        if (page==1){
-            videoGoodsAdapter = new VideoGoodsAdapter(getActivity(),shopGoodInfo);
-            rcy_videclass.setAdapter(videoGoodsAdapter);
-        }else{
+        if (shopGoodInfo!=null&& shopGoodInfo.size() != 0){
+            searchNullTips_ly.setVisibility(View.GONE);
+            if (page==1){
+                videoGoodsAdapter = new VideoGoodsAdapter(getActivity(),shopGoodInfo);
+                rcy_videclass.setAdapter(videoGoodsAdapter);
+            }else{
 
-            videoGoodsAdapter.loadMore(list);
-            swipeList.finishLoadMore(false);
+                videoGoodsAdapter.loadMore(list);
+                swipeList.finishLoadMore(false);
+            }
+        }else{
+            searchNullTips_ly.setVisibility(View.VISIBLE);
         }
+
 
 
     }
 
     @Override
     public void onVideoGoodsError() {
-
+        searchNullTips_ly.setVisibility(View.VISIBLE);
     }
 }

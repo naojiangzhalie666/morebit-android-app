@@ -18,4 +18,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/searchNullTips_ly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_meiyousousuojilu"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="下次看到喜欢的东西赶紧下手哦"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+    </LinearLayout>
 </FrameLayout>
