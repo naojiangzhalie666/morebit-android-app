@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
+import android.os.StrictMode;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
@@ -577,27 +578,40 @@ public class ShareUtil {
             } else {
                 uri = Uri.fromFile(file);
             }
-//            ComponentName comp = new ComponentName("com.tencent.mobileqq","com.tencent.mobileqq.activity.JumpActivity");
-//            share.putExtra(Intent.EXTRA_STREAM, uri);
-//           share.setType(getMimeType(file.getAbsolutePath()));//此处可发送多种文件
-//            share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//            share.setComponent(comp);
-//            context.startActivity(share);
-
-
-
-            sendIntent.setAction(Intent.ACTION_SEND);
+            checkFileUriExposure();
+           // ComponentName comp = new ComponentName("com.tencent.mobileqq","com.tencent.mobileqq.activity.JumpActivity");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            sendIntent.setType(getMimeType(file.getAbsolutePath()));//此处可发送多种文件
             sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-            sendIntent.setType(getMimeType(file.getAbsolutePath()));
-            sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");//QQ好友或QQ群
-            context.startActivity(sendIntent);
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+           // sendIntent.setComponent(comp);
+            context.startActivity(Intent.createChooser(sendIntent, "多点优选"));
+
+
+
+//            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+//            sendIntent.setType(getMimeType(file.getAbsolutePath()));
+//            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//          sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");//QQ好友或QQ群
+//            context.startActivity(sendIntent);
 
        }
 
 
     }
+
+
+    private static void checkFileUriExposure() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            builder.detectFileUriExposure();
+        }
+
+    }
+
     // 根据文件后缀名获得对应的MIME类型。
     private static String getMimeType(String filePath) {
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
