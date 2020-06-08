@@ -145,7 +145,6 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
                 }
             }
         });
-
        /* LoadImgUtils.loadingCornerBitmap(context, holder.iv_head, mGoodsInfo.getItemPic());
         holder.tv_title.setText(mGoodsInfo.getItemTitle());
         holder.tv_price.setText(mGoodsInfo.getCouponMoney() + "元劵");
