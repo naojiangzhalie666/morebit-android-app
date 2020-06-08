@@ -76,7 +76,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
             holder.iv_head.setTag(null);//需要清空tag，否则报错
             LoadImgUtils.loadingCornerTop(context, holder.iv_head, list.get(position).getItemPic(), 5);
         }
-        holder.tv_num.setText(MathUtils.getSales(videoBean.getDyLikeCount()));
+        holder.tv_num.setText(MathUtils.getSale(videoBean.getDyLikeCount()));
 
         holder.commission.setText(list.get(position).getCouponMoney() + "元劵");
         holder.tv_price.setText("" + list.get(position).getItemPrice());

@@ -54,7 +54,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
         videoBean.setItemSourceId(list.get(position).getItemId());
 
         holder.tv_title.setText(list.get(position).getItemTitle());
-        holder.tv_num.setText(MathUtils.getSales(videoBean.getDyLikeCount()));
+        holder.tv_num.setText(MathUtils.getSale(videoBean.getDyLikeCount()));
         //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());
         LoadImgUtils.loadingCornerTop(context, holder.iv_head,list.get(position).getItemPic(),5);
         holder.commission.setText(list.get(position).getCouponMoney()+"元劵");

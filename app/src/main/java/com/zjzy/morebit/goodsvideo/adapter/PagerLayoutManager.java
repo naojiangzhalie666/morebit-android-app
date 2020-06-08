@@ -57,7 +57,7 @@ public class PagerLayoutManager  extends LinearLayoutManager {
                 if (viewIdle != null) {
                     int positionIdle = getPosition(viewIdle);
                     if (mOnViewPagerListener != null && getChildCount() == 1) {
-                        mOnViewPagerListener.onPageSelected(positionIdle, positionIdle == getItemCount() - 1, viewIdle,context);
+                        mOnViewPagerListener.onPageSelected(positionIdle, positionIdle == getItemCount() - 2, viewIdle,context);
                     }
                 }
                 break;

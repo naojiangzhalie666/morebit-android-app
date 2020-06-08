@@ -116,10 +116,13 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         tv_coupon_price = (TextView) findViewById(R.id.tv_coupon_price);//商品价格
         tv_buy = (TextView) findViewById(R.id.tv_buy);//立即购买
         tv_share = (TextView) findViewById(R.id.tv_share);//分享
+
         douAdapter = new VideoDouAdapter(this, data);
         mLayoutManager = new PagerLayoutManager(this, OrientationHelper.VERTICAL);
         rcy_video.setLayoutManager(mLayoutManager);
         rcy_video.setAdapter(douAdapter);
+        rcy_video.scrollToPosition(videoId);
+        tv_coupon_price.setText(data.get(videoId).getItemPrice() + "");
         mLayoutManager.setOnViewPagerListener(new OnViewPagerListener() {
             @Override
             public void onInitComplete(View view) {
@@ -127,9 +130,8 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
             }
 
             @Override
-            public void onPageSelected(int position, boolean isBottom, View view, Context context) {
-                if (mCurPos == position) return;
-                playVideo(position, view);
+            public void onPageSelected(final int position, boolean isBottom, final View view, Context context) {
+
                 if (isBottom) {
                     page++;
                     getVideoGoods((BaseActivity) context, cid, page)
@@ -150,6 +152,11 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                         }
                     });
                 }
+                    if (mCurPos == position) return;
+                    playVideo(position, view);
+
+
+
             }
 
             @Override
@@ -164,16 +171,12 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-        rcy_video.scrollToPosition(videoId);
-        tv_coupon_price.setText(data.get(videoId).getItemPrice() + "");
-      //  goodsDetais(videoId);
+
 
     }
 
     private void onVideoGoodsSuccess(List<ShopGoodInfo> mdata) {
         data.addAll(mdata);
-        douAdapter.notifyDataSetChanged();
-
     }
 
     private void onVideoGoodsError() {
@@ -300,17 +303,17 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                 if (TaobaoUtil.isAuth()) {//淘宝授权
                     TaobaoUtil.getAllianceAppKey(VideoActivity.this);
                 } else {
-                    if (isGoodsLose(mGoodsInfo)) return;
-
-
+                    if (isGoodsLose(mGoodsInfo)){
+                        return;
+                    }
                         LoadingView.showDialog(VideoActivity.this, "");
                         GoodsUtil.getTaoKouLing(VideoActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
                             @Override
                             public void invoke(TKLBean arg) {
                                 mTKLBean = arg;
-                                if (mTKLBean!=null){
-                                    ShareMoneyActivity.start(VideoActivity.this, mGoodsInfo, mTKLBean);
-                                }
+//                                if (mTKLBean!=null){
+//                                    ShareMoneyActivity.start(VideoActivity.this, mGoodsInfo, mTKLBean);
+//                                }
 
                             }
 
