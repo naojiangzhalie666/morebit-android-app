@@ -1,5 +1,6 @@
 package com.zjzy.morebit.goodsvideo.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 
@@ -103,7 +105,10 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoActivity.start(context, (List<ShopGoodInfo>) list,position,cid,page);
+                if (LoginUtil.checkIsLogin((Activity) context)) {
+                    VideoActivity.start(context, (List<ShopGoodInfo>) list,position,cid,page);
+                }
+
             }
         });
 

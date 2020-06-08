@@ -1,5 +1,6 @@
 package com.zjzy.morebit.home.adpater;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -19,8 +20,10 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.VideoBean;
+import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 
 import java.util.ArrayList;
@@ -75,7 +78,10 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoActivity.start(context,(List<ShopGoodInfo>)list,position,"0",1);
+                if (LoginUtil.checkIsLogin((Activity) context)) {
+                    VideoActivity.start(context,(List<ShopGoodInfo>)list,position,"0",1);
+                }
+
             }
         });
 
