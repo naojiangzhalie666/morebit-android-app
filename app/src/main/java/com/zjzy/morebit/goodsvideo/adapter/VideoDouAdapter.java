@@ -92,19 +92,12 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final ShopGoodInfo mGoodsInfo=data.get(position);
-        mGoodsInfo.setItemSourceId(mGoodsInfo.getItemId());
-        mGoodsInfo.setItemTitle(mGoodsInfo.getItemTitle());
-        mGoodsInfo.setItemDesc(mGoodsInfo.getItemDesc());
-        mGoodsInfo.setItemPicture(mGoodsInfo.getItemPic());
-        mGoodsInfo.setItemPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
-        mGoodsInfo.setCouponPrice(mGoodsInfo.getCouponMoney());
-        mGoodsInfo.setItemVoucherPrice(mGoodsInfo.getItemPrice());
-        mGoodsInfo.setSaleMonth(TextUtils.isEmpty(mGoodsInfo.getSaleMonth()) ? "0" : mGoodsInfo.getSaleMonth());
-        mGoodsInfo.setCouponUrl(mGoodsInfo.getCouponUrl());
-        mGoodsInfo.setCommission(mGoodsInfo.getTkMoney());
-//        Log.e("ko",mGoodsInfo.getItemPrice()+"");
-//        Log.e("ko",mGoodsInfo.getPrice()+"");
-//        Log.e("ko",mGoodsInfo.getItemVoucherPrice()+"");
+
+       // mGoodsInfo.setPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
+
+        Log.e("ko",mGoodsInfo.getItemPrice()+"r");
+        Log.e("ko",mGoodsInfo.getPrice()+"t");
+        Log.e("ko",mGoodsInfo.getItemVoucherPrice()+"y");
 //        indexbannerdataArray.clear();
 //        ImageInfo imageInfo = new ImageInfo();
 //        imageInfo.setThumb(mGoodsInfo.getItemPic());
@@ -350,7 +343,7 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
     public void getTemplate(final ShopGoodInfo mGoodsInfo) {
 
         LoadingView.showDialog(context, "请求中...");
-        GoodsUtil.getGetTkLFinalObservable((RxAppCompatActivity) context, mGoodsInfo)
+        GoodsUtil.getGetTkObservable((RxAppCompatActivity) context, mGoodsInfo)
                 .subscribe(new DataObserver<TKLBean>() {
                     @Override
                     protected void onSuccess(TKLBean data) {

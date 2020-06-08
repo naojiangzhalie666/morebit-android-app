@@ -3,6 +3,7 @@ package com.zjzy.morebit.Module.common.Dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +41,8 @@ public class VideoShareDialog extends Dialog {
     private void initView() {
         btn_ok = findViewById(R.id.btn_ok);
         tv_share=findViewById(R.id.tv_share);
+        TextPaint tp = btn_ok.getPaint();
+        tp.setFakeBoldText(true);
         close=findViewById(R.id.close);
         tv_share.setText(title);
         btn_ok.setOnClickListener(new View.OnClickListener() {

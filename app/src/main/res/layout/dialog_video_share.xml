@@ -59,7 +59,6 @@ pkaname=com. zizv. .morebit"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="立即分享"
-                android:textStyle="bold"
                 android:textColor="#ffffffff"
                 android:textSize="16sp" />
 

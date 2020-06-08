@@ -590,7 +590,7 @@ public class ShareUtil {
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-            sendIntent.setType("*/*");
+            sendIntent.setType(getMimeType(file.getAbsolutePath()));
             sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");//QQ好友或QQ群
             context.startActivity(sendIntent);
 

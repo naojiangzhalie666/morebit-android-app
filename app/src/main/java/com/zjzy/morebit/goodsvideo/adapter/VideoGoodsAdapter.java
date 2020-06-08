@@ -67,12 +67,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
 //        shopGoodInfo.setItemSourceId(list.get(position).getItemId());
         final ShopGoodInfo videoBean = list.get(position);
         videoBean.setItemSourceId(list.get(position).getItemId());
-        videoBean.setItemVoucherPrice(list.get(position).getItemPrice());
-        ImageInfo imglist=new ImageInfo();
-        imglist.setThumb(list.get(position).getItemPic());
-        List<ImageInfo> mlist=new ArrayList<>();
-        mlist.add(imglist);
-        videoBean.setAdImgUrl(mlist);
+
        // holder.tv_title.setText(list.get(position).getItemTitle());
         StringsUtils.retractTitle( holder.img, holder.tv_title,list.get(position).getItemTitle());
         //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());

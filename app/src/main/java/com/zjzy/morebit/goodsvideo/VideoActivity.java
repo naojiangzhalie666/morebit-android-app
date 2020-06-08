@@ -52,6 +52,7 @@ import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
+import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 
@@ -73,18 +74,17 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private RecyclerView rcy_video;
     private List<ShopGoodInfo> data = new ArrayList<>();
     private VideoView mVideoView;
-    private int videoId,page;
+    private int videoId, page;
     private int mCurPos;
-    private ImageView closs, first_img,img_stop;
+    private ImageView closs, first_img, img_stop;
     private int currentPosition;
-    private  PagerLayoutManager mLayoutManager;
+    private PagerLayoutManager mLayoutManager;
     private String cid;
     private TextView tv_title, tv_price, tv_subsidy, tv_num, tv_coupon_price, tv_buy, tv_share;
     private VideoView videoView;
-    private ImageView iv_head, img_share,img_collect,img_xia;
+    private ImageView iv_head, img_share, img_collect, img_xia;
     private TKLBean mTKLBean;
     List<ImageInfo> indexbannerdataArray = new ArrayList<>();
-
 
 
     @Override
@@ -109,15 +109,15 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         closs = (ImageView) findViewById(R.id.closs);
         closs.setOnClickListener(this);
         iv_head = (ImageView) findViewById(R.id.iv_head);//主图
-        tv_title = (TextView)findViewById(R.id.tv_title);//标题
-        tv_price = (TextView)findViewById(R.id.tv_price);//优惠券
-        tv_subsidy = (TextView)findViewById(R.id.tv_subsidy);//预估收益
-        tv_num = (TextView)findViewById(R.id.tv_num);//销量
-        tv_coupon_price = (TextView)findViewById(R.id.tv_coupon_price);//商品价格
-        tv_buy = (TextView)findViewById(R.id.tv_buy);//立即购买
-        tv_share = (TextView)findViewById(R.id.tv_share);//分享
+        tv_title = (TextView) findViewById(R.id.tv_title);//标题
+        tv_price = (TextView) findViewById(R.id.tv_price);//优惠券
+        tv_subsidy = (TextView) findViewById(R.id.tv_subsidy);//预估收益
+        tv_num = (TextView) findViewById(R.id.tv_num);//销量
+        tv_coupon_price = (TextView) findViewById(R.id.tv_coupon_price);//商品价格
+        tv_buy = (TextView) findViewById(R.id.tv_buy);//立即购买
+        tv_share = (TextView) findViewById(R.id.tv_share);//分享
         douAdapter = new VideoDouAdapter(this, data);
-          mLayoutManager = new PagerLayoutManager(this, OrientationHelper.VERTICAL);
+        mLayoutManager = new PagerLayoutManager(this, OrientationHelper.VERTICAL);
         rcy_video.setLayoutManager(mLayoutManager);
         rcy_video.setAdapter(douAdapter);
         mLayoutManager.setOnViewPagerListener(new OnViewPagerListener() {
@@ -127,12 +127,12 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
             }
 
             @Override
-            public void onPageSelected(int position, boolean isBottom, View view,Context context) {
+            public void onPageSelected(int position, boolean isBottom, View view, Context context) {
                 if (mCurPos == position) return;
                 playVideo(position, view);
-                if (isBottom){
+                if (isBottom) {
                     page++;
-                    getVideoGoods((BaseActivity) context,cid,page)
+                    getVideoGoods((BaseActivity) context, cid, page)
                             .doFinally(new Action() {
                                 @Override
                                 public void run() throws Exception {
@@ -165,7 +165,8 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         });
 
         rcy_video.scrollToPosition(videoId);
-        goodsDetais(videoId);
+        tv_coupon_price.setText(data.get(videoId).getItemPrice() + "");
+      //  goodsDetais(videoId);
 
     }
 
@@ -198,33 +199,54 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         if (view != null) {
             mVideoView = view.findViewById(R.id.videoView);
             first_img = view.findViewById(R.id.first_img);
-            img_stop=view.findViewById(R.id.img_stop);
+            img_stop = view.findViewById(R.id.img_stop);
             img_stop.setVisibility(View.GONE);
             Uri uri = Uri.parse(data.get(position).getItemVideo());
             mVideoView.setVideoURI(uri);
             mVideoView.requestFocus();
             mVideoView.start();
             mCurPos = position;
-           goodsDetais(position);
+            goodsDetais(position);
         }
     }
 
     private void goodsDetais(int position) {
-        final ShopGoodInfo mGoodsInfo=data.get(position);
-        mGoodsInfo.setItemSourceId(mGoodsInfo.getItemId());
-        mGoodsInfo.setItemTitle(mGoodsInfo.getItemTitle());
-        mGoodsInfo.setItemDesc(mGoodsInfo.getItemDesc());
-        mGoodsInfo.setItemPicture(mGoodsInfo.getItemPic());
-        mGoodsInfo.setItemPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
-        mGoodsInfo.setCouponPrice(mGoodsInfo.getCouponMoney());
-        mGoodsInfo.setItemVoucherPrice(mGoodsInfo.getItemPrice());
-        mGoodsInfo.setSaleMonth(TextUtils.isEmpty(mGoodsInfo.getSaleMonth()) ? "0" : mGoodsInfo.getSaleMonth());
-        mGoodsInfo.setCouponUrl(mGoodsInfo.getCouponUrl());
-        mGoodsInfo.setCommission(mGoodsInfo.getTkMoney());
-        Log.e("ko",mGoodsInfo.getItemPrice()+"");
-        Log.e("ko",mGoodsInfo.getPrice()+"");
-        Log.e("ko",mGoodsInfo.getItemVoucherPrice()+"");
+        final ShopGoodInfo mGoodsInfo = data.get(position);
+        if (TextUtils.isEmpty(mGoodsInfo.getVoucherPrice())) {
+            mGoodsInfo.setVoucherPrice(mGoodsInfo.getItemPrice());
+        }
+        if (TextUtils.isEmpty(mGoodsInfo.getItemSourceId())) {
+            mGoodsInfo.setItemSourceId(mGoodsInfo.getItemId());
+        }
+        if (TextUtils.isEmpty(mGoodsInfo.getItemTitle())) {
+            mGoodsInfo.setItemTitle(mGoodsInfo.getItemTitle());
+        }
+        if (TextUtils.isEmpty(mGoodsInfo.getItemDesc())) {
+            mGoodsInfo.setItemDesc(mGoodsInfo.getItemDesc());
+        }
 
+        if (TextUtils.isEmpty(mGoodsInfo.getItemPicture())) {
+            mGoodsInfo.setItemPicture(mGoodsInfo.getItemPic());
+        }
+        if (TextUtils.isEmpty(mGoodsInfo.getCouponPrice())) {
+            mGoodsInfo.setCouponPrice(mGoodsInfo.getCouponMoney());
+        }
+        if (TextUtils.isEmpty(mGoodsInfo.getCouponUrl())) {
+            mGoodsInfo.setCouponUrl(mGoodsInfo.getCouponUrl());
+        }
+
+        if (TextUtils.isEmpty(mGoodsInfo.getCommission())) {
+            mGoodsInfo.setCommission(mGoodsInfo.getTkMoney());
+        }
+        if (!TextUtils.isEmpty(mGoodsInfo.getPrice())){
+            mGoodsInfo.setPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
+        }
+        mGoodsInfo.setSaleMonth(TextUtils.isEmpty(mGoodsInfo.getSaleMonth()) ? "0" : mGoodsInfo.getSaleMonth());
+
+
+        Log.e("ko", mGoodsInfo.getItemPrice() + "q");
+        Log.e("ko", mGoodsInfo.getPrice() + "w");
+        Log.e("ko", mGoodsInfo.getItemVoucherPrice() + "e");
         getBaseResponseObservable(this, mGoodsInfo)
                 .doFinally(new Action() {
                     @Override
@@ -237,13 +259,15 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                     protected void onSuccess(final ShopGoodInfo data) {
                         List<String> getBanner = data.getItemBanner();
                         indexbannerdataArray.clear();
-                        for (int i = 0; i < getBanner.size(); i++) {
-                            String s = StringsUtils.checkHttp(getBanner.get(i));
-                            if (TextUtils.isEmpty(s)) return;
-                            if (LoadImgUtils.isPicture(s)) {
-                                ImageInfo imageInfo = new ImageInfo();
-                                imageInfo.setThumb(getBanner.get(i));
-                                indexbannerdataArray.add(imageInfo);
+                        if (getBanner!=null&&getBanner.size()!=0){
+                            for (int i = 0; i < getBanner.size(); i++) {
+                                String s = StringsUtils.checkHttp(getBanner.get(i));
+                                if (TextUtils.isEmpty(s)) return;
+                                if (LoadImgUtils.isPicture(s)) {
+                                    ImageInfo imageInfo = new ImageInfo();
+                                    imageInfo.setThumb(getBanner.get(i));
+                                    indexbannerdataArray.add(imageInfo);
+                                }
                             }
                         }
                         mGoodsInfo.setAdImgUrl(indexbannerdataArray);
@@ -252,12 +276,11 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
                 });
 
 
-        LoadImgUtils.loadingCornerBitmap(this,iv_head, mGoodsInfo.getItemPic());
+        LoadImgUtils.loadingCornerBitmap(this, iv_head, mGoodsInfo.getItemPic());
         tv_title.setText(mGoodsInfo.getItemTitle());
         tv_price.setText(mGoodsInfo.getCouponMoney() + "元劵");
         tv_num.setText("销量：" + mGoodsInfo.getItemSale());
-        String itemPrice = mGoodsInfo.getItemPrice();
-        tv_coupon_price.setText(mGoodsInfo.getItemVoucherPrice() + "");
+        tv_coupon_price.setText(mGoodsInfo.getVoucherPrice() + "");
         UserInfo userInfo1 = UserLocalData.getUser();
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             tv_subsidy.setText("登录赚佣金");
@@ -271,26 +294,33 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         tv_buy.setOnClickListener(new View.OnClickListener() {//购买
             @Override
             public void onClick(View v) {
+                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                    return;
+                }
                 if (TaobaoUtil.isAuth()) {//淘宝授权
                     TaobaoUtil.getAllianceAppKey(VideoActivity.this);
                 } else {
                     if (isGoodsLose(mGoodsInfo)) return;
 
-                    if (mTKLBean == null) {
+
                         LoadingView.showDialog(VideoActivity.this, "");
-                        GoodsUtil.getTaoKouLing( VideoActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
+                        GoodsUtil.getTaoKouLing(VideoActivity.this, mGoodsInfo, new MyAction.OnResult<TKLBean>() {
                             @Override
                             public void invoke(TKLBean arg) {
                                 mTKLBean = arg;
+                                if (mTKLBean!=null){
+                                    ShareMoneyActivity.start(VideoActivity.this, mGoodsInfo, mTKLBean);
+                                }
+
                             }
 
                             @Override
                             public void onError() {
                             }
                         });
-                    } else {
-                        ShareMoneyActivity.start(VideoActivity.this, mGoodsInfo, mTKLBean);
-                    }
+
+
+
                 }
             }
         });
@@ -299,14 +329,13 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onClick(View v) {
                 if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey( VideoActivity.this);
+                    TaobaoUtil.getAllianceAppKey(VideoActivity.this);
                 } else {
                     GoodsUtil.getCouponInfo(VideoActivity.this, mGoodsInfo);
                 }
 
             }
         });
-
 
 
     }
@@ -350,7 +379,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    public static void start(Context context, List<ShopGoodInfo> info, int videoId,String cid,int page) {
+    public static void start(Context context, List<ShopGoodInfo> info, int videoId, String cid, int page) {
         Intent intent = new Intent((Activity) context, VideoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(C.Extras.GOODSBEAN, (Serializable) info);
@@ -375,7 +404,6 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
      * 获取抖货商品列表
      *
      * @param rxActivity
-     *
      */
     public Observable<BaseResponse<List<ShopGoodInfo>>> getVideoGoods(BaseActivity rxActivity, String catId, int page) {
         RequestVideoGoodsBean requestBean = new RequestVideoGoodsBean();
@@ -391,8 +419,8 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     /**
      * 商品是否过期
      *
-     * @return
      * @param mGoodsInfo
+     * @return
      */
     private boolean isGoodsLose(ShopGoodInfo mGoodsInfo) {
         if (!LoginUtil.checkIsLogin(this)) {

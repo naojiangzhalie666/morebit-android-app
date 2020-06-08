@@ -66,7 +66,7 @@
             android:lineSpacingMultiplier="1.2"
             tools:text="抖音强烈推荐…"
             android:textColor="#ff333333"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 
 

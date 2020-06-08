@@ -145,8 +145,6 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
                 videoGoodsAdapter.loadMore(list);
                 swipeList.finishLoadMore(false);
             }
-        }else{
-            searchNullTips_ly.setVisibility(View.VISIBLE);
         }
 
 
