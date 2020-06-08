@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -26,6 +27,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.utils.SpaceItemDecorationUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +39,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
     private String cid="1";
     private VideoGoodsAdapter videoGoodsAdapter;
     private int page=1;
-    private List<ShopGoodInfo>  list;
+    private List<ShopGoodInfo>  list=new ArrayList<>();
     private SwipeRefreshLayout  swipeList;
     private LinearLayout searchNullTips_ly;
 
@@ -145,6 +147,8 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
                 videoGoodsAdapter.loadMore(list);
                 swipeList.finishLoadMore(false);
             }
+        }else{
+            swipeList.finishLoadMore(false);
         }
 
 
@@ -153,6 +157,12 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
 
     @Override
     public void onVideoGoodsError() {
-        searchNullTips_ly.setVisibility(View.VISIBLE);
+        swipeList.finishLoadMore(false);
+        if (page==1){
+            searchNullTips_ly.setVisibility(View.VISIBLE);
+        }else{
+            searchNullTips_ly.setVisibility(View.GONE);
+        }
+
     }
 }
