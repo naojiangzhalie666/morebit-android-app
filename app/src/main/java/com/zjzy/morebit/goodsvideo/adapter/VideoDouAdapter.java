@@ -22,8 +22,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.iceteck.silicompressorr.SiliCompressor;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
