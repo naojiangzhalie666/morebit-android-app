@@ -198,6 +198,7 @@ public class KoalaWebActivity extends BaseActivity {
                 try {
 
                     if (!TextUtils.isEmpty(newurl)) {
+                        Log.e("uuuu",newurl+"列表");
                         if (newurl.contains("https://m-goods.kaola.com/product/")) {
                             String shopid = "";
                             String substring = newurl.substring(0, newurl.indexOf(".html"));
@@ -241,6 +242,17 @@ public class KoalaWebActivity extends BaseActivity {
                                         }
                                     });
                             return true;
+                        }else{
+                            if (newurl.contains("https://m.vip.com/product")) {
+                                String shopid = "";
+                                String substring = newurl.substring(newurl.indexOf("-"),newurl.indexOf("html"));
+                                String substring2=substring.substring(newurl.indexOf("-"),newurl.indexOf("-"));
+                              //  String substring2 = newurl.substring(0, newurl.indexOf("-"));
+                                shopid = substring.replace("https://m.vip.com/product-", "");
+                                Log.e("uuuu",shopid+"列表");
+                                Log.e("uuuu",substring+"列表");
+                                Log.e("uuuu",substring2+"列表");
+                            }
                         }
 
                         }

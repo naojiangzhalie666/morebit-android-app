@@ -143,8 +143,12 @@ public class BannerInitiateUtils {
                     if (TaobaoUtil.isAuth()) {//淘宝授权
                         TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
                     } else {
-                        //跳转到网页
-                        showWebIntent(activity, imageInfo);
+                        if ("唯品会".equals(imageInfo.getTitle())){
+                            KoalaWebActivity.start(activity, imageInfo.getUrl(), imageInfo.getTitle());
+                        }else{
+                            //跳转到网页
+                            showWebIntent(activity, imageInfo);
+                        }
                     }
 //                }else{
 //                    //跳转到网页
