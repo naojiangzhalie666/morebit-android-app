@@ -15,6 +15,7 @@ import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -153,6 +154,8 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                     mPresenter.getDetailDataForJd(OrderListFragment.this, info);
                 }else if (mTeamType == 5){
                     GoodsDetailForKoalaActivity.start(getActivity(),mListArray.get(position).getItemId());
+                }else if (mTeamType == 6){
+                    GoodsDetailForWphActivity.start(getActivity(),mListArray.get(position).getItemId());
                 }else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     if (mListArray.get(position).isSelf()){

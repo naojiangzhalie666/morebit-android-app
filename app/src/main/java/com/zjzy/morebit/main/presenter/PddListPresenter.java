@@ -18,6 +18,7 @@ import com.zjzy.morebit.pojo.ShopGoodBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UI.BaseTitleTabBean;
 import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
+import com.zjzy.morebit.pojo.request.ProgramWphBean;
 import com.zjzy.morebit.pojo.request.RequestSearchBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.fire.DeviceIDUtils;
@@ -93,6 +94,37 @@ public class PddListPresenter extends MvpPresenter<MainModel, PddContract.View> 
         getObservable(loadType, observable);
     }
 
+    @Override
+    public void getWphGoodList(RxFragment rxFragmen, ProgramWphBean programCatItemBean, int loadType) {
+        Observable<BaseResponse<List<ShopGoodInfo>>> observable = null;
+        observable = mModel.getWphGoodsList(rxFragmen, programCatItemBean);
+        getWphObservable(loadType, observable);
+    }
+
+
+    private void getWphObservable(final int loadType, Observable<BaseResponse<List<ShopGoodInfo>>> observable) {
+        if (observable == null) {
+            getIView().showFinally();
+            return;
+        }
+        observable.doFinally(new Action() {
+            @Override
+            public void run() throws Exception {
+                getIView().showFinally();
+            }
+        }).subscribe(new DataObserver<List<ShopGoodInfo>>() {
+
+            @Override
+            protected void onDataListEmpty() {
+                getIView().setWphError(loadType);
+            }
+
+            @Override
+            protected void onSuccess(List<ShopGoodInfo> data) {
+                getIView().setWph(data, loadType);
+            }
+        });
+    }
     private void getObservable(final int loadType, Observable<BaseResponse<List<ShopGoodInfo>>> observable) {
         if (observable == null) {
             getIView().showFinally();

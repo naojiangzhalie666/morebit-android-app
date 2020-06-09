@@ -256,6 +256,46 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     });
         }
     }
+    /*
+     *
+     * 唯品会收藏
+     * */
+    @Override
+    public void switchWphCollect(final BaseActivity rxActivity, final ShopGoodInfo goodsInfo) {
+
+        if (goodsInfo.getColler() != 0) {
+            if (mMainModel == null) {
+                mMainModel = new MainModel();
+            }
+            mMainModel.delUserCollection(rxActivity, goodsInfo.getColler() + "")
+                    .subscribe(new DataObserver<String>(false) {
+                        @Override
+                        protected void onDataNull() {
+                            onSuccess("");
+                        }
+
+                        @Override
+                        protected void onSuccess(String data) {
+                            UserLocalData.isCollect = true;
+                            goodsInfo.setColler(0);
+                            getIView().switchColler(goodsInfo);
+                            ViewShowUtils.showShortToast(rxActivity, rxActivity.getString(R.string.cancel_collect_succeed));
+                        }
+                    });
+        } else {
+            mModel.getGoodsCollectForWph(rxActivity, goodsInfo)
+                    .subscribe(new DataObserver<Integer>() {
+                        @Override
+                        protected void onSuccess(Integer data) {
+                            UserLocalData.isCollect = true;
+                            goodsInfo.setColler(data);
+                            getIView().switchColler(goodsInfo);
+                            ViewShowUtils.showShortToast(rxActivity, rxActivity.getString(R.string.collect_succeed));
+
+                        }
+                    });
+        }
+    }
 
 
     /**

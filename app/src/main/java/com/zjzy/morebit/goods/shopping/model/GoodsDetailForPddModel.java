@@ -238,4 +238,43 @@ public class GoodsDetailForPddModel extends MvpModel {
                 .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
 
+
+    /**
+     * 唯品会收藏
+     * @param rxActivity
+     * @param goodsInfo
+     * @return
+     */
+    public Observable<BaseResponse<Integer>> getGoodsCollectForWph(BaseActivity rxActivity, ShopGoodInfo goodsInfo) {
+        RequestGoodsCollectBean requestBean = new RequestGoodsCollectBean();
+        requestBean.setItemSourceId(goodsInfo.getGoodsId().toString());
+        requestBean.setItemTitle(goodsInfo.getGoodsName());
+        requestBean.setItemPicture(goodsInfo.getGoodsMainPicture());
+        requestBean.setItemPrice(goodsInfo.getMarketPrice());
+        requestBean.setCouponPrice(goodsInfo.getCouponPrice());
+        requestBean.setItemVoucherPrice(goodsInfo.getVipPrice());
+        requestBean.setCouponUrl(goodsInfo.getCouponUrl());
+        requestBean.setCouponEndTime(goodsInfo.getCouponEndTime());
+        requestBean.setCommission(goodsInfo.getCommission());
+        requestBean.setShopType("6");
+        if (goodsInfo.getSourceType()==0){
+            requestBean.setShopName("唯品自营");
+        }else{
+            requestBean.setShopName(goodsInfo.getStoreName());
+        }
+        requestBean.setSaleMonth(TextUtils.isEmpty(goodsInfo.getSaleMonth())?"0":goodsInfo.getSaleMonth());
+        requestBean.setSign(EncryptUtlis.getSign2(requestBean));
+
+        return RxHttp.getInstance().getCommonService().getGoodsCollect(
+                requestBean
+        )
+                .compose(RxUtils.<BaseResponse<Integer>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<Integer>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
 }

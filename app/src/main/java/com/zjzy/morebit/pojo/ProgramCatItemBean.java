@@ -31,6 +31,15 @@ public class ProgramCatItemBean implements Serializable {
     private String self;
     private String coupon;
     private String keyword;
+    private String fieldName;
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
     public String getKeyword() {
         return keyword;

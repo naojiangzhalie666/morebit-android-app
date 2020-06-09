@@ -289,6 +289,15 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     public void setJdError(int loadType) {
     }
 
+    @Override
+    public void setWph(List<ShopGoodInfo> data, int loadType) {
+
+    }
+
+    @Override
+    public void setWphError(int loadType) {
+
+    }
 
 
     @Override

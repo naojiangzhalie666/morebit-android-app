@@ -134,9 +134,6 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
     RelativeLayout re_tab;
     @BindView(R.id.search_statusbar_rl)
     LinearLayout search_statusbar_rl;
-    @BindView(R.id.tv_discount)
-    TextView tv_discount;
-
 
     private String shopid;
     private ShopGoodInfo mGoodsInfo;
@@ -417,10 +414,10 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
         setGoodsAdImg(Info);
 
 
-        if (!StringsUtils.isEmpty(Info.getGoodsTitle())) {
-            mGoodsInfo.setGoodsTitle(Info.getGoodsTitle());
+        if (!StringsUtils.isEmpty(Info.getGoodsName())) {
+            mGoodsInfo.setGoodsTitle(Info.getGoodsName());
         }
-        if (!StringsUtils.isEmpty(Info.getCurrentPrice())) {
+        if (!StringsUtils.isEmpty(Info.getVipPrice())) {
             textview_original.setText("" + MathUtils.getnum(Info.getVipPrice()));
         }
 
@@ -436,9 +433,7 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
             text_two.setText(" ¥" + MathUtils.getnum(Info.getMarketPrice()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
-        if (!TextUtils.isEmpty(Info.getDiscount())){
-            tv_discount.setText(Info.getDiscount()+"");//几折
-        }
+
 
         if (!TextUtils.isEmpty(Info.getCommission())) {
             mGoodsInfo.setCommission(Info.getCommission());
@@ -690,7 +685,7 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
             switchColler(mGoodsInfo);
         }
         //示详情图片
-        List<String> imgs = mGoodsInfo.getDetailImgList();
+        List<String> imgs = mGoodsInfo.getGoodsDetailPictures();
         if (imgs != null && imgs.size() > 0) {
             mGoodsDetailForPdd.setGoodsDetails(imgs);
             initImgFragment(mGoodsDetailForPdd);
@@ -698,27 +693,30 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
         if (!StringsUtils.isEmpty(data.getMarketPrice())) {
             mGoodsInfo.setItemPrice(data.getMarketPrice());
         }
-        if (!StringsUtils.isEmpty(data.getCurrentPrice())) {
-            mGoodsInfo.setItemVoucherPrice(data.getCurrentPrice());
+        if (!StringsUtils.isEmpty(data.getVipPrice())) {
+            mGoodsInfo.setItemVoucherPrice(data.getVipPrice());
         }
-        if (!StringsUtils.isEmpty(data.getGoodsTitle())) {
-            mGoodsInfo.setItemTitle(data.getGoodsTitle());
+        if (!StringsUtils.isEmpty(data.getGoodsName())) {
+            mGoodsInfo.setItemTitle(data.getGoodsName());
         }
         if (!StringsUtils.isEmpty(String.valueOf(data.getGoodsId()))) {
             mGoodsInfo.setItemSourceId(String.valueOf(data.getGoodsId()));
         }
-        if (!StringsUtils.isEmpty(imgs.get(0))) {
-            mGoodsInfo.setPicture(imgs.get(0));
+        if (!TextUtils.isEmpty(mGoodsInfo.getGoodsMainPicture())) {
+            mGoodsInfo.setPicture(mGoodsInfo.getGoodsMainPicture());
+        }
+        if (!TextUtils.isEmpty(mGoodsInfo.getStoreName())) {
+            mGoodsInfo.setShopName(mGoodsInfo.getStoreName());
         }
         if (seavDao && !isRefresh) {
             SensorsDataUtil.getInstance().browseProductTrack("", String.valueOf(data.getGoodsId()));
-            if (LoginUtil.checkIsLogin(this, false) && !TextUtils.isEmpty(mGoodsInfo.getGoodsTitle()) && !TextUtils.isEmpty(mGoodsInfo.getImageList().get(0))) {
+            if (LoginUtil.checkIsLogin(this, false) && !TextUtils.isEmpty(mGoodsInfo.getGoodsName()) && !TextUtils.isEmpty(mGoodsInfo.getGoodsMainPicture())) {
                 mPresenter.saveGoodsHistor(this, mGoodsInfo);
             }
         }
 
 
-        StringsUtils.retractKaoLaTitle(tv_pdd, title,data.getGoodsTitle());
+        StringsUtils.retractKaoLaTitle(tv_pdd, title,data.getGoodsName());
         getViewLocationOnScreen();
     }
 
@@ -764,21 +762,23 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
                 if (mGoodsInfo != null) {
                     mGoodsInfo.setAdImgUrl(indexbannerdataArray);
                     mGoodsInfo.setPrice(mGoodsInfo.getMarketPrice());
-                    mGoodsInfo.setVoucherPrice(mGoodsInfo.getCurrentPrice());
-                    mGoodsInfo.setTitle(mGoodsInfo.getGoodsTitle());
+                    mGoodsInfo.setVoucherPrice(mGoodsInfo.getVipPrice());
+                    mGoodsInfo.setTitle(mGoodsInfo.getGoodsName());
+                    mGoodsInfo.setClickURL(mGoodsInfo.getPurchaseLink());
                 }
-                ShareMoneyForKaolaActivity.start(this, mGoodsInfo, mGoodsInfo.getPurchaseLink());
+                ShareMoneyForPddActivity.start(this, mGoodsInfo, mGoodsInfo.getPurchaseLink());
 
                 break;
             case R.id.btn_sweepg: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
-                    if (mGoodsInfo.getGoodsDetail()!=null){
-                        String burl = mGoodsInfo.getGoodsDetail().replace("https://", "kaola://");
-                        if (isHasInstalledKaola()){
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(burl));
-                            startActivity(intent);
+                    if (mGoodsInfo.getPurchaseLink()!=null){
+                        if (isHasInstalledWph()){
+                            if (mGoodsInfo.getDeepLinkUrl()!=null){
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mGoodsInfo.getDeepLinkUrl()));
+                                startActivity(intent);
+                            }
                         }else{
-                            ShowWebActivity.start(this,mGoodsInfo.getGoodsDetail(), "");
+                            ShowWebActivity.start(this,mGoodsInfo.getPurchaseLink(), "");
                         }
                     }
 
@@ -813,20 +813,14 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
     private void sumbitCollect() {
 
         if (mGoodsInfo == null || mGoodsInfo.getGoodsId() == 0
-                || TextUtils.isEmpty(mGoodsInfo.getGoodsTitle())) {
+                || TextUtils.isEmpty(mGoodsInfo.getGoodsName())) {
             ViewShowUtils.showShortToast(GoodsDetailForWphActivity.this, "收藏失败,请稍后再试");
             return;
         }
         LoadingView.showDialog(GoodsDetailForWphActivity.this);
         //todo：修复从足迹到收藏报错
-        String couponEndTime = mGoodsInfo.getCouponEndTime();
 
-        if (couponEndTime != null && couponEndTime.length() > 5) {
-            couponEndTime = DateTimeUtils.formatMMdd(couponEndTime);
-            mGoodsInfo.setCouponEndTime(couponEndTime);
-        }
-
-        mPresenter.switchKaolaCollect(this, mGoodsInfo);
+        mPresenter.switchWphCollect(this, mGoodsInfo);
     }
 
 
@@ -855,7 +849,7 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
         if (mGoodsInfo == null) {
             return true;
         }
-        if (TextUtils.isEmpty(mGoodsInfo.getCurrentPrice())) {
+        if (TextUtils.isEmpty(mGoodsInfo.getVipPrice())) {
             ViewShowUtils.showLongToast(this, "商品已经过期，请联系管理员哦");
             return true;
         }
@@ -878,11 +872,11 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
     }
 
     /**
-     * 判断是否安装考拉
+     * 判断是否安装唯品会
      *
      * @return
      */
-    private boolean isHasInstalledKaola() {
-        return AppUtil.checkHasInstalledApp(this, "com.kaola");
+    private boolean isHasInstalledWph() {
+        return AppUtil.checkHasInstalledApp(this, "com.achievo.vipshop");
     }
 }

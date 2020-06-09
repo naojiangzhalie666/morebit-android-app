@@ -296,6 +296,16 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
 
     }
 
+    @Override
+    public void setWph(List<ShopGoodInfo> data, int loadType) {
+
+    }
+
+    @Override
+    public void setWphError(int loadType) {
+
+    }
+
     @Subscribe  //订阅事件
     public void onEventMainThread(MessageEvent event) {
         switch (event.getAction()) {

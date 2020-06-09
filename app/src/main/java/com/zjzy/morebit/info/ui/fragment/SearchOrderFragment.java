@@ -16,6 +16,7 @@ import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -63,7 +64,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
     @BindView(R.id.search_et)
     EditText search_et;
     private int type;
-    private boolean isRefresh=false;
+    private boolean isRefresh = false;
     private ConsComGoodsDetailAdapter consComGoodsDetailAdapter;
     List<ConsComGoodsInfo> mListArray = new ArrayList<>();
 
@@ -96,7 +97,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
 
     @Override
     public void onSearchSuccessful(List<ConsComGoodsInfo> data) {
-        if(mPage==1){
+        if (mPage == 1) {
             mDateNullView.setVisibility(View.GONE);
             mReUseListView.setVisibility(View.VISIBLE);
             mListArray.clear();
@@ -104,7 +105,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
         } else {
             mListArray.addAll(data);
         }
-       mPage++;
+        mPage++;
         consComGoodsDetailAdapter.setData(mListArray);
         mReUseListView.notifyDataSetChanged();
         //搜索成功隐藏虚拟键盘
@@ -113,7 +114,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
 
     @Override
     public void onFailure() {
-        if(mPage==1){
+        if (mPage == 1) {
             mDateNullView.setVisibility(View.VISIBLE);
             mReUseListView.setVisibility(View.GONE);
         } else {
@@ -130,7 +131,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
 
     @Override
     public void onCheckGoodsSuccessFul(ShopGoodInfo data) {
-        GoodsDetailActivity.start(getActivity(),data);
+        GoodsDetailActivity.start(getActivity(), data);
     }
 
     @Override
@@ -141,17 +142,17 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
     @Override
     public void showDetailsView(ShopGoodInfo data, boolean seavDao) {
 
-        if (data!=null){
-            if ("1".equals(data.getItemSource())){
+        if (data != null) {
+            if ("1".equals(data.getItemSource())) {
                 data.setItemSource("1");
-                GoodsDetailForJdActivity.start(getActivity(),data);
-            }else if ("2".equals(data.getItemSource())){
+                GoodsDetailForJdActivity.start(getActivity(), data);
+            } else if ("2".equals(data.getItemSource())) {
                 data.setItemSource("2");
-                GoodsDetailForPddActivity.start(getActivity(),data);
+                GoodsDetailForPddActivity.start(getActivity(), data);
             }
 
-        }else{
-            ViewShowUtils.showShortToast(getActivity(),"商品已下架");
+        } else {
+            ViewShowUtils.showShortToast(getActivity(), "商品已下架");
         }
 
     }
@@ -168,7 +169,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    MyLog.i("test","refreshData");
+                    MyLog.i("test", "refreshData");
                     refreshData(true);
                 }
                 return false;
@@ -182,15 +183,15 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
         if (bundle != null) {
             type = bundle.getInt(C.Extras.order_type, 1);
         }
-        if(1 != type && 10 != type && 4!=type && 5!=type){
+        if (1 != type && 10 != type && 4 != type && 5 != type && 6 != type) {
             type = 3;
         }
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                MyLog.i("test","refreshData");
-              refreshData(true);
+                MyLog.i("test", "refreshData");
+                refreshData(true);
             }
         });
 
@@ -198,7 +199,7 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
             @Override
             public void onLoadMore() {
                 if (!mReUseListView.getSwipeList().isRefreshing()) {
-                    MyLog.i("test","refreshData");
+                    MyLog.i("test", "refreshData");
                     refreshData(false);
                 }
 
@@ -210,27 +211,29 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
         consComGoodsDetailAdapter.setOnAdapterClickListener(new ConsComGoodsDetailAdapter.OnAdapterClickListener() {
             @Override
             public void onItem(int position) {
-                if (type == 1){
-                    mPresenter.onCheckGoods(SearchOrderFragment.this,mListArray.get(position).getItemId());
-                }else if (type==3){
-                    ShopGoodInfo mGoodsInfo=new ShopGoodInfo();
+                if (type == 1) {
+                    mPresenter.onCheckGoods(SearchOrderFragment.this, mListArray.get(position).getItemId());
+                } else if (type == 3) {
+                    ShopGoodInfo mGoodsInfo = new ShopGoodInfo();
                     mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForJd(SearchOrderFragment.this, mGoodsInfo);
-                }else if (type==4){
-                    ShopGoodInfo mGoodsInfo=new ShopGoodInfo();
+                } else if (type == 4) {
+                    ShopGoodInfo mGoodsInfo = new ShopGoodInfo();
                     mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForPdd(SearchOrderFragment.this, mGoodsInfo);
-                }else if (type==5){
-                    GoodsDetailForKoalaActivity.start(getActivity(),mListArray.get(position).getItemId());
-                } else if (type==10){
-                    if (mListArray.get(position).isSelf()){//进订单
+                } else if (type == 5) {
+                    GoodsDetailForKoalaActivity.start(getActivity(), mListArray.get(position).getItemId());
+                }  else if (type == 6) {
+                    GoodsDetailForWphActivity.start(getActivity(), mListArray.get(position).getItemId());
+                }else if (type == 10) {
+                    if (mListArray.get(position).isSelf()) {//进订单
                         NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
                                 mListArray.get(position).getOrderSn());
-                    }else{//进商品
+                    } else {//进商品
                         NumberGoodsDetailsActivity.start(getActivity(), mListArray.get(position).getItemId());
                     }
-                }else{
-                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
+                } else {
+                    ViewShowUtils.showShortToast(getActivity(), getString(R.string.order_no_look));
                 }
             }
         });
@@ -239,25 +242,25 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
             @Override
             public void onReceiveGoods(String orderId, int position) {
                 //确认收货
-                mPresenter.ConfirmReceiveGoods(SearchOrderFragment.this,orderId);
+                mPresenter.ConfirmReceiveGoods(SearchOrderFragment.this, orderId);
             }
 
             @Override
             public void onShip(String orderId, int position) {
                 //调用查看物流接口
                 String originUrl = mListArray.get(position).getShipUrl();
-                if (!TextUtils.isEmpty(originUrl)){
-                    originUrl = originUrl+"?orderId="+orderId;
-                    ShowWebActivity.start(getActivity(),originUrl,"物流信息");
-                }else{
-                    MyLog.d("test","物流url为空");
+                if (!TextUtils.isEmpty(originUrl)) {
+                    originUrl = originUrl + "?orderId=" + orderId;
+                    ShowWebActivity.start(getActivity(), originUrl, "物流信息");
+                } else {
+                    MyLog.d("test", "物流url为空");
                 }
             }
 
             @Override
             public void onPay(String orderId, int position) {
                 //去支付或者取消
-                NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),orderId);
+                NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()), orderId);
             }
         });
     }
@@ -278,8 +281,8 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
     private int mPage = 1;
 
     private void refreshData(boolean isRefresh) {
-        if(isRefresh){
-            mPage=1;
+        if (isRefresh) {
+            mPage = 1;
         }
         mPresenter.searchGoodsOrder(this, search_et.getText().toString().trim(), type, mPage);
     }

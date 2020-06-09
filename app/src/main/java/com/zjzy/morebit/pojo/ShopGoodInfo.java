@@ -74,6 +74,24 @@ public class ShopGoodInfo implements Serializable {
     private int sourceType;//商品类型：0-自营，1-非自营
     private String brandName;//商品品牌名称
     private String vipPrice;//现价
+    private String deepLinkUrl;//购买链接
+    private String storeName;//店铺名称
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getDeepLinkUrl() {
+        return deepLinkUrl;
+    }
+
+    public void setDeepLinkUrl(String deepLinkUrl) {
+        this.deepLinkUrl = deepLinkUrl;
+    }
 
     public List<String> getGoodsCarouselPictures() {
         return goodsCarouselPictures;

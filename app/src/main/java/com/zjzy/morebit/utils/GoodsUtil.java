@@ -198,7 +198,38 @@ public class GoodsUtil {
                     }
                 });
     }
+    /**
+     * 获取唯品会的推广内容
+     *
+     * @param activity
+     * @param goodsInfo
+     * @return
+     */
+    public static Observable<BaseResponse<String>> getGenerateForWph(RxAppCompatActivity activity,
+                                                                    ShopGoodInfo goodsInfo) {
+        int isInvitecode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
+        int isDownloadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
 
+        RequestPddShareContent requestBean = new RequestPddShareContent();
+        requestBean.setItemTitle(goodsInfo.getGoodsName());
+        requestBean.setPrice(goodsInfo.getMarketPrice());
+        requestBean.setVoucherPrice(goodsInfo.getVipPrice());
+        requestBean.setIsDownLoadUrl(isDownloadUrl);
+        requestBean.setIsInviteCode(isInvitecode);
+        requestBean.setClickURL(goodsInfo.getClickURL());
+
+        return RxHttp.getInstance().getGoodsService().getGenerateForWph(
+                requestBean
+        )
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(activity.<BaseResponse<String>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
 
     /**
      * 获取koala的推广内容
@@ -558,19 +589,20 @@ public class GoodsUtil {
         TextView tv_sales = (TextView) view.findViewById(R.id.tv_sales);
         TextView yuan_prise = (TextView) view.findViewById(R.id.yuan_prise);
         TextView tv_invite_code = (TextView) view.findViewById(R.id.tv_invite_code);
+        TextView ll_prise=view.findViewById(R.id.ll_prise);
         if (goodBitmap != null) {
             goods_img.setImageBitmap(goodBitmap);
         }
         tv_invite_code.setText(activity.getString(R.string.invitation_code, UserLocalData.getUser().getInviteCode()));
         if (StringsUtils.isEmpty(goodsInfo.getCouponPrice())) {
-            cop_price.setVisibility(View.INVISIBLE);
+            cop_price.setVisibility(View.GONE);
         } else {
             cop_price.setText(activity.getString(R.string.yuan, MathUtils.getnum(goodsInfo.getCouponPrice())));
         }
-        juanhou_prise.setText("¥" + MathUtils.getSalesPrice(MathUtils.getnum(goodsInfo.getVoucherPrice())));
+        juanhou_prise.setText("¥ " + MathUtils.getSalesPrice(MathUtils.getnum(goodsInfo.getVoucherPrice())));
         yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
         if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {
-            StringsUtils.retractTitle(title, title, goodsInfo.getTitle());
+            StringsUtils.retractWphTitle(title, title, goodsInfo.getTitle());
         }
         yuan_prise.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         if (!"0".equals(goodsInfo.getSaleMonth())) {
@@ -587,6 +619,10 @@ public class GoodsUtil {
         } else if(goodsInfo.getShopType() == 5){
             goodShopTag.setText("考拉");
             tv_sales.setVisibility(View.GONE);
+        } else if(goodsInfo.getShopType() == 6){
+            goodShopTag.setText("唯品会");
+            tv_sales.setVisibility(View.GONE);
+            ll_prise.setText("抢购价");
         }
 
         Log.e("private","二维码"+ewmBitmap);

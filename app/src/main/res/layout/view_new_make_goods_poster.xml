@@ -76,9 +76,11 @@
                 android:gravity="bottom"
                 android:lines="1"
                 android:maxLines="1"
+                android:textStyle="bold"
                 android:textColor="#EE403A"
                 android:textSize="24sp"
                 tools:text="29.9"/>
+
             <TextView
 
                 android:id="@+id/ll_prise"
@@ -93,7 +95,7 @@
                 android:maxLines="1"
                 android:text="券后价"
                 android:textColor="#EE403A"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
             <TextView
                 android:id="@+id/tv_sales"
                 android:layout_alignParentRight="true"
@@ -110,7 +112,6 @@
             android:layout_below="@id/rl_juanhou_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
             <TextView
                 android:id="@+id/cop_price"
@@ -123,6 +124,7 @@
                 android:maxLines="1"
                 android:paddingRight="4dp"
                 android:paddingLeft="4dp"
+                android:layout_marginLeft="10dp"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="16sp"
                 tools:text="10000000000元"/>
@@ -130,13 +132,25 @@
             <TextView
                 android:id="@+id/yuan_prise"
                 android:layout_toRightOf="@id/cop_price"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:textColor="@color/color_999999"
                 android:textSize="16sp"
                 tools:text="￥59.9"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原价"
+                android:layout_toRightOf="@id/yuan_prise"
+                android:layout_centerVertical="true"
+                android:textColor="#ff999999"
+                android:textSize="12sp"
+                android:paddingTop="3dp"
+                android:layout_marginLeft="8dp"
+                />
 
         </RelativeLayout>
         <RelativeLayout

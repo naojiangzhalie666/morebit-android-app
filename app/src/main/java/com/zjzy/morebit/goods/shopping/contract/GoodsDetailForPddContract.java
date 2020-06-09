@@ -91,7 +91,10 @@ public class GoodsDetailForPddContract {
          * @param goodsInfo
          */
         void switchCollect(BaseActivity rxActivity, ShopGoodInfo goodsInfo);
+        //考拉收藏
         void  switchKaolaCollect(BaseActivity rxActivity, ShopGoodInfo goodsInfo);
+        //唯品会收藏
+        void  switchWphCollect(BaseActivity rxActivity, ShopGoodInfo goodsInfo);
 
 
         void saveGoodsHistor(BaseActivity activity, ShopGoodInfo itemSourceId);

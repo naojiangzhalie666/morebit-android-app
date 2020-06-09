@@ -85,6 +85,7 @@ import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
+import com.zjzy.morebit.pojo.request.ProgramWphBean;
 import com.zjzy.morebit.pojo.request.RequesKoalaBean;
 import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
@@ -2451,6 +2452,13 @@ public interface CommonService {
     Observable<BaseResponse<List<ShopGoodInfo>>> getJdGoodsList(
             @Body ProgramCatItemBean body
     );
+    /**
+     * 京东商品列表_新接口
+     */
+    @POST("/api/goods/wphKeywordSearch")
+    Observable<BaseResponse<List<ShopGoodInfo>>> getWphGoodsList(
+            @Body ProgramWphBean body
+    );
 
     /**
      * 京东的领劵链接
@@ -2477,6 +2485,14 @@ public interface CommonService {
      */
     @POST("/api/goods/getKaoLaGenerate")
     public Observable<BaseResponse<String>> getGenerateForKaola(
+            @Body RequestPddShareContent requestBean);
+    /**
+     * 生成唯品会的分享
+     * @param requestBean
+     * @return
+     */
+    @POST("/api/goods/getWphGenerate")
+    public Observable<BaseResponse<String>> getGenerateForWph(
             @Body RequestPddShareContent requestBean);
 
 

@@ -708,6 +708,7 @@ public class C {
         public static final int JD = 2;
         public static final int PDD = 4;
         public static final int KAOLA = 5;
+        public static final int WPH = 6;
 
 
         public static final  int E_UPLIMIT_SORT_DOWN=0;//降序

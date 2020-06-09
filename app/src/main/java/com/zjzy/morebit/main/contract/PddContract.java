@@ -7,6 +7,7 @@ import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UI.BaseTitleTabBean;
 import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
+import com.zjzy.morebit.pojo.request.ProgramWphBean;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class PddContract {
         void setJd(List<ShopGoodInfo> data, int loadType);
 
         void setJdError(int loadType);
+        void setWph(List<ShopGoodInfo> data, int loadType);
+
+        void setWphError(int loadType);
     }
 
     public interface Present extends BasePresenter {
@@ -32,6 +36,8 @@ public class PddContract {
         void getJdPddGoodsList(RxFragment rxFragmen, ProgramCatItemBean programCatItemBean, int loadType);
 
         void getJdGoodsList(RxFragment rxFragmen, ProgramCatItemBean programCatItemBean, int loadType);
+
+        void getWphGoodList(RxFragment rxFragmen, ProgramWphBean programCatItemBean, int loadType);
 
     }
 }
