@@ -51,6 +51,7 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ActivityLinkBean;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.JpBannerBean;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
@@ -58,6 +59,7 @@ import com.zjzy.morebit.pojo.event.OpenCategoryEvent;
 import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.home.TmallActivityBean;
 import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
+import com.zjzy.morebit.pojo.request.RequestJpLinkBean;
 import com.zjzy.morebit.pojo.request.RequestSplashStatistics;
 import com.zjzy.morebit.pojo.request.RequestTmallActivityLinkBean;
 import com.zjzy.morebit.purchase.PurchaseActivity;
@@ -586,7 +588,7 @@ public class BannerInitiateUtils {
     }
 
     public static void setJpBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView) {
-        setBrandBanner(activity, data, banner, aspectRatioView, BannerConfig.NOT_INDICATOR);
+        setBrandJpBanner(activity, data, banner, aspectRatioView, BannerConfig.NOT_INDICATOR);
     }
 
     public static void setBrandBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView, int bannerConfigType) {
@@ -643,6 +645,99 @@ public class BannerInitiateUtils {
                 .isAutoPlay(true)
                 .setDelayTime(4000)
                 .start();
+    }
+
+    public static void setBrandJpBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView, int bannerConfigType) {
+        final int bannerId = banner.getId();
+        if (data == null || data.size() == 0) {
+            return;
+        }
+        if (aspectRatioView != null) {
+            ImageInfo imageInfo = data.get(0);
+            float width = imageInfo.getWidth();
+            float height = imageInfo.getHeight();
+            if (width != 0 && width / height != 0) {
+                aspectRatioView.setAspectRatio(width / height);
+            }
+        }
+        List<String> imgUrls = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            imgUrls.add(data.get(i).getThumb());
+        }
+
+        //简单使用
+        banner.setImages(imgUrls)
+                .setIndicatorGravity(bannerConfigType)
+                .setImageLoader(new GlideImageLoader())
+                .setOnBannerListener(new OnBannerListener() {
+                    @Override
+                    public void OnBannerClick(int position) {
+//                        StatService.onEventDuration(getActivity(), "浏览", "图片 "+position, 3000);
+                        /**
+                         @param eventId 事件Id，提前在网站端创建
+                         @param eventLabel 事件标签，附加参数，不能为空字符串
+                         @param acc 事件发生次数
+                         @param attributes 事件属性，对应的key需要在网站上创建，注意：key，value只接受String
+                         */
+//                        CountEvent cEvent = new CountEvent( );
+//                        cEvent.setEventId("1000");
+//                        CountEvent cEvent = new CountEvent("1000");
+//                        cEvent.addKeyValue("1000","value1").addKeyValue("key2","value2");
+//                        JAnalyticsInterface.onEvent(getActivity(), cEvent);
+                        if (LoginUtil.checkIsLogin(activity)) {
+                            if (data.get(position).getOpen() == 3) {
+                                getJpBanner((BaseActivity) activity, data.get(position).getType(), data.get(position).getUrl(), data.get(position));
+                            } else {
+                                ImageInfo imageInfo = data.get(position);
+                                String mudule = "";
+                                if (bannerId == R.id.roll_view_pager) {
+                                    mudule = C.BigData.AD_A;
+                                } else if (bannerId == R.id.banner_offical) {
+                                    mudule = C.BigData.AD_B;
+                                } else if (bannerId == R.id.banner_make_money) {
+                                    mudule = C.BigData.AD_C;
+                                }
+                                SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(), imageInfo.getId() + "", imageInfo.getOpen() + "", mudule, position, imageInfo.getClassId() + "", imageInfo.getUrl());
+                                BannerInitiateUtils.gotoAction(activity, imageInfo);
+
+                            }
+                        }
+                    }
+                })
+                .isAutoPlay(true)
+                .setDelayTime(4000)
+                .start();
+    }
+
+    /**
+     * 获取活动生成口碑链接
+     *
+     * @param activity
+     * @param
+     */
+    private static void getJpBanner(final BaseActivity activity, String type, String ext, final ImageInfo info) {
+
+        RequestJpLinkBean bean = new RequestJpLinkBean();
+        bean.setType(type);
+        bean.setExt(ext);
+        RxHttp.getInstance().getGoodsService()
+                .getJpLink(bean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(activity.<BaseResponse<String>>bindToLifecycle())
+                .subscribe(new DataObserver<String>() {
+                    @Override
+                    protected void onSuccess(String data) {
+                        String linkUrl= data;
+                        if (TextUtils.isEmpty(linkUrl)){
+                            ToastUtils.showLong("该活动已结束");
+                        }else{
+                            ShowWebActivity.start(activity,linkUrl, info.getTitle());
+                        }
+
+
+                    }
+                });
+
     }
 
     /**

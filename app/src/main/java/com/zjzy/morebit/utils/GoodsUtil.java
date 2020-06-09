@@ -311,6 +311,53 @@ public class GoodsUtil {
 
     }
 
+    public static Observable<BaseResponse<TKLBean>> getGetTkObservable(RxAppCompatActivity activity, ShopGoodInfo goodsInfo) {
+
+
+        String editTemplate = (String) SharedPreferencesUtils.get(activity, C.sp.editTemplate, "");
+        String isShortLink = App.getACache().getAsString(C.sp.isShortLink);
+        if (TextUtils.isEmpty(isShortLink)) {
+            isShortLink = "1";
+        }
+        RequestTKLBean requestBean = new RequestTKLBean();
+        requestBean.setItemSourceId(goodsInfo.getItemSourceId());
+        requestBean.setItemTitle(goodsInfo.getTitle());
+        requestBean.setItemDesc(goodsInfo.getItemDesc());
+        requestBean.setItemPicture(goodsInfo.getPicture());
+        requestBean.setItemPrice(goodsInfo.getPrice());
+        requestBean.setCouponPrice(goodsInfo.getCouponPrice());
+        requestBean.setItemVoucherPrice(goodsInfo.getVoucherPrice());
+        requestBean.setSaleMouth(TextUtils.isEmpty(goodsInfo.getSaleMonth()) ? "0" : goodsInfo.getSaleMonth());
+        requestBean.setCouponUrl(goodsInfo.getCouponUrl());
+        requestBean.setCommission(goodsInfo.getCommission());
+        requestBean.setTemplate(editTemplate);
+        requestBean.setIsShortLink(isShortLink);
+
+        int isInviteCode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
+        int isDownLoadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
+        requestBean.setIsDownLoadUrl(1);
+        requestBean.setIsInviteCode(isInviteCode);
+
+        if (TextUtils.isEmpty(goodsInfo.material) || !"11".equals(goodsInfo.getItemSource())) {
+            //非物料商品
+            requestBean.setMaterial("0");
+        } else {
+            requestBean.setMaterial(goodsInfo.material);
+        }
+        return RxHttp.getInstance().getGoodsService().getTKL(
+                requestBean
+        )
+                .compose(RxUtils.<BaseResponse<TKLBean>>switchSchedulers())
+                .compose(activity.<BaseResponse<TKLBean>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+
+    }
+
     /**
      * 获取优惠券
      *

@@ -90,43 +90,14 @@ public class LoadImgUtils {
             return;
         }
         try {
-            final RequestOptions options = new RequestOptions()
-                    .dontAnimate()
-                    .centerCrop()
-                    .placeholder(placeholderRes)
-                    .error(placeholderRes);
-
-            final RequestOptions options2 = new RequestOptions()
-                    .dontAnimate()
+            RequestOptions options = new RequestOptions()
                     .placeholder(placeholderRes)
                     .error(placeholderRes);
             Glide.with(context)
-                    .asBitmap()
                     .load(url)
-                    .apply(options2)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            int imageHeight = resource.getHeight();
-                            if(imageHeight > 4096) {
-                                imageHeight = 4096;
-                                ViewGroup.LayoutParams layoutParams = iv.getLayoutParams();
-                                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                                layoutParams.height = imageHeight;
-                                iv.setLayoutParams(layoutParams);
-                                Glide.with(context)
-                                        .load(url)
-                                        .apply(options)
-                                        .into(iv);
+                    .apply(options)
+                    .into(iv);
 
-                            }else{
-                                Glide.with(context)
-                                        .load(url)
-                                        .apply(options2)
-                                        .into(iv);
-                            }
-                            }
-                    });
         } catch (Exception e) {
             e.printStackTrace();
         } catch (OutOfMemoryError outOfMemoryError) {
@@ -137,6 +108,28 @@ public class LoadImgUtils {
     }
 
 
+    public static void setKaoImg(final Context context, final ImageView iv, final String url, int placeholderRes) {
+        if (context == null || iv == null) {
+            return;
+        }
+        try {
+             RequestOptions options = new RequestOptions()
+                    .dontAnimate()
+                    .placeholder(placeholderRes)
+                    .error(placeholderRes);
+            Glide.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .apply(options)
+                    .into(new TransformationUtils(iv));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (OutOfMemoryError outOfMemoryError) {
+            System.gc();
+            Logger.e("Glide 加载图片 OOM");
+        }
+
+    }
     /**
      * 添加加载回调的Listener
      * @param context

@@ -1,5 +1,6 @@
 package com.zjzy.morebit.home.adpater;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -19,8 +20,10 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.VideoBean;
+import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 
 import java.util.ArrayList;
@@ -52,13 +55,9 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final ShopGoodInfo videoBean = list.get(position);
         videoBean.setItemSourceId(list.get(position).getItemId());
-        videoBean.setItemVoucherPrice(list.get(position).getItemPrice());
-        ImageInfo imglist=new ImageInfo();
-       imglist.setThumb(list.get(position).getItemPic());
-        List<ImageInfo> mlist=new ArrayList<>();
-        mlist.add(imglist);
-        videoBean.setAdImgUrl(mlist);
+
         holder.tv_title.setText(list.get(position).getItemTitle());
+        holder.tv_num.setText(MathUtils.getSale(videoBean.getDyLikeCount()));
         //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());
         LoadImgUtils.loadingCornerTop(context, holder.iv_head,list.get(position).getItemPic(),5);
         holder.commission.setText(list.get(position).getCouponMoney()+"元劵");
@@ -79,7 +78,10 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoActivity.start(context,videoBean);
+                if (LoginUtil.checkIsLogin((Activity) context)) {
+                    VideoActivity.start(context,(List<ShopGoodInfo>)list,position,"0",1);
+                }
+
             }
         });
 
@@ -98,7 +100,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_head;
-        private TextView tv_title,commission,tv_price,tv_coupul;
+        private TextView tv_title,commission,tv_price,tv_coupul,tv_num;
         public ViewHolder(View itemView) {
             super(itemView);
             iv_head=itemView.findViewById(R.id.iv_head);//主图
@@ -106,6 +108,7 @@ public class ShakeGoodsAdapter extends RecyclerView.Adapter<ShakeGoodsAdapter.Vi
             commission=itemView.findViewById(R.id.commission);//优惠券
             tv_price=itemView.findViewById(R.id.tv_price);//价格
             tv_coupul=itemView.findViewById(R.id.tv_coupul);//预估收益
+            tv_num=itemView.findViewById(R.id.tv_num);//点赞数
 
         }
     }

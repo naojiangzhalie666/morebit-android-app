@@ -359,6 +359,31 @@ public class MathUtils {
         return salesStr;
     }
 
+
+    /**
+     * 转换为万  整数
+     *
+     * @param
+     * @return
+     */
+    public static String getSale(String getSaless) {
+        String salesStr = "";
+        if (TextUtils.isEmpty(getSaless)) return "0";
+        try {
+            int getSalesNum = Integer.valueOf(getSaless);
+            if (getSalesNum > 1000) {
+                double saleW = getSalesNum * 1.0 / 10000;
+                salesStr = String.format("%.1f", saleW) + "万";
+            } else {
+                salesStr = "" + getSalesNum;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            salesStr = getSaless;
+        }
+        return salesStr;
+    }
+
     /**
      * 校验无效滴今儿
      *

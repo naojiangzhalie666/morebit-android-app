@@ -1,10 +1,12 @@
 package com.zjzy.morebit.Module.common.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -86,6 +88,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
     private Runnable mLoadingRunnable;
     private Handler mHandler;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +99,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
             initImmersionBar();
         ActivityLifeHelper.getInstance().addActivity(this);
 //        registerClipEvents(this);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//禁止横屏
     }
 
     @Override

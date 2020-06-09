@@ -56,7 +56,7 @@ public class GoodDeImgAdapter extends RecyclerView.Adapter<GoodDeImgAdapter.View
         }
         String s = mDatas.get(i);
         if (LoadImgUtils.isPicture(s)) {
-            LoadImgUtils.setImg(mContext, viewHolder.mImg, s, R.drawable.icon_default_750);
+            LoadImgUtils.setKaoImg(mContext, viewHolder.mImg, s, R.drawable.icon_default_750);
             viewHolder.mImg.setVisibility(View.VISIBLE);
             viewHolder.tv_text.setVisibility(View.GONE);
         } else if (s.contains("<txt>")) {

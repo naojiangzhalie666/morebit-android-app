@@ -1,6 +1,8 @@
 package com.zjzy.morebit.info.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,13 +14,19 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
+import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
+import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
+import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ConsComGoodsDetailAdapter;
@@ -35,8 +43,10 @@ import com.zjzy.morebit.order.ui.NumberOrderDetailActivity;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.goods.FloorBean;
+import com.zjzy.morebit.pojo.request.RequesKoalaBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SoftInputUtil;
@@ -47,6 +57,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 
 /**
  * Created by YangBoTian on 2018/9/12.
@@ -210,6 +222,8 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
         mDateNullViewRecommend.getPaint().setAntiAlias(true);//抗锯齿
         consComGoodsDetailAdapter.setOnAdapterClickListener(new ConsComGoodsDetailAdapter.OnAdapterClickListener() {
             @Override
+
+
             public void onItem(int position) {
                 if (type == 1) {
                     mPresenter.onCheckGoods(SearchOrderFragment.this, mListArray.get(position).getItemId());
@@ -221,11 +235,12 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
                     ShopGoodInfo mGoodsInfo = new ShopGoodInfo();
                     mGoodsInfo.setGoodsId(Long.valueOf(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForPdd(SearchOrderFragment.this, mGoodsInfo);
+
                 } else if (type == 5) {
                     GoodsDetailForKoalaActivity.start(getActivity(), mListArray.get(position).getItemId());
-                }  else if (type == 6) {
+                } else if (type == 6) {
                     GoodsDetailForWphActivity.start(getActivity(), mListArray.get(position).getItemId());
-                }else if (type == 10) {
+                } else if (type == 10) {
                     if (mListArray.get(position).isSelf()) {//进订单
                         NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
                                 mListArray.get(position).getOrderSn());
@@ -263,6 +278,23 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
                 NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()), orderId);
             }
         });
+    }
+
+    /**
+     * 考拉海购
+     *
+     * @param rxFragment
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForKaoLa
+    (RxFragment rxFragment, String goodsId, String userId) {
+        RequesKoalaBean requesKoalaBean = new RequesKoalaBean();
+        requesKoalaBean.setUserId(userId);
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getKaoLaGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
 
     @OnClick({R.id.search, R.id.iv_back})

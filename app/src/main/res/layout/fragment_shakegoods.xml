@@ -9,9 +9,10 @@
 
     <TextView
         android:id="@+id/tv_douhuo"
-        android:layout_width="32dp"
-        android:layout_height="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="抖货"
+        android:textStyle="bold"
         android:textColor="#ffcc2498"
         android:textSize="16sp" />
 
@@ -31,10 +32,13 @@
         android:layout_height="23dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="5dp"
-        android:text="更多 >"
+        android:text="更多"
+        android:gravity="center_vertical"
+        android:drawablePadding="8dp"
+        android:drawableRight="@mipmap/douhuo_false"
         android:paddingRight="@dimen/dp_10"
         android:textColor="#ff999999"
-        android:textSize="11sp" />
+        android:textSize="12sp" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="5dp"

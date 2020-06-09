@@ -80,9 +80,11 @@ public class ConsComDetailAdapter extends RecyclerView.Adapter {
             viewHolder.record_time.setText(DateTimeUtils.getTheMonth(info.getYearMonthDay(),DateTimeUtils.FORMAT_PATTERN_YEAR_MONTH_DAY_WITHOUT_TEXT,DateTimeUtils.FORMAT_PATTERN_MONTH_DAY_WITHOUT_TEXT)+" "+info.getHourBranchSeconds());
            viewHolder.tv_hint.setText(info.getReason());
 
-           if (position==mDatas.size()-1){
-               viewHolder.view.setVisibility(View.GONE);
-           }
+               if (mDatas.size()==0||position==mDatas.size()-1){
+                   viewHolder.view.setVisibility(View.GONE);
+               }
+
+
         }
 
     }

@@ -29,6 +29,8 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
+import com.zjzy.morebit.goods.shopping.ui.TmallWebActivity;
 import com.zjzy.morebit.main.ui.fragment.ShowWebFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
@@ -78,7 +80,7 @@ public class KoalaWebActivity extends BaseActivity {
     private Bundle bundle;
     private WebView web;
     private LinearLayout rl_bottom_view;
-        private TextView directBuyTv;
+        private TextView directBuyTv,tv_no;
 
 
     public static void start(Activity activity, String url, String title) {
@@ -119,7 +121,13 @@ public class KoalaWebActivity extends BaseActivity {
         mIvRefresh= (ImageView) findViewById(R.id.iv_refresh);
         mIvOff= (ImageView) findViewById(R.id.iv_off);
         web= (WebView) findViewById(R.id.web);
+        tv_no= (TextView) findViewById(R.id.tv_no);
+        tv_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
         WebSettings webSettings = web.getSettings();
 
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //设置缓存
@@ -229,13 +237,11 @@ public class KoalaWebActivity extends BaseActivity {
                                                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(replace));
                                                                startActivity(intent);
                                                            }else{
-                                                               view.loadUrl(newurl);
+                                                               PddWebActivity.start(KoalaWebActivity.this,newurl,"考拉");
                                                            }
 
 
                                                        }
-                                                       rl_bottom_view.setVisibility(View.GONE);
-
                                                    }
                                                });
 

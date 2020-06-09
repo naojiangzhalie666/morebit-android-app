@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -24,6 +27,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.utils.SpaceItemDecorationUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,8 +39,9 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
     private String cid="1";
     private VideoGoodsAdapter videoGoodsAdapter;
     private int page=1;
-    private List<ShopGoodInfo>  list;
+    private List<ShopGoodInfo>  list=new ArrayList<>();
     private SwipeRefreshLayout  swipeList;
+    private LinearLayout searchNullTips_ly;
 
 
     public static VideoFragment newInstance(String name,String id) {
@@ -79,6 +84,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
         }
         rcy_videclass = view.findViewById(R.id.rcy_videclass);
         swipeList=view.findViewById(R.id.swipeList);
+        searchNullTips_ly=view.findViewById(R.id.searchNullTips_ly);
 
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         //设置图标的间距
@@ -131,20 +137,32 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
     @Override
     public void onVideoGoodsSuccess(List<ShopGoodInfo> shopGoodInfo) {
         list=  shopGoodInfo;
-        if (page==1){
-            videoGoodsAdapter = new VideoGoodsAdapter(getActivity(),shopGoodInfo);
-            rcy_videclass.setAdapter(videoGoodsAdapter);
-        }else{
+        if (shopGoodInfo!=null&& shopGoodInfo.size() != 0){
+            searchNullTips_ly.setVisibility(View.GONE);
+            if (page==1){
+                videoGoodsAdapter = new VideoGoodsAdapter(getActivity(),shopGoodInfo,cid,page);
+                rcy_videclass.setAdapter(videoGoodsAdapter);
+            }else{
 
-            videoGoodsAdapter.loadMore(list);
+                videoGoodsAdapter.loadMore(list);
+                swipeList.finishLoadMore(false);
+            }
+        }else{
             swipeList.finishLoadMore(false);
         }
+
 
 
     }
 
     @Override
     public void onVideoGoodsError() {
+        swipeList.finishLoadMore(false);
+        if (page==1){
+            searchNullTips_ly.setVisibility(View.VISIBLE);
+        }else{
+            searchNullTips_ly.setVisibility(View.GONE);
+        }
 
     }
 }

@@ -1,6 +1,7 @@
 package com.zjzy.morebit.Module.service;
 
 import com.zjzy.morebit.pojo.ActivityLinkBean;
+import com.zjzy.morebit.pojo.JpBannerBean;
 import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
@@ -119,6 +120,7 @@ import com.zjzy.morebit.pojo.request.RequestGoodsOrderBean;
 import com.zjzy.morebit.pojo.request.RequestGradeBean;
 import com.zjzy.morebit.pojo.request.RequestGradeUrlBean;
 import com.zjzy.morebit.pojo.request.RequestIncomeBean;
+import com.zjzy.morebit.pojo.request.RequestJpLinkBean;
 import com.zjzy.morebit.pojo.request.RequestListBody;
 import com.zjzy.morebit.pojo.request.RequestLoginBean;
 import com.zjzy.morebit.pojo.request.RequestLoginCodeBean;
@@ -2533,6 +2535,7 @@ public interface CommonService {
     @POST("/api/marketing/official/getQRcode")
     public Observable<BaseResponse<WxCodeBean>> getQRcode(@Body RequestActivityLinkBean requestBean);
 
+
     /**
      * 获取唯品会-商品详情
      *
@@ -2540,4 +2543,16 @@ public interface CommonService {
      */
     @POST("/api/goods/wphGoodsDetails")
     public Observable<BaseResponse<ShopGoodInfo>> getWeiGoodsDetail(@Body RequesWeiBean requestBean);
+
+
+    /**
+     * 获取京东拼多多活动链接
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/fans/getActivityLink")
+    public Observable<BaseResponse<String>> getJpLink(@Body RequestJpLinkBean requestBean);
+
+
 }
