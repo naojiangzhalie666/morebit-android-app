@@ -17,6 +17,7 @@ import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.request.RequesKoalaBean;
+import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.pojo.request.RequestGoodsCollectBean;
 import com.zjzy.morebit.pojo.request.RequestMaterialLink;
 import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
@@ -219,6 +220,22 @@ public class GoodsDetailForPddModel extends MvpModel {
                         LoadingView.dismissDialog();
                     }
                 });
+    }
+
+
+
+    /**
+     * 唯品会
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForWph(BaseActivity rxActivity, String  goodsId) {
+        RequesWeiBean requesKoalaBean = new RequesWeiBean();
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getWeiGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
 
 }

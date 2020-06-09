@@ -64,6 +64,11 @@ public class GoodsDetailForPddContract {
          */
         void setDetaisData(ShopGoodInfo data,boolean seavDao, boolean isRefresh);
 
+        /**
+         * 唯品会详情
+         * @param
+         */
+        void setDetaisDataWph(ShopGoodInfo data,boolean seavDao, boolean isRefresh);
 
 
 
@@ -125,5 +130,12 @@ public class GoodsDetailForPddContract {
          * @param rxActivity
          */
         void generateDetailForKaola(BaseActivity rxActivity,String goodsId,String userId, boolean isRefresh);
+
+
+        /**
+         * 唯品会商品详情
+         * @param rxActivity
+         */
+        void generateDetailForWph(BaseActivity rxActivity,String goodsId,boolean isRefresh);
     }
 }

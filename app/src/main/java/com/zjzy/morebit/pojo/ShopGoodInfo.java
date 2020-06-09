@@ -60,6 +60,101 @@ public class ShopGoodInfo implements Serializable {
     private String marketPrice;//原价
     private String goodsDetail;//原商品详情链接
 
+
+    /*
+     * 唯品会详情
+     * */
+    private List<String> goodsCarouselPictures;//轮播
+    private List<String> goodsDetailPictures;//图文详情中的图片
+    private String goodsName;//标题
+    private String goodsMainPicture;//商品主图
+    private int status;//商品状态：0-下架，1-上架
+    private String discount;//折扣:唯品价/市场价 保留两位小数字符串
+    private String commissionRate;//佣金比
+    private int sourceType;//商品类型：0-自营，1-非自营
+    private String brandName;//商品品牌名称
+    private String vipPrice;//现价
+
+    public List<String> getGoodsCarouselPictures() {
+        return goodsCarouselPictures;
+    }
+
+    public void setGoodsCarouselPictures(List<String> goodsCarouselPictures) {
+        this.goodsCarouselPictures = goodsCarouselPictures;
+    }
+
+    public List<String> getGoodsDetailPictures() {
+        return goodsDetailPictures;
+    }
+
+    public void setGoodsDetailPictures(List<String> goodsDetailPictures) {
+        this.goodsDetailPictures = goodsDetailPictures;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getGoodsMainPicture() {
+        return goodsMainPicture;
+    }
+
+    public void setGoodsMainPicture(String goodsMainPicture) {
+        this.goodsMainPicture = goodsMainPicture;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getCommissionRate() {
+        return commissionRate;
+    }
+
+    public void setCommissionRate(String commissionRate) {
+        this.commissionRate = commissionRate;
+    }
+
+    public int getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(int sourceType) {
+        this.sourceType = sourceType;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(String vipPrice) {
+        this.vipPrice = vipPrice;
+    }
+
     public String getGoodsDetail() {
         return goodsDetail;
     }

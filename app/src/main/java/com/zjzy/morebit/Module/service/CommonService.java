@@ -86,6 +86,7 @@ import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
 import com.zjzy.morebit.pojo.request.RequesKoalaBean;
+import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
 import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
@@ -2515,4 +2516,12 @@ public interface CommonService {
      */
     @POST("/api/marketing/official/getQRcode")
     public Observable<BaseResponse<WxCodeBean>> getQRcode(@Body RequestActivityLinkBean requestBean);
+
+    /**
+     * 获取唯品会-商品详情
+     *
+     * @return
+     */
+    @POST("/api/goods/wphGoodsDetails")
+    public Observable<BaseResponse<ShopGoodInfo>> getWeiGoodsDetail(@Body RequesWeiBean requestBean);
 }

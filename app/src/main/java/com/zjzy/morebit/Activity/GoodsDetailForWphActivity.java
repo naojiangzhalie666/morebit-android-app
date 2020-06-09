@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -32,7 +31,6 @@ import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
-import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
@@ -49,32 +47,25 @@ import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
 import com.zjzy.morebit.pojo.GoodsDetailForPdd;
 import com.zjzy.morebit.pojo.ImageInfo;
-import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
 import com.zjzy.morebit.pojo.ReleaseManage;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
-import com.zjzy.morebit.pojo.goods.ConsumerProtectionBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
-import com.zjzy.morebit.utils.GoodsUtil;
-import com.zjzy.morebit.utils.KaipuleUtils;
-import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
-import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
-import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.main.SysNotificationView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -87,10 +78,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 考拉商品详情页
+ * 唯品会商品详情页
  */
 
-public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
+public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
 
     @BindView(R.id.iv_feedback)
     ImageView iv_feedback;
@@ -143,6 +134,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     RelativeLayout re_tab;
     @BindView(R.id.search_statusbar_rl)
     LinearLayout search_statusbar_rl;
+    @BindView(R.id.tv_discount)
+    TextView tv_discount;
 
 
     private String shopid;
@@ -167,11 +160,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
     private GoodsDetailForPdd mGoodsDetailForPdd;
 
-    //京东领劵领劵
-    private String mPromotionJdUrl;
-
     public static void start(Context context, String id) {
-        Intent intent = new Intent((Activity) context, GoodsDetailForKoalaActivity.class);
+        Intent intent = new Intent((Activity) context, GoodsDetailForWphActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(C.Extras.GOODSBEAN, id);
         intent.putExtras(bundle);
@@ -180,7 +170,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
     @Override
     protected int getViewLayout() {
-        return R.layout.activity_koala_goodsdetail;
+        return R.layout.activity_wph_goodsdetail;
     }
 
     @Subscribe  //订阅事件
@@ -219,8 +209,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     }
 
     private void initData(boolean isRefresh) {
-        UserInfo  mUserInfo = UserLocalData.getUser(this);
-        mPresenter.generateDetailForKaola(this,shopid,mUserInfo.getId(),isRefresh);
+        mPresenter.generateDetailForWph(this,shopid,isRefresh);
     }
 
     @Override
@@ -323,8 +312,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                         re_tab.setVisibility(View.GONE);
                         re_tab.setAlpha(0);
                         view_bar.setAlpha(0);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
+                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForWphActivity.this, R.color.white));
+                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForWphActivity.this, R.color.white));
                     } else {
                         if (re_tab.getVisibility() == View.GONE) {
                             re_tab.setVisibility(View.VISIBLE);
@@ -341,8 +330,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                     if (!isTitleBarSetBg) {
                         re_tab.setAlpha(1);
                         view_bar.setAlpha(1);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
+                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForWphActivity.this, R.color.white));
+                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForWphActivity.this, R.color.white));
                     }
                 }
             }
@@ -432,7 +421,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             mGoodsInfo.setGoodsTitle(Info.getGoodsTitle());
         }
         if (!StringsUtils.isEmpty(Info.getCurrentPrice())) {
-            textview_original.setText("" + MathUtils.getnum(Info.getCurrentPrice()));
+            textview_original.setText("" + MathUtils.getnum(Info.getVipPrice()));
         }
 
 
@@ -447,7 +436,9 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             text_two.setText(" ¥" + MathUtils.getnum(Info.getMarketPrice()));
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
-
+        if (!TextUtils.isEmpty(Info.getDiscount())){
+            tv_discount.setText(Info.getDiscount()+"");//几折
+        }
 
         if (!TextUtils.isEmpty(Info.getCommission())) {
             mGoodsInfo.setCommission(Info.getCommission());
@@ -458,7 +449,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             mGoodsInfo.setCommission(Info.getCommission());
         }
 
-        if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForKoalaActivity.this).getPartner())) {
+        if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForWphActivity.this).getPartner())) {
             tv_Share_the_money.setText(getString(R.string.now_share));
             setEstimateData();
             setUPdateData();
@@ -466,10 +457,10 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             if (!StringsUtils.isEmpty(Info.getCommission())) {
                 if (getString(R.string.now_share).equals(tv_Share_the_money.getText())) {
                     mGoodsInfo.setCommission(Info.getCommission());
-                    String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(GoodsDetailForKoalaActivity.this).getCalculationRate(), Info.getCommission());
+                    String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(GoodsDetailForWphActivity.this).getCalculationRate(), Info.getCommission());
                     setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
                     if (!TextUtils.isEmpty(muRatioComPrice)) {
-                        String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(GoodsDetailForKoalaActivity.this).getCalculationRate(), Info.getSubsidiesPrice());
+                        String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(GoodsDetailForWphActivity.this).getCalculationRate(), Info.getSubsidiesPrice());
                         String totalSubside = MathUtils.getTotleSubSidies(muRatioComPrice, getRatioSubside);
                         tv_Share_the_money.setText(getString(R.string.goods_share_moeny, totalSubside));
                         setAllIncomeData(muRatioComPrice, getRatioSubside);
@@ -590,7 +581,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         }
 
         if (mBannerList.size() <= 1) {
-            List<String> getBanner = info.getImageList();
+            List<String> getBanner = info.getGoodsCarouselPictures();
 
             indexbannerdataArray.clear();
             for (int i = 0; i < getBanner.size(); i++) {
@@ -613,7 +604,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                     .setOnBannerListener(new OnBannerListener() {
                         @Override
                         public void OnBannerClick(int position) {
-                            Intent intent = new Intent(GoodsDetailForKoalaActivity.this, ImagePagerActivity.class);
+                            Intent intent = new Intent(GoodsDetailForWphActivity.this, ImagePagerActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putStringArrayList(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) mBannerList);
                             bundle.putInt(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
@@ -638,12 +629,12 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         mGoodsInfo.setColler(info.getColler());
         if (info.getColler() != 0) {
             tv_collect.setText(getString(R.string.also_collect));
-            tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.color_FF3F29));
+            tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForWphActivity.this, R.color.color_FF3F29));
             collect_bg.setImageResource(R.drawable.icon_shoucanxuanzhong);
             SensorsDataUtil.getInstance().collectProductTrack("", mGoodsInfo.getItemSourceId(), mGoodsInfo.getGoodsTitle(), mGoodsInfo.getCurrentPrice());
         } else {
             collect_bg.setImageResource(R.drawable.icon_shoucang);
-            tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.mmhuisezi));
+            tv_collect.setTextColor(ContextCompat.getColor(GoodsDetailForWphActivity.this, R.color.mmhuisezi));
             tv_collect.setText(getString(R.string.collect));
         }
     }
@@ -685,6 +676,11 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
      * */
     @Override
     public void setDetaisData(ShopGoodInfo data,boolean isSeavDao, boolean isRefresh) {
+
+    }
+
+    @Override
+    public void setDetaisDataWph(ShopGoodInfo data, boolean seavDao, boolean isRefresh) {
         mGoodsInfo=data;
         if (mGoodsInfo == null) {
             return;
@@ -714,7 +710,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         if (!StringsUtils.isEmpty(imgs.get(0))) {
             mGoodsInfo.setPicture(imgs.get(0));
         }
-        if (isSeavDao && !isRefresh) {
+        if (seavDao && !isRefresh) {
             SensorsDataUtil.getInstance().browseProductTrack("", String.valueOf(data.getGoodsId()));
             if (LoginUtil.checkIsLogin(this, false) && !TextUtils.isEmpty(mGoodsInfo.getGoodsTitle()) && !TextUtils.isEmpty(mGoodsInfo.getImageList().get(0))) {
                 mPresenter.saveGoodsHistor(this, mGoodsInfo);
@@ -724,11 +720,6 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
         StringsUtils.retractKaoLaTitle(tv_pdd, title,data.getGoodsTitle());
         getViewLocationOnScreen();
-    }
-
-    @Override
-    public void setDetaisDataWph(ShopGoodInfo data, boolean seavDao, boolean isRefresh) {
-
     }
 
     private void setSysNotificationView() {
@@ -755,11 +746,11 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 finish();
                 break;
             case R.id.iv_feedback:
-                if (!LoginUtil.checkIsLogin(GoodsDetailForKoalaActivity.this)) {
+                if (!LoginUtil.checkIsLogin(GoodsDetailForWphActivity.this)) {
                     return;
                 }
 
-                Intent feedBackIt = new Intent(GoodsDetailForKoalaActivity.this, AppFeedActivity.class);
+                Intent feedBackIt = new Intent(GoodsDetailForWphActivity.this, AppFeedActivity.class);
                 Bundle feedBackBundle = new Bundle();
                 feedBackBundle.putString("title", "意见反馈");
                 feedBackBundle.putString("fragmentName", "GoodsFeedBackFragment");
@@ -823,10 +814,10 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
         if (mGoodsInfo == null || mGoodsInfo.getGoodsId() == 0
                 || TextUtils.isEmpty(mGoodsInfo.getGoodsTitle())) {
-            ViewShowUtils.showShortToast(GoodsDetailForKoalaActivity.this, "收藏失败,请稍后再试");
+            ViewShowUtils.showShortToast(GoodsDetailForWphActivity.this, "收藏失败,请稍后再试");
             return;
         }
-        LoadingView.showDialog(GoodsDetailForKoalaActivity.this);
+        LoadingView.showDialog(GoodsDetailForWphActivity.this);
         //todo：修复从足迹到收藏报错
         String couponEndTime = mGoodsInfo.getCouponEndTime();
 
@@ -855,7 +846,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
      * @return
      */
     private boolean isGoodsLose() {
-        if (!LoginUtil.checkIsLogin(GoodsDetailForKoalaActivity.this)) {
+        if (!LoginUtil.checkIsLogin(GoodsDetailForWphActivity.this)) {
             return true;
         }
         if (AppUtil.isFastClick(200)) {

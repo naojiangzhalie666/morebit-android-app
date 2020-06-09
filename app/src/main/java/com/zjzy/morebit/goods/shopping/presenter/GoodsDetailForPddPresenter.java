@@ -151,6 +151,28 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     }
                 });
     }
+    /*
+     *
+     * 唯品会详情
+     * */
+
+    @Override
+    public void generateDetailForWph(BaseActivity rxActivity, String goodsId, final boolean isRefresh) {
+        mModel.getBaseResponseObservableForWph(rxActivity, goodsId)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        getIView().setDetaisDataWph(data,true,isRefresh);
+                    }
+                });
+    }
+
 
     /**
      * 切换收藏
