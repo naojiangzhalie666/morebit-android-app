@@ -20,6 +20,9 @@ public class VideoContract {
         void onVideoGoodsSuccess(List<ShopGoodInfo> shopGoodInfo);
         void onVideoGoodsError();
 
+        void onCommissionGoodsSuccess(List<ShopGoodInfo> shopGoodInfo);
+        void onCommissionGoodsError();
+
 
     }
     public interface Present extends BasePresenter {
@@ -34,6 +37,10 @@ public class VideoContract {
          * 抖货分类商品
          */
         void getVideoGoods(RxFragment rxFragment, String catId, int page);
+        /**
+         * 高佣分类商品
+         */
+        void getCommissionGoods(RxFragment rxFragment, String catId, int minId);
 
 
 

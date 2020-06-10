@@ -4,94 +4,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/bg_color_ff_top_20"
-    android:paddingBottom="8dp"
-    >
+    android:orientation="vertical"
+    android:paddingBottom="8dp">
 
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/iv_head"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/prushchase_bg" />
+
+        <ImageView
+            android:id="@+id/img_bo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bofang" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/background_000000_radius_10dp"
+            android:drawableLeft="@mipmap/video_bo"
+            android:drawablePadding="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="2dp"
+            android:text="99.90万"
+            android:textColor="#ffffffff"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/prushchase_bg"
-        />
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/bofang"
-        android:layout_centerInParent="true"
-        />
-
-    <TextView
-        android:id="@+id/tv_num"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="99.90万"
-        android:textColor="#ffffffff"
-        android:textSize="12sp"
-        android:paddingRight="8dp"
-        android:paddingLeft="8dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:drawableLeft="@mipmap/video_bo"
-        android:drawablePadding="8dp"
-        android:background="@drawable/background_000000_radius_10dp"
-        />
-</RelativeLayout>
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="抖音强烈推荐…"
-        android:textColor="#ff333333"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="12sp"
-        android:paddingLeft="8dp"
-        />
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/good_mall_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/tb_icon" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="抖音强烈推荐…"
+            android:textColor="#ff333333"
+            android:textSize="12sp" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/commission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/bg_commission_1dp"
         android:gravity="center"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:layout_marginTop="4dp"
+        android:text="20元劵"
         android:textColor="@color/color_FA6400"
-        android:textSize="@dimen/sp_11"
-        android:layout_marginLeft="8dp"
-        android:text="20元劵" />
+        android:textSize="@dimen/sp_11" />
+
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
         android:text="¥299.0"
         android:textColor="#DB493E"
-        android:layout_marginTop="5dp"
-        android:textSize="12sp"
-        android:layout_marginLeft="8dp"
-        />
+        android:textSize="12sp" />
+
     <TextView
         android:id="@+id/tv_coupul"
         android:layout_width="match_parent"
         android:layout_height="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="8dp"
+        android:background="@mipmap/yugu_bg"
         android:gravity="center"
         android:text="预估收益31.57元"
         android:textColor="#ffffffff"
         android:textSize="9sp"
-        android:background="@mipmap/yugu_bg"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
 
         />
 

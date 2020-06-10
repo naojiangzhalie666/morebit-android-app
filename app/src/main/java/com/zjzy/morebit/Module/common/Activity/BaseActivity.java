@@ -46,6 +46,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.RequesKoalaBean;
+import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestAnalysisTKL;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
@@ -379,6 +380,19 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                 .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
 
+    /**
+     * 唯品会
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForWei(BaseActivity rxActivity, String  goodsId) {
+        RequesWeiBean requesKoalaBean = new RequesWeiBean();
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getWeiGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
     private void gotoSearchResultPage(String keywords) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
@@ -486,9 +500,43 @@ public abstract class BaseActivity extends SwipeBaseActivity {
             pddDialog(s);
         } else if (s.startsWith("https://m-goods.kaola.com")) {//考拉
             kaoLaDialog(s);
+        } else if (s.startsWith("https://m.vip.com/product")){//唯品会
+            wphDialog(s);
+
         }
 
 
+    }
+
+    private void wphDialog(final String s) {
+        if (s.contains("https://m.vip.com/product")){
+            String shopid = "";
+            String substring = s.substring(0, s.indexOf("?"));
+            String[] split = substring.split("-");
+            String informationId = split[2];
+            shopid = informationId.replace(".html", "");
+
+            getBaseResponseObservableForWei(BaseActivity.this,shopid)
+                    .doFinally(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                        }
+                    })
+                    .subscribe(new DataObserver<ShopGoodInfo>() {
+                        @Override
+                        protected void onSuccess(final ShopGoodInfo data) {
+                            if (data.getCommission()!=null&&!MathUtils.getnum(data.getCommission()).equals("0")){
+                                data.setItemPicture(data.getGoodsMainPicture());
+                                data.setShopType(6);
+                                data.setItemVoucherPrice(data.getVipPrice());
+                                data.setItemTitle(data.getGoodsName());
+                                openGuessDialog(data);
+                            }else{
+                                openSearchDialog(s);
+                            }
+                        }
+                    });
+        }
     }
 
     private void kaoLaDialog(final String s) {

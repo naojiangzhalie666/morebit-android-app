@@ -108,6 +108,7 @@ import com.zjzy.morebit.pojo.request.RequestCircleFeedBackBean;
 import com.zjzy.morebit.pojo.request.RequestCircleSearchBean;
 import com.zjzy.morebit.pojo.request.RequestCircleShareCountBean;
 import com.zjzy.morebit.pojo.request.RequestCollectionListBean;
+import com.zjzy.morebit.pojo.request.RequestCommissionGoodsBean;
 import com.zjzy.morebit.pojo.request.RequestConfigKeyBean;
 import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
 import com.zjzy.morebit.pojo.request.RequestCreateOrderBean;
@@ -2398,6 +2399,14 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/goods/listTikTokTab")
     public Observable<BaseResponse<List<VideoClassBean>>> getVideoClass();
+    /**
+     * 获取抖货分类条目
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/getfarawayMountainTab")
+    public Observable<BaseResponse<List<VideoClassBean>>> getCommissionClass();
 
 
     /**
@@ -2553,6 +2562,16 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/goods/fans/getActivityLink")
     public Observable<BaseResponse<String>> getJpLink(@Body RequestJpLinkBean requestBean);
+
+    /**
+     * 定向计划（高佣）商品列表获取
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/queryOrientationPlanList")
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getCommissionGoods(@Body RequestCommissionGoodsBean requestBean);
+
 
 
 }

@@ -256,6 +256,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     public void onClick(View v) {
+        page=1;
         switch (v.getId()) {
             case R.id.title_comprehensive_tv://综合
                 requestClickRadar(null, title_comprehensive_tv, 0);

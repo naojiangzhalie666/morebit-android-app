@@ -39,6 +39,7 @@ import com.bumptech.glide.Glide;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Transformer;
+import com.zjzy.morebit.Activity.CommissionClassActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -52,6 +53,7 @@ import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.PanicBuyFragment;
 import com.zjzy.morebit.goodsvideo.VideoClassActivity;
 import com.zjzy.morebit.home.adpater.ActivityAdapter;
+import com.zjzy.morebit.home.adpater.CommissionGoodsAdapter;
 import com.zjzy.morebit.home.adpater.ShakeGoodsAdapter;
 import com.zjzy.morebit.home.contract.HomeRecommentContract;
 import com.zjzy.morebit.home.presenter.HomeRecommendPresenter;
@@ -177,9 +179,9 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
     private boolean isNearEadge = false;
 
-    private RecyclerView rcy_shakegoods;
+    private RecyclerView rcy_shakegoods,rcy_commissiongoods;
     private ImageInfo mImageInfo;
-    private TextView shake_more;
+    private TextView shake_more,commission_more;
     private TextView tv_limitime;
     private List<PanicBuyTiemBean> mPanicBuyTiemBean;
     private CountDownTimer mCountDownTiemr;
@@ -321,6 +323,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         //首页悬浮窗
         mPresenter.getBanner(this, C.UIShowType.FLOAT_AD);
         mPresenter.getVideo(this);//首页抖货商品
+        mPresenter.getCommission(this);//高佣专区
     }
 
     private void setRecommendData() {
@@ -435,6 +438,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
 
         shake_more=mHeadView.findViewById(R.id.shake_more);
+        commission_more=mHeadView.findViewById(R.id.commission_more);
         tv_limitime=mHeadView.findViewById(R.id.tv_limitime);//限时秒杀时间
         shake_more.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -443,6 +447,12 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
             }
         });
 
+        commission_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), CommissionClassActivity.class));
+            }
+        });
         getGet_taoqianggou_time(this)
                 .subscribe(new DataObserver<List<PanicBuyTiemBean>>() {
                     @Override
@@ -525,6 +535,15 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(20, 3);
         rcy_shakegoods.addItemDecoration(spaceItemDecorationUtils);
         rcy_shakegoods.setLayoutManager(manager);
+
+
+        //高佣专区
+        rcy_commissiongoods = mHeadView.findViewById(R.id.rcy_commissiongoods);//高佣recycleview
+        GridLayoutManager manager2 = new GridLayoutManager(getActivity(), 3);
+        //设置图标的间距
+        SpaceItemDecorationUtils spaceItemDecorationUtils2 = new SpaceItemDecorationUtils(20, 3);
+        rcy_commissiongoods.addItemDecoration(spaceItemDecorationUtils2);
+        rcy_commissiongoods.setLayoutManager(manager2);
 
 
         recommendTitleTv = mHeadView.findViewById(R.id.recommendTitleTv);
@@ -1384,6 +1403,17 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
     @Override
     public void onVideoFailure() {
+
+    }
+//高佣专区
+    @Override
+    public void onCommissionuccess(List<ShopGoodInfo> data) {
+        CommissionGoodsAdapter goodsAdapter = new CommissionGoodsAdapter(getActivity(), data);
+        rcy_commissiongoods.setAdapter(goodsAdapter);
+    }
+
+    @Override
+    public void onCommissionFailure() {
 
     }
 

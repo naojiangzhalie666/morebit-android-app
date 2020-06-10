@@ -1,8 +1,7 @@
-package com.zjzy.morebit.goodsvideo;
+package com.zjzy.morebit.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,13 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.zjzy.morebit.Module.common.View.ReUseGridView;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.goodsvideo.adapter.CommissionClassAdapter;
 import com.zjzy.morebit.goodsvideo.adapter.VideoGoodsAdapter;
 import com.zjzy.morebit.goodsvideo.contract.VideoContract;
 import com.zjzy.morebit.goodsvideo.presenter.VideoPresenter;
@@ -31,21 +29,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 抖货分类
+ * 高佣分类
  */
-public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoContract.View  {
+public class CommissonFragment extends MvpFragment<VideoPresenter> implements VideoContract.View  {
 
     private RecyclerView rcy_videclass;
-    private String cid="1";
-    private VideoGoodsAdapter videoGoodsAdapter;
-    private int page=1;
+    private String catId="";
+    private CommissionClassAdapter videoGoodsAdapter;
+    private int minId=1;
     private List<ShopGoodInfo>  list=new ArrayList<>();
     private SwipeRefreshLayout  swipeList;
     private LinearLayout searchNullTips_ly;
 
 
-    public static VideoFragment newInstance(String name,String id) {
-        VideoFragment fragment = new VideoFragment();
+    public static CommissonFragment newInstance(String name, String id) {
+        CommissonFragment fragment = new CommissonFragment();
         Bundle args = new Bundle();
         Log.e("id",id);
         args.putString("id", id);
@@ -68,7 +66,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
     }
 
     private void getData() {
-        mPresenter.getVideoGoods(this,cid,page);
+        mPresenter.getCommissionGoods(this,catId,minId);
     }
 
 
@@ -79,7 +77,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-              cid = arguments.getString("id");
+            catId = arguments.getString("id");
 
         }
         rcy_videclass = view.findViewById(R.id.rcy_videclass);
@@ -97,7 +95,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
         swipeList.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page=1;
+                minId=1;
                 initData();
                 refreshLayout.finishRefresh(true);//刷新完成
             }
@@ -105,7 +103,7 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
         swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
+                minId++;
                 initData();
             }
         });
@@ -136,11 +134,25 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
 
     @Override
     public void onVideoGoodsSuccess(List<ShopGoodInfo> shopGoodInfo) {
+
+
+
+
+    }
+
+    @Override
+    public void onVideoGoodsError() {
+
+
+    }
+
+    @Override
+    public void onCommissionGoodsSuccess(List<ShopGoodInfo> shopGoodInfo) {
         list=  shopGoodInfo;
         if (shopGoodInfo!=null&& shopGoodInfo.size() != 0){
             searchNullTips_ly.setVisibility(View.GONE);
-            if (page==1){
-                videoGoodsAdapter = new VideoGoodsAdapter(getActivity(),shopGoodInfo,cid,page);
+            if (minId==1){
+                videoGoodsAdapter = new CommissionClassAdapter(getActivity(),shopGoodInfo);
                 rcy_videclass.setAdapter(videoGoodsAdapter);
             }else{
 
@@ -150,29 +162,15 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
         }else{
             swipeList.finishLoadMore(false);
         }
-
-
-
-    }
-
-    @Override
-    public void onVideoGoodsError() {
-        swipeList.finishLoadMore(false);
-        if (page==1){
-            searchNullTips_ly.setVisibility(View.VISIBLE);
-        }else{
-            searchNullTips_ly.setVisibility(View.GONE);
-        }
-
-    }
-
-    @Override
-    public void onCommissionGoodsSuccess(List<ShopGoodInfo> shopGoodInfo) {
-
     }
 
     @Override
     public void onCommissionGoodsError() {
-
+        swipeList.finishLoadMore(false);
+        if (minId==1){
+            searchNullTips_ly.setVisibility(View.VISIBLE);
+        }else{
+            searchNullTips_ly.setVisibility(View.GONE);
+        }
     }
 }

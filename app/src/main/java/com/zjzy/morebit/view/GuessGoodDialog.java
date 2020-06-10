@@ -182,6 +182,8 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                         });
             } else if (mData.getShopType() == 2) {
                 good_mall_tag.setImageResource(R.mipmap.guess_tm_icon);
+            }else if (mData.getShopType()==6){
+                good_mall_tag.setImageResource(R.mipmap.guess_wph_icon);
             }
             if (!TextUtils.isEmpty(mData.getItemPicture())) {
                 LoadImgUtils.setImg(mContext, imageView, mData.getItemPicture());
@@ -318,6 +320,24 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                     }
                     ShareMoneyForKaolaActivity.start((Activity) mContext, mData, mData.getPurchaseLink());
 
+                }else if (mData.getShopType()==6){
+                    if (isGoodsLose()) return;
+                    if (mData != null) {
+                        indexbannerdataArray.clear();
+                        List<String> getBanner = mData.getGoodsCarouselPictures();
+                        for (int i=0;i<getBanner.size();i++){
+                            ImageInfo imageInfo = new ImageInfo();
+                            imageInfo.setThumb(getBanner.get(i));
+                            indexbannerdataArray.add(imageInfo);
+                        }
+                        mData.setAdImgUrl(indexbannerdataArray);
+                        mData.setPrice(mData.getMarketPrice());
+                        mData.setVoucherPrice(mData.getVipPrice());
+                        mData.setTitle(mData.getGoodsName());
+                        mData.setClickURL(mData.getPurchaseLink());
+                    }
+                    ShareMoneyForPddActivity.start((Activity) mContext, mData, mData.getPurchaseLink());
+
                 }
 
                 this.dismiss();
@@ -373,6 +393,19 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                             ShowWebActivity.start((Activity) mContext,mData.getGoodsDetail(), "");
                         }
                     }
+                }else if (mData.getShopType()==6){
+                        if (mData.getPurchaseLink()!=null){
+                            if (isHasInstalledWph()){
+                                if (mData.getDeepLinkUrl()!=null){
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData.getDeepLinkUrl()));
+                                    startActivity(intent);
+                                }
+                            }else{
+                                ShowWebActivity.start((Activity) mContext,mData.getPurchaseLink(), "");
+                            }
+                        }
+
+
                 }
 
                 this.dismiss();
@@ -381,6 +414,8 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
 
         }
     }
+
+
 
 
     public static void materialLinkList(final RxAppCompatActivity rxActivity, String itemSourceId, String material) {
@@ -565,4 +600,12 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
         return AppUtil.checkHasInstalledApp(mContext, "com.kaola");
     }
 
+    /**
+     * 判断是否安装唯品会
+     *
+     * @return
+     */
+    private boolean isHasInstalledWph() {
+        return AppUtil.checkHasInstalledApp(mContext, "com.achievo.vipshop");
+    }
 }

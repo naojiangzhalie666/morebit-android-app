@@ -95,6 +95,154 @@ public class ShopGoodInfo implements Serializable {
     private String deepLinkUrl;//购买链接
     private String storeName;//店铺名称
 
+    /*
+     * 高佣详情
+     * */
+    private String itemid;//宝贝ID
+    private String itemtitle;//宝贝标题
+    private String itemprice;//宝贝原价
+    private String itemendprice;//宝贝劵后价
+    private String itemsale;//宝贝月销
+    private String itempic;//宝贝主图
+    private List<String> taobaoImageList;//宝贝轮播
+    private int shoptype;//店铺类型： 天猫（B）淘宝店（C）
+    private String tkrates;//佣金比例
+    private String tkmoney;//佣金
+    private String couponurl;//优惠券链接
+    private String couponmoney;//优惠券金额
+    private String shopname;//店铺名称
+    private String couponstarttime;//优惠券开始时间
+    private String couponendtime;//优惠券结束时间
+    private String itemdesc;//推荐语
+
+    public int getShoptype() {
+        return shoptype;
+    }
+
+    public void setShoptype(int shoptype) {
+        this.shoptype = shoptype;
+    }
+
+    public String getItemdesc() {
+        return itemdesc;
+    }
+
+    public void setItemdesc(String itemdesc) {
+        this.itemdesc = itemdesc;
+    }
+
+    public String getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(String itemid) {
+        this.itemid = itemid;
+    }
+
+    public String getItemtitle() {
+        return itemtitle;
+    }
+
+    public void setItemtitle(String itemtitle) {
+        this.itemtitle = itemtitle;
+    }
+
+    public String getItemprice() {
+        return itemprice;
+    }
+
+    public void setItemprice(String itemprice) {
+        this.itemprice = itemprice;
+    }
+
+    public String getItemendprice() {
+        return itemendprice;
+    }
+
+    public void setItemendprice(String itemendprice) {
+        this.itemendprice = itemendprice;
+    }
+
+    public String getItemsale() {
+        return itemsale;
+    }
+
+    public void setItemsale(String itemsale) {
+        this.itemsale = itemsale;
+    }
+
+    public String getItempic() {
+        return itempic;
+    }
+
+    public void setItempic(String itempic) {
+        this.itempic = itempic;
+    }
+
+    public List<String> getTaobaoImageList() {
+        return taobaoImageList;
+    }
+
+    public void setTaobaoImageList(List<String> taobaoImageList) {
+        this.taobaoImageList = taobaoImageList;
+    }
+
+    public String getTkrates() {
+        return tkrates;
+    }
+
+    public void setTkrates(String tkrates) {
+        this.tkrates = tkrates;
+    }
+
+    public String getTkmoney() {
+        return tkmoney;
+    }
+
+    public void setTkmoney(String tkmoney) {
+        this.tkmoney = tkmoney;
+    }
+
+    public String getCouponurl() {
+        return couponurl;
+    }
+
+    public void setCouponurl(String couponurl) {
+        this.couponurl = couponurl;
+    }
+
+    public String getCouponmoney() {
+        return couponmoney;
+    }
+
+    public void setCouponmoney(String couponmoney) {
+        this.couponmoney = couponmoney;
+    }
+
+    public String getShopname() {
+        return shopname;
+    }
+
+    public void setShopname(String shopname) {
+        this.shopname = shopname;
+    }
+
+    public String getCouponstarttime() {
+        return couponstarttime;
+    }
+
+    public void setCouponstarttime(String couponstarttime) {
+        this.couponstarttime = couponstarttime;
+    }
+
+    public String getCouponendtime() {
+        return couponendtime;
+    }
+
+    public void setCouponendtime(String couponendtime) {
+        this.couponendtime = couponendtime;
+    }
+
     public String getStoreName() {
         return storeName;
     }

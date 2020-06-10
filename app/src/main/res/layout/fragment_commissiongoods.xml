@@ -11,9 +11,9 @@
         android:id="@+id/tv_douhuo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="抖货"
+        android:text="高佣专区"
         android:textStyle="bold"
-        android:textColor="#ffcc2498"
+        android:textColor="@color/color_F05557"
         android:textSize="16sp" />
 
     <TextView
@@ -22,12 +22,12 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/tv_douhuo"
-        android:text="抖音尖货 优选爆品"
+        android:text="精品好物 高佣福利"
         android:textColor="#ff333333"
         android:textSize="11sp" />
 
     <TextView
-        android:id="@+id/shake_more"
+        android:id="@+id/commission_more"
         android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:layout_alignParentRight="true"
@@ -42,7 +42,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="10dp"
-        android:id="@+id/rcy_shakegoods"
+        android:id="@+id/rcy_commissiongoods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_douhuo" />
