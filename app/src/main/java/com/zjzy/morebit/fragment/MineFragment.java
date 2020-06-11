@@ -420,7 +420,7 @@ public class MineFragment extends BaseMainFragmeng {
             case R.id.share_friends:   //分享好友
 
                 startActivity(new Intent(getActivity(), InvateActivity.class));
- //              OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+            //    OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
 //                PartnerShareActivity.start(getActivity());
                 break;
             case R.id.offen_question:

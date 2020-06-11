@@ -142,22 +142,16 @@
                     android:textColor="@color/white"
                     android:textSize="12dp" />
             </RelativeLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:layout_below="@+id/rl"
-                android:layout_marginBottom="50dp"
-                >
+
 
             <com.zjzy.morebit.utils.Banner
+                android:layout_marginTop="20dp"
                 android:id="@+id/banner"
-                android:background="#F8F8F8"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-              />
-            </LinearLayout>
+                android:layout_height="450dp"
+                android:layout_below="@+id/rl"
+                android:layout_marginBottom="50dp" />
+
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>

@@ -1482,7 +1482,12 @@ public static Bitmap returnBitMap(final String url){
                 if (action != null) {
                     action.invoke(imgFile, 1);
                 }
-                updataImgToTK(context, imgFile, saveName + ".jpg");
+                try {
+                    MediaStore.Images.Media.insertImage(context.getContentResolver(), imgFile.getAbsolutePath(), saveName + ".jpg", null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                //  updataImgToTK(context, imgFile, saveName + ".jpg");
                 BuglyUtils.e("saveImg", "permission state  == goSetting");
                 return;
             }
