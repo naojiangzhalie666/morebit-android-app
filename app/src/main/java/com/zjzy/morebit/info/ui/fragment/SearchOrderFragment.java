@@ -21,6 +21,7 @@ import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
+import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
@@ -90,7 +91,8 @@ public class SearchOrderFragment extends MvpFragment<OrderListPresenter> impleme
     public void Onclick(View v) {
         switch (v.getId()) {
             case R.id.dateNullView_clickbox://跳转到分享界面
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+              //  OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+                startActivity(new Intent(getActivity(), InvateActivity.class));
                 break;
         }
     }

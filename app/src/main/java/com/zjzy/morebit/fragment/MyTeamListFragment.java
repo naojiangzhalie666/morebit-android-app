@@ -1,5 +1,6 @@
 package com.zjzy.morebit.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.FansRemarkDialog;
 import com.zjzy.morebit.Module.common.Dialog.QrcodeDialog;
@@ -174,7 +176,8 @@ public class MyTeamListFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 //跳转到分享界面
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+             //   OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+                startActivity(new Intent(getActivity(), InvateActivity.class));
             }
         });
 

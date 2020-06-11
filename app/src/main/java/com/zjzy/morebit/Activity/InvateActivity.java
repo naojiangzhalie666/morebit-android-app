@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Rect;
@@ -424,7 +425,7 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
             ViewShowUtils.showLongToast(App.getAppContext(), "生成失败");
             return fileName;
         }
-        Bitmap scBitmap = Bitmap.createScaledBitmap(qrBitmap, qrscSize - wblSize * 3, qrscSize - wblSize * 3, true);
+        Bitmap scBitmap = Bitmap.createScaledBitmap(qrBitmap, qrscSize - wblSize * 2, qrscSize - wblSize * 2, true);
         //给二维码添加白色边框
 
         Bitmap wblBitmap = Bitmap.createBitmap(qrscSize, qrscSize, Bitmap.Config.ARGB_8888);
@@ -435,34 +436,31 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
 
         Canvas canvas = new Canvas(bitmap);
 
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.image_yaoqingma);
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.yqm_bg_poster);
         int yamWidth = bmp.getWidth();
         int yamHeight = bmp.getHeight();
 
 
         Paint PaintText = new Paint();
         PaintText.setStrokeWidth(5);
-        PaintText.setTextSize(40);
+        PaintText.setTextSize(28);
         PaintText.setTextAlign(Paint.Align.LEFT);
+        PaintText.setColor(Color.WHITE);
 
         Rect bounds = new Rect();
-        PaintText.getTextBounds(mInvite_code, 0, mInvite_code.length(), bounds);
+        PaintText.getTextBounds("邀请码："+mInvite_code, 0, mInvite_code.length(), bounds);
 
         Paint paintBitmap = new Paint();
         // 设置去掉锯齿
         PaintFlagsDrawFilter paintFlagsDrawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
         canvas.setDrawFilter(paintFlagsDrawFilter);
+        // 邀请码图片
+        int i = bitmap.getWidth() / 2 - yamWidth / 2;
+        canvas.drawBitmap(bmp, i, bitmap.getHeight() - mYQMPaddingText - yamHeight - mTextPaddingButtom, paintBitmap);
 
         int textHeight = bounds.height();// 文字高度
         // 画文字
-        canvas.drawText(mInvite_code, bitmap.getWidth() / 2 - bounds.width() / 2, bitmap.getHeight() - mTextPaddingButtom, PaintText);
-//        RectF oval=new RectF();//定义参考矩形
-//        oval.set(10.0f, 140.0f, 110.0f, 200.0f);
-//        canvas.drawOval(oval, PaintText);//画椭圆
-        // 邀请码图片
-        int i = bitmap.getWidth() / 2 - yamWidth / 2;
-        canvas.drawBitmap(bmp, i, bitmap.getHeight() - mYQMPaddingText - yamHeight - mTextPaddingButtom - textHeight, paintBitmap);
-
+        canvas.drawText("邀请码："+mInvite_code, bitmap.getWidth() / 2 - bounds.width()/2-34 , bitmap.getHeight() - mTextPaddingButtom-18, PaintText);
 
         //往海报上绘上二维码
         int qrLeft = bitmap.getWidth() / 2 - qrscSize / 2;
