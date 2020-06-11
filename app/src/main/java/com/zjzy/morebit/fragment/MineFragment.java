@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -417,7 +418,9 @@ public class MineFragment extends BaseMainFragmeng {
 //                TaobaoUtil.authTaobao(getActivity(), "25107719");
                 break;
             case R.id.share_friends:   //分享好友
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+
+                startActivity(new Intent(getActivity(), InvateActivity.class));
+ //              OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
 //                PartnerShareActivity.start(getActivity());
                 break;
             case R.id.offen_question:

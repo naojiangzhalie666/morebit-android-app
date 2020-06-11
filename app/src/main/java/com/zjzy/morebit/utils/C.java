@@ -578,6 +578,7 @@ public class C {
         public static final String DIALOG_USER_IS_UPGRADE_TIME = Setting.appName + "DIALOG_USER_IS_UPGRADE_TIME";  //用户升级dialog弹出的时间
         public static final String SAVED_DB_FOR_ADDRESS = Setting.appName + "SAVED_DB_FOR_ADDRESS";  //地址保存到db
         public static final String PDD_CATEGORY = Setting.appName + "PDD_CATEGORY"; //  拼多多二级标题数据
+        public static final String WXRESGINLINK = "WXRESGINLINK"; // 微信注册链接
     }
 
 
