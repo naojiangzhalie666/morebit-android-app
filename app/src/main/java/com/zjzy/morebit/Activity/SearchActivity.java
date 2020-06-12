@@ -153,6 +153,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private int mPlatFormType = 1;//平台类型 1：淘宝  2:京东 3：拼多多
     @BindView(R.id.status_bar)
     View status_bar;
+    private int  search_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,6 +247,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 //                }
 //            }
 //        });
+
+        Intent intent = getIntent();
+        search_type = intent.getIntExtra(C.Extras.SEARCH_TYPE, 0);
         getSearchGuide();
         getHotKeywords();
         getTodayTitle();
@@ -688,6 +692,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         Bundle bundle = new Bundle();
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
         bundle.putString(C.Extras.search_keyword,keywords);
+        bundle.putInt(C.Extras.SEARCH_TYPE,search_type);
         OpenFragmentUtils.goToSimpleFragment(this, SearchResultFragment.class.getName(), bundle);
 
     }

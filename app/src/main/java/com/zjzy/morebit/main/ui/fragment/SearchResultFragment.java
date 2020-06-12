@@ -96,6 +96,7 @@ public class SearchResultFragment extends BaseMainFragmeng {
     private Bundle bundle;
     private ChannelAdapter mChannelAdapter;
     private int mType = 1;
+    private  int search_type=0;
 
 
     @Override
@@ -202,6 +203,15 @@ public class SearchResultFragment extends BaseMainFragmeng {
 
        sendMsgForChildFragment(mType);
        initSearchAdapter();
+       if (search_type==0){
+           xTablayout.getTabAt(0).select();
+       }else if (search_type==1){
+           xTablayout.getTabAt(1).select();
+       }else if (search_type==2){
+           xTablayout.getTabAt(2).select();
+       }
+
+
     }
     @OnTextChanged(value = R.id.search_et, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterTextChanged(Editable s) {
@@ -302,7 +312,7 @@ public class SearchResultFragment extends BaseMainFragmeng {
         bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
             keyWord = bundle.getString(C.Extras.search_keyword);
-
+            search_type = bundle.getInt(C.Extras.SEARCH_TYPE);
         }
 //        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 //            @Override

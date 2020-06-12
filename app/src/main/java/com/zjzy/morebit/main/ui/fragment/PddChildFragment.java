@@ -180,7 +180,9 @@ public class PddChildFragment extends BaseMainFragmeng {
         iv_right_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SearchActivity.class));
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra(C.Extras.SEARCH_TYPE,2);
+                startActivity(intent);
             }
         });
 

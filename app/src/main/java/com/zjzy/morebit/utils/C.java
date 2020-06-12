@@ -243,6 +243,8 @@ public class C {
          */
         public static final  String KEY_SERVER_TYPE = "serverType";
 
+        public static final String SEARCH_TYPE = "SEARCH_TYPE";
+
     }
 
     /**
