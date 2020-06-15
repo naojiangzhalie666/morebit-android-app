@@ -180,8 +180,6 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             }
         });
 
-
-
     }
 
 

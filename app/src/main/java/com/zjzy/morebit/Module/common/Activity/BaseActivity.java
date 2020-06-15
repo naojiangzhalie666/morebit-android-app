@@ -503,6 +503,8 @@ public abstract class BaseActivity extends SwipeBaseActivity {
         } else if (s.startsWith("https://m.vip.com/product")){//唯品会
             wphDialog(s);
 
+        }else{
+            openSearchDialog(s);
         }
 
 

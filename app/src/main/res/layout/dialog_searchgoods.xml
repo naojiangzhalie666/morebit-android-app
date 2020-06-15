@@ -7,6 +7,7 @@
 
 
     <LinearLayout
+        android:id="@+id/rl"
         android:layout_width="260dp"
         android:orientation="vertical"
         android:layout_marginTop="6dp"
@@ -42,6 +43,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="36dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
             android:layout_marginTop="23dp"
@@ -87,4 +89,20 @@
         android:textSize="16sp"
         android:textStyle="bold"
         />
+
+    <LinearLayout
+        android:layout_below="@+id/rl"
+        android:id="@+id/closeLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_dialog_close"
+            android:layout_gravity="center"
+
+            />
+    </LinearLayout>
 </RelativeLayout>

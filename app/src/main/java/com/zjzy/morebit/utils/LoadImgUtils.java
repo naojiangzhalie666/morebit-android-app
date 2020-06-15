@@ -634,6 +634,9 @@ public class LoadImgUtils {
         transformation.setExceptCorner(leftTop, rightTop, leftBottom, rightBottom);
         RequestOptions options = new RequestOptions()
                 .placeholder(placeholderRes)
+                .dontAnimate()
+                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(placeholderRes)
                 .transform(transformation);
         try {

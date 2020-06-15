@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
@@ -74,22 +75,24 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
         } else {
             return new OuterViewHolder(mInflater.inflate(R.layout.item_your_love, parent, false));
         }
+
     }
 
 
     public void setData(List<ShopGoodInfo> data) {
         if (data != null) {
-            mDatas.clear();
+           // mDatas.clear();
             mDatas.addAll(data);
+            notifyItemRangeChanged(0,data.size());
             //处理官方推荐
-            if (C.GoodsListType.officialrecomList == mType) {
-                slFlag.clear();
-                for (int i = 0; i < mDatas.size(); i++) {
-                    SelectFlag selectFlag = new SelectFlag();
-                    selectFlag.setCheck("0");
-                    slFlag.add(selectFlag);
-                }
-            }
+//            if (C.GoodsListType.officialrecomList == mType) {
+//                slFlag.clear();
+//                for (int i = 0; i < mDatas.size(); i++) {
+//                    SelectFlag selectFlag = new SelectFlag();
+//                    selectFlag.setCheck("0");
+//                    slFlag.add(selectFlag);
+//                }
+//            }
         }
     }
 
@@ -321,6 +324,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return mDatas == null ? 0 : mDatas.size();
     }
+
+
 
     public void setMaterialID(String materialID) {
         mMaterialID = materialID;
