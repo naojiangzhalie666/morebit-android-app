@@ -109,6 +109,14 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         super.onCreateView(inflater, container, savedInstanceState);
 
         mView = inflater.inflate(R.layout.fragment_searchcommodity_pdd, container, false);
+        initBundle();
+        mTabLayout = (TabLayout) mView.findViewById(R.id.tl_pdd_tab);
+//        "综合", "券后价", "销量", "奖励"
+        tabList.add(new BaseTitleTabBean("综合", false, ""));
+        tabList.add(new BaseTitleTabBean("佣金比例", true, C.Setting.sort_commissionShare));
+        tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
+        tabList.add(new BaseTitleTabBean("价格", true, C.Setting.sort_price));
+        initTab(mTabLayout);
         return mView;
     }
 
@@ -119,6 +127,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         if (isVisibleToUser && isUserHint && mView != null&&mPushType == 3) {
             initView();
             isUserHint = false;
+
         }
 
     }
@@ -130,14 +139,8 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         if (mPushType == 3) {
             initView();
         }
-        initBundle();
-        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_pdd_tab);
-//        "综合", "券后价", "销量", "奖励"
-        tabList.add(new BaseTitleTabBean("综合", false, ""));
-        tabList.add(new BaseTitleTabBean("佣金比例", true, C.Setting.sort_commissionShare));
-        tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
-        tabList.add(new BaseTitleTabBean("价格", true, C.Setting.sort_price));
-        initTab(mTabLayout);
+
+
 
     }
     private Bundle bundle;
@@ -178,7 +181,6 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                     getMoreData();
             }
         });
-
         //默认选择第一个
         reLoadData();
     }
@@ -316,9 +318,8 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
      * 第一次获取数据
      */
     public void getFirstData(String keyWords) {
-
         if (TextUtils.isEmpty(keyWords)) {
-            mRecyclerView.getSwipeList().setRefreshing(false);
+           mRecyclerView.getSwipeList().setRefreshing(false);
             if (!isUserHint){
                 ViewShowUtils.showShortToast(getActivity(), "请输入搜索内容");
             }
@@ -326,9 +327,9 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         }
         keyWord = keyWords;
         mPage = 1;
-        mRecyclerView.getListView().setNoMore(false);
-        mRecyclerView.getSwipeList().setRefreshing(true);
         fristSearch(keyWord);
+//        mRecyclerView.getListView().setNoMore(false);
+//        mRecyclerView.getSwipeList().setRefreshing(true);
     }
 
     private void fristSearch(String keywords) {
@@ -347,7 +348,6 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                         @Override
                         protected void onError(String errorMsg, String errCode) {
                             searchNullTips_ly.setVisibility(View.VISIBLE);
-
                         }
 
                         @Override
@@ -355,10 +355,10 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                             mRecyclerView.getSwipeList().setRefreshing(false);
                             dataList_ly.setVisibility(View.VISIBLE);
                             if (data != null && data.size() != 0) {
-                                searchNullTips_ly.setVisibility(View.GONE);
                                 listArray.clear();
                                 listArray.addAll(data);
                                 mAdapter.replace(listArray);
+                                searchNullTips_ly.setVisibility(View.GONE);
 
                             } else {
                                 searchNullTips_ly.setVisibility(View.VISIBLE);
