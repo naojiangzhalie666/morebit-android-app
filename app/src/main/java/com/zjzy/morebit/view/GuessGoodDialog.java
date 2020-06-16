@@ -543,7 +543,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
         }
 
         SpannableString spannableString = new SpannableString(title);
-        LeadingMarginSpan.Standard what = new LeadingMarginSpan.Standard(40, 0);
+        LeadingMarginSpan.Standard what = new LeadingMarginSpan.Standard(50, 0);
         spannableString.setSpan(what, 0, title.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
         tv.setText(spannableString);
 

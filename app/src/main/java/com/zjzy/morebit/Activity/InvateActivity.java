@@ -50,6 +50,7 @@ import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.Banner;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
@@ -237,10 +238,10 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
         banner.setImageLoader(new GlideImageLoader())
                 .setBannerStyle(BannerConfig.NOT_INDICATOR)
                 .setOffscreenPageLimit(3)
-                .setPageMargin(20)
+                .setPageMargin(12)
                 .setBannerAnimation(Transformer.ZoomOutSlide)
                 .isAutoPlay(false)
-                .setViewPageMargin((int) 100, 0, (int) 100, 0)
+                .setViewPageMargin((int) 120, 0, (int) 120, 0)
                 .start();
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
@@ -405,15 +406,15 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
     }
 
     private String getImg(Bitmap bitmap, String fileName, String ewmUrl) {
-        int qrSize = 290;
-        int wblSize = 2;
-        int qrscSize = 200;
+        int qrSize = 270;
+        int wblSize = 1;
+        int qrscSize =250;
 //        Bitmap logoBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.share_logo);
         Bitmap logoBitmap = UserLocalData.getmMyHeadBitmap();
         if (qrBitmap == null) {
             qrBitmap = QrcodeUtils.createQRCode(ewmUrl, qrSize);
             try {
-                int whiteBitmapWidth = 12;
+                int whiteBitmapWidth = 1;
                 qrBitmap = LoadImgUtils.bg2WhiteBitmap(qrBitmap, whiteBitmapWidth);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -425,7 +426,7 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
             ViewShowUtils.showLongToast(App.getAppContext(), "生成失败");
             return fileName;
         }
-        Bitmap scBitmap = Bitmap.createScaledBitmap(qrBitmap, qrscSize - wblSize * 2, qrscSize - wblSize * 2, true);
+        Bitmap scBitmap = Bitmap.createScaledBitmap(qrBitmap, qrscSize , qrscSize , true);
         //给二维码添加白色边框
 
         Bitmap wblBitmap = Bitmap.createBitmap(qrscSize, qrscSize, Bitmap.Config.ARGB_8888);
@@ -434,13 +435,18 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
 //        wblCanvas.drawColor(Color.parseColor("#ffffff"));
         wblCanvas.drawBitmap(scBitmap, wblSize, wblSize, wblPaint);
 
+
+
         Canvas canvas = new Canvas(bitmap);
 
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.yqm_bg_poster);
+        Bitmap yqmBitmap = Bitmap.createScaledBitmap(bmp, qrscSize , 48 , true);
+        Canvas canvas2 = new Canvas(yqmBitmap);
+
         int yamWidth = bmp.getWidth();
         int yamHeight = bmp.getHeight();
 
-
+        // 邀请码图片
         Paint PaintText = new Paint();
         PaintText.setStrokeWidth(5);
         PaintText.setTextSize(28);
@@ -453,14 +459,15 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
         Paint paintBitmap = new Paint();
         // 设置去掉锯齿
         PaintFlagsDrawFilter paintFlagsDrawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-        canvas.setDrawFilter(paintFlagsDrawFilter);
-        // 邀请码图片
-        int i = bitmap.getWidth() / 2 - yamWidth / 2;
-        canvas.drawBitmap(bmp, i, bitmap.getHeight() - mYQMPaddingText - yamHeight - mTextPaddingButtom, paintBitmap);
+        canvas2.setDrawFilter(paintFlagsDrawFilter);
+        // 画文字
+        canvas2.drawText("邀请码："+mInvite_code,  14, yqmBitmap.getHeight() -bounds.height()/2,/*bitmap.getHeight() - mTextPaddingButtom,*/ PaintText);
+
+        int yqmBitmapWidth = yqmBitmap.getWidth();
+        int i = bitmap.getWidth() / 2 - yqmBitmapWidth/2;
+        canvas.drawBitmap(yqmBitmap, i,bitmap.getHeight() - mYQMPaddingText - yamHeight - mTextPaddingButtom, paintBitmap);
 
         int textHeight = bounds.height();// 文字高度
-        // 画文字
-        canvas.drawText("邀请码："+mInvite_code, bitmap.getWidth() / 2 - bounds.width()/2-34 , bitmap.getHeight() - mTextPaddingButtom-18, PaintText);
 
         //往海报上绘上二维码
         int qrLeft = bitmap.getWidth() / 2 - qrscSize / 2;
@@ -470,6 +477,8 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
         String s = FileUtils.savePhoto(bitmap, SdDirPath.IMAGE_CACHE_PATH, fileName);
         scBitmap.recycle();
         scBitmap = null;
+        yqmBitmap.recycle();
+        yqmBitmap=null;
         wblBitmap.recycle();
         wblBitmap = null;
         return s;

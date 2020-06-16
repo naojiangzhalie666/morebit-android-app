@@ -188,7 +188,6 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         tabList.add(new BaseTitleTabBean("券后价", true, C.Setting.itemVoucherPrice));
         tabList.add(new BaseTitleTabBean("销量", true, C.Setting.saleMonth));
          tabList.add(new BaseTitleTabBean("奖励", true, C.Setting.commission));
-
         initTab(mTabLayout);
 
         //默认选择第一个
@@ -242,7 +241,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         tabLayout.setTabTextColors(getResources().getColor(R.color.color_666666), getResources().getColor(R.color.color_666666));
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.top_head));
         tabLayout.setSelectedTabIndicatorHeight(DensityUtil.dip2px(getActivity(), 0));
-
+        tabLayout.setTabTextColors(R.color.colcor_999999,R.color.top_head);
         //填充数据
         for (int i = 0; i < tabList.size(); i++) {
             BaseTitleTabBean bean = tabList.get(i);
@@ -312,10 +311,13 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
     private void switchTab(TabLayout tabLayout, int i, BaseTitleTabBean switchTop, boolean isInit) {
         ImageView textIcon1 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_up);
      //   ImageView textIcon2 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_down);
+        TextView text = (TextView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_tv);
         if (isInit) {
             textIcon1.setImageResource(R.drawable.icon_jiage_no);
             //textIcon2.setImageResource(R.drawable.icon_jiagexia);
+            text.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_999999));
         } else {
+            text.setTextColor(ContextCompat.getColor(getActivity(), R.color.top_head));
             if ( C.Setting.ascParms.equals(switchTop.order)) {
                 textIcon1.setImageResource(R.drawable.icon_jiage_down);
               //  textIcon2.setImageResource(R.drawable.icon_jiagexiaxuanzhong);
@@ -346,14 +348,14 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         if (isCouponShowOff) {
             isCouponShowOff = false;
             couponIv.setImageResource(R.drawable.check_no);
-            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
+            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.colcor_999999));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
             //重新读取数据
         } else {
             isCouponShowOff = true;
             couponIv.setImageResource(R.drawable.check_yes);
-            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
+            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.top_head));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
             //重新读取数据
@@ -484,10 +486,10 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
                                 mMinId = data.getMinId();
                                 mPage = data.getPage();
                                 mSearchType = data.getSearchType();
-                              //  List<ShopGoodInfo> shopGoodInfos = partList(goodsList);
-                                mAdapter.setData(goodsList);
+                                List<ShopGoodInfo> shopGoodInfos = partList(goodsList);
+                                mAdapter.setData(shopGoodInfos);
                                 //设置是否是代理商
-                               // mRecyclerView.notifyDataSetChanged();
+                                mRecyclerView.notifyDataSetChanged();
                             } else {
                                 mRecyclerView.getListView().setNoMore(true);
                             }

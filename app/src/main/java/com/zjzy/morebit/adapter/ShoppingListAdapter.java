@@ -81,18 +81,18 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
 
     public void setData(List<ShopGoodInfo> data) {
         if (data != null) {
-           // mDatas.clear();
+            mDatas.clear();
             mDatas.addAll(data);
-            notifyItemRangeChanged(0,data.size());
+           // notifyItemRangeChanged(0,data.size());
             //处理官方推荐
-//            if (C.GoodsListType.officialrecomList == mType) {
-//                slFlag.clear();
-//                for (int i = 0; i < mDatas.size(); i++) {
-//                    SelectFlag selectFlag = new SelectFlag();
-//                    selectFlag.setCheck("0");
-//                    slFlag.add(selectFlag);
-//                }
-//            }
+            if (C.GoodsListType.officialrecomList == mType) {
+                slFlag.clear();
+                for (int i = 0; i < mDatas.size(); i++) {
+                    SelectFlag selectFlag = new SelectFlag();
+                    selectFlag.setCheck("0");
+                    slFlag.add(selectFlag);
+                }
+            }
         }
     }
 

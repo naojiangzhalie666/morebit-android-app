@@ -35,7 +35,7 @@ public class TransformationUtils extends ImageViewTarget<Bitmap> {
         int imageViewWidth = target.getWidth();
 
         //计算缩放比例
-        float sy = (float) (imageViewWidth * 0.1) / (float) (width * 0.1);
+        float sy = (float) (imageViewWidth * 0.5) / (float) (width * 0.5);
 
         //计算图片等比例放大后的高
         int imageViewHeight = (int) (height * sy);

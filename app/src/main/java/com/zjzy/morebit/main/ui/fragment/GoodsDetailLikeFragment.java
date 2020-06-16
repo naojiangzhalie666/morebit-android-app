@@ -3,6 +3,7 @@ package com.zjzy.morebit.main.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,6 +84,7 @@ public class GoodsDetailLikeFragment extends BaseFragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRlList.setLayoutManager(gridLayoutManager);
         mRlList.setAdapter(mAdapter);
+
     }
 
 

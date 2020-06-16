@@ -636,6 +636,11 @@ public abstract class BaseActivity extends SwipeBaseActivity {
         }
     }
 
+    private void OngetDetailDataFinally(String s) {
+        //跳转到搜索页面
+        openSearchDialog(s);
+    }
+
     private void taoBaoDialog(final String s) {
         RxHttp.getInstance().getGoodsService().getAnalysis(new RequestAnalysisTKL().setTkl(s))
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())

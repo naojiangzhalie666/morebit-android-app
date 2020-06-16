@@ -2,6 +2,7 @@ package com.zjzy.morebit.goods.shopping.ui.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -402,17 +403,20 @@ public class CategoryListFragment extends BaseFragment implements ReEndlessGradL
 
     private void switchTab(TabLayout tabLayout, int i, BaseTitleTabBean switchTop, boolean isInit) {
         ImageView textIcon1 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_up);
-        ImageView textIcon2 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_down);
+      //  ImageView textIcon2 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_down);
+        TextView text = (TextView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_tv);
         if (isInit) {
-            textIcon1.setBackgroundResource(R.drawable.icon_jiageshangxuanzhong);
-            textIcon2.setBackgroundResource(R.drawable.icon_jiagexia);
+            textIcon1.setBackgroundResource(R.drawable.icon_jiage_no);
+            text.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_999999));
+           // textIcon2.setBackgroundResource(R.drawable.icon_jiagexia);
         } else {
+            text.setTextColor(ContextCompat.getColor(getActivity(), R.color.top_head));
             if (ascParms.equals(switchTop.order)) {
-                textIcon1.setBackgroundResource(R.drawable.icon_jiageshangxuanzhong);
-                textIcon2.setBackgroundResource(R.drawable.icon_jiagexiaxuanzhong);
+                textIcon1.setBackgroundResource(R.drawable.icon_jiage_down);
+              //  textIcon2.setBackgroundResource(R.drawable.icon_jiagexiaxuanzhong);
             } else {
-                textIcon1.setBackgroundResource(R.drawable.icon_jiageshang);
-                textIcon2.setBackgroundResource(R.drawable.icon_jiagexia);
+                textIcon1.setBackgroundResource(R.drawable.icon_jiage_up);
+              //  textIcon2.setBackgroundResource(R.drawable.icon_jiagexia);
             }
         }
     }
@@ -465,7 +469,7 @@ public class CategoryListFragment extends BaseFragment implements ReEndlessGradL
                     @Override
                     protected void onDataListEmpty() {
                         if (loadType == C.requestType.initData) {
-                            listArray.clear();
+                           listArray.clear();
                             listArray.addAll(listArray);
                             shoppingAoLeAdapter.setData(listArray);
                             shoppingAoLeAdapter1.replace(listArray);
@@ -509,6 +513,8 @@ public class CategoryListFragment extends BaseFragment implements ReEndlessGradL
                     }
                 });
     }
+
+
 
 
     @Subscribe  //订阅事件
