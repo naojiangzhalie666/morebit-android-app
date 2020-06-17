@@ -285,7 +285,7 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                     if (mData != null) {
                         mData.setAdImgUrl(indexbannerdataArray);
                     }
-                    generatePromotionUrlForPdd((BaseActivity) mContext, mData.getGoodsId(), mData.getCouponUrl())
+                    generatePromotionUrlForPdd2((BaseActivity) mContext, mData.getGoodsId(), mData.getCouponUrl())
                             .doFinally(new Action() {
                                 @Override
                                 public void run() throws Exception {
@@ -294,8 +294,8 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                             .subscribe(new DataObserver<String>() {
                                 @Override
                                 protected void onSuccess(final String data) {
-                                    mPromotionUrl = data;
-                                    ShareMoneyForPddActivity.start((Activity) mContext, mData, mPromotionUrl);
+
+                                    ShareMoneyForPddActivity.start((Activity) mContext, mData, data);
 
                                 }
                             });
@@ -605,6 +605,25 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
         bean.setType(2);
         bean.setGoodsId(goodsId);
         bean.setCouponUrl(couponUrl);
+        return RxHttp.getInstance().getCommonService().generatePromotionUrlForPdd(bean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
+    }
+
+    /**
+     * 拼多多
+     *
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<String>> generatePromotionUrlForPdd2(BaseActivity rxActivity,
+                                                                       Long goodsId, String couponUrl) {
+        RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
+        bean.setType(2);
+        bean.setGoodsId(goodsId);
+        bean.setCouponUrl(couponUrl);
+        bean.setOperateType(2);
         return RxHttp.getInstance().getCommonService().generatePromotionUrlForPdd(bean)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
