@@ -637,6 +637,7 @@ public class GoodsUtil {
         TextView yuan_prise = (TextView) view.findViewById(R.id.yuan_prise);
         TextView tv_invite_code = (TextView) view.findViewById(R.id.tv_invite_code);
         TextView ll_prise=view.findViewById(R.id.ll_prise);
+        RelativeLayout rl_cop_price=view.findViewById(R.id.rl_cop_price);
         if (goodBitmap != null) {
             goods_img.setImageBitmap(goodBitmap);
         }
@@ -648,9 +649,9 @@ public class GoodsUtil {
         }
         juanhou_prise.setText("¥ " + MathUtils.getSalesPrice(MathUtils.getnum(goodsInfo.getVoucherPrice())));
         if (TextUtils.isEmpty(goodsInfo.getPrice())){
-            cop_price.setVisibility(View.GONE);
+            rl_cop_price.setVisibility(View.GONE);
         }else{
-            cop_price.setVisibility(View.VISIBLE);
+            rl_cop_price.setVisibility(View.VISIBLE);
             yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
         }
 
