@@ -156,7 +156,6 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                 good_mall_tag.setImageResource(R.mipmap.guess_tao_icon);
             } else if (mData.getShopType() == 4) {
                 good_mall_tag.setImageResource(R.mipmap.guess_jd_icon);
-
             } else if (mData.getShopType() == 5) {
                 good_mall_tag.setImageResource(R.mipmap.guess_kaola_icon);
             } else if (mData.getShopType() == 3) {
