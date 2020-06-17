@@ -23,6 +23,15 @@ public class ProgramGetGoodsDetailBean implements Serializable {
      */
     private Long goodsId;
 
+    private Integer searchType;
+
+    public Integer getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(Integer searchType) {
+        this.searchType = searchType;
+    }
 
     public Integer getType() {
         return type;

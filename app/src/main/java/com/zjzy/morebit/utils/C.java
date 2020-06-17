@@ -483,6 +483,7 @@ public class C {
         public static final String B10009 = "B10009"; //此微信已绑定其他用户
         public static final String B800430 = "B800430"; //该手机号已有用户使用
         public static final String B1000007 = "B1000007"; //用户未注册，请先注册
+        public static final String B30421 = "B30421"; //商品已下架，请走全局搜索
 
     }
 

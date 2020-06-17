@@ -348,8 +348,11 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 
     //    拼多多
     public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForPdd(BaseActivity rxActivity, String goodsId) {
-        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(new ProgramGetGoodsDetailBean().setType(2)
-                .setGoodsId(Long.valueOf(goodsId)))
+        ProgramGetGoodsDetailBean bean = new ProgramGetGoodsDetailBean();
+        bean.setType(2);
+        bean.setSearchType(1);
+        bean.setGoodsId(Long.valueOf(goodsId));
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(bean)
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
@@ -358,8 +361,11 @@ public abstract class BaseActivity extends SwipeBaseActivity {
      *
      * */
     public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForJd(BaseActivity rxActivityt, String goodsId) {
-        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(new ProgramGetGoodsDetailBean().setType(1)
-                .setGoodsId(Long.valueOf(goodsId)))
+        ProgramGetGoodsDetailBean bean = new ProgramGetGoodsDetailBean();
+        bean.setType(1);
+        bean.setSearchType(1);
+        bean.setGoodsId(Long.valueOf(goodsId));
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(bean)
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
                 .compose(rxActivityt.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
@@ -600,6 +606,14 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                             }
 
                         }
+                        @Override
+                        protected void onError(String errorMsg, String errCode) {
+                            if (C.requestCode.B30421.equals(errCode)){
+                                //跳转到搜索页面
+                                openSearchDialog(s);
+                            }
+                        }
+
                     });
 
         }
@@ -631,6 +645,14 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 
                             }
 
+                        }
+
+                        @Override
+                        protected void onError(String errorMsg, String errCode) {
+                            if (C.requestCode.B30421.equals(errCode)){
+                                //跳转到搜索页面
+                                openSearchDialog(s);
+                            }
                         }
                     });
         }
