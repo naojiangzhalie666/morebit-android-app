@@ -647,7 +647,13 @@ public class GoodsUtil {
             cop_price.setText(activity.getString(R.string.yuan, MathUtils.getnum(goodsInfo.getCouponPrice())));
         }
         juanhou_prise.setText("¥ " + MathUtils.getSalesPrice(MathUtils.getnum(goodsInfo.getVoucherPrice())));
-        yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
+        if (TextUtils.isEmpty(goodsInfo.getPrice())){
+            cop_price.setVisibility(View.GONE);
+        }else{
+            cop_price.setVisibility(View.VISIBLE);
+            yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
+        }
+
         if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {
             StringsUtils.retractWphTitle(title, title, goodsInfo.getTitle());
         }

@@ -165,9 +165,6 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                     info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
                     mPresenter.getDetailDataForJd(OrderListFragment.this, info);
                 }else if (mTeamType == 5){
-                    GoodsDetailForKoalaActivity.start(getActivity(),mListArray.get(position).getItemId());
-                }else if (mTeamType == 6){
-                    GoodsDetailForWphActivity.start(getActivity(),mListArray.get(position).getItemId());
                     getBaseResponseObservableForKaoLa(OrderListFragment.this, mListArray.get(position).getItemId(), UserLocalData.getUser(getActivity()).getId())
                             .doFinally(new Action() {
                                 @Override
@@ -185,6 +182,9 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                                 }
 
                             });
+                }else if (mTeamType == 6){
+                    GoodsDetailForWphActivity.start(getActivity(),mListArray.get(position).getItemId());
+
                 }else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     if (mListArray.get(position).isSelf()){

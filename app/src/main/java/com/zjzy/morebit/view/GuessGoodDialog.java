@@ -17,6 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
 import com.zjzy.morebit.Activity.ShareMoneyForKaolaActivity;
 import com.zjzy.morebit.Activity.ShareMoneyForPddActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
@@ -152,34 +156,12 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                 good_mall_tag.setImageResource(R.mipmap.guess_tao_icon);
             } else if (mData.getShopType() == 4) {
                 good_mall_tag.setImageResource(R.mipmap.guess_jd_icon);
-                generatePromotionUrlForJd((BaseActivity) mContext, mData.getGoodsId(), mData.getCouponUrl())
-                        .doFinally(new Action() {
-                            @Override
-                            public void run() throws Exception {
-                            }
-                        })
-                        .subscribe(new DataObserver<String>() {
-                            @Override
-                            protected void onSuccess(final String data) {
-                                mPromotionJdUrl = data;
-                            }
-                        });
+
             } else if (mData.getShopType() == 5) {
                 good_mall_tag.setImageResource(R.mipmap.guess_kaola_icon);
             } else if (mData.getShopType() == 3) {
                 good_mall_tag.setImageResource(R.mipmap.guess_pdd_icon);
-                generatePromotionUrlForPdd((BaseActivity) mContext, mData.getGoodsId(), mData.getCouponUrl())
-                        .doFinally(new Action() {
-                            @Override
-                            public void run() throws Exception {
-                            }
-                        })
-                        .subscribe(new DataObserver<String>() {
-                            @Override
-                            protected void onSuccess(final String data) {
-                                mPromotionUrl = data;
-                            }
-                        });
+
             } else if (mData.getShopType() == 2) {
                 good_mall_tag.setImageResource(R.mipmap.guess_tm_icon);
             }else if (mData.getShopType()==6){
@@ -222,10 +204,10 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
             }
 
 
-
-            if (TextUtils.isEmpty(UserLocalData.getUser(mContext).getPartner()) || C.UserType.member.equals(UserLocalData.getUser(mContext).getPartner())) {
+            boolean isLogin = LoginUtil.checkIsLogin((Activity) mContext, false);
+            if (!isLogin){
                 commissionTv.setText("分享");
-            } else {
+            }else{
                 if (!StringsUtils.isEmpty(mData.getCommission())) {
                     if ("分享".equals(commissionTv.getText().toString())) {
                         String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), mData.getCommission());
@@ -247,20 +229,31 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
 
     }
 
+    private void pddUrl(ShopGoodInfo mData) {
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shopLayout:
                 if (null != mData) {
-                    GoodsDetailActivity.start(mContext, mData);
-                    App.mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            GuessGoodDialog.this.dismiss();
-                        }
-                    }, 200);
-
+                    if (mData.getShopType()==1||mData.getShopType()==2){
+                        GoodsDetailActivity.start(mContext, mData);
+                    }else if (mData.getShopType()==3){//拼多多
+                        mData.setItemSource("2");
+                        GoodsDetailForPddActivity.start(mContext,mData);
+                    }else if (mData.getShopType()==4){//京东
+                        mData.setItemSource("1");
+                        GoodsDetailForJdActivity.start(mContext,mData);
+                    }else if (mData.getShopType()==5) {//考拉
+                        GoodsDetailForKoalaActivity.start(mContext,mData.getShopId());
+                    }else if (mData.getShopType()==6){//唯品会
+                        GoodsDetailForWphActivity.start(mContext,mData.getShopId());
+                    }
                 }
+                this.dismiss();
+                AppUtil.clearClipboard((Activity) mContext);
                 break;
             case R.id.closeLay:
                 this.dismiss();
@@ -292,16 +285,40 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                     if (mData != null) {
                         mData.setAdImgUrl(indexbannerdataArray);
                     }
-                    ShareMoneyForPddActivity.start((Activity) mContext, mData, mPromotionUrl);
+                    generatePromotionUrlForPdd((BaseActivity) mContext, mData.getGoodsId(), mData.getCouponUrl())
+                            .doFinally(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                }
+                            })
+                            .subscribe(new DataObserver<String>() {
+                                @Override
+                                protected void onSuccess(final String data) {
+                                    mPromotionUrl = data;
+                                    ShareMoneyForPddActivity.start((Activity) mContext, mData, mPromotionUrl);
+
+                                }
+                            });
 
                 }else if (mData.getShopType()==4){//京东
                     if (isGoodsLose()) return;
-                    if (mData != null && mPromotionJdUrl!=null) {
-                        mData.setAdImgUrl(indexbannerdataArray);
-                        mData.setPriceForPdd(mData.getItemVoucherPrice());
-                        mData.setClickURL(mPromotionJdUrl);
-                    }
-                    ShareMoneyForPddActivity.start((Activity) mContext, mData, mPromotionJdUrl);
+                    generatePromotionUrlForJd((BaseActivity) mContext, mData.getGoodsId(), mData.getCouponUrl())
+                            .doFinally(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                }
+                            })
+                            .subscribe(new DataObserver<String>() {
+                                @Override
+                                protected void onSuccess(final String data) {
+                                    mPromotionJdUrl = data;
+                                    mData.setAdImgUrl(indexbannerdataArray);
+                                    mData.setPriceForPdd(mData.getItemVoucherPrice());
+                                    mData.setClickURL(mPromotionJdUrl);
+                                    mData.setPrice(mData.getPrice());
+                                    ShareMoneyForPddActivity.start((Activity) mContext, mData, mPromotionJdUrl);
+                                }
+                            });
 
                 }else if (mData.getShopType()==5){//考拉
                     if (isGoodsLose()) return;
@@ -369,20 +386,47 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
                     }
                     SensorsDataUtil.getInstance().buy("", "", mData.getItemSourceId(), mData.getTitle(), mData.getPrice());
                 } else if (mData.getShopType() == 3) {//拼多多
-                    if (mPromotionUrl != null) {
-                        if (isHasInstalledPdd() && mPromotionUrl.contains("https://mobile.yangkeduo.com")) {
-                            String content = mPromotionUrl.replace("https://mobile.yangkeduo.com",
-                                    "pinduoduo://com.xunmeng.pinduoduo");
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(content));
-                            mContext.startActivity(intent);
-                        } else {
-                            PddWebActivity.start((Activity) mContext, mPromotionUrl, mData.getTitle());
-                        }
-                    }
+                    generatePromotionUrlForPdd((BaseActivity) mContext, mData.getGoodsId(), mData.getCouponUrl())
+                            .doFinally(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                }
+                            })
+                            .subscribe(new DataObserver<String>() {
+                                @Override
+                                protected void onSuccess(final String data) {
+                                    mPromotionUrl = data;
+                                    if (mPromotionUrl != null) {
+                                        if (isHasInstalledPdd() && mPromotionUrl.contains("https://mobile.yangkeduo.com")) {
+                                            String content = mPromotionUrl.replace("https://mobile.yangkeduo.com",
+                                                    "pinduoduo://com.xunmeng.pinduoduo");
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(content));
+                                            mContext.startActivity(intent);
+                                        } else {
+                                            PddWebActivity.start((Activity) mContext, mPromotionUrl, mData.getTitle());
+                                        }
+                                    }
+                                }
+                            });
+
                 } else if (mData.getShopType() == 4) {//京东
-                    if (mPromotionJdUrl != null) {
-                        KaipuleUtils.getInstance(mContext).openUrlToApp(mPromotionJdUrl);
-                    }
+                    generatePromotionUrlForJd((BaseActivity) mContext, mData.getGoodsId(), mData.getCouponUrl())
+                            .doFinally(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                }
+                            })
+                            .subscribe(new DataObserver<String>() {
+                                @Override
+                                protected void onSuccess(final String data) {
+                                    mPromotionJdUrl = data;
+                                    if (mPromotionJdUrl != null) {
+                                        KaipuleUtils.getInstance(mContext).openUrlToApp(mPromotionJdUrl);
+                                    }
+                                }
+                            });
+
+
                 } else if (mData.getShopType() == 5) {//考拉
                     if (mData.getGoodsDetail()!=null){
                         String burl = mData.getGoodsDetail().replace("https://", "kaola://");
@@ -525,11 +569,9 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
         UserInfo user = UserLocalData.getUser();
         boolean isLogin = LoginUtil.checkIsLogin((Activity) mContext, false);
         boolean invalidMoney = MathUtils.checkoutInvalidMoney(couponPrice);// 是否有券
-        if (!isLogin && !invalidMoney) {//（1）未登录，商品没券：立即购买
+        if (!isLogin) {//（1）未登录，商品没券：立即购买
             buyTv.setText("购买");
-        } else if (isLogin && !invalidMoney && C.UserType.member.equals(user.getPartner())) {//（6）已登录，普通会员，商品没券：立即购买
-            buyTv.setText("购买");
-        } else {
+        } else if (isLogin) {//（6）已登录，普通会员，商品没券：立即购买
             double allDiscountsMoney = MathUtils.allDiscountsMoney(user.getCalculationRate(), commission, couponPrice);
             String allDiscountsMoneyStr = MathUtils.formatTo2Decimals(allDiscountsMoney + "");
             buyTv.setText("省 " + allDiscountsMoneyStr + "元");

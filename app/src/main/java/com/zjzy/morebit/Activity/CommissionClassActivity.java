@@ -192,7 +192,7 @@ public class CommissionClassActivity extends BaseActivity {
     public Observable<BaseResponse<List<VideoClassBean>>> getCommissionClass(BaseActivity rxActivity) {
 
         return RxHttp.getInstance().getGoodsService()
-                .getVideoClass()
+                .getCommissionClass()
                 .compose(RxUtils.<BaseResponse<List<VideoClassBean>>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<List<VideoClassBean>>>bindToLifecycle());
     }

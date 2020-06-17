@@ -497,7 +497,6 @@ public abstract class BaseActivity extends SwipeBaseActivity {
         //http://pagoda.gzmiyuan.com/WirelessShareTpwdQueryRequest.php?tkl=%EF%BF%A5QY4ebeJbZyE%EF%BF%A5
 //        RxHttp.getInstance().getGoodsService().getAnalysis(s)
         Log.e("itemsoure", s + "");
-
         if (s.contains("https://m.tb.cn")) {//淘宝
             taoBaoDialog(s);
         } else if (s.startsWith("https://item.m.jd.com")) {//京东
