@@ -47,7 +47,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
     private List<SelectFlag> slFlag = new ArrayList<>();
     private boolean isEditor;//收藏列表是否是编辑状态
     private String mMaterialID;
-    private boolean showHotTag = false; //标识是否显示多点优选推荐
+    private boolean showHotTag = true; //标识是否显示多点优选推荐
 
     public ShoppingListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
