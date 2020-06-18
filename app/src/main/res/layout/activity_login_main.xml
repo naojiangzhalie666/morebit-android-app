@@ -145,7 +145,7 @@
                     <Button
                         android:id="@+id/areaCodeBtn"
                         style="@style/areaCodeStyle"
-                        android:visibility="gone" />
+                      />
                 </LinearLayout>
 
                 <View

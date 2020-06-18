@@ -675,30 +675,30 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
      * 红包轮播
      */
     public void getTopRedPackage() {
-        ConfigModel.getInstance().getConfigForKey((RxAppCompatActivity) getActivity(), C.SysConfig.RECEIVE_RED_PACKET)
-                .subscribe(new DataObserver<HotKeywords>() {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        iv_hongbao.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    protected void onSuccess(HotKeywords data) {
-                        String sysValue = data.getSysValue();
-                        HomeTopRedPagckageBean bean = (HomeTopRedPagckageBean) MyGsonUtils.jsonToBean(sysValue, HomeTopRedPagckageBean.class);
-                        if (bean != null && bean.getStatus() == 1) {
-                            iv_hongbao.setVisibility(View.VISIBLE);
-                            Animation loadAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
-                            iv_hongbao.startAnimation(loadAnimation);
-                            if (!TextUtils.isEmpty(bean.getCode())) {
-                                mRedpackagecode = bean.getCode();
-                                AppUtil.coayTextPutNative(getActivity(), bean.getCode());
-                            }
-                        } else {
-                            iv_hongbao.setVisibility(View.GONE);
-                        }
-                    }
-                });
+//        ConfigModel.getInstance().getConfigForKey((RxAppCompatActivity) getActivity(), C.SysConfig.RECEIVE_RED_PACKET)
+//                .subscribe(new DataObserver<HotKeywords>() {
+//                    @Override
+//                    protected void onError(String errorMsg, String errCode) {
+//                        iv_hongbao.setVisibility(View.GONE);
+//                    }
+//
+//                    @Override
+//                    protected void onSuccess(HotKeywords data) {
+//                        String sysValue = data.getSysValue();
+//                        HomeTopRedPagckageBean bean = (HomeTopRedPagckageBean) MyGsonUtils.jsonToBean(sysValue, HomeTopRedPagckageBean.class);
+//                        if (bean != null && bean.getStatus() == 1) {
+//                            iv_hongbao.setVisibility(View.VISIBLE);
+//                            Animation loadAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+//                            iv_hongbao.startAnimation(loadAnimation);
+//                            if (!TextUtils.isEmpty(bean.getCode())) {
+//                                mRedpackagecode = bean.getCode();
+//                                AppUtil.coayTextPutNative(getActivity(), bean.getCode());
+//                            }
+//                        } else {
+//                            iv_hongbao.setVisibility(View.GONE);
+//                        }
+//                    }
+//                });
     }
 
 

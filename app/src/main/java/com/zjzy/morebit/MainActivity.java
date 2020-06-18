@@ -120,7 +120,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     public static boolean isNetwork = true;
     private RelativeLayout rl_mine, rl_community, rl_homepage, rl_shop, rl_number;
     //Fragment
-    HomeFragment homePageFragment;
+    HomeOtherFragment homePageFragment;
     BaseMainFragmeng superNavigationFragment;
     BaseMainFragmeng circleFragment;
     //    BaseMainFragmeng collegeFragment;
@@ -607,7 +607,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         rl_homepage.setSelected(true);
 
         mViewPager = (NoScrollViewPager) findViewById(R.id.viewPager);
-        homePageFragment = new HomeFragment();
+        homePageFragment = new HomeOtherFragment();
         superNavigationFragment = new SuperNavigationFragment();
 //        collegeFragment = new HomeCollegeFragment();
         numberFragment = new NumberFragment();
@@ -624,7 +624,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         mViewPager.setAdapter(myFragmentPagerAdapter);
         mViewPager.setOffscreenPageLimit(5);
 
-        ((HomeFragment) homePageFragment).setmGuideNextCallback(new GuideNextCallback() {
+        ((HomeOtherFragment) homePageFragment).setmGuideNextCallback(new GuideNextCallback() {
             @Override
             public void nextGuide() {
                 if (LoginUtil.checkIsLogin(MainActivity.this, false) && UserLocalData.isShowGuide()) {
@@ -833,7 +833,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 mViewPager.setCurrentItem(0, false);
                 if (homePageFragment != null) {
                     if (mViewPager.getCurrentItem() == curPosition) {
-                        ((HomeFragment) homePageFragment).selectFirst();
+                        ((HomeOtherFragment) homePageFragment).selectFirst();
                     }
                 }
                 curPosition = C.mainPage.HOME;
