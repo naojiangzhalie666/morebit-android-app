@@ -542,6 +542,20 @@ public class AppUtil {
 
 
     }
+    /**
+     * 清空剪贴板内容
+     */
+    public static void clearClipboard(final Activity activity) {
+        ClipboardManager manager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        if (manager != null) {
+            try {
+                manager.setPrimaryClip(manager.getPrimaryClip());
+                manager.setText(null);
+            } catch (Exception e) {
+            }
+        }
+    }
+
 
     public static String replaceText(String text) {
         try {

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="10dp"
+    android:id="@+id/rl_commission"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_douhuo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="高佣专区"
+        android:textStyle="bold"
+        android:textColor="@color/color_F05557"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/tv_douhuo"
+        android:text="精品好物 高佣福利"
+        android:textColor="#ff333333"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/commission_more"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:text="更多"
+        android:gravity="center_vertical"
+        android:drawablePadding="8dp"
+        android:drawableRight="@mipmap/douhuo_false"
+        android:paddingRight="@dimen/dp_10"
+        android:textColor="#ff999999"
+        android:textSize="12sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:id="@+id/rcy_commissiongoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_douhuo" />
+</RelativeLayout>

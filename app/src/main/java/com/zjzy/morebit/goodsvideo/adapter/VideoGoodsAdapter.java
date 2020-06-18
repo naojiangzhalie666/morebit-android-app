@@ -86,7 +86,7 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
 
 
         if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
-                || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())) {  holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + "") + "元");
+                || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())||C.UserType.member.equals(UserLocalData.getUser(context).getPartner())) {  holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + "") + "元");
         } else {
             UserInfo userInfo1 = UserLocalData.getUser();
             if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {

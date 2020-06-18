@@ -122,7 +122,7 @@ public class ActivityAdapter extends SimpleAdapter<HandpickBean, SimpleViewHolde
             }
             title.setText(MathUtils.getTitle(item));
 
-            discount_price.setText(item.getItemPrice());
+            discount_price.setText("¥"+item.getItemPrice());
             price.setText("¥"+MathUtils.getVoucherPrice(item.getVoucherPrice()));
             discount_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG); //中划线
             holder.itemView.setOnClickListener(new View.OnClickListener() {

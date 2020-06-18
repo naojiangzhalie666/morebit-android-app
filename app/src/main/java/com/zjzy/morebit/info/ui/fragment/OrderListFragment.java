@@ -1,6 +1,7 @@
 package com.zjzy.morebit.info.ui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,8 @@ import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
+import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
@@ -179,6 +182,9 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                                 }
 
                             });
+                }else if (mTeamType == 6){
+                    GoodsDetailForWphActivity.start(getActivity(),mListArray.get(position).getItemId());
+
                 }else{
 //                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     if (mListArray.get(position).isSelf()){
@@ -233,7 +239,8 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     public void Onclick(View v) {
         switch (v.getId()) {
             case R.id.dateNullView_clickbox://跳转到分享界面
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+               // OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+                startActivity(new Intent(getActivity(), InvateActivity.class));
                 break;
         }
     }

@@ -4,9 +4,11 @@
     <dimen name="margin_medium">10dp</dimen>
     <dimen name="margin_small">6dp</dimen>
     <dimen name="margin_pdd">6dp</dimen>
+    <dimen name="margin_guess">5dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="poster">30dp</dimen>
     <dimen name="info_text_small">14sp</dimen>
 
 

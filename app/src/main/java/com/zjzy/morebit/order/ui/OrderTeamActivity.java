@@ -41,7 +41,8 @@ public class OrderTeamActivity extends BaseActivity {
     LinearLayout llPddOrder;
     @BindView(R.id.ll_kl_order)
     LinearLayout llklOrder;
-
+    @BindView(R.id.ll_wph_order)
+    LinearLayout llwphOrder;
     public static void start(Activity activity) {
         //跳转到订单类型列表
         Intent it = new Intent(activity, OrderTeamActivity.class);
@@ -116,6 +117,16 @@ public class OrderTeamActivity extends BaseActivity {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(C.Extras.order_type,C.OrderType.KAOLA);
+                OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
+                        OrderDetailFragment.class.getName(), bundle);
+            }
+        });
+        //唯品会
+        llwphOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(C.Extras.order_type,C.OrderType.WPH);
                 OpenFragmentUtils.goToSimpleFragment(OrderTeamActivity.this,
                         OrderDetailFragment.class.getName(), bundle);
             }

@@ -165,4 +165,14 @@ public class VideoFragment extends MvpFragment<VideoPresenter> implements VideoC
         }
 
     }
+
+    @Override
+    public void onCommissionGoodsSuccess(List<ShopGoodInfo> shopGoodInfo) {
+
+    }
+
+    @Override
+    public void onCommissionGoodsError() {
+
+    }
 }

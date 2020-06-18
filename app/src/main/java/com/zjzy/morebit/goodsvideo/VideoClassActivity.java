@@ -133,6 +133,16 @@ public class VideoClassActivity extends MvpActivity<VideoPresenter> implements V
 
     }
 
+    @Override
+    public void onCommissionGoodsSuccess(List<ShopGoodInfo> shopGoodInfo) {
+
+    }
+
+    @Override
+    public void onCommissionGoodsError() {
+
+    }
+
     public class NewsPagerAdapter extends FragmentPagerAdapter {
         private List<VideoFragment> mFragments;
         private List<VideoClassBean> mNewsTypes;

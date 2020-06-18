@@ -28,6 +28,7 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.RxActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.MainActivity;
@@ -44,12 +45,15 @@ import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.request.RequesKoalaBean;
+import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestAnalysisTKL;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoginUtil;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
@@ -91,7 +95,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
         super.onCreate(savedInstanceState);
         Logger.e("打开了界面----", this.getClass().getSimpleName());
         //初始化沉浸式
-        mHandler=new Handler();
+        mHandler = new Handler();
         if (isImmersionBarEnabled())
             initImmersionBar();
         ActivityLifeHelper.getInstance().addActivity(this);
@@ -154,11 +158,13 @@ public abstract class BaseActivity extends SwipeBaseActivity {
     protected boolean isImmersionBarEnabled() {
         return false;
     }
+
     protected void initImmersionBar() {
         //在BaseActivity里初始化
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.init();
     }
+
     class NwtWorkRunnable implements Runnable {
         @Override
         public void run() {
@@ -257,14 +263,14 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 //                return;
 //            }
             //判断非复制的邀请码
-            UserInfo userInfo = UserLocalData.getUser( );
+            UserInfo userInfo = UserLocalData.getUser();
             if (userInfo != null && userInfo.getInviteCode().equals(getClipText)) {
                 return;
             }
             String o = (String) SharedPreferencesUtils.get(BaseActivity.this, C.sp.SearchText, "");
             String replaceClipText = AppUtil.replaceText(getClipText);
             MyLog.i("test", "o: " + o + " replaceClipText: " + replaceClipText + " getClipText: " + getClipText);
-            if(null != mGuessGoodDialog && mGuessGoodDialog.isShowing()){
+            if (null != mGuessGoodDialog && mGuessGoodDialog.isShowing()) {
                 getAnalysis(getClipText);
             }
             if (!TextUtils.isEmpty(o) && replaceClipText.equals(o)) {
@@ -291,7 +297,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 
     protected void openSearchDialog(final String getClipStr) {
 
-        searchDialog = new  SearchGoodsDialog(BaseActivity.this, R.style.dialog, "", getClipStr, new SearchGoodsDialog.OnCloseListener() {
+        searchDialog = new SearchGoodsDialog(BaseActivity.this, R.style.dialog, "", getClipStr, new SearchGoodsDialog.OnCloseListener() {
             @Override
             public void onClick(Dialog dialog, String text) {
                 final String textTrim = getClipStr.trim();
@@ -312,28 +318,10 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                 }
                 App.getACache().put(C.sp.searchHotKey, asObject);
 
-                if (textTrim.contains("https://item.m.jd.com/product/")){
-                    String stextTrim="";
-                    String substring = textTrim.substring(0, textTrim.indexOf(".html"));
-                    stextTrim= substring.replace("https://item.m.jd.com/product/","");
 
-                    getBaseResponseObservableForJd(BaseActivity.this, stextTrim)
-                            .doFinally(new Action() {
-                                @Override
-                                public void run() throws Exception {
-                                }
-                            })
-                            .subscribe(new DataObserver<ShopGoodInfo>() {
-                                @Override
-                                protected void onSuccess(final ShopGoodInfo data) {
-                                  showDetailsView(data,textTrim);
-
-                                }
-                            });
-                }else{
                     //跳转到搜索页面
                     gotoSearchResultPage(textTrim);
-                }
+
 
 //                Intent intent = new Intent(BaseActivity.this, SearchResultForPddActivity.class);
 //                Bundle bundle = new Bundle();
@@ -356,44 +344,81 @@ public abstract class BaseActivity extends SwipeBaseActivity {
         }
     }
 
-    private void showDetailsView(ShopGoodInfo data, String textTrim) {
-        if (data!=null){
-            data.setItemSource("1");
-            GoodsDetailForJdActivity.start(BaseActivity.this,data);
-        }else{
-            //跳转到搜索页面
-            gotoSearchResultPage(textTrim);
-        }
 
+
+    //    拼多多
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForPdd(BaseActivity rxActivity, String goodsId) {
+        ProgramGetGoodsDetailBean bean = new ProgramGetGoodsDetailBean();
+        bean.setType(2);
+        bean.setSearchType(1);
+        bean.setGoodsId(Long.valueOf(goodsId));
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(bean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
-
-
-    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForJd(BaseActivity rxActivityt, String  goodsId) {
-        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(new ProgramGetGoodsDetailBean().setType(1)
-                .setGoodsId(Long.valueOf(goodsId)))
+    /*
+     * 京东
+     *
+     * */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForJd(BaseActivity rxActivityt, String goodsId) {
+        ProgramGetGoodsDetailBean bean = new ProgramGetGoodsDetailBean();
+        bean.setType(1);
+        bean.setSearchType(1);
+        bean.setGoodsId(Long.valueOf(goodsId));
+        return RxHttp.getInstance().getCommonService().getJdPddGoodsDetail(bean)
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
                 .compose(rxActivityt.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
-    private void gotoSearchResultPage(String keywords){
+
+    /**
+     * 考拉海购
+     *
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForKaoLa(BaseActivity rxActivity, String goodsId, String userId) {
+        RequesKoalaBean requesKoalaBean = new RequesKoalaBean();
+        requesKoalaBean.setUserId(userId);
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getKaoLaGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
+
+    /**
+     * 唯品会
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForWei(BaseActivity rxActivity, String  goodsId) {
+        RequesWeiBean requesKoalaBean = new RequesWeiBean();
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getWeiGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
+    private void gotoSearchResultPage(String keywords) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-        bundle.putString(C.Extras.search_keyword,keywords);
+        bundle.putString(C.Extras.search_keyword, keywords);
         OpenFragmentUtils.goToSimpleFragment(this, SearchResultFragment.class.getName(), bundle);
 
     }
 
-    protected void openGuessDialog(ShopGoodInfo data){
-         if(null != mGuessGoodDialog){
-             mGuessGoodDialog.setData(data);
-         }else{
-             mGuessGoodDialog = new GuessGoodDialog(BaseActivity.this, R.style.dialog, data, new GuessGoodDialog.OnComissionListener() {
-                 @Override
-                 public void onClick(Dialog dialog, String text) {
+    protected void openGuessDialog(ShopGoodInfo data) {
+        if (null != mGuessGoodDialog) {
+            mGuessGoodDialog.setData(data);
+        } else {
+            mGuessGoodDialog = new GuessGoodDialog(BaseActivity.this, R.style.dialog, data, new GuessGoodDialog.OnComissionListener() {
+                @Override
+                public void onClick(Dialog dialog, String text) {
 
-                 }
+                }
 
-             });
-         }
+            });
+        }
 
 
         if (mGuessGoodDialog != null) {
@@ -406,15 +431,14 @@ public abstract class BaseActivity extends SwipeBaseActivity {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         LoadingView.closeDialog();
-        if(mUnbinder != null){
+        if (mUnbinder != null) {
             mUnbinder.unbind();
         }
-        if ( ImmersionBar.with(this) != null) //一个Activity只有一个ImmersionBar对象, 即使在子类初始化, 在这里也能销毁.
+        if (ImmersionBar.with(this) != null) //一个Activity只有一个ImmersionBar对象, 即使在子类初始化, 在这里也能销毁.
             ImmersionBar.with(this).destroy();  //在BaseActivity里销毁
 
         if (mNwtWorkRunnable != null) {
@@ -466,13 +490,179 @@ public abstract class BaseActivity extends SwipeBaseActivity {
     }
 
 
-
     /**
      * 解析淘口令
      */
     public void getAnalysis(final String s) {
         //http://pagoda.gzmiyuan.com/WirelessShareTpwdQueryRequest.php?tkl=%EF%BF%A5QY4ebeJbZyE%EF%BF%A5
 //        RxHttp.getInstance().getGoodsService().getAnalysis(s)
+        Log.e("itemsoure", s + "");
+        if (s.contains("https://m.tb.cn")) {//淘宝
+            taoBaoDialog(s);
+        } else if (s.startsWith("https://item.m.jd.com")) {//京东
+            JdDialog(s);
+        } else if (s.startsWith("https://mobile.yangkeduo.com")) {//拼多多
+            pddDialog(s);
+        } else if (s.startsWith("https://m-goods.kaola.com")) {//考拉
+            kaoLaDialog(s);
+        } else if (s.startsWith("https://m.vip.com/product")){//唯品会
+            wphDialog(s);
+
+        }else{
+            openSearchDialog(s);
+        }
+
+
+    }
+
+    private void wphDialog(final String s) {
+        if (s.contains("https://m.vip.com/product")){
+            String shopid = "";
+            String substring = s.substring(0, s.indexOf("?"));
+            String[] split = substring.split("-");
+            String informationId = split[2];
+            shopid = informationId.replace(".html", "");
+
+            getBaseResponseObservableForWei(BaseActivity.this,shopid)
+                    .doFinally(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                        }
+                    })
+                    .subscribe(new DataObserver<ShopGoodInfo>() {
+                        @Override
+                        protected void onSuccess(final ShopGoodInfo data) {
+                            if (data.getCommission()!=null&&!MathUtils.getnum(data.getCommission()).equals("0")){
+                                data.setItemPicture(data.getGoodsMainPicture());
+                                data.setShopType(6);
+                                data.setItemVoucherPrice(data.getVipPrice());
+                                data.setItemTitle(data.getGoodsName());
+                                openGuessDialog(data);
+                            }else{
+                                openSearchDialog(s);
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void kaoLaDialog(final String s) {
+        if (s.contains("https://m-goods.kaola.com/product/")) {
+            String shopid = "";
+            String substring = s.substring(0, s.indexOf(".html"));
+            shopid = substring.replace("https://m-goods.kaola.com/product/", "");
+            Log.e("itemsoure", shopid + "");
+            getBaseResponseObservableForKaoLa(BaseActivity.this, shopid, UserLocalData.getUser(BaseActivity.this).getId())
+                    .doFinally(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                        }
+                    })
+                    .subscribe(new DataObserver<ShopGoodInfo>() {
+                        @Override
+                        protected void onSuccess(final ShopGoodInfo data) {
+                            if (data.getCommission()!=null&&!MathUtils.getnum(data.getCommission()).equals("0")){
+                                data.setItemPicture(data.getImageList().get(0));
+                                data.setShopType(5);
+                                data.setItemVoucherPrice(data.getCurrentPrice());
+                                data.setItemTitle(data.getGoodsTitle());
+                                openGuessDialog(data);
+                            }else{
+                                openSearchDialog(s);
+                            }
+
+                        }
+
+                    });
+
+
+        }
+
+    }
+
+    private void pddDialog(final String s) {
+        if (s.contains("https://mobile.yangkeduo.com")) {
+            String substring = s.substring(s.indexOf("goods_id=") + 9, s.indexOf("&page_from"));
+            Log.e("itemsoure", substring + "");
+            getBaseResponseObservableForPdd(BaseActivity.this, substring)
+                    .doFinally(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                        }
+                    })
+                    .subscribe(new DataObserver<ShopGoodInfo>() {
+                        @Override
+                        protected void onSuccess(final ShopGoodInfo data) {
+                            if (data != null) {
+                                data.setItemPicture(data.getImageUrl());
+                                data.setShopType(3);
+                                data.setItemVoucherPrice(data.getVoucherPriceForPdd());
+                                openGuessDialog(data);
+                            } else {
+                                //跳转到搜索页面
+                                openSearchDialog(s);
+
+                            }
+
+                        }
+                        @Override
+                        protected void onError(String errorMsg, String errCode) {
+                            if (C.requestCode.B30421.equals(errCode)){
+                                //跳转到搜索页面
+                                openSearchDialog(s);
+                            }
+                        }
+
+                    });
+
+        }
+    }
+
+    private void JdDialog(final String s) {
+        if (s.contains("https://item.m.jd.com/product/")) {
+            String stextTrim = "";
+            String substring = s.substring(0, s.indexOf(".html"));
+            stextTrim = substring.replace("https://item.m.jd.com/product/", "");
+            Log.e("itemsoure", stextTrim + "");
+            getBaseResponseObservableForJd(BaseActivity.this, stextTrim)
+                    .doFinally(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                        }
+                    })
+                    .subscribe(new DataObserver<ShopGoodInfo>() {
+                        @Override
+                        protected void onSuccess(final ShopGoodInfo data) {
+                            if (data != null) {
+                                data.setItemPicture(data.getImageUrl());
+                                data.setShopType(4);
+                                data.setItemVoucherPrice(data.getVoucherPriceForPdd());
+                                openGuessDialog(data);
+                            } else {
+                                //跳转到搜索页面
+                                openSearchDialog(s);
+
+                            }
+
+                        }
+
+                        @Override
+                        protected void onError(String errorMsg, String errCode) {
+                            if (C.requestCode.B30421.equals(errCode)){
+                                //跳转到搜索页面
+                                openSearchDialog(s);
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void OngetDetailDataFinally(String s) {
+        //跳转到搜索页面
+        openSearchDialog(s);
+    }
+
+    private void taoBaoDialog(final String s) {
         RxHttp.getInstance().getGoodsService().getAnalysis(new RequestAnalysisTKL().setTkl(s))
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
                 .compose(this.<BaseResponse<ShopGoodInfo>>bindToLifecycle())
@@ -486,15 +676,14 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                         SharedPreferencesUtils.put(BaseActivity.this, C.sp.SearchText, AppUtil.replaceText(s));
                         ClipboardManager cma = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                         cma.setText(s);
-                        if(!TextUtils.isEmpty(data.getItemSourceId())){
+                        if (!TextUtils.isEmpty(data.getItemSourceId())) {
                             openGuessDialog(data);
-                        }else{
+                        } else {
                             openSearchDialog(data.getItemTitle());
                         }
 
                     }
                 });
-
     }
 
 
@@ -544,24 +733,25 @@ public abstract class BaseActivity extends SwipeBaseActivity {
     }
 
     /**
-     *  设置系统状态栏白色
-     *
+     * 设置系统状态栏白色
      */
-    protected  void setStatusBarWhite(){
+    protected void setStatusBarWhite() {
         ImmersionBar.with(this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.fontScale != 1)//非默认值
             getResources();
         super.onConfigurationChanged(newConfig);
     }
+
     @Override
     public Resources getResources() {//不需要App内字体和UI随着系统字体的变化而改变
         Resources res = super.getResources();
-        Configuration config=new Configuration();
+        Configuration config = new Configuration();
         config.setToDefaults();
-        res.updateConfiguration(config,res.getDisplayMetrics());
+        res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
     }
 
@@ -570,10 +760,10 @@ public abstract class BaseActivity extends SwipeBaseActivity {
      */
 
     public void showLoadingDialogOnUI() {
-            if (dialog==null){
-                dialog=new ProgressDialog(this);
-            }
-            dialog.show();
+        if (dialog == null) {
+            dialog = new ProgressDialog(this);
+        }
+        dialog.show();
 
 
     }
@@ -582,15 +772,16 @@ public abstract class BaseActivity extends SwipeBaseActivity {
      * 隐藏 loading框
      */
     public void dismissLoadingDialog() {
-            if (dialog!=null){
-                dialog.dismiss();
-            }
+        if (dialog != null) {
+            dialog.dismiss();
+        }
 
 
     }
-    public void isMethodManager(View view){
+
+    public void isMethodManager(View view) {
         InputMethodManager im = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-        im.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+        im.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
 

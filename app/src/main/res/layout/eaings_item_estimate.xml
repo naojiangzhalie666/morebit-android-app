@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¥ "
-                    android:textColor="#FF6600"
+                    android:textColor="#EE4139"
                     android:textSize="12dp"
                     />
                 <TextView
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.0"
-                    android:textColor="#FF6600"
+                    android:textColor="#EE4139"
                     android:textSize="20dp"
                     />
             </LinearLayout>
@@ -234,7 +234,7 @@
         </LinearLayout>
         <LinearLayout
             android:paddingTop="8dp"
-            android:background="@mipmap/more_shouyi_bg"
+            android:background="@mipmap/wph_shouyi_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -244,20 +244,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="更多收入"
-                android:textColor="#ED291E"
+                android:text="唯品会预估收入"
+                android:textColor="@color/color_333333"
                 android:textSize="16dp" />
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="敬请期待"
-                android:textColor="#333333"
-                android:textSize="16dp"
-                />
+
 
             <LinearLayout
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -270,7 +262,7 @@
                     android:textSize="12dp"
                     />
                 <TextView
-                    android:id="@+id/more_moeny"
+                    android:id="@+id/wph_moeny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.0"

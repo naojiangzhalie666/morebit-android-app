@@ -29,6 +29,8 @@ public class HomeRecommentContract {
         void onFloorFailure();
         void onVideoSuccess(List<ShopGoodInfo>  videoBean);
         void onVideoFailure();
+        void onCommissionuccess(List<ShopGoodInfo>  data);
+        void onCommissionFailure();
     }
 
     public interface Present extends BasePresenter {
@@ -64,6 +66,11 @@ public class HomeRecommentContract {
          * @param fragment
          */
         void  getVideo(RxFragment fragment);
+        /**
+         * 抖货
+         * @param fragment
+         */
+        void  getCommission(RxFragment fragment);
 
 
 

@@ -101,7 +101,7 @@
             android:layout_height="28dp"
 
             android:background="@color/color_FFFFFF"
-            app:xTabDisplayNum="3"
+            app:xTabDisplayNum="4"
             app:xTabIndicatorColor="@color/color_FF645B"
             app:xTabIndicatorHeight="3dp"
             app:xTabIndicatorWidth="15dp"

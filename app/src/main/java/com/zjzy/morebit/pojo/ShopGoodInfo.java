@@ -78,6 +78,267 @@ public class ShopGoodInfo implements Serializable {
     private String marketPrice;//原价
     private String goodsDetail;//原商品详情链接
 
+
+    /*
+     * 唯品会详情
+     * */
+    private List<String> goodsCarouselPictures;//轮播
+    private List<String> goodsDetailPictures;//图文详情中的图片
+    private String goodsName;//标题
+    private String goodsMainPicture;//商品主图
+    private int status;//商品状态：0-下架，1-上架
+    private String discount;//折扣:唯品价/市场价 保留两位小数字符串
+    private String commissionRate;//佣金比
+    private int sourceType;//商品类型：0-自营，1-非自营
+    private String brandName;//商品品牌名称
+    private String vipPrice;//现价
+    private String deepLinkUrl;//购买链接
+    private String storeName;//店铺名称
+
+    /*
+     * 高佣详情
+     * */
+    private String itemid;//宝贝ID
+    private String itemtitle;//宝贝标题
+    private String itemprice;//宝贝原价
+    private String itemendprice;//宝贝劵后价
+    private String itemsale;//宝贝月销
+    private String itempic;//宝贝主图
+    private List<String> taobaoImageList;//宝贝轮播
+    private int shoptype;//店铺类型： 天猫（B）淘宝店（C）
+    private String tkrates;//佣金比例
+    private String tkmoney;//佣金
+    private String couponurl;//优惠券链接
+    private String couponmoney;//优惠券金额
+    private String shopname;//店铺名称
+    private String couponstarttime;//优惠券开始时间
+    private String couponendtime;//优惠券结束时间
+    private String itemdesc;//推荐语
+
+    public int getShoptype() {
+        return shoptype;
+    }
+
+    public void setShoptype(int shoptype) {
+        this.shoptype = shoptype;
+    }
+
+    public String getItemdesc() {
+        return itemdesc;
+    }
+
+    public void setItemdesc(String itemdesc) {
+        this.itemdesc = itemdesc;
+    }
+
+    public String getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(String itemid) {
+        this.itemid = itemid;
+    }
+
+    public String getItemtitle() {
+        return itemtitle;
+    }
+
+    public void setItemtitle(String itemtitle) {
+        this.itemtitle = itemtitle;
+    }
+
+    public String getItemprice() {
+        return itemprice;
+    }
+
+    public void setItemprice(String itemprice) {
+        this.itemprice = itemprice;
+    }
+
+    public String getItemendprice() {
+        return itemendprice;
+    }
+
+    public void setItemendprice(String itemendprice) {
+        this.itemendprice = itemendprice;
+    }
+
+    public String getItemsale() {
+        return itemsale;
+    }
+
+    public void setItemsale(String itemsale) {
+        this.itemsale = itemsale;
+    }
+
+    public String getItempic() {
+        return itempic;
+    }
+
+    public void setItempic(String itempic) {
+        this.itempic = itempic;
+    }
+
+    public List<String> getTaobaoImageList() {
+        return taobaoImageList;
+    }
+
+    public void setTaobaoImageList(List<String> taobaoImageList) {
+        this.taobaoImageList = taobaoImageList;
+    }
+
+    public String getTkrates() {
+        return tkrates;
+    }
+
+    public void setTkrates(String tkrates) {
+        this.tkrates = tkrates;
+    }
+
+    public String getTkmoney() {
+        return tkmoney;
+    }
+
+    public void setTkmoney(String tkmoney) {
+        this.tkmoney = tkmoney;
+    }
+
+    public String getCouponurl() {
+        return couponurl;
+    }
+
+    public void setCouponurl(String couponurl) {
+        this.couponurl = couponurl;
+    }
+
+    public String getCouponmoney() {
+        return couponmoney;
+    }
+
+    public void setCouponmoney(String couponmoney) {
+        this.couponmoney = couponmoney;
+    }
+
+    public String getShopname() {
+        return shopname;
+    }
+
+    public void setShopname(String shopname) {
+        this.shopname = shopname;
+    }
+
+    public String getCouponstarttime() {
+        return couponstarttime;
+    }
+
+    public void setCouponstarttime(String couponstarttime) {
+        this.couponstarttime = couponstarttime;
+    }
+
+    public String getCouponendtime() {
+        return couponendtime;
+    }
+
+    public void setCouponendtime(String couponendtime) {
+        this.couponendtime = couponendtime;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getDeepLinkUrl() {
+        return deepLinkUrl;
+    }
+
+    public void setDeepLinkUrl(String deepLinkUrl) {
+        this.deepLinkUrl = deepLinkUrl;
+    }
+
+    public List<String> getGoodsCarouselPictures() {
+        return goodsCarouselPictures;
+    }
+
+    public void setGoodsCarouselPictures(List<String> goodsCarouselPictures) {
+        this.goodsCarouselPictures = goodsCarouselPictures;
+    }
+
+    public List<String> getGoodsDetailPictures() {
+        return goodsDetailPictures;
+    }
+
+    public void setGoodsDetailPictures(List<String> goodsDetailPictures) {
+        this.goodsDetailPictures = goodsDetailPictures;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getGoodsMainPicture() {
+        return goodsMainPicture;
+    }
+
+    public void setGoodsMainPicture(String goodsMainPicture) {
+        this.goodsMainPicture = goodsMainPicture;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getCommissionRate() {
+        return commissionRate;
+    }
+
+    public void setCommissionRate(String commissionRate) {
+        this.commissionRate = commissionRate;
+    }
+
+    public int getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(int sourceType) {
+        this.sourceType = sourceType;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(String vipPrice) {
+        this.vipPrice = vipPrice;
+    }
+
     public String getGoodsDetail() {
         return goodsDetail;
     }

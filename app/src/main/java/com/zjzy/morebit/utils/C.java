@@ -243,6 +243,8 @@ public class C {
          */
         public static final  String KEY_SERVER_TYPE = "serverType";
 
+        public static final String SEARCH_TYPE = "SEARCH_TYPE";
+
     }
 
     /**
@@ -319,6 +321,8 @@ public class C {
         public static final int MOUTH = 44;//口碑
         public static final int SHOPMALL = 45;//优选商城
         public static final int KOALA = 46;//考拉海购
+        public static final int WPH = 47;//唯品会
+
 
     }
 
@@ -481,6 +485,7 @@ public class C {
         public static final String B10009 = "B10009"; //此微信已绑定其他用户
         public static final String B800430 = "B800430"; //该手机号已有用户使用
         public static final String B1000007 = "B1000007"; //用户未注册，请先注册
+        public static final String B30421 = "B30421"; //商品已下架，请走全局搜索
 
     }
 
@@ -711,6 +716,7 @@ public class C {
         public static final int JD = 2;
         public static final int PDD = 4;
         public static final int KAOLA = 5;
+        public static final int WPH = 6;
 
 
         public static final  int E_UPLIMIT_SORT_DOWN=0;//降序

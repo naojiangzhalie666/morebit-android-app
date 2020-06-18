@@ -83,7 +83,14 @@ public class GoodsDetailImgFragment extends MvpFragment<GoodsDetailImgPresenter>
         arrayList.add("http:默认图片.png");
         arrayList.add("http:默认图片.png");
         mGoodDeImgAdapter = new GoodDeImgAdapter(getActivity(), arrayList);
-        imgList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager manager=  new LinearLayoutManager(getActivity()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        imgList.setLayoutManager(manager);
+
         imgList.setAdapter(mGoodDeImgAdapter);
     }
 

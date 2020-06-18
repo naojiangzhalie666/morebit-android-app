@@ -18,6 +18,7 @@ import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -556,6 +557,10 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                     ll_shop_name.setVisibility(View.INVISIBLE);
                     sales.setVisibility(View.GONE);
 
+                }else if (item.getShopType()==6){//唯品会
+                    good_mall_tag.setImageResource(R.mipmap.wph_icon);
+                    sales.setVisibility(View.GONE);
+                    tv_shop_name.setText(""+item.getShopName());
                 }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -580,6 +585,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                                 GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
                             } else if (item.getShopType()==5){
                                 GoodsDetailForKoalaActivity.start(getActivity(),shopGoodInfo.getItemSourceId());
+                            } else if (item.getShopType()==6){
+                                GoodsDetailForWphActivity.start(getActivity(),shopGoodInfo.getItemSourceId());
                             }else{
                                 GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
                                     @Override

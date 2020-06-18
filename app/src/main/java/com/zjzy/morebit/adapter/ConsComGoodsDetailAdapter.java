@@ -3,6 +3,7 @@ package com.zjzy.morebit.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -359,6 +360,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             }
             if ("4".equals(info.getStatus())) {//已失效
                 viewHolder.tv_order_status.setText("已失效");
+                viewHolder.number_yongjin_tv.setBackgroundResource(R.drawable.bg_yujin_item2);
+                viewHolder.number_yongjin_tv.setTextColor(Color.parseColor("#D3D3D3"));
             } else if ("3".equals(info.getStatus())) {//已结算
                 viewHolder.tv_order_status.setText("已结算");
 

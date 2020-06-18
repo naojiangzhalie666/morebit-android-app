@@ -70,4 +70,32 @@ public class VideoPresenter extends MvpPresenter<VideoModel, VideoContract.View>
         });
     }
 
+    @Override
+    public void getCommissionGoods(RxFragment rxFragment, String catId, int minId) {
+        mModel.getCommissionGoods(rxFragment,catId,minId)
+                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                })
+                .subscribe(new DataObserver<List<ShopGoodInfo>>() {
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().onCommissionGoodsError();
+                    }
+
+                    @Override
+                    protected void onSuccess(List<ShopGoodInfo> data) {
+                        getIView().onCommissionGoodsSuccess(data);
+
+                    }
+
+                });
+    }
+
+
 }

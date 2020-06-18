@@ -447,7 +447,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
         setResult(RESULT_OK);
         LoadingView.showDialog(this, "请求中...");
 
-        if (goodsInfo.getItemSource().equals("1")){//京东
+        if (goodsInfo.getShopType() == 4) {//京东
             GoodsUtil.getGenerateForJD(this, goodsInfo)
                     .subscribe(new DataObserver<String>() {
                         @Override
@@ -457,7 +457,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
 
                         }
                     });
-        }else{//拼多多
+        } else if (goodsInfo.getShopType() == 3) {//拼多多
             GoodsUtil.getGenerateForPDD(this, goodsInfo)
                     .subscribe(new DataObserver<PddShareContent>() {
                         @Override
@@ -467,10 +467,20 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
 
                         }
                     });
+
+
+        } else if (goodsInfo.getShopType()==6){//唯品会
+            GoodsUtil.getGenerateForWph(this, goodsInfo)
+                    .subscribe(new DataObserver<String>() {
+                        @Override
+                        protected void onSuccess(String data) {
+                            String template = data;
+                            et_copy.setText(template);
+
+                        }
+                    });
         }
-
     }
-
 
     /**
      * 生成分享海报二维码

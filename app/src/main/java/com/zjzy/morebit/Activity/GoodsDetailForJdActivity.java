@@ -999,6 +999,11 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 
     }
 
+    @Override
+    public void setDetaisDataWph(ShopGoodInfo data, boolean seavDao, boolean isRefresh) {
+
+    }
+
     private void setSysNotificationView() {
         rl_urgency_notifi.removeAllViews();
         if (mSysNotificationData == null || mSysNotificationData.size() == 0) return;

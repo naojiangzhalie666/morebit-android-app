@@ -47,22 +47,24 @@ public class HomeRecommendPresenter extends MvpPresenter<HomeModel, HomeRecommen
 //            }
 //        });
     }
+
     @Override
-    public void getNewRecommend(RxFragment rxFragment, int page, int minNum,int type) {
-        mModel.getNewRecommend(rxFragment, page, minNum,type)
-              .subscribe(new DataObserver<NewRecommendBean>(false) {
-                  @Override
-                  protected void onError(String errorMsg, String errCode) {
-                      getIView().onRecommendFailure(errorMsg,errCode);
-                  }
+    public void getNewRecommend(RxFragment rxFragment, int page, int minNum, int type) {
+        mModel.getNewRecommend(rxFragment, page, minNum, type)
+                .subscribe(new DataObserver<NewRecommendBean>(false) {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().onRecommendFailure(errorMsg, errCode);
+                    }
 
 
-            @Override
-            protected void onSuccess(NewRecommendBean data) {
-                getIView().onRecommendSuccessful(data);
-            }
-        });
+                    @Override
+                    protected void onSuccess(NewRecommendBean data) {
+                        getIView().onRecommendSuccessful(data);
+                    }
+                });
     }
+
     @Override
     public void getBanner(RxFragment fragment, final int back) {
         mModel.getBanner(fragment, back)
@@ -80,7 +82,6 @@ public class HomeRecommendPresenter extends MvpPresenter<HomeModel, HomeRecommen
                     }
                 });
     }
-
 
 
     @Override
@@ -131,10 +132,11 @@ public class HomeRecommendPresenter extends MvpPresenter<HomeModel, HomeRecommen
                     }
                 });
     }
-/*
-* 首页抖货商品
-*
-* */
+
+    /*
+     * 首页抖货商品
+     *
+     * */
     @Override
     public void getVideo(RxFragment fragment) {
         mModel.getVideo(fragment)
@@ -156,6 +158,37 @@ public class HomeRecommendPresenter extends MvpPresenter<HomeModel, HomeRecommen
                     @Override
                     protected void onSuccess(List<ShopGoodInfo> data) {
                         getIView().onVideoSuccess(data);
+
+                    }
+
+                });
+    }
+
+    /*
+     * 首页高佣专区商品
+     *
+     * */
+    @Override
+    public void getCommission(RxFragment fragment) {
+        mModel.getCommissionGoods(fragment)
+                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                })
+                .subscribe(new DataObserver<List<ShopGoodInfo>>() {
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        getIView().onCommissionFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(List<ShopGoodInfo> data) {
+                        getIView().onCommissionuccess(data);
 
                     }
 

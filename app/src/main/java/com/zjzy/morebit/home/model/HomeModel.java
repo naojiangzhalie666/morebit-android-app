@@ -14,6 +14,7 @@ import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.zjzy.morebit.pojo.goods.RecommendBean;
 import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
+import com.zjzy.morebit.pojo.request.RequestCommissionGoodsBean;
 import com.zjzy.morebit.pojo.request.RequestConfigKeyBean;
 import com.zjzy.morebit.pojo.request.RequestRecommendBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestOfficialRecommend;
@@ -108,6 +109,19 @@ public class HomeModel extends MvpModel {
 
         return RxHttp.getInstance().getGoodsService()
                 .getVideo()
+                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
+    }
+
+    /**
+     * 获取首页高佣专区商品
+     *
+     * @return
+     */
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getCommissionGoods(RxFragment fragment) {
+        RequestCommissionGoodsBean commissionGoodsBean=new RequestCommissionGoodsBean();
+        return RxHttp.getInstance().getGoodsService()
+                .getCommissionGoods(commissionGoodsBean)
                 .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
                 .compose(fragment.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
     }

@@ -27,6 +27,7 @@ import com.zjzy.morebit.adapter.SearchHotAdapter;
 import com.zjzy.morebit.fragment.SearchResultForJdFragment;
 import com.zjzy.morebit.fragment.SearchResultForPddFragment;
 import com.zjzy.morebit.fragment.SearchResultForTaobaoFragment;
+import com.zjzy.morebit.fragment.SearchResultForWphFragment;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
 import com.zjzy.morebit.network.CallBackObserver;
@@ -35,6 +36,7 @@ import com.zjzy.morebit.network.RxWXHttp;
 import com.zjzy.morebit.pojo.event.SearchGoodsForJdEvent;
 import com.zjzy.morebit.pojo.event.SearchGoodsForPddEvent;
 import com.zjzy.morebit.pojo.event.SearchGoodsForTaobaoEvent;
+import com.zjzy.morebit.pojo.event.SearchGoodsForWphEvent;
 import com.zjzy.morebit.pojo.goods.TaobaoSearch;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyGsonUtils;
@@ -55,7 +57,7 @@ import io.reactivex.functions.Function;
 
 
 /**
- * 首页分类-搜索淘宝、拼多多、京东
+ * 首页分类-搜索淘宝、拼多多、京东、唯品会
  */
 public class SearchResultFragment extends BaseMainFragmeng {
     @BindView(R.id.xTablayout)
@@ -87,12 +89,14 @@ public class SearchResultFragment extends BaseMainFragmeng {
     private SearchResultForTaobaoFragment mSearchTaobaoFragment;
     private SearchResultForPddFragment mSearchPddFragment;
     private SearchResultForJdFragment mSearchJdFragment;
+    private SearchResultForWphFragment mSearchWphFragment;
     private View mView;
     private int mHeadBgHeight;
     private String keyWord = "";
     private Bundle bundle;
     private ChannelAdapter mChannelAdapter;
     private int mType = 1;
+    private  int search_type=0;
 
 
     @Override
@@ -130,8 +134,10 @@ public class SearchResultFragment extends BaseMainFragmeng {
        mSearchPddFragment = SearchResultForPddFragment.newInstance(3);
        mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_pdd)));
 
+       mSearchWphFragment = SearchResultForWphFragment.newInstance(4);
+       mSearchBean.add(new SearchBean(mSearchWphFragment, getResources().getString(R.string.current_wph)));
        mChannelAdapter =new ChannelAdapter(getChildFragmentManager());
-       viewPager.setOffscreenPageLimit(3);
+       viewPager.setOffscreenPageLimit(4);
        viewPager.setAdapter(mChannelAdapter);
        xTablayout.setupWithViewPager(viewPager);
        xTablayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener (){
@@ -145,7 +151,9 @@ public class SearchResultFragment extends BaseMainFragmeng {
                    mType = 3;
                }else if (getResources().getString(R.string.current_jd).equals(tab.getText())){
                    mType = 2;
-           }
+           }else if (getResources().getString(R.string.current_wph).equals(tab.getText())){
+                   mType = 4;
+               }
                String currentSearch = etSearch.getText().toString();
                keyWord = currentSearch;
                sendMsgForChildFragment(mType);
@@ -195,6 +203,15 @@ public class SearchResultFragment extends BaseMainFragmeng {
 
        sendMsgForChildFragment(mType);
        initSearchAdapter();
+       if (search_type==0){
+           xTablayout.getTabAt(0).select();
+       }else if (search_type==1){
+           xTablayout.getTabAt(1).select();
+       }else if (search_type==2){
+           xTablayout.getTabAt(2).select();
+       }
+
+
     }
     @OnTextChanged(value = R.id.search_et, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterTextChanged(Editable s) {
@@ -295,7 +312,7 @@ public class SearchResultFragment extends BaseMainFragmeng {
         bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
             keyWord = bundle.getString(C.Extras.search_keyword);
-
+            search_type = bundle.getInt(C.Extras.SEARCH_TYPE);
         }
 //        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 //            @Override
@@ -420,6 +437,10 @@ public class SearchResultFragment extends BaseMainFragmeng {
             EventBus.getDefault().post(event);
         } else if (type==2){
             SearchGoodsForJdEvent event = new SearchGoodsForJdEvent();
+            event.setKeyword(keyWord);
+            EventBus.getDefault().post(event);
+        }else if (type==4){
+            SearchGoodsForWphEvent event = new SearchGoodsForWphEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
         }

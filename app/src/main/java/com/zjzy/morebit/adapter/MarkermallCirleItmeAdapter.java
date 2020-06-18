@@ -89,6 +89,7 @@ public class MarkermallCirleItmeAdapter extends RecyclerView.Adapter {
                 } else {       //图片
                     holder1.iv_expire.setVisibility(View.GONE);
                     holder1.tv_after_discount.setVisibility(View.GONE);
+                    holder1.iv_head_qg_bg.setVisibility(View.GONE);
                 }
                 holder1.iv_icon.setOnClickListener(new View.OnClickListener() {
                     @Override

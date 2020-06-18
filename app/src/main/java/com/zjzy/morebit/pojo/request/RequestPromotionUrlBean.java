@@ -8,6 +8,15 @@ public class RequestPromotionUrlBean extends RequestBaseBean {
     private Long goodsId;
     private String couponUrl;
     private String productUrl;
+    private Integer operateType;
+
+    public Integer getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(Integer operateType) {
+        this.operateType = operateType;
+    }
 
     public String getProductUrl() {
         return productUrl;

@@ -159,6 +159,7 @@
     <string name="current_taobao">淘宝</string>
     <string name="current_pdd">拼多多</string>
     <string name="current_jd">京东</string>
+    <string name="current_wph">唯品会</string>
     <string name="current_ranking">实时排行</string>
     <string name="pdd_tab">拼多多</string>
     <string name="today_ranking">今日排行</string>
@@ -471,6 +472,9 @@
     <string name="give_growth_value">送%1$s成长值</string>
     <string name="vip_growth_value">您还需要%1$s成长值即可成为团队长</string>
     <string name="number_growth_value">您还需要%1$s成长值即可成为VIP</string>
+    <string name="invate_text1">方式一：可以直接复制邀请码给好友下载APP注册填写</string>
+    <string name="invate_text2">方式二：专属海报中的二维码和邀请链接已经包含您的邀请信息以直接复制邀请码给好友下载APP注册填写</string>
+    <string name="invate_text3">方式三：好友通过您的邀请码或者邀请海报注册会员并下载APP后，Ta将成为您的粉丝</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

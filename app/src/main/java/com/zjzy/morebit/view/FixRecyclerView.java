@@ -3,6 +3,7 @@ package com.zjzy.morebit.view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
 
@@ -25,6 +26,11 @@ public class FixRecyclerView extends RecyclerView {
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent e) {
+        return false;
+    }
+
+    @Override
     /**
      * 重写该方法，达到使ListView适应ScrollView的效果
      */
@@ -33,5 +39,7 @@ public class FixRecyclerView extends RecyclerView {
                 MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
+
+
 
 }

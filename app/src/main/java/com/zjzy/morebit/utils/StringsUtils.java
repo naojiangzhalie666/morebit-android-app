@@ -1,9 +1,12 @@
 package com.zjzy.morebit.utils;
 
+import android.content.Context;
 import android.text.Layout;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.LeadingMarginSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
@@ -246,7 +249,33 @@ public class StringsUtils {
         }
 
     }
+    /**
+     *     左边图片右边文字换行不错位
+     * @param title      标题
+     * @return
+     */
+    public static void retractTitleForPoster(final View icon, final TextView tv, final String title){
+        if(TextUtils.isEmpty(title)){
+            return;
+        }
+        if(sWidth == 0){
+            icon.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    sWidth = icon.getWidth() +App.getAppContext().getResources().getDimensionPixelSize(R.dimen.poster);
+                    retractTitle(tv,title);
+                    icon.getViewTreeObserver().removeOnPreDrawListener(
+                            this);
+                    Log.e("poster","111");
+                    return false;
+                }
+            });
+        }else{
+            retractTitle(tv,title);
+            Log.e("poster","222");
+        }
 
+    }
 
     /**
      *     左边图片右边文字换行不错位
@@ -262,6 +291,31 @@ public class StringsUtils {
                 @Override
                 public boolean onPreDraw() {
                     sWidth = icon.getWidth() +App.getAppContext().getResources().getDimensionPixelSize(R.dimen.margin_small);
+                    retractTitle(tv,title);
+                    icon.getViewTreeObserver().removeOnPreDrawListener(
+                            this);
+                    return false;
+                }
+            });
+        }else{
+            retractTitle(tv,title);
+        }
+    }
+
+    /**
+     *     左边图片右边文字换行不错位
+     * @param title      标题
+     * @return
+     */
+    public static void retractWphTitle(final View icon, final TextView tv, final String title){
+        if(TextUtils.isEmpty(title)){
+            return;
+        }
+        if(sWidth == 0){
+            icon.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    sWidth = icon.getWidth() +App.getAppContext().getResources().getDimensionPixelSize(R.dimen.margin_default);
                     retractTitle(tv,title);
                     icon.getViewTreeObserver().removeOnPreDrawListener(
                             this);
@@ -302,6 +356,17 @@ public class StringsUtils {
         if(TextUtils.isEmpty(title)){
             return;
         }
+        Log.e("poster","333");
+        SpannableString spannableString = new SpannableString(title);
+        LeadingMarginSpan.Standard what = new LeadingMarginSpan.Standard(sWidth  , 0);
+        spannableString.setSpan(what, 0, title.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        tv.setText(spannableString);
+
+    }
+    public static void retractTitles(  TextView tv, final String title,int sWidth){
+        if(TextUtils.isEmpty(title)){
+            return;
+        }
 
         SpannableString spannableString = new SpannableString(title);
         LeadingMarginSpan.Standard what = new LeadingMarginSpan.Standard(sWidth  , 0);
@@ -309,8 +374,6 @@ public class StringsUtils {
         tv.setText(spannableString);
 
     }
-
-
 
     /**
      * 接口数据列表返回null或者size为0

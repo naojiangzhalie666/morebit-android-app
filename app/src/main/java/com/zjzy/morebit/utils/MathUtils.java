@@ -280,7 +280,7 @@ public class MathUtils {
         if (TextUtils.isEmpty(rmb)) {
             return "";
         }
-        if(rmb.indexOf(".") > 0){
+        if (rmb.indexOf(".") > 0) {
             rmb = rmb.replaceAll("0+?$", "");//去掉多余的0
             rmb = rmb.replaceAll("[.]$", "");//如最后一位是.则去掉
         }
@@ -300,11 +300,11 @@ public class MathUtils {
             throw new IllegalArgumentException(
                     "The   scale   must   be   a   positive   integer   or   zero");
         }
-        if(scale == 0){
+        if (scale == 0) {
             return new DecimalFormat("0").format(v);
         }
         String formatStr = "0.";
-        for(int i=0;i<scale;i++){
+        for (int i = 0; i < scale; i++) {
             formatStr = formatStr + "0";
         }
         return new DecimalFormat(formatStr).format(v);
@@ -481,6 +481,18 @@ public class MathUtils {
         BigDecimal bd1 = new BigDecimal(Double.toString(d1));
         BigDecimal bd2 = new BigDecimal(Double.toString(d2));
         return bd1.add(bd2).doubleValue();
+    }
+
+    /**
+     * 换算成多少折
+     *
+     * @param d1
+     * @return
+     */
+    public static String getDiscount(String d1) {
+        String salesStr = "";
+        if (TextUtils.isEmpty(d1)) return "";
+        return new BigDecimal(d1).multiply(new BigDecimal(10)).toString();
     }
 
     /**

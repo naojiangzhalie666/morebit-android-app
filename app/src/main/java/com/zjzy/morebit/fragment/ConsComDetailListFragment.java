@@ -1,5 +1,6 @@
 package com.zjzy.morebit.fragment;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -109,7 +111,10 @@ public class ConsComDetailListFragment extends BaseFragment {
             public void onClick(View view) {
                 //跳转到分享界面
 //               startActivity(new Intent(getActivity(),PartnerShareActivity.class));
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+         //       OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+                startActivity(new Intent(getActivity(), InvateActivity.class));
+
+
             }
         });
     }

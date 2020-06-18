@@ -22,6 +22,15 @@ public class MonthEarnings implements Serializable {
     private String totalPddEstimateMoney="";//拼多多预估总收益
     private String totalJdEstimateMoney="";//京东预估总收益
     private String totalKlEstimateMoney="";//考拉预估总收益
+    private String totalWphEstimateMoney="";//唯品会预估总收益
+
+    public String getTotalWphEstimateMoney() {
+        return totalWphEstimateMoney;
+    }
+
+    public void setTotalWphEstimateMoney(String totalWphEstimateMoney) {
+        this.totalWphEstimateMoney = totalWphEstimateMoney;
+    }
 
     public String getTotalKlEstimateMoney() {
         return totalKlEstimateMoney;

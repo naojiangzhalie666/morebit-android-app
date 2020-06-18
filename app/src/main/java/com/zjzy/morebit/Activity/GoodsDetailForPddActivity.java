@@ -55,6 +55,9 @@ import com.zjzy.morebit.main.model.SearchStatisticsModel;
 import com.zjzy.morebit.main.ui.fragment.GoodsDetailLikeFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.GoodsDetailForPdd;
 import com.zjzy.morebit.pojo.ImageInfo;
@@ -68,6 +71,7 @@ import com.zjzy.morebit.pojo.goods.ConsumerProtectionBean;
 import com.zjzy.morebit.pojo.goods.EvaluatesBean;
 import com.zjzy.morebit.pojo.goods.GoodsImgDetailBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
+import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
 import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -100,6 +104,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
 /**
@@ -1018,13 +1023,18 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     @Override
     public void setPromotionJdUrl(String promotionJdUrl) {
         mPromotionJdUrl=promotionJdUrl;
-        mGoodsInfo.setClickURL(promotionJdUrl);
     }
 
     @Override
     public void setDetaisData(ShopGoodInfo data, boolean seavDao, boolean isRefresh) {
 
     }
+
+    @Override
+    public void setDetaisDataWph(ShopGoodInfo data, boolean seavDao, boolean isRefresh) {
+
+    }
+
     private void setSysNotificationView() {
         rl_urgency_notifi.removeAllViews();
         if (mSysNotificationData == null || mSysNotificationData.size() == 0) return;
@@ -1067,8 +1077,19 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                 if (mGoodsInfo != null) {
                     mGoodsInfo.setAdImgUrl(indexbannerdataArray);
                 }
-                ShareMoneyForPddActivity.start(this, mGoodsInfo, mPromotionUrl);
-
+                generatePromotionUrlForPdd2( this, mGoodsInfo.getGoodsId(), mGoodsInfo.getCouponUrl())
+                        .doFinally(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                            }
+                        })
+                        .subscribe(new DataObserver<String>() {
+                            @Override
+                            protected void onSuccess(final String data) {
+                                Log.e("wwwwdata",data+"");
+                                ShareMoneyForPddActivity.start(GoodsDetailForPddActivity.this, mGoodsInfo, data);
+                            }
+                        });
                 break;
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买
@@ -1264,5 +1285,22 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         return AppUtil.checkHasInstalledApp(this, "com.xunmeng.pinduoduo");
     }
 
-
+    /**
+     * 拼多多
+     *
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<String>> generatePromotionUrlForPdd2(BaseActivity rxActivity,
+                                                                        Long goodsId, String couponUrl) {
+        RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
+        bean.setType(2);
+        bean.setGoodsId(goodsId);
+        bean.setCouponUrl(couponUrl);
+        bean.setOperateType(2);
+        return RxHttp.getInstance().getCommonService().generatePromotionUrlForPdd(bean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
+    }
 }

@@ -17,6 +17,7 @@ import com.zjzy.morebit.pojo.RankingTitleBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
+import com.zjzy.morebit.pojo.request.ProgramWphBean;
 import com.zjzy.morebit.pojo.request.RequestByGoodList;
 import com.zjzy.morebit.pojo.request.RequestCollectionListBean;
 import com.zjzy.morebit.pojo.request.RequestMaterial;
@@ -264,6 +265,16 @@ public class MainModel extends MvpModel {
                 .compose(rxFragmen.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
     }
 
+    /**
+     * 京东商品列表_新接口
+     *
+     * @return
+     */
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getWphGoodsList(RxFragment rxFragmen, ProgramWphBean bean) {
+        return RxHttp.getInstance().getGoodsService().getWphGoodsList(bean)
+                .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
+                .compose(rxFragmen.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle());
+    }
 
 
     /**

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
@@ -46,7 +47,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
     private List<SelectFlag> slFlag = new ArrayList<>();
     private boolean isEditor;//收藏列表是否是编辑状态
     private String mMaterialID;
-    private boolean showHotTag = false; //标识是否显示多点优选推荐
+    private boolean showHotTag = true; //标识是否显示多点优选推荐
 
     public ShoppingListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -74,6 +75,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
         } else {
             return new OuterViewHolder(mInflater.inflate(R.layout.item_your_love, parent, false));
         }
+
     }
 
 
@@ -81,6 +83,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
         if (data != null) {
             mDatas.clear();
             mDatas.addAll(data);
+           // notifyItemRangeChanged(0,data.size());
             //处理官方推荐
             if (C.GoodsListType.officialrecomList == mType) {
                 slFlag.clear();
@@ -321,6 +324,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return mDatas == null ? 0 : mDatas.size();
     }
+
+
 
     public void setMaterialID(String materialID) {
         mMaterialID = materialID;

@@ -142,12 +142,13 @@ public class BannerInitiateUtils {
                 gotoMenu(activity, imageInfo.getClassId(), imageInfo);  //如果是2类型，class_id就是分类ID
             } else if (open == 3) {   //跳到网页
 //                if (imageInfo.getSuperType()==1){
-                    if (TaobaoUtil.isAuth()) {//淘宝授权
-                        TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
-                    } else {
-                        //跳转到网页
-                        showWebIntent(activity, imageInfo);
-                    }
+                if (TaobaoUtil.isAuth()) {//淘宝授权
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
+                } else {
+                    //跳转到网页
+                    showWebIntent(activity, imageInfo);
+
+                }
 //                }else{
 //                    //跳转到网页
 //                    showWebIntent(activity, imageInfo);
@@ -396,14 +397,14 @@ public class BannerInitiateUtils {
             OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
         } else if (type == C.BannerIntentionType.NEW_PERSONAL) {//新人免单
             if (LoginUtil.checkIsLogin(activity)) {
-            activity.startActivity(new Intent(activity, PurchaseActivity.class));
+                activity.startActivity(new Intent(activity, PurchaseActivity.class));
 
             }
         } else if (type == C.BannerIntentionType.HUNGRY) {//饿了么
             if (LoginUtil.checkIsLogin(activity)) {
                 if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity,false);
-                }else{
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
+                } else {
                     getHungryLink((BaseActivity) activity, info);
                 }
             }
@@ -412,18 +413,18 @@ public class BannerInitiateUtils {
 
             if (LoginUtil.checkIsLogin(activity)) {
                 if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity,false);
-                }else{
+                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
+                } else {
                     getMouthLink((BaseActivity) activity, info);
                 }
             }
-        }else if (type == C.BannerIntentionType.SHOPMALL) {  //每日推荐 45
+        } else if (type == C.BannerIntentionType.SHOPMALL) {  //每日推荐 45
 
             GoodNewsFramgent.startTiemSale(activity, info);
 
-        }else if (type == C.BannerIntentionType.KOALA) {  //考拉 46
+        } else if (type == C.BannerIntentionType.KOALA || type == C.BannerIntentionType.WPH) {  //考拉 46 唯品会47
             if (TextUtils.isEmpty(info.getUrl())) return;
-            Log.e("ksjs",info.getUrl()+info.getTitle());
+            Log.e("ksjs", info.getUrl() + info.getTitle());
             KoalaWebActivity.start(activity, info.getUrl(), info.getTitle());
 
         } else {
@@ -497,9 +498,9 @@ public class BannerInitiateUtils {
                     @Override
                     protected void onSuccess(ActivityLinkBean data) {
                         String activityLink = data.getActivityLink();
-                         if (TextUtils.isEmpty(activityLink)) return;
-                       ShowWebActivity.start(activity, info.getUrl() + "?activityLinkTkl=" + data.getActivityLinkTkl() + "&activityLink=" + data.getActivityLink(), info.getTitle(), "28");
-              //          ShowWebActivity.start(activity, "http://192.168.3.88:81/#/resta", info.getTitle(), "28");
+                        if (TextUtils.isEmpty(activityLink)) return;
+                        ShowWebActivity.start(activity, info.getUrl() + "?activityLinkTkl=" + data.getActivityLinkTkl() + "&activityLink=" + data.getActivityLink(), info.getTitle(), "28");
+                        //          ShowWebActivity.start(activity, "http://192.168.3.88:81/#/resta", info.getTitle(), "28");
 
                     }
                 });
@@ -723,11 +724,11 @@ public class BannerInitiateUtils {
                 .subscribe(new DataObserver<String>() {
                     @Override
                     protected void onSuccess(String data) {
-                        String linkUrl= data;
-                        if (TextUtils.isEmpty(linkUrl)){
+                        String linkUrl = data;
+                        if (TextUtils.isEmpty(linkUrl)) {
                             ToastUtils.showLong("该活动已结束");
-                        }else{
-                            ShowWebActivity.start(activity,linkUrl, info.getTitle());
+                        } else {
+                            ShowWebActivity.start(activity, linkUrl, info.getTitle());
                         }
 
 

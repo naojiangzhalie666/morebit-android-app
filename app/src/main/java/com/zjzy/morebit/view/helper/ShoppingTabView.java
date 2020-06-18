@@ -161,24 +161,24 @@ public class ShoppingTabView extends RelativeLayout {
 
     private void switchTab(TabLayout tabLayout, int i, BaseTitleTabBean switchTop, boolean isInit) {
         ImageView textIcon1 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_up);
-        ImageView textIcon2 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_down);
+      //  ImageView textIcon2 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_down);
         TextView text = (TextView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_tv);
         if (isInit) {
-            textIcon1.setImageResource(R.drawable.icon_jiageshangxuanzhong);
-            textIcon2.setImageResource(R.drawable.icon_jiagexia);
+            textIcon1.setImageResource(R.drawable.icon_jiage_no);
+        //    textIcon2.setImageResource(R.drawable.icon_jiagexia);
             TextPaint tp = text.getPaint();
             tp.setFakeBoldText(false);
             text.setTextColor(ContextCompat.getColor(mContext, R.color.color_999999));
         } else {
-            text.setTextColor(ContextCompat.getColor(mContext, R.color.color_333333));
+            text.setTextColor(ContextCompat.getColor(mContext, R.color.top_head));
             TextPaint tp = text.getPaint();
             tp.setFakeBoldText(true);
             if (C.Setting.ascParms.equals(switchTop.order)) {
-                textIcon1.setImageResource(R.drawable.icon_jiageshangxuanzhong);
-                textIcon2.setImageResource(R.drawable.icon_jiagexiaxuanzhong);
+                textIcon1.setImageResource(R.drawable.icon_jiage_down);
+              //  textIcon2.setImageResource(R.drawable.icon_jiagexiaxuanzhong);
             } else {
-                textIcon1.setImageResource(R.drawable.icon_jiageshang);
-                textIcon2.setImageResource(R.drawable.icon_jiagexia);
+                textIcon1.setImageResource(R.drawable.icon_jiage_up);
+               // textIcon2.setImageResource(R.drawable.icon_jiagexia);
             }
         }
     }

@@ -256,6 +256,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     public void onClick(View v) {
+        page=1;
         switch (v.getId()) {
             case R.id.title_comprehensive_tv://综合
                 requestClickRadar(null, title_comprehensive_tv, 0);
@@ -422,6 +423,16 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         }
 //        dataList_ly.setVisibility(View.GONE);
 //        searchNullTips_ly.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setWph(List<ShopGoodInfo> data, int loadType) {
+
+    }
+
+    @Override
+    public void setWphError(int loadType) {
+
     }
 
     @Override

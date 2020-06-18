@@ -79,7 +79,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     private TextView tao_money,pin_money,profit_money,tv_today_paymen_total,tv_today_integral,tv_today_estimate_money,tv_today_money
             ,tv_yesterday_payment_total,tv_yestaday_integral,tv_yesterday_estimate_money,tv_yesterday_money,tv_month_estimate_money
             ,tv_month_money,tv_last__month_estimate_money,tv_last_month_money,tv_month_profit,tv_last_month_profit,tv_day_hint,tv_month_hint
-            ,jd_moeny,kaola_moeny;
+            ,jd_moeny,kaola_moeny,wph_moeny;
     EarningsHintNewsDialog mMonthdialog;
     EarningsHintNewsDialog mDayialog;
     EarningExplainBean mExplainData;
@@ -209,6 +209,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         tv_day_hint=view.findViewById(R.id.tv_day_hint);//日说明
         tv_month_hint=view.findViewById(R.id.tv_month_hint);//月说明
         kaola_moeny=view.findViewById(R.id.kaola_moeny);//考拉收益
+        wph_moeny=view.findViewById(R.id.wph_moeny);//唯品会预估收益
 
 
 
@@ -276,6 +277,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         profit_money.setText(""+MathUtils.getMoney(data.getTotalIntegral()));
         jd_moeny.setText(""+MathUtils.getMoney(data.getTotalJdEstimateMoney()));
         kaola_moeny.setText(""+MathUtils.getMoney(data.getTotalKlEstimateMoney()));
+        wph_moeny.setText(""+MathUtils.getMoney(data.getTotalWphEstimateMoney()));
 
 
 

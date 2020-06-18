@@ -1,13 +1,16 @@
 package com.zjzy.morebit.view;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.utils.AppUtil;
 
 /**
  * 商品搜索弹窗
@@ -23,6 +26,7 @@ public class SearchGoodsDialog extends Dialog implements View.OnClickListener{
     private String type = "";
     private OnCloseListener listener;
     private TextView edtext;
+    private LinearLayout closeLay;
 
 
     public SearchGoodsDialog(Context context) {
@@ -76,6 +80,7 @@ public class SearchGoodsDialog extends Dialog implements View.OnClickListener{
     private void initView(){
         title_tv = (TextView)findViewById(R.id.title_tv);
         edtext = (TextView)findViewById(R.id.edtext);
+        closeLay=findViewById(R.id.closeLay);
         if(!TextUtils.isEmpty(content)){
             edtext.setText(content);
         }
@@ -83,6 +88,7 @@ public class SearchGoodsDialog extends Dialog implements View.OnClickListener{
         cancel.setOnClickListener(this);
         ok = (TextView)findViewById(R.id.ok);
         ok.setOnClickListener(this);
+        closeLay.setOnClickListener(this);
     }
 
     @Override
@@ -93,9 +99,15 @@ public class SearchGoodsDialog extends Dialog implements View.OnClickListener{
                     listener.onClick(this,"");
                 }
                 this.dismiss();
+                AppUtil.clearClipboard((Activity) mContext);
                 break;
             case R.id.cancel:
                 this.dismiss();
+                AppUtil.clearClipboard((Activity) mContext);
+                break;
+            case R.id.closeLay:
+                this.dismiss();
+                AppUtil.clearClipboard((Activity) mContext);
                 break;
         }
     }

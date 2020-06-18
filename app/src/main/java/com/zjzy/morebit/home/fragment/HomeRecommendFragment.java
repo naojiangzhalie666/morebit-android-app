@@ -39,6 +39,7 @@ import com.bumptech.glide.Glide;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Transformer;
+import com.zjzy.morebit.Activity.CommissionClassActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -52,6 +53,7 @@ import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.PanicBuyFragment;
 import com.zjzy.morebit.goodsvideo.VideoClassActivity;
 import com.zjzy.morebit.home.adpater.ActivityAdapter;
+import com.zjzy.morebit.home.adpater.CommissionGoodsAdapter;
 import com.zjzy.morebit.home.adpater.ShakeGoodsAdapter;
 import com.zjzy.morebit.home.contract.HomeRecommentContract;
 import com.zjzy.morebit.home.presenter.HomeRecommendPresenter;
@@ -177,16 +179,18 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
     private boolean isNearEadge = false;
 
-    private RecyclerView rcy_shakegoods;
+    private RecyclerView rcy_shakegoods, rcy_commissiongoods;
     private ImageInfo mImageInfo;
-    private TextView shake_more;
+    private TextView shake_more, commission_more;
     private TextView tv_limitime;
     private List<PanicBuyTiemBean> mPanicBuyTiemBean;
     private CountDownTimer mCountDownTiemr;
-  //  private LoopLayout loopLayout;
-   private List<ImageInfo> list;
+    //  private LoopLayout loopLayout;
+    private List<ImageInfo> list;
+    private RelativeLayout rl_video, rl_commission;
 
-   private Activity mContext;
+    private Activity mContext;
+
     public static HomeRecommendFragment newInstance() {
         Bundle args = new Bundle();
         HomeRecommendFragment fragment = new HomeRecommendFragment();
@@ -321,6 +325,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         //首页悬浮窗
         mPresenter.getBanner(this, C.UIShowType.FLOAT_AD);
         mPresenter.getVideo(this);//首页抖货商品
+        mPresenter.getCommission(this);//高佣专区
     }
 
     private void setRecommendData() {
@@ -377,16 +382,15 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         mFloorRv.setAdapter(mFloorAdapter);
 
 
-
     }
 
     /*
-    *
-    * 限时抢购模块
-    *
-    * */
+     *
+     * 限时抢购模块
+     *
+     * */
 
-    private void initLimted(){
+    private void initLimted() {
 
 
         img_limted2 = mHeadView.findViewById(R.id.img_limted2);//新手教程
@@ -409,7 +413,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     protected void onSuccess(final FloorBean data) {
                         if (data != null) {
 
-                            SPUtils.getInstance().put("purchaseRule",data.getZeroActivityRule());
+                            SPUtils.getInstance().put("purchaseRule", data.getZeroActivityRule());
                             LoadImgUtils.setImg(getActivity(), img_limted1, data.getFlashSalePic());
                             LoadImgUtils.setImg(getActivity(), img_limted2, data.getNoviceTutorialPic());
                             img_limted1.setOnClickListener(new View.OnClickListener() {
@@ -422,7 +426,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                             img_limted2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    ShowWebActivity.start(getActivity(),data.getNoviceTutorial(),"新手教程");//跳新手教程
+                                    ShowWebActivity.start(getActivity(), data.getNoviceTutorial(), "新手教程");//跳新手教程
                                 }
                             });
                             litmited_time.setVisibility(View.VISIBLE);
@@ -434,8 +438,9 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                 });
 
 
-        shake_more=mHeadView.findViewById(R.id.shake_more);
-        tv_limitime=mHeadView.findViewById(R.id.tv_limitime);//限时秒杀时间
+        shake_more = mHeadView.findViewById(R.id.shake_more);
+        commission_more = mHeadView.findViewById(R.id.commission_more);
+        tv_limitime = mHeadView.findViewById(R.id.tv_limitime);//限时秒杀时间
         shake_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -443,6 +448,12 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
             }
         });
 
+        commission_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), CommissionClassActivity.class));
+            }
+        });
         getGet_taoqianggou_time(this)
                 .subscribe(new DataObserver<List<PanicBuyTiemBean>>() {
                     @Override
@@ -470,15 +481,15 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
                                         String hms = DateTimeUtils.getCountTimeByLong(millisUntilFinished);
                                         if (!TextUtils.isEmpty(hms)) {
-                                            SpannableStringBuilder style=new SpannableStringBuilder(hms);
-                                            style.setSpan(new BackgroundColorSpan(Color.RED),0,2, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
-                                            style.setSpan(new BackgroundColorSpan(Color.RED),3,5, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
-                                            style.setSpan(new BackgroundColorSpan(Color.RED),6,8, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
-                                            style.setSpan(new ForegroundColorSpan(Color.WHITE),0,2,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
-                                            style.setSpan(new ForegroundColorSpan(Color.WHITE),3,5,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
-                                            style.setSpan(new ForegroundColorSpan(Color.WHITE),6,8,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
-                                            style.setSpan(new ForegroundColorSpan(Color.RED),2,3,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
-                                            style.setSpan(new ForegroundColorSpan(Color.RED),5,6,Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            SpannableStringBuilder style = new SpannableStringBuilder(hms);
+                                            style.setSpan(new BackgroundColorSpan(Color.RED), 0, 2, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
+                                            style.setSpan(new BackgroundColorSpan(Color.RED), 3, 5, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
+                                            style.setSpan(new BackgroundColorSpan(Color.RED), 6, 8, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置textview的背景颜色
+                                            style.setSpan(new ForegroundColorSpan(Color.WHITE), 0, 2, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            style.setSpan(new ForegroundColorSpan(Color.WHITE), 3, 5, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            style.setSpan(new ForegroundColorSpan(Color.WHITE), 6, 8, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            style.setSpan(new ForegroundColorSpan(Color.RED), 2, 3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
+                                            style.setSpan(new ForegroundColorSpan(Color.RED), 5, 6, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色 textView.setText(style);
                                             tv_limitime.setText(style);
                                         }
 
@@ -493,11 +504,11 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     }
                 });
 
-        }
+    }
 
     /*
-    * 秒杀时间
-    * */
+     * 秒杀时间
+     * */
     private Observable<BaseResponse<List<PanicBuyTiemBean>>> getGet_taoqianggou_time(RxFragment fragment) {
         RequestPanicBuyTabBean requestBean = new RequestPanicBuyTabBean();
         requestBean.setType(0);
@@ -507,6 +518,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                 .compose(RxUtils.<BaseResponse<List<PanicBuyTiemBean>>>switchSchedulers())
                 .compose(fragment.<BaseResponse<List<PanicBuyTiemBean>>>bindToLifecycle());
     }
+
     private void setFloorLayout(List<FloorInfo> data) {
         if (null == data || data.isEmpty()) {
             return;
@@ -525,6 +537,16 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(20, 3);
         rcy_shakegoods.addItemDecoration(spaceItemDecorationUtils);
         rcy_shakegoods.setLayoutManager(manager);
+        rl_commission = mHeadView.findViewById(R.id.rl_commission);
+        rl_video = mHeadView.findViewById(R.id.rl_video);
+
+        //高佣专区
+        rcy_commissiongoods = mHeadView.findViewById(R.id.rcy_commissiongoods);//高佣recycleview
+        GridLayoutManager manager2 = new GridLayoutManager(getActivity(), 3);
+        //设置图标的间距
+        SpaceItemDecorationUtils spaceItemDecorationUtils2 = new SpaceItemDecorationUtils(20, 3);
+        rcy_commissiongoods.addItemDecoration(spaceItemDecorationUtils2);
+        rcy_commissiongoods.setLayoutManager(manager2);
 
 
         recommendTitleTv = mHeadView.findViewById(R.id.recommendTitleTv);
@@ -587,7 +609,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-               // loopLayout.stopLoop();
+                // loopLayout.stopLoop();
                 isLoadData = true;
                 isSetBannerColor = false;
                 page = 1;
@@ -885,7 +907,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         mMakeMoneyBanner = (Banner) mHeadView.findViewById(R.id.banner_make_money);
         mOfficialBanner = mHeadView.findViewById(R.id.banner_offical);
 
-     //   loopLayout = mHeadView.findViewById(R.id.loop_layout);
+        //   loopLayout = mHeadView.findViewById(R.id.loop_layout);
 
 
     }
@@ -896,7 +918,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
      */
     private void setModuleView() {
         mTitleBanner = (Banner) mHeadView.findViewById(R.id.roll_view_pager);
- //       mTitleBanner.setBannerAnimation(Transformer.ZoomOutSlide);
+        //       mTitleBanner.setBannerAnimation(Transformer.ZoomOutSlide);
 //        mTitleBanner.setPadding(10,0,10,0);
         mTitleBanner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -927,8 +949,8 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                 currentBannerPosition = position;
                 if (null != topBannerColors && topBannerColors.size() > 0) {
                     int size = topBannerColors.size();
-                    if (position >= size){
-                        position = size -1;
+                    if (position >= size) {
+                        position = size - 1;
                         currentBannerPosition = position;
                     }
                     recycleStartColor = topBannerColors.get(position);
@@ -1052,7 +1074,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         super.onInvisible();
         if (isAdded()) {
             mTitleBanner.stopAutoPlay();
-         //   loopLayout.stopLoop();
+            //   loopLayout.stopLoop();
         }
     }
 
@@ -1062,7 +1084,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         super.onVisible();
         if (isAdded()) {
             mTitleBanner.startAutoPlay();
-           // loopLayout.startLoop();
+            // loopLayout.startLoop();
         }
     }
 
@@ -1078,7 +1100,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-       // loopLayout.stopLoop();// 页面销毁时需要停止
+        // loopLayout.stopLoop();// 页面销毁时需要停止
     }
 
     @Subscribe  //订阅事件
@@ -1201,7 +1223,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
 
     @Override
     public void onBrandBanner(final List<ImageInfo> datas, int back) {
-       list= datas;
+        list = datas;
         switch (back) {
             case C.UIShowType.Brandsale: //品牌特卖轮播
                 putBannerData((ArrayList) datas, back);
@@ -1374,17 +1396,42 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         floorRootLayout.setVisibility(View.GONE);
     }
 
+    //抖货专区
     @Override
     public void onVideoSuccess(List<ShopGoodInfo> videoBean) {//抖货商品获取成功
         List<ShopGoodInfo> data = new ArrayList<>();
         data.addAll(videoBean);
-        ShakeGoodsAdapter shakeadapter = new ShakeGoodsAdapter(getActivity(), data);
-        rcy_shakegoods.setAdapter(shakeadapter);
+        if (data != null && data.size() != 0) {
+            rl_video.setVisibility(View.VISIBLE);
+            ShakeGoodsAdapter shakeadapter = new ShakeGoodsAdapter(getActivity(), data);
+            rcy_shakegoods.setAdapter(shakeadapter);
+        } else {
+            rl_video.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
     public void onVideoFailure() {
+        rl_video.setVisibility(View.GONE);
+    }
 
+    //高佣专区
+    @Override
+    public void onCommissionuccess(List<ShopGoodInfo> data) {
+        if (data != null && data.size() != 0) {
+            rl_commission.setVisibility(View.VISIBLE);
+            CommissionGoodsAdapter goodsAdapter = new CommissionGoodsAdapter(getActivity(), data);
+            rcy_commissiongoods.setAdapter(goodsAdapter);
+        } else {
+            rl_commission.setVisibility(View.GONE);
+        }
+
+    }
+
+    @Override
+    public void onCommissionFailure() {
+        rl_commission.setVisibility(View.GONE);
     }
 
 
@@ -1542,7 +1589,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            if (animation!=null){
+                            if (animation != null) {
                                 int moveleft = (int) animation.getAnimatedValue();
                                 floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft + floatIv.getWidth(), moveMarginHeight + 200));
                             }
@@ -1576,7 +1623,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                     valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
-                            if (animation!=null){
+                            if (animation != null) {
                                 int moveleft = (int) animation.getAnimatedValue();
                                 floatIv.setLayoutParams(createLayoutParams(moveleft, floatIv.getTop(), moveleft - floatIv.getWidth(), moveMarginHeight + 200));
                             }

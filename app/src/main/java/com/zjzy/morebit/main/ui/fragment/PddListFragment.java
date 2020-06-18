@@ -119,7 +119,6 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
 
         rl_list.setOnReLoadListener(this);
         rl_list.getSwipeList().setEnableRefresh(false);
-
         title_comprehensive_tv=view.findViewById(R.id.title_comprehensive_tv);//综合
 
         mTitleSalesVolumeLl = view.findViewById(R.id.title_sales_volume_ll);//销量
@@ -152,6 +151,9 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.refreshpdd");//名字
         getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+
+
+
     }
 
 
@@ -293,6 +295,16 @@ public class PddListFragment extends MvpFragment<PddListPresenter> implements Pd
 
     @Override
     public void setJdError(int loadType) {
+
+    }
+
+    @Override
+    public void setWph(List<ShopGoodInfo> data, int loadType) {
+
+    }
+
+    @Override
+    public void setWphError(int loadType) {
 
     }
 

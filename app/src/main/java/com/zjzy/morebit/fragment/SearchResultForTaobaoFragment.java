@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
+import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ShoppingListAdapter;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
@@ -158,8 +160,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         mAdapter = new ShoppingListAdapter(getActivity());
         mAdapter.setShowHotTag(true);
         mRecyclerView.setAdapter(mAdapter);
-
-        mRecyclerView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+        mRecyclerView.getSwipeList().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getFirstData(keyWord);
@@ -173,6 +174,13 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
                     getMoreData();
             }
         });
+        mRecyclerView.getListView().setItemAnimator(null);
+//        mRecyclerView.getListView().getItemAnimator().setAddDuration(0);
+//        mRecyclerView.getListView().getItemAnimator().setRemoveDuration(0);
+//        mRecyclerView.getListView().getItemAnimator().setChangeDuration(0);
+//        mRecyclerView.getListView().getItemAnimator().setMoveDuration(0);
+//        ((SimpleItemAnimator) mRecyclerView.getListView().getItemAnimator()).setSupportsChangeAnimations(false);
+
 
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_tab);
 //        "综合", "券后价", "销量", "奖励"
@@ -180,7 +188,6 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         tabList.add(new BaseTitleTabBean("券后价", true, C.Setting.itemVoucherPrice));
         tabList.add(new BaseTitleTabBean("销量", true, C.Setting.saleMonth));
          tabList.add(new BaseTitleTabBean("奖励", true, C.Setting.commission));
-
         initTab(mTabLayout);
 
         //默认选择第一个
@@ -234,7 +241,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         tabLayout.setTabTextColors(getResources().getColor(R.color.color_666666), getResources().getColor(R.color.color_666666));
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.top_head));
         tabLayout.setSelectedTabIndicatorHeight(DensityUtil.dip2px(getActivity(), 0));
-
+        tabLayout.setTabTextColors(R.color.colcor_999999,R.color.top_head);
         //填充数据
         for (int i = 0; i < tabList.size(); i++) {
             BaseTitleTabBean bean = tabList.get(i);
@@ -304,10 +311,13 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
     private void switchTab(TabLayout tabLayout, int i, BaseTitleTabBean switchTop, boolean isInit) {
         ImageView textIcon1 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_up);
      //   ImageView textIcon2 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_down);
+        TextView text = (TextView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_tv);
         if (isInit) {
             textIcon1.setImageResource(R.drawable.icon_jiage_no);
             //textIcon2.setImageResource(R.drawable.icon_jiagexia);
+            text.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_999999));
         } else {
+            text.setTextColor(ContextCompat.getColor(getActivity(), R.color.top_head));
             if ( C.Setting.ascParms.equals(switchTop.order)) {
                 textIcon1.setImageResource(R.drawable.icon_jiage_down);
               //  textIcon2.setImageResource(R.drawable.icon_jiagexiaxuanzhong);
@@ -338,14 +348,14 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
         if (isCouponShowOff) {
             isCouponShowOff = false;
             couponIv.setImageResource(R.drawable.check_no);
-            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
+            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.colcor_999999));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
             //重新读取数据
         } else {
             isCouponShowOff = true;
             couponIv.setImageResource(R.drawable.check_yes);
-            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
+            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.top_head));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
             //重新读取数据
@@ -388,7 +398,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
                     protected void onError(String errorMsg, String errCode) {
                         listArray.clear();
                         mAdapter.setData(listArray);
-                        mRecyclerView.notifyDataSetChanged();
+                      mRecyclerView.notifyDataSetChanged();
                         if (isOneSwitchConpon) {
                             isOneSwitchConpon = false;
                         } else {
@@ -412,11 +422,14 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng {
                             mAdapter.setData(shopGoodInfos);
                             //设置是否是代理商
                             UserInfo userInfo = UserLocalData.getUser(getActivity());
-                            mRecyclerView.notifyDataSetChanged();
+                          //  mAdapter.notifyItemRangeChanged(0,shopGoodInfos.size());
+                          mRecyclerView.notifyDataSetChanged();
                         } else {
-                            listArray.clear();
+                             listArray.clear();
                             mAdapter.setData(listArray);
-                            mRecyclerView.notifyDataSetChanged();
+                          mRecyclerView.notifyDataSetChanged();
+                           // mAdapter.notifyItemRangeChanged(0,listArray.size());
+
                             if (isOneSwitchConpon) {
                                 isOneSwitchConpon = false;
                             } else {

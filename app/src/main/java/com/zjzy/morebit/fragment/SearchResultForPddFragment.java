@@ -109,6 +109,15 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         super.onCreateView(inflater, container, savedInstanceState);
 
         mView = inflater.inflate(R.layout.fragment_searchcommodity_pdd, container, false);
+        initBundle();
+        mTabLayout = (TabLayout) mView.findViewById(R.id.tl_pdd_tab);
+//        "综合", "券后价", "销量", "奖励"
+        tabList.add(new BaseTitleTabBean("综合", false, ""));
+        tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
+        tabList.add(new BaseTitleTabBean("价格", true, C.Setting.sort_price));
+        tabList.add(new BaseTitleTabBean("佣金", true, C.Setting.sort_commissionShare));
+
+        initTab(mTabLayout);
         return mView;
     }
 
@@ -119,6 +128,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         if (isVisibleToUser && isUserHint && mView != null&&mPushType == 3) {
             initView();
             isUserHint = false;
+
         }
 
     }
@@ -130,14 +140,8 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         if (mPushType == 3) {
             initView();
         }
-        initBundle();
-        mTabLayout = (TabLayout) getActivity().findViewById(R.id.tl_pdd_tab);
-//        "综合", "券后价", "销量", "奖励"
-        tabList.add(new BaseTitleTabBean("综合", false, ""));
-        tabList.add(new BaseTitleTabBean("佣金比例", true, C.Setting.sort_commissionShare));
-        tabList.add(new BaseTitleTabBean("销量", true, C.Setting.sort_inOrderCount30Days));
-        tabList.add(new BaseTitleTabBean("价格", true, C.Setting.sort_price));
-        initTab(mTabLayout);
+
+
 
     }
     private Bundle bundle;
@@ -178,7 +182,6 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                     getMoreData();
             }
         });
-
         //默认选择第一个
         reLoadData();
     }
@@ -189,10 +192,9 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
      */
     private void initTab(final TabLayout tabLayout) {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        tabLayout.setTabTextColors(getResources().getColor(R.color.color_666666), getResources().getColor(R.color.color_666666));
+        tabLayout.setTabTextColors(getResources().getColor(R.color.top_head), getResources().getColor(R.color.top_head));
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.top_head));
         tabLayout.setSelectedTabIndicatorHeight(DensityUtil.dip2px(getActivity(), 0));
-
         //填充数据
         for (int i = 0; i < tabList.size(); i++) {
             BaseTitleTabBean bean = tabList.get(i);
@@ -267,11 +269,14 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
     private void switchTab(TabLayout tabLayout, int i, BaseTitleTabBean switchTop, boolean isInit) {
         ImageView textIcon1 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_up);
      //   ImageView textIcon2 = (ImageView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_icon_down);
+        TextView text = (TextView) tabLayout.getTabAt(i).getCustomView().findViewById(R.id.class_tv);
         if (isInit) {
             textIcon1.setImageResource(R.drawable.icon_jiage_no);
         //    textIcon2.setImageResource(R.drawable.icon_jiagexia);
+            text.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_999999));
         } else {
-            if ( C.Setting.ascParms.equals(switchTop.order)) {
+            text.setTextColor(ContextCompat.getColor(getActivity(), R.color.top_head));
+            if ( C.Setting.descParms.equals(switchTop.order)) {
                 textIcon1.setImageResource(R.drawable.icon_jiage_down);
              //   textIcon2.setImageResource(R.drawable.icon_jiagexiaxuanzhong);
             } else {
@@ -299,14 +304,14 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         if (isCouponShowOff) {
             isCouponShowOff = false;
             couponIv.setImageResource(R.drawable.check_no);
-            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_tablay_text));
+            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.colcor_999999));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
             //重新读取数据
         } else {
             isCouponShowOff = true;
             couponIv.setImageResource(R.drawable.check_yes);
-            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_333333));
+            couponTv.setTextColor(ContextCompat.getColor(getActivity(),R.color.top_head));
             mRecyclerView.getSwipeList().setRefreshing(true);
             getFirstData(keyWord);
             //重新读取数据
@@ -316,9 +321,8 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
      * 第一次获取数据
      */
     public void getFirstData(String keyWords) {
-
         if (TextUtils.isEmpty(keyWords)) {
-            mRecyclerView.getSwipeList().setRefreshing(false);
+           mRecyclerView.getSwipeList().setRefreshing(false);
             if (!isUserHint){
                 ViewShowUtils.showShortToast(getActivity(), "请输入搜索内容");
             }
@@ -326,9 +330,9 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
         }
         keyWord = keyWords;
         mPage = 1;
-        mRecyclerView.getListView().setNoMore(false);
-        mRecyclerView.getSwipeList().setRefreshing(true);
         fristSearch(keyWord);
+//        mRecyclerView.getListView().setNoMore(false);
+//        mRecyclerView.getSwipeList().setRefreshing(true);
     }
 
     private void fristSearch(String keywords) {
@@ -347,7 +351,6 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                         @Override
                         protected void onError(String errorMsg, String errCode) {
                             searchNullTips_ly.setVisibility(View.VISIBLE);
-
                         }
 
                         @Override
@@ -355,10 +358,10 @@ public class SearchResultForPddFragment extends BaseMainFragmeng {
                             mRecyclerView.getSwipeList().setRefreshing(false);
                             dataList_ly.setVisibility(View.VISIBLE);
                             if (data != null && data.size() != 0) {
-                                searchNullTips_ly.setVisibility(View.GONE);
                                 listArray.clear();
                                 listArray.addAll(data);
                                 mAdapter.replace(listArray);
+                                searchNullTips_ly.setVisibility(View.GONE);
 
                             } else {
                                 searchNullTips_ly.setVisibility(View.VISIBLE);

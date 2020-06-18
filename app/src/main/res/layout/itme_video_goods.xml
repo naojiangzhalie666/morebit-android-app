@@ -19,6 +19,7 @@
         tools:src="@mipmap/prushchase_bg" />
 
         <ImageView
+            android:id="@+id/img_bo"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/bofang"

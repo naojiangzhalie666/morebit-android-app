@@ -151,6 +151,28 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     }
                 });
     }
+    /*
+     *
+     * 唯品会详情
+     * */
+
+    @Override
+    public void generateDetailForWph(BaseActivity rxActivity, String goodsId, final boolean isRefresh) {
+        mModel.getBaseResponseObservableForWph(rxActivity, goodsId)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().OngetDetailDataFinally();
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        getIView().setDetaisDataWph(data,true,isRefresh);
+                    }
+                });
+    }
+
 
     /**
      * 切换收藏
@@ -222,6 +244,46 @@ public class GoodsDetailForPddPresenter extends MvpPresenter<GoodsDetailForPddMo
                     });
         } else {
             mModel.getGoodsCollectForKaola(rxActivity, goodsInfo)
+                    .subscribe(new DataObserver<Integer>() {
+                        @Override
+                        protected void onSuccess(Integer data) {
+                            UserLocalData.isCollect = true;
+                            goodsInfo.setColler(data);
+                            getIView().switchColler(goodsInfo);
+                            ViewShowUtils.showShortToast(rxActivity, rxActivity.getString(R.string.collect_succeed));
+
+                        }
+                    });
+        }
+    }
+    /*
+     *
+     * 唯品会收藏
+     * */
+    @Override
+    public void switchWphCollect(final BaseActivity rxActivity, final ShopGoodInfo goodsInfo) {
+
+        if (goodsInfo.getColler() != 0) {
+            if (mMainModel == null) {
+                mMainModel = new MainModel();
+            }
+            mMainModel.delUserCollection(rxActivity, goodsInfo.getColler() + "")
+                    .subscribe(new DataObserver<String>(false) {
+                        @Override
+                        protected void onDataNull() {
+                            onSuccess("");
+                        }
+
+                        @Override
+                        protected void onSuccess(String data) {
+                            UserLocalData.isCollect = true;
+                            goodsInfo.setColler(0);
+                            getIView().switchColler(goodsInfo);
+                            ViewShowUtils.showShortToast(rxActivity, rxActivity.getString(R.string.cancel_collect_succeed));
+                        }
+                    });
+        } else {
+            mModel.getGoodsCollectForWph(rxActivity, goodsInfo)
                     .subscribe(new DataObserver<Integer>() {
                         @Override
                         protected void onSuccess(Integer data) {

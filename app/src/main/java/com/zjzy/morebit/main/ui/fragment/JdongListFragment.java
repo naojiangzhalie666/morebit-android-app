@@ -180,8 +180,6 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
             }
         });
 
-
-
     }
 
 
@@ -277,7 +275,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     public void setJd(List<ShopGoodInfo> data, int loadType) {
         if (page==1) {
             mAdapter = new JdListAdapter(getActivity(), data);
-            if (mAdapter!=null){
+            if (mAdapter!=null&&rl_list!=null){
                 rl_list.setAdapter(mAdapter);
             }
         } else  {
@@ -289,6 +287,15 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
     public void setJdError(int loadType) {
     }
 
+    @Override
+    public void setWph(List<ShopGoodInfo> data, int loadType) {
+
+    }
+
+    @Override
+    public void setWphError(int loadType) {
+
+    }
 
 
     @Override
@@ -299,6 +306,7 @@ public class JdongListFragment extends MvpFragment<PddListPresenter> implements 
 
     @Override
     public void onClick(View v) {
+            page=1;
             switch (v.getId()){
                 case R.id.title_comprehensive_tv://综合
                     requestClickRadar(null, title_comprehensive_tv, 0);

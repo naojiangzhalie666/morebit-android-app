@@ -1,6 +1,7 @@
 package com.zjzy.morebit.info.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -155,7 +157,8 @@ public class MakeMoneyFragment extends MvpFragment<MakeMoenyPresenter> implement
                         mPresenter.confirmUpgrade(MakeMoneyFragment.this);
                         break;
                     case "2":
-                        OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+                      //  OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+                        startActivity(new Intent(getActivity(), InvateActivity.class));
                         break;
                     case "3":
                         PageToUtil.goToSimpleFragment(getActivity(), "专属客服", "CustomerServiceFragment");
@@ -285,7 +288,8 @@ public class MakeMoneyFragment extends MvpFragment<MakeMoenyPresenter> implement
 //                getActivity().startActivity(it);
                 break;
             case R.id.tv_share:
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+              //  OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+                startActivity(new Intent(getActivity(), InvateActivity.class));
                 break;
             case R.id.tv_capy:
                 if (mUser != null && TextUtils.isEmpty(mUser.getInviteCode())) {

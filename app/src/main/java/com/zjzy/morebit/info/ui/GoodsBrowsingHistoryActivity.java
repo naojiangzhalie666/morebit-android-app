@@ -19,6 +19,7 @@ import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
@@ -478,6 +479,10 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                         sales.setVisibility(View.GONE);
                         ll_shop_name.setVisibility(View.INVISIBLE);
                         break;
+                    case 6:
+                        good_mall_tag.setImageResource(R.mipmap.wph_icon);
+                        sales.setVisibility(View.GONE);
+                        break;
                     default:
                         break;
                 }
@@ -502,6 +507,8 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                                 GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
                             }else if (item.getShopType() == 5){
                                 GoodsDetailForKoalaActivity.start(GoodsBrowsingHistoryActivity.this,shopGoodInfo.getItemSourceId());
+                            }else if (item.getShopType() == 6){
+                                GoodsDetailForWphActivity.start(GoodsBrowsingHistoryActivity.this,shopGoodInfo.getItemSourceId());
                             }else{
                                 GoodsUtil.checkGoods(GoodsBrowsingHistoryActivity.this, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
                                     @Override

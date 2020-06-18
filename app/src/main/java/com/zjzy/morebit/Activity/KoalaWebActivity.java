@@ -41,6 +41,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.event.WebViewEvent;
 import com.zjzy.morebit.pojo.event.WebViewUpdataColorEvent;
 import com.zjzy.morebit.pojo.request.RequesKoalaBean;
+import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.LogUtils;
 import com.zjzy.morebit.utils.MathUtils;
@@ -206,6 +207,7 @@ public class KoalaWebActivity extends BaseActivity {
                 try {
 
                     if (!TextUtils.isEmpty(newurl)) {
+                        Log.e("uuuu",newurl+"列表");
                         if (newurl.contains("https://m-goods.kaola.com/product/")) {
                             String shopid = "";
                             String substring = newurl.substring(0, newurl.indexOf(".html"));
@@ -247,6 +249,51 @@ public class KoalaWebActivity extends BaseActivity {
                                         }
                                     });
                             return true;
+                        }else if (newurl.contains("https://m.vip.com/product")) {
+                            String shopid = "";
+                            String[] split = newurl.split("-");
+                            String informationId = split[2];
+
+                            shopid = informationId.replace(".html", "");
+                            final String finalShopid = shopid;
+                           Log.e("uuuu",shopid+"列表");
+                            getBaseResponseObservableForWei(KoalaWebActivity.this,shopid)
+                                    .doFinally(new Action() {
+                                        @Override
+                                        public void run() throws Exception {
+                                        }
+                                    })
+                                    .subscribe(new DataObserver<ShopGoodInfo>() {
+                                        @Override
+                                        protected void onSuccess(final ShopGoodInfo data) {
+                                            if (data.getCommission()!=null&&!MathUtils.getnum(data.getCommission()).equals("0")){
+                                                  wphGoods(finalShopid);  //分佣商品跳转考拉详情
+                                            }else{
+                                                view.loadUrl(newurl); //无分佣商品
+                                                rl_bottom_view.setVisibility(View.VISIBLE);
+                                                directBuyTv.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        if (newurl.contains("https://m-goods.kaola.com/product/")){
+                                                            String replace = newurl.replace("https://m-goods.kaola.com", "kaola://goods.kaola.com");
+                                                            if (isHasInstalledKaola()){
+                                                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(replace));
+                                                                startActivity(intent);
+                                                            }else{
+                                                                view.loadUrl(newurl);
+                                                            }
+
+
+                                                        }
+                                                        rl_bottom_view.setVisibility(View.GONE);
+
+                                                    }
+                                                });
+
+                                            }
+                                        }
+                                    });
+                            return true;
                         }
 
                         }
@@ -261,6 +308,10 @@ public class KoalaWebActivity extends BaseActivity {
 
     }
 
+    private void wphGoods(String shopid) {
+        GoodsDetailForWphActivity.start(this,shopid);
+    }
+
 
     /**
      * 考拉海购
@@ -273,6 +324,20 @@ public class KoalaWebActivity extends BaseActivity {
         requesKoalaBean .setUserId(userId);
         requesKoalaBean.setGoodsId(goodsId);
         return RxHttp.getInstance().getCommonService().getKaoLaGoodsDetail(requesKoalaBean)
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
+
+    /**
+     * 唯品会
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservableForWei(BaseActivity rxActivity, String  goodsId) {
+        RequesWeiBean requesKoalaBean = new RequesWeiBean();
+        requesKoalaBean.setGoodsId(goodsId);
+        return RxHttp.getInstance().getCommonService().getWeiGoodsDetail(requesKoalaBean)
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
