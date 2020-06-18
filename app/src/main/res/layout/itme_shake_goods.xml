@@ -71,29 +71,41 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/commission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/bg_commission_1dp"
-        android:gravity="center"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:text="20元劵"
-        android:textColor="@color/color_FA6400"
-        android:textSize="@dimen/sp_11" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:text="¥299.0"
+            android:textColor="#DB493E"
+            android:textSize="12sp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/commission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_commission_1dp"
+            android:gravity="center"
 
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="5dp"
-        android:text="¥299.0"
-        android:textColor="#DB493E"
-        android:textSize="12sp" />
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="20元劵"
+            android:textColor="@color/color_FA6400"
+            android:textSize="@dimen/sp_11" />
+
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_coupul"
