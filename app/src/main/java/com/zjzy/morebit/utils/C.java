@@ -321,6 +321,8 @@ public class C {
         public static final int MOUTH = 44;//口碑
         public static final int SHOPMALL = 45;//优选商城
         public static final int KOALA = 46;//考拉海购
+        public static final int WPH = 47;//唯品会
+
 
     }
 
