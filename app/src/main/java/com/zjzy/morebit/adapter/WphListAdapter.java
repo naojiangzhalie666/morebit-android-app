@@ -75,7 +75,7 @@ public class WphListAdapter extends RecyclerView.Adapter {
 
 
            // LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getGoodsMainPicture(), 9);
-            viewHolder.textview_original.setText("¥" + MathUtils.getnum(info.getVipPrice()));
+            viewHolder.textview_original.setText("¥ " + MathUtils.getnum(info.getVipPrice()));
             viewHolder.textvihew_Preco.setText("¥" + MathUtils.getnum(info.getMarketPrice()));
             viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 

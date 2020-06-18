@@ -406,15 +406,15 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
     }
 
     private String getImg(Bitmap bitmap, String fileName, String ewmUrl) {
-        int qrSize = 270;
-        int wblSize = 1;
+        int qrSize = 250;
+        int wblSize = 4;
         int qrscSize =250;
 //        Bitmap logoBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.share_logo);
         Bitmap logoBitmap = UserLocalData.getmMyHeadBitmap();
         if (qrBitmap == null) {
             qrBitmap = QrcodeUtils.createQRCode(ewmUrl, qrSize);
             try {
-                int whiteBitmapWidth = 1;
+                int whiteBitmapWidth = 2;
                 qrBitmap = LoadImgUtils.bg2WhiteBitmap(qrBitmap, whiteBitmapWidth);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -440,7 +440,7 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
         Canvas canvas = new Canvas(bitmap);
 
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.yqm_bg_poster);
-        Bitmap yqmBitmap = Bitmap.createScaledBitmap(bmp, qrscSize , 48 , true);
+        Bitmap yqmBitmap = Bitmap.createScaledBitmap(bmp, qrscSize+20 , 50 , true);
         Canvas canvas2 = new Canvas(yqmBitmap);
 
         int yamWidth = bmp.getWidth();
@@ -461,7 +461,7 @@ public class InvateActivity extends BaseActivity implements View.OnClickListener
         PaintFlagsDrawFilter paintFlagsDrawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
         canvas2.setDrawFilter(paintFlagsDrawFilter);
         // 画文字
-        canvas2.drawText("邀请码："+mInvite_code,  14, yqmBitmap.getHeight() -bounds.height()/2,/*bitmap.getHeight() - mTextPaddingButtom,*/ PaintText);
+        canvas2.drawText("邀请码："+mInvite_code,  24, yqmBitmap.getHeight() -bounds.height()/2,/*bitmap.getHeight() - mTextPaddingButtom,*/ PaintText);
 
         int yqmBitmapWidth = yqmBitmap.getWidth();
         int i = bitmap.getWidth() / 2 - yqmBitmapWidth/2;

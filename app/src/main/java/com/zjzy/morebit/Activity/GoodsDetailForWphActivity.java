@@ -716,7 +716,7 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
         }
 
 
-        StringsUtils.retractKaoLaTitle(tv_pdd, title,data.getGoodsName());
+        StringsUtils.retractTitles(title,data.getGoodsName(),tv_pdd.getWidth()+10);
         getViewLocationOnScreen();
     }
 

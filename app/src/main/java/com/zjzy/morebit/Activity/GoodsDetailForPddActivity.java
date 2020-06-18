@@ -1023,7 +1023,6 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     @Override
     public void setPromotionJdUrl(String promotionJdUrl) {
         mPromotionJdUrl=promotionJdUrl;
-        mGoodsInfo.setClickURL(promotionJdUrl);
     }
 
     @Override
@@ -1087,11 +1086,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
                         .subscribe(new DataObserver<String>() {
                             @Override
                             protected void onSuccess(final String data) {
+                                Log.e("wwwwdata",data+"");
                                 ShareMoneyForPddActivity.start(GoodsDetailForPddActivity.this, mGoodsInfo, data);
                             }
                         });
-
-
                 break;
             case R.id.btn_sweepg: //立即购买
             case R.id.rl_prise: //立即购买

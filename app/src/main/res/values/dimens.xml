@@ -8,6 +8,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="poster">30dp</dimen>
     <dimen name="info_text_small">14sp</dimen>
 
 

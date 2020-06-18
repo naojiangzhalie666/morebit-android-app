@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     tools:text=" 维达抽纸箱批大 包家用实惠装纸巾…"
                     android:textStyle="bold"
+                    android:lineSpacingMultiplier="1.2"
                     android:textColor="@color/color_333333"
                     android:textSize="12dp"
                     android:maxLines="2"

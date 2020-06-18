@@ -655,9 +655,7 @@ public class GoodsUtil {
             yuan_prise.setText("¥ " + MathUtils.getnum(goodsInfo.getPrice()));
         }
 
-        if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {
-            StringsUtils.retractWphTitle(title, title, goodsInfo.getTitle());
-        }
+
         yuan_prise.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         if (!"0".equals(goodsInfo.getSaleMonth())) {
             tv_sales.setText("销量:  " + MathUtils.getSales(goodsInfo.getSaleMonth()));
@@ -677,6 +675,12 @@ public class GoodsUtil {
             goodShopTag.setText("唯品会");
             tv_sales.setVisibility(View.GONE);
             ll_prise.setText("抢购价");
+        }
+        Paint paint = new Paint();
+        paint.setTextSize(goodShopTag.getTextSize());
+        float size = paint.measureText(goodShopTag.getText().toString());
+        if (!StringsUtils.isEmpty(goodsInfo.getTitle())) {
+            StringsUtils.retractTitles(title, goodsInfo.getTitle(), (int) (size)+20);
         }
 
         Log.e("private","二维码"+ewmBitmap);

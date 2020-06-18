@@ -90,14 +90,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_alignParentRight="true"
-
                 android:layout_marginLeft="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥"
+                    android:text="¥ "
                     android:layout_gravity="bottom"
-                    android:gravity="bottom"
                     android:textSize="@dimen/sp_10"
                     android:textColor="@color/color_EE403A"
                     />
@@ -105,11 +103,10 @@
                     android:id="@+id/goods_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="bottom"
+                    android:layout_gravity="bottom"
                     android:text="29.90"
                     android:textStyle="bold"
                     android:textColor="@color/color_EE403A"
-                    android:layout_marginTop="3dp"
                     android:visibility="visible"
                     />
             </LinearLayout>
