@@ -455,7 +455,7 @@ dependencies {
     implementation 'com.zyp.cardview:cardview:1.0.1'
     // implementation 'com.github.lzjin:ViewPagerGallery:1.2'
     // 万能布局管理器VirtualLayout
-    implementation 'com.alibaba.android:vlayout:1.0.9'
+    implementation 'com.alibaba.android:vlayout:1.2.8@aar'
 
 
 }

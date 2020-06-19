@@ -5,12 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/home_rcy"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/status_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <include
+            android:id="@+id/searchLayout"
+            layout="@layout/home_search"/>
+
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/home_rcy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
