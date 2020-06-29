@@ -6,10 +6,64 @@
               android:orientation="vertical">
 
 
-    <include layout="@layout/toolbar_actionbar_no_shadow"/>
+    <include layout="@layout/toolbar_actionbar_no_shadow"
+        android:visibility="gone"
+        />
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+
+
+     <RelativeLayout
+         android:background="@color/color_F05557"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         >
+
+         <ImageView
+             android:layout_width="25dp"
+             android:layout_height="25dp"
+             android:paddingTop="5dp"
+             android:paddingBottom="5dp"
+             android:layout_marginLeft="@dimen/dp_10"
+             android:layout_alignParentLeft="true"
+             android:layout_centerVertical="true"
+             android:scaleType="fitCenter"
+             android:src="@drawable/zuojiantou_white"
+             android:id="@+id/back"/>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerInParent="true"
+             android:text="限时秒杀"
+             android:textColor="@color/color_FFFFFF"
+             android:textSize="@dimen/sp_18" />
+
+
+     </RelativeLayout>
+
+ </LinearLayout>
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magicIndicator"
+        android:background="@color/color_F05557"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

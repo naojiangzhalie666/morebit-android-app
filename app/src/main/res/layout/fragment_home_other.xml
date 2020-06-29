@@ -15,13 +15,209 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <include
+
             android:id="@+id/searchLayout"
-            layout="@layout/home_search"/>
-
-        <android.support.v7.widget.RecyclerView
-
-            android:id="@+id/home_rcy"
+            layout="@layout/home_search" />
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
+
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar_lt"
+                app:elevation="0dp"
+                app:layout_behavior=".utils.FlingBehavior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+                    <android.support.design.widget.CoordinatorLayout
+                        android:id="@+id/super_header_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_F8F8F8"
+                            android:orientation="vertical">
+
+                            <com.zjzy.morebit.view.AspectRatioView
+                                android:id="@+id/ar_title_banner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                app:aspectRatio="2.5">
+
+                                <android.support.v7.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/transparent"
+                                    app:cardBackgroundColor="@color/transparent"
+                                    app:cardCornerRadius="5dp"
+                                    app:cardElevation="0dp"
+                                    app:cardUseCompatPadding="false"
+                                    app:contentPadding="0dp">
+
+                                    <com.youth.banner.Banner
+                                        android:id="@+id/roll_view_pager"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:delay_time="2000"
+                                        app:indicator_drawable_selected="@drawable/icon_huangdian"
+                                        app:indicator_drawable_unselected="@drawable/icon_baidian"
+                                        app:is_auto_play="true"
+                                        app:scroll_time="1000" />
+                                </android.support.v7.widget.CardView>
+                            </com.zjzy.morebit.view.AspectRatioView>
+
+                            <LinearLayout
+                                android:background="@color/color_F8F8F8"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical">
+
+                                <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+                                    android:id="@+id/xTablayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="40dp"
+                                    android:layout_weight="1"
+                                    app:xTabDividerColor="#999999"
+                                    app:xTabDividerGravity="center"
+                                    app:xTabDividerHeight="15dp"
+                                    app:xTabDividerWidth="1dp"
+                                    app:xTabIndicatorHeight="0dp"
+                                    app:xTabIndicatorWidth="0dp"
+                                    app:xTabMode="fixed"
+                                    app:xTabPadding="3dp"
+                                    app:xTabSelectedTextColor="@color/white"
+                                    app:xTabSelectedTextSize="@dimen/sp_15"
+                                    app:xTabTextColor="#999999"
+                                    app:xTabTextSize="@dimen/sp_12" />
+                            </LinearLayout>
+
+                            <android.support.v4.view.ViewPager
+                                android:background="@color/color_F8F8F8"
+                                android:id="@+id/icon_pager"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp" />
+
+                            <me.relex.circleindicator.CircleIndicator
+                                android:background="@color/color_F8F8F8"
+                                android:id="@+id/circle_indicator_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:ci_drawable="@drawable/icon_huangdian"
+                                app:ci_drawable_unselected="@drawable/icon_baidian" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="128dp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginRight="12dp"
+                                android:background="@drawable/bg_f0057_round_8dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2">
+
+                                    <android.support.v7.widget.RecyclerView
+                                        android:id="@+id/new_rcy"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_marginTop="8dp"
+                                       />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="16dp"
+                                        android:gravity="center"
+                                        android:text="新人0元商品"
+                                        android:textColor="#ffffffff"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:gravity="center"
+                                        android:text="剩余2天23:59:59"
+                                        android:textColor="#ffffffff"
+                                        android:textSize="12sp" />
+
+                                    <ImageView
+                                        android:id="@+id/img_go"
+                                        android:layout_width="86dp"
+                                        android:layout_height="28dp"
+                                        android:layout_marginTop="12dp"
+                                        android:gravity="center"
+                                        android:layout_gravity="center"
+                                       />
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <include layout="@layout/item_home_activity" />
+
+                            <include layout="@layout/item_home_limited" />
+
+                            <include layout="@layout/item_home_hao" />
+
+                            <include layout="@layout/item_home_dou" />
+
+                            <include layout="@layout/item_home_bao" />
+                        </LinearLayout>
+                    </android.support.design.widget.CoordinatorLayout>
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+                <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+                    android:id="@+id/xablayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    app:tl_tab_padding="20dp"
+                    app:xTabIndicatorColor="@color/color_DB493E"
+                    app:xTabIndicatorHeight="3dp"
+                    app:xTabIndicatorWidth="15dp"
+                    app:xTabMode="scrollable"
+                    app:xTabTextSelectedBold="true"
+                    app:xTabSelectedTextColor="@color/color_DB493E"
+                    app:xTabSelectedTextSize="@dimen/sp_16"
+                    app:xTabTextColor="@color/color_333333"
+                    app:xTabTextSize="@dimen/sp_14" />
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </android.support.design.widget.CoordinatorLayout>
     </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

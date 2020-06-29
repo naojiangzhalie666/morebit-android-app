@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +44,8 @@ public class MsgFeedbackFragment extends MvpFragment<MsgPresenter> implements Ms
     private MsgAdapter mAdapter;
     private List<EarningsMsg> listArray = new ArrayList<>();
     private CommonEmpty mEmptyView;
+    private TextView txt_head_title;
+    private LinearLayout btn_back;
     public static MsgFeedbackFragment newInstance() {
         Bundle args = new Bundle();
         MsgFeedbackFragment fragment = new MsgFeedbackFragment();
@@ -54,7 +57,7 @@ public class MsgFeedbackFragment extends MvpFragment<MsgPresenter> implements Ms
     @Override
     protected int getViewLayout() {
 //        return R.layout.fragment_msg_feedback;
-        return R.layout.fragment_msg_list;
+        return R.layout.fragment_msg_list3;
     }
 
     @Override
@@ -97,7 +100,17 @@ public class MsgFeedbackFragment extends MvpFragment<MsgPresenter> implements Ms
 
     @Override
     protected void initView(View view) {
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle("反馈回复")
+        txt_head_title = (TextView) view.findViewById(R.id.txt_head_title);
+        txt_head_title.setText("反馈回复");
+        txt_head_title.setTextSize(18);
+        txt_head_title.getPaint().setFakeBoldText(true);
+        btn_back = (LinearLayout) view.findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
 //                .setCustomRightTitle("投诉", new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

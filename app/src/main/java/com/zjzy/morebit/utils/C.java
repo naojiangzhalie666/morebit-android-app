@@ -364,6 +364,11 @@ public class C {
         //团队长
         public static final String operator = "2";
 
+        public static final String ORDERTYPE = "ORDERTYPE";
+        public static final String TIMESKILL = "TIMESKILL";
+        public static final String ICONNAME = "ICONNAME";
+
+
     }
 
     /**
@@ -409,7 +414,7 @@ public class C {
      * brandsale：品牌特卖，
      * taobao_v2：聚划算v2，
      * 0：首页轮播，1：推广海报，6：启动页，8：官方推荐，11：首页弹窗，12：个人轮播，13：福利津贴，14：标题轮播，16：品牌特卖，17：聚划算v2 18 赚钱计划轮播图
-     * 19:我的工具 20:商学院 ,21：首页ICON配置,22是二级模块,32 首页悬浮窗
+     * 19:我的工具 20:商学院 ,21：首页ICON配置,22是好单预告,32 首页悬浮窗
      */
     public static class UIShowType {
         public static final int HomeBanner = 0;

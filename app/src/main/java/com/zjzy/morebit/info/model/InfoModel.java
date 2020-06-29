@@ -43,6 +43,7 @@ public class InfoModel extends MvpModel {
     public static final int msgSysType = 1; // 系统
     public static final int msgAwardType = 3;//奖励
     public static final int msgFansType = 2;//粉丝
+    public static final int msgActivityType = 6;//活动
 
 
     /**

@@ -12,14 +12,15 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
+import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.utils.Banner;
 
 public class HomeGoodsAdapter extends DelegateAdapter.Adapter<HomeGoodsAdapter.ViewHolder> {
     private Context context;
     private  LayoutInflater mInflater;
-    private LinearLayoutHelper singleLayoutHelper;
-    public HomeGoodsAdapter(Context context, LinearLayoutHelper singleLayoutHelper) {
+    private StickyLayoutHelper singleLayoutHelper;
+    public HomeGoodsAdapter(Context context, StickyLayoutHelper singleLayoutHelper) {
          mInflater = LayoutInflater.from(context);
         this.context=context;
         this.singleLayoutHelper=singleLayoutHelper;
@@ -50,10 +51,9 @@ public class HomeGoodsAdapter extends DelegateAdapter.Adapter<HomeGoodsAdapter.V
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private Banner banner;
         public ViewHolder(View itemView) {
             super(itemView);
-            banner=itemView.findViewById(R.id.banner);
+
         }
     }
 }

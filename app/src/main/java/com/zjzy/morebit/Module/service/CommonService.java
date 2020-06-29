@@ -1,11 +1,15 @@
 package com.zjzy.morebit.Module.service;
 
 import com.zjzy.morebit.pojo.ActivityLinkBean;
+import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.JpBannerBean;
 import com.zjzy.morebit.pojo.KaolaBean;
+import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
+import com.zjzy.morebit.pojo.QueryDhAndGyBean;
+import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.pojo.address.AddressInfoList;
@@ -2572,6 +2576,44 @@ public interface CommonService {
     @POST("/api/goods/queryOrientationPlanList")
     public Observable<BaseResponse<List<ShopGoodInfo>>> getCommissionGoods(@Body RequestCommissionGoodsBean requestBean);
 
+    /**
+     * 限时抢购【首页】
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/panicBuyingList")
+    public Observable<BaseResponse<PanicBuyingListBean>> getpanicBuyingList();
 
+
+
+    /**
+     * 获取用户0元购相关信息
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/user/getUserZeroInfo")
+    public Observable<BaseResponse<UserZeroInfoBean>> getUserZeroInfo();
+
+    /**
+     * 获取金刚位
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/system/getDoorGodCategory")
+    public Observable<BaseResponse<DoorGodCategoryBean>> getDoorGodCategory(@Body RequestBannerBean requestBean);
+
+
+
+    /**
+     * 查询抖货和高佣专区接口
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/queryDhAndGy")
+    public Observable<BaseResponse<QueryDhAndGyBean>> getQueryDhAndGy();
 
 }

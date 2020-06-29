@@ -70,8 +70,11 @@ public class MathUtils {
      * @return
      */
     public static String getMuRatioComPrice(String calculation, String commission_price) {
-        if (TextUtils.isEmpty(calculation) || TextUtils.isEmpty(commission_price)) {
+        if (TextUtils.isEmpty(commission_price)) {
             return "";
+        }
+        if (TextUtils.isEmpty(calculation)){
+            calculation="60";
         }
         double v1 = getMuratiocom(calculation, commission_price);
         return formatTo2Decimals(v1 + "");

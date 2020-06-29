@@ -3,7 +3,9 @@ package com.zjzy.morebit.info.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Activity.SettingNotificationActivity;
@@ -44,12 +46,12 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     private final static int sys = 1;
     private final static int all = 4;
     private int mNureadConut;
-    @BindView(R.id.mListView)
-    ReUseListView mReUseListView;
     private int page = 1;
     private MsgDayHotAdapter mAdapter;
 
     private CommonEmpty mEmptyView;
+    private TextView tv_shouyi,tv_fans,tv_system,tv_answer,tv_activity;
+    private LinearLayout activity_huo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,36 +64,23 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
     @Override
     protected void initData() {
-        refreshData();
     }
 
     @Override
     protected void initView(View view) {
-        mEmptyView = new CommonEmpty(view, getString(R.string.no_msg), R.drawable.image_dayhot_empty);
+        tv_shouyi= view.findViewById(R.id.tv_shouyi);
+        tv_fans= view.findViewById(R.id.tv_fans);
+        tv_system= view.findViewById(R.id.tv_system);
+        tv_answer= view.findViewById(R.id.tv_answer);
+        tv_activity= view.findViewById(R.id.tv_activity);
+        tv_activity.getPaint().setFakeBoldText(true);
+        tv_answer.getPaint().setFakeBoldText(true);
+        tv_system.getPaint().setFakeBoldText(true);
+        tv_fans.getPaint().setFakeBoldText(true);
+        tv_shouyi.getPaint().setFakeBoldText(true);
+        activity_huo=view.findViewById(R.id.activity_huo);
 
 
-        mAdapter = new MsgDayHotAdapter(getActivity());
-        mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                page = 1;
-                refreshData();
-
-            }
-        });
-
-        mReUseListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (!mReUseListView.getSwipeList().isRefreshing()) {
-                    mReUseListView.getListView().setNoMore(true);
-//                    mPresenter.getMsg(MsgFragment.this, mEmptyView);
-                }
-
-            }
-        });
-        mReUseListView.getListView().setMarkermallNoMore(true);
-        mReUseListView.setAdapter(mAdapter);
 
 
 
@@ -104,14 +93,6 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
         return R.layout.fragment_msg;
     }
 
-    @OnClick({R.id.empty_view})
-    public void Onclick(View v) {
-        switch (v.getId()) {
-            case R.id.empty_view:
-                refreshData();
-                break;
-        }
-    }
 
     @Override
     public BaseView getBaseView() {
@@ -138,41 +119,27 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
 
 
-    private void refreshData() {
-        mReUseListView.getSwipeList().post(new Runnable() {
 
-            @Override
-            public void run() {
-                mReUseListView.getSwipeList().setRefreshing(true);
-            }
-        });
-        page = 1;
-        mReUseListView.getListView().setNoMore(false);
-        mPresenter.getMsg(this, mEmptyView);
-    }
 
     @Override
     public void onMsgSuccessful(List<DayHotBean> data) {
-        mAdapter.replace(handlerData(data));
-        mAdapter.notifyDataSetChanged();
+
 
     }
 
     @Override
     public void onMsgfailure() {
-        mReUseListView.getListView().setNoMore(true);
-    }
+       }
 
     @Override
     public void onMsgFinally() {
-        mReUseListView.getListView().refreshComplete(REQUEST_COUNT);
-        mReUseListView.getSwipeList().setRefreshing(false);
+
     }
 
 
 
 
-    @OnClick({ R.id.back,R.id.msgSetIv,R.id.openNoticationBtn,R.id.closeNoticationIv,R.id.earningLay,R.id.fansLay,R.id.sysLay,R.id.feedbackLay})
+    @OnClick({ R.id.back,R.id.msgSetIv,R.id.openNoticationBtn,R.id.closeNoticationIv,R.id.earningLay,R.id.fansLay,R.id.sysLay,R.id.feedbackLay,R.id.activity_huo})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -199,6 +166,9 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
                 break;
             case R.id.feedbackLay:
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgFeedbackFragment.class.getName(), new Bundle());
+                break;
+            case R.id.activity_huo:
+                OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgActiityFragment.class.getName(), new Bundle());
                 break;
             default:
                 break;

@@ -282,7 +282,8 @@
     <string name="has_been_for_you">已为您</string>
     <string name="capy_tkl">仅复制淘口令</string>
     <string name="goods_poster_hint">长按识别二维码</string>
-    <string name="no_msg">暂无消息</string>
+    <string name="no_msg">还没有任何消息~</string>
+    <string name="no_activity">暂无公告</string>
     <string name="order_team_tb">淘宝订单</string>
     <string name="order_team_sl">苏宁订单</string>
     <string name="order_team_other">其他订单</string>
@@ -356,10 +357,10 @@
     <string name="hot_end_coming_soon">活动开始啦！赶紧去”火热开抢中“抢购吧</string>
 
     <string name="contact_he">联系他</string>
-    <string name="order_sn">订单号 %1$s</string>
-    <string name="order_type">订单类型 %1$s</string>
-    <string name="order_money">订单金额 %1$s</string>
-    <string name="order_earnings">获得收益 %1$s</string>
+    <string name="order_sn">订单号: %1$s</string>
+    <string name="order_type">订单类型: %1$s</string>
+    <string name="order_money">订单金额: %1$s</string>
+    <string name="order_earnings">获得普通收益: %1$s</string>
     <string name="guide_circle">助你变身导购达人，佣金赚不停</string>
     <string name="guide_order">收益、订单看这里</string>
     <string name="guide_circle_sucai">一键转发吸粉素材，粉丝越多赚佣越快</string>

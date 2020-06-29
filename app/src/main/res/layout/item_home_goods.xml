@@ -4,12 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-
-  <com.zjzy.morebit.utils.Banner
-      android:id="@+id/banner"
-      android:layout_marginTop="20dp"
-      android:layout_width="match_parent"
-      android:background="@color/color_00A0EA"
-      android:layout_height="1000dp"/>
+  <include
+      android:id="@+id/searchLayout"
+      layout="@layout/home_search" />
 
 </LinearLayout>

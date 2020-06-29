@@ -1,8 +1,14 @@
 package com.zjzy.morebit.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +22,10 @@ import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ShoppingListAdapter;
+import com.zjzy.morebit.goodsvideo.VideoFragment;
+import com.zjzy.morebit.home.fragment.HomeOtherFragment;
+import com.zjzy.morebit.home.fragment.LimiteFragment;
+import com.zjzy.morebit.home.fragment.LimiteSkillFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
@@ -26,12 +36,20 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.requestbodybean.RequestGetTimedSpikeList;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.LimitedTimePageTitleView;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.ToolbarHelper;
 import com.zjzy.morebit.view.helper.PanicBuyTabView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +77,13 @@ public class PanicBuyFragment extends BaseFragment {
     private int scrollHeight;
     private LinearLayout mLl_super_tab;
     private ImageInfo mImageInfo;
+    private MagicIndicator mMagicIndicator;
+    private ViewPager mViewPager;
+    private CommonNavigator mCommonNavigator;
+    private List<PanicBuyTiemBean> mTimeTitleList=new ArrayList<>();
+    private List<LimiteSkillFragment> fragments = new ArrayList<>();
 
+    private LimitePagerAdapter limiteAdapter;
 
     public static void start(Activity activity, ImageInfo info) {
         Bundle bundle = new Bundle();
@@ -132,7 +156,91 @@ public class PanicBuyFragment extends BaseFragment {
             }
         });
         mRecyclerView.setAdapterAndHeadView(headView, mAdapter);
+        mTimeTitleList.add(new PanicBuyTiemBean("昨日秒杀","22:00"));
+        mTimeTitleList.add(new PanicBuyTiemBean("已开抢","0:00"));
+        mTimeTitleList.add(new PanicBuyTiemBean("抢购中","10:00"));
+        mTimeTitleList.add(new PanicBuyTiemBean("即将开抢","12:00"));
+        mTimeTitleList.add(new PanicBuyTiemBean("即将开抢","15:00"));
 
+
+        mMagicIndicator = view.findViewById(R.id.magicIndicator);
+        mViewPager = view.findViewById(R.id.viewPager);
+        limiteAdapter = new LimitePagerAdapter(getActivity().getSupportFragmentManager(), fragments);
+        mViewPager.setAdapter(limiteAdapter);
+        initIndicator();
+
+
+
+    }
+    public class LimitePagerAdapter extends FragmentPagerAdapter {
+        private List<LimiteSkillFragment> mFragments;
+
+
+        public LimitePagerAdapter(FragmentManager fm, List<LimiteSkillFragment> fragments) {
+            super(fm);
+            mFragments = fragments;
+
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return LimiteSkillFragment.newInstance();
+        }
+
+        @Override
+        public int getCount() {
+            return  5;
+        }
+
+
+        //    为Tabayout设置主题名称
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            return title == null ? "" + position : title.get(position);
+//        }
+
+        @Override
+        public void restoreState(Parcelable state, ClassLoader loader) {
+
+        }
+    }
+    private void initIndicator() {
+
+        mCommonNavigator = new CommonNavigator(getActivity());
+        mCommonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mTimeTitleList == null ? 0 : mTimeTitleList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+
+                LimitedTimePageTitleView pagerTitleView = new LimitedTimePageTitleView(context);
+                pagerTitleView.setTimeText(mTimeTitleList.get(index).getTitle());
+                pagerTitleView.setTipsText(mTimeTitleList.get(index).getSubTitle());
+//                if (mTimeTitleList.get(index).getBuyStatus()==1){
+//                    pagerTitleView.setTipsText("已开抢");
+//                }else{
+//                    pagerTitleView.setTipsText("即将开始");
+//                }
+
+                pagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mViewPager.setCurrentItem(index);
+                    }
+                });
+                return pagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                return null;
+            }
+        });
+        mMagicIndicator.setNavigator(mCommonNavigator);
+        ViewPagerHelper.bind(mMagicIndicator, mViewPager);
     }
 
 

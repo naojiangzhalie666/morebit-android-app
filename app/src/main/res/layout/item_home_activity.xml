@@ -3,13 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    android:orientation="vertical"
     >
 
-  <com.zjzy.morebit.utils.Banner
-      android:id="@+id/banner"
-      android:layout_marginTop="20dp"
+  <ImageView
+      android:id="@+id/activity_img"
       android:layout_width="match_parent"
-      android:background="@color/color_b49ea0"
-      android:layout_height="200dp"/>
+      android:layout_height="wrap_content"
+      android:scaleType="fitXY"
+      android:src="@mipmap/tm_bg_activity"
+      />
+
+  <LinearLayout
+      android:id="@+id/ll_bg"
+      android:background="@color/color_F05557"
+      android:layout_width="match_parent"
+      android:paddingBottom="12dp"
+      android:orientation="vertical"
+      android:layout_height="wrap_content">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_rcy1"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_rcy2"
+        android:paddingLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+  </LinearLayout>
+
 
 </LinearLayout>

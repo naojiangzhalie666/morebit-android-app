@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
@@ -32,11 +33,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     private Context mContext;
     private FragmentManager fm;
     private int screenWidth = 0;
+    private List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> list;
 
-    public HomeMenuAdapter(Context mContext, int itmeWidth) {
+    public HomeMenuAdapter(Context mContext, int itmeWidth,List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> wheelChartDisplayVo) {
         mInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
         mItmeWidth = itmeWidth;
+        this.list=wheelChartDisplayVo;
     }
 
 
@@ -68,10 +71,20 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final HomeMenuAdapter.ViewHolder holder, int position) {
-        final ImageInfo imageInfo = mDatas.get(position);
-        if (imageInfo != null) {
+        final ImageInfo imageInfo = new ImageInfo();
+        final   DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean wheelChartDisplayVoBean = list.get(position);
+        imageInfo.setId(wheelChartDisplayVoBean.getId());
+        imageInfo.setMediaType(wheelChartDisplayVoBean.getMediaType());
+        imageInfo.setClassId(wheelChartDisplayVoBean.getClassId());
+        imageInfo.setTitle(wheelChartDisplayVoBean.getTitle());
+        imageInfo.setUrl(wheelChartDisplayVoBean.getUrl());
+        imageInfo.setOpen(wheelChartDisplayVoBean.getOpen());
+        imageInfo.setSort(wheelChartDisplayVoBean.getSort());
+        imageInfo.setSubTitle(wheelChartDisplayVoBean.getSubTitle());
+        imageInfo.setDesc(wheelChartDisplayVoBean.getDesc());
+        if (wheelChartDisplayVoBean != null) {
             if (null != holder.itemMainTitle) {
-                holder.itemMainTitle.setText(mDatas.get(position).getTitle());
+                holder.itemMainTitle.setText(wheelChartDisplayVoBean.getTitle());
             }
             if (null != holder.imageView) {
                 if (mItmeWidth != 0) {
@@ -80,7 +93,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                     LinearLayout.LayoutParams itmeLayoutParams = new LinearLayout.LayoutParams(mItmeWidth,  LinearLayout.LayoutParams.WRAP_CONTENT );
                     holder.itemLayout.setLayoutParams(itmeLayoutParams );
                 }
-                LoadImgUtils.setImg(mContext, holder.imageView, imageInfo.getPicture());
+                LoadImgUtils.setImg(mContext, holder.imageView, wheelChartDisplayVoBean.getPicture());
             }
         }
 
@@ -96,7 +109,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        return list.size();
     }
 
 
