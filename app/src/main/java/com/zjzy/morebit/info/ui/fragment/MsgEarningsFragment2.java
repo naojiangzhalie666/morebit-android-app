@@ -98,7 +98,7 @@ public class MsgEarningsFragment2 extends MvpFragment<MsgPresenter> implements M
         mReUseListView.getListView().setMarkermallNoMore(true);
         mReUseListView.getListView().setFootViewVisibility(View.GONE);
         mReUseListView.getListView().setFooterViewHint("","仅支持查看近3个月订单","");
-        mPresenter.getMsg(this, InfoModel.msgAwardType, page, mEmptyView);
+        mPresenter.getMsg2(this, InfoModel.msgAwardType, page,mtype, mEmptyView);
     }
 
     @Override
@@ -124,39 +124,13 @@ public class MsgEarningsFragment2 extends MvpFragment<MsgPresenter> implements M
     @Override
     public void onMsgSuccessful(List<EarningsMsg> data) {
         if (page == 1) {
-            if (mtype==0){
-                for (int i=0;i<data.size();i++){
-                    if ("优选".equals(data.get(i).getOrderSource())){
-                        data.remove(i);
-                    }
-                }
-            }else{
-                for (int i=0;i<data.size();i++){
-                    if (!"优选".equals(data.get(i).getOrderSource())){
-                        data.remove(i);
-                    }
-                }
-            }
             mAdapter.replace(data);
             mAdapter.notifyDataSetChanged();
             if(data.size()<10){
-                mReUseListView.getListView().setFootViewVisibility(View.VISIBLE);
+              mReUseListView.getListView().setFootViewVisibility(View.VISIBLE);
                 mReUseListView.getListView().setNoMore(true);
             }
         } else {
-            if (mtype==0){
-                for (int i=0;i<data.size();i++){
-                    if ("优选".equals(data.get(i).getOrderSource())){
-                        data.remove(i);
-                    }
-                }
-            }else{
-                for (int i=0;i<data.size();i++){
-                    if (!"优选".equals(data.get(i).getOrderSource())){
-                        data.remove(i);
-                    }
-                }
-            }
             mAdapter.add(data);
             mAdapter.notifyDataSetChanged();
         }

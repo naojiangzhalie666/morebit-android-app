@@ -367,6 +367,8 @@ public class C {
         public static final String ORDERTYPE = "ORDERTYPE";
         public static final String TIMESKILL = "TIMESKILL";
         public static final String ICONNAME = "ICONNAME";
+        public static final String SKILLITEM = "SKILLITEM";
+        public static final String SKILLTITLE = "SKILLTITLE";
 
 
     }

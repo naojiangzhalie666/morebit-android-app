@@ -459,6 +459,7 @@ dependencies {
     //viewpager指示器
     implementation 'me.relex:circleindicator:1.3.2'
     implementation'com.github.hackware1993:MagicIndicator:1.5.0'
+    //implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
 
 }
 // 依赖插件脚本

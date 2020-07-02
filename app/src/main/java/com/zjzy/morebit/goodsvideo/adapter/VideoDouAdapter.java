@@ -96,9 +96,6 @@ public class VideoDouAdapter extends RecyclerView.Adapter<VideoDouAdapter.ViewHo
 
        // mGoodsInfo.setPrice(String.valueOf(MathUtils.sum(Double.valueOf(mGoodsInfo.getItemPrice()),Double.valueOf(mGoodsInfo.getCouponMoney()))));
 
-        Log.e("ko",mGoodsInfo.getItemPrice()+"r");
-        Log.e("ko",mGoodsInfo.getPrice()+"t");
-        Log.e("ko",mGoodsInfo.getItemVoucherPrice()+"y");
 //        indexbannerdataArray.clear();
 //        ImageInfo imageInfo = new ImageInfo();
 //        imageInfo.setThumb(mGoodsInfo.getItemPic());

@@ -42,6 +42,7 @@ import com.zjzy.morebit.main.ui.NoticeActivity;
 import com.zjzy.morebit.main.ui.fragment.ForeshowFragment;
 import com.zjzy.morebit.main.ui.fragment.GoodNewsFramgent;
 import com.zjzy.morebit.main.ui.fragment.JdChildFragment;
+import com.zjzy.morebit.main.ui.fragment.NineFragment;
 import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
 import com.zjzy.morebit.main.ui.fragment.PddFragment;
 import com.zjzy.morebit.main.ui.fragment.RankingFragment;
@@ -313,7 +314,8 @@ public class BannerInitiateUtils {
         } else if (type == C.BannerIntentionType.TQG) {
             GoodNewsFramgent.start(activity, info, C.GoodsListType.TAOQIANGGOU);
         } else if (type == C.BannerIntentionType.NINE) {
-            GoodNewsFramgent.start(activity, info, C.GoodsListType.NINEPINKAGE);
+           // GoodNewsFramgent.start(activity, info, C.GoodsListType.NINEPINKAGE);
+           OpenFragmentUtils.goToSimpleFragment(activity, NineFragment.class.getName(), null);
         } else if (type == C.BannerIntentionType.PANICBUY) {
             PanicBuyFragment.start(activity, info);
         } else if (type == C.BannerIntentionType.OFFICIALRECOM) {    //官方推荐
@@ -327,7 +329,9 @@ public class BannerInitiateUtils {
             }
 
         } else if (type == C.BannerIntentionType.TypeActivity) {// 专题列表
-            GoodNewsFramgent.start(activity, info);
+             GoodNewsFramgent.start(activity, info);
+           // OpenFragmentUtils.goToSimpleFragment(activity, NineFragment.class.getName(), null);
+
         } else if (type == C.BannerIntentionType.Newcomers) {// "新人课堂",
             NewcomersFragment.start(activity);
         } else if (type == C.BannerIntentionType.OfficialNotice) {// "官方公告",

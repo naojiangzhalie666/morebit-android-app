@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textColor="@color/white"
+        android:textColor="@color/color_FCDDDD"
         android:textSize="@dimen/sp_18"
         tools:text="0.11"/>
 

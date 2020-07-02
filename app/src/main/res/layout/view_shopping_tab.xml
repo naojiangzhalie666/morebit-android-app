@@ -29,6 +29,7 @@
             </android.support.design.widget.TabLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/rl_switch"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

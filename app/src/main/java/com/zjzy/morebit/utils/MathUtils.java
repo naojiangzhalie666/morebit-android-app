@@ -9,6 +9,9 @@ import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.umeng.analytics.pro.ca.f;
 
@@ -485,6 +488,25 @@ public class MathUtils {
         BigDecimal bd2 = new BigDecimal(Double.toString(d2));
         return bd1.add(bd2).doubleValue();
     }
+
+    public static String getToDate(String time){
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date;
+        String s = null;
+        try {
+            date = format.parse(time);
+            SimpleDateFormat format1 = new SimpleDateFormat("HH:mm:ss");
+              s = format1.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return s;
+
+    }
+
 
     /**
      * 换算成多少折

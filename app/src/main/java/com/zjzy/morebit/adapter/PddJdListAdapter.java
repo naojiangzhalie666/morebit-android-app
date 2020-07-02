@@ -2,7 +2,10 @@ package com.zjzy.morebit.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -22,22 +25,37 @@ import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
+import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
+import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.KaipuleUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
+import com.zjzy.morebit.utils.ShareUtil;
 import com.zjzy.morebit.utils.StringsUtils;
+import com.zjzy.morebit.utils.VerticalImageSpan;
+import com.zjzy.morebit.view.CommNewShareDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
+
 
 /**
- * 列表新版
+ * pdd adapter
  */
 public class PddJdListAdapter extends RecyclerView.Adapter {
     private LayoutInflater mInflater;
@@ -45,6 +63,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
     private List<ShopGoodInfo> mDatas;
     private boolean isEditor;//收藏列表是否是编辑状态
     private final int mBottomPadding;
+    private    CommNewShareDialog shareDialog;
 
     public PddJdListAdapter(Context context,List<ShopGoodInfo> data) {
         mInflater = LayoutInflater.from(context);
@@ -76,62 +95,103 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
         final ViewHolder viewHolder = (ViewHolder) holder;
 
-        viewHolder.ll_bottom.setPadding(0, 10, 0, 0);
 
-
-
-            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, MathUtils.getPicture(info), 9);
-            viewHolder.textview_original.setText("¥" + MathUtils.getnum(info.getVoucherPriceForPdd()));
-            viewHolder.textvihew_Preco.setText("¥" + MathUtils.getnum(info.getPriceForPdd()));
+            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, MathUtils.getPicture(info), 8);
+            viewHolder.textview_original.setText(MathUtils.getnum(info.getVoucherPriceForPdd()));
+            viewHolder.textvihew_Preco.setText("¥ " + MathUtils.getnum(info.getPriceForPdd()));
             viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
             LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getImageUrl());
             try {
-                if (C.UserType.member.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
-                    viewHolder.ll_prise.setVisibility(View.GONE);
+
+                if (StringsUtils.isEmpty(info.getCouponPrice())) {
+                    viewHolder.coupon.setVisibility(View.GONE);
                 } else {
-                    if (StringsUtils.isEmpty(info.getCouponPrice().toString())) {
-                        viewHolder.ll_prise.setVisibility(View.GONE);
-                    } else {
-                        viewHolder.ll_prise.setVisibility(View.VISIBLE);
-                    }
+                    viewHolder.coupon.setVisibility(View.VISIBLE);
                 }
 
-                if (StringsUtils.isEmpty(info.getCouponPrice().toString())) {
-                    viewHolder.return_cash.setVisibility(View.GONE);
-                } else {
-                    viewHolder.return_cash.setVisibility(View.VISIBLE);
-                }
-                //店铺名称
-                if (!TextUtils.isEmpty(info.getShopName())) {
-                    viewHolder.tv_shop_name.setText(info.getShopName());
-                }
-
-                viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum((info.getCouponPrice().toString()))));
-                viewHolder.toDetail.setOnClickListener(new View.OnClickListener() {
+                viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum((info.getCouponPrice()))));
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        GoodsDetailForPddActivity.start(mContext, info);
+                        GoodsDetailForJdActivity.start(mContext, info);
                     }
                 });
-                if (C.UserType.vipMember.equals(UserLocalData.getUser((Activity) mContext).getPartner())
-                        || C.UserType.operator.equals(UserLocalData.getUser((Activity) mContext).getPartner())) {
-                    viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser((Activity) mContext).getCalculationRate(), info.getCommission())));
-                } else {
-                    UserInfo userInfo1 = UserLocalData.getUser();
-                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                        viewHolder.commission.setText("登录赚佣金");
-                    } else {
-                        viewHolder.commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
-                    }
-//                viewHolder.commission.setText(mContext.getString(R.string.upgrade_commission));
+
+                if (!TextUtils.isEmpty(info.getCommission())) {
+                    viewHolder.commission.setText(mContext.getString(R.string.mcommission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
+
                 }
+                SpannableString spannableString = new SpannableString("  " + info.getItemTitle());
+                Drawable drawable = mContext.getResources().getDrawable(R.mipmap.pdd_list_icon);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                spannableString.setSpan(new VerticalImageSpan(drawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                viewHolder.title.setText(spannableString);
 
-                viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {//点击购买
+                    @Override
+                    public void onClick(View v) {
+                        generatePromotionUrlForPdd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
+                                .doFinally(new Action() {
+                                    @Override
+                                    public void run() throws Exception {
+                                    }
+                                })
+                                .subscribe(new DataObserver<String>() {
+                                    @Override
+                                    protected void onSuccess(final String data) {
+                                        if (LoginUtil.checkIsLogin((Activity) mContext)) {
+
+                                            if (data != null) {
+                                                if (isHasInstalledPdd() && data.contains("https://mobile.yangkeduo.com")) {
+                                                    String content = data.replace("https://mobile.yangkeduo.com",
+                                                            "pinduoduo://com.xunmeng.pinduoduo");
+                                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(content));
+                                                    mContext.startActivity(intent);
+                                                } else {
+                                                    PddWebActivity.start((Activity) mContext, data, info.getItemTitle());
+                                                }
+                                            }
 
 
-                viewHolder.good_mall_tag.setImageResource(R.drawable.pdd_icon);
-                StringsUtils.retractTitle( viewHolder.good_mall_tag, viewHolder.title,MathUtils.getTitle(info));
+                                        }
+                                    }
+                                });
+                    }
+                });
+
+
+                viewHolder.tv_share.setOnClickListener(new View.OnClickListener() {//分享链接
+                    @Override
+                    public void onClick(View v) {
+                        if (!LoginUtil.checkIsLogin((Activity) mContext)) {
+                            return;
+                        }
+                        generatePromotionUrlForPdd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
+                                .doFinally(new Action() {
+                                    @Override
+                                    public void run() throws Exception {
+                                    }
+                                })
+                                .subscribe(new DataObserver<String>() {
+                                    @Override
+                                    protected void onSuccess(final String data) {
+                                        if (LoginUtil.checkIsLogin((Activity) mContext)) {
+
+                                            if (data != null) {
+                                                mShare(info,data);
+                                            }
+
+
+                                        }
+                                    }
+                                });
+
+
+
+                    }
+                });
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -139,6 +199,35 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
         }
 
+    private void mShare(final ShopGoodInfo info, final String data) {
+        shareDialog = new CommNewShareDialog(mContext, new View.OnClickListener() {//分享
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.weixinFriend: //分享到好友
+                        ShareUtil.App.toWechatFriend((Activity) mContext, info.getItemTitle(), info.getShopName(),info.getImageUrl(),data,null);
+                        break;
+                    case R.id.weixinCircle: //分享到朋友圈
+                        ShareUtil.App.toWechatMoments((Activity) mContext, info.getItemTitle(), info.getShopName(),info.getImageUrl(),data,null);
+                        break;
+                    case R.id.qqFriend: //分享到QQ
+                        ShareUtil.App.toQQFriend((Activity) mContext, info.getItemTitle(), info.getShopName(),info.getImageUrl(),data,null);
+                        break;
+                    case R.id.qqRoom: //分享到QQ空间
+                        ShareUtil.App.toQQRoom((Activity) mContext, info.getItemTitle(), info.getShopName(),info.getImageUrl(),data,null);
+                        break;
+                    default:
+                        break;
+                }
+
+                shareDialog.dismiss();
+            }
+        });
+
+        if (!shareDialog.isShowing()) {
+            shareDialog.show();
+        }
+    }
 
 
 
@@ -150,7 +239,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textview_original, textvihew_Preco, momVolume, coupon, commission, tv_shop_name;
+        TextView textview_original, textvihew_Preco, tv_share, coupon, commission;
         ImageView iv_icon,good_mall_tag;
         LinearLayout return_cash;
         RelativeLayout toDetail, img_rl;
@@ -163,21 +252,14 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
-            tv_shop_name = (TextView) itemView.findViewById(R.id.tv_shop_name);
             textview_original = (TextView) itemView.findViewById(R.id.discount_price);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
             good_mall_tag = (ImageView) itemView.findViewById(R.id.good_mall_tag);
             textvihew_Preco = (TextView) itemView.findViewById(R.id.price);
-            momVolume = (TextView) itemView.findViewById(R.id.sales);
             coupon = (TextView) itemView.findViewById(R.id.coupon);
-            toDetail = (RelativeLayout) itemView.findViewById(R.id.toDetail);
-            img_rl = (RelativeLayout) itemView.findViewById(R.id.img_rl);
-
+            tv_share=itemView.findViewById(R.id.tv_share);
             commission = (TextView) itemView.findViewById(R.id.commission);
-            select_tag = (ImageView) itemView.findViewById(R.id.select_tag);
-            ll_prise = (View) itemView.findViewById(R.id.ll_return_cash);
-            ll_bottom = (LinearLayout) itemView.findViewById(R.id.ll_bottom);
-            return_cash = (LinearLayout) itemView.findViewById(R.id.ll_return_cash);
+
 
         }
     }
@@ -214,23 +296,30 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         isEditor = editor;
     }
 
-//
-//    tvDes.setText(getSpannableString(label, description));
-//      tvLabel.setText(label);
-
     /**
-     * 首行缩进的SpannableString
-     *
-     * @param description 描述信息
+     * 拼多多
+     * @param rxActivity
+     * @param
+     * @return
      */
-    private SpannableString getSpannableString(String description) {
-        SpannableString spannableString = new SpannableString(description);
-        int dimension = (int) mContext.getResources().getDimension(R.dimen.good_mall_wide);
-        int padding = (int) mContext.getResources().getDimension(R.dimen.good_mall_wide_padding);
-        LeadingMarginSpan leadingMarginSpan = new LeadingMarginSpan.Standard(dimension + padding, 0);//仅首行缩进
-        spannableString.setSpan(leadingMarginSpan, 0, description.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        return spannableString;
+    public Observable<BaseResponse<String>> generatePromotionUrlForPdd(BaseActivity rxActivity,
+                                                                       Long goodsId,String couponUrl) {
+        RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
+        bean.setType(2);
+        bean.setGoodsId(goodsId);
+        bean.setCouponUrl(couponUrl);
+        return RxHttp.getInstance().getCommonService().generatePromotionUrlForPdd(bean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
     }
 
+    /**
+     * 判断是否安装拼多多
+     *
+     * @return
+     */
+    private boolean isHasInstalledPdd() {
+        return AppUtil.checkHasInstalledApp(mContext, "com.xunmeng.pinduoduo");
+    }
 
 }

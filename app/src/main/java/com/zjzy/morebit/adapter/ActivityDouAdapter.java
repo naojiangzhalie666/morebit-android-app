@@ -1,5 +1,6 @@
 package com.zjzy.morebit.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,12 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.CommissionClassActivity;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.goodsvideo.VideoActivity;
 import com.zjzy.morebit.goodsvideo.VideoClassActivity;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 
 import java.util.ArrayList;
@@ -55,6 +60,18 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
         List<QueryDhAndGyBean.DhListBean> dhList = data.getDhList();//抖货
         List<QueryDhAndGyBean.GyListBean> gyList = data.getGyList();//高佣
         if (position == 0) {
+            final ShopGoodInfo gyBean = new ShopGoodInfo();
+            gyBean.setItemSourceId(gyList.get(0).getItemid()+"");
+            gyBean.setGoodsId(Long.valueOf(gyList.get(0).getItemid()));
+            gyBean.setPrice(gyList.get(0).getItemprice());
+            gyBean.setVoucherPrice(gyList.get(0).getItemendprice());
+            gyBean.setCouponStartTime(gyList.get(0).getCouponstarttime());
+            gyBean.setCouponEndTime(gyList.get(0).getCouponendtime());
+            gyBean.setCouponUrl(gyList.get(0).getCouponurl());
+            gyBean.setCouponPrice(gyList.get(0).getCouponmoney());
+            gyBean.setCommission(gyList.get(0).getTkmoney());
+            gyBean.setSaleMonth(gyList.get(0).getItemsale());
+
             holder.title1.setText("定向高佣");
             holder.title1.setTextColor(Color.parseColor("#F05557"));
             if (gyList.size() == 0) return;
@@ -81,7 +98,32 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                     mContext.startActivity(new Intent(mContext, CommissionClassActivity.class));
                 }
             });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GoodsDetailActivity.start(mContext, gyBean);
+                }
+            });
         } else {
+            final ShopGoodInfo dhBean = new ShopGoodInfo();
+            final List<ShopGoodInfo> list=new ArrayList<>();
+            dhBean.setItemTitle(dhList.get(0).getItemTitle());
+            dhBean.setItemSourceId(dhList.get(0).getItemId()+"");
+            dhBean.setGoodsId(Long.valueOf(dhList.get(0).getItemId()));
+            dhBean.setItemPic(dhList.get(0).getItemPic());
+            dhBean.setCouponMoney(dhList.get(0).getCouponMoney()+"");
+            dhBean.setGoodsId(Long.valueOf(gyList.get(0).getItemid()));
+            dhBean.setPrice(dhList.get(0).getItemPrice());
+            dhBean.setItemVideo(dhList.get(0).getItemVideo());
+            dhBean.setCouponUrl(dhList.get(0).getCouponUrl());
+            dhBean.setCouponMoney(dhList.get(0).getCouponMoney());
+            dhBean.setTkMoney(dhList.get(0).getTkMoney());
+            dhBean.setItemSale(dhList.get(0).getItemSale());
+            dhBean.setItemVideoPic(dhList.get(0).getItemVideoPic());
+            list.add(dhBean);
+
+
             holder.title1.setText("抖货爆款");
             holder.title1.setTextColor(Color.parseColor("#CC2498"));
             if (dhList.size() == 0) return;
@@ -105,6 +147,15 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 @Override
                 public void onClick(View v) {
                     mContext.startActivity(new Intent(mContext, VideoClassActivity.class));
+                }
+            });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (LoginUtil.checkIsLogin((Activity) mContext)) {
+                        VideoActivity.start(mContext,list,0,"1",1);
+                    }
                 }
             });
         }

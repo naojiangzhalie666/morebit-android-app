@@ -716,7 +716,7 @@ public class MineFragment extends BaseMainFragmeng {
 //                        day_price.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
                         tv_today_money.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
                         tv_yesterday_estimate_money.setText(MathUtils.getMoney(data.getYesterdayEstimateMoney()));
-                        checkWithdrawTime();
+                      //  checkWithdrawTime();
 //                        tvWithDraw
 
                     }

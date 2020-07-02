@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+
+    <com.zjzy.morebit.Module.common.View.ReUseListView
         android:id="@+id/rcy_litmit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        />
+        android:layout_height="match_parent"/>
 </FrameLayout>

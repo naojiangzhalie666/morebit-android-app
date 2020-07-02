@@ -9,6 +9,8 @@ import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
+import com.zjzy.morebit.pojo.RankTimeBean;
+import com.zjzy.morebit.pojo.RequestNineBean;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
@@ -2615,5 +2617,26 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/goods/queryDhAndGy")
     public Observable<BaseResponse<QueryDhAndGyBean>> getQueryDhAndGy();
+
+
+    /**
+     * 实时排行（新)
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/ranking/realTime")
+    public Observable<BaseResponse<RankTimeBean>> getRealTime(@Body RequestBannerBean requestBean);
+
+    /**
+     * 9.9包邮
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/getFreeShipping ")
+    public Observable<BaseResponse<List<ShopGoodInfo>>> getFreeShipping(@Body RequestNineBean body);
+
+
 
 }

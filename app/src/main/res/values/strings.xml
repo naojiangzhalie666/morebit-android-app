@@ -47,6 +47,7 @@
     <string name="income">¥ %1$s</string>
     <string name="income_yuan">%1$s元</string>
     <string name="commission">预估收益%1$s元</string>
+    <string name="mcommission">赚 ¥ %1$s</string>
     <string name="upgrade_commission">升级收益</string>
     <string name="exclusiveWechat">专属客服微信：%1$s</string>
     <string name="recommend">推荐词</string>
@@ -156,6 +157,7 @@
     <string name="complaint_suggestion">投诉建议</string>
     <string name="find_splendid">发现精彩</string>
     <string name="sales">销量：%1$s</string>
+    <string name="msales">月销%1$s</string>
     <string name="current_taobao">淘宝</string>
     <string name="current_pdd">拼多多</string>
     <string name="current_jd">京东</string>

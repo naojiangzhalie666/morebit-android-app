@@ -139,6 +139,8 @@ public class PddChildFragment extends BaseMainFragmeng {
             ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
+            // 设置状态栏颜色
+            getActivity().getWindow().setStatusBarColor(Color.parseColor("#F3060D"));
 
         }
 

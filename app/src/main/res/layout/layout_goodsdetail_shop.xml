@@ -4,23 +4,24 @@
               xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/rl_shop_taobao"
         android:layout_width="match_parent"
+    android:paddingBottom="12dp"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/shop_img"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginBottom="15dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:src="@mipmap/taobao_details_logo"/>
 
 
         <RelativeLayout
+            android:id="@+id/rl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/shop_img"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/shop_img"
             >
 
@@ -32,7 +33,7 @@
                 android:ellipsize="end"
                 android:maxEms="8"
                 android:maxLines="1"
-                android:text=""
+                android:text="斑布官方旗舰店"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp"/>
 
@@ -77,11 +78,11 @@
         </RelativeLayout>
 
         <LinearLayout
-
+            android:layout_below="@+id/rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/shop_img"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/shop_img"
             >
 
@@ -91,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:text="宝贝描述"
                 android:textColor="@color/color_666666"
                 android:textSize="11dp"/>
 
@@ -101,6 +103,7 @@
                 android:layout_marginLeft="19dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:text="宝贝描述"
                 android:textColor="@color/color_666666"
                 android:textSize="11dp"/>
 
@@ -111,6 +114,7 @@
                 android:layout_marginLeft="19dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:text="宝贝描述"
                 android:textColor="@color/color_666666"
                 android:textSize="11dp"/>
 

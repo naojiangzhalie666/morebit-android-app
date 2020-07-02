@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/iten_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+  >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp">
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@color/color_999999" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ranking_bianshi"
+            android:layout_marginLeft="8dp"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/tv_sale"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="销量 3237"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ranking_goods_bg"
+            />
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+
+            <TextView
+                android:layout_marginLeft="11dp"
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="特仑苏2箱99元6月特仑苏250…"
+                android:textColor="#ff333333"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥ "
+                    android:textColor="#fff05557"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="19.9"
+                    android:textColor="#fff05557"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/tv_mprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="月销1.2万"
+                    android:textColor="@color/color_999999"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll1"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_coupul"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/yhj_bg_goods"
+                    android:gravity="center"
+                    android:text="10元券"
+                    android:textColor="#ffffffff"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_zhuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/background_ffebce_radius_2dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="赚 ¥ 2.34"
+                    android:textColor="#ff975400"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:background="#F0F1F5"
+        android:layout_height="1dp"/>
+</LinearLayout>

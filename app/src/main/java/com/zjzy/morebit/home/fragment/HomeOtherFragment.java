@@ -748,6 +748,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
                 }
                 TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tv_name);
+                textView.getPaint().setFakeBoldText(true);
                 textView.setText(data.getResultList().get(i).getCategoryName());//设置tab上的文字
             }
             icon_pager.setOffscreenPageLimit(data.getResultList().size());

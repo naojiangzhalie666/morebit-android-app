@@ -83,7 +83,7 @@ public class MsgEarningsFragment extends BaseFragment implements View.OnClickLis
         for (int i = 0; i < title.size(); i++) {
             MsgEarningsFragment2 fragment = null;
             fragment = new MsgEarningsFragment2();
-            mfragment.add(fragment.newInstance(i));
+            mfragment.add(fragment.newInstance(i+1));
         }
         NewsPagerAdapter mAdapter = new NewsPagerAdapter(getActivity().getSupportFragmentManager(), mfragment, title);
         viewPager.setAdapter(mAdapter);
@@ -112,7 +112,7 @@ public class MsgEarningsFragment extends BaseFragment implements View.OnClickLis
 
         @Override
         public Fragment getItem(int position) {
-            return MsgEarningsFragment2.newInstance(position);
+            return MsgEarningsFragment2.newInstance(position+1);
         }
 
         @Override

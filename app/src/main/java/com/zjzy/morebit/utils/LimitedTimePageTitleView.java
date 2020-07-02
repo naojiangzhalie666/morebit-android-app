@@ -49,9 +49,9 @@ public class LimitedTimePageTitleView extends LinearLayout implements IPagerTitl
         mTimeTv = findViewById(R.id.time_tv);
         mTipTv = findViewById(R.id.tips_tv);
         selectTipsColor = getResources().getColor(R.color.color_F05557);
-        selectTimeColor = Color.WHITE;
-        unSelectTipsColor = getResources().getColor(R.color.white);
-        unSelectTimeColor = getResources().getColor(R.color.white);
+        selectTimeColor =  getResources().getColor(R.color.white);
+        unSelectTipsColor = getResources().getColor(R.color.color_FCDDDD);
+        unSelectTimeColor = getResources().getColor(R.color.color_FCDDDD);
         setGravity(Gravity.CENTER);
         mTipTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,tipsSizeSp);
         mTimeTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,timeSizeSp);

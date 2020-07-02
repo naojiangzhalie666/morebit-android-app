@@ -193,6 +193,28 @@ public class InfoModel extends MvpModel {
     }
 
     /**
+     * 消息
+     *
+     * @param fragment
+     * @param type
+     * @param page
+     * @return
+     */
+
+    public Observable<BaseResponse<List<EarningsMsg>>> getMsg2(RxFragment fragment, int type, int page,int orderSource) {
+
+        RequestSystemNoticeBean requestBean = new RequestSystemNoticeBean();
+        requestBean.setType(type);
+        requestBean.setPage(page);
+        requestBean.setOrderSource(orderSource);
+        return RxHttp.getInstance().getCommonService()
+                .systemNotice(requestBean)
+                .compose(RxUtils.<BaseResponse<List<EarningsMsg>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<EarningsMsg>>>bindToLifecycle());
+
+    }
+
+    /**
      * 每日爆款
      *
      * @param fragment
