@@ -35,6 +35,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rl_list"
+        android:layout_marginLeft="6dp"
         android:overScrollMode="never"
         android:layout_below="@+id/rl_title"
         android:layout_width="match_parent"

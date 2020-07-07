@@ -1,5 +1,7 @@
 package com.zjzy.morebit.home.fragment;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -61,12 +63,14 @@ import com.zjzy.morebit.adapter.HomeSelectedAdapter;
 import com.zjzy.morebit.adapter.NewItemAdapter;
 import com.zjzy.morebit.fragment.PanicBuyFragment;
 import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment;
+import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment2;
 import com.zjzy.morebit.goodsvideo.VideoFragment;
 import com.zjzy.morebit.home.contract.HomeRecommentContract;
 import com.zjzy.morebit.home.presenter.HomeRecommendPresenter;
 import com.zjzy.morebit.info.ui.fragment.MsgFragment;
 import com.zjzy.morebit.interfaces.GuideNextCallback;
 import com.zjzy.morebit.main.ui.fragment.GoodNewsFramgent;
+import com.zjzy.morebit.main.ui.fragment.GuessLikeFragment;
 import com.zjzy.morebit.main.ui.fragment.ShoppingListFragment2;
 import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
 import com.zjzy.morebit.mvp.base.base.BaseView;
@@ -76,6 +80,7 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.DoorGodCategoryBean;
+import com.zjzy.morebit.pojo.FloorBean2;
 import com.zjzy.morebit.pojo.FloorInfo;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
@@ -117,7 +122,7 @@ import me.relex.circleindicator.CircleIndicator;
  * Use the {@link HomeOtherFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> implements HomeRecommentContract.View, View.OnClickListener {
+public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> implements HomeRecommentContract.View, View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -152,7 +157,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     HomeAdapter mHomeAdapter;
     List<GoodCategoryInfo> mHomeColumns = new ArrayList<>();
     private List<SelectGoodsFragment> fragments = new ArrayList<>();
-
+    private boolean isAnimatorEnd;
     private ImageView img_bao;
     private List<String> title_time = new ArrayList<>();
     private List<String> title_tv = new ArrayList<>();
@@ -166,8 +171,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private ImageInfo mImageInfo;
     private TextView searchTv;
     private ImageView img_go;
-    private ImageView home_msg;
+    private ImageView home_msg,shareImageView;
     private List<PanicBuyingListBean.TimeListBean> timeList;
+    private int scroll=0;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -255,6 +261,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         mAppBarLt = mView.findViewById(R.id.app_bar_lt);
         mViewPager = mView.findViewById(R.id.viewPager);
         xablayout = mView.findViewById(R.id.xablayout);
+        shareImageView=mView.findViewById(R.id.shareImageView);
 
         litmited_pager = mView.findViewById(R.id.litmited_pager);
         limited = mView.findViewById(R.id.limited);
@@ -273,6 +280,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         img_go = mView.findViewById(R.id.img_go);
         Glide.with(this).asGif().load(R.drawable.must_go).into(img_go);
+        Glide.with(this).asGif().load(R.drawable.new_hongbao).into(shareImageView);
 
         home_msg = mView.findViewById(R.id.home_msg);
         home_msg.setOnClickListener(this);
@@ -284,15 +292,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         searchTv = mView.findViewById(R.id.searchTv);
         searchTv.setOnClickListener(this);
         autoView = mView.findViewById(R.id.autoView);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //处理全屏显示
-            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
-            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
-            status_bar.setLayoutParams(viewParams);
-            // 设置状态栏颜色
-            getActivity().getWindow().setStatusBarColor(Color.parseColor("#F05557"));
 
-        }
+        initBar();
+
 
 
         litmited_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -377,7 +379,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     swipeRefreshLayout.setEnabled(true);
                 }
             }
+
         });
+
 
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -459,29 +463,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         new_rcy.setLayoutManager(manager);
 
-
-        activity_img = mView.findViewById(R.id.activity_img);//头图
-        ll_bg = mView.findViewById(R.id.ll_bg);//下图背景
         activity_rcy1 = mView.findViewById(R.id.activity_rcy1);//横版列表
-        activity_rcy2 = mView.findViewById(R.id.activity_rcy2);//竖版列表
-        GridLayoutManager manager3 = new GridLayoutManager(getActivity(), 2);
-        activity_rcy1.setLayoutManager(manager3);
-        if (activity_rcy1.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-            activity_rcy1.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
-        }
-        ActivityFloorAdapter1 floorAdapter1 = new ActivityFloorAdapter1(getActivity());
-        activity_rcy1.setAdapter(floorAdapter1);
-
-        ActivityFloorAdapter2 floorAdapter2 = new ActivityFloorAdapter2(getActivity());
-        GridLayoutManager manager2 = new GridLayoutManager(getActivity(), 4);
-        //设置图标的间距
-        if (activity_rcy2.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-            SpaceItemRightUtils spaceItemDecorationUtils = new SpaceItemRightUtils(24, 5);
-            activity_rcy2.addItemDecoration(spaceItemDecorationUtils);
-        }
-
-        activity_rcy2.setLayoutManager(manager2);
-        activity_rcy2.setAdapter(floorAdapter2);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
+        activity_rcy1.setLayoutManager(linearLayoutManager);
 
 
         activity_hao = mView.findViewById(R.id.activity_hao);  //好单预告
@@ -527,10 +511,38 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             public void stop() {
                 isAutoPlay = false;
                 handler.removeMessages(1001);
+                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
             }
         });
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initBar();
+        mAppBarLt.addOnOffsetChangedListener(this);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mAppBarLt.removeOnOffsetChangedListener(this);
+
+    }
+
+    private void initBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //处理全屏显示
+            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
+            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
+            status_bar.setLayoutParams(viewParams);
+            // 设置状态栏颜色
+            getActivity().getWindow().setStatusBarColor(Color.parseColor("#F05557"));
+
+        }
     }
 
     private void initRefresh() {
@@ -717,8 +729,39 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 });
 
 
+        getListGraphicInfoSorting(this)
+                .subscribe(new DataObserver<FloorBean2>(false) {
+            @Override
+            protected void onDataListEmpty() {
+                onActivityFailure();
+            }
+
+            @Override
+            protected void onDataNull() {
+                onActivityFailure();
+            }
+
+            @Override
+            protected void onError(String errorMsg, String errCode) {
+                onActivityFailure();
+            }
+
+            @Override
+            protected void onSuccess(FloorBean2 data) {
+                onGetListGraphicInfoSorting(data);
+            }
+        });
+
+
+
         getCategoryData();
 
+    }
+
+    private void onGetListGraphicInfoSorting(FloorBean2 data) {
+        List<FloorBean2.ListDataBean> listData = data.getListData();
+        ActivityFloorAdapter1 floorAdapter1 = new ActivityFloorAdapter1(getActivity(),listData,data.getExt());
+        activity_rcy1.setAdapter(floorAdapter1);
     }
 
     private void onGetQueryDhAndGy(QueryDhAndGyBean data) {
@@ -1131,6 +1174,47 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         App.getACache().put(C.sp.UIShow + back, datas);
     }
 
+
+    private void showShareImage() {
+        float translationX = shareImageView.getTranslationX();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 0);
+        animator.setDuration(0);
+        if (!isAnimatorEnd) {
+            animator.setStartDelay(1200);
+        }
+        animator.start();
+    }
+
+    private void hideShareImage() {
+        isAnimatorEnd = false;
+        float translationX = shareImageView.getTranslationX();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 100);
+        animator.setDuration(0);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                isAnimatorEnd = true;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animator.start();
+    }
+
+
     //获取banner
     public Observable<BaseResponse<List<ImageInfo>>> getBanner(RxFragment fragment, int back) {
         RequestBannerBean requestBean = new RequestBannerBean();
@@ -1229,6 +1313,19 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 return litmited_pager.getCurrentItem();
             }
         }
+
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        Log.e("oooooo","滑动了："+verticalOffset);
+        if (scroll==verticalOffset){
+            showShareImage();
+        }else{
+            hideShareImage();
+            scroll=verticalOffset;
+        }
+
 
     }
 
@@ -1340,11 +1437,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 fragments.add(goodsFragment);
                 return goodsFragment;
             } else if (getString(R.string.what_like).equals(homeColumn.getName())) {
-                ShoppingListFragment2 whatLikeFragment = ShoppingListFragment2.newInstance(C.GoodsListType.WHAT_LIKE);
+                GuessLikeFragment whatLikeFragment = GuessLikeFragment.newInstance();
                 return whatLikeFragment;
             } else {
                 List<Child2> childs = homeColumn.getChild2();
-                return CategoryListFragment.newInstance(homeColumn.getName(), childs);
+                return CategoryListFragment2.newInstance(homeColumn.getName(), childs);
 
             }
 
@@ -1399,6 +1496,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         return RxHttp.getInstance().getSysteService().getQueryDhAndGy()
                 .compose(RxUtils.<BaseResponse<QueryDhAndGyBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<QueryDhAndGyBean>>bindToLifecycle());
+    }
+
+    //新楼层查询
+    public Observable<BaseResponse<FloorBean2>> getListGraphicInfoSorting(RxFragment fragment) {
+        return RxHttp.getInstance().getSysteService().getListGraphicInfoSorting()
+                .compose(RxUtils.<BaseResponse<FloorBean2>>switchSchedulers())
+                .compose(fragment.<BaseResponse<FloorBean2>>bindToLifecycle());
     }
 
 }

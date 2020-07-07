@@ -417,7 +417,7 @@
     <string name="subsidiesPrice">平台补贴%1$s元</string>
     <string name="subsidiesTips">补贴 %1$s元</string>
     <string name="incomeTips">佣金 %1$s元</string>
-    <string name="share_money_phone_line">手机端链接</string>
+    <string name="share_money_phone_line">淘口令</string>
     <string name="share_money_pc_line">PC端链接</string>
     <string name="share_money_download">下载链接</string>
     <string name="invitation_code_text">邀请码</string>

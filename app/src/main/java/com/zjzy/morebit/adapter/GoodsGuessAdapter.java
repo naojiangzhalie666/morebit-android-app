@@ -90,7 +90,7 @@ public class GoodsGuessAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHol
         }
 
 
-        discount_price.setText(getString(R.string.coupon, MathUtils.getnum(item.getVoucherPrice())));
+        discount_price.setText(MathUtils.getnum(item.getVoucherPrice()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

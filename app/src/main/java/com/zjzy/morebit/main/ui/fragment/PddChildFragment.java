@@ -183,7 +183,7 @@ public class PddChildFragment extends BaseMainFragmeng {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
-                intent.putExtra(C.Extras.SEARCH_TYPE,2);
+                intent.putExtra(C.Extras.SEARCH_TYPE,1);
                 startActivity(intent);
             }
         });

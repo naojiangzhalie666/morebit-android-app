@@ -62,14 +62,14 @@
             android:layout_gravity="center"
             android:layout_marginBottom="9dp"
             android:layout_marginTop="9dp"
-            android:text="图文分享到"
+            android:text="分享图文到"
             android:textColor="@color/color_333333"
-            android:textSize="12sp"/>
+            android:textSize="16sp"/>
 
 
         <include
             layout="@layout/layout_share_select"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="10dp"/>
@@ -91,17 +91,18 @@
             <RelativeLayout
                 android:id="@+id/rule_ly"
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="40dp">
 
                 <TextView
                     android:id="@+id/incomeMoney"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/color_FFECB6"
-                    android:gravity="center"
-                    android:text="您的奖励预计为: 0.00元"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="12sp"/>
+                    android:background="@color/color_FFEBCE"
+                    android:paddingLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:text="分享后不要忘记复制粘贴【评论区文案】!!!"
+                    android:textColor="@color/color_975400"
+                    android:textSize="14sp"/>
 
                 <ImageView
                     android:id="@+id/icon_right"
@@ -109,21 +110,38 @@
                     android:layout_height="10dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/icon_gengduo_white"/>
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/new_people_right"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/icon_right"
-                    android:text="规则"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="11sp"/>
+
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_copy_text2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_f8f8f8_round_6dp"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/et_copy2"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_height="139dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bg_f8f8f8_round_6dp"
+                    android:gravity="top"
+                    android:hint=""
+                    android:textColorHint="@color/color_333333"
+                    android:textSize="13sp"
+                    android:windowSoftInputMode="stateHidden"/>
+
+            </RelativeLayout>
             <TextView
                 android:id="@+id/tv_select_desc"
                 android:layout_marginTop="12dp"
@@ -131,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="14dp"
-                android:text="选择图片"
+                android:text="分享图片"
                 android:textColor="@color/color_333333"
                 android:textSize="14sp"/>
 
@@ -140,12 +158,14 @@
                 android:id="@+id/id_recyclerview_horizontal"
                 android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
+                android:layout_marginLeft="12dp"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:scrollbars="none"/>
 
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/makeGoodsPoster"
                 android:layout_width="116dp"
                 android:layout_height="28dp"
@@ -158,16 +178,7 @@
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="13dp"/>
 
-            <TextView
-                android:id="@+id/tv_share_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="10dp"
-                android:text="编辑分享文案"
-                android:textColor="@color/color_333333"
-                android:textSize="13sp"/>
+
 
             <RelativeLayout
                 android:id="@+id/rl_copy_text"
@@ -179,7 +190,7 @@
                 android:background="@drawable/bg_f8f8f8_round_6dp"
                 android:orientation="horizontal">
 
-                <EditText
+                <TextView
                     android:id="@+id/et_copy"
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
@@ -195,6 +206,7 @@
                     android:windowSoftInputMode="stateHidden"/>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

@@ -50,7 +50,7 @@ public class ShareMoneySwitchForKaolaTemplateView extends LinearLayout {
                         LayoutParams.MATCH_PARENT, 1.0f);
                 param.gravity = Gravity.LEFT;
 //                linearLayout.setPadding(5, 0, 0, 0);
-                linearLayout.setGravity(Gravity.LEFT);
+                linearLayout.setGravity(Gravity.CENTER);
                 String title = list.get(i);
                 TextView textView2 = new TextView(context);
                 textView2.setGravity(Gravity.CENTER);
@@ -58,6 +58,7 @@ public class ShareMoneySwitchForKaolaTemplateView extends LinearLayout {
                 textView2.setTextColor(ContextCompat.getColor(context, R.color.color_666666));
                 textView2.setText(title);
                 textView2.setPadding(6, 0, 0, 0);
+
 
                 final ImageView imageView = new ImageView(context);
                 imageView.setImageResource(R.drawable.selector_share_money_line);
@@ -70,10 +71,11 @@ public class ShareMoneySwitchForKaolaTemplateView extends LinearLayout {
                     @Override
                     public void onClick(View v) {
                         boolean isSelector = (boolean) imageView.getTag();
-//                        if (finalI == 0 ){
-//                            App.getACache().put(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL, "1");
-//                        }else
-                            if (finalI == 1){
+                    if (finalI == 0 ){
+                            imageView.setSelected(!isSelector);
+                            imageView.setTag(!isSelector);
+                            App.getACache().put(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL, (boolean) imageView.getTag() ? "1" : "0");
+                        }else if (finalI == 1 ){
                             imageView.setSelected(!isSelector);
                             imageView.setTag(!isSelector);
                             App.getACache().put(C.sp.SHARE_MOENY_IS_INVITECODE, (boolean) imageView.getTag() ? "1" : "0");
@@ -87,13 +89,11 @@ public class ShareMoneySwitchForKaolaTemplateView extends LinearLayout {
                 switch (i) {
                     case 0:
                         imageView.setSelected(true);
+                        imageView.setTag(!(boolean) imageView.getTag());
                         break;
                     case 1:
-                        imageView.setSelected(false);
-                        if (isInvitecode == 1) {
-                            imageView.setSelected(!(boolean) imageView.getTag());
-                            imageView.setTag(!(boolean) imageView.getTag());
-                        }
+                        imageView.setSelected(true);
+                        imageView.setTag(!(boolean) imageView.getTag());
                         break;
                     default:
                         break;

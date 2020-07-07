@@ -2,6 +2,8 @@ package com.zjzy.morebit.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -29,9 +31,11 @@ import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CallBackObserver;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.TkBean;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.ShareMoenyPosterEvent;
 import com.zjzy.morebit.pojo.goods.EditTemplateInfo;
@@ -85,8 +89,8 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
     private LinearLayout btn_back;
     private RecyclerView mRecyclerView;
     private ShareMoneyAdapter mAdapter;
-    private TextView tv_copy, incomeMoney;
-    private EditText et_copy;
+    private TextView tv_copy;
+    private TextView et_copy,et_copy2;
     private LinearLayout weixinCircle, weixinFriend;
     private ShopGoodInfo goodsInfo;
     private TKLBean mTKLBean;
@@ -135,7 +139,8 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
         //设置页面头顶空出状态栏的高度
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         tv_copy = (TextView) findViewById(R.id.tv_copy);
-        et_copy = (EditText) findViewById(R.id.et_copy);
+        et_copy = (TextView) findViewById(R.id.et_copy);
+        et_copy2= (TextView) findViewById(R.id.et_copy2);
         et_copy.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -194,13 +199,11 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
             });
             mAdapter.notifyDataSetChanged();
         }
-        if (!TextUtils.isEmpty(mTKLBean.getTemplate())) {
-            et_copy.setText(mTKLBean.getTemplate());
-        }
+//        if (!TextUtils.isEmpty(mTKLBean.getTemplate())) {
+//            et_copy.setText(mTKLBean.getTemplate());
+//        }
         rule_ly = (RelativeLayout) findViewById(R.id.rule_ly);
         rule_ly.setOnClickListener(this);
-        //代理商显示代理佣金
-        incomeMoney = (TextView) findViewById(R.id.incomeMoney);
         //设置是否是代理商
         UserInfo userInfo = UserLocalData.getUser(ShareMoneyActivity.this);
         if (C.UserType.member.equals(userInfo.getPartner())) { //消费者
@@ -210,8 +213,8 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
             String discountsMoneyStr = MathUtils.getMuRatioComPrice(userInfo.getCalculationRate(), goodsInfo.getCommission());
             String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(userInfo.getCalculationRate(), goodsInfo.getSubsidiesPrice());
             String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
-            incomeMoney.setText("您的奖励预计为: " + allDiscountsMoneyStr + "元");
         }
+        getTemplate();
         ShareMoneySwitchTemplateView viewSwitch = (ShareMoneySwitchTemplateView) findViewById(R.id.view_swicht);
         viewSwitch.setAction(new MyAction.One<Integer>() {
             @Override
@@ -248,6 +251,11 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
                 }
                 AppUtil.coayTextPutNative(this, et_copy.getText().toString());
                 ViewShowUtils.showShortToast(this, R.string.coayTextSucceed);
+
+                //跳转微信
+                PageToUtil.goToWeixin(ShareMoneyActivity.this);
+
+
                 break;
             case R.id.tv_capy_tkl:
                 if (TextUtils.isEmpty(mTKLBean.getTkl())) {
@@ -303,6 +311,7 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
                 break;
         }
     }
+
 
     private void openShareFriendsDialog() {
         if (mShareFriendsDialog == null) {
@@ -456,13 +465,13 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
     public void getTemplate() {
         setResult(RESULT_OK);
         LoadingView.showDialog(this, "请求中...");
-        GoodsUtil.getGetTkLFinalObservable(this, goodsInfo)
-                .subscribe(new DataObserver<TKLBean>() {
+        GoodsUtil.getGetTkLFinalObservable2(this, goodsInfo,1)
+                .subscribe(new DataObserver<CommonShareTemplateBean>() {
                     @Override
-                    protected void onSuccess(TKLBean data) {
-                        String template = data.getTemplate();
-                        et_copy.setText(template);
-                        mTKLBean.setTemp(data.getTemp());
+                    protected void onSuccess(CommonShareTemplateBean data) {
+                        et_copy2.setText(data.getShareContent());
+                        et_copy.setText(data.getTklVo().getTemplate());
+
                     }
                 });
 

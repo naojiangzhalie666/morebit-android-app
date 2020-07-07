@@ -135,11 +135,8 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
         mAdapter.setType(mType);
         mAdapter1.setListType(mType);
         rl_list.getListView().setNestedScrollingEnabled(false);
-        if (headView == null) {
-            rl_list.setAdapter(mAdapter, mAdapter1);
-        } else {
-            rl_list.setAdapterAndHeadView(headView, mAdapter, mAdapter1);
-        }
+        rl_list.setAdapter(mAdapter, mAdapter1);
+
         rl_list.setOnReLoadListener(this);
 //        mGoTop.setOnClickListener(new View.OnClickListener() {
 //            @Override

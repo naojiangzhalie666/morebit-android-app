@@ -29,6 +29,7 @@ import com.zjzy.morebit.goods.shopping.ui.dialog.ShareFriendsDialog;
 import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.network.CallBackObserver;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
@@ -80,7 +81,7 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
     private RecyclerView mRecyclerView;
     private ShareMoneyAdapter mAdapter;
     private TextView tv_copy, incomeMoney;
-    private EditText et_copy;
+    private TextView et_copy,et_copy2;
     private LinearLayout weixinCircle, weixinFriend;
     private ShopGoodInfo goodsInfo;
 
@@ -132,7 +133,8 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
         //设置页面头顶空出状态栏的高度
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         tv_copy = (TextView) findViewById(R.id.tv_copy);
-        et_copy = (EditText) findViewById(R.id.et_copy);
+        et_copy = (TextView) findViewById(R.id.et_copy);
+        et_copy2= (TextView) findViewById(R.id.et_copy2);
         et_copy.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -178,7 +180,7 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
                 goodsInfo.getAdImgUrl().get(0).isChecked = true;
             mAdapter = new ShareMoneyAdapter(this, goodsInfo.getAdImgUrl(), false);
             mRecyclerView.setAdapter(mAdapter);
-
+            goodsInfo.setCouponUrl(promotionUrl);
             mAdapter.setOnItemClickListener(new ShareMoneyAdapter.OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position, boolean isChecked) {
@@ -205,7 +207,7 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
             String discountsMoneyStr = MathUtils.getMuRatioComPrice(userInfo.getCalculationRate(), goodsInfo.getCommission());
 //            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(userInfo.getCalculationRate(), goodsInfo.getSubsidiesPrice());
 //            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
-            incomeMoney.setText("您的奖励预计为: " + discountsMoneyStr + "元");
+ //           incomeMoney.setText("您的奖励预计为: " + discountsMoneyStr + "元");
 //        }
         ShareMoneySwitchForKaolaTemplateView viewSwitch = (ShareMoneySwitchForKaolaTemplateView) findViewById(R.id.view_swicht);
         viewSwitch.setAction(new MyAction.One<Integer>() {
@@ -244,6 +246,8 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
                 }
                 AppUtil.coayTextPutNative(this, et_copy.getText().toString());
                 ViewShowUtils.showShortToast(this, R.string.coayTextSucceed);
+                //跳转微信
+                PageToUtil.goToWeixin(ShareMoneyForKaolaActivity.this);
                 break;
 
             case R.id.weixinFriend:
@@ -439,13 +443,12 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
     public void getTemplate() {
         setResult(RESULT_OK);
         LoadingView.showDialog(this, "请求中...");
-            GoodsUtil.getGenerateForKaola(this, goodsInfo)
-                    .subscribe(new DataObserver<String>() {
+            GoodsUtil.getGetTkLFinalObservable3(this, goodsInfo,4)
+                    .subscribe(new DataObserver<CommonShareTemplateBean>() {
                         @Override
-                        protected void onSuccess(String data) {
-                            String template = data;
-                            et_copy.setText(template);
-
+                        protected void onSuccess(CommonShareTemplateBean data) {
+                            et_copy2.setText(data.getShareContent());
+                            et_copy.setText(data.getTklVo().getTemplate());
                         }
                     });
     }

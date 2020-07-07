@@ -1,5 +1,6 @@
 package com.zjzy.morebit.fragment;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -68,23 +69,39 @@ public class NumberFragment extends BaseMainFragmeng  {
     }
 
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        //initBar();
+    }
 
     private void initView(View view) {
         ViewPager viewPager = view.findViewById(R.id.viewPager);
 
         mFragments.add(NumberSubFragment.newInstance());
+        //initBar();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //处理全屏显示
             ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
-            status_bar.setBackgroundResource(R.color.transparent);
+            // 设置状态栏颜色
+            getActivity().getWindow().setStatusBarColor(Color.parseColor("#EDCFB1"));
         }
         TextView tv = view.findViewById(R.id.txt_head_title);
         tv.getPaint().setFakeBoldText(true);
         viewPager.setAdapter(new NumbersGoodsAdapter(getChildFragmentManager()));
+    }
+
+    private void initBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //处理全屏显示
+            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
+            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
+            status_bar.setLayoutParams(viewParams);
+            // 设置状态栏颜色
+            getActivity().getWindow().setStatusBarColor(Color.parseColor("#EDCFB1"));
+        }
     }
 
     private class NumbersGoodsAdapter extends FragmentPagerAdapter {

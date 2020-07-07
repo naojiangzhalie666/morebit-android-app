@@ -45,8 +45,10 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.RxWXHttp;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.TkBean;
 import com.zjzy.morebit.pojo.goods.CheckCouponStatusBean;
 import com.zjzy.morebit.pojo.goods.CouponUrlBean;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
@@ -198,6 +200,7 @@ public class GoodsUtil {
                     }
                 });
     }
+
     /**
      * 获取唯品会的推广内容
      *
@@ -206,7 +209,7 @@ public class GoodsUtil {
      * @return
      */
     public static Observable<BaseResponse<String>> getGenerateForWph(RxAppCompatActivity activity,
-                                                                    ShopGoodInfo goodsInfo) {
+                                                                     ShopGoodInfo goodsInfo) {
         int isInvitecode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
         int isDownloadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
 
@@ -239,7 +242,7 @@ public class GoodsUtil {
      * @return
      */
     public static Observable<BaseResponse<String>> getGenerateForKaola(RxAppCompatActivity activity,
-                                                                    ShopGoodInfo goodsInfo) {
+                                                                       ShopGoodInfo goodsInfo) {
         int isInvitecode = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_INVITECODE);
         int isDownloadUrl = App.getACache().getAsInt(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
 
@@ -297,9 +300,7 @@ public class GoodsUtil {
         } else {
             requestBean.setMaterial(goodsInfo.material);
         }
-        return RxHttp.getInstance().getGoodsService().getTKL(
-                requestBean
-        )
+        return RxHttp.getInstance().getGoodsService().getTKL(requestBean)
                 .compose(RxUtils.<BaseResponse<TKLBean>>switchSchedulers())
                 .compose(activity.<BaseResponse<TKLBean>>bindToLifecycle())
                 .doFinally(new Action() {
@@ -310,6 +311,99 @@ public class GoodsUtil {
                 });
 
     }
+
+
+    public static Observable<BaseResponse<CommonShareTemplateBean>> getGetTkLFinalObservable2(RxAppCompatActivity activity, ShopGoodInfo goodsInfo, int type) {
+
+
+
+        TkBean requestBean = new TkBean();
+        requestBean.setItemSourceId(goodsInfo.getItemSourceId());
+        requestBean.setItemTitle(goodsInfo.getTitle());
+        requestBean.setItemDesc(goodsInfo.getItemDesc());
+        requestBean.setItemPicture(goodsInfo.getPicture());
+        requestBean.setItemPrice(goodsInfo.getPrice());
+        requestBean.setCouponPrice(goodsInfo.getCouponPrice());
+        requestBean.setItemVoucherPrice(goodsInfo.getVoucherPrice());
+        requestBean.setSaleMonth(TextUtils.isEmpty(goodsInfo.getSaleMonth()) ? "0" : goodsInfo.getSaleMonth());
+        requestBean.setCouponUrl(goodsInfo.getCouponUrl());
+        requestBean.setCommission(goodsInfo.getCommission());
+        requestBean.setType(type);
+
+
+        String isInviteCode = App.getACache().getAsString(C.sp.SHARE_MOENY_IS_INVITECODE);
+        String isDownLoadUrl = App.getACache().getAsString(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
+        if (TextUtils.isEmpty(isInviteCode)){
+            isInviteCode = "1";
+        }
+        if (TextUtils.isEmpty(isDownLoadUrl)){
+            isDownLoadUrl = "1";
+        }
+        String isShortLink = App.getACache().getAsString(C.sp.isShortLink);
+        if (TextUtils.isEmpty(isShortLink)) {
+            isShortLink = "0";
+        }
+        requestBean.setIsDownLoadUrl(isDownLoadUrl);
+        requestBean.setIsInviteCode(isInviteCode);
+        requestBean.setIsShowTkl(isShortLink);
+
+        if (TextUtils.isEmpty(goodsInfo.material) || !"11".equals(goodsInfo.getItemSource())) {
+            //非物料商品
+            requestBean.setMaterial("0");
+        } else {
+            requestBean.setMaterial(goodsInfo.material);
+        }
+        return RxHttp.getInstance().getGoodsService().getCommonShareTemplate(requestBean)
+                .compose(RxUtils.<BaseResponse<CommonShareTemplateBean>>switchSchedulers())
+                .compose(activity.<BaseResponse<CommonShareTemplateBean>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
+
+    public static Observable<BaseResponse<CommonShareTemplateBean>> getGetTkLFinalObservable3(RxAppCompatActivity activity, ShopGoodInfo goodsInfo, int type) {
+
+        TkBean requestBean = new TkBean();
+        requestBean.setItemSourceId(goodsInfo.getItemSourceId());
+        requestBean.setItemTitle(goodsInfo.getTitle());
+        requestBean.setItemDesc(goodsInfo.getItemDesc());
+        requestBean.setItemPicture(goodsInfo.getPicture());
+        requestBean.setItemPrice(goodsInfo.getPrice());
+        requestBean.setItemVoucherPrice(goodsInfo.getVoucherPrice());
+        requestBean.setCouponUrl(goodsInfo.getCouponUrl());
+        requestBean.setCommission(goodsInfo.getCommission());
+        requestBean.setType(type);
+
+
+        String isInviteCode = App.getACache().getAsString(C.sp.SHARE_MOENY_IS_INVITECODE);
+        String isDownLoadUrl = App.getACache().getAsString(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL);
+        if (TextUtils.isEmpty(isInviteCode)){
+            isInviteCode = "1";
+        }
+        if (TextUtils.isEmpty(isDownLoadUrl)){
+            isDownLoadUrl = "1";
+        }
+        requestBean.setIsDownLoadUrl(isDownLoadUrl);
+        requestBean.setIsInviteCode(isInviteCode);
+        requestBean.setIsShortLink(1);
+
+        return RxHttp.getInstance().getGoodsService().getCommonShareTemplate(requestBean)
+                .compose(RxUtils.<BaseResponse<CommonShareTemplateBean>>switchSchedulers())
+                .compose(activity.<BaseResponse<CommonShareTemplateBean>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                });
+    }
+
+
+
+
 
     public static Observable<BaseResponse<TKLBean>> getGetTkObservable(RxAppCompatActivity activity, ShopGoodInfo goodsInfo) {
 

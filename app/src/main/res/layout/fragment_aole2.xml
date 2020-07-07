@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0.5dp"-->
+        <!--android:background="@color/color_E5E5E5"/>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F5F5F5">
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/swipeList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="12dp"
+        android:id="@+id/listview_aole"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        <LinearLayout
+            android:id="@+id/searchNullTips_ly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_meiyousousuojilu"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="下次看到喜欢的东西赶紧下手哦"
+                android:textColor="@color/color_666666"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+        <include layout="@layout/item_go_top"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

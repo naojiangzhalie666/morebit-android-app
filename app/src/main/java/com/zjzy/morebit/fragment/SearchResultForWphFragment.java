@@ -1,6 +1,7 @@
 package com.zjzy.morebit.fragment;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,11 +9,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -61,14 +66,14 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
     RecyclerView mRecyclerView;
     @BindView(R.id.dataList_ly)
     LinearLayout dataList_ly;
-
+    private String minPrice,maxprice;
     boolean isUserHint = true;
     private int mPushType;
     private List<ShopGoodInfo> listArray = new ArrayList<>();
 
 
     //券后价
-    private LinearLayout mTitlePostCouponPriceLl;
+    private LinearLayout mTitlePostCouponPriceLl,title_zong_volume_ll;
     private ImageView mTitlePostCouponPriceIv;
     private TextView mTitlePostCouponPriceTv;
     //佣金
@@ -83,6 +88,10 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
     private long mSortType = 0;//排序类型 0 综合排序 2 销量排序 3 价格排序 4 奖励排序
     private int page=1;
     private SmartRefreshLayout mSwipeList;
+
+    private LinearLayout title_commission_ll2;
+    private TextView title_commission_tv2;
+    private ImageView title_commission_iv2,title_comprehensive_iv;
 
 
 
@@ -147,6 +156,8 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
 
     public void initView(View view) {
         title_comprehensive_tv = view.findViewById(R.id.title_comprehensive_tv);//综合
+        title_zong_volume_ll=view.findViewById(R.id.title_zong_volume_ll);
+        title_comprehensive_iv=view.findViewById(R.id.title_comprehensive_iv);
 
 
         mTitlePostCouponPriceLl = view.findViewById(R.id.title_post_coupon_price__ll);//价格
@@ -162,6 +173,12 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
         mTitlePostCouponPriceLl.setOnClickListener(this);
         mTitleCommissionLl.setOnClickListener(this);
         title_comprehensive_tv.setOnClickListener(this);
+
+        title_commission_ll2 = view.findViewById(R.id.title_commission_ll2);//筛选
+        title_commission_tv2 = view.findViewById(R.id.title_commission_tv2);
+        title_commission_iv2 = view.findViewById(R.id.title_commission_iv2);
+        title_zong_volume_ll.setOnClickListener(this);
+        title_commission_ll2.setOnClickListener(this);
         getFirstData(keyWord);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         //设置图标的间距
@@ -233,20 +250,81 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
     public void onClick(View v) {
         page=1;
         switch (v.getId()) {
-            case R.id.title_comprehensive_tv://综合
+            case R.id.title_zong_volume_ll://综合
                 requestClickRadar(null, title_comprehensive_tv, 0);
                 onReload();
+                title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio);
+                title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao);
                 break;
             case R.id.title_post_coupon_price__ll://价格
                 requestClickRadar(mTitlePostCouponPriceIv, mTitlePostCouponPriceTv, 1);
                 onReload();
+                title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio);
+                title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
                 break;
-            case R.id.title_commission_ll://奖励
+            case R.id.title_commission_ll://销量
                 requestClickRadar(mTitleCommissionIv, mTitleCommissionTv, 2);
                 onReload();
+                title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio);
+                title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
+                break;
+            case R.id.title_commission_ll2://筛选
+                showPopupWindow2(title_commission_ll2);
+                requestClickRadar(null, title_commission_tv2, 4);
+                title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio2);
+                title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
                 break;
         }
     }
+
+    private void showPopupWindow2(View view){
+        //加载布局
+        View inflate = LayoutInflater.from(getContext()).inflate(R.layout.pop_shai, null);
+        //更改背景颜色
+//        inflate.setBackgroundColor(getContext().getResources().getColor(R.color.white));
+        final PopupWindow mPopupWindow = new PopupWindow(inflate);
+        //设置SelectPicPopupWindow弹出窗体的宽
+        mPopupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        //设置SelectPicPopupWindow弹出窗体的高
+        mPopupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        //点击其他地方隐藏,false为无反应
+        mPopupWindow.setFocusable(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //对他进行便宜
+            mPopupWindow.showAsDropDown(view,0,0, Gravity.BOTTOM);
+        }
+        //对popupWindow进行显示
+        mPopupWindow.update();
+
+        final EditText tv_min = inflate.findViewById(R.id.tv_min);
+        final EditText tv_max= inflate.findViewById(R.id.tv_max);
+        TextView tv_sure = inflate.findViewById(R.id.tv_sure);
+        final TextView tv_chong= inflate.findViewById(R.id.tv_chong);
+
+        tv_sure.setOnClickListener(new View.OnClickListener() {//确定
+            @Override
+            public void onClick(View v) {
+                minPrice=tv_min.getText().toString();
+                maxprice=tv_max.getText().toString();
+                onReload();
+                mPopupWindow.dismiss();
+
+
+            }
+        });
+        tv_chong.setOnClickListener(new View.OnClickListener() {//重置
+            @Override
+            public void onClick(View v) {
+                isMethodManager(tv_chong);
+                mPopupWindow.dismiss();
+
+            }
+        });
+
+
+
+    }
+
 
     private void requestClickRadar(ImageView clickIv, TextView textView, int orderType) {
         if (orderType == 0) {
@@ -273,9 +351,11 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
 
         mTitlePostCouponPriceTv.setSelected(false);
         mTitleCommissionTv.setSelected(false);
+        title_commission_tv2.setSelected(false);
         title_comprehensive_tv.setTextColor(Color.parseColor("#999999"));
         mTitlePostCouponPriceTv.setTextColor(Color.parseColor("#999999"));
         mTitleCommissionTv.setTextColor(Color.parseColor("#999999"));
+        title_commission_tv2.setTextColor(Color.parseColor("#333333"));
         //对点击的设置 图片
         if (clickIv != null) {
             clickIv.setImageResource(getDrawableIdBySortDir(eSortDir));
@@ -306,6 +386,9 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
         ProgramWphBean programCatItemBean = new ProgramWphBean();
         programCatItemBean.setPage(page);
         programCatItemBean.setKeyword(keyWord);
+        programCatItemBean.setMaxPrice(maxprice);
+        programCatItemBean.setMinPrice(minPrice);
+
         if (eSortDirection == 0) {
             programCatItemBean.setOrder("0");
         } else {
@@ -316,7 +399,7 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
         }else  if (mSortType==1){
             programCatItemBean.setFieldName("PRICE");
         }else  if (mSortType==2){
-            programCatItemBean.setFieldName("COMMISSION");
+            programCatItemBean.setFieldName("SALES");
         }
         mPresenter.getWphGoodList(this, programCatItemBean, C.requestType.initData);
     }

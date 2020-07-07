@@ -40,6 +40,7 @@ import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.ReleaseGoodsActivity;
 import com.zjzy.morebit.contact.EventBusAction;
+import com.zjzy.morebit.fragment.NumberFragment;
 import com.zjzy.morebit.goods.shopping.contract.GoodsDetailForPddContract;
 import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailForPddPresenter;
 import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
@@ -69,6 +70,7 @@ import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.UI.ActivityUtils;
@@ -92,8 +94,7 @@ import butterknife.OnClick;
 
 public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
 
-    @BindView(R.id.iv_feedback)
-    ImageView iv_feedback;
+
     @BindView(R.id.tv_Share_the_money)
     TextView tv_Share_the_money;
     @BindView(R.id.ll_share_money)
@@ -110,22 +111,15 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     TextView momVolume;
     @BindView(R.id.coupon_prise)
     TextView coupon_prise;
-    @BindView(R.id.tv_pdd)
-    TextView tv_pdd;
+
     @BindView(R.id.rl_prise)
     View rl_prise;
-    @BindView(R.id.arv_prise)
-    AspectRatioView arv_prise;
+
     @BindView(R.id.roll_view_pager)
     Banner mRollViewPager;
     List<ImageInfo> indexbannerdataArray = new ArrayList<>();
 
-    @BindView(R.id.go_top)
-    ImageView go_top;
-    @BindView(R.id.tv_desc)
-    TextView tv_desc;
-    @BindView(R.id.tv_describe)
-    TextView tv_describe;
+
 //    @BindView(R.id.tv_logistics)
 //    TextView tv_logistics;
 //    @BindView(R.id.tv_sellel)
@@ -134,27 +128,15 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             TextView tv_collect;
     @BindView(R.id.collect_bg)
     ImageView collect_bg;
-    @BindView(R.id.shop_img)
-    ImageView shop_img;
+
     @BindView(R.id.videopaly_btn)
     ImageView videopaly_btn;
-    @BindView(R.id.shop_name)
-    TextView shop_name;
+
     @BindView(R.id.tv_coupon_time)
     TextView tv_coupon_time;
-    @BindView(R.id.tv_provcity)
-    TextView tv_provcity;
-    @BindView(R.id.allIncomeTv)
-    TextView allIncomeTv;
 
-    @BindView(R.id.rl_desc)
-    View rl_desc;
-    @BindView(R.id.nsv_view)
-    NestedScrollView nsv_view;
-    @BindView(R.id.srl_view)
-    SwipeRefreshLayout srl_view;
-    @BindView(R.id.ll_fw)
-    LinearLayout ll_fw;
+
+
     @BindView(R.id.view_bar)
     View view_bar;
 
@@ -164,35 +146,10 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     GoodsDetailUpdateView gduv_view;
     @BindView(R.id.tv_buy)
     TextView tv_buy;
-    @BindView(R.id.tv_line)
-    TextView tv_line;
-    @BindView(R.id.fl_img)
-    FrameLayout fl_img;
-    @BindView(R.id.fl_list)
-    FrameLayout fl_list;
-    @BindView(R.id.tablayout)
-    CommonTabLayout tablayout;
 
-    //描述状态
-    @BindView(R.id.tv_descTxt_status)
-    TextView tv_desc_status;
 
-    //服务态度
-    @BindView(R.id.tv_servTxt_status)
-    TextView tv_servTxt_status;
-    @BindView(R.id.tv_servTxt)
-    TextView tv_servTxt;
-    //物流状态
-    @BindView(R.id.tv_lgstTxt_status)
-    TextView tv_lgstTxt_status;
-    @BindView(R.id.tv_lgstTxt)
-    TextView tv_lgstTxt;
-    @BindView(R.id.re_tab)
-    RelativeLayout re_tab;
-    @BindView(R.id.search_statusbar_rl)
-    LinearLayout search_statusbar_rl;
-    @BindView(R.id.tv_shop_desc)
-    LinearLayout tv_shop_desc;
+
+
 
 
     private ShopGoodInfo mGoodsInfo;
@@ -209,7 +166,9 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     private int mListHeight;
     private Handler mHandler;
     private int mTitleHeight;
-
+    private TextView iv_taobao;
+    private TextView tv_zhaun;
+    private LinearLayout ll_shen;
 
     private String[] mTitles;
     ArrayList mTabArrayList = new ArrayList<BaseCustomTabEntity>();
@@ -251,28 +210,6 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 
     private void getViewLocationOnScreen() {
 
-        search_statusbar_rl.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-
-                    @Override
-                    public boolean onPreDraw() {
-                        search_statusbar_rl.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int i = search_statusbar_rl.getHeight() - mTitleHeight;
-                        mListHeight = i; // 获取高度
-                        return true;
-                    }
-                });
-        fl_list.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-
-                    @Override
-                    public boolean onPreDraw() {
-                        fl_list.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int listHeight = fl_list.getHeight() == 0 ? 50 : fl_list.getHeight();
-                        mIngHeight = listHeight + mListHeight; // 获取高度
-                        return true;
-                    }
-                });
 
         MyLog.d("setOnScrollChangeListener  ", "mIngHeight " + mIngHeight);
         MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
@@ -287,12 +224,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTitles = new String[]{getString(R.string.goods_detail_baby), getString(R.string.goods_detail_det)};
-        int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.margin_small);
-        mConsumerPadding = getResources().getDimensionPixelSize(R.dimen.goods_consumer_itme_padding);
-        mTitleHeight = getResources().getDimensionPixelSize(R.dimen.goods_detail_title_height);
-        mWidth = AppUtil.getTaobaoIconWidth() + dimensionPixelSize;
-        duration = getWindowManager().getDefaultDisplay().getWidth() - mTitleHeight + 0.0F;
+
         //初始化
         mGoodsDetailForPdd = new GoodsDetailForPdd();
         EventBus.getDefault().register(this);
@@ -326,16 +258,11 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 
     private void refreshVipUpdate() {
         gduv_view.refreshView();
-        setEstimateData();
-        setUPdateData();
+//        setEstimateData();
+//        setUPdateData();
     }
 
-    private void initImgFragment(GoodsDetailForPdd goodsDetailForPdd) {
-        mDetailImgFragment = GoodsDetailImgForPddFragment.newInstance(mGoodsDetailForPdd);
-        ActivityUtils.replaceFragmentToActivity(
-                getSupportFragmentManager(), mDetailImgFragment, R.id.fl_img);
 
-    }
 
     private void initBundle() {
         bundle = getIntent().getExtras();
@@ -351,142 +278,16 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     }
 
     private void initView() {
-        initTab();
+        iv_taobao = (TextView) findViewById(R.id.iv_taobao);
+        tv_zhaun= (TextView) findViewById(R.id.tv_zhaun);
+        view_bar.setAlpha(0);
 
-        srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initData(true);
-                refreshVipUpdate();
-            }
-        });
         if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getVideoid()) || "0".equals(mGoodsInfo.getVideoid())) {
             videopaly_btn.setVisibility(View.GONE);
         } else {
             videopaly_btn.setVisibility(View.VISIBLE);
         }
-        go_top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scrollViewToLocation(0);
-            }
-        });
-        re_tab.setAlpha(0);
-        view_bar.setAlpha(0);
-        nsv_view.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                scrollTitleChange(scrollY);
-                scrollTabChange(scrollY);
-                if (scrollY > 1000) {
-                    go_top.setVisibility(View.VISIBLE);
-                } else {
-                    go_top.setVisibility(View.GONE);
-                }
-            }
-
-
-            private void scrollTitleChange(int scrollY) {
-                float alpha = (float) (scrollY / duration);
-                if (duration > scrollY) {
-                    if (scrollY < 5) {
-                        getViewLocationOnScreen();
-                        re_tab.setVisibility(View.GONE);
-                        re_tab.setAlpha(0);
-                        view_bar.setAlpha(0);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.white));
-                    } else {
-                        if (re_tab.getVisibility() == View.GONE) {
-                            re_tab.setVisibility(View.VISIBLE);
-                        }
-                        re_tab.setAlpha(alpha);
-                        view_bar.setAlpha(alpha);
-                        isTitleBarSetBg = false;
-                    }
-                } else {
-
-                    if (re_tab.getVisibility() == View.GONE) {
-                        re_tab.setVisibility(View.VISIBLE);
-                    }
-                    if (!isTitleBarSetBg) {
-                        re_tab.setAlpha(1);
-                        view_bar.setAlpha(1);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForJdActivity.this, R.color.white));
-                    }
-                }
-            }
-
-            private void scrollTabChange(int scrollY) {
-
-                MyLog.d("setOnScrollChangeListener  ", "mIngHeight " + mIngHeight);
-                MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
-                if (tablayout == null || mListHeight == 0 || mIngHeight == 0 || isContinueScrollTabChange) {
-                    return;
-                }
-
-                int currentTab = tablayout.getCurrentTab();
-                if (scrollY <= mIngHeight) {
-                    if (currentTab != 0)
-                        tablayout.setCurrentTab(0);
-                } else if (scrollY > mIngHeight) {
-                    if (currentTab != 1)
-                        tablayout.setCurrentTab(1);
-                }
-            }
-        });
-
-
     }
-
-    private void initTab() {
-        for (int i = 0; i < mTitles.length; i++) {
-            mTabArrayList.add(new BaseCustomTabEntity(mTitles[i], 0, 0));
-        }
-        tablayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                isContinueScrollTabChange = true;
-                switch (position) {
-                    case 0:
-                        scrollViewToLocation(0);
-                        break;
-                    case 1:
-                        scrollViewToLocation(mListHeight);
-                        break;
-                    case 2:
-                        scrollViewToLocation(mIngHeight);
-                        break;
-
-                    default:
-                        break;
-                }
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        isContinueScrollTabChange = false;
-                    }
-                }, 500);
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
-        tablayout.setTabData(mTabArrayList);
-    }
-
-    private void scrollViewToLocation(int location) {
-        nsv_view.fling(location);
-        nsv_view.smoothScrollTo(location, location);
-    }
-
-    private boolean isTitleBarSetBg = true;
-    private boolean isContinueScrollTabChange = false;
-
     /**
      * 初始化界面数据
      *
@@ -514,26 +315,15 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         }
 
 
-        if (StringsUtils.isEmpty(Info.getItemDesc())) {
-            rl_desc.setVisibility(View.GONE);
-        } else {
-            rl_desc.setVisibility(View.VISIBLE);
-            mGoodsInfo.setItemDesc(Info.getItemDesc());
-            tv_desc.setText(Info.getItemDesc());
-        }
+
         mGoodsInfo.setItemSource(Info.getItemSource());
         if (!StringsUtils.isEmpty(Info.getTitle())) {
-                tv_pdd.setText("京东");
-                shop_img.setImageResource(R.mipmap.jd_icon_bg);
-
-            StringsUtils.retractTitleForPdd(tv_pdd, title, Info.getTitle());
+                iv_taobao.setText("京东");
+            StringsUtils.retractTitles(title,Info.getTitle(),iv_taobao.getWidth()+10);
         }
 
-
-        if (UserLocalData.getUser().getReleasePermission() == 1) {
-            findViewById(R.id.iv_release_goods).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.iv_release_goods).setVisibility(View.GONE);
+        if (!TextUtils.isEmpty(Info.getCommission())) {
+            tv_zhaun.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), Info.getCommission() + "") + "元");
         }
 
         if (!StringsUtils.isEmpty(Info.getPriceForPdd())) {
@@ -545,18 +335,11 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (!StringsUtils.isEmpty(Info.getSaleMonth())) {
             mGoodsInfo.setSaleMonth(Info.getSaleMonth());
 
-            momVolume.setText(getString(R.string.sales, MathUtils.getSales(Info.getSaleMonth())));
+            momVolume.setText(getString(R.string.msales, MathUtils.getSales(Info.getSaleMonth())));
         }
 
-        if (!StringsUtils.isEmpty(Info.getShopName())) {
-            shop_name.setText(Info.getShopName());
-            mGoodsInfo.setShopName(Info.getShopName());
-        }
 
-        if (!StringsUtils.isEmpty(Info.getSellerPicture())) {
-            Info.setSellerPicture(Info.getSellerPicture());
-           LoadImgUtils.loadingCornerBitmap(this, shop_img, Info.getSellerPicture());
-        }
+
         String dateStart = Info.getCouponStartTime();
         String dateEnd = Info.getCouponEndTime();
         if (TextUtils.isEmpty(tv_coupon_time.getText())) {
@@ -593,11 +376,11 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         }
         if (!StringsUtils.isEmpty(Info.getCouponPrice())) {
             mGoodsInfo.setCouponPrice(Info.getCouponPrice());
-            arv_prise.setVisibility(View.VISIBLE);
+            rl_prise.setVisibility(View.VISIBLE);
             coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice()) + "");
             setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
         }else{
-            arv_prise.setVisibility(View.GONE);
+            rl_prise.setVisibility(View.GONE);
         }
 
         if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
@@ -611,8 +394,8 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 
         if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForJdActivity.this).getPartner())) {
             tv_Share_the_money.setText(getString(R.string.now_share));
-            setEstimateData();
-            setUPdateData();
+//            setEstimateData();
+//            setUPdateData();
         } else {
             if (!StringsUtils.isEmpty(Info.getCommission())) {
                 if (getString(R.string.now_share).equals(tv_Share_the_money.getText())) {
@@ -625,12 +408,12 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
                         tv_Share_the_money.setText(getString(R.string.goods_share_moeny, totalSubside));
                         setAllIncomeData(muRatioComPrice, getRatioSubside);
                     }
-                    setEstimateData();
-                    setUPdateData();
+//                    setEstimateData();
+//                    setUPdateData();
                 }
             } else {
-                setEstimateData();
-                setUPdateData();
+//                setEstimateData();
+//                setUPdateData();
             }
         }
     }
@@ -662,10 +445,10 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (!TextUtils.isEmpty(subsidiesPrice) && !TextUtils.isEmpty(ratioComPrice)) {
             incomeBuild.append(getString(R.string.subsidiesTips, subsidiesPrice) + " + ");
             incomeBuild.append(getString(R.string.incomeTips, ratioComPrice));
-            allIncomeTv.setVisibility(View.VISIBLE);
-            allIncomeTv.setText(incomeBuild.toString());
-        } else {
-            allIncomeTv.setVisibility(View.GONE);
+//            allIncomeTv.setVisibility(View.VISIBLE);
+//            allIncomeTv.setText(incomeBuild.toString());
+//        } else {
+//            allIncomeTv.setVisibility(View.GONE);
         }
 
     }
@@ -712,17 +495,6 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             switchColler(info);
         }
 
-        if (TextUtils.isEmpty(tv_provcity.getText())) {
-            if (!StringsUtils.isEmpty(info.getProvcity())) {
-                tv_provcity.setVisibility(View.VISIBLE);
-                tv_line.setVisibility(View.VISIBLE);
-                tv_provcity.setText(info.getProvcity());
-                mGoodsInfo.setProvcity(info.getProvcity());
-            } else {
-                tv_line.setVisibility(View.GONE);
-                tv_provcity.setVisibility(View.GONE);
-            }
-        }
 
 
         if (!StringsUtils.isEmpty(info.getCouponUrl())) {
@@ -746,20 +518,9 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (imgs != null && imgs.size() > 0) {
 
             mGoodsDetailForPdd.setGoodsDetails(imgs);
-            initImgFragment(mGoodsDetailForPdd);
         }
 
-        if (TextUtils.isEmpty(info.getDescTxt())){
-            tv_shop_desc.setVisibility(View.GONE);
-        }else{
-            //描述状态
-            tv_desc_status.setText(info.getDescTxt());
-            //服务状态
-            tv_servTxt_status.setText(info.getServTxt());
-            //物流状态
-            tv_lgstTxt_status.setText(info.getLgstTxt());
 
-        }
         getViewLocationOnScreen();
 
     }
@@ -767,7 +528,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 
     @Override
     public void OngetDetailDataFinally() {
-        srl_view.setRefreshing(false);
+     //   srl_view.setRefreshing(false);
     }
 
     @Override
@@ -886,7 +647,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
      */
     public void initViewShopData(ShopGoodInfo data) {
 
-        showConsumerProtection(data);
+      //  showConsumerProtection(data);
 //        showSellerEvaluate(data);
     }
 
@@ -895,52 +656,52 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
      *
      * @param data
      */
-    private void showConsumerProtection(ShopGoodInfo data) {
-        String consumerProtection = data.getConsumerProtection();
-        if (TextUtils.isEmpty(consumerProtection))
-            ll_fw.setVisibility(View.GONE);
-        ArrayList<ConsumerProtectionBean> coList = null;
-        try {
-            if (!TextUtils.isEmpty(consumerProtection)) {
-                coList = (ArrayList) MyGsonUtils.getListBeanWithResult(consumerProtection, ConsumerProtectionBean.class);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (coList == null || coList.size() == 0) {
-            ll_fw.setVisibility(View.GONE);
-            return;
-        }
-        ll_fw.setVisibility(View.VISIBLE);
-        if (coList != null && coList.size() != 0) {
-            ll_fw.removeAllViews();
-            for (int i = 0; i < coList.size(); i++) {
-                if (i >= 4) {
-                    continue;
-                }
-                LinearLayout linearLayout = new LinearLayout(this);
-                linearLayout.setPadding(mConsumerPadding, 0, 0, 0);
-                linearLayout.setGravity(Gravity.CENTER_VERTICAL);
-                ConsumerProtectionBean item = coList.get(i);
-                TextView textView2 = new TextView(this);
-                textView2.setGravity(Gravity.CENTER);
-                textView2.setTextSize(11);
-                textView2.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
-                textView2.setText(item.getTitle());
-                textView2.setPadding(6, 0, 0, 0);
-
-                ImageView imageView = new ImageView(this);
-                imageView.setImageResource(R.drawable.goods_describe);
-                linearLayout.addView(imageView);
-                linearLayout.addView(textView2);
-
-                ll_fw.addView(linearLayout);
-
-            }
-        }
-
-    }
+//    private void showConsumerProtection(ShopGoodInfo data) {
+//        String consumerProtection = data.getConsumerProtection();
+//        if (TextUtils.isEmpty(consumerProtection))
+//            ll_fw.setVisibility(View.GONE);
+//        ArrayList<ConsumerProtectionBean> coList = null;
+//        try {
+//            if (!TextUtils.isEmpty(consumerProtection)) {
+//                coList = (ArrayList) MyGsonUtils.getListBeanWithResult(consumerProtection, ConsumerProtectionBean.class);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        if (coList == null || coList.size() == 0) {
+//            ll_fw.setVisibility(View.GONE);
+//            return;
+//        }
+//        ll_fw.setVisibility(View.VISIBLE);
+//        if (coList != null && coList.size() != 0) {
+//            ll_fw.removeAllViews();
+//            for (int i = 0; i < coList.size(); i++) {
+//                if (i >= 4) {
+//                    continue;
+//                }
+//                LinearLayout linearLayout = new LinearLayout(this);
+//                linearLayout.setPadding(mConsumerPadding, 0, 0, 0);
+//                linearLayout.setGravity(Gravity.CENTER_VERTICAL);
+//                ConsumerProtectionBean item = coList.get(i);
+//                TextView textView2 = new TextView(this);
+//                textView2.setGravity(Gravity.CENTER);
+//                textView2.setTextSize(11);
+//                textView2.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
+//                textView2.setText(item.getTitle());
+//                textView2.setPadding(6, 0, 0, 0);
+//
+//                ImageView imageView = new ImageView(this);
+//                imageView.setImageResource(R.drawable.goods_describe);
+//                linearLayout.addView(imageView);
+//                linearLayout.addView(textView2);
+//
+//                ll_fw.addView(linearLayout);
+//
+//            }
+//        }
+//
+//    }
 
     /**
      * 切换收藏ui
@@ -1018,29 +779,29 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     }
 
 
-    @OnClick({R.id.btn_back, R.id.iv_feedback, R.id.iv_img_download, R.id.iv_release_goods, R.id.ll_share_money, R.id.bottomLy, R.id.btn_sweepg, R.id.rl_prise, R.id.videopaly_btn, R.id.collect_ly, R.id.rl_shop_taobao, R.id.ll_home, R.id.btn_tltle_back})
+    @OnClick({R.id.btn_back, R.id.ll_share_money, R.id.bottomLy, R.id.btn_sweepg, R.id.rl_prise, R.id.videopaly_btn, R.id.collect_ly,R.id.ll_home, R.id.ll_shen})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
                 break;
             case R.id.btn_back:
-            case R.id.btn_tltle_back:
+//            case R.id.btn_tltle_back:
                 finish();
                 break;
-            case R.id.iv_feedback:
-                if (!LoginUtil.checkIsLogin(GoodsDetailForJdActivity.this)) {
-                    return;
-                }
-
-                Intent feedBackIt = new Intent(GoodsDetailForJdActivity.this, AppFeedActivity.class);
-                Bundle feedBackBundle = new Bundle();
-                feedBackBundle.putString("title", "意见反馈");
-                feedBackBundle.putString("fragmentName", "GoodsFeedBackFragment");
-                feedBackBundle.putString("gid", mGoodsInfo.getItemSourceId());
-                feedBackIt.putExtras(feedBackBundle);
-                startActivity(feedBackIt);
-
-                break;
+//            case R.id.iv_feedback:
+//                if (!LoginUtil.checkIsLogin(GoodsDetailForJdActivity.this)) {
+//                    return;
+//                }
+//
+//                Intent feedBackIt = new Intent(GoodsDetailForJdActivity.this, AppFeedActivity.class);
+//                Bundle feedBackBundle = new Bundle();
+//                feedBackBundle.putString("title", "意见反馈");
+//                feedBackBundle.putString("fragmentName", "GoodsFeedBackFragment");
+//                feedBackBundle.putString("gid", mGoodsInfo.getItemSourceId());
+//                feedBackIt.putExtras(feedBackBundle);
+//                startActivity(feedBackIt);
+//
+//                break;
             case R.id.ll_share_money:
                 if (isGoodsLose()) return;
                 if (mGoodsInfo != null) {
@@ -1090,12 +851,17 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 //                request.setItemId(mGoodsInfo.getItemSourceId());
 //                mPresenter.checkPermission(this, request);
 //                break;
-            case R.id.iv_img_download:   //下载图片
-                if (mBannerList.size() > 0) {
-                    DownloadDialog downloadDialog = new DownloadDialog(this, R.style.dialog, mBannerList);
-                    downloadDialog.show();
+//            case R.id.iv_img_download:   //下载图片
+//                if (mBannerList.size() > 0) {
+//                    DownloadDialog downloadDialog = new DownloadDialog(this, R.style.dialog, mBannerList);
+//                    downloadDialog.show();
+//                }
+//
+//                break;
+            case R.id.ll_shen:
+                if (LoginUtil.checkIsLogin(this)) {
+                    OpenFragmentUtils.goToSimpleFragment(this, NumberFragment.class.getName(), null);
                 }
-
                 break;
             default:
                 break;
@@ -1191,23 +957,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         return this;
     }
 
-//    /**
-//     * 预加载淘口令
-//     */
-//    @Override
-//    public void getTaoKouLing() {// 获取淘口令
-//        //没有登录  有数据  没有title 没有价格
-//        if (mTKLBean != null ||
-//                !LoginUtil.checkIsLogin(this, false) ||
-//                TextUtils.isEmpty(mGoodsInfo.getTitle()) ||
-//                TaobaoUtil.isAuth()
-//        ) {
-//            return;
-//        }
-//
-//
-//
-//    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1223,23 +973,6 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     }
 
 
-    /**
-     * 判断是否安装拼多多
-     *
-     * @return
-     */
-    private boolean isHasInstalledPdd() {
-        return AppUtil.checkHasInstalledApp(this, "com.xunmeng.pinduoduo");
-    }
-
-    /**
-     * 判断是否安装京东
-     *
-     * @return
-     */
-    private boolean isHasInstalledJd() {
-        return AppUtil.checkHasInstalledApp(this, "com.jingdong.app.mall");
-    }
 
 
 }

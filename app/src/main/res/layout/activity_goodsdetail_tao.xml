@@ -98,6 +98,7 @@
 
                         <com.zjzy.morebit.goods.shopping.ui.view.GoodsDetailUpdateView
                             android:id="@+id/gduv_view"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             />
@@ -293,6 +294,7 @@
 
 
                         <LinearLayout
+                            android:id="@+id/ll_shen"
                             android:layout_width="match_parent"
                             android:layout_height="44dp"
                             android:background="@color/white">
@@ -486,14 +488,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:nestedScrollingEnabled="false" />
-                    <FrameLayout
-                        android:visibility="gone"
-                        android:id="@+id/fl_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:nestedScrollingEnabled="false"
-                        />
+
 
                     <View
                         android:layout_width="match_parent"

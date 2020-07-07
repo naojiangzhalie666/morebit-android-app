@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/iten_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="12dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginRight="12dp"
+    android:background="@drawable/bg_ffffff_8dp"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/item_ly"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/color_EDEDED"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingRight="0dp">-->
+
+    <RelativeLayout
+        android:id="@+id/toDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/checkbox"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/selector_checkbox"
+            android:visibility="gone"
+            tools:layout_height="wrap_content"
+            tools:layout_width="wrap_content" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/img_cv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:cardCornerRadius="7dp"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false">
+
+            <RelativeLayout
+                android:id="@+id/img_rl"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
+                android:layout_toRightOf="@id/checkbox">
+
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/markTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bg_search_recommod_good_l"
+                    android:gravity="center"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_11"
+                    android:visibility="visible" />
+
+
+                <ImageView
+                    android:id="@+id/video_play"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/bofang"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/select_tag"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/icon_official_gouxuan_huise"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/iv_icon_bg"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="fitXY"
+                    android:src="@color/color_60EDEDED"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+
+            android:id="@+id/item_detials"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/img_cv"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="特仑苏2箱99元6月特仑苏250…"
+                android:textColor="#ff333333"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="7dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/good_mall_tag"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/jd_list_icon" />
+
+                <TextView
+                    android:id="@+id/shop_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:text="蒙牛旗舰店"
+                    android:textColor="@color/color_999999"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ll1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¥ "
+                        android:textColor="#fff05557"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/discount_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="19.9"
+                        android:textColor="#fff05557"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 券后"
+                        android:textColor="#fff05557"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/volume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="9dp"
+                        android:text="¥ 44.9"
+                        android:textColor="@color/color_999999"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll1"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/coupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="11dp"
+                        android:background="@mipmap/yhj_bg_goods"
+                        android:gravity="center"
+                        android:text="10元券"
+                        android:textColor="#ffffffff"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/commission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="11dp"
+                        android:background="@drawable/background_ffebce_radius_2dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="赚 ¥ 2.34"
+                        android:textColor="#ff975400"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <!--</LinearLayout>-->
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

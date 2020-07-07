@@ -53,7 +53,7 @@ public class WphListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.item_jd_shopping, parent, false));
+        return new ViewHolder(mInflater.inflate(R.layout.item_jd_goodsearch, parent, false));
     }
 
 
@@ -73,24 +73,22 @@ public class WphListAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
 
 
-        // LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getGoodsMainPicture(), 9);
+        LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, MathUtils.getPicture(info), 8);
         viewHolder.textview_original.setText(MathUtils.getnum(info.getVipPrice()));
-        viewHolder.textvihew_Preco.setText("¥" + MathUtils.getnum(info.getMarketPrice()));
-        viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        viewHolder.textvihew_Preco.setVisibility(View.GONE);
+
 
         LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.iv_icon, info.getGoodsMainPicture());
         try {
-            if (StringsUtils.isEmpty(info.getCouponPrice())) {
-                viewHolder.coupon.setVisibility(View.GONE);
-            } else {
-                viewHolder.coupon.setVisibility(View.VISIBLE);
-            }
 
-            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum((info.getCouponPrice()))));
+
+            viewHolder.coupon.setVisibility(View.GONE);
+
+
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    GoodsDetailForJdActivity.start(mContext, info);
+                    GoodsDetailForWphActivity.start(mContext,String.valueOf(info.getGoodsId()));
                 }
             });
 
@@ -98,16 +96,21 @@ public class WphListAdapter extends RecyclerView.Adapter {
                 viewHolder.commission.setText(mContext.getString(R.string.mcommission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
 
             }
-            SpannableString spannableString = new SpannableString("  " + info.getItemTitle());
-            Drawable drawable = mContext.getResources().getDrawable(R.mipmap.pdd_list_icon);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            spannableString.setSpan(new VerticalImageSpan(drawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            viewHolder.title.setText(spannableString);
+            if (!TextUtils.isEmpty(info.getGoodsName())){
+                viewHolder.title.setText(info.getGoodsName()+"");
+            }
+
+
+            viewHolder.ll2.setVisibility(View.GONE);
+            viewHolder.tv_content.setText(" 抢购");
+
+
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
 
     }
@@ -120,21 +123,24 @@ public class WphListAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textview_original, textvihew_Preco, coupon, commission, tv_shop_name;
+        TextView textview_original, textvihew_Preco, coupon, commission, shop_name,tv_content;
         ImageView iv_icon, good_mall_tag;
-        TextView title;
+
+        TextView title, tv_share;
+        private LinearLayout ll2;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
-            tv_shop_name = (TextView) itemView.findViewById(R.id.tv_shop_name);
             textview_original = (TextView) itemView.findViewById(R.id.discount_price);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
-            good_mall_tag = (ImageView) itemView.findViewById(R.id.good_mall_tag);
-            textvihew_Preco = (TextView) itemView.findViewById(R.id.price);
+            textvihew_Preco = (TextView) itemView.findViewById(R.id.volume);
             coupon = (TextView) itemView.findViewById(R.id.coupon);
             commission = (TextView) itemView.findViewById(R.id.commission);
+            shop_name=itemView.findViewById(R.id.shop_name);
+            ll2=itemView.findViewById(R.id.ll2);
+            tv_content=itemView.findViewById(R.id.tv_content);
 
 
         }

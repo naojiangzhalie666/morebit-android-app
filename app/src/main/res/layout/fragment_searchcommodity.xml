@@ -19,52 +19,7 @@
         android:layout_height="0.5dp"
         android:background="@color/color_E5E5E5"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_weight="1">
-
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tl_tab"
-                style="@style/MyTabLayout"
-                app:tabSelectedTextColor="@color/top_head"
-                app:tabTextColor="@color/color_999999"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                >
-            </android.support.design.widget.TabLayout>
-        </FrameLayout>
-        <LinearLayout
-            android:id="@+id/couponLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center">
-            <View android:id="@+id/line" android:layout_width="1px" android:layout_height="match_parent" android:background="@color/color_F1F1F1" android:layout_marginRight="12dp" android:layout_marginLeft="3dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />
-            <TextView
-                android:id="@+id/couponTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="优惠券"
-                android:textSize="12sp"
-                android:textColor="@color/tv_tablay_text"/>
-            <ImageView
-                android:id="@+id/couponIv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:background="@drawable/check_no"
-                android:layout_marginRight="11dp"
-                />
-        </LinearLayout>
-
-    </LinearLayout>
-
+    <include layout="@layout/title_jd_search_layout"/>
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -1,7 +1,9 @@
 package com.zjzy.morebit.Module.service;
 
 import com.zjzy.morebit.pojo.ActivityLinkBean;
+import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.DoorGodCategoryBean;
+import com.zjzy.morebit.pojo.FloorBean2;
 import com.zjzy.morebit.pojo.JpBannerBean;
 import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
@@ -11,6 +13,7 @@ import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
 import com.zjzy.morebit.pojo.RankTimeBean;
 import com.zjzy.morebit.pojo.RequestNineBean;
+import com.zjzy.morebit.pojo.TkBean;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
@@ -2637,6 +2640,23 @@ public interface CommonService {
     @POST("/api/goods/getFreeShipping ")
     public Observable<BaseResponse<List<ShopGoodInfo>>> getFreeShipping(@Body RequestNineBean body);
 
+    /**
+     * 商品分享接口（新）
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/goods/getCommonShareTemplate")
+    public Observable<BaseResponse<CommonShareTemplateBean>> getCommonShareTemplate(@Body TkBean body);
+
+    /**
+     * 新楼层查询
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/system/graphicInfo/sorting/listGraphicInfoSorting")
+    public Observable<BaseResponse<FloorBean2>> getListGraphicInfoSorting();
 
 
 }

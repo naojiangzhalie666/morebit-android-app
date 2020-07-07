@@ -64,12 +64,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/good_mall_tag"
                 android:layout_width="@dimen/dp_14"
                 android:layout_height="@dimen/dp_14"
-                android:src="@mipmap/tm_icon"
+                android:src="@drawable/tb_list_icon"
                 />
 
             <TextView
+                android:id="@+id/shop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="蒙牛旗舰店"
@@ -120,6 +122,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/volnum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
@@ -138,6 +141,7 @@
                 android:layout_marginTop="5dp">
 
                 <TextView
+                    android:id="@+id/coupon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@mipmap/yhj_bg_goods"
@@ -148,6 +152,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_zhuan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"

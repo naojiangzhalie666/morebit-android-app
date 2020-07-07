@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -220,4 +223,16 @@
 
         </android.support.design.widget.CoordinatorLayout>
     </LinearLayout>
+
+        <ImageView
+            android:id="@+id/shareImageView"
+            android:layout_width="55dp"
+            android:layout_height="60dp"
+            android:src="@color/color_999999"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="70dp"
+            android:layout_marginRight="12dp"
+            />
+    </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

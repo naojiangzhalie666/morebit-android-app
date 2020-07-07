@@ -32,6 +32,24 @@ public class ProgramCatItemBean implements Serializable {
     private String coupon;
     private String keyword;
     private String fieldName;
+    private String minPrice;//最小价格
+    private String maxPrice;//最大价格
+
+    public String getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(String minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public String getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(String maxPrice) {
+        this.maxPrice = maxPrice;
+    }
 
     public String getFieldName() {
         return fieldName;

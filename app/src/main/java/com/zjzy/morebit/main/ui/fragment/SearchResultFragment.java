@@ -128,11 +128,12 @@ public class SearchResultFragment extends BaseMainFragmeng {
        mSearchBean.add(new SearchBean(mSearchTaobaoFragment, getResources().getString(R.string.current_taobao)));
 
 
-       mSearchJdFragment = SearchResultForJdFragment.newInstance(2);
+       mSearchPddFragment = SearchResultForPddFragment.newInstance(2);
+       mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_pdd)));
+
+       mSearchJdFragment = SearchResultForJdFragment.newInstance(3);
        mSearchBean.add(new SearchBean(mSearchJdFragment, getResources().getString(R.string.current_jd)));
 
-       mSearchPddFragment = SearchResultForPddFragment.newInstance(3);
-       mSearchBean.add(new SearchBean(mSearchPddFragment, getResources().getString(R.string.current_pdd)));
 
        mSearchWphFragment = SearchResultForWphFragment.newInstance(4);
        mSearchBean.add(new SearchBean(mSearchWphFragment, getResources().getString(R.string.current_wph)));
@@ -148,9 +149,9 @@ public class SearchResultFragment extends BaseMainFragmeng {
                if (getResources().getString(R.string.current_taobao).equals(tab.getText())){
                    mType = 1;
                }else if (getResources().getString(R.string.current_pdd).equals(tab.getText())){
-                   mType = 3;
-               }else if (getResources().getString(R.string.current_jd).equals(tab.getText())){
                    mType = 2;
+               }else if (getResources().getString(R.string.current_jd).equals(tab.getText())){
+                   mType = 3;
            }else if (getResources().getString(R.string.current_wph).equals(tab.getText())){
                    mType = 4;
                }
@@ -209,6 +210,8 @@ public class SearchResultFragment extends BaseMainFragmeng {
            xTablayout.getTabAt(1).select();
        }else if (search_type==2){
            xTablayout.getTabAt(2).select();
+       }else if (search_type==3){
+           xTablayout.getTabAt(3).select();
        }
 
 
@@ -431,11 +434,11 @@ public class SearchResultFragment extends BaseMainFragmeng {
             SearchGoodsForTaobaoEvent event = new SearchGoodsForTaobaoEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
-        }else if (type==3){
+        }else if (type==2){
             SearchGoodsForPddEvent event = new SearchGoodsForPddEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);
-        } else if (type==2){
+        } else if (type==3){
             SearchGoodsForJdEvent event = new SearchGoodsForJdEvent();
             event.setKeyword(keyWord);
             EventBus.getDefault().post(event);

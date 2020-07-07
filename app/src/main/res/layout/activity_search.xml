@@ -8,6 +8,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
+
     <com.zjzy.morebit.view.AspectRatioView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
     <RelativeLayout
         android:id="@+id/rel_top"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/status_bar"
         android:background="@color/white"
         android:focusable="true"
@@ -48,7 +49,7 @@
         <TextView
             android:id="@+id/search"
             android:layout_width="52dp"
-            android:layout_height="31dp"
+            android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
@@ -97,8 +98,48 @@
 
         </RelativeLayout>
 
-
     </RelativeLayout>
+    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+        android:id="@+id/xablayout"
+        android:layout_width="match_parent"
+        android:layout_below="@id/rel_top"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        app:tl_tab_padding="20dp"
+        app:xTabIndicatorColor="@color/color_F05557"
+        app:xTabIndicatorHeight="3dp"
+        app:xTabIndicatorWidth="15dp"
+        app:xTabMode="fixed"
+        app:xTabSelectedTextColor="@color/color_F05557"
+        app:xTabSelectedTextSize="@dimen/sp_16"
+        app:xTabTextColor="@color/color_333333"
+        app:xTabTextSize="@dimen/sp_16" >
+
+        <com.zjzy.morebit.main.ui.myview.xtablayout.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="淘宝"
+            />
+        <com.zjzy.morebit.main.ui.myview.xtablayout.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="拼多多"
+            />
+        <com.zjzy.morebit.main.ui.myview.xtablayout.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="京东"
+            />
+        <com.zjzy.morebit.main.ui.myview.xtablayout.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="唯品会"
+            />
+
+
+
+    </com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout>
+
     <!--    <android.support.design.widget.TabLayout-->
     <!--        android:id="@+id/tab_layout"-->
     <!--        android:layout_width="match_parent"-->
@@ -126,7 +167,7 @@
         android:id="@+id/nsv_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rel_top"
+        android:layout_below="@id/xablayout"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:scrollbars="none">
@@ -138,6 +179,8 @@
             android:paddingBottom="10dp">
 
             <LinearLayout
+                android:background="@color/white"
+                android:paddingTop="10dp"
                 android:id="@+id/guideLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

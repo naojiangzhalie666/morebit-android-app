@@ -1,5 +1,6 @@
 package com.zjzy.morebit.main.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import com.zjzy.morebit.Activity.ShareHungryActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.OpinionpReplyFragment;
@@ -37,6 +39,7 @@ import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PageToUtil;
 import com.zjzy.morebit.utils.ShareUtil;
+import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.appDownload.QianWenUpdateUtlis;
@@ -297,6 +300,32 @@ public class WebJSHook {
                 GoodsDetailActivity.start(mFragment.getActivity(), shopGoodInfo);
             }
         });
+
+    }
+
+
+
+    /**
+     * 跳转淘宝
+     *
+     * @param url
+     */
+    @JavascriptInterface
+    public void goTaoBaoDetail(final String url) {
+        MyLog.i("WebJSHook", "shareWebpage");
+        if (TextUtils.isEmpty(url)) return;
+        if (TaobaoUtil.isAuth()) {//淘宝授权
+            TaobaoUtil.getAllianceAppKey((BaseActivity) mFragment.getContext());
+        }else{
+            App.mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    TaobaoUtil.showUrl((Activity) mFragment.getContext(),url);
+                }
+            });
+        }
+
+
 
     }
 

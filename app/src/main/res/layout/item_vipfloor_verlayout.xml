@@ -3,18 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="1dp"
+    android:id="@+id/ll2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
    >
 
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="110dp"
-        android:layout_height="150dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/icon_default"
-        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcy2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

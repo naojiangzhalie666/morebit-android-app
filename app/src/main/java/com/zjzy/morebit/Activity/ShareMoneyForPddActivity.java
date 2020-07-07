@@ -30,6 +30,7 @@ import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CallBackObserver;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
@@ -88,7 +89,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
     private RecyclerView mRecyclerView;
     private ShareMoneyAdapter mAdapter;
     private TextView tv_copy, incomeMoney;
-    private EditText et_copy;
+    private TextView et_copy,et_copy2 ;
     private LinearLayout weixinCircle, weixinFriend;
     private ShopGoodInfo goodsInfo;
 
@@ -140,7 +141,8 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
         //设置页面头顶空出状态栏的高度
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         tv_copy = (TextView) findViewById(R.id.tv_copy);
-        et_copy = (EditText) findViewById(R.id.et_copy);
+        et_copy = (TextView) findViewById(R.id.et_copy);
+        et_copy2 = (TextView) findViewById(R.id.et_copy2);
         et_copy.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -186,7 +188,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 goodsInfo.getAdImgUrl().get(0).isChecked = true;
             mAdapter = new ShareMoneyAdapter(this, goodsInfo.getAdImgUrl(), false);
             mRecyclerView.setAdapter(mAdapter);
-
+            goodsInfo.setCouponUrl(promotionUrl);
             mAdapter.setOnItemClickListener(new ShareMoneyAdapter.OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position, boolean isChecked) {
@@ -213,7 +215,7 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
             String discountsMoneyStr = MathUtils.getMuRatioComPrice(userInfo.getCalculationRate(), goodsInfo.getCommission());
 //            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(userInfo.getCalculationRate(), goodsInfo.getSubsidiesPrice());
 //            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
-            incomeMoney.setText("您的奖励预计为: " + discountsMoneyStr + "元");
+      //      incomeMoney.setText("您的奖励预计为: " + discountsMoneyStr + "元");
 //        }
         ShareMoneySwitchForPddTemplateView viewSwitch = (ShareMoneySwitchForPddTemplateView) findViewById(R.id.view_swicht);
         viewSwitch.setAction(new MyAction.One<Integer>() {
@@ -252,6 +254,9 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
                 }
                 AppUtil.coayTextPutNative(this, et_copy.getText().toString());
                 ViewShowUtils.showShortToast(this, R.string.coayTextSucceed);
+
+                //跳转微信
+                PageToUtil.goToWeixin(ShareMoneyForPddActivity.this);
                 break;
 
             case R.id.weixinFriend:
@@ -448,34 +453,40 @@ public class ShareMoneyForPddActivity extends BaseActivity implements View.OnCli
         LoadingView.showDialog(this, "请求中...");
 
         if (goodsInfo.getShopType() == 4) {//京东
-            GoodsUtil.getGenerateForJD(this, goodsInfo)
-                    .subscribe(new DataObserver<String>() {
+            GoodsUtil.getGetTkLFinalObservable3(this, goodsInfo,2)
+                    .subscribe(new DataObserver<CommonShareTemplateBean>() {
                         @Override
-                        protected void onSuccess(String data) {
-                            String template = data;
-                            et_copy.setText(template);
+                        protected void onSuccess(CommonShareTemplateBean data) {
+                           // String template = data;
+                            //et_copy.setText(template);
+                            et_copy2.setText(data.getShareContent());
+                            et_copy.setText(data.getTklVo().getTemplate());
 
                         }
                     });
         } else if (goodsInfo.getShopType() == 3) {//拼多多
-            GoodsUtil.getGenerateForPDD(this, goodsInfo)
-                    .subscribe(new DataObserver<PddShareContent>() {
+            GoodsUtil.getGetTkLFinalObservable3(this, goodsInfo,3)
+                    .subscribe(new DataObserver<CommonShareTemplateBean>() {
                         @Override
-                        protected void onSuccess(PddShareContent data) {
-                            String template = data.getTemplate();
-                            et_copy.setText(template);
+                        protected void onSuccess(CommonShareTemplateBean data) {
+                         //   String template = data.getTemplate();
+                          //  et_copy.setText(template);
+                            et_copy2.setText(data.getShareContent());
+                            et_copy.setText(data.getTklVo().getTemplate());
 
                         }
                     });
 
 
         } else if (goodsInfo.getShopType()==6){//唯品会
-            GoodsUtil.getGenerateForWph(this, goodsInfo)
-                    .subscribe(new DataObserver<String>() {
+            GoodsUtil.getGetTkLFinalObservable3(this, goodsInfo,6)
+                    .subscribe(new DataObserver<CommonShareTemplateBean>() {
                         @Override
-                        protected void onSuccess(String data) {
-                            String template = data;
-                            et_copy.setText(template);
+                        protected void onSuccess(CommonShareTemplateBean data) {
+//                            String template = data;
+//                            et_copy.setText(template);
+                            et_copy2.setText(data.getShareContent());
+                            et_copy.setText(data.getTklVo().getTemplate());
 
                         }
                     });

@@ -40,7 +40,7 @@ public class ActivityFloorAdapter3 extends RecyclerView.Adapter<ActivityFloorAda
     public ActivityFloorAdapter3.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = null;
 
-             view = mInflater.inflate(R.layout.item_vipfloor_horizontal, viewGroup, false);
+             view = mInflater.inflate(R.layout.item_vipfloor_tou, viewGroup, false);
 
 
         ActivityFloorAdapter3.ViewHolder viewHolder = new ActivityFloorAdapter3.ViewHolder(view);

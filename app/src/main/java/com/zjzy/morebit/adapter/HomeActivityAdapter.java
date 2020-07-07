@@ -15,7 +15,6 @@ import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.utils.Banner;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.UI.SpaceItemRightUtils;
 
@@ -46,24 +45,7 @@ public class HomeActivityAdapter extends DelegateAdapter.Adapter<HomeActivityAda
 
     @Override
     public void onBindViewHolder(@NonNull HomeActivityAdapter.ViewHolder holder, int position) {
-        GridLayoutManager manager = new GridLayoutManager(context, 2);
-        holder.activity_rcy1.setLayoutManager(manager);
-        if (holder.activity_rcy1.getItemDecorationCount()==0){//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-            holder.activity_rcy1.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(context, 3)));
-        }
-        ActivityFloorAdapter1 floorAdapter1 = new ActivityFloorAdapter1(context);
-        holder.activity_rcy1.setAdapter(floorAdapter1);
 
-        ActivityFloorAdapter2 floorAdapter2 = new ActivityFloorAdapter2(context);
-        GridLayoutManager manager2 = new GridLayoutManager(context, 4);
-        //设置图标的间距
-        if (holder.activity_rcy2.getItemDecorationCount()==0){//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-            SpaceItemRightUtils spaceItemDecorationUtils = new SpaceItemRightUtils(24, 5);
-            holder.activity_rcy2.addItemDecoration(spaceItemDecorationUtils);
-        }
-
-        holder.activity_rcy2.setLayoutManager(manager2);
-        holder.activity_rcy2.setAdapter(floorAdapter2);
 
 
     }
@@ -81,10 +63,7 @@ public class HomeActivityAdapter extends DelegateAdapter.Adapter<HomeActivityAda
 
         public ViewHolder(View itemView) {
             super(itemView);
-            activity_img = itemView.findViewById(R.id.activity_img);//头图
-            ll_bg = itemView.findViewById(R.id.ll_bg);//下图背景
-            activity_rcy1 = itemView.findViewById(R.id.activity_rcy1);//横版列表
-            activity_rcy2 = itemView.findViewById(R.id.activity_rcy2);//竖版列表
+
 
 
         }
