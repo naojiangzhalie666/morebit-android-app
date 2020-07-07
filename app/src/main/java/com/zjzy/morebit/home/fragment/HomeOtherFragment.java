@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -97,6 +98,7 @@ import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AutoInterceptViewGroup;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.CountTimeView;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -174,6 +176,23 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private ImageView home_msg,shareImageView;
     private List<PanicBuyingListBean.TimeListBean> timeList;
     private int scroll=0;
+    private CountTimeView count_time_view,count_time_view2;
+    private DataSetObserver mObserver = new DataSetObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            //倒计时结束
+            initLimit();
+        }
+    };
+    private DataSetObserver mObserver2 = new DataSetObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            //倒计时结束
+           // initLimit();
+        }
+    };
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -293,6 +312,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         searchTv.setOnClickListener(this);
         autoView = mView.findViewById(R.id.autoView);
 
+
+        count_time_view = mView.findViewById(R.id.count_time_view);
+        count_time_view.registerDataSetObserver(mObserver);
+
+
+        count_time_view2=mView.findViewById(R.id.count_time_view2);
+        count_time_view2.registerDataSetObserver(mObserver2);
         initBar();
 
 
@@ -635,28 +661,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 });
 
 
-        getpainBuyinglist(this)
-                .subscribe(new DataObserver<PanicBuyingListBean>(false) {
-                    @Override
-                    protected void onDataListEmpty() {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onDataNull() {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onSuccess(PanicBuyingListBean data) {
-                        onGetLitmitSkill(data);
-                    }
-                });
+        initLimit();
 
 
         getUserZeroInfo(this)
@@ -758,6 +763,33 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     }
 
+    private void initLimit() {
+        getpainBuyinglist(this)
+                .subscribe(new DataObserver<PanicBuyingListBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(PanicBuyingListBean data) {
+                        onGetLitmitSkill(data);
+                    }
+                });
+
+
+    }
+
     private void onGetListGraphicInfoSorting(FloorBean2 data) {
         List<FloorBean2.ListDataBean> listData = data.getListData();
         ActivityFloorAdapter1 floorAdapter1 = new ActivityFloorAdapter1(getActivity(),listData,data.getExt());
@@ -831,6 +863,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
         NewItemAdapter newItemAdapter = new NewItemAdapter(getActivity(), itemList);//新人
         new_rcy.setAdapter(newItemAdapter);
+        count_time_view2.startLimitedTime(Long.parseLong(data.getTime()));
     }
 
     private void onGetLitmitSkill(PanicBuyingListBean data) {
@@ -853,6 +886,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         limiteAdapter = new LimitePagerAdapter(getActivity().getSupportFragmentManager(), mfragment, timeList);
         litmited_pager.setAdapter(limiteAdapter);
         litmited_pager.setOffscreenPageLimit(title_time.size());
+      // count_time_view.startLimitedTime(data.getTimeList());
     }
 
 
@@ -1505,4 +1539,15 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 .compose(fragment.<BaseResponse<FloorBean2>>bindToLifecycle());
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (count_time_view!=null&&mObserver!=null){
+            count_time_view.unregisterDataSetObserver(mObserver);
+        }
+
+        if (count_time_view2!=null&&mObserver2!=null){
+            count_time_view2.unregisterDataSetObserver(mObserver2);
+        }
+    }
 }

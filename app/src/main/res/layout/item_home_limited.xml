@@ -29,12 +29,13 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/litmit_img" />
 
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="00:00:00"
-              />
-
+            <include
+                android:id="@+id/count_time_view"
+                layout="@layout/count_time_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                />
 
 
 

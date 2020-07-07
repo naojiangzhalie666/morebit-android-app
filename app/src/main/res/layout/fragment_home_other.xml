@@ -161,14 +161,16 @@
                                         android:textColor="#ffffffff"
                                         android:textSize="18sp" />
 
-                                    <TextView
-                                        android:layout_width="match_parent"
+
+                                    <include
+                                        android:id="@+id/count_time_view2"
+                                        layout="@layout/count_time_layout"
+                                        android:layout_gravity="center"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="8dp"
-                                        android:gravity="center"
-                                        android:text="剩余2天23:59:59"
-                                        android:textColor="#ffffffff"
-                                        android:textSize="12sp" />
+                                        android:layout_marginTop="6dp"
+                                        />
+
 
                                     <ImageView
                                         android:id="@+id/img_go"

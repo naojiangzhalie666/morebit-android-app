@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zjzy.morebit.utils.CountTimeView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                          xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                          android:layout_width="wrap_content"
+                                                          android:layout_height="wrap_content"
+                                                          android:gravity="center"
+                                                          android:orientation="horizontal">
+    <!--时-->
+    <LinearLayout
+        android:id="@+id/time_bg1"
+        android:layout_width="21dp"
+        android:layout_height="16dp"
+        android:background="@drawable/shape_bg_count_time_corner"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/hour_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:gravity="center"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="7dp"
+        android:layout_height="16dp"
+        android:gravity="center"
+        android:text=":"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_13"/>
+    <!--分-->
+    <LinearLayout
+        android:id="@+id/time_bg2"
+        android:layout_width="21dp"
+        android:layout_height="16dp"
+        android:background="@drawable/shape_bg_count_time_corner"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/min_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13"
+           />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="7dp"
+        android:layout_height="16dp"
+        android:gravity="center"
+        android:text=":"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_13"/>
+    <!--秒-->
+    <LinearLayout
+        android:id="@+id/time_bg3"
+        android:layout_width="21dp"
+        android:layout_height="16dp"
+        android:background="@drawable/shape_bg_count_time_corner"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/second_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13"/>
+    </LinearLayout>
+
+</com.zjzy.morebit.utils.CountTimeView>
