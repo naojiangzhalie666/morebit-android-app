@@ -8,6 +8,7 @@ import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
@@ -99,6 +100,7 @@ import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AutoInterceptViewGroup;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.CountTimeView;
+import com.zjzy.morebit.utils.CountTimeView2;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -106,6 +108,7 @@ import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
+import com.zjzy.morebit.utils.TimeUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.UI.SpaceItemRightUtils;
 import com.zjzy.morebit.view.AspectRatioView;
@@ -176,7 +179,15 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private ImageView home_msg,shareImageView;
     private List<PanicBuyingListBean.TimeListBean> timeList;
     private int scroll=0;
-    private CountTimeView count_time_view,count_time_view2;
+    private CountTimeView count_time_view;
+    private long days;
+    private long hours;
+    private long minutes;
+    private long seconds;
+    private  boolean isRun = true;
+    private TextView daysTv,hoursTv,minutesTv,secondsTv;
+    private LinearLayout ll_new;
+    private LinearLayout new_goods;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -185,14 +196,45 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             initLimit();
         }
     };
-    private DataSetObserver mObserver2 = new DataSetObserver() {
+
+    private Handler timeHandler = new Handler() {
+
         @Override
-        public void onChanged() {
-            super.onChanged();
-            //倒计时结束
-           // initLimit();
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==1) {
+                computeTime();
+                daysTv.setText("剩余"+days+"天");
+                hoursTv.setText(hours+":");
+                minutesTv.setText(minutes+":");
+                secondsTv.setText(seconds+"");
+//                if (mDay==0&&mHour==0&&mMin==0&&mSecond==0) {
+//                    countDown.setVisibility(View.GONE);
+//                }
+            }
         }
     };
+
+    private void computeTime() {
+        seconds--;
+        if (seconds < 0) {
+            minutes--;
+            seconds = 59;
+            if (minutes < 0) {
+                minutes = 59;
+                hours--;
+                if (hours < 0) {
+                    // 倒计时结束
+                    hours = 23;
+                    days--;
+                }
+            }
+        }
+
+
+    }
+
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -274,6 +316,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     private void initOtherView() {
         // home_rcy = mView.findViewById(R.id.home_rcy);
+        ll_new=mView.findViewById(R.id.ll_new);
         img_bao = mView.findViewById(R.id.img_bao);
         swipeRefreshLayout = mView.findViewById(R.id.swipeRefreshLayout);
         status_bar = mView.findViewById(R.id.status_bar);
@@ -297,6 +340,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         linear2 = mView.findViewById(R.id.linear2);
         linear3 = mView.findViewById(R.id.linear3);
 
+        secondsTv=mView.findViewById(R.id.secondsTv);
+        minutesTv=mView.findViewById(R.id.minutesTv);
+        hoursTv=mView.findViewById(R.id.hoursTv);
+        daysTv=mView.findViewById(R.id.daysTv);
+
         img_go = mView.findViewById(R.id.img_go);
         Glide.with(this).asGif().load(R.drawable.must_go).into(img_go);
         Glide.with(this).asGif().load(R.drawable.new_hongbao).into(shareImageView);
@@ -307,7 +355,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         linear2.setOnClickListener(this);
         linear3.setOnClickListener(this);
 
-
+        new_goods=mView.findViewById(R.id.new_goods);
         searchTv = mView.findViewById(R.id.searchTv);
         searchTv.setOnClickListener(this);
         autoView = mView.findViewById(R.id.autoView);
@@ -317,8 +365,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         count_time_view.registerDataSetObserver(mObserver);
 
 
-        count_time_view2=mView.findViewById(R.id.count_time_view2);
-        count_time_view2.registerDataSetObserver(mObserver2);
         initBar();
 
 
@@ -859,11 +905,53 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     }
 
-    private void onGetUserZeroInfo(UserZeroInfoBean data) {
+    private void onGetUserZeroInfo(final UserZeroInfoBean data) {
         List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
         NewItemAdapter newItemAdapter = new NewItemAdapter(getActivity(), itemList);//新人
         new_rcy.setAdapter(newItemAdapter);
-        count_time_view2.startLimitedTime(Long.parseLong(data.getTime()));
+        if (data.isIsNewUser()){
+            new_goods.setVisibility(View.VISIBLE);
+        }else{
+            new_goods.setVisibility(View.GONE);
+        }
+        initTime(Long.parseLong(data.getTime()));
+        new_goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowWebActivity.start(getActivity(), data.getLinkUrl(),"");
+            }
+        });
+    }
+
+    private void initTime(long mss) {
+          days = mss / (1000 * 60 * 60 * 24);
+          hours = (mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+          minutes = (mss % (1000 * 60 * 60)) / (1000 * 60);
+          seconds = (mss % (1000 * 60)) / 1000;
+          startRun();
+
+    }
+    /**
+     * 开启倒计时
+     */
+    private void startRun() {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                while (isRun) {
+                    try {
+                        Thread.sleep(1000); // sleep 1000ms
+                        Message message = Message.obtain();
+                        message.what = 1;
+                        timeHandler.sendMessage(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     private void onGetLitmitSkill(PanicBuyingListBean data) {
@@ -1544,10 +1632,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         super.onDestroyView();
         if (count_time_view!=null&&mObserver!=null){
             count_time_view.unregisterDataSetObserver(mObserver);
-        }
-
-        if (count_time_view2!=null&&mObserver2!=null){
-            count_time_view2.unregisterDataSetObserver(mObserver2);
         }
     }
 }

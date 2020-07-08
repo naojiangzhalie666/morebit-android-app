@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -122,12 +123,13 @@
                                 app:ci_drawable_unselected="@drawable/icon_huidian" />
 
                             <LinearLayout
+                                android:id="@+id/new_goods"
                                 android:layout_width="match_parent"
                                 android:layout_height="128dp"
                                 android:layout_marginLeft="12dp"
                                 android:layout_marginTop="12dp"
                                 android:layout_marginRight="12dp"
-                                android:background="@drawable/bg_f0057_round_8dp">
+                                android:background="@drawable/new_goods_bg">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -162,15 +164,47 @@
                                         android:textSize="18sp" />
 
 
-                                    <include
-                                        android:id="@+id/count_time_view2"
-                                        layout="@layout/count_time_layout"
-                                        android:layout_gravity="center"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="6dp"
-                                        />
+                                   <LinearLayout
+                                       android:id="@+id/ll_new"
+                                       android:layout_width="match_parent"
+                                       android:gravity="center"
+                                       android:layout_marginTop="7dp"
+                                       android:layout_height="wrap_content">
 
+                                       <TextView
+                                           android:id="@+id/daysTv"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           tools:text="天"
+                                           android:textColor="@color/white"
+                                           android:textSize="12sp"
+                                           />
+                                       <TextView
+                                           android:id="@+id/hoursTv"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           tools:text="时"
+                                           android:textColor="@color/white"
+                                           android:textSize="12sp"
+                                           />
+                                       <TextView
+                                           android:id="@+id/minutesTv"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           tools:text="分"
+                                           android:textColor="@color/white"
+                                           android:textSize="12sp"
+                                           />
+                                       <TextView
+                                           android:id="@+id/secondsTv"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           tools:text="秒"
+                                           android:textColor="@color/white"
+                                           android:textSize="12sp"
+                                           />
+
+                                   </LinearLayout>
 
                                     <ImageView
                                         android:id="@+id/img_go"

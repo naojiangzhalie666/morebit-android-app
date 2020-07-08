@@ -37,7 +37,15 @@
     <string name="main_circle_hotday">每日爆款</string>
     <string name="main_circle_adv">宣传素材</string>
     <string name="goodsShertError">商品优惠券已领完，请重新选择商品</string>
-
+    <string name="ago">前</string>
+    <string name="years">年</string>
+    <string name="month">月</string>
+    <string name="week">周</string>
+    <string name="day">天</string>
+    <string name="hours">小时</string>
+    <string name="minutes">分钟</string>
+    <string name="secknds">秒</string>
+    <string name="just_now">现在</string>
     <string name="coupon">¥%1$s</string>
     <string name="coupon_add_text">券后¥%1$s</string>
     <string name="submit">确认提交</string>
