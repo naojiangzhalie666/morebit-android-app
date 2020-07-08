@@ -95,20 +95,16 @@
 
 
                             <LinearLayout
+                                android:id="@+id/litmit_ll"
                                 android:orientation="vertical"
                                 android:background="@color/color_F8F8F8"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical">
 
-                                <LinearLayout
-                                    android:id="@+id/litmit_ll"
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
                                 <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
                                     android:id="@+id/xTablayout"
-                                    android:layout_width="0dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="50dp"
                                     android:layout_weight="1"
                                     app:xTabDividerColor="#999999"
@@ -123,8 +119,6 @@
                                     app:xTabSelectedTextSize="@dimen/sp_15"
                                     app:xTabTextColor="#999999"
                                     app:xTabTextSize="@dimen/sp_12" />
-                            </LinearLayout>
-
                             <com.zjzy.morebit.utils.AutoHeightViewPager
                                 android:background="@color/color_F8F8F8"
                                 android:id="@+id/icon_pager"
