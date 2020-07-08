@@ -1,5 +1,6 @@
 package com.zjzy.morebit.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -16,10 +17,14 @@ import android.widget.LinearLayout;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.FloorBean2;
+import com.zjzy.morebit.pojo.FloorChildInfo;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.MyGsonUtils;
+import com.zjzy.morebit.utils.SensorsDataUtil;
+import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,12 +85,27 @@ public class ActivityFloorAdapter1 extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         List<FloorBean2.ListDataBean.ChildBean> child = mDatas.get(position).getChild();
         int viewType = getItemViewType(position);
+        final FloorChildInfo floorChildInfo=new FloorChildInfo();
+        floorChildInfo.setId(child.get(position).getId());
+        floorChildInfo.setOpen(child.get(position).getOpen());
+        floorChildInfo.setMainTitle(child.get(position).getMainTitle());
+        floorChildInfo.setClassId(child.get(position).getClassId());
+        floorChildInfo.setUrl(child.get(position).getUrl());
+        floorChildInfo.setSubTitle(child.get(position).getSubTitle());
+
        if (viewType==FristType){
            ViewHolder1 holder1= (ViewHolder1) holder;
            LoadImgUtils.setImg(mContext,holder1.imageView,child.get(position).getPicture());
+           holder1.imageView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   SensorsDataUtil.getInstance().advClickTrack(floorChildInfo.getId()+"",floorChildInfo.getOpen()+"", "楼层管理"+position, position,floorChildInfo.getMainTitle(), floorChildInfo.getClassId()+"", floorChildInfo.getUrl(), floorChildInfo.getSubTitle());
+                   BannerInitiateUtils.gotoAction((Activity) mContext, MyGsonUtils.toImageInfo(floorChildInfo));
+               }
+           });
 
        }else if (viewType==TwoType){
            ViewHolder2 holder2= (ViewHolder2) holder;

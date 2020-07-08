@@ -86,7 +86,7 @@ public class NumberFragment extends BaseMainFragmeng  {
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
             // 设置状态栏颜色
-            getActivity().getWindow().setStatusBarColor(Color.parseColor("#EDCFB1"));
+           // getActivity().getWindow().setStatusBarColor(Color.parseColor("#EDCFB1"));
         }
         TextView tv = view.findViewById(R.id.txt_head_title);
         tv.getPaint().setFakeBoldText(true);

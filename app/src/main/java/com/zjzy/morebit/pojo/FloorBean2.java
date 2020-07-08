@@ -152,6 +152,15 @@ public class FloorBean2 implements Serializable {
                 private String url;
                 private int showType;
                 private String splicePid;
+                private int classId;
+
+                public int getClassId() {
+                    return classId;
+                }
+
+                public void setClassId(int classId) {
+                    this.classId = classId;
+                }
 
                 public int getId() {
                     return id;

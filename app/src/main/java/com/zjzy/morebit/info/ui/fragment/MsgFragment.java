@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.SettingNotificationActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -17,8 +18,14 @@ import com.zjzy.morebit.info.contract.MsgDayHotContract;
 import com.zjzy.morebit.info.presenter.MsgDayHotPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
+import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CommonEmpty;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.DayHotBean;
+import com.zjzy.morebit.pojo.FloorBean2;
+import com.zjzy.morebit.pojo.NoticemBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.NotificationsUtils;
@@ -32,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 
 
 /**
@@ -48,9 +56,10 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     private int mNureadConut;
     private int page = 1;
     private MsgDayHotAdapter mAdapter;
+    private TextView tv1, tv2, tv3, tv4, tv5;
 
     private CommonEmpty mEmptyView;
-    private TextView tv_shouyi,tv_fans,tv_system,tv_answer,tv_activity;
+    private TextView tv_shouyi, tv_fans, tv_system, tv_answer, tv_activity;
     private LinearLayout activity_huo;
 
     @Override
@@ -60,28 +69,74 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     }
 
 
-
-
     @Override
     protected void initData() {
+
+        getUserNoticeList(this)
+                .subscribe(new DataObserver<NoticemBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(NoticemBean data) {
+                        onGetListGraphicInfoSorting(data);
+                    }
+                });
+
+    }
+
+    private void onGetListGraphicInfoSorting(NoticemBean data) {
+        if (data!=null){
+          for (int i=0;i<data.getList().size();i++){
+              if (data.getList().get(i).getType()==1){
+                  tv1.setText(data.getList().get(i).getMsg());
+              }else if (data.getList().get(i).getType()==2){
+                  tv2.setText(data.getList().get(i).getMsg());
+              }else if (data.getList().get(i).getType()==3){
+                  tv3.setText(data.getList().get(i).getMsg());
+              }else if (data.getList().get(i).getType()==4){
+                  tv4.setText(data.getList().get(i).getMsg());
+              }else if (data.getList().get(i).getType()==6){
+                  tv5.setText(data.getList().get(i).getMsg());
+              }
+          }
+        }
+    }
+
+    private void onActivityFailure() {
+
     }
 
     @Override
     protected void initView(View view) {
-        tv_shouyi= view.findViewById(R.id.tv_shouyi);
-        tv_fans= view.findViewById(R.id.tv_fans);
-        tv_system= view.findViewById(R.id.tv_system);
-        tv_answer= view.findViewById(R.id.tv_answer);
-        tv_activity= view.findViewById(R.id.tv_activity);
+        tv_shouyi = view.findViewById(R.id.tv_shouyi);
+        tv_fans = view.findViewById(R.id.tv_fans);
+        tv_system = view.findViewById(R.id.tv_system);
+        tv_answer = view.findViewById(R.id.tv_answer);
+        tv_activity = view.findViewById(R.id.tv_activity);
         tv_activity.getPaint().setFakeBoldText(true);
         tv_answer.getPaint().setFakeBoldText(true);
         tv_system.getPaint().setFakeBoldText(true);
         tv_fans.getPaint().setFakeBoldText(true);
         tv_shouyi.getPaint().setFakeBoldText(true);
-        activity_huo=view.findViewById(R.id.activity_huo);
-
-
-
+        activity_huo = view.findViewById(R.id.activity_huo);
+        tv1 = view.findViewById(R.id.tv1);
+        tv2 = view.findViewById(R.id.tv2);
+        tv3 = view.findViewById(R.id.tv3);
+        tv4 = view.findViewById(R.id.tv4);
+        tv5 = view.findViewById(R.id.tv5);
 
 
         initPush();
@@ -118,9 +173,6 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     }
 
 
-
-
-
     @Override
     public void onMsgSuccessful(List<DayHotBean> data) {
 
@@ -129,7 +181,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
     @Override
     public void onMsgfailure() {
-       }
+    }
 
     @Override
     public void onMsgFinally() {
@@ -137,9 +189,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     }
 
 
-
-
-    @OnClick({ R.id.back,R.id.msgSetIv,R.id.openNoticationBtn,R.id.closeNoticationIv,R.id.earningLay,R.id.fansLay,R.id.sysLay,R.id.feedbackLay,R.id.activity_huo})
+    @OnClick({R.id.back, R.id.msgSetIv, R.id.openNoticationBtn, R.id.closeNoticationIv, R.id.earningLay, R.id.fansLay, R.id.sysLay, R.id.feedbackLay, R.id.activity_huo})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -176,26 +226,25 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
 
-    public List<DayHotBean> handlerData(List<DayHotBean> data){
+    public List<DayHotBean> handlerData(List<DayHotBean> data) {
         List<DayHotBean> dayHotBeans = new ArrayList<>();
         String lastTime = "";
-        if(null != data && data.size()>0){
+        if (null != data && data.size() > 0) {
             //通过时间判断是今天的商品不显示时间分线
             for (int i = 0; i < data.size(); i++) {
                 DayHotBean item = data.get(i);
-                if(!lastTime.equals(DateTimeUtils.getYMDTime(item.getSendTime()))){
+                if (!lastTime.equals(DateTimeUtils.getYMDTime(item.getSendTime()))) {
                     //lastTime = DateTimeUtils.getDatetoString(item.getSendTime());
                     String isTodayTime = DateTimeUtils.getDatetoString(item.getSendTime());
-                    if(!isTodayTime.equals("今天")){
+                    if (!isTodayTime.equals("今天")) {
                         String currentTime = DateTimeUtils.getYMDTime(item.getSendTime());
-                        if(!currentTime.equals(lastTime)){
+                        if (!currentTime.equals(lastTime)) {
                             lastTime = currentTime;
                             DayHotBean timeLineBean = new DayHotBean();
                             timeLineBean.setGoodsId("-1");
@@ -222,14 +271,20 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
         checkNoticationEnable();
     }
 
-    private void checkNoticationEnable(){
+    private void checkNoticationEnable() {
         boolean isshow = (boolean) SharedPreferencesUtils.get(App.getAppContext(), C.sp.isShowMsgNotication, true);
-        if(!NotificationsUtils.isNotificationEnabled(getActivity()) && isshow){
+        if (!NotificationsUtils.isNotificationEnabled(getActivity()) && isshow) {
             //显示消息通知提示
             msgNoticationRl.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowMsgNotication, false);
             msgNoticationRl.setVisibility(View.GONE);
         }
+    }
+    //新楼层查询
+    public Observable<BaseResponse<NoticemBean>> getUserNoticeList(RxFragment fragment) {
+        return RxHttp.getInstance().getSysteService().getUserNoticeList()
+                .compose(RxUtils.<BaseResponse<NoticemBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<NoticemBean>>bindToLifecycle());
     }
 }

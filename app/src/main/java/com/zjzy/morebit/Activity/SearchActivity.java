@@ -312,7 +312,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.search:
-                goToSearch();
+               // goToSearch();
+                finish();
                 break;
             case R.id.clearLy: //清楚历史数据
                 openCleanDataDialog();

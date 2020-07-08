@@ -6,6 +6,7 @@ import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.FloorBean2;
 import com.zjzy.morebit.pojo.JpBannerBean;
 import com.zjzy.morebit.pojo.KaolaBean;
+import com.zjzy.morebit.pojo.NoticemBean;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
@@ -2658,5 +2659,12 @@ public interface CommonService {
     @POST("/api/system/graphicInfo/sorting/listGraphicInfoSorting")
     public Observable<BaseResponse<FloorBean2>> getListGraphicInfoSorting();
 
-
+    /**
+     * 消息列表内容
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/system/getUserNoticeList")
+    public Observable<BaseResponse<NoticemBean>> getUserNoticeList();
 }

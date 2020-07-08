@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zjzy.morebit.App;
+import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SearchHotAdapter;
 import com.zjzy.morebit.fragment.SearchResultForJdFragment;
@@ -42,6 +43,7 @@ import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
+import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -117,7 +119,9 @@ public class SearchResultFragment extends BaseMainFragmeng {
 
     @OnClick(R.id.iv_back)
     public void onViewClicked() {
-        getActivity().finish();
+      //  getActivity().finish();
+        ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
+
     }
 
     /**

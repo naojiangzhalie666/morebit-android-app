@@ -721,8 +721,10 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             }
         }
 
-
-        StringsUtils.retractKaoLaTitle(tv_pdd, title,data.getGoodsTitle());
+        Paint paint = new Paint();
+        paint.setTextSize(tv_pdd.getTextSize());
+        float size = paint.measureText(tv_pdd.getText().toString());
+        StringsUtils.retractTitles(title,data.getGoodsTitle(), (int) (size) + 35);
         getViewLocationOnScreen();
     }
 

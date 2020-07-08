@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
@@ -97,6 +98,7 @@ import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
+import com.zjzy.morebit.utils.AutoHeightViewPager;
 import com.zjzy.morebit.utils.AutoInterceptViewGroup;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.CountTimeView;
@@ -107,6 +109,7 @@ import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
+import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
 import com.zjzy.morebit.utils.TimeUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
@@ -138,6 +141,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private String mParam2;
 
     private RecyclerView home_rcy;
+    private List<DoorGodCategoryBean.ResultListBean> resultList;
     private View status_bar;
     private List<ImageInfo> list = new ArrayList<>();
     private View mView;
@@ -150,7 +154,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     ;
     private NewsPagerAdapter mAdapter;
     private XTabLayout xTablayout, xablayout, litmited_tab;
-    private ViewPager icon_pager, mViewPager, litmited_pager;
+    private ViewPager  mViewPager, litmited_pager;
+    private AutoHeightViewPager  icon_pager;
     private CircleIndicator circle_indicator_view;
     private LinearLayout ll_bg;
     private RecyclerView activity_rcy1, activity_rcy2, new_rcy, activity_hao, dou_rcy, activity_rcy;
@@ -176,18 +181,19 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private ImageInfo mImageInfo;
     private TextView searchTv;
     private ImageView img_go;
-    private ImageView home_msg,shareImageView;
+    private ImageView home_msg, shareImageView;
     private List<PanicBuyingListBean.TimeListBean> timeList;
-    private int scroll=0;
+    private int scroll = 0;
     private CountTimeView count_time_view;
     private long days;
     private long hours;
     private long minutes;
     private long seconds;
-    private  boolean isRun = true;
-    private TextView daysTv,hoursTv,minutesTv,secondsTv;
+    private boolean isRun = true;
+    private TextView daysTv, hoursTv, minutesTv, secondsTv;
     private LinearLayout ll_new;
     private LinearLayout new_goods;
+    private RelativeLayout rl_limit;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -202,12 +208,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what==1) {
+            if (msg.what == 1) {
                 computeTime();
-                daysTv.setText("剩余"+days+"天");
-                hoursTv.setText(hours+":");
-                minutesTv.setText(minutes+":");
-                secondsTv.setText(seconds+"");
+                daysTv.setText("剩余" + days + "天");
+                hoursTv.setText(hours + ":");
+                minutesTv.setText(minutes + ":");
+                secondsTv.setText(seconds + "");
 //                if (mDay==0&&mHour==0&&mMin==0&&mSecond==0) {
 //                    countDown.setVisibility(View.GONE);
 //                }
@@ -300,12 +306,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         mImageInfo.setSplicePid("0");
         mImageInfo.setType("4");
         mImageInfo.setTitle("限时抢购");
-        GoodCategoryInfo good = new GoodCategoryInfo();
-        good.setName(getString(R.string.choiceness));
-        mHomeColumns.add(good);
-        GoodCategoryInfo goodWhatLink = new GoodCategoryInfo();
-        goodWhatLink.setName(getString(R.string.what_like));
-        mHomeColumns.add(goodWhatLink);
         initOtherView();//初始化
         initRefresh();
         autoPlay();
@@ -316,20 +316,20 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     private void initOtherView() {
         // home_rcy = mView.findViewById(R.id.home_rcy);
-        ll_new=mView.findViewById(R.id.ll_new);
+        ll_new = mView.findViewById(R.id.ll_new);
         img_bao = mView.findViewById(R.id.img_bao);
         swipeRefreshLayout = mView.findViewById(R.id.swipeRefreshLayout);
         status_bar = mView.findViewById(R.id.status_bar);
         mAppBarLt = mView.findViewById(R.id.app_bar_lt);
         mViewPager = mView.findViewById(R.id.viewPager);
         xablayout = mView.findViewById(R.id.xablayout);
-        shareImageView=mView.findViewById(R.id.shareImageView);
+        shareImageView = mView.findViewById(R.id.shareImageView);
 
         litmited_pager = mView.findViewById(R.id.litmited_pager);
         limited = mView.findViewById(R.id.limited);
         limited.setOnClickListener(this);
         litmited_pager.setOnClickListener(this);
-
+        rl_limit=mView.findViewById(R.id.rl_limit);
         tv_time1 = mView.findViewById(R.id.tv_time1);
         tv_time2 = mView.findViewById(R.id.tv_time2);
         tv_time3 = mView.findViewById(R.id.tv_time3);
@@ -340,10 +340,10 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         linear2 = mView.findViewById(R.id.linear2);
         linear3 = mView.findViewById(R.id.linear3);
 
-        secondsTv=mView.findViewById(R.id.secondsTv);
-        minutesTv=mView.findViewById(R.id.minutesTv);
-        hoursTv=mView.findViewById(R.id.hoursTv);
-        daysTv=mView.findViewById(R.id.daysTv);
+        secondsTv = mView.findViewById(R.id.secondsTv);
+        minutesTv = mView.findViewById(R.id.minutesTv);
+        hoursTv = mView.findViewById(R.id.hoursTv);
+        daysTv = mView.findViewById(R.id.daysTv);
 
         img_go = mView.findViewById(R.id.img_go);
         Glide.with(this).asGif().load(R.drawable.must_go).into(img_go);
@@ -355,7 +355,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         linear2.setOnClickListener(this);
         linear3.setOnClickListener(this);
 
-        new_goods=mView.findViewById(R.id.new_goods);
+        new_goods = mView.findViewById(R.id.new_goods);
         searchTv = mView.findViewById(R.id.searchTv);
         searchTv.setOnClickListener(this);
         autoView = mView.findViewById(R.id.autoView);
@@ -366,7 +366,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
 
         initBar();
-
 
 
         litmited_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -486,6 +485,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             public void onPageSelected(int position) {
                 swipeDirectionDetector.onPageSelected(position);
                 currentViewPagerPosition = position;
+                // 切换到当前页面，重置高度
+                icon_pager.requestLayout();
             }
 
             @Override
@@ -536,7 +537,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         new_rcy.setLayoutManager(manager);
 
         activity_rcy1 = mView.findViewById(R.id.activity_rcy1);//横版列表
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         activity_rcy1.setLayoutManager(linearLayoutManager);
 
 
@@ -569,17 +570,19 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             @Override
             public void onClick(View v) {
                 PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+                Log.e("gggg", "不要点我1");
             }
         });
 
-        autoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-                Log.e("gggg","不要点我");
 
-            }
-        });
+//        autoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+//                Log.e("gggg", "不要点我");
+//
+//            }
+//        });
 
 //        autoView.setOnsClickListener(new AutoInterceptViewGroup.OnClickListener() {
 //            @Override
@@ -603,15 +606,15 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     @Override
     public void onResume() {
         super.onResume();
-        initBar();
-        mAppBarLt.addOnOffsetChangedListener(this);
+      //  initBar();
+        // mAppBarLt.addOnOffsetChangedListener(this);
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-        mAppBarLt.removeOnOffsetChangedListener(this);
+        //mAppBarLt.removeOnOffsetChangedListener(this);
 
     }
 
@@ -622,7 +625,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
             // 设置状态栏颜色
-            getActivity().getWindow().setStatusBarColor(Color.parseColor("#F05557"));
+         //   getActivity().getWindow().setStatusBarColor(Color.parseColor("#F05557"));
 
         }
     }
@@ -792,27 +795,26 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         getListGraphicInfoSorting(this)
                 .subscribe(new DataObserver<FloorBean2>(false) {
-            @Override
-            protected void onDataListEmpty() {
-                onActivityFailure();
-            }
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
 
-            @Override
-            protected void onDataNull() {
-                onActivityFailure();
-            }
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
 
-            @Override
-            protected void onError(String errorMsg, String errCode) {
-                onActivityFailure();
-            }
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
 
-            @Override
-            protected void onSuccess(FloorBean2 data) {
-                onGetListGraphicInfoSorting(data);
-            }
-        });
-
+                    @Override
+                    protected void onSuccess(FloorBean2 data) {
+                        onGetListGraphicInfoSorting(data);
+                    }
+                });
 
 
         getCategoryData();
@@ -848,12 +850,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     private void onGetListGraphicInfoSorting(FloorBean2 data) {
         List<FloorBean2.ListDataBean> listData = data.getListData();
-        ActivityFloorAdapter1 floorAdapter1 = new ActivityFloorAdapter1(getActivity(),listData,data.getExt());
+        ActivityFloorAdapter1 floorAdapter1 = new ActivityFloorAdapter1(getActivity(), listData, data.getExt());
         activity_rcy1.setAdapter(floorAdapter1);
     }
 
     private void onGetQueryDhAndGy(QueryDhAndGyBean data) {
-        ActivityDouAdapter douAdapter = new ActivityDouAdapter(getActivity(),data);
+        ActivityDouAdapter douAdapter = new ActivityDouAdapter(getActivity(), data);
         dou_rcy.setAdapter(douAdapter);
     }
 
@@ -865,8 +867,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 fragment = new IconFragment();
                 mFragments.add(fragment.newInstance(data.getResultList().get(i).getWheelChartDisplayVo()));
             }
-
-            mAdapter = new NewsPagerAdapter(getActivity().getSupportFragmentManager(), mFragments, data.getResultList());
+            resultList = data.getResultList();
+            mAdapter = new NewsPagerAdapter(getChildFragmentManager(), mFragments, data.getResultList());
             icon_pager.setAdapter(mAdapter);
             xTablayout.setupWithViewPager(icon_pager);
             for (int i = 0; i < data.getResultList().size(); i++) {
@@ -919,10 +921,10 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
         NewItemAdapter newItemAdapter = new NewItemAdapter(getActivity(), itemList);//新人
         new_rcy.setAdapter(newItemAdapter);
-        if (data.isIsNewUser()){
+        if (data.isIsNewUser()) {
             new_goods.setVisibility(View.VISIBLE);
             shareImageView.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             new_goods.setVisibility(View.GONE);
             shareImageView.setVisibility(View.GONE);
         }
@@ -930,25 +932,26 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         new_goods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowWebActivity.start(getActivity(), data.getLinkUrl(),"");
+                ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
             }
         });
         shareImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowWebActivity.start(getActivity(), data.getLinkUrl(),"");
+                ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
             }
         });
     }
 
     private void initTime(long mss) {
-          days = mss / (1000 * 60 * 60 * 24);
-          hours = (mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
-          minutes = (mss % (1000 * 60 * 60)) / (1000 * 60);
-          seconds = (mss % (1000 * 60)) / 1000;
-          startRun();
+        days = mss / (1000 * 60 * 60 * 24);
+        hours = (mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+        minutes = (mss % (1000 * 60 * 60)) / (1000 * 60);
+        seconds = (mss % (1000 * 60)) / 1000;
+        startRun();
 
     }
+
     /**
      * 开启倒计时
      */
@@ -973,7 +976,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
     private void onGetLitmitSkill(PanicBuyingListBean data) {
-
+        String title = "";
         timeList = data.getTimeList();
         if (timeList.size() != 0 && timeList.size() > 1) {
             tv_time1.setText(timeList.get(0).getTitle());
@@ -988,11 +991,21 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             LimiteFragment fragment = null;
             fragment = new LimiteFragment();
             mfragment.add(fragment.newInstance(timeList.get(i).getItemList()));
+            if (timeList.get(i).getType() == 0) {
+                title = timeList.get(i).getTitle();
+            }
         }
-        limiteAdapter = new LimitePagerAdapter(getActivity().getSupportFragmentManager(), mfragment, timeList);
+        limiteAdapter = new LimitePagerAdapter(getChildFragmentManager(), mfragment, timeList);
         litmited_pager.setAdapter(limiteAdapter);
         litmited_pager.setOffscreenPageLimit(title_time.size());
-      // count_time_view.startLimitedTime(data.getTimeList());
+
+        long timeStamp = TimeUtil.date2TimeStamp(title+":00", "HH:mm:ss");
+        Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
+        String stime = TimeUtil.timeStamp2Date(String.valueOf(serverTime), "");
+        long dataTime = TimeUtil.date2TimeStamp(stime, "HH:mm:ss");
+        long s=timeStamp - dataTime;
+        count_time_view.startLimitedTime(s);
+
     }
 
 
@@ -1014,12 +1027,21 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
                     @Override
                     protected void onSuccess(List<GoodCategoryInfo> data) {
+                        mHomeColumns.clear();
+                        GoodCategoryInfo good = new GoodCategoryInfo();
+                        good.setName(getString(R.string.choiceness));
+                        mHomeColumns.add(good);
+                        GoodCategoryInfo goodWhatLink = new GoodCategoryInfo();
+                        goodWhatLink.setName(getString(R.string.what_like));
+                        mHomeColumns.add(goodWhatLink);
                         App.getACache().put(C.sp.homeFenleiData, (Serializable) data);
                         mHomeColumns.addAll(data);
-                        mHomeAdapter = new HomeAdapter(getChildFragmentManager(), mHomeColumns);
-                        swipeDirectionDetector = new SwipeDirectionDetector();
+
+                        mHomeAdapter = new HomeAdapter(getActivity().getSupportFragmentManager(), mHomeColumns);
                         mViewPager.setAdapter(mHomeAdapter);
                         xablayout.setupWithViewPager(mViewPager);
+                        mViewPager.setOffscreenPageLimit(mHomeColumns.size());
+
                     }
                 });
     }
@@ -1458,12 +1480,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        Log.e("oooooo","滑动了："+verticalOffset);
-        if (scroll==verticalOffset){
+        Log.e("oooooo", "滑动了：" + verticalOffset);
+        if (scroll == verticalOffset) {
             showShareImage();
-        }else{
+        } else {
             hideShareImage();
-            scroll=verticalOffset;
+            scroll = verticalOffset;
         }
 
 
@@ -1589,13 +1611,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         @Override
         public int getCount() {
-            return mHomeColumns.size();
+            return mHomeColumns == null ? 0 : mHomeColumns.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            GoodCategoryInfo homeColumn = mHomeColumns.get(position);
-            return homeColumn.getName();
+            return mHomeColumns == null ? "" + position : mHomeColumns.get(position).getName();
         }
 
     }
@@ -1648,7 +1669,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (count_time_view!=null&&mObserver!=null){
+        if (count_time_view != null && mObserver != null) {
             count_time_view.unregisterDataSetObserver(mObserver);
         }
     }

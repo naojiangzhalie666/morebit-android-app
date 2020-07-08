@@ -109,7 +109,11 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list.size()>10){
+            return 10;
+        }else{
+            return list.size();
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package com.zjzy.morebit.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,11 @@ import android.widget.ImageView;
 
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.FloorBean2;
+import com.zjzy.morebit.pojo.FloorChildInfo;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.MyGsonUtils;
+import com.zjzy.morebit.utils.SensorsDataUtil;
+import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +50,21 @@ public class FloorAdapter3 extends RecyclerView.Adapter<FloorAdapter3.ViewHolder
 
     @Override
     public void onBindViewHolder(FloorAdapter3.ViewHolder holder, final int position) {
-
+        final FloorChildInfo floorChildInfo=new FloorChildInfo();
+        floorChildInfo.setId(mDatas.get(position).getId());
+        floorChildInfo.setOpen(mDatas.get(position).getOpen());
+        floorChildInfo.setMainTitle(mDatas.get(position).getMainTitle());
+        floorChildInfo.setClassId(mDatas.get(position).getClassId());
+        floorChildInfo.setUrl(mDatas.get(position).getUrl());
+        floorChildInfo.setSubTitle(mDatas.get(position).getSubTitle());
         LoadImgUtils.loadingCornerBitmap(mContext, holder.imageView,mDatas.get(position).getPicture(), 8);
-
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SensorsDataUtil.getInstance().advClickTrack(floorChildInfo.getId()+"",floorChildInfo.getOpen()+"", "楼层管理"+position, position,floorChildInfo.getMainTitle(), floorChildInfo.getClassId()+"", floorChildInfo.getUrl(), floorChildInfo.getSubTitle());
+                BannerInitiateUtils.gotoAction((Activity) mContext, MyGsonUtils.toImageInfo(floorChildInfo));
+            }
+        });
 //        final ImageInfo imageInfo = mDatas.get(position);
 //        ActivityFloorAdapter1.ViewHolder viewHolder = (ActivityFloorAdapter1.ViewHolder) holder;
 //        if (!TextUtils.isEmpty(imageInfo.getPicture()) && imageInfo.getId()!=-1) {

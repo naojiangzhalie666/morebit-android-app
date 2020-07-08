@@ -554,7 +554,10 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 iv_taobao.setText("淘宝");
             }
             if (!StringsUtils.isEmpty(Info.getTitle())) {
-                StringsUtils.retractTitle(iv_taobao, title, Info.getTitle());
+                Paint paint = new Paint();
+                paint.setTextSize(iv_taobao.getTextSize());
+                float size = paint.measureText(iv_taobao.getText().toString());
+                StringsUtils.retractTitles(title, Info.getTitle(), (int) (size) + 35);
             }
         }
 

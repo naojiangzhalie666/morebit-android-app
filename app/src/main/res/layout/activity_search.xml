@@ -36,6 +36,7 @@
 
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,17 +54,17 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:background="@drawable/bg_search_btn_new"
+
             android:gravity="center"
-            android:text="搜索"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:text="取消"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:id="@+id/search_rl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
             android:layout_toLeftOf="@+id/search"
@@ -74,20 +75,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:background="@drawable/bg_search_bg"
+                android:background="@drawable/bg_search_bg2"
                 android:gravity="left|center_vertical"
-                android:hint="粘贴商品标题搜索隐藏优惠券"
+                android:hint="搜索商品名或粘贴宝贝标题"
                 android:imeOptions="actionSearch"
-                android:paddingLeft="40dp"
+                android:paddingLeft="16dp"
                 android:paddingRight="15dp"
                 android:singleLine="true"
                 android:textColor="@color/color_000000"
                 android:textColorHint="@color/color_999999"
                 android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:deleteImg="@drawable/input_search_text_delete_icon" />
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="19dp"
                 android:layout_height="19dp"
                 android:layout_alignParentLeft="true"
@@ -214,6 +216,7 @@
 
                             <ImageView
                                 android:id="@+id/guideIv"
+                                android:scaleType="fitXY"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 />

@@ -194,7 +194,7 @@
                                     android:paddingRight="5dp"
                                     android:textSize="10sp"
                                     android:layout_marginTop="4dp"
-                                    android:text="拼多多"
+                                    tools:text="拼多多"
                                     android:textColor="@color/white" />
 
                                 <com.zjzy.morebit.view.CopyTextView

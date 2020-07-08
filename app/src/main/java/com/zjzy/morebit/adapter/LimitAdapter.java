@@ -1,5 +1,6 @@
 package com.zjzy.morebit.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.fragment.PanicBuyFragment;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -51,6 +53,12 @@ public class LimitAdapter extends RecyclerView.Adapter<LimitAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(LimitAdapter.ViewHolder holder, final int position) {
+        final ImageInfo mImageInfo = new ImageInfo();
+        mImageInfo.setClassId(4);
+        mImageInfo.setId(363);
+        mImageInfo.setSplicePid("0");
+        mImageInfo.setType("4");
+        mImageInfo.setTitle("限时抢购");
         LoadImgUtils.loadingCornerBitmap(mContext, holder.img, itemList.get(position).getItemPicture(), 4);
         if (!TextUtils.isEmpty(itemList.get(position).getItemTitle())){
             holder.tv_title.setText(itemList.get(position).getItemTitle()+"");
@@ -61,6 +69,13 @@ public class LimitAdapter extends RecyclerView.Adapter<LimitAdapter.ViewHolder>{
             holder.tv_price.setText(MathUtils.getnum(itemList.get(position).getItemVoucherPrice())+"");
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PanicBuyFragment.start((Activity) mContext, mImageInfo);//跳限时秒杀
+
+            }
+        });
 
     }
 

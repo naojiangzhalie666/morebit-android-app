@@ -140,6 +140,10 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_limit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <com.zjzy.morebit.utils.AutoInterceptViewGroup
         android:id="@+id/autoView"
         android:layout_width="match_parent"
@@ -150,5 +154,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.zjzy.morebit.utils.AutoInterceptViewGroup>
+    </RelativeLayout>
 
 </LinearLayout>

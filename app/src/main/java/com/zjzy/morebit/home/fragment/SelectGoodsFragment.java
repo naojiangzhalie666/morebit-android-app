@@ -130,9 +130,9 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_selectgoods, container, false);
-        getData();
-        getTime();
-        initView(view);
+//        getData();
+//        getTime();
+//        initView(view);
         return view;
     }
 
@@ -159,11 +159,11 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
                     protected void onSuccess(final UserZeroInfoBean data) {
 
                         initTime(Long.parseLong(data.getTime()));
-//                        if (data.isIsNewUser()){
-//                            new_goods.setVisibility(View.VISIBLE);
-//                        }else{
-//                            new_goods.setVisibility(View.GONE);
-//                        }
+                        if (data.isIsNewUser()){
+                            new_goods.setVisibility(View.VISIBLE);
+                        }else{
+                            new_goods.setVisibility(View.GONE);
+                        }
                         List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
 
                         if (itemList.size()!=0){
@@ -230,34 +230,34 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
         Bundle arguments = getArguments();
         if (arguments != null) {
         }
-        secondsTv=view.findViewById(R.id.secondsTv);
-        minutesTv=view.findViewById(R.id.minutesTv);
-        hoursTv=view.findViewById(R.id.hoursTv);
-        daysTv=view.findViewById(R.id.daysTv);
-        rcy_goods = view.findViewById(R.id.rcy_goods);
-        netscrollview=view.findViewById(R.id.netscrollview);
-        new_goods=view.findViewById(R.id.new_goods);
-        tv_icon=view.findViewById(R.id.tv_icon);
-        tv_title=view.findViewById(R.id.tv_title);
-        img=view.findViewById(R.id.img);
-        rcy_goods.setNestedScrollingEnabled(false);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        rcy_goods.setLayoutManager(manager);
-        netscrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                //判断是否滑到的底部
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    page++;
-                    getData();//调用刷新控件对应的加载更多方法
-                }
-            }
-        });
-        rcy_goods.getItemAnimator().setAddDuration(0);
-        rcy_goods.getItemAnimator().setChangeDuration(0);
-        rcy_goods.getItemAnimator().setMoveDuration(0);
-        rcy_goods.getItemAnimator().setRemoveDuration(0);
-        ((SimpleItemAnimator) rcy_goods.getItemAnimator()).setSupportsChangeAnimations(false);
+//        secondsTv=view.findViewById(R.id.secondsTv);
+//        minutesTv=view.findViewById(R.id.minutesTv);
+//        hoursTv=view.findViewById(R.id.hoursTv);
+//        daysTv=view.findViewById(R.id.daysTv);
+//        rcy_goods = view.findViewById(R.id.rcy_goods);
+//        netscrollview=view.findViewById(R.id.netscrollview);
+//        new_goods=view.findViewById(R.id.new_goods);
+//        tv_icon=view.findViewById(R.id.tv_icon);
+//        tv_title=view.findViewById(R.id.tv_title);
+//        img=view.findViewById(R.id.img);
+//        rcy_goods.setNestedScrollingEnabled(false);
+//        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+//        rcy_goods.setLayoutManager(manager);
+//        netscrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                //判断是否滑到的底部
+//                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+//                    page++;
+//                    getData();//调用刷新控件对应的加载更多方法
+//                }
+//            }
+//        });
+//        rcy_goods.getItemAnimator().setAddDuration(0);
+//        rcy_goods.getItemAnimator().setChangeDuration(0);
+//        rcy_goods.getItemAnimator().setMoveDuration(0);
+//        rcy_goods.getItemAnimator().setRemoveDuration(0);
+//        ((SimpleItemAnimator) rcy_goods.getItemAnimator()).setSupportsChangeAnimations(false);
 
 //        View header = LayoutInflater.from(getActivity()).inflate(R.layout.item_selectgoods_head, null, false);
 //        TextView tv_icon = header.findViewById(R.id.tv_icon);

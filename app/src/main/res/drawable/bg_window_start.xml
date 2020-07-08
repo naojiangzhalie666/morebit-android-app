@@ -22,4 +22,9 @@
             android:gravity="bottom|center|fill_horizontal"
             android:src="@drawable/app_start_button"/>
     </item>
+
+<!--    <item>
+
+        <bitmap android:src="@drawable/app_start_bg"/>-->
+<!--    </item>-->
 </layer-list>
