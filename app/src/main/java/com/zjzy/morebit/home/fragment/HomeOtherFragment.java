@@ -37,6 +37,13 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
+import com.app.hubert.guide.NewbieGuide;
+import com.app.hubert.guide.core.Controller;
+import com.app.hubert.guide.listener.OnGuideChangedListener;
+import com.app.hubert.guide.listener.OnLayoutInflatedListener;
+import com.app.hubert.guide.listener.OnPageChangedListener;
+import com.app.hubert.guide.model.GuidePage;
+import com.app.hubert.guide.model.HighLight;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -47,6 +54,8 @@ import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.HomeFragment;
+import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ActivityBaoAdapter;
 import com.zjzy.morebit.adapter.ActivityDouAdapter;
@@ -97,12 +106,14 @@ import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
+import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AutoHeightViewPager;
 import com.zjzy.morebit.utils.AutoInterceptViewGroup;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.CountTimeView;
 import com.zjzy.morebit.utils.CountTimeView2;
+import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -111,9 +122,11 @@ import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.SwipeDirectionDetector;
+import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.TimeUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.UI.SpaceItemRightUtils;
+import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.view.AspectRatioView;
 
 import java.io.Serializable;
@@ -154,8 +167,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     ;
     private NewsPagerAdapter mAdapter;
     private XTabLayout xTablayout, xablayout, litmited_tab;
-    private ViewPager  mViewPager, litmited_pager;
-    private AutoHeightViewPager  icon_pager;
+    private ViewPager mViewPager, litmited_pager;
+    private AutoHeightViewPager icon_pager;
     private CircleIndicator circle_indicator_view;
     private LinearLayout ll_bg;
     private RecyclerView activity_rcy1, activity_rcy2, new_rcy, activity_hao, dou_rcy, activity_rcy;
@@ -191,9 +204,16 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private long seconds;
     private boolean isRun = true;
     private TextView daysTv, hoursTv, minutesTv, secondsTv;
-    private LinearLayout ll_new;
+    private LinearLayout ll_new,litmit_ll;
     private LinearLayout new_goods;
-    private RelativeLayout rl_limit;
+    private RelativeLayout rl_limit, rl_urgency_notifi;
+    ;
+    private boolean isShowGuide = false;
+    private Handler mHandler;
+    View noLoginView, noaurthorView, nonewbuyView;
+    private String ischeck;
+    private boolean newPurchase = false;
+    private int num = 0;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -324,12 +344,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         mViewPager = mView.findViewById(R.id.viewPager);
         xablayout = mView.findViewById(R.id.xablayout);
         shareImageView = mView.findViewById(R.id.shareImageView);
-
+        litmit_ll=mView.findViewById(R.id.litmit_ll);
         litmited_pager = mView.findViewById(R.id.litmited_pager);
         limited = mView.findViewById(R.id.limited);
         limited.setOnClickListener(this);
         litmited_pager.setOnClickListener(this);
-        rl_limit=mView.findViewById(R.id.rl_limit);
+        rl_limit = mView.findViewById(R.id.rl_limit);
         tv_time1 = mView.findViewById(R.id.tv_time1);
         tv_time2 = mView.findViewById(R.id.tv_time2);
         tv_time3 = mView.findViewById(R.id.tv_time3);
@@ -339,7 +359,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         linear1 = mView.findViewById(R.id.linear1);
         linear2 = mView.findViewById(R.id.linear2);
         linear3 = mView.findViewById(R.id.linear3);
-
+        rl_urgency_notifi=mView.findViewById(R.id.rl_urgency_notifi);
         secondsTv = mView.findViewById(R.id.secondsTv);
         minutesTv = mView.findViewById(R.id.minutesTv);
         hoursTv = mView.findViewById(R.id.hoursTv);
@@ -364,7 +384,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         count_time_view = mView.findViewById(R.id.count_time_view);
         count_time_view.registerDataSetObserver(mObserver);
 
-
+        getLoginView();
+        boolean newPurchase = SPUtils.getInstance().getBoolean("newPurchase");
+        Log.e("page", newPurchase + "新人来了");
+        if (newPurchase) {
+            getPurchase();
+        }
         initBar();
 
 
@@ -606,7 +631,19 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     @Override
     public void onResume() {
         super.onResume();
-      //  initBar();
+        getLoginView();
+        if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuide() && !isShowGuide) {
+            isShowGuide = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showGuideSearch();
+                    SPUtils.getInstance().remove("num");
+                }
+            }, 500);
+
+        }
+        //  initBar();
         // mAppBarLt.addOnOffsetChangedListener(this);
     }
 
@@ -625,7 +662,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
             // 设置状态栏颜色
-         //   getActivity().getWindow().setStatusBarColor(Color.parseColor("#F05557"));
+            //   getActivity().getWindow().setStatusBarColor(Color.parseColor("#F05557"));
 
         }
     }
@@ -999,11 +1036,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         litmited_pager.setAdapter(limiteAdapter);
         litmited_pager.setOffscreenPageLimit(title_time.size());
 
-        long timeStamp = TimeUtil.date2TimeStamp(title+":00", "HH:mm:ss");
+        long timeStamp = TimeUtil.date2TimeStamp(title + ":00", "HH:mm:ss");
         Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
         String stime = TimeUtil.timeStamp2Date(String.valueOf(serverTime), "");
         long dataTime = TimeUtil.date2TimeStamp(stime, "HH:mm:ss");
-        long s=timeStamp - dataTime;
+        long s = timeStamp - dataTime;
         count_time_view.startLimitedTime(s);
 
     }
@@ -1164,9 +1201,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         //  this.mGuideNextCallback = mGuideNextCallback;
     }
 
-    public void getLoginView() {
 
-    }
+
 
     public void selectFirst() {
 //        try {
@@ -1673,4 +1709,383 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             count_time_view.unregisterDataSetObserver(mObserver);
         }
     }
+
+
+    public void getLoginView() {
+        Log.e("ssss","进来了");
+        boolean isLogin = LoginUtil.checkIsLogin(getActivity(), false);
+        if (!isLogin) {
+            Log.e("ssss","进来了1");
+            if (getActivity() == null) {
+                return;
+            }
+            Log.e("ssss","进来了2");
+            if (noLoginView == null) {
+                Log.e("ssss","进来了3");
+                noLoginView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_login, null);
+                noLoginView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                            return;
+                        }
+                        LoginUtil.goToPasswordLogin(getActivity());
+                    }
+                });
+            }
+
+            if (rl_urgency_notifi != null) {
+                rl_urgency_notifi.removeAllViews();
+                rl_urgency_notifi.addView(noLoginView);
+            }
+
+        } else {
+            if (TaobaoUtil.isAuth()) {//淘宝授权
+                if (noaurthorView == null) {
+                    noaurthorView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_authorization, null);
+                    noaurthorView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity(), false);
+                        }
+                    });
+                }
+                if (rl_urgency_notifi != null) {
+                    rl_urgency_notifi.removeAllViews();
+                    rl_urgency_notifi.addView(noaurthorView);
+                }
+
+            } else {
+                if (rl_urgency_notifi != null) {
+                    rl_urgency_notifi.removeAllViews();
+                }
+                RxHttp.getInstance().getCommonService().checkPruchase()
+                        .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                        .compose(this.<BaseResponse<String>>bindToLifecycle())
+                        .subscribe(new DataObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data) {
+
+                                ischeck = data;
+
+                                if (!TextUtils.isEmpty(ischeck)) {
+                                    if (ischeck.equals("true")) {//是否有新人首单
+                                        if (nonewbuyView == null) {
+                                            nonewbuyView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_new_buy, null);
+                                            nonewbuyView.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                        return;
+                                                    }
+                                                    getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));//跳转新人免单
+
+                                                }
+                                            });
+                                        }
+                                        if (rl_urgency_notifi != null) {
+                                            rl_urgency_notifi.removeAllViews();
+                                            rl_urgency_notifi.addView(nonewbuyView);
+                                        }
+
+                                    } else {
+                                        if (rl_urgency_notifi != null) {
+                                            rl_urgency_notifi.removeAllViews();
+                                        }
+
+                                    }
+                                }
+                            }
+                        });
+
+
+            }
+
+        }
+    }
+
+    public void showGuideSearch() {//新人引导页面
+        SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuide, false);
+        Log.e("page", "NewbieGuide onShowed: ");
+        // GuideViewUtil.showGuideView(getActivity(), search_rl, GuideViewUtil.GUIDE_SEARCH, 0, this.mGuideNextCallback, null);
+        NewbieGuide.with(this)
+                .setLabel("page")//设置引导层标示区分不同引导层，必传！否则报错
+                .setOnGuideChangedListener(new OnGuideChangedListener() {
+                    @Override
+                    public void onShowed(Controller controller) {
+                        Log.e("page", "NewbieGuide onShowed: ");
+                        //引导层显示
+                    }
+
+                    @Override
+                    public void onRemoved(Controller controller) {
+                        Log.e("page", "NewbieGuide  onRemoved: ");
+                        //引导层消失（多页切换不会触发）
+                        getPurchase();
+                        SPUtils.getInstance().put("newPurchase", true);
+                    }
+                })
+                .setOnPageChangedListener(new OnPageChangedListener() {
+                    @Override
+                    public void onPageChanged(int page) {
+                        Log.e("page", "NewbieGuide  onPageChanged: " + page);
+                        //引导页切换，page为当前页位置，从0开始
+                    }
+                })
+                .alwaysShow(true)//是否每次都显示引导层，默认false，只显示一次
+                .setShowCounts(1)
+                .addGuidePage(//添加一页引导页
+                        GuidePage.newInstance()//创建一个实例
+                                .setLayoutRes(R.layout.view_search_guide)//设置引导页布局
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+
+
+                                    }
+
+                                })
+//
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_news_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+//
+
+                                    }
+
+                                })
+                )
+
+                .addGuidePage(
+                        GuidePage.newInstance()
+
+                                .addHighLight(litmit_ll, HighLight.Shape.ROUND_RECTANGLE,35,0,null)
+                                .setLayoutRes(R.layout.view_icon_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+
+
+                                    }
+
+                                })
+
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_circle_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        ImageView search_jump = view.findViewById(R.id.search_jump);
+                                        RelativeLayout rl = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+                                    }
+
+                                })
+                )
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .setLayoutRes(R.layout.view_start_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        //引导页布局填充后回调，用于初始化
+                                        RelativeLayout search_jump = view.findViewById(R.id.rl);
+                                        search_jump.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                    return;
+                                                }
+                                                controller.remove();
+
+                                            }
+                                        });
+                                    }
+
+                                })
+                                .setEverywhereCancelable(false)
+                )
+                .show();//显示引导层(至少需要一页引导页才能显示)
+
+
+    }
+
+    private void getPurchase() {//新人弹框
+        Log.e("page", "新人");
+        RxHttp.getInstance().getCommonService().checkPruchase()
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(this.<BaseResponse<String>>bindToLifecycle())
+                .subscribe(new DataObserver<String>() {
+                    @Override
+                    protected void onSuccess(String data) {
+                        Log.e("page", data + "新人");
+                        ischeck = data;
+                        Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
+                        String ymdhhmmss = DateTimeUtils.getYmdhhmmss(String.valueOf(serverTime));
+                        if (!TextUtils.isEmpty(ischeck)) {
+                            if (ischeck.equals("true")) {//是否有新人首单
+                                if (DateTimeUtils.IsToday(ymdhhmmss)) {//判断是否是当天
+
+                                    num = SPUtils.getInstance().getInt("num");
+                                    Log.e("page", num + "num");
+                                    if (num<2){
+                                        NewbieGuide.with(getActivity())
+                                                .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
+                                                .alwaysShow(true)
+                                                .setShowCounts(1)
+                                                .addGuidePage(//添加一页引导页
+                                                        GuidePage.newInstance()//创建一个实例
+                                                                .setLayoutRes(R.layout.view_pruchase_guide)//设置引导页布局
+                                                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                                                    @Override
+                                                                    public void onLayoutInflated(View view, final Controller controller) {
+                                                                        //引导页布局填充后回调，用于初始化
+                                                                        ImageView diss = view.findViewById(R.id.diss);
+                                                                        diss.setOnClickListener(new View.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(View v) {
+                                                                                controller.remove();
+
+                                                                            }
+                                                                        });
+                                                                        ImageView purchase_bg = view.findViewById(R.id.purchase_bg);
+                                                                        purchase_bg.setOnClickListener(new View.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(View v) {
+                                                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
+                                                                                    return;
+                                                                                }
+                                                                                getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
+                                                                                controller.remove();
+                                                                            }
+                                                                        });
+                                                                    }
+
+                                                                })
+                                                                .setEverywhereCancelable(false)
+
+
+                                                ).show();
+                                        SPUtils.getInstance().put("num", num+1);
+                                    }
+
+
+                                }else{
+                                    SPUtils.getInstance().put("num", 0);
+                                }
+                            }
+                        }
+
+                    }
+                });
+
+
+    }
+
+    private void addRecommendGoodsView(final ImageInfo imageInfo, final int index) {
+        if (getActivity() == null) {
+            return;
+        }
+        View recommendGoodsView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_recommend_goods, null);
+        rl_urgency_notifi.removeAllViews();
+        rl_urgency_notifi.addView(recommendGoodsView);
+
+        ImageView iv_picture = recommendGoodsView.findViewById(R.id.iv_picture);
+        ImageView iv_icon = recommendGoodsView.findViewById(R.id.iv_icon);
+        TextView tv_desc = recommendGoodsView.findViewById(R.id.tv_desc);
+        TextView tv_title = recommendGoodsView.findViewById(R.id.tv_title);
+        tv_desc.setText(imageInfo.getDesc());
+        tv_title.setText(imageInfo.getTitle());
+        LoadImgUtils.setImg(getActivity(), iv_picture, imageInfo.getPicture());
+        LoadImgUtils.setImg(getActivity(), iv_icon, imageInfo.getIcon(), R.drawable.home_recommend_goods_dz);
+        recommendGoodsView.findViewById(R.id.iv_to_below).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cleseRecommendGoodsView(imageInfo, index);
+            }
+        });
+        recommendGoodsView.findViewById(R.id.tv_clese).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cleseRecommendGoodsView(imageInfo, 2);
+            }
+        });
+        recommendGoodsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BannerInitiateUtils.gotoAction(getActivity(), imageInfo);
+            }
+        });
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                cleseRecommendGoodsView(imageInfo, index);
+            }
+        }, 5000);
+    }
+
+    private void cleseRecommendGoodsView(ImageInfo imageInfo, int index) {
+        int id = imageInfo.getId();
+        index++;
+        App.getACache().put(C.sp.CLESE_RECOMMEND_GOODS + UserLocalData.getUser().getPhone() + id, index);
+        if (rl_urgency_notifi != null)
+            rl_urgency_notifi.removeAllViews();
+
+    }
+
 }

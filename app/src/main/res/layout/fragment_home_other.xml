@@ -95,11 +95,17 @@
 
 
                             <LinearLayout
+                                android:orientation="vertical"
                                 android:background="@color/color_F8F8F8"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical">
 
+                                <LinearLayout
+                                    android:id="@+id/litmit_ll"
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
                                 <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
                                     android:id="@+id/xTablayout"
                                     android:layout_width="0dp"
@@ -132,7 +138,7 @@
                                 android:layout_height="wrap_content"
                                 app:ci_drawable="@drawable/icon_huangdian"
                                 app:ci_drawable_unselected="@drawable/icon_huidian" />
-
+                            </LinearLayout>
                             <LinearLayout
                                 android:id="@+id/new_goods"
                                 android:layout_width="match_parent"
@@ -281,5 +287,10 @@
             android:layout_marginBottom="70dp"
             android:layout_marginRight="12dp"
             />
+        <RelativeLayout
+            android:id="@+id/rl_urgency_notifi"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
