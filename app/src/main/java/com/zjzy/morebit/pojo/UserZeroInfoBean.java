@@ -58,6 +58,15 @@ public class UserZeroInfoBean implements Serializable {
             private String slogan;
             private String itemPicture;
             private String itemVoucherPrice;
+            private String title;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
 
             public String getSlogan() {
                 return slogan;

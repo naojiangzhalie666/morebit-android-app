@@ -369,6 +369,7 @@ public class C {
         public static final String ICONNAME = "ICONNAME";
         public static final String SKILLITEM = "SKILLITEM";
         public static final String SKILLTITLE = "SKILLTITLE";
+        public static final String NEWGOODS = "NEWGOODS";
 
 
     }

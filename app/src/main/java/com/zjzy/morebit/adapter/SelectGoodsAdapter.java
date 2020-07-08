@@ -1,6 +1,7 @@
 package com.zjzy.morebit.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -27,7 +28,7 @@ import java.util.List;
  * @Author: wuchaowen
  * @Description: 二级模块
  **/
-public class SelectGoodsAdapter extends RecyclerView.Adapter{
+public class SelectGoodsAdapter extends RecyclerView.Adapter {
     public static final int DISPLAY_HORIZONTAL = 0; //横向
     private LayoutInflater mInflater;
     private List<ShopGoodInfo> mDatas = new ArrayList<>();
@@ -35,10 +36,10 @@ public class SelectGoodsAdapter extends RecyclerView.Adapter{
     private static final int FristType = 0;
     private static final int TwoType = 1;
 
-    public SelectGoodsAdapter(Context context,List<ShopGoodInfo> goods) {
+    public SelectGoodsAdapter(Context context, List<ShopGoodInfo> goods) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
-        this.mDatas=goods;
+        this.mDatas = goods;
     }
 
     public void setData(List<ShopGoodInfo> data) {
@@ -53,8 +54,8 @@ public class SelectGoodsAdapter extends RecyclerView.Adapter{
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 //        if (viewType == FristType) {
-              view = mInflater.inflate(R.layout.item_selectgoods, parent, false);
-             return new ViewHolder1(view);
+        view = mInflater.inflate(R.layout.item_selectgoods, parent, false);
+        return new ViewHolder1(view);
 //        } else if (viewType==TwoType){
 //              view = mInflater.inflate(R.layout.item_selectgoods2, parent, false);
 //            return new ViewHolder2(view);
@@ -66,8 +67,12 @@ public class SelectGoodsAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 //        if (holder instanceof ViewHolder1){
         final ShopGoodInfo info = mDatas.get(position);
-        ViewHolder1 holder1= (ViewHolder1) holder;
-            StringsUtils.retractTitle(holder1.tv_icon, holder1.tv_title, info.getItemTitle());
+        ViewHolder1 holder1 = (ViewHolder1) holder;
+
+        Paint paint = new Paint();
+        paint.setTextSize(holder1.tv_icon.getTextSize());
+        float size = paint.measureText(holder1.tv_icon.getText().toString());
+        StringsUtils.retractTitles(holder1.tv_title, info.getItemTitle(), (int) (size) + 20);
         LoadImgUtils.loadingCornerBitmap(mContext, holder1.img, MathUtils.getPicture(info), 8);
         holder1.tv_price.setText(MathUtils.getnum(info.getVoucherPrice()));
         holder1.volnum.setText("销量" + MathUtils.getSales(info.getSaleMonth()));
@@ -99,12 +104,9 @@ public class SelectGoodsAdapter extends RecyclerView.Adapter{
         }
 
 
-
-
-        if (!TextUtils.isEmpty(info.getShopName())){
-            holder1.shop_name.setText(info.getShopName()+"");
+        if (!TextUtils.isEmpty(info.getShopName())) {
+            holder1.shop_name.setText(info.getShopName() + "");
         }
-
 
 
 //        }else{
@@ -123,9 +125,6 @@ public class SelectGoodsAdapter extends RecyclerView.Adapter{
 //    }
 
 
-
-
-
     @Override
     public int getItemCount() {
 //        if (mDatas.size()<2){
@@ -139,30 +138,31 @@ public class SelectGoodsAdapter extends RecyclerView.Adapter{
 
 
     public class ViewHolder1 extends RecyclerView.ViewHolder {
-        private TextView tv_icon,tv_title,tv_price,volnum,coupon,tv_zhuan,shop_name;
-        private ImageView img,good_mall_tag;
+        private TextView tv_icon, tv_title, tv_price, volnum, coupon, tv_zhuan, shop_name;
+        private ImageView img, good_mall_tag;
+
         public ViewHolder1(View itemView) {
             super(itemView);
-            tv_icon= itemView.findViewById(R.id.tv_icon);
-            img= itemView.findViewById(R.id.img);
-            tv_title= itemView.findViewById(R.id.tv_title);
-            tv_price=itemView.findViewById(R.id.tv_price);
-            volnum=itemView.findViewById(R.id.volnum);
-            coupon=itemView.findViewById(R.id.coupon);
-            tv_zhuan=itemView.findViewById(R.id.tv_zhuan);
-            shop_name=itemView.findViewById(R.id.shop_name);
-            good_mall_tag=itemView.findViewById(R.id.good_mall_tag);
+            tv_icon = itemView.findViewById(R.id.tv_icon);
+            img = itemView.findViewById(R.id.img);
+            tv_title = itemView.findViewById(R.id.tv_title);
+            tv_price = itemView.findViewById(R.id.tv_price);
+            volnum = itemView.findViewById(R.id.volnum);
+            coupon = itemView.findViewById(R.id.coupon);
+            tv_zhuan = itemView.findViewById(R.id.tv_zhuan);
+            shop_name = itemView.findViewById(R.id.shop_name);
+            good_mall_tag = itemView.findViewById(R.id.good_mall_tag);
         }
     }
 
 
-
     public class ViewHolder2 extends RecyclerView.ViewHolder {
         private ImageView img2;
+
         public ViewHolder2(View itemView) {
             super(itemView);
 
-            img2= itemView.findViewById(R.id.img2);
+            img2 = itemView.findViewById(R.id.img2);
 
         }
     }

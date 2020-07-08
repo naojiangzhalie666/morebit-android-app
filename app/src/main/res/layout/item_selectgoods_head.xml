@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/iten_rl"
+    android:id="@+id/new_goods"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -47,14 +47,48 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
-        <TextView
+        <LinearLayout
+            android:id="@+id/ll_new"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="剩余2天23:59:59"
             android:layout_marginRight="12dp"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/daysTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="天"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                />
+            <TextView
+                android:id="@+id/hoursTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="时"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                />
+            <TextView
+                android:id="@+id/minutesTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="分"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                />
+            <TextView
+                android:id="@+id/secondsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="秒"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -69,6 +103,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
+        android:id="@+id/img"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:src="@color/color_999999"/>
@@ -134,7 +169,7 @@
             android:layout_weight="1"/>
 
         <RelativeLayout
-            android:layout_width="186dp"
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:background="@mipmap/new_bg_people"
             android:layout_marginBottom="15dp"

@@ -53,8 +53,8 @@
     <ImageView
         android:layout_marginTop="12dp"
         android:id="@+id/img_zhu"
-        android:layout_width="158dp"
-        android:layout_height="158dp"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
         android:layout_gravity="center"
        android:background="@color/color_999999"
         />

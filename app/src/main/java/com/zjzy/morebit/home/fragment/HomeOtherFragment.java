@@ -571,21 +571,31 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
             }
         });
-        autoView.setOnsClickListener(new AutoInterceptViewGroup.OnClickListener() {
-            @Override
-            public void paly() {
-                isAutoPlay = true;
-                handler.removeMessages(1001);
-                handler.sendEmptyMessageDelayed(1001, 3000);
-            }
 
+        autoView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void stop() {
-                isAutoPlay = false;
-                handler.removeMessages(1001);
+            public void onClick(View v) {
                 PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+                Log.e("gggg","不要点我");
+
             }
         });
+
+//        autoView.setOnsClickListener(new AutoInterceptViewGroup.OnClickListener() {
+//            @Override
+//            public void paly() {
+//                isAutoPlay = true;
+//                handler.removeMessages(1001);
+//                handler.sendEmptyMessageDelayed(1001, 3000);
+//            }
+//
+//            @Override
+//            public void stop() {
+//                isAutoPlay = false;
+//                handler.removeMessages(1001);
+//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+//            }
+//        });
 
 
     }
@@ -911,11 +921,19 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         new_rcy.setAdapter(newItemAdapter);
         if (data.isIsNewUser()){
             new_goods.setVisibility(View.VISIBLE);
+            shareImageView.setVisibility(View.VISIBLE);
         }else{
             new_goods.setVisibility(View.GONE);
+            shareImageView.setVisibility(View.GONE);
         }
         initTime(Long.parseLong(data.getTime()));
         new_goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowWebActivity.start(getActivity(), data.getLinkUrl(),"");
+            }
+        });
+        shareImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ShowWebActivity.start(getActivity(), data.getLinkUrl(),"");

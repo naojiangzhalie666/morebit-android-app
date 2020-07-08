@@ -83,17 +83,8 @@ public class ActivityBaoAdapter extends RecyclerView.Adapter<ActivityBaoAdapter.
 
 
 
-        if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner())
-                || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
+        if (!TextUtils.isEmpty(item.getCommission())){
             holder.tv_coupul.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission() + "") + "元");
-        } else {
-            UserInfo userInfo1 = UserLocalData.getUser();
-            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                holder.tv_coupul.setText("登录赚佣金");
-            } else {
-                holder.tv_coupul.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission() + "") + "元");
-            }
-
 
         }
 

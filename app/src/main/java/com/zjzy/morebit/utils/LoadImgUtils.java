@@ -684,6 +684,16 @@ public class LoadImgUtils {
      * @param url
      * @param radius  角度
      */
+    public static void loadingCornerTop2(Context context, ImageView iv, String url, int radius) {
+        loadingCornerBitmap(context, iv, url, R.drawable.icon_default, radius, true, false, true, false);
+    }
+
+    /**
+     * @param context
+     * @param iv
+     * @param url
+     * @param radius  角度
+     */
     public static void loadingCornerBitmap(Context context, ImageView iv, String url, int radius) {
         loadingCornerBitmap(context, iv, url, R.drawable.icon_default, radius);
     }
