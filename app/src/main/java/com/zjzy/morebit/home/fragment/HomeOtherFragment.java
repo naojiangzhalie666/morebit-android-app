@@ -130,7 +130,9 @@ import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.view.AspectRatioView;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -1035,12 +1037,27 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         limiteAdapter = new LimitePagerAdapter(getChildFragmentManager(), mfragment, timeList);
         litmited_pager.setAdapter(limiteAdapter);
         litmited_pager.setOffscreenPageLimit(title_time.size());
+        Date date = new Date();
+
+        String time = date.toLocaleString();
+
+        Log.i("md", "时间time为： "+time);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+        String sim = dateFormat.format(date);
+
+        Log.i("md", "时间sim为： "+sim);
 
         long timeStamp = TimeUtil.date2TimeStamp(title + ":00", "HH:mm:ss");
-        Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
-        String stime = TimeUtil.timeStamp2Date(String.valueOf(serverTime), "");
-        long dataTime = TimeUtil.date2TimeStamp(stime, "HH:mm:ss");
+
+        long dataTime = TimeUtil.date2TimeStamp(sim, "HH:mm:ss");
         long s = timeStamp - dataTime;
+
+        String sdataTime = TimeUtil.timeStamp2Date(String.valueOf(s), "HH:mm:ss");
+        Log.e("hhhh",timeStamp+"q");
+        Log.e("hhhh",dataTime+"r");
+        Log.e("hhhh",sdataTime+"t");
         count_time_view.startLimitedTime(s);
 
     }

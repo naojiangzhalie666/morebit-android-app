@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:lines="2"
             android:text="特仑苏2箱99元6月特仑苏250…"
             android:textColor="#ff333333"
             android:textSize="14sp"
