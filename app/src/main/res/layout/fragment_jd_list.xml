@@ -11,7 +11,9 @@
         android:layout_height="0.5dp"
         android:background="@color/color_E5E5E5"/>
 
-        <include layout="@layout/title_sort_layout"/>
+        <include layout="@layout/title_sort_layout"
+            android:visibility="gone"
+            />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/swipeList"

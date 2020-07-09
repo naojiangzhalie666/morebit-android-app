@@ -1032,7 +1032,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     }
 
 
-    @OnClick({R.id.btn_back,/*R.id.iv_release_goods,*/ R.id.ll_share_money, R.id.bottomLy, R.id.btn_sweepg, R.id.rl_prise, R.id.videopaly_btn, R.id.collect_ly, /*R.id.rl_shop_taobao,*/ R.id.ll_home, R.id.btn_tltle_back,R.id.ll_shen})
+    @OnClick({R.id.btn_back,R.id.tv_fuzhi, R.id.ll_share_money, R.id.bottomLy, R.id.btn_sweepg, R.id.rl_prise, R.id.videopaly_btn, R.id.collect_ly, /*R.id.rl_shop_taobao,*/ R.id.ll_home, R.id.btn_tltle_back,R.id.ll_shen})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
@@ -1149,6 +1149,14 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                     bundle2.putInt(C.UserType.NEWVIP,1);
                     OpenFragmentUtils.goToSimpleFragment(this, NumberFragment.class.getName(), bundle2);
                 }
+                break;
+            case R.id.tv_fuzhi: //复制推荐语
+                if (TextUtils.isEmpty(tv_desc.getText().toString())) {
+                    return;
+                }
+                AppUtil.coayTextPutNative(this, tv_desc.getText().toString());
+                ViewShowUtils.showShortToast(this, R.string.coayTextSucceed);
+
                 break;
             default:
                 break;

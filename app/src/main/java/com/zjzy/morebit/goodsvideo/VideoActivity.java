@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -25,6 +26,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.RxActivity;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -84,6 +86,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
     private VideoView videoView;
     private ImageView iv_head, img_share, img_collect, img_xia;
     private TKLBean mTKLBean;
+    private LinearLayout ll_share,ll_buy;
     List<ImageInfo> indexbannerdataArray = new ArrayList<>();
 
 
@@ -116,7 +119,8 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         tv_coupon_price = (TextView) findViewById(R.id.tv_coupon_price);//商品价格
         tv_buy = (TextView) findViewById(R.id.tv_buy);//立即购买
         tv_share = (TextView) findViewById(R.id.tv_share);//分享
-
+        ll_share= (LinearLayout) findViewById(R.id.ll_share);
+        ll_buy= (LinearLayout) findViewById(R.id.ll_buy);
         douAdapter = new VideoDouAdapter(this, data);
         mLayoutManager = new PagerLayoutManager(this, OrientationHelper.VERTICAL);
         rcy_video.setLayoutManager(mLayoutManager);
@@ -282,19 +286,24 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         LoadImgUtils.loadingCornerBitmap(this, iv_head, mGoodsInfo.getItemPic());
         tv_title.setText(mGoodsInfo.getItemTitle());
         tv_price.setText(mGoodsInfo.getCouponMoney() + "元劵");
-        tv_num.setText("销量：" + mGoodsInfo.getItemSale());
+        tv_num.setText("月销：" + mGoodsInfo.getItemSale());
         tv_coupon_price.setText(mGoodsInfo.getVoucherPrice() + "");
-        UserInfo userInfo1 = UserLocalData.getUser();
-        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-            tv_subsidy.setText("登录赚佣金");
-        } else {
-            if (C.UserType.operator.equals(UserLocalData.getUser(this).getPartner())
-                    || C.UserType.vipMember.equals(UserLocalData.getUser(this).getPartner())) {
-                tv_subsidy.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mGoodsInfo.getTkMoney() + "") + "元");
-            }
+        String muRatioComPrice="";
+        if (!TextUtils.isEmpty(mGoodsInfo.getTkMoney())){
+              muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mGoodsInfo.getTkMoney());
+            tv_subsidy.setText("赚 " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mGoodsInfo.getTkMoney() + "") + "元");
+
         }
 
-        tv_buy.setOnClickListener(new View.OnClickListener() {//购买
+        tv_buy.setText("分享赚钱\n赚¥"+muRatioComPrice);
+        double sum = MathUtils.sum(Double.valueOf(mGoodsInfo.getCouponMoney()), Double.valueOf(muRatioComPrice));
+
+
+        String discountsMoneyStr = MathUtils.formatTo2Decimals(mGoodsInfo.getCouponMoney() + "");
+
+        String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, muRatioComPrice);
+        tv_share.setText("立即购买\n省¥"+allDiscountsMoneyStr);
+        ll_share.setOnClickListener(new View.OnClickListener() {//购买
             @Override
             public void onClick(View v) {
                 if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
@@ -328,7 +337,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-        tv_share.setOnClickListener(new View.OnClickListener() {//分享
+        ll_buy.setOnClickListener(new View.OnClickListener() {//分享
             @Override
             public void onClick(View v) {
                 if (TaobaoUtil.isAuth()) {//淘宝授权

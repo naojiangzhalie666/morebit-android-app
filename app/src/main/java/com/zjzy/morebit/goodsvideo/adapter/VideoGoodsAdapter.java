@@ -2,8 +2,11 @@ package com.zjzy.morebit.goodsvideo.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +27,7 @@ import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.StringsUtils;
+import com.zjzy.morebit.utils.VerticalImageSpan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,13 +74,17 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
         final ShopGoodInfo videoBean = list.get(position);
         videoBean.setItemSourceId(list.get(position).getItemId());
 
-       // holder.tv_title.setText(list.get(position).getItemTitle());
-        StringsUtils.retractTitle( holder.img, holder.tv_title,list.get(position).getItemTitle());
-        //LoadImgUtils.setImg(context, holder.iv_head, list.get(position).getItemPic());
+
+        SpannableString spannableString = new SpannableString("  " + videoBean.getItemTitle());
+        Drawable drawable = context.getResources().getDrawable(R.drawable.tb_list_icon);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        spannableString.setSpan(new VerticalImageSpan(drawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.tv_title.setText(spannableString);
+
 
         if(!list.get(position).getItemPic().equals(holder.iv_head.getTag())){//解决图片加载不闪烁的问题,可以在加载时候，对于已经加载过的item,  采用比对tag方式判断是否需要重新计算高度
             holder.iv_head.setTag(null);//需要清空tag，否则报错
-            LoadImgUtils.loadingCornerTop(context, holder.iv_head, list.get(position).getItemPic(), 5);
+            LoadImgUtils.loadingCornerBitmap(context, holder.iv_head, list.get(position).getItemPic(), 5);
         }
         holder.tv_num.setText(MathUtils.getSale(videoBean.getDyLikeCount()));
 
@@ -84,17 +92,8 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
         holder.tv_price.setText("" + list.get(position).getItemPrice());
 
 
-
-        if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
-                || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())||C.UserType.member.equals(UserLocalData.getUser(context).getPartner())) {  holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + "") + "元");
-        } else {
-            UserInfo userInfo1 = UserLocalData.getUser();
-            if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                holder.tv_coupul.setText("登录赚佣金");
-            } else {
-                holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + "") + "元");
-            }
-
+        if (!TextUtils.isEmpty(list.get(position).getTkMoney() )){
+            holder.tv_coupul.setText("赚 ¥ " +MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkMoney() + ""));
 
         }
 

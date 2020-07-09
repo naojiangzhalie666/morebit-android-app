@@ -32,6 +32,7 @@
     </RelativeLayout>
     <include layout="@layout/title_sort_pdd_layout"
         android:id="@+id/title"
+        android:visibility="gone"
         />
 
     <com.zjzy.morebit.Module.common.View.ReUseListView
