@@ -371,6 +371,7 @@ public class C {
         public static final String SKILLTITLE = "SKILLTITLE";
         public static final String NEWGOODS = "NEWGOODS";
         public static final String NEWVIP = "NEWVIP";
+        public static final String TIMETITLE = "TIMETITLE";
 
 
     }
@@ -403,6 +404,8 @@ public class C {
         public static final String COMMISSION_PERCENT = "COMMISSION_PERCENT";// 获取普通会员，VIP，运营商佣金比例
 
         public static final String SELF_COMMISSION_PERCENT = "SELF_COMMISSION_PERCENT";// 自营商品的获取普通会员，VIP，运营商佣金比例
+
+        public static final String WEB_COMMSSION_RULE = "WEB_COMMSSION_RULE";// 返佣规则
     }
 
     /**

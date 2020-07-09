@@ -14,12 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -300,14 +302,30 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
         final EditText tv_max= inflate.findViewById(R.id.tv_max);
         TextView tv_sure = inflate.findViewById(R.id.tv_sure);
         final TextView tv_chong= inflate.findViewById(R.id.tv_chong);
-
+        if (!TextUtils.isEmpty(minPrice)){
+            tv_min.setText(minPrice);
+        }
+        if (!TextUtils.isEmpty(maxprice)){
+            tv_max.setText(maxprice);
+        }
         tv_sure.setOnClickListener(new View.OnClickListener() {//确定
             @Override
             public void onClick(View v) {
                 minPrice=tv_min.getText().toString();
                 maxprice=tv_max.getText().toString();
-                onReload();
-                mPopupWindow.dismiss();
+                if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
+                    ToastUtils.showShort("金额不能为空");
+                }else{
+                    int int1 = Integer.parseInt(minPrice);
+                    int int2 = Integer.parseInt(maxprice);
+                    if (int1>int2){
+                        ToastUtils.showShort("最高价不得低于最低价");
+                    }else{
+                        onReload();
+                        mPopupWindow.dismiss();
+                        hideInput();
+                    }
+                }
 
 
             }
@@ -317,6 +335,7 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
             public void onClick(View v) {
                 isMethodManager(tv_chong);
                 mPopupWindow.dismiss();
+                hideInput();
 
             }
         });
@@ -454,4 +473,14 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
     @Override
     public void showFinally() {
     }
+
+    /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(
+                InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
 }

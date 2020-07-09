@@ -37,12 +37,14 @@ public class LimiteFragment extends MvpFragment<VideoPresenter> implements Video
     private SwipeRefreshLayout  swipeList;
     private LinearLayout searchNullTips_ly;
     private List<PanicBuyingListBean.TimeListBean.ItemListBean> itemList;
+    private  String title;
 
 
-    public static LimiteFragment newInstance( List<PanicBuyingListBean.TimeListBean.ItemListBean> itemList) {
+    public static LimiteFragment newInstance( List<PanicBuyingListBean.TimeListBean.ItemListBean> itemList,String title) {
         LimiteFragment fragment = new LimiteFragment();
         Bundle args = new Bundle();
         args.putSerializable(C.UserType.TIMESKILL, (Serializable) itemList);
+        args.putSerializable(C.UserType.TIMETITLE, title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,12 +67,14 @@ public class LimiteFragment extends MvpFragment<VideoPresenter> implements Video
         Bundle arguments = getArguments();
         if (arguments != null) {
              itemList = (List<PanicBuyingListBean.TimeListBean.ItemListBean>) arguments.getSerializable(C.UserType.TIMESKILL);
+             title = (String) arguments.getSerializable(C.UserType.TIMETITLE);
+
         }
         rcy_litmit = view.findViewById(R.id.rcy_litmit);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
         rcy_litmit.setLayoutManager(manager);
 
-        LimitAdapter limitAdapter = new LimitAdapter(getActivity(),itemList);
+        LimitAdapter limitAdapter = new LimitAdapter(getActivity(),itemList,title);
         rcy_litmit.setAdapter(limitAdapter);
 
 

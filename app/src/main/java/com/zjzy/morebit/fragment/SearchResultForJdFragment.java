@@ -48,6 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 /**
  * 京东的搜索结果展示
  */
@@ -97,6 +99,9 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     private int page=1;
     private SmartRefreshLayout mSwipeList;
 
+    private boolean zong=true;
+    private boolean yong1=false;
+    private boolean yong2=false;
 
 
 
@@ -300,6 +305,9 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
                 }
                 onReload();
                 break;
+            case R.id.title_comprehensive_tv:
+                showPopupWindow(title_zong_volume_ll);
+                break;
         }
     }
 
@@ -455,14 +463,30 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         final EditText tv_max= inflate.findViewById(R.id.tv_max);
         TextView tv_sure = inflate.findViewById(R.id.tv_sure);
         final TextView tv_chong= inflate.findViewById(R.id.tv_chong);
-
+        if (!TextUtils.isEmpty(minPrice)){
+            tv_min.setText(minPrice);
+        }
+        if (!TextUtils.isEmpty(maxprice)){
+            tv_max.setText(maxprice);
+        }
         tv_sure.setOnClickListener(new View.OnClickListener() {//确定
             @Override
             public void onClick(View v) {
                 minPrice=tv_min.getText().toString();
                 maxprice=tv_max.getText().toString();
-                onReload();
-                mPopupWindow.dismiss();
+                if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
+                    ToastUtils.showShort("金额不能为空");
+                }else{
+                    int int1 = Integer.parseInt(minPrice);
+                    int int2 = Integer.parseInt(maxprice);
+                    if (int1>int2){
+                        ToastUtils.showShort("最高价不得低于最低价");
+                    }else{
+                        onReload();
+                        mPopupWindow.dismiss();
+                        hideInput();
+                    }
+                }
 
 
             }
@@ -472,6 +496,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
             public void onClick(View v) {
                 isMethodManager(tv_chong);
                 mPopupWindow.dismiss();
+                hideInput();
 
             }
         });
@@ -513,17 +538,37 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         RelativeLayout rl1=inflate.findViewById(R.id.rl1);
         RelativeLayout rl2=inflate.findViewById(R.id.rl2);
         RelativeLayout rl3=inflate.findViewById(R.id.rl3);
-
+        if (zong){
+            img1.setVisibility(View.VISIBLE);
+            img2.setVisibility(View.GONE);
+            img3.setVisibility(View.GONE);
+            tv1.setTextColor(Color.parseColor("#F05557"));
+            tv2.setTextColor(Color.parseColor("#999999"));
+            tv3.setTextColor(Color.parseColor("#999999"));
+        }else  if (yong1){
+            img1.setVisibility(View.GONE);
+            img2.setVisibility(View.VISIBLE);
+            img3.setVisibility(View.GONE);
+            tv1.setTextColor(Color.parseColor("#999999"));
+            tv2.setTextColor(Color.parseColor("#F05557"));
+            tv3.setTextColor(Color.parseColor("#999999"));
+        }else if (yong2){
+            img1.setVisibility(View.GONE);
+            img2.setVisibility(View.GONE);
+            img3.setVisibility(View.VISIBLE);
+            tv1.setTextColor(Color.parseColor("#999999"));
+            tv2.setTextColor(Color.parseColor("#999999"));
+            tv3.setTextColor(Color.parseColor("#F05557"));
+        }
         rl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.VISIBLE);
-                img2.setVisibility(View.GONE);
-                img3.setVisibility(View.GONE);
+                zong=true;
+                yong1=false;
+                yong2=false;
+
                 title_comprehensive_tv.setText("综合");
-                tv1.setTextColor(Color.parseColor("#F05557"));
-                tv2.setTextColor(Color.parseColor("#999999"));
-                tv3.setTextColor(Color.parseColor("#999999"));
+
                 eSortDirection=0;
                 mSortType=0;
                 onReload();
@@ -535,13 +580,12 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         rl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.GONE);
-                img2.setVisibility(View.VISIBLE);
-                img3.setVisibility(View.GONE);
+                zong=false;
+                yong1=true;
+                yong2=false;
+
                 title_comprehensive_tv.setText("佣金比例");
-                tv1.setTextColor(Color.parseColor("#999999"));
-                tv2.setTextColor(Color.parseColor("#F05557"));
-                tv3.setTextColor(Color.parseColor("#999999"));
+
                 eSortDirection=0;
                 mSortType=3;
                 onReload();
@@ -551,13 +595,12 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.GONE);
-                img2.setVisibility(View.GONE);
-                img3.setVisibility(View.VISIBLE);
+                zong=false;
+                yong1=false;
+                yong2=true;
+
                 title_comprehensive_tv.setText("佣金比例");
-                tv1.setTextColor(Color.parseColor("#999999"));
-                tv2.setTextColor(Color.parseColor("#999999"));
-                tv3.setTextColor(Color.parseColor("#F05557"));
+
                 eSortDirection=1;
                 mSortType=3;
                 onReload();
@@ -565,6 +608,14 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
             }
         });
 
+    }
+    /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(
+                InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
 

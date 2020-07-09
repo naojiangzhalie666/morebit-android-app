@@ -625,13 +625,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             activity_rcy.addItemDecoration(spaceItemDecorationUtils);
         }
         activity_rcy.setLayoutManager(manager6);
-        limited.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-                Log.e("gggg", "不要点我1");
-            }
-        });
+//        limited.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+//                Log.e("gggg", "不要点我1");
+//            }
+//        });
 
 
 //        autoView.setOnClickListener(new View.OnClickListener() {
@@ -1102,7 +1102,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         for (int i = 0; i < timeList.size(); i++) {
             LimiteFragment fragment = null;
             fragment = new LimiteFragment();
-            mfragment.add(fragment.newInstance(timeList.get(i).getItemList()));
+            mfragment.add(fragment.newInstance(timeList.get(i).getItemList(),timeList.get(i).getTitle()));
             if (timeList.get(i).getType() == 0) {
                 title = timeList.get(i).getTitle();
             }
@@ -1664,7 +1664,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         @Override
         public Fragment getItem(int position) {
             int mpostion = position % 3;
-            return LimiteFragment.newInstance(timeList.get(mpostion).getItemList());
+            return LimiteFragment.newInstance(timeList.get(mpostion).getItemList(),timeList.get(mpostion).getTitle());
         }
 
         @Override
@@ -1683,6 +1683,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         public void restoreState(Parcelable state, ClassLoader loader) {
 
         }
+
+
+
+
+
+
     }
 
     private class HomeAdapter extends FragmentPagerAdapter {

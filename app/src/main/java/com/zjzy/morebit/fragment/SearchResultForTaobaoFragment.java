@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -131,6 +133,9 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
     private String minPrice,maxprice;
     private boolean isCoupon = false;//优惠券是否选中
     private String coupon = "0";
+    private boolean zong=true;
+    private boolean yong1=false;
+    private boolean yong2=false;
 
 
     public static SearchResultForTaobaoFragment newInstance(int type) {
@@ -507,6 +512,9 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
                 }
                 reLoadData();
                 break;
+            case R.id.title_comprehensive_tv:
+                showPopupWindow(title_zong_volume_ll);
+                break;
         }
     }
     private void requestClickRadar(ImageView clickIv, TextView textView, int orderType) {
@@ -588,13 +596,32 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
         TextView tv_sure = inflate.findViewById(R.id.tv_sure);
         final TextView tv_chong= inflate.findViewById(R.id.tv_chong);
 
+        if (!TextUtils.isEmpty(minPrice)){
+            tv_min.setText(minPrice);
+        }
+        if (!TextUtils.isEmpty(maxprice)){
+            tv_max.setText(maxprice);
+        }
         tv_sure.setOnClickListener(new View.OnClickListener() {//确定
             @Override
             public void onClick(View v) {
                 minPrice=tv_min.getText().toString();
                 maxprice=tv_max.getText().toString();
-                reLoadData();
-                mPopupWindow.dismiss();
+                int int1 = Integer.parseInt(minPrice);
+                int int2 = Integer.parseInt(maxprice);
+                if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
+                    ToastUtils.showShort("金额不能为空");
+                }else{
+                    if (int1>int2){
+                        ToastUtils.showShort("最高价不得低于最低价");
+                    }else{
+                        hideInput();
+                        reLoadData();
+                        mPopupWindow.dismiss();
+                    }
+
+                }
+
 
 
             }
@@ -602,8 +629,8 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
         tv_chong.setOnClickListener(new View.OnClickListener() {//重置
             @Override
             public void onClick(View v) {
-                isMethodManager(tv_chong);
                 mPopupWindow.dismiss();
+                hideInput();
 
             }
         });
@@ -617,7 +644,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
     private void showPopupWindow(View view){
         //加载布局
         View inflate = LayoutInflater.from(getContext()).inflate(R.layout.pop_zong, null);
-        //更改背景颜色
+        //更改背景颜色m
 //        inflate.setBackgroundColor(getContext().getResources().getColor(R.color.white));
         final PopupWindow mPopupWindow = new PopupWindow(inflate);
         //设置SelectPicPopupWindow弹出窗体的宽
@@ -645,17 +672,37 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
         RelativeLayout rl1=inflate.findViewById(R.id.rl1);
         RelativeLayout rl2=inflate.findViewById(R.id.rl2);
         RelativeLayout rl3=inflate.findViewById(R.id.rl3);
-
+        if (zong){
+            img1.setVisibility(View.VISIBLE);
+            img2.setVisibility(View.GONE);
+            img3.setVisibility(View.GONE);
+            tv1.setTextColor(Color.parseColor("#F05557"));
+            tv2.setTextColor(Color.parseColor("#999999"));
+            tv3.setTextColor(Color.parseColor("#999999"));
+        }else  if (yong1){
+            img1.setVisibility(View.GONE);
+            img2.setVisibility(View.VISIBLE);
+            img3.setVisibility(View.GONE);
+            tv1.setTextColor(Color.parseColor("#999999"));
+            tv2.setTextColor(Color.parseColor("#F05557"));
+            tv3.setTextColor(Color.parseColor("#999999"));
+        }else if (yong2){
+            img1.setVisibility(View.GONE);
+            img2.setVisibility(View.GONE);
+            img3.setVisibility(View.VISIBLE);
+            tv1.setTextColor(Color.parseColor("#999999"));
+            tv2.setTextColor(Color.parseColor("#999999"));
+            tv3.setTextColor(Color.parseColor("#F05557"));
+        }
         rl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.VISIBLE);
-                img2.setVisibility(View.GONE);
-                img3.setVisibility(View.GONE);
+                zong=true;
+                yong1=false;
+                yong2=false;
+
                 title_comprehensive_tv.setText("综合");
-                tv1.setTextColor(Color.parseColor("#F05557"));
-                tv2.setTextColor(Color.parseColor("#999999"));
-                tv3.setTextColor(Color.parseColor("#999999"));
+
                 eSortDirection=0;
                 mSortType=0;
                 reLoadData();
@@ -667,13 +714,12 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
         rl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.GONE);
-                img2.setVisibility(View.VISIBLE);
-                img3.setVisibility(View.GONE);
+                zong=false;
+                yong1=true;
+                yong2=false;
+
                 title_comprehensive_tv.setText("佣金比例");
-                tv1.setTextColor(Color.parseColor("#999999"));
-                tv2.setTextColor(Color.parseColor("#F05557"));
-                tv3.setTextColor(Color.parseColor("#999999"));
+
                 eSortDirection=0;
                 mSortType=2;
                 reLoadData();
@@ -683,13 +729,12 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
         rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.GONE);
-                img2.setVisibility(View.GONE);
-                img3.setVisibility(View.VISIBLE);
+                zong=false;
+                yong1=false;
+                yong2=true;
+
                 title_comprehensive_tv.setText("佣金比例");
-                tv1.setTextColor(Color.parseColor("#999999"));
-                tv2.setTextColor(Color.parseColor("#999999"));
-                tv3.setTextColor(Color.parseColor("#F05557"));
+
                 eSortDirection=1;
                 mSortType=2;
                 reLoadData();
@@ -697,5 +742,13 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
             }
         });
 
+    }
+    /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(
+                InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 }

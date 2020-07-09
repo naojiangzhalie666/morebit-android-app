@@ -416,13 +416,13 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                             SPUtils.getInstance().put("purchaseRule", data.getZeroActivityRule());
                             LoadImgUtils.setImg(getActivity(), img_limted1, data.getFlashSalePic());
                             LoadImgUtils.setImg(getActivity(), img_limted2, data.getNoviceTutorialPic());
-                            img_limted1.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // BannerInitiateUtils.gotoMenu(getActivity(),4,mImageInfo);
-                                    PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-                                }
-                            });
+//                            img_limted1.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    // BannerInitiateUtils.gotoMenu(getActivity(),4,mImageInfo);
+//                                    PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+//                                }
+//                            });
                             img_limted2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

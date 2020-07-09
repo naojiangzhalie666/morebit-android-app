@@ -2,9 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:layout_height="match_parent"
+   android:background="#66000000"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -90,6 +98,7 @@
             android:background="#F05557"
             />
 
+    </LinearLayout>
     </LinearLayout>
 
 

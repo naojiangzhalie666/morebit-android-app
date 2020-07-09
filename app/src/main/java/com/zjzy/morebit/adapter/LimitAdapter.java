@@ -30,11 +30,13 @@ public class LimitAdapter extends RecyclerView.Adapter<LimitAdapter.ViewHolder>{
     private List<ImageInfo> mDatas = new ArrayList<>();
     private Context mContext;
     private List<PanicBuyingListBean.TimeListBean.ItemListBean> itemList;
+    private String title;
 
-    public LimitAdapter(Context context,List<PanicBuyingListBean.TimeListBean.ItemListBean> itemList) {
+    public LimitAdapter(Context context,List<PanicBuyingListBean.TimeListBean.ItemListBean> itemList,String title) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.itemList=itemList;
+        this.title=title;
     }
 
 
@@ -72,7 +74,7 @@ public class LimitAdapter extends RecyclerView.Adapter<LimitAdapter.ViewHolder>{
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PanicBuyFragment.start((Activity) mContext, mImageInfo);//跳限时秒杀
+                PanicBuyFragment.start((Activity) mContext, mImageInfo,title);//跳限时秒杀
 
             }
         });

@@ -53,7 +53,11 @@ import com.zjzy.morebit.main.ui.fragment.GuessDetailLikeFragment;
 import com.zjzy.morebit.main.ui.fragment.NineFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
@@ -66,6 +70,7 @@ import com.zjzy.morebit.pojo.goods.EvaluatesBean;
 import com.zjzy.morebit.pojo.goods.GoodsImgDetailBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -143,6 +148,18 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     TextView tv_logistics;
     @BindView(R.id.tv_sellel)
     TextView tv_sellel;
+    @BindView(R.id.tv_describe2)
+    TextView tv_describe2;
+    @BindView(R.id.tv_logistics2)
+    TextView tv_logistics2;
+    @BindView(R.id.tv_sellel2)
+    TextView tv_sellel2;
+    @BindView(R.id.tv_describe3)
+    TextView tv_describe3;
+    @BindView(R.id.tv_logistics3)
+    TextView tv_logistics3;
+    @BindView(R.id.tv_sellel3)
+    TextView tv_sellel3;
     @BindView(R.id.tv_collect)
     TextView tv_collect;
     @BindView(R.id.collect_bg)
@@ -451,6 +468,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 }
             }
         });
+        getReturning();
     }
 
     private void initTab() {
@@ -885,13 +903,20 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 String levelText = evaluatesBean.getLevelText();
                 switch (i) {
                     case 0:
-                        tv_describe.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
+                        tv_describe.setText(evaluatesBean.getTitle());
+                        tv_describe2.setText(" " + evaluatesBean.getScore());
+                        tv_describe3.setText(" "+evaluatesBean.getLevelText());
+
                         break;
                     case 1:
-                        tv_logistics.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
+                        tv_logistics.setText(evaluatesBean.getTitle());
+                        tv_logistics2.setText(" " + evaluatesBean.getScore());
+                        tv_logistics3.setText(" "+evaluatesBean.getLevelText());
                         break;
                     case 2:
-                        tv_sellel.setText(evaluatesBean.getTitle() + "：" + evaluatesBean.getScore());
+                        tv_sellel.setText(evaluatesBean.getTitle());
+                        tv_sellel2.setText(" " + evaluatesBean.getScore());
+                        tv_sellel3.setText(" "+evaluatesBean.getLevelText());
                         break;
                 }
             }
@@ -1334,6 +1359,32 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+
+
+    public void getReturning() {
+
+//        LoadingView.showDialog(this, "请求中...");
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.WEB_COMMSSION_RULE))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .compose(this.<BaseResponse<HotKeywords>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        String commssionH5 = data.getSysValue();
+                        Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
     }
 
 }

@@ -34,6 +34,7 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.PanicBuyTiemBean;
+import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.request.RequestPanicBuyTabBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestGetTimedSpikeList;
@@ -79,10 +80,17 @@ public class PanicBuyFragment extends BaseFragment {
 
     private LimitePagerAdapter limiteAdapter;
     private ImageView back;
+    private String title;
 
     public static void start(Activity activity, ImageInfo info) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(C.Extras.GOODSBEAN, info);
+        OpenFragmentUtils.goToSimpleFragment(activity, PanicBuyFragment.class.getName(), bundle);
+    }
+    public static void start(Activity activity, ImageInfo info,String title) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(C.Extras.GOODSBEAN, info);
+        bundle.putSerializable(C.UserType.TIMETITLE, title);
         OpenFragmentUtils.goToSimpleFragment(activity, PanicBuyFragment.class.getName(), bundle);
     }
 
@@ -125,6 +133,12 @@ public class PanicBuyFragment extends BaseFragment {
                         initIndicator();
                         limiteAdapter = new LimitePagerAdapter(getActivity().getSupportFragmentManager(), fragments,bean);
                         mViewPager.setAdapter(limiteAdapter);
+
+                        for (int i=0;i<mTimeTitleList.size();i++){
+                            if (title.equals(mTimeTitleList.get(i).getTitle())){
+                                mViewPager.setCurrentItem(i);
+                            }
+                        }
                     }
                 });
     }
@@ -140,7 +154,11 @@ public class PanicBuyFragment extends BaseFragment {
                 getActivity().finish();
             }
         });
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            title = (String) arguments.getSerializable(C.UserType.TIMETITLE);
 
+        }
 
     }
 

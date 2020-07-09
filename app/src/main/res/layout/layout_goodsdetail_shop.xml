@@ -94,29 +94,89 @@
                 android:orientation="horizontal"
                 android:text="宝贝描述"
                 android:textColor="@color/color_666666"
-                android:textSize="11dp"/>
+                android:textSize="12dp"/>
+            <TextView
+                android:id="@+id/tv_describe2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:text="5"
+                android:textColor="@color/color_F05557"
+                android:textSize="14dp"/>
+            <TextView
+                android:id="@+id/tv_describe3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/background_f8ecec_radius_2dp"
+                android:text="高"
+                android:paddingRight="2.5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/color_F05557"
+                android:textSize="12dp"/>
 
             <TextView
                 android:id="@+id/tv_logistics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="19dp"
+                android:layout_marginLeft="15dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:text="宝贝描述"
                 android:textColor="@color/color_666666"
-                android:textSize="11dp"/>
+                android:textSize="12dp"/>
+            <TextView
+                android:id="@+id/tv_logistics2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:text="5"
+                android:textColor="@color/color_F05557"
+                android:textSize="14dp"/>
+            <TextView
+                android:id="@+id/tv_logistics3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="高"
+                android:paddingRight="2.5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/background_f8ecec_radius_2dp"
+                android:textColor="@color/color_F05557"
+                android:textSize="12dp"/>
 
             <TextView
                 android:id="@+id/tv_sellel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="19dp"
+                android:layout_marginLeft="15dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:text="宝贝描述"
                 android:textColor="@color/color_666666"
-                android:textSize="11dp"/>
+                android:textSize="12dp"/>
+            <TextView
+                android:id="@+id/tv_sellel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:text="5"
+                android:textColor="@color/color_F05557"
+                android:textSize="14dp"/>
+            <TextView
+                android:id="@+id/tv_sellel3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="高"
+                android:paddingRight="2.5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/background_f8ecec_radius_2dp"
+                android:textColor="@color/color_F05557"
+                android:textSize="12dp"/>
 
 
         </LinearLayout>

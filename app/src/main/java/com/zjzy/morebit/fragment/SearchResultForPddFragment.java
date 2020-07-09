@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.wireless.security.open.middletier.fc.IFCActionCallback;
+import com.blankj.utilcode.util.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -85,6 +86,9 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
     LinearLayout dataList_ly;
     boolean isUserHint =true;
     private int mPushType;
+    private boolean zong=true;
+    private boolean yong1=false;
+    private boolean yong2=false;
 
     //销量
     private LinearLayout mTitleSalesVolumeLl,title_zong_volume_ll;
@@ -411,6 +415,9 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
                 }
                 reLoadData();
                 break;
+            case R.id.title_comprehensive_tv:
+                showPopupWindow(title_zong_volume_ll);
+                break;
         }
     }
 
@@ -493,14 +500,31 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
         final EditText tv_max= inflate.findViewById(R.id.tv_max);
         TextView tv_sure = inflate.findViewById(R.id.tv_sure);
         final TextView tv_chong= inflate.findViewById(R.id.tv_chong);
-
+        if (!TextUtils.isEmpty(minPrice)){
+            tv_min.setText(minPrice);
+        }
+        if (!TextUtils.isEmpty(maxprice)){
+            tv_max.setText(maxprice);
+        }
         tv_sure.setOnClickListener(new View.OnClickListener() {//确定
             @Override
             public void onClick(View v) {
                 minPrice=tv_min.getText().toString();
                 maxprice=tv_max.getText().toString();
-                reLoadData();
-                mPopupWindow.dismiss();
+                int int1 = Integer.parseInt(minPrice);
+                int int2 = Integer.parseInt(maxprice);
+                if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
+                    ToastUtils.showShort("金额不能为空");
+                }else{
+                    if (int1>int2){
+                        ToastUtils.showShort("最高价不得低于最低价");
+                    }else{
+                        reLoadData();
+                        mPopupWindow.dismiss();
+                        hideInput();
+                    }
+
+                }
 
 
             }
@@ -510,6 +534,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
             public void onClick(View v) {
                 isMethodManager(tv_chong);
                 mPopupWindow.dismiss();
+                hideInput();
 
             }
         });
@@ -552,16 +577,37 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
         RelativeLayout rl2=inflate.findViewById(R.id.rl2);
         RelativeLayout rl3=inflate.findViewById(R.id.rl3);
 
+        if (zong){
+            img1.setVisibility(View.VISIBLE);
+            img2.setVisibility(View.GONE);
+            img3.setVisibility(View.GONE);
+            tv1.setTextColor(Color.parseColor("#F05557"));
+            tv2.setTextColor(Color.parseColor("#999999"));
+            tv3.setTextColor(Color.parseColor("#999999"));
+        }else  if (yong1){
+            img1.setVisibility(View.GONE);
+            img2.setVisibility(View.VISIBLE);
+            img3.setVisibility(View.GONE);
+            tv1.setTextColor(Color.parseColor("#999999"));
+            tv2.setTextColor(Color.parseColor("#F05557"));
+            tv3.setTextColor(Color.parseColor("#999999"));
+        }else if (yong2){
+            img1.setVisibility(View.GONE);
+            img2.setVisibility(View.GONE);
+            img3.setVisibility(View.VISIBLE);
+            tv1.setTextColor(Color.parseColor("#999999"));
+            tv2.setTextColor(Color.parseColor("#999999"));
+            tv3.setTextColor(Color.parseColor("#F05557"));
+        }
         rl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.VISIBLE);
-                img2.setVisibility(View.GONE);
-                img3.setVisibility(View.GONE);
+                zong=true;
+                yong1=false;
+                yong2=false;
+
                 title_comprehensive_tv.setText("综合");
-                tv1.setTextColor(Color.parseColor("#F05557"));
-                tv2.setTextColor(Color.parseColor("#999999"));
-                tv3.setTextColor(Color.parseColor("#999999"));
+
                 eSortDirection=0;
                 mSortType=0;
                 reLoadData();
@@ -573,13 +619,12 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
         rl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.GONE);
-                img2.setVisibility(View.VISIBLE);
-                img3.setVisibility(View.GONE);
+                zong=false;
+                yong1=true;
+                yong2=false;
+
                 title_comprehensive_tv.setText("佣金比例");
-                tv1.setTextColor(Color.parseColor("#999999"));
-                tv2.setTextColor(Color.parseColor("#F05557"));
-                tv3.setTextColor(Color.parseColor("#999999"));
+
                 eSortDirection=0;
                 mSortType=1;
                 reLoadData();
@@ -589,13 +634,12 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
         rl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                img1.setVisibility(View.GONE);
-                img2.setVisibility(View.GONE);
-                img3.setVisibility(View.VISIBLE);
+                zong=false;
+                yong1=false;
+                yong2=true;
+
                 title_comprehensive_tv.setText("佣金比例");
-                tv1.setTextColor(Color.parseColor("#999999"));
-                tv2.setTextColor(Color.parseColor("#999999"));
-                tv3.setTextColor(Color.parseColor("#F05557"));
+
                 eSortDirection=1;
                 mSortType=1;
                 reLoadData();
@@ -604,5 +648,12 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
         });
 
     }
-
+    /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(
+                InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
 }
