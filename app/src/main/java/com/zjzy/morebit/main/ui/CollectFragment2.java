@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +43,7 @@ import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.StringsUtils;
+import com.zjzy.morebit.utils.VerticalImageSpan;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.network.CommonEmpty;
 import com.zjzy.morebit.utils.action.MyAction;
@@ -75,6 +79,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     TextView share;
     @BindView(R.id.delete)
     TextView delete;
+    private  Drawable drawable;
 
     private List<ShopGoodInfo> collectArray = new ArrayList<>(); //收藏
     int mPage = 1;
@@ -463,9 +468,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 //判断是淘宝还是天猫的商品
 
 
-                if (!TextUtils.isEmpty(item.getTitle())) {
-                    StringsUtils.retractTitle(good_mall_tag,title,item.getTitle());
-                }
+
                 if (!StringsUtils.isShowVideo(item.getVideoid())) {
                     video_play.setVisibility(View.GONE);
                 } else {
@@ -535,33 +538,48 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 });
                 checkbox.setSelected(item.isSelect());
                 if (item.getShopType()==2) {
-                    good_mall_tag.setImageResource(R.drawable.tianmao);
+                    drawable = mContext.getResources().getDrawable(R.drawable.tianmao);
+                   // good_mall_tag.setImageResource(R.drawable.tianmao);
                     ll_shop_name.setVisibility(View.VISIBLE);
                     sales.setVisibility(View.VISIBLE);
                 } else if (item.getShopType() == 1) {
-                    good_mall_tag.setImageResource(R.drawable.taobao);
+                    drawable = mContext.getResources().getDrawable(R.drawable.taobao);
+                   // good_mall_tag.setImageResource(R.drawable.taobao);
                     ll_shop_name.setVisibility(View.VISIBLE);
                     sales.setVisibility(View.VISIBLE);
                     //拼多多
                 }else if (item.getShopType() == 3){
-                    good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                    drawable = mContext.getResources().getDrawable(R.drawable.pdd_icon);
+                  //  good_mall_tag.setImageResource(R.drawable.pdd_icon);
                     ll_shop_name.setVisibility(View.VISIBLE);
                     sales.setVisibility(View.VISIBLE);
                 }else if (item.getShopType()==4){//京东
-                    good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                   // good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                    drawable = mContext.getResources().getDrawable(R.mipmap.jdong_icon);
                     ll_shop_name.setVisibility(View.VISIBLE);
                     sales.setVisibility(View.VISIBLE);
 
                 }else if (item.getShopType()==5){//考拉
-                    good_mall_tag.setImageResource(R.mipmap.kaola);
+                   // good_mall_tag.setImageResource(R.mipmap.kaola);
+                    drawable = mContext.getResources().getDrawable(R.mipmap.kaola);
+
                     ll_shop_name.setVisibility(View.INVISIBLE);
                     sales.setVisibility(View.GONE);
 
                 }else if (item.getShopType()==6){//唯品会
-                    good_mall_tag.setImageResource(R.mipmap.wph_icon);
+                   // good_mall_tag.setImageResource(R.mipmap.wph_icon);
+                    drawable = mContext.getResources().getDrawable(R.mipmap.wph_icon);
                     sales.setVisibility(View.GONE);
                     tv_shop_name.setText(""+item.getShopName());
                 }
+                if (!TextUtils.isEmpty(item.getTitle())) {
+                    StringsUtils.retractTitles(title,item.getTitle(),(int)good_mall_tag.getWidth()+20);
+
+                }
+                SpannableString spannableString = new SpannableString("  " + item.getItemTitle());
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                spannableString.setSpan(new VerticalImageSpan(drawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                title.setText(spannableString);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +44,7 @@ import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.StringsUtils;
+import com.zjzy.morebit.utils.VerticalImageSpan;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.dao.DBManager;
@@ -70,6 +74,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
     TextView editor;
     @BindView(R.id.toolbar_right_img)
     ImageView toolbar_right_img;
+    private Drawable drawable;
 
     private List<GoodsBrowsHistory> listArray = new ArrayList<>();
     GoodsHistoryAdapter mAdapter;
@@ -463,29 +468,39 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                 checkbox.setSelected(item.isSelect());
                 switch (shopType){
                     case 2:
-                        good_mall_tag.setImageResource(R.drawable.tianmao);
+                        drawable = mContext.getResources().getDrawable(R.drawable.tianmao);
+                        //good_mall_tag.setImageResource(R.drawable.tianmao);
                         break;
                     case 1:
-                        good_mall_tag.setImageResource(R.drawable.taobao);
+                        drawable = mContext.getResources().getDrawable(R.drawable.taobao);
+                      //  good_mall_tag.setImageResource(R.drawable.taobao);
                         break;
                     case 3:
-                        good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                        drawable = mContext.getResources().getDrawable(R.drawable.pdd_icon);
+                       // good_mall_tag.setImageResource(R.drawable.pdd_icon);
                         break;
                     case 4:
-                        good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                        drawable = mContext.getResources().getDrawable(R.mipmap.jdong_icon);
+                        //good_mall_tag.setImageResource(R.mipmap.jdong_icon);
                         break;
                     case 5:
-                        good_mall_tag.setImageResource(R.mipmap.kaola);
+                        drawable = mContext.getResources().getDrawable(R.mipmap.kaola);
+                       // good_mall_tag.setImageResource(R.mipmap.kaola);
                         sales.setVisibility(View.GONE);
                         ll_shop_name.setVisibility(View.INVISIBLE);
                         break;
                     case 6:
-                        good_mall_tag.setImageResource(R.mipmap.wph_icon);
+                        drawable = mContext.getResources().getDrawable(R.mipmap.wph_icon);
+                        //good_mall_tag.setImageResource(R.mipmap.wph_icon);
                         sales.setVisibility(View.GONE);
                         break;
                     default:
                         break;
                 }
+                SpannableString spannableString = new SpannableString("  " + item.getItemTitle());
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                spannableString.setSpan(new VerticalImageSpan(drawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                title.setText(spannableString);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

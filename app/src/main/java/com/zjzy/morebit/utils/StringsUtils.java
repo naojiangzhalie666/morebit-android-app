@@ -324,7 +324,7 @@ public class StringsUtils {
                 }
             });
         }else{
-            retractTitle(tv,title);
+            retractTitles(tv,title,sWidth);
         }
     }
 

@@ -118,7 +118,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
                 viewHolder.commission.setText(mContext.getString(R.string.mcommission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
 
             }
-            SpannableString spannableString = new SpannableString("  " + info.getItemTitle());
+            SpannableString spannableString = new SpannableString("   " + info.getItemTitle());
             Drawable drawable = mContext.getResources().getDrawable(R.mipmap.jd_list_icon);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             spannableString.setSpan(new VerticalImageSpan(drawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
