@@ -674,8 +674,8 @@ public class C {
     }
 
     public static class PHONE {
-        public static final int MIN_LENGTH = 6;
-        public static final int MAX_LENGTH = 12;
+        public static final int MIN_LENGTH = 8;
+        public static final int MAX_LENGTH = 11;
         public static final int DEFAULT_LENGTH = 11;
     }
 
