@@ -14,7 +14,9 @@ import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
 import com.zjzy.morebit.pojo.RankTimeBean;
 import com.zjzy.morebit.pojo.RequestNineBean;
+import com.zjzy.morebit.pojo.RequestReadNotice;
 import com.zjzy.morebit.pojo.TkBean;
+import com.zjzy.morebit.pojo.UnreadInforBean;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
@@ -2667,4 +2669,21 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/system/getUserNoticeList")
     public Observable<BaseResponse<NoticemBean>> getUserNoticeList();
+    /**
+     * 消息是否有未读
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/system/getUnreadInformation")
+    public Observable<BaseResponse<UnreadInforBean>> getUnreadInformation();
+
+    /**
+     * 消息已读
+     *
+     * @return
+     */
+//    @FormUrlEncoded
+    @POST("/api/system/readNotice")
+    public Observable<BaseResponse<String>> getReadNotice(@Body RequestReadNotice body);
 }

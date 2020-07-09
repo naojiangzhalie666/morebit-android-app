@@ -118,6 +118,7 @@
                         android:src="@drawable/icon_bg_earning" />
 
                     <ImageView
+                        android:id="@+id/img1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/notice_yuan"
@@ -191,6 +192,7 @@
                         android:src="@drawable/icon_bg_msg_fans" />
 
                     <ImageView
+                        android:id="@+id/img2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/notice_yuan"
@@ -264,6 +266,7 @@
                         android:src="@drawable/icon_bg_msg_system" />
 
                     <ImageView
+                        android:id="@+id/img3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/notice_yuan"
@@ -338,6 +341,7 @@
                         android:src="@drawable/icon_bg_msg_feedback" />
 
                     <ImageView
+                        android:id="@+id/img4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/notice_yuan"
@@ -412,6 +416,7 @@
                         android:src="@drawable/icon_bg_msg_activity" />
 
                     <ImageView
+                        android:id="@+id/img5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/notice_yuan"

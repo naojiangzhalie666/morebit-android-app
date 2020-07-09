@@ -3,7 +3,10 @@ package com.zjzy.morebit.home.fragment;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Build;
@@ -97,7 +100,9 @@ import com.zjzy.morebit.pojo.FloorInfo;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
+import com.zjzy.morebit.pojo.RequestReadNotice;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UnreadInforBean;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.goods.Child2;
@@ -206,7 +211,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private long seconds;
     private boolean isRun = true;
     private TextView daysTv, hoursTv, minutesTv, secondsTv;
-    private LinearLayout ll_new,litmit_ll;
+    private LinearLayout ll_new, litmit_ll;
     private LinearLayout new_goods;
     private RelativeLayout rl_limit, rl_urgency_notifi;
     ;
@@ -216,6 +221,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private String ischeck;
     private boolean newPurchase = false;
     private int num = 0;
+    private RelativeLayout msg_rl;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -279,7 +285,24 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         }
 
     };
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("1")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+              getReadNoticed(1);
+            }else if (action.equals("2")){
+                getReadNoticed(2);
+            }else if (action.equals("3")){
+                getReadNoticed(3);
+            }else if (action.equals("4")){
+                getReadNoticed(4);
+            }else if (action.equals("6")){
+                getReadNoticed(6);
+            }
+        }
+    };
     public static HomeOtherFragment newInstance(String param1, String param2) {
         HomeOtherFragment fragment = new HomeOtherFragment();
         Bundle args = new Bundle();
@@ -338,6 +361,14 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     private void initOtherView() {
         // home_rcy = mView.findViewById(R.id.home_rcy);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("6");//名字
+        intentFilter.addAction("4");//名字
+        intentFilter.addAction("3");//名字
+        intentFilter.addAction("2");//名字
+        intentFilter.addAction("1");//名字
+        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+        msg_rl = mView.findViewById(R.id.msg_rl);
         ll_new = mView.findViewById(R.id.ll_new);
         img_bao = mView.findViewById(R.id.img_bao);
         swipeRefreshLayout = mView.findViewById(R.id.swipeRefreshLayout);
@@ -346,7 +377,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         mViewPager = mView.findViewById(R.id.viewPager);
         xablayout = mView.findViewById(R.id.xablayout);
         shareImageView = mView.findViewById(R.id.shareImageView);
-        litmit_ll=mView.findViewById(R.id.litmit_ll);
+        litmit_ll = mView.findViewById(R.id.litmit_ll);
         litmited_pager = mView.findViewById(R.id.litmited_pager);
         limited = mView.findViewById(R.id.limited);
         limited.setOnClickListener(this);
@@ -361,7 +392,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         linear1 = mView.findViewById(R.id.linear1);
         linear2 = mView.findViewById(R.id.linear2);
         linear3 = mView.findViewById(R.id.linear3);
-        rl_urgency_notifi=mView.findViewById(R.id.rl_urgency_notifi);
+        rl_urgency_notifi = mView.findViewById(R.id.rl_urgency_notifi);
         secondsTv = mView.findViewById(R.id.secondsTv);
         minutesTv = mView.findViewById(R.id.minutesTv);
         hoursTv = mView.findViewById(R.id.hoursTv);
@@ -373,6 +404,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         home_msg = mView.findViewById(R.id.home_msg);
         home_msg.setOnClickListener(this);
+        msg_rl.setOnClickListener(this);
         linear1.setOnClickListener(this);
         linear2.setOnClickListener(this);
         linear3.setOnClickListener(this);
@@ -634,6 +666,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     public void onResume() {
         super.onResume();
         getLoginView();
+        getNotice();
+
         if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuide() && !isShowGuide) {
             isShowGuide = true;
             new Handler().postDelayed(new Runnable() {
@@ -856,8 +890,47 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 });
 
 
+
+        getNotice();//消息
+
+
+
         getCategoryData();
 
+    }
+
+    private void getNotice() {
+
+        getUnreadInformation(this)
+                .subscribe(new DataObserver<UnreadInforBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(UnreadInforBean data) {
+                        onUnreadInformation(data);
+                    }
+                });
+    }
+
+    private void onUnreadInformation(UnreadInforBean data) {
+        if (!data.isActivity() && !data.isFeedback() && !data.isIncome() && !data.isFs() && !data.isSystem()) {
+            home_msg.setImageResource(R.mipmap.notice_icon);
+        }else{
+            home_msg.setImageResource(R.drawable.notice_icon_bg);
+        }
     }
 
     private void initLimit() {
@@ -1041,13 +1114,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         String time = date.toLocaleString();
 
-        Log.i("md", "时间time为： "+time);
+        Log.i("md", "时间time为： " + time);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
         String sim = dateFormat.format(date);
 
-        Log.i("md", "时间sim为： "+sim);
+        Log.i("md", "时间sim为： " + sim);
 
         long timeStamp = TimeUtil.date2TimeStamp(title + ":00", "HH:mm:ss");
 
@@ -1055,9 +1128,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         long s = timeStamp - dataTime;
 
         String sdataTime = TimeUtil.timeStamp2Date(String.valueOf(s), "HH:mm:ss");
-        Log.e("hhhh",timeStamp+"q");
-        Log.e("hhhh",dataTime+"r");
-        Log.e("hhhh",sdataTime+"t");
+        Log.e("hhhh", timeStamp + "q");
+        Log.e("hhhh", dataTime + "r");
+        Log.e("hhhh", sdataTime + "t");
         count_time_view.startLimitedTime(s);
 
     }
@@ -1217,8 +1290,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     public void setmGuideNextCallback(GuideNextCallback mGuideNextCallback) {
         //  this.mGuideNextCallback = mGuideNextCallback;
     }
-
-
 
 
     public void selectFirst() {
@@ -1719,6 +1790,47 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 .compose(fragment.<BaseResponse<FloorBean2>>bindToLifecycle());
     }
 
+
+    //消息是否已读
+    public Observable<BaseResponse<UnreadInforBean>> getUnreadInformation(RxFragment fragment) {
+        return RxHttp.getInstance().getSysteService().getUnreadInformation()
+                .compose(RxUtils.<BaseResponse<UnreadInforBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UnreadInforBean>>bindToLifecycle());
+    }
+
+    //消息已读
+    public Observable<BaseResponse<String>> getReadNotice(RxFragment fragment,int  type) {
+        RequestReadNotice notice=new RequestReadNotice();
+        notice.setType(type);
+        return RxHttp.getInstance().getSysteService().getReadNotice(notice)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
+    }
+    private void getReadNoticed(int type) {
+        getReadNotice(this, type)
+                .subscribe(new DataObserver<String>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(String data) {
+
+                    }
+                });
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -1727,18 +1839,23 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
+    }
 
     public void getLoginView() {
-        Log.e("ssss","进来了");
+        Log.e("ssss", "进来了");
         boolean isLogin = LoginUtil.checkIsLogin(getActivity(), false);
         if (!isLogin) {
-            Log.e("ssss","进来了1");
+            Log.e("ssss", "进来了1");
             if (getActivity() == null) {
                 return;
             }
-            Log.e("ssss","进来了2");
+            Log.e("ssss", "进来了2");
             if (noLoginView == null) {
-                Log.e("ssss","进来了3");
+                Log.e("ssss", "进来了3");
                 noLoginView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_login, null);
                 noLoginView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1904,7 +2021,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 .addGuidePage(
                         GuidePage.newInstance()
 
-                                .addHighLight(litmit_ll, HighLight.Shape.ROUND_RECTANGLE,35,0,null)
+                                .addHighLight(litmit_ll, HighLight.Shape.ROUND_RECTANGLE, 35, 0, null)
                                 .setLayoutRes(R.layout.view_icon_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
                                 .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
                                     @Override
@@ -1997,7 +2114,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
                                     num = SPUtils.getInstance().getInt("num");
                                     Log.e("page", num + "num");
-                                    if (num<2){
+                                    if (num < 2) {
                                         NewbieGuide.with(getActivity())
                                                 .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
                                                 .alwaysShow(true)
@@ -2035,11 +2152,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
 
                                                 ).show();
-                                        SPUtils.getInstance().put("num", num+1);
+                                        SPUtils.getInstance().put("num", num + 1);
                                     }
 
 
-                                }else{
+                                } else {
                                     SPUtils.getInstance().put("num", 0);
                                 }
                             }

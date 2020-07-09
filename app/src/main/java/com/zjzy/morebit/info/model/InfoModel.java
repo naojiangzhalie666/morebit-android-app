@@ -14,6 +14,7 @@ import com.zjzy.morebit.pojo.EarningsMsg;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
+import com.zjzy.morebit.pojo.RequestReadNotice;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UpgradeCarousel;
 import com.zjzy.morebit.pojo.myInfo.ApplyUpgradeBean;
@@ -45,7 +46,14 @@ public class InfoModel extends MvpModel {
     public static final int msgFansType = 2;//粉丝
     public static final int msgActivityType = 6;//活动
 
-
+    //消息已读
+    public Observable<BaseResponse<String>> getReadNotice(RxFragment fragment,int  type) {
+        RequestReadNotice notice=new RequestReadNotice();
+        notice.setType(type);
+        return RxHttp.getInstance().getSysteService().getReadNotice(notice)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
+    }
     /**
      * 申请升级
      *

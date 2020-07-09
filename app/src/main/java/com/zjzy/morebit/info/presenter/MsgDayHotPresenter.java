@@ -1,5 +1,7 @@
 package com.zjzy.morebit.info.presenter;
 
+import android.util.Log;
+
 import com.zjzy.morebit.info.contract.MsgDayHotContract;
 import com.zjzy.morebit.info.model.InfoModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
@@ -37,6 +39,22 @@ public class MsgDayHotPresenter extends MvpPresenter<InfoModel, MsgDayHotContrac
                     @Override
                     protected void onSuccess(List<DayHotBean> data) {
                         getIView().onMsgSuccessful(data);
+                    }
+                });
+    }
+
+
+    public void getNoticede(RxFragment fragment,int  type){
+        mModel.getReadNotice(fragment,type)
+                .subscribe(new DataObserver<String>(false) {
+                    @Override
+                    protected void onSuccess(String data) {
+
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        Log.e("sssss","2");
                     }
                 });
     }
