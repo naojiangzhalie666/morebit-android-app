@@ -10,12 +10,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
+import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,14 +33,16 @@ import butterknife.ButterKnife;
  * 升级入口，会员商品列表
  * Created by haiping.liu on 2019-12-04.
  */
-public class NumberFragment extends BaseMainFragmeng  {
+public class NumberFragment extends BaseMainFragmeng {
     private static final String TAG = NumberFragment.class.getSimpleName();
 
     private View mView;
-//
+    //
     @BindView(R.id.status_bar)
     View status_bar;
-    private  String extra;
+    private String extra;
+    private ImageView back;
+    private int fanhui;
 
 
 //    @BindView(R.id.my_more_corn)
@@ -60,7 +64,7 @@ public class NumberFragment extends BaseMainFragmeng  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         mView = inflater.inflate(R.layout.fragment_number, container, false);
         ButterKnife.bind(this, mView);
 
@@ -76,8 +80,14 @@ public class NumberFragment extends BaseMainFragmeng  {
     }
 
     private void initView(View view) {
-        ViewPager viewPager = view.findViewById(R.id.viewPager);
 
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            fanhui = arguments.getInt(C.UserType.NEWVIP);
+        }
+        ViewPager viewPager = view.findViewById(R.id.viewPager);
+        back = view.findViewById(R.id.back);
         mFragments.add(NumberSubFragment.newInstance());
         //initBar();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -85,12 +95,29 @@ public class NumberFragment extends BaseMainFragmeng  {
             ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
-            // 设置状态栏颜色
-           // getActivity().getWindow().setStatusBarColor(Color.parseColor("#EDCFB1"));
+
         }
         TextView tv = view.findViewById(R.id.txt_head_title);
         tv.getPaint().setFakeBoldText(true);
+        if (fanhui == 1) {
+            back.setVisibility(View.VISIBLE);
+            // 设置状态栏颜色
+           getActivity().getWindow().setStatusBarColor(Color.parseColor("#EDCFB1"));
+        } else {
+            back.setVisibility(View.GONE);
+            // 设置状态栏颜色
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
         viewPager.setAdapter(new NumbersGoodsAdapter(getChildFragmentManager()));
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+
     }
 
     private void initBar() {
@@ -152,13 +179,6 @@ public class NumberFragment extends BaseMainFragmeng  {
         super.onDestroy();
 //        EventBus.getDefault().unregister(this);
     }
-
-
-
-
-
-
-
 
 
 }

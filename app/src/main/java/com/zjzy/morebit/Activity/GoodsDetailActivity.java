@@ -1145,7 +1145,9 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
             case R.id.ll_shen:
                 if (LoginUtil.checkIsLogin(this)) {
-                    OpenFragmentUtils.goToSimpleFragment(this, NumberFragment.class.getName(), null);
+                    Bundle bundle2=new Bundle();
+                    bundle2.putInt(C.UserType.NEWVIP,1);
+                    OpenFragmentUtils.goToSimpleFragment(this, NumberFragment.class.getName(), bundle2);
                 }
                 break;
             default:

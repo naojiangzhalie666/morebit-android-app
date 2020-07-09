@@ -370,6 +370,7 @@ public class C {
         public static final String SKILLITEM = "SKILLITEM";
         public static final String SKILLTITLE = "SKILLTITLE";
         public static final String NEWGOODS = "NEWGOODS";
+        public static final String NEWVIP = "NEWVIP";
 
 
     }
