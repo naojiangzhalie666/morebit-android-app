@@ -118,11 +118,11 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
         if (data != null) {
             for (int i = 0; i < data.getList().size(); i++) {
                 if (data.getList().get(i).getType() == 1) {
-                    tv1.setText(data.getList().get(i).getMsg());
+                    tv3.setText(data.getList().get(i).getMsg());
                 } else if (data.getList().get(i).getType() == 2) {
                     tv2.setText(data.getList().get(i).getMsg());
                 } else if (data.getList().get(i).getType() == 3) {
-                    tv3.setText(data.getList().get(i).getMsg());
+                    tv1.setText(data.getList().get(i).getMsg());
                 } else if (data.getList().get(i).getType() == 4) {
                     tv4.setText(data.getList().get(i).getMsg());
                 } else if (data.getList().get(i).getType() == 6) {

@@ -194,7 +194,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                 isMethodManager(rl_root);
             }
         });
-        edtInvite.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+        edtInvite.setFilters(new InputFilter[]{new InputFilter.LengthFilter(12)});
         edtInvite.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -203,7 +203,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(edtInvite.getText().toString().length()==6||edtInvite.getText().toString().length()==11){
+                if(edtInvite.getText().toString().length()>=6||edtInvite.getText().toString().length()<=12){
                     tv_next.setEnabled(true);
                     tv_next.setTextColor(Color.parseColor("#FFFFFF"));
                     tv_next.setBackgroundResource(R.mipmap.phone_login_next);
@@ -233,7 +233,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         mEditInviteText = s.toString();
 
 
-        if (!TextUtils.isEmpty(areaCode) && !"86".equals(areaCode) && mEditInviteText.length() >= 6) {
+        if (!TextUtils.isEmpty(areaCode) && mEditInviteText.length() >= 6) {
             if (mEditInviteText.length() >= C.PHONE.MIN_LENGTH && mEditInviteText.length() <= C.PHONE.MAX_LENGTH) {
                 if (mSearchHandler.hasMessages(MSG_SEARCH)) {
                     mSearchHandler.removeMessages(MSG_SEARCH);
@@ -254,8 +254,8 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
         }
 
 
-        if (!TextUtils.isEmpty(areaCode) && "86".equals(areaCode)) {
-            if (mEditInviteText.length() == 6 || mEditInviteText.length() == 11) {
+        if (!TextUtils.isEmpty(areaCode)) {
+            if (mEditInviteText.length() == 6 || mEditInviteText.length() == 12) {
                 if (!AppUtil.isFastClick(400)) {
                     if (mEditInviteText.length() == 6) {
                         errorTv.setText("");
@@ -274,7 +274,7 @@ public class LoginEditInviteFragment extends MvpFragment<LoginEditInvitePresente
                         }, 1000);
                     }
 
-                    if (mEditInviteText.length() == 11 && LoginUtil.isMobile(mEditInviteText)) {
+                    if (mEditInviteText.length() == 12) {
                         mPresenter.getInviteUserInfo(this, mEditInviteText);
 
                     }

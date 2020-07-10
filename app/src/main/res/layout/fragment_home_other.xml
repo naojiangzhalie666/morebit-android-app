@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_F05557">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,7 +22,6 @@
                 android:background="@color/color_F05557" />
 
             <include
-
                 android:id="@+id/searchLayout"
                 layout="@layout/home_search" />
 
@@ -37,7 +35,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:elevation="0dp"
-                    app:layout_behavior=".utils.FlingBehavior">
+                    app:layout_behavior=".utils.FlingBehavior"
+
+                    >
+
 
                     <android.support.design.widget.CollapsingToolbarLayout
                         android:layout_width="match_parent"
@@ -157,6 +158,9 @@
 
                                         <android.support.v7.widget.RecyclerView
                                             android:id="@+id/new_rcy"
+                                            android:overScrollMode="never"
+                                            android:nestedScrollingEnabled="false"
+                                            app:layout_scrollFlags="scroll|exitUntilCollapsed"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_marginLeft="8dp"
@@ -238,7 +242,7 @@
 
                                 <include layout="@layout/item_home_activity" />
 
-                                <include layout="@layout/item_home_limited" />
+                                <include layout="@layout/item_home_limited"  />
 
                                 <include layout="@layout/item_home_hao" />
 
@@ -269,6 +273,7 @@
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewPager"
+                    android:background="@color/color_F8F8F8"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />

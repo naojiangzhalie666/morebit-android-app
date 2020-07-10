@@ -2,6 +2,7 @@ package com.zjzy.morebit.home.fragment;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,9 +18,11 @@ import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,6 +31,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -357,6 +361,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initOtherView() {
         // home_rcy = mView.findViewById(R.id.home_rcy);
         IntentFilter intentFilter = new IntentFilter();
@@ -419,7 +424,125 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         getLoginView();
         initBar();
 
+        initOnresh();
+        mAppBarLt.post(new Runnable() {
+            @Override
+            public void run() {
+                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLt.getLayoutParams();
+                AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) layoutParams.getBehavior();
 
+                behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                    @Override
+                    public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                        return true;
+                    }
+                });
+            }
+        });
+
+        mAppBarLt.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()== MotionEvent.ACTION_DOWN){
+                    for (int i =0;i<mViewPager.getChildCount();i++){
+                        View view = mViewPager.getChildAt(i);
+                        if(view instanceof RecyclerView ){
+                            ViewCompat.stopNestedScroll(view);
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
+        banner = mView.findViewById(R.id.roll_view_pager);
+        mAsTitleBanner = mView.findViewById(R.id.ar_title_banner);
+        xTablayout = mView.findViewById(R.id.xTablayout);
+        icon_pager = mView.findViewById(R.id.icon_pager);
+        circle_indicator_view = mView.findViewById(R.id.circle_indicator_view);
+        swipeDirectionDetector = new SwipeDirectionDetector();
+
+        new_rcy = mView.findViewById(R.id.new_rcy);
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
+        //设置图标的间距
+        if (new_rcy.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
+            SpaceItemRightUtils spaceItemDecorationUtils = new SpaceItemRightUtils(16, 3);
+            new_rcy.addItemDecoration(spaceItemDecorationUtils);
+        }
+
+        new_rcy.setLayoutManager(manager);
+
+        activity_rcy1 = mView.findViewById(R.id.activity_rcy1);//横版列表
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        activity_rcy1.setLayoutManager(linearLayoutManager);
+
+
+        activity_hao = mView.findViewById(R.id.activity_hao);  //好单预告
+        GridLayoutManager manager4 = new GridLayoutManager(getActivity(), 2);
+        activity_hao.setLayoutManager(manager4);
+        if (activity_hao.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
+            activity_hao.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
+        }
+
+
+        dou_rcy = mView.findViewById(R.id.dou_rcy);//抖货
+        GridLayoutManager manager5 = new GridLayoutManager(getActivity(), 2);
+        dou_rcy.setLayoutManager(manager5);
+        if (dou_rcy.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
+            dou_rcy.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
+        }
+
+
+        activity_rcy = mView.findViewById(R.id.activity_rcy);
+        LinearLayoutManager manager6 = new LinearLayoutManager(getActivity());
+        manager6.setOrientation(LinearLayout.HORIZONTAL);
+        //设置图标的间距
+        if (activity_rcy.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
+            SpaceItemRightUtils spaceItemDecorationUtils = new SpaceItemRightUtils(20, 3);
+            activity_rcy.addItemDecoration(spaceItemDecorationUtils);
+        }
+        activity_rcy.setLayoutManager(manager6);
+
+
+
+//        limited.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+//                Log.e("gggg", "不要点我1");
+//            }
+//        });
+
+
+//        autoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+//                Log.e("gggg", "不要点我");
+//
+//            }
+//        });
+
+//        autoView.setOnsClickListener(new AutoInterceptViewGroup.OnClickListener() {
+//            @Override
+//            public void paly() {
+//                isAutoPlay = true;
+//                handler.removeMessages(1001);
+//                handler.sendEmptyMessageDelayed(1001, 3000);
+//            }
+//
+//            @Override
+//            public void stop() {
+//                isAutoPlay = false;
+//                handler.removeMessages(1001);
+//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+//            }
+//        });
+
+
+    }
+
+    private void initOnresh() {
         litmited_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -461,6 +584,104 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     tv_title3.setTextColor(Color.parseColor("#FFFFFF"));
                     tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_10dp);
                 }
+                icon_pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        super.onPageScrollStateChanged(state);
+                        if (state == 1) {
+                            swipeRefreshLayout.setEnabled(false);//设置不可触发
+                        } else if (state == 2 && canRefresh) {
+                            swipeRefreshLayout.setEnabled(true);//设置可触发
+                        }
+                    }
+                });
+                mAppBarLt.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                        if (i < -150 && canRefresh) {
+                            swipeRefreshLayout.setEnabled(false);//设置可触发
+                            canRefresh = false;
+                        } else if (i > -150 && !canRefresh) {
+                            canRefresh = true;
+                            swipeRefreshLayout.setEnabled(true);
+                        }
+                    }
+
+                });
+
+
+                banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        if (state == 1) {
+                            swipeRefreshLayout.setEnabled(false);//设置不可触发
+                        } else if (state == 2 && canRefresh) {
+                            swipeRefreshLayout.setEnabled(true);//设置可触发
+                        }
+                    }
+                });
+                icon_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                        swipeDirectionDetector.onPageScrolled(position, positionOffset, positionOffsetPixels);
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        swipeDirectionDetector.onPageSelected(position);
+                        currentViewPagerPosition = position;
+                        // 切换到当前页面，重置高度
+                        icon_pager.requestLayout();
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        swipeDirectionDetector.onPageScrollStateChanged(state);
+                        MyLog.d("addOnPageChangeListener", " onPageScrollStateChanged  state = " + state);
+                    }
+                });
+
+                mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        super.onPageScrollStateChanged(state);
+                        if (state == 1) {
+                            swipeRefreshLayout.setEnabled(false);//设置不可触发
+                        } else if (state == 2 && canRefresh) {
+                            swipeRefreshLayout.setEnabled(true);//设置可触发
+                        }
+                    }
+                });
+                mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                        swipeDirectionDetector.onPageScrolled(position, positionOffset, positionOffsetPixels);
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        swipeDirectionDetector.onPageSelected(position);
+                        currentViewPagerPosition = position;
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        swipeDirectionDetector.onPageScrollStateChanged(state);
+                        MyLog.d("addOnPageChangeListener", " onPageScrollStateChanged  state = " + state);
+                    }
+                });
 
             }
 
@@ -473,185 +694,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 }
             }
         });
-
-        banner = mView.findViewById(R.id.roll_view_pager);
-        mAsTitleBanner = mView.findViewById(R.id.ar_title_banner);
-        xTablayout = mView.findViewById(R.id.xTablayout);
-        icon_pager = mView.findViewById(R.id.icon_pager);
-        circle_indicator_view = mView.findViewById(R.id.circle_indicator_view);
-        swipeDirectionDetector = new SwipeDirectionDetector();
-        icon_pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-                if (state == 1) {
-                    swipeRefreshLayout.setEnabled(false);//设置不可触发
-                } else if (state == 2 && canRefresh) {
-                    swipeRefreshLayout.setEnabled(true);//设置可触发
-                }
-            }
-        });
-        mAppBarLt.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-                if (i < -150 && canRefresh) {
-                    swipeRefreshLayout.setEnabled(false);//设置可触发
-                    canRefresh = false;
-                } else if (i > -150 && !canRefresh) {
-                    canRefresh = true;
-                    swipeRefreshLayout.setEnabled(true);
-                }
-            }
-
-        });
-
-
-        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if (state == 1) {
-                    swipeRefreshLayout.setEnabled(false);//设置不可触发
-                } else if (state == 2 && canRefresh) {
-                    swipeRefreshLayout.setEnabled(true);//设置可触发
-                }
-            }
-        });
-        icon_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                swipeDirectionDetector.onPageScrolled(position, positionOffset, positionOffsetPixels);
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                swipeDirectionDetector.onPageSelected(position);
-                currentViewPagerPosition = position;
-                // 切换到当前页面，重置高度
-                icon_pager.requestLayout();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                swipeDirectionDetector.onPageScrollStateChanged(state);
-                MyLog.d("addOnPageChangeListener", " onPageScrollStateChanged  state = " + state);
-            }
-        });
-
-        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-                if (state == 1) {
-                    swipeRefreshLayout.setEnabled(false);//设置不可触发
-                } else if (state == 2 && canRefresh) {
-                    swipeRefreshLayout.setEnabled(true);//设置可触发
-                }
-            }
-        });
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                swipeDirectionDetector.onPageScrolled(position, positionOffset, positionOffsetPixels);
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                swipeDirectionDetector.onPageSelected(position);
-                currentViewPagerPosition = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                swipeDirectionDetector.onPageScrollStateChanged(state);
-                MyLog.d("addOnPageChangeListener", " onPageScrollStateChanged  state = " + state);
-            }
-        });
-        new_rcy = mView.findViewById(R.id.new_rcy);
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
-        //设置图标的间距
-        if (new_rcy.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-            SpaceItemRightUtils spaceItemDecorationUtils = new SpaceItemRightUtils(16, 3);
-            new_rcy.addItemDecoration(spaceItemDecorationUtils);
-        }
-
-        new_rcy.setLayoutManager(manager);
-
-        activity_rcy1 = mView.findViewById(R.id.activity_rcy1);//横版列表
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        activity_rcy1.setLayoutManager(linearLayoutManager);
-
-
-        activity_hao = mView.findViewById(R.id.activity_hao);  //好单预告
-        GridLayoutManager manager4 = new GridLayoutManager(getActivity(), 2);
-        activity_hao.setLayoutManager(manager4);
-        if (activity_hao.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-            activity_hao.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
-        }
-
-
-        dou_rcy = mView.findViewById(R.id.dou_rcy);//抖货
-        GridLayoutManager manager5 = new GridLayoutManager(getActivity(), 2);
-        dou_rcy.setLayoutManager(manager5);
-        if (dou_rcy.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-            dou_rcy.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
-        }
-
-
-        activity_rcy = mView.findViewById(R.id.activity_rcy);
-        LinearLayoutManager manager6 = new LinearLayoutManager(getActivity());
-        manager6.setOrientation(LinearLayout.HORIZONTAL);
-        //设置图标的间距
-        if (activity_rcy.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-            SpaceItemRightUtils spaceItemDecorationUtils = new SpaceItemRightUtils(20, 3);
-            activity_rcy.addItemDecoration(spaceItemDecorationUtils);
-        }
-        activity_rcy.setLayoutManager(manager6);
-//        limited.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-//                Log.e("gggg", "不要点我1");
-//            }
-//        });
-
-
-//        autoView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-//                Log.e("gggg", "不要点我");
-//
-//            }
-//        });
-
-//        autoView.setOnsClickListener(new AutoInterceptViewGroup.OnClickListener() {
-//            @Override
-//            public void paly() {
-//                isAutoPlay = true;
-//                handler.removeMessages(1001);
-//                handler.sendEmptyMessageDelayed(1001, 3000);
-//            }
-//
-//            @Override
-//            public void stop() {
-//                isAutoPlay = false;
-//                handler.removeMessages(1001);
-//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-//            }
-//        });
-
 
     }
 
@@ -1156,7 +1198,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                         App.getACache().put(C.sp.homeFenleiData, (Serializable) data);
                         mHomeColumns.addAll(data);
 
-                        mHomeAdapter = new HomeAdapter(getActivity().getSupportFragmentManager(), mHomeColumns);
+                        mHomeAdapter = new HomeAdapter(getChildFragmentManager(), mHomeColumns);
                         mViewPager.setAdapter(mHomeAdapter);
                         xablayout.setupWithViewPager(mViewPager);
                         mViewPager.setOffscreenPageLimit(mHomeColumns.size());
