@@ -61,6 +61,7 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.GoodsDetailForPdd;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
@@ -74,6 +75,7 @@ import com.zjzy.morebit.pojo.goods.GoodsImgDetailBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
 import com.zjzy.morebit.pojo.request.RequestReleaseGoods;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -205,6 +207,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     //京东领劵领劵
     private String mPromotionJdUrl;
     private TextView tv_zhaun;
+    private LinearLayout tv_fan;
 
     public static void start(Context context, ShopGoodInfo info) {
         Intent intent = new Intent((Activity) context, GoodsDetailForPddActivity.class);
@@ -330,7 +333,8 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
     }
 
     private void initView() {
-
+        tv_fan= (LinearLayout) findViewById(R.id.tv_fan);
+        getReturning();
         iv_taobao = (TextView) findViewById(R.id.iv_taobao);
         tv_zhaun= (TextView) findViewById(R.id.tv_zhaun);
         srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -383,6 +387,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
 
         mGoodsInfo.setItemSource(Info.getItemSource());
         if (!StringsUtils.isEmpty(Info.getTitle())) {
+            iv_taobao.setText("拼多多");
             StringsUtils.retractTitles(title,Info.getTitle(),iv_taobao.getWidth()+10);
         }
 
@@ -1110,5 +1115,38 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         return RxHttp.getInstance().getCommonService().generatePromotionUrlForPdd(bean)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
+    }
+
+    public void getReturning() {
+
+//        LoadingView.showDialog(this, "请求中...");
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.WEB_COMMSSION_RULE))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .compose(this.<BaseResponse<HotKeywords>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            tv_fan.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowWebActivity.start(GoodsDetailForPddActivity.this,commssionH5,"");
+                                }
+                            });
+                        }
+
+                        android.util.Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
     }
 }

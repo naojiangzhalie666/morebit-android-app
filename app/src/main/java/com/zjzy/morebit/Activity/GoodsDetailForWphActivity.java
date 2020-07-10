@@ -46,7 +46,12 @@ import com.zjzy.morebit.goods.shopping.ui.view.GoodsDetailUpdateView;
 import com.zjzy.morebit.info.ui.AppFeedActivity;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.GoodsDetailForPdd;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
@@ -55,6 +60,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.goods.TKLBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -78,6 +84,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Action;
 
 /**
  * 唯品会商品详情页
@@ -143,7 +150,7 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
     private int mTitleHeight;
     private TextView iv_taobao;
     private TextView tv_zhaun;
-    private LinearLayout ll_shen;
+    private LinearLayout ll_shen,tv_fan;
 
 
     private String[] mTitles;
@@ -258,6 +265,8 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
 
     private void initView() {
        // initTab();
+        tv_fan= (LinearLayout) findViewById(R.id.tv_fan);
+        getReturning();
         iv_taobao= (TextView) findViewById(R.id.iv_taobao);
         tv_zhaun= (TextView) findViewById(R.id.tv_zhaun);
         ll_shen= (LinearLayout) findViewById(R.id.ll_shen);
@@ -758,5 +767,38 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
      */
     private boolean isHasInstalledWph() {
         return AppUtil.checkHasInstalledApp(this, "com.achievo.vipshop");
+    }
+
+    public void getReturning() {
+
+//        LoadingView.showDialog(this, "请求中...");
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.WEB_COMMSSION_RULE))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .compose(this.<BaseResponse<HotKeywords>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            tv_fan.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowWebActivity.start(GoodsDetailForWphActivity.this,commssionH5,"");
+                                }
+                            });
+                        }
+
+                        android.util.Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
     }
 }

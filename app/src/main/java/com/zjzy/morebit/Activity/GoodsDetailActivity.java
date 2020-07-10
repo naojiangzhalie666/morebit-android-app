@@ -232,7 +232,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     private GuessDetailLikeFragment mLikeFragment;
     private TextView tv_zhaun;
     ;
-    private LinearLayout ll_shen;
+    private LinearLayout ll_shen,tv_fan;
     private String[] mTitles;
     ArrayList mTabArrayList = new ArrayList<BaseCustomTabEntity>();
 
@@ -373,6 +373,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     }
 
     private void initView() {
+        tv_fan= (LinearLayout) findViewById(R.id.tv_fan);
         tv_zhaun = (TextView) findViewById(R.id.tv_zhaun);
         initTab();
         ll_shen= (LinearLayout) findViewById(R.id.ll_shen);
@@ -1378,7 +1379,16 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
                 .subscribe(new DataObserver<HotKeywords>() {
                     @Override
                     protected void onSuccess(HotKeywords data) {
-                        String commssionH5 = data.getSysValue();
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            tv_fan.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowWebActivity.start(GoodsDetailActivity.this,commssionH5,"");
+                                }
+                            });
+                        }
+
                         Log.e("gggg",commssionH5+"");
 
 

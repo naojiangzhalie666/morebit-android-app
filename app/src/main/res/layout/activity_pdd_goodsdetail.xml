@@ -350,6 +350,7 @@
                             android:background="@color/color_F8F8F8" />
 
                         <LinearLayout
+                            android:id="@+id/tv_fan"
                             android:background="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="44dp"

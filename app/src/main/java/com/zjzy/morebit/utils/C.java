@@ -405,7 +405,8 @@ public class C {
 
         public static final String SELF_COMMISSION_PERCENT = "SELF_COMMISSION_PERCENT";// 自营商品的获取普通会员，VIP，运营商佣金比例
 
-        public static final String WEB_COMMSSION_RULE = "WEB_COMMSSION_RULE";// 返佣规则
+        public static final String WEB_COMMSSION_RULE = "COMMISSION_RULES";// 返佣规则
+        public static final String SHARE_COURES = "SHARE_COURES";// 分享三部曲
     }
 
     /**

@@ -49,7 +49,12 @@ import com.zjzy.morebit.goods.shopping.ui.view.GoodsDetailUpdateView;
 import com.zjzy.morebit.info.ui.AppFeedActivity;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.GoodsDetailForPdd;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ReleaseGoodsPermission;
@@ -59,6 +64,7 @@ import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.goods.ConsumerProtectionBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -87,6 +93,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Action;
 
 /**
  * 京东商品详情页
@@ -168,7 +175,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
     private int mTitleHeight;
     private TextView iv_taobao;
     private TextView tv_zhaun;
-    private LinearLayout ll_shen;
+    private LinearLayout ll_shen,tv_fan;
 
     private String[] mTitles;
     ArrayList mTabArrayList = new ArrayList<BaseCustomTabEntity>();
@@ -287,6 +294,8 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         } else {
             videopaly_btn.setVisibility(View.VISIBLE);
         }
+        tv_fan= (LinearLayout) findViewById(R.id.tv_fan);
+        getReturning();
     }
     /**
      * 初始化界面数据
@@ -972,7 +981,38 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         return true;
     }
 
+    public void getReturning() {
 
+//        LoadingView.showDialog(this, "请求中...");
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.WEB_COMMSSION_RULE))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .compose(this.<BaseResponse<HotKeywords>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            tv_fan.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowWebActivity.start(GoodsDetailForJdActivity.this,commssionH5,"");
+                                }
+                            });
+                        }
+
+                        Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
+    }
 
 
 }

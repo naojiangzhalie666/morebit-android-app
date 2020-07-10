@@ -27,7 +27,10 @@ import com.zjzy.morebit.adapter.ShareMoneyAdapter;
 import com.zjzy.morebit.goods.shopping.ui.ShareMoneyGetImgActivity;
 import com.zjzy.morebit.goods.shopping.ui.dialog.ShareFriendsDialog;
 import com.zjzy.morebit.main.model.ConfigModel;
+import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CallBackObserver;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.HotKeywords;
@@ -36,6 +39,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.ShareMoenyPosterEvent;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -217,6 +221,7 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
             }
         });
         getTemplate();
+        getReturning();
 
     }
 
@@ -278,9 +283,9 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
             case R.id.ll_more:
                 permission(ShareUtil.MoreType);
                 break;
-            case R.id.rule_ly: //奖励规则
-                showRuleDialog();
-                break;
+//            case R.id.rule_ly: //奖励规则
+//                showRuleDialog();
+//                break;
             case R.id.makeGoodsPoster: //更换海报
                 goodsInfo.setCouponUrl(promotionUrl);
                 Log.e("private",promotionUrl+"考拉");
@@ -643,5 +648,38 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    public void getReturning() {
+
+//        LoadingView.showDialog(this, "请求中...");
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.SHARE_COURES))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .compose(this.<BaseResponse<HotKeywords>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            rule_ly.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowWebActivity.start(ShareMoneyForKaolaActivity.this,commssionH5,"");
+                                }
+                            });
+                        }
+
+                        android.util.Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
     }
 }

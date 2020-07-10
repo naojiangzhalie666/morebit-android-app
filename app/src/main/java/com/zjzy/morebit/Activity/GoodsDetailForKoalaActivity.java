@@ -47,7 +47,12 @@ import com.zjzy.morebit.goods.shopping.ui.view.GoodsDetailUpdateView;
 import com.zjzy.morebit.info.ui.AppFeedActivity;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.GoodsDetailForPdd;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.MessageEvent;
@@ -58,6 +63,7 @@ import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.goods.ConsumerProtectionBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -85,6 +91,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Action;
 
 /**
  * 考拉商品详情页
@@ -92,8 +99,7 @@ import butterknife.OnClick;
 
 public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPresenter> implements View.OnClickListener, GoodsDetailForPddContract.View {
 
-    @BindView(R.id.iv_feedback)
-    ImageView iv_feedback;
+
     @BindView(R.id.tv_Share_the_money)
     TextView tv_Share_the_money;
     @BindView(R.id.ll_share_money)
@@ -106,14 +112,12 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     TextView title;
     @BindView(R.id.btn_sweepg)
     LinearLayout btn_sweepg;
-    @BindView(R.id.tv_pdd)
-    TextView tv_pdd;
+
     @BindView(R.id.roll_view_pager)
     Banner mRollViewPager;
     List<ImageInfo> indexbannerdataArray = new ArrayList<>();
 
-    @BindView(R.id.go_top)
-    ImageView go_top;
+
     @BindView(R.id.tv_collect)
     TextView tv_collect;
     @BindView(R.id.collect_bg)
@@ -135,14 +139,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     GoodsDetailUpdateView gduv_view;
     @BindView(R.id.tv_buy)
     TextView tv_buy;
-    @BindView(R.id.fl_img)
-    FrameLayout fl_img;
-    @BindView(R.id.tablayout)
-    CommonTabLayout tablayout;
-    @BindView(R.id.re_tab)
-    RelativeLayout re_tab;
-    @BindView(R.id.search_statusbar_rl)
-    LinearLayout search_statusbar_rl;
+
 
 
     private String shopid;
@@ -160,6 +157,9 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     private int mListHeight;
     private Handler mHandler;
     private int mTitleHeight;
+    private TextView iv_taobao;
+    private TextView tv_zhaun;
+    private LinearLayout ll_shen,tv_fan;
 
 
     private String[] mTitles;
@@ -200,22 +200,22 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     }
 
     private void getViewLocationOnScreen() {
-
-        search_statusbar_rl.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-
-                    @Override
-                    public boolean onPreDraw() {
-                        search_statusbar_rl.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int i = search_statusbar_rl.getHeight() - mTitleHeight;
-                        mListHeight = i; // 获取高度
-                        return true;
-                    }
-                });
-
-
-        MyLog.d("setOnScrollChangeListener  ", "mIngHeight " + mIngHeight);
-        MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
+//
+//        search_statusbar_rl.getViewTreeObserver().addOnPreDrawListener(
+//                new ViewTreeObserver.OnPreDrawListener() {
+//
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        search_statusbar_rl.getViewTreeObserver().removeOnPreDrawListener(this);
+//                        int i = search_statusbar_rl.getHeight() - mTitleHeight;
+//                        mListHeight = i; // 获取高度
+//                        return true;
+//                    }
+//                });
+//
+//
+//        MyLog.d("setOnScrollChangeListener  ", "mIngHeight " + mIngHeight);
+//        MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
     }
 
     private void initData(boolean isRefresh) {
@@ -257,7 +257,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("action.Grade")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
-                refreshVipUpdate();//需要去做的事
+               // refreshVipUpdate();//需要去做的事
             }
         }
     };
@@ -268,12 +268,12 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         setUPdateData();
     }
 
-    private void initImgFragment(GoodsDetailForPdd goodsDetailForPdd) {
-        mDetailImgFragment = GoodsDetailImgForPddFragment.newInstance(mGoodsDetailForPdd);
-        ActivityUtils.replaceFragmentToActivity(
-                getSupportFragmentManager(), mDetailImgFragment, R.id.fl_img);
-
-    }
+//    private void initImgFragment(GoodsDetailForPdd goodsDetailForPdd) {
+//        mDetailImgFragment = GoodsDetailImgForPddFragment.newInstance(mGoodsDetailForPdd);
+//        ActivityUtils.replaceFragmentToActivity(
+//                getSupportFragmentManager(), mDetailImgFragment, R.id.fl_img);
+//
+//    }
 
     private void initBundle() {
         bundle = getIntent().getExtras();
@@ -283,129 +283,100 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     }
 
     private void initView() {
-        initTab();
-
-        srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initData(true);
-                refreshVipUpdate();
-            }
-        });
-
-        go_top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scrollViewToLocation(0);
-            }
-        });
-        re_tab.setAlpha(0);
+        iv_taobao= (TextView) findViewById(R.id.iv_taobao);
+        tv_fan= (LinearLayout) findViewById(R.id.tv_fan);
+        getReturning();
+        iv_taobao= (TextView) findViewById(R.id.iv_taobao);
+        tv_zhaun= (TextView) findViewById(R.id.tv_zhaun);
+        ll_shen= (LinearLayout) findViewById(R.id.ll_shen);
+    //    initTab();
+//        tv_fan= (LinearLayout) findViewById(R.id.tv_fan);
+//        getReturning();
+//        srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                initData(true);
+//                refreshVipUpdate();
+//            }
+//        });
+//
+//        go_top.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scrollViewToLocation(0);
+//            }
+//        });
+      //  re_tab.setAlpha(0);
         view_bar.setAlpha(0);
-        nsv_view.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                scrollTitleChange(scrollY);
-                scrollTabChange(scrollY);
-                if (scrollY > 1000) {
-                    go_top.setVisibility(View.VISIBLE);
-                } else {
-                    go_top.setVisibility(View.GONE);
-                }
-            }
-
-
-            private void scrollTitleChange(int scrollY) {
-                float alpha = (float) (scrollY / duration);
-                if (duration > scrollY) {
-                    if (scrollY < 5) {
-                        getViewLocationOnScreen();
-                        re_tab.setVisibility(View.GONE);
-                        re_tab.setAlpha(0);
-                        view_bar.setAlpha(0);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
-                    } else {
-                        if (re_tab.getVisibility() == View.GONE) {
-                            re_tab.setVisibility(View.VISIBLE);
-                        }
-                        re_tab.setAlpha(alpha);
-                        view_bar.setAlpha(alpha);
-                        isTitleBarSetBg = false;
-                    }
-                } else {
-
-                    if (re_tab.getVisibility() == View.GONE) {
-                        re_tab.setVisibility(View.VISIBLE);
-                    }
-                    if (!isTitleBarSetBg) {
-                        re_tab.setAlpha(1);
-                        view_bar.setAlpha(1);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
-                    }
-                }
-            }
-
-            private void scrollTabChange(int scrollY) {
-
-                MyLog.d("setOnScrollChangeListener  ", "mIngHeight " + mIngHeight);
-                MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
-                if (tablayout == null || mListHeight == 0 || isContinueScrollTabChange) {
-                    return;
-                }
-
-                int currentTab = tablayout.getCurrentTab();
-                if (scrollY <= mListHeight) {
-                    if (currentTab != 0)
-                        tablayout.setCurrentTab(0);
-                } else if (scrollY > mListHeight) {
-                    if (currentTab != 1)
-                        tablayout.setCurrentTab(1);
-                }
-            }
-        });
+//        nsv_view.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//
+//            @Override
+//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                scrollTitleChange(scrollY);
+//                scrollTabChange(scrollY);
+//                if (scrollY > 1000) {
+//                    go_top.setVisibility(View.VISIBLE);
+//                } else {
+//                    go_top.setVisibility(View.GONE);
+//                }
+//            }
+//
+//
+//            private void scrollTitleChange(int scrollY) {
+//                float alpha = (float) (scrollY / duration);
+//                if (duration > scrollY) {
+//                    if (scrollY < 5) {
+//                        getViewLocationOnScreen();
+//                        re_tab.setVisibility(View.GONE);
+//                        re_tab.setAlpha(0);
+//                        view_bar.setAlpha(0);
+//                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
+//                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
+//                    } else {
+//                        if (re_tab.getVisibility() == View.GONE) {
+//                            re_tab.setVisibility(View.VISIBLE);
+//                        }
+//                        re_tab.setAlpha(alpha);
+//                        view_bar.setAlpha(alpha);
+//                        isTitleBarSetBg = false;
+//                    }
+//                } else {
+//
+//                    if (re_tab.getVisibility() == View.GONE) {
+//                        re_tab.setVisibility(View.VISIBLE);
+//                    }
+//                    if (!isTitleBarSetBg) {
+//                        re_tab.setAlpha(1);
+//                        view_bar.setAlpha(1);
+//                        re_tab.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
+//                        view_bar.setBackgroundColor(ContextCompat.getColor(GoodsDetailForKoalaActivity.this, R.color.white));
+//                    }
+ //               }
+//            }
+//
+//            private void scrollTabChange(int scrollY) {
+//
+//                MyLog.d("setOnScrollChangeListener  ", "mIngHeight " + mIngHeight);
+//                MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
+//                if (tablayout == null || mListHeight == 0 || isContinueScrollTabChange) {
+//                    return;
+//                }
+//
+//                int currentTab = tablayout.getCurrentTab();
+//                if (scrollY <= mListHeight) {
+//                    if (currentTab != 0)
+//                        tablayout.setCurrentTab(0);
+//                } else if (scrollY > mListHeight) {
+//                    if (currentTab != 1)
+//                        tablayout.setCurrentTab(1);
+//                }
+//            }
+//        });
 
 
     }
 
-    private void initTab() {
-        for (int i = 0; i < mTitles.length; i++) {
-            mTabArrayList.add(new BaseCustomTabEntity(mTitles[i], 0, 0));
-        }
-        tablayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                isContinueScrollTabChange = true;
-                switch (position) {
-                    case 0:
-                        scrollViewToLocation(0);
-                        break;
-                    case 1:
-                        scrollViewToLocation(mListHeight);
-                        break;
-                    case 2:
-                        scrollViewToLocation(mIngHeight);
-                        break;
 
-                    default:
-                        break;
-                }
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        isContinueScrollTabChange = false;
-                    }
-                }, 500);
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
-        tablayout.setTabData(mTabArrayList);
-    }
 
     private void scrollViewToLocation(int location) {
         nsv_view.fling(location);
@@ -436,11 +407,11 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         }
 
 
-        if (UserLocalData.getUser().getReleasePermission() == 1) {
-            findViewById(R.id.iv_release_goods).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.iv_release_goods).setVisibility(View.GONE);
-        }
+//        if (UserLocalData.getUser().getReleasePermission() == 1) {
+//            findViewById(R.id.iv_release_goods).setVisibility(View.VISIBLE);
+//        } else {
+//            findViewById(R.id.iv_release_goods).setVisibility(View.GONE);
+//        }
 
         if (!StringsUtils.isEmpty(Info.getMarketPrice())) {
 
@@ -448,7 +419,9 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             text_two.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         }
 
-
+        if (!TextUtils.isEmpty(mGoodsInfo.getCommission())) {
+            tv_zhaun.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), mGoodsInfo.getCommission() + "") + "元");
+        }
         if (!TextUtils.isEmpty(Info.getCommission())) {
             mGoodsInfo.setCommission(Info.getCommission());
             tv_Share_the_money.setText(getString(R.string.now_share));
@@ -460,8 +433,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
         if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForKoalaActivity.this).getPartner())) {
             tv_Share_the_money.setText(getString(R.string.now_share));
-            setEstimateData();
-            setUPdateData();
+
         } else {
             if (!StringsUtils.isEmpty(Info.getCommission())) {
                 if (getString(R.string.now_share).equals(tv_Share_the_money.getText())) {
@@ -474,12 +446,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                         tv_Share_the_money.setText(getString(R.string.goods_share_moeny, totalSubside));
                         setAllIncomeData(muRatioComPrice, getRatioSubside);
                     }
-                    setEstimateData();
-                    setUPdateData();
+
                 }
-            } else {
-                setEstimateData();
-                setUPdateData();
             }
         }
     }
@@ -501,7 +469,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         if (TextUtils.isEmpty(C.SysConfig.COMMISSION_PERCENT_VALUE)) {
             mPresenter.getSysCommissionPercent(this);
         } else {
-            gduv_view.setUpdateView(mGoodsInfo, C.SysConfig.COMMISSION_PERCENT_VALUE);
+         //   gduv_view.setUpdateView(mGoodsInfo, C.SysConfig.COMMISSION_PERCENT_VALUE);
         }
     }
 
@@ -697,7 +665,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         List<String> imgs = mGoodsInfo.getDetailImgList();
         if (imgs != null && imgs.size() > 0) {
             mGoodsDetailForPdd.setGoodsDetails(imgs);
-            initImgFragment(mGoodsDetailForPdd);
+          //  initImgFragment(mGoodsDetailForPdd);
         }
         if (!StringsUtils.isEmpty(data.getMarketPrice())) {
             mGoodsInfo.setItemPrice(data.getMarketPrice());
@@ -722,8 +690,8 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         }
 
         Paint paint = new Paint();
-        paint.setTextSize(tv_pdd.getTextSize());
-        float size = paint.measureText(tv_pdd.getText().toString());
+        paint.setTextSize(iv_taobao.getTextSize());
+        float size = paint.measureText(iv_taobao.getText().toString());
         StringsUtils.retractTitles(title,data.getGoodsTitle(), (int) (size) + 35);
         getViewLocationOnScreen();
     }
@@ -747,29 +715,29 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     }
 
 
-    @OnClick({R.id.btn_back, R.id.iv_feedback, R.id.iv_img_download, R.id.iv_release_goods, R.id.ll_share_money, R.id.bottomLy, R.id.btn_sweepg, R.id.videopaly_btn, R.id.collect_ly, R.id.ll_home, R.id.btn_tltle_back})
+    @OnClick({R.id.btn_back, R.id.ll_share_money, R.id.bottomLy, R.id.btn_sweepg, R.id.videopaly_btn, R.id.collect_ly, R.id.ll_home})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
                 break;
             case R.id.btn_back:
-            case R.id.btn_tltle_back:
+           // case R.id.btn_tltle_back:
                 finish();
                 break;
-            case R.id.iv_feedback:
-                if (!LoginUtil.checkIsLogin(GoodsDetailForKoalaActivity.this)) {
-                    return;
-                }
-
-                Intent feedBackIt = new Intent(GoodsDetailForKoalaActivity.this, AppFeedActivity.class);
-                Bundle feedBackBundle = new Bundle();
-                feedBackBundle.putString("title", "意见反馈");
-                feedBackBundle.putString("fragmentName", "GoodsFeedBackFragment");
-                feedBackBundle.putString("gid", mGoodsInfo.getItemSourceId());
-                feedBackIt.putExtras(feedBackBundle);
-                startActivity(feedBackIt);
-
-                break;
+//            case R.id.iv_feedback:
+//                if (!LoginUtil.checkIsLogin(GoodsDetailForKoalaActivity.this)) {
+//                    return;
+//                }
+//
+//                Intent feedBackIt = new Intent(GoodsDetailForKoalaActivity.this, AppFeedActivity.class);
+//                Bundle feedBackBundle = new Bundle();
+//                feedBackBundle.putString("title", "意见反馈");
+//                feedBackBundle.putString("fragmentName", "GoodsFeedBackFragment");
+//                feedBackBundle.putString("gid", mGoodsInfo.getItemSourceId());
+//                feedBackIt.putExtras(feedBackBundle);
+//                startActivity(feedBackIt);
+//
+//                break;
             case R.id.ll_share_money:
                 if (isGoodsLose()) return;
                 if (mGoodsInfo != null) {
@@ -805,13 +773,13 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
                 ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
                 break;
 
-            case R.id.iv_img_download:   //下载图片
-                if (mBannerList.size() > 0) {
-                    DownloadDialog downloadDialog = new DownloadDialog(this, R.style.dialog, mBannerList);
-                    downloadDialog.show();
-                }
+//            case R.id.iv_img_download:   //下载图片
+//                if (mBannerList.size() > 0) {
+//                    DownloadDialog downloadDialog = new DownloadDialog(this, R.style.dialog, mBannerList);
+//                    downloadDialog.show();
+//                }
 
-                break;
+            //    break;
             default:
                 break;
         }
@@ -895,5 +863,38 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
      */
     private boolean isHasInstalledKaola() {
         return AppUtil.checkHasInstalledApp(this, "com.kaola");
+    }
+
+    public void getReturning() {
+
+//        LoadingView.showDialog(this, "请求中...");
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.WEB_COMMSSION_RULE))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .compose(this.<BaseResponse<HotKeywords>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            tv_fan.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowWebActivity.start(GoodsDetailForKoalaActivity.this,commssionH5,"");
+                                }
+                            });
+                        }
+
+                        android.util.Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
     }
 }

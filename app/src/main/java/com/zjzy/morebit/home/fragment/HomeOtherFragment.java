@@ -219,8 +219,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private Handler mHandler;
     View noLoginView, noaurthorView, nonewbuyView;
     private String ischeck;
-    private boolean newPurchase = false;
-    private int num = 0;
     private RelativeLayout msg_rl;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
@@ -419,11 +417,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         count_time_view.registerDataSetObserver(mObserver);
 
         getLoginView();
-        boolean newPurchase = SPUtils.getInstance().getBoolean("newPurchase");
-        Log.e("page", newPurchase + "新人来了");
-        if (newPurchase) {
-            getPurchase();
-        }
         initBar();
 
 
@@ -674,7 +667,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 @Override
                 public void run() {
                     showGuideSearch();
-                    SPUtils.getInstance().remove("num");
                 }
             }, 500);
 
@@ -1961,8 +1953,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     public void onRemoved(Controller controller) {
                         Log.e("page", "NewbieGuide  onRemoved: ");
                         //引导层消失（多页切换不会触发）
-                        getPurchase();
-                        SPUtils.getInstance().put("newPurchase", true);
                     }
                 })
                 .setOnPageChangedListener(new OnPageChangedListener() {
@@ -2102,77 +2092,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     }
 
-    private void getPurchase() {//新人弹框
-        Log.e("page", "新人");
-        RxHttp.getInstance().getCommonService().checkPruchase()
-                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
-                .compose(this.<BaseResponse<String>>bindToLifecycle())
-                .subscribe(new DataObserver<String>() {
-                    @Override
-                    protected void onSuccess(String data) {
-                        Log.e("page", data + "新人");
-                        ischeck = data;
-                        Long serverTime = (Long) SharedPreferencesUtils.get(App.getAppContext(), C.syncTime.SERVER_TIME, 0L);
-                        String ymdhhmmss = DateTimeUtils.getYmdhhmmss(String.valueOf(serverTime));
-                        if (!TextUtils.isEmpty(ischeck)) {
-                            if (ischeck.equals("true")) {//是否有新人首单
-                                if (DateTimeUtils.IsToday(ymdhhmmss)) {//判断是否是当天
 
-                                    num = SPUtils.getInstance().getInt("num");
-                                    Log.e("page", num + "num");
-                                    if (num < 2) {
-                                        NewbieGuide.with(getActivity())
-                                                .setLabel("new")//设置引导层标示区分不同引导层，必传！否则报错
-                                                .alwaysShow(true)
-                                                .setShowCounts(1)
-                                                .addGuidePage(//添加一页引导页
-                                                        GuidePage.newInstance()//创建一个实例
-                                                                .setLayoutRes(R.layout.view_pruchase_guide)//设置引导页布局
-                                                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                                                    @Override
-                                                                    public void onLayoutInflated(View view, final Controller controller) {
-                                                                        //引导页布局填充后回调，用于初始化
-                                                                        ImageView diss = view.findViewById(R.id.diss);
-                                                                        diss.setOnClickListener(new View.OnClickListener() {
-                                                                            @Override
-                                                                            public void onClick(View v) {
-                                                                                controller.remove();
-
-                                                                            }
-                                                                        });
-                                                                        ImageView purchase_bg = view.findViewById(R.id.purchase_bg);
-                                                                        purchase_bg.setOnClickListener(new View.OnClickListener() {
-                                                                            @Override
-                                                                            public void onClick(View v) {
-                                                                                if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-                                                                                    return;
-                                                                                }
-                                                                                getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));
-                                                                                controller.remove();
-                                                                            }
-                                                                        });
-                                                                    }
-
-                                                                })
-                                                                .setEverywhereCancelable(false)
-
-
-                                                ).show();
-                                        SPUtils.getInstance().put("num", num + 1);
-                                    }
-
-
-                                } else {
-                                    SPUtils.getInstance().put("num", 0);
-                                }
-                            }
-                        }
-
-                    }
-                });
-
-
-    }
 
     private void addRecommendGoodsView(final ImageInfo imageInfo, final int index) {
         if (getActivity() == null) {
