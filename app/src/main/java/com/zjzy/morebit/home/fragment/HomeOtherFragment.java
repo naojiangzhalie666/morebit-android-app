@@ -54,7 +54,14 @@ import com.app.hubert.guide.model.HighLight;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout;
+import com.donkingliang.consecutivescroller.ConsecutiveViewPager;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Banner;
 import com.zjzy.morebit.Activity.SearchActivity;
@@ -175,12 +182,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private AspectRatioView mAsTitleBanner;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<String> title = new ArrayList<>();
-    ;
+
     private List<IconFragment> mFragments = new ArrayList<>();
-    ;
+    private SmartRefreshLayout swipeList;
     private NewsPagerAdapter mAdapter;
     private XTabLayout xTablayout, xablayout, litmited_tab;
-    private ViewPager mViewPager, litmited_pager;
+    private ViewPager litmited_pager;
+    private ConsecutiveViewPager mViewPager;
     private AutoHeightViewPager icon_pager;
     private CircleIndicator circle_indicator_view;
     private LinearLayout ll_bg;
@@ -226,6 +234,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     View noLoginView, noaurthorView, nonewbuyView;
     private String ischeck;
     private RelativeLayout msg_rl;
+    private ConsecutiveScrollerLayout scrollerlayout;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -289,24 +298,16 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         }
 
     };
-    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals("1")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
-              getReadNoticed(1);
-            }else if (action.equals("2")){
-                getReadNoticed(2);
-            }else if (action.equals("3")){
-                getReadNoticed(3);
-            }else if (action.equals("4")){
-                getReadNoticed(4);
-            }else if (action.equals("6")){
-                getReadNoticed(6);
-            }
-        }
-    };
+//    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            String action = intent.getAction();
+//            if (action.equals("0")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+//                finisResh();
+//            }
+//        }
+//    };
     public static HomeOtherFragment newInstance(String param1, String param2) {
         HomeOtherFragment fragment = new HomeOtherFragment();
         Bundle args = new Bundle();
@@ -366,19 +367,16 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     @SuppressLint("ClickableViewAccessibility")
     private void initOtherView() {
         // home_rcy = mView.findViewById(R.id.home_rcy);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("6");//名字
-        intentFilter.addAction("4");//名字
-        intentFilter.addAction("3");//名字
-        intentFilter.addAction("2");//名字
-        intentFilter.addAction("1");//名字
-        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction("0");//名字
+//        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+        scrollerlayout=mView.findViewById(R.id.scrollerlayout);
+        swipeList=mView.findViewById(R.id.swipeList);
         msg_rl = mView.findViewById(R.id.msg_rl);
         ll_new = mView.findViewById(R.id.ll_new);
         img_bao = mView.findViewById(R.id.img_bao);
         swipeRefreshLayout = mView.findViewById(R.id.swipeRefreshLayout);
         status_bar = mView.findViewById(R.id.status_bar);
-        mAppBarLt = mView.findViewById(R.id.app_bar_lt);
         mViewPager = mView.findViewById(R.id.viewPager);
         xablayout = mView.findViewById(R.id.xablayout);
         shareImageView = mView.findViewById(R.id.shareImageView);
@@ -427,35 +425,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         initBar();
 
         initOnresh();
-        mAppBarLt.post(new Runnable() {
-            @Override
-            public void run() {
-                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLt.getLayoutParams();
-                AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) layoutParams.getBehavior();
 
-                behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
-                    @Override
-                    public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
-                        return true;
-                    }
-                });
-            }
-        });
 
-        mAppBarLt.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction()== MotionEvent.ACTION_DOWN){
-                    for (int i =0;i<mViewPager.getChildCount();i++){
-                        View view = mViewPager.getChildAt(i);
-                        if(view instanceof RecyclerView ){
-                            ViewCompat.stopNestedScroll(view);
-                        }
-                    }
-                }
-                return false;
-            }
-        });
+
 
         banner = mView.findViewById(R.id.roll_view_pager);
         mAsTitleBanner = mView.findViewById(R.id.ar_title_banner);
@@ -504,6 +476,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             activity_rcy.addItemDecoration(spaceItemDecorationUtils);
         }
         activity_rcy.setLayoutManager(manager6);
+
+
 
 
 
@@ -597,19 +571,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                         }
                     }
                 });
-                mAppBarLt.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                    @Override
-                    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-                        if (i < -150 && canRefresh) {
-                            swipeRefreshLayout.setEnabled(false);//设置可触发
-                            canRefresh = false;
-                        } else if (i > -150 && !canRefresh) {
-                            canRefresh = true;
-                            swipeRefreshLayout.setEnabled(true);
-                        }
-                    }
 
-                });
 
 
                 banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -697,6 +659,31 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             }
         });
 
+        scrollerlayout.setOnVerticalScrollChangeListener(new ConsecutiveScrollerLayout.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollY, int oldScrollY, int scrollState) {
+
+                int ownScrollY = scrollerlayout.getOwnScrollY();
+                Log.e("hhhh",scrollY+"");
+                Log.e("tttt",oldScrollY+"");
+                Log.e("yyyy",ownScrollY+"");
+                if (ownScrollY <=0 ) {
+                    swipeRefreshLayout.setEnabled(true);//设置可触发
+
+                } else if (ownScrollY > 0) {
+
+                    swipeRefreshLayout.setEnabled(false);
+                }
+
+                if (scroll == ownScrollY) {
+                    showShareImage();
+                } else {
+                    hideShareImage();
+                    scroll = ownScrollY;
+                }
+            }
+        });
+
     }
 
     @Override
@@ -761,6 +748,44 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
             }
         });
+
+        swipeList.setEnableRefresh(false);
+
+        swipeList.setEnableLoadMore(true);
+
+//        swipeList.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+//            @Override
+//            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
+//                // 上拉加载时，保证吸顶头部不被推出屏幕。
+//                scrollerlayout.setStickyOffset(offset);
+//            }
+//        });
+
+        swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                Intent intent = new Intent();
+                Log.e("rtyt",mViewPager.getCurrentItem()+"");
+                intent.setAction(mViewPager.getCurrentItem()+"");//要通知的广播名称
+                getActivity().sendBroadcast(intent);
+                // 模拟加载5秒钟
+                swipeList.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 加载完成
+                        swipeList.finishLoadMore();
+                    }
+                },1000);
+//                if (mViewPager.getCurrentItem()==0){
+//                    SelectGoodsFragment goodsFragment= (SelectGoodsFragment) mHomeAdapter.getItem(mViewPager.getCurrentItem());
+//                    goodsFragment.onLoadMore(swipeList);
+//                }
+            }
+        });
+    }
+
+    public void finisResh(){
+        swipeList.finishLoadMore(false);
     }
 
     private void refreshData() {
@@ -1783,7 +1808,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 return whatLikeFragment;
             } else {
                 List<Child2> childs = homeColumn.getChild2();
-                return CategoryListFragment2.newInstance(homeColumn.getName(), childs);
+                return CategoryListFragment2.newInstance(homeColumn.getName(), childs,position);
 
             }
 
@@ -1898,7 +1923,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
+     //   getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
     public void getLoginView() {

@@ -1,5 +1,9 @@
 package com.zjzy.morebit.goods.shopping.ui.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -93,6 +97,7 @@ public class CategoryListFragment2 extends BaseFragment implements ReEndlessGrad
     private int mSearchType = 1;
     private String mMinId = "1";
     private String mPageString = "1";
+    private int stype;
 
     public static CategoryListFragment2 newInstance(String typeName) {
         CategoryListFragment2 shoppingAoLeFragment = new CategoryListFragment2();
@@ -102,13 +107,14 @@ public class CategoryListFragment2 extends BaseFragment implements ReEndlessGrad
         return shoppingAoLeFragment;
     }
 
-    public static CategoryListFragment2 newInstance(String typeName, List<Child2> shopGoodInfos) {
+    public static CategoryListFragment2 newInstance(String typeName, List<Child2> shopGoodInfos,int type) {
 
         CategoryListFragment2 shoppingAoLeFragment = new CategoryListFragment2();
         //MyLog.i("test","newInstance: " +shoppingAoLeFragment);
         Bundle bundle = new Bundle();
         bundle.putString("TypeName", typeName);
         bundle.putSerializable("FlData", (Serializable) shopGoodInfos);
+        bundle.putSerializable("TYPE", type);
         shoppingAoLeFragment.setArguments(bundle);
         return shoppingAoLeFragment;
     }
@@ -140,6 +146,7 @@ public class CategoryListFragment2 extends BaseFragment implements ReEndlessGrad
         if (bundle != null) {
             typeName = bundle.getString("TypeName", "");
             homeList = (List<Child2>) bundle.getSerializable("FlData");
+              stype= (int) bundle.getSerializable("TYPE");
         }
     }
 
@@ -152,11 +159,23 @@ public class CategoryListFragment2 extends BaseFragment implements ReEndlessGrad
     public void onLoadMore() {
         getMoreData();
     }
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (!action.equals("1")&&!action.equals("0")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                getMoreData();
+            }
+        }
+    };
 
     public void inview(View view) {
-         swipeList=view.findViewById(R.id.swipeList);
+         //swipeList=view.findViewById(R.id.swipeList);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(stype+"");//名字
 
+        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.listview_aole);
         GridLayoutManager manager3 = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(manager3);
@@ -168,13 +187,13 @@ public class CategoryListFragment2 extends BaseFragment implements ReEndlessGrad
         searchNullTips_ly = view.findViewById(R.id.searchNullTips_ly);
 
         mRecyclerView.setAdapter(shoppingAoLeAdapter1);
-        swipeList.finishRefresh(false);
-        swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                getMoreData();
-            }
-        });
+       // swipeList.finishRefresh(false);
+//        swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+//                getMoreData();
+//            }
+//        });
 
 
         getFirstData();
@@ -274,7 +293,7 @@ public class CategoryListFragment2 extends BaseFragment implements ReEndlessGrad
                                 listArray.addAll(goodsList);
                                 pageNum = pageNum + 1;
                                 shoppingAoLeAdapter1.setData(goodsList);
-                                swipeList.finishLoadMore(false);
+                              //  swipeList.finishLoadMore(false);
                                // mRecyclerView.notifyDataSetChanged();
                             }
                         }
@@ -306,6 +325,7 @@ public class CategoryListFragment2 extends BaseFragment implements ReEndlessGrad
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
 }

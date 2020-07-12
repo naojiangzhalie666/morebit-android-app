@@ -462,6 +462,8 @@ dependencies {
     //implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
     implementation 'com.github.yuruiyin:AppbarLayoutBehavior:v1.0.2'
 
+    implementation 'com.github.donkingliang:ConsecutiveScroller:4.0.0-support'
+
 }
 // 依赖插件脚本
 //apply from: 'tinker-support.gradle'

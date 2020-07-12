@@ -5,281 +5,510 @@
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F05557">
+    android:background="@color/color_F8F8F8"
+    >
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/swipeList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout
+        android:background="@color/color_F05557"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/status_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/color_F05557" />
+
+        <include
+            android:id="@+id/searchLayout"
+            layout="@layout/home_search" />
+
+
+        <com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout
+            android:id="@+id/scrollerlayout"
+            android:background="@color/color_F8F8F8"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:scrollbars="vertical">
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
 
-            <TextView
-                android:id="@+id/status_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/color_F05557" />
 
-            <include
-                android:id="@+id/searchLayout"
-                layout="@layout/home_search" />
+            <!--        <RelativeLayout-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent">-->
 
-            <android.support.design.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:orientation="vertical">-->
 
-<!-- app:layout_behavior=".utils.FlingBehavior"-->
-                <android.support.design.widget.AppBarLayout
-                    android:id="@+id/app_bar_lt"
+                <com.zjzy.morebit.view.AspectRatioView
+                    android:id="@+id/ar_title_banner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:elevation="0dp"
-                    app:layout_behavior="com.yuruiyin.appbarlayoutbehavior.AppBarLayoutBehavior"
-                    >
+                    app:aspectRatio="2.5">
 
 
-                    <android.support.design.widget.CollapsingToolbarLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                        android:layout_height="wrap_content">
 
-
-                        <android.support.design.widget.CoordinatorLayout
-                            android:id="@+id/super_header_cl"
+                        <com.youth.banner.Banner
+                            android:id="@+id/roll_view_pager"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
+                            android:layout_height="match_parent"
+                            app:delay_time="2000"
+                            app:indicator_drawable_selected="@drawable/icon_huangdian"
+                            app:indicator_drawable_unselected="@drawable/icon_baidian"
+                            app:is_auto_play="true"
+                            app:scroll_time="1000" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="11dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/home_banner_bg"
                             android:orientation="vertical">
 
-                            <LinearLayout
+
+                            <View
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/color_F8F8F8"
-                                android:orientation="vertical">
+                                android:layout_height="0.1dp"
+                                android:layout_alignParentBottom="true"
+                                android:background="@color/color_F8F8F8" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                </com.zjzy.morebit.view.AspectRatioView>
 
 
-                                <com.zjzy.morebit.view.AspectRatioView
-                                    android:id="@+id/ar_title_banner"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:aspectRatio="2.5">
-
-
-                                    <RelativeLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
-
-                                        <com.youth.banner.Banner
-                                            android:id="@+id/roll_view_pager"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            app:delay_time="2000"
-                                            app:indicator_drawable_selected="@drawable/icon_huangdian"
-                                            app:indicator_drawable_unselected="@drawable/icon_baidian"
-                                            app:is_auto_play="true"
-                                            app:scroll_time="1000" />
-
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="11dp"
-                                            android:layout_alignParentBottom="true"
-                                            android:background="@drawable/home_banner_bg"
-                                            android:orientation="vertical">
-
-
-                                            <View
-                                                android:layout_width="match_parent"
-                                                android:layout_height="0.1dp"
-                                                android:layout_alignParentBottom="true"
-                                                android:background="@color/color_F8F8F8" />
-                                        </RelativeLayout>
-                                    </RelativeLayout>
-
-                                </com.zjzy.morebit.view.AspectRatioView>
-
-
-                                <LinearLayout
-                                    android:id="@+id/litmit_ll"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@color/color_F8F8F8"
-                                    android:gravity="center_vertical"
-                                    android:orientation="vertical">
-
-                                    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
-                                        android:id="@+id/xTablayout"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="50dp"
-                                        android:layout_weight="1"
-                                        app:xTabDividerColor="#999999"
-                                        app:xTabDividerGravity="center"
-                                        app:xTabDividerHeight="15dp"
-                                        app:xTabDividerWidth="1dp"
-                                        app:xTabIndicatorHeight="0dp"
-                                        app:xTabIndicatorWidth="0dp"
-                                        app:xTabMode="fixed"
-                                        app:xTabPadding="3dp"
-                                        app:xTabSelectedTextColor="@color/white"
-                                        app:xTabSelectedTextSize="@dimen/sp_15"
-                                        app:xTabTextColor="#999999"
-                                        app:xTabTextSize="@dimen/sp_12" />
-
-                                    <com.zjzy.morebit.utils.AutoHeightViewPager
-                                        android:id="@+id/icon_pager"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/color_F8F8F8" />
-
-                                    <me.relex.circleindicator.CircleIndicator
-                                        android:id="@+id/circle_indicator_view"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@color/color_F8F8F8"
-                                        app:ci_drawable="@drawable/icon_huangdian"
-                                        app:ci_drawable_unselected="@drawable/icon_huidian" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/new_goods"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="128dp"
-                                    android:layout_marginLeft="12dp"
-                                    android:layout_marginTop="12dp"
-                                    android:layout_marginRight="12dp"
-                                    android:background="@drawable/new_goods_bg">
-
-                                    <LinearLayout
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2">
-
-                                        <android.support.v7.widget.RecyclerView
-                                            android:id="@+id/new_rcy"
-                                            android:overScrollMode="never"
-                                            android:nestedScrollingEnabled="false"
-                                            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginLeft="8dp"
-                                            android:layout_marginTop="8dp" />
-
-
-                                    </LinearLayout>
-
-
-                                    <LinearLayout
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="16dp"
-                                            android:gravity="center"
-                                            android:text="新人0元商品"
-                                            android:textColor="#ffffffff"
-                                            android:textSize="18sp" />
-
-
-                                        <LinearLayout
-                                            android:id="@+id/ll_new"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="7dp"
-                                            android:gravity="center">
-
-                                            <TextView
-                                                android:id="@+id/daysTv"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:textColor="@color/white"
-                                                android:textSize="12sp"
-                                                tools:text="天" />
-
-                                            <TextView
-                                                android:id="@+id/hoursTv"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:textColor="@color/white"
-                                                android:textSize="12sp"
-                                                tools:text="时" />
-
-                                            <TextView
-                                                android:id="@+id/minutesTv"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:textColor="@color/white"
-                                                android:textSize="12sp"
-                                                tools:text="分" />
-
-                                            <TextView
-                                                android:id="@+id/secondsTv"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:textColor="@color/white"
-                                                android:textSize="12sp"
-                                                tools:text="秒" />
-
-                                        </LinearLayout>
-
-                                        <ImageView
-                                            android:id="@+id/img_go"
-                                            android:layout_width="86dp"
-                                            android:layout_height="28dp"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="12dp"
-                                            android:gravity="center" />
-
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <include layout="@layout/item_home_activity" />
-
-                                <include layout="@layout/item_home_limited"  />
-
-                                <include layout="@layout/item_home_hao" />
-
-                                <include layout="@layout/item_home_dou" />
-
-                                <include layout="@layout/item_home_bao" />
-                            </LinearLayout>
-                        </android.support.design.widget.CoordinatorLayout>
-
-                    </android.support.design.widget.CollapsingToolbarLayout>
+                <LinearLayout
+                    android:id="@+id/litmit_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_F8F8F8"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                     <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
-                        android:id="@+id/xablayout"
+                        android:id="@+id/xTablayout"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/white"
-                        app:tl_tab_padding="20dp"
-                        app:xTabIndicatorColor="@color/color_DB493E"
-                        app:xTabIndicatorHeight="3dp"
-                        app:xTabIndicatorWidth="15dp"
-                        app:xTabMode="scrollable"
-                        app:xTabSelectedTextColor="@color/color_DB493E"
-                        app:xTabSelectedTextSize="@dimen/sp_16"
-                        app:xTabTextColor="@color/color_333333"
-                        app:xTabTextSelectedBold="true"
-                        app:xTabTextSize="@dimen/sp_14" />
-                </android.support.design.widget.AppBarLayout>
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        app:xTabDividerColor="#999999"
+                        app:xTabDividerGravity="center"
+                        app:xTabDividerHeight="15dp"
+                        app:xTabDividerWidth="1dp"
+                        app:xTabIndicatorHeight="0dp"
+                        app:xTabIndicatorWidth="0dp"
+                        app:xTabMode="fixed"
+                        app:xTabPadding="3dp"
+                        app:xTabSelectedTextColor="@color/white"
+                        app:xTabSelectedTextSize="@dimen/sp_15"
+                        app:xTabTextColor="#999999"
+                        app:xTabTextSize="@dimen/sp_12" />
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewPager"
-                    android:background="@color/color_F8F8F8"
+                    <com.zjzy.morebit.utils.AutoHeightViewPager
+                        android:id="@+id/icon_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_F8F8F8" />
+
+                    <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/circle_indicator_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_F8F8F8"
+                        app:ci_drawable="@drawable/icon_huangdian"
+                        app:ci_drawable_unselected="@drawable/icon_huidian" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/new_goods"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    android:layout_height="128dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/new_goods_bg">
 
-            </android.support.design.widget.CoordinatorLayout>
-        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
 
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/new_rcy"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never"
+                            app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+
+
+                    </LinearLayout>
+                    <!--  使用Space设置上下边距   -->
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:text="新人0元商品"
+                            android:textColor="#ffffffff"
+                            android:textSize="18sp" />
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_new"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/daysTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                tools:text="天" />
+
+                            <TextView
+                                android:id="@+id/hoursTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                tools:text="时" />
+
+                            <TextView
+                                android:id="@+id/minutesTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                tools:text="分" />
+
+                            <TextView
+                                android:id="@+id/secondsTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                tools:text="秒" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/img_go"
+                            android:layout_width="86dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="12dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/activity_rcy1"
+                        android:overScrollMode="never"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+
+                </LinearLayout>
+
+<!--                <include layout="@layout/item_home_activity" />-->
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="12dp" />
+                <LinearLayout
+                    android:id="@+id/limited"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:paddingRight="12dp"
+                    android:paddingLeft="12dp"
+                    android:background="@drawable/bg_ffffff_8dp"
+                    android:orientation="vertical">
+
+
+
+                    <LinearLayout
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingLeft="12dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/litmit_img" />
+
+                            <include
+                                android:id="@+id/count_time_view"
+                                layout="@layout/count_time_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                />
+
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+
+                            <LinearLayout
+                                android:id="@+id/linear1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_time1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10:00"
+                                    android:textColor="@color/color_F05557"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_title1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/background_f05557_radius_10dp"
+                                    android:ellipsize="end"
+                                    android:paddingLeft="6dp"
+                                    android:paddingRight="6dp"
+                                    android:singleLine="true"
+                                    android:text="抢购中"
+                                    android:textColor="#ffffff"
+                                    android:textSize="@dimen/sp_12" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linear2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_time2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10:00"
+                                    android:textColor="#ff999999"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_title2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:paddingLeft="6dp"
+                                    android:paddingRight="6dp"
+                                    android:singleLine="true"
+                                    android:text="即将开抢"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/sp_12" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linear3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_time3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10:00"
+                                    android:textColor="#ff999999"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_title3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:paddingLeft="6dp"
+                                    android:paddingRight="6dp"
+                                    android:singleLine="true"
+                                    android:text="即将开抢"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/sp_12" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_limit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <com.zjzy.morebit.utils.AutoInterceptViewGroup
+                            android:id="@+id/autoView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.v4.view.ViewPager
+                                android:id="@+id/litmited_pager"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </com.zjzy.morebit.utils.AutoInterceptViewGroup>
+                    </RelativeLayout>
+                </LinearLayout>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="12dp" />
+<!--                <include layout="@layout/item_home_limited" />-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/activity_hao"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="12dp" />
+<!--                <include layout="@layout/item_home_hao" />-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:background="@drawable/bg_ffffff_8dp"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/dou_rcy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="12dp" />
+<!--                <include layout="@layout/item_home_dou" />-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                   android:paddingRight="12dp"
+                    android:paddingLeft="12dp"
+                    android:orientation="vertical">
+
+                    <com.zjzy.morebit.view.AspectRatioView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_transparent_round_5dp"
+                        app:aspectRatio="2.5">
+
+                        <ImageView
+                            android:id="@+id/img_bao"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/icon_default" />
+                    </com.zjzy.morebit.view.AspectRatioView>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/activity_rcy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="70dp"
+                        android:scrollbars="none" />
+
+                </RelativeLayout>
+<!--                <include layout="@layout/item_home_bao" />-->
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="12dp" />
+
+            <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+                android:id="@+id/xablayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                app:layout_isSticky="true"
+                app:tl_tab_padding="20dp"
+                app:xTabIndicatorColor="@color/color_DB493E"
+                app:xTabIndicatorHeight="3dp"
+                app:xTabIndicatorWidth="15dp"
+                app:xTabMode="scrollable"
+                app:xTabSelectedTextColor="@color/color_DB493E"
+                app:xTabSelectedTextSize="@dimen/sp_16"
+                app:xTabTextColor="@color/color_333333"
+                app:xTabTextSelectedBold="true"
+                app:xTabTextSize="@dimen/sp_14" />
+
+
+            <com.donkingliang.consecutivescroller.ConsecutiveViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_F8F8F8"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+
+
+        </com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout>
+    </LinearLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         <ImageView
             android:id="@+id/shareImageView"
             android:layout_width="55dp"
@@ -288,12 +517,15 @@
             android:layout_alignParentBottom="true"
             android:layout_marginRight="12dp"
             android:layout_marginBottom="70dp"
-            android:src="@color/color_999999" />
+            />
 
         <RelativeLayout
             android:id="@+id/rl_urgency_notifi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            />
+
     </RelativeLayout>
+
 </android.support.v4.widget.SwipeRefreshLayout>

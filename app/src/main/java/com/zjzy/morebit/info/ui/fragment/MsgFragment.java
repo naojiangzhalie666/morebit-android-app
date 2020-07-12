@@ -250,8 +250,6 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
     @OnClick({R.id.back, R.id.msgSetIv, R.id.openNoticationBtn, R.id.closeNoticationIv, R.id.earningLay, R.id.fansLay, R.id.sysLay, R.id.feedbackLay, R.id.activity_huo})
     public void onClick(View view) {
-        Intent intent = new Intent();
-
         switch (view.getId()) {
             case R.id.back:
                 getActivity().finish();
@@ -268,32 +266,23 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
                 break;
             case R.id.earningLay:
                 //getReadNoticed(3);
-                intent.setAction("3");//要通知的广播名称
-                getActivity().sendBroadcast(intent);
+
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgEarningsFragment.class.getName(), new Bundle());
                 break;
             case R.id.fansLay:
                 //getReadNoticed(2);
-                intent.setAction("2");//要通知的广播名称
-                getActivity().sendBroadcast(intent);
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgFansFragment.class.getName(), new Bundle());
                 break;
             case R.id.sysLay:
                // getReadNoticed(1);
-                intent.setAction("1");//要通知的广播名称
-                getActivity().sendBroadcast(intent);
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgSysFragment.class.getName(), new Bundle());
                 break;
             case R.id.feedbackLay:
                // getReadNoticed(4);
-                intent.setAction("4");//要通知的广播名称
-                getActivity().sendBroadcast(intent);
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgFeedbackFragment.class.getName(), new Bundle());
                 break;
             case R.id.activity_huo:
              //   getReadNoticed(6);
-                intent.setAction("6");//要通知的广播名称
-                getActivity().sendBroadcast(intent);
               //  mPresenter.getNoticede(this,6);
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgActiityFragment.class.getName(), new Bundle());
                 break;

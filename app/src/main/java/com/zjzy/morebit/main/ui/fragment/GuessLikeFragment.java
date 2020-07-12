@@ -1,5 +1,9 @@
 package com.zjzy.morebit.main.ui.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,7 +54,7 @@ public class GuessLikeFragment extends BaseFragment {
     private SelectGoodsAdapter2 mAdapter;
     private ShopGoodInfo mGoodsInfo;
     private int page=1;
-    private SmartRefreshLayout swipeList;
+
 
     public static GuessLikeFragment newInstance() {
         GuessLikeFragment fragment = new GuessLikeFragment();
@@ -78,22 +82,28 @@ public class GuessLikeFragment extends BaseFragment {
         getData();
 
     }
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("1")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                page++;
+                getData();
+            }
+        }
+    };
     protected void initView(View view) {
         mRlList = view.findViewById(R.id.rl_list);
-        swipeList=view.findViewById(R.id.swipeList);
-        swipeList.finishRefresh(false);
         mAdapter = new SelectGoodsAdapter2(getActivity());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRlList.setLayoutManager(gridLayoutManager);
         mRlList.setAdapter(mAdapter);
-        swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                getData();
-            }
-        });
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("1");//名字
+        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+
+
 
 
     }
@@ -128,7 +138,6 @@ public class GuessLikeFragment extends BaseFragment {
                             mAdapter.setData(data);
                         }else{
                             mAdapter.setData(data);
-                            swipeList.finishLoadMore(false);
                         }
 
 
@@ -138,5 +147,9 @@ public class GuessLikeFragment extends BaseFragment {
 
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
+    }
 }
