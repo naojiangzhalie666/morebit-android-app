@@ -72,7 +72,7 @@ public class SelectGoodsAdapter extends RecyclerView.Adapter {
         Paint paint = new Paint();
         paint.setTextSize(holder1.tv_icon.getTextSize());
         float size = paint.measureText(holder1.tv_icon.getText().toString());
-        StringsUtils.retractTitles(holder1.tv_title, info.getItemTitle(), (int) (size) + 20);
+        StringsUtils.retractTitles(holder1.tv_title, info.getItemTitle(), (int) (size) + 30);
         LoadImgUtils.loadingCornerBitmap(mContext, holder1.img, MathUtils.getPicture(info), 8);
         holder1.tv_price.setText(MathUtils.getnum(info.getVoucherPrice()));
         holder1.volnum.setText("销量" + MathUtils.getSales(info.getSaleMonth()));

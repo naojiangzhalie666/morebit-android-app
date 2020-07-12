@@ -9,6 +9,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.ShowWebActivity;
+import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.LimitSkillAdapter;
@@ -40,12 +42,14 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.zjzy.morebit.pojo.request.RequestRecommendBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.TimeUtil;
@@ -64,20 +68,20 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
 
     private RecyclerView rcy_goods;
 
-    private List<ShopGoodInfo>  list=new ArrayList<>();
+    private List<ShopGoodInfo> list = new ArrayList<>();
     private LinearLayout searchNullTips_ly;
-    private int mMinNum=0;
+    private int mMinNum = 0;
     private int page = 1;
-    private int mType=0;
-    private  SelectGoodsAdapter selectGoodsAdapter;
-    private  List<ShopGoodInfo> goods;
+    private int mType = 0;
+    private SelectGoodsAdapter selectGoodsAdapter;
+    private List<ShopGoodInfo> goods;
     private NestedScrollView netscrollview;
     private long days;
     private long hours;
     private long minutes;
     private long seconds;
-    private  boolean isRun = true;
-    private TextView daysTv,hoursTv,minutesTv,secondsTv,tv_title,tv_icon;
+    private boolean isRun = true;
+    private TextView daysTv, hoursTv, minutesTv, secondsTv, tv_title, tv_icon;
     private LinearLayout new_goods;
     private ImageView img;
     private Handler timeHandler = new Handler() {
@@ -85,18 +89,19 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what==1) {
+            if (msg.what == 1) {
                 computeTime();
-                daysTv.setText("剩余"+days+"天");
-                hoursTv.setText(hours+":");
-                minutesTv.setText(minutes+":");
-                secondsTv.setText(seconds+"");
+                daysTv.setText("剩余" + days + "天");
+                hoursTv.setText(String.valueOf(hours).length() == 1 ? "0" + hours + ":" : hours + ":");
+                minutesTv.setText(String.valueOf(minutes).length() == 1 ? "0" + minutes + ":" : minutes + ":");
+                secondsTv.setText(String.valueOf(seconds).length() == 1 ? "0" + seconds + "" : seconds+"");
 //                if (mDay==0&&mHour==0&&mMin==0&&mSecond==0) {
 //                    countDown.setVisibility(View.GONE);
 //                }
             }
         }
     };
+
     private void computeTime() {
         seconds--;
         if (seconds < 0) {
@@ -115,9 +120,6 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
 
 
     }
-
-
-
 
 
     public static SelectGoodsFragment newInstance() {
@@ -159,24 +161,30 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
                     protected void onSuccess(final UserZeroInfoBean data) {
 
                         initTime(Long.parseLong(data.getTime()));
-                        if (data.isIsNewUser()){
+                        UserInfo userInfo1 = UserLocalData.getUser(getActivity());
+                        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
                             new_goods.setVisibility(View.VISIBLE);
-                        }else{
-                            new_goods.setVisibility(View.GONE);
+                        } else {
+                            if (data.isIsNewUser()) {
+                                new_goods.setVisibility(View.VISIBLE);
+                            } else {
+                                new_goods.setVisibility(View.GONE);
+                            }
                         }
+
                         List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
 
-                        if (itemList.size()!=0){
+                        if (itemList.size() != 0) {
                             Paint paint = new Paint();
                             paint.setTextSize(tv_icon.getTextSize());
                             float size = paint.measureText(tv_icon.getText().toString());
-                            StringsUtils.retractTitles(tv_title, itemList.get(0).getTitle(), (int) (size)+20);
-                            LoadImgUtils.loadingCornerTop2(getActivity(),img,itemList.get(0).getItemPicture(), 8);
+                            StringsUtils.retractTitles(tv_title, itemList.get(0).getTitle(), (int) (size) + 35);
+                            LoadImgUtils.loadingCornerTop2(getActivity(), img, itemList.get(0).getItemPicture(), 8);
                         }
                         new_goods.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ShowWebActivity.start(getActivity(), data.getLinkUrl(),"");
+                                ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
 
                             }
                         });
@@ -199,20 +207,20 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
 
                     @Override
                     protected void onSuccess(NewRecommendBean data) {
-                       onRecommendSuccessful(data);
+                        onRecommendSuccessful(data);
                     }
                 });
     }
 
     private void onRecommendSuccessful(NewRecommendBean recommendBean) {
         goods = recommendBean.getItemList();
-        if (page==1){
-            selectGoodsAdapter=new SelectGoodsAdapter(getActivity(),goods);
+        if (page == 1) {
+            selectGoodsAdapter = new SelectGoodsAdapter(getActivity(), goods);
             rcy_goods.setAdapter(selectGoodsAdapter);
 
 
-        }else{
-                selectGoodsAdapter.setData(goods);
+        } else {
+            selectGoodsAdapter.setData(goods);
         }
         mMinNum = recommendBean.getMinNum();
         mType = recommendBean.getType();
@@ -230,16 +238,16 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
         Bundle arguments = getArguments();
         if (arguments != null) {
         }
-        secondsTv=view.findViewById(R.id.secondsTv);
-        minutesTv=view.findViewById(R.id.minutesTv);
-        hoursTv=view.findViewById(R.id.hoursTv);
-        daysTv=view.findViewById(R.id.daysTv);
+        secondsTv = view.findViewById(R.id.secondsTv);
+        minutesTv = view.findViewById(R.id.minutesTv);
+        hoursTv = view.findViewById(R.id.hoursTv);
+        daysTv = view.findViewById(R.id.daysTv);
         rcy_goods = view.findViewById(R.id.rcy_goods);
-        netscrollview=view.findViewById(R.id.netscrollview);
-        new_goods=view.findViewById(R.id.new_goods);
-        tv_icon=view.findViewById(R.id.tv_icon);
-        tv_title=view.findViewById(R.id.tv_title);
-        img=view.findViewById(R.id.img);
+        netscrollview = view.findViewById(R.id.netscrollview);
+        new_goods = view.findViewById(R.id.new_goods);
+        tv_icon = view.findViewById(R.id.tv_icon);
+        tv_title = view.findViewById(R.id.tv_title);
+        img = view.findViewById(R.id.img);
         rcy_goods.setNestedScrollingEnabled(false);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rcy_goods.setLayoutManager(manager);
@@ -262,7 +270,7 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.item_selectgoods_head, null, false);
         TextView tv_icon = header.findViewById(R.id.tv_icon);
         TextView tv_title = header.findViewById(R.id.tv_title);
-        StringsUtils.retractTitle(tv_icon,tv_title, "特仑苏牛奶大减价了 快来买啊实践活动放松放松房间里刷卡缴费卡洛斯");
+        StringsUtils.retractTitle(tv_icon, tv_title, "特仑苏牛奶大减价了 快来买啊实践活动放松放松房间里刷卡缴费卡洛斯");
 
 
     }
@@ -274,6 +282,7 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
         seconds = (mss % (1000 * 60)) / 1000;
         startRun();
     }
+
     /**
      * 开启倒计时
      */

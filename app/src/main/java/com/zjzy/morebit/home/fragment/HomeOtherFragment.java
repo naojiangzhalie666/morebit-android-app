@@ -80,6 +80,7 @@ import com.zjzy.morebit.adapter.HomeNewAdapter;
 import com.zjzy.morebit.adapter.HomeOtherAdapter;
 import com.zjzy.morebit.adapter.HomeSelectedAdapter;
 import com.zjzy.morebit.adapter.NewItemAdapter;
+import com.zjzy.morebit.fragment.NumberFragment;
 import com.zjzy.morebit.fragment.PanicBuyFragment;
 import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment;
 import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment2;
@@ -107,6 +108,7 @@ import com.zjzy.morebit.pojo.QueryDhAndGyBean;
 import com.zjzy.morebit.pojo.RequestReadNotice;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UnreadInforBean;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.goods.Child2;
@@ -241,9 +243,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             if (msg.what == 1) {
                 computeTime();
                 daysTv.setText("剩余" + days + "天");
-                hoursTv.setText(hours + ":");
-                minutesTv.setText(minutes + ":");
-                secondsTv.setText(seconds + "");
+                hoursTv.setText(String.valueOf(hours).length() == 1 ? "0" + hours + ":" : hours + ":");
+                minutesTv.setText(String.valueOf(minutes).length() == 1 ? "0" + minutes + ":" : minutes + ":");
+                secondsTv.setText(String.valueOf(seconds).length() == 1 ? "0" + seconds + "" : seconds+"");
 //                if (mDay==0&&mHour==0&&mMin==0&&mSecond==0) {
 //                    countDown.setVisibility(View.GONE);
 //                }
@@ -795,9 +797,15 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         if (data != null && data.size() != 0) {
-                            onBrandBannerSuccess(data, 22);
-                            ActivityFloorAdapter3 floorAdapter = new ActivityFloorAdapter3(getActivity(), data);
-                            activity_hao.setAdapter(floorAdapter);
+                            if (data.size()<2){
+                                activity_hao.setVisibility(View.GONE);
+                            }else{
+                                activity_hao.setVisibility(View.VISIBLE);
+                                onBrandBannerSuccess(data, 22);
+                                ActivityFloorAdapter3 floorAdapter = new ActivityFloorAdapter3(getActivity(), data);
+                                activity_hao.setAdapter(floorAdapter);
+                            }
+
                         }
 
 
@@ -1067,26 +1075,34 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
         NewItemAdapter newItemAdapter = new NewItemAdapter(getActivity(), itemList);//新人
         new_rcy.setAdapter(newItemAdapter);
-        if (data.isIsNewUser()) {
+        initTime(Long.parseLong(data.getTime()));
+        UserInfo userInfo1 = UserLocalData.getUser(getActivity());
+        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             new_goods.setVisibility(View.VISIBLE);
             shareImageView.setVisibility(View.VISIBLE);
-        } else {
-            new_goods.setVisibility(View.GONE);
-            shareImageView.setVisibility(View.GONE);
+        }else{
+            if (data.isIsNewUser()) {
+                new_goods.setVisibility(View.VISIBLE);
+                shareImageView.setVisibility(View.VISIBLE);
+            } else {
+                new_goods.setVisibility(View.GONE);
+                shareImageView.setVisibility(View.GONE);
+            }
+            initTime(Long.parseLong(data.getTime()));
+            new_goods.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
+                }
+            });
+            shareImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
+                }
+            });
         }
-        initTime(Long.parseLong(data.getTime()));
-        new_goods.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
-            }
-        });
-        shareImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
-            }
-        });
+
     }
 
     private void initTime(long mss) {

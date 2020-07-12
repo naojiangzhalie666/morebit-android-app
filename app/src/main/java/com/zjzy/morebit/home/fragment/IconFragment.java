@@ -86,20 +86,20 @@ public class IconFragment extends MvpFragment<VideoPresenter> implements VideoCo
         if (rcy_icon.getItemDecorationCount()==0){//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
             rcy_icon.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 5)));
         }
-        int windowWidth = AppUtil.getWindowWidth(getActivity());
-        int defpadding = DensityUtil.dip2px(getActivity(), 30);
-        float menuItmeWidth = 0.0F;
-        if (windowWidth != 0) {
-            int padding = windowWidth * defpadding / 1086;
-            menuItmeWidth = ((windowWidth - padding) / 5) + 0.0f;
-        }
-        double horizontalSpacing = defpadding;
-        double itmeWidth = DensityUtil.dip2px(getActivity(), 42);
-        if (menuItmeWidth != 0) {
-            horizontalSpacing = menuItmeWidth * 0.36;
-            itmeWidth = menuItmeWidth * 0.67;
-        }
-        HomeMenuAdapter menuAdapter = new HomeMenuAdapter(getActivity(),(int) itmeWidth,wheelChartDisplayVo);
+//        int windowWidth = AppUtil.getWindowWidth(getActivity());
+//        int defpadding = DensityUtil.dip2px(getActivity(), 30);
+//        float menuItmeWidth = 0.0F;
+//        if (windowWidth != 0) {
+//            int padding = windowWidth * defpadding / 1086;
+//            menuItmeWidth = ((windowWidth - padding) / 5) + 0.0f;
+//        }
+//        double horizontalSpacing = defpadding;
+//        double itmeWidth = DensityUtil.dip2px(getActivity(), 42);
+//        if (menuItmeWidth != 0) {
+//            horizontalSpacing = menuItmeWidth * 0.36;
+//            itmeWidth = menuItmeWidth * 0.67;
+//        }
+        HomeMenuAdapter menuAdapter = new HomeMenuAdapter(getActivity(),/*(int) itmeWidth,*/wheelChartDisplayVo);
         rcy_icon.setAdapter(menuAdapter);
 
 

@@ -35,10 +35,10 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     private int screenWidth = 0;
     private List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> list;
 
-    public HomeMenuAdapter(Context mContext, int itmeWidth,List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> wheelChartDisplayVo) {
+    public HomeMenuAdapter(Context mContext,/* int itmeWidth,*/List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> wheelChartDisplayVo) {
         mInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
-        mItmeWidth = itmeWidth;
+       // mItmeWidth = itmeWidth;
         this.list=wheelChartDisplayVo;
     }
 
@@ -87,12 +87,12 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
                 holder.itemMainTitle.setText(wheelChartDisplayVoBean.getTitle());
             }
             if (null != holder.imageView) {
-                if (mItmeWidth != 0) {
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItmeWidth, mItmeWidth);
-                    holder.imageView.setLayoutParams(layoutParams);
-                    LinearLayout.LayoutParams itmeLayoutParams = new LinearLayout.LayoutParams(mItmeWidth,  LinearLayout.LayoutParams.WRAP_CONTENT );
-                    holder.itemLayout.setLayoutParams(itmeLayoutParams );
-                }
+//                if (mItmeWidth != 0) {
+//                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItmeWidth, mItmeWidth);
+//                    holder.imageView.setLayoutParams(layoutParams);
+//                    LinearLayout.LayoutParams itmeLayoutParams = new LinearLayout.LayoutParams(mItmeWidth,  LinearLayout.LayoutParams.WRAP_CONTENT );
+//                    holder.itemLayout.setLayoutParams(itmeLayoutParams );
+//                }
                 LoadImgUtils.setImg(mContext, holder.imageView, wheelChartDisplayVoBean.getPicture());
             }
         }

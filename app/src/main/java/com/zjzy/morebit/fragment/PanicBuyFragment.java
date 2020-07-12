@@ -135,7 +135,7 @@ public class PanicBuyFragment extends BaseFragment {
                         mViewPager.setAdapter(limiteAdapter);
 
                         for (int i=0;i<mTimeTitleList.size();i++){
-                            if (title.equals(mTimeTitleList.get(i).getTitle())){
+                            if (mTimeTitleList.get(i).getTitle().equals(title)){
                                 mViewPager.setCurrentItem(i);
                             }
                         }
