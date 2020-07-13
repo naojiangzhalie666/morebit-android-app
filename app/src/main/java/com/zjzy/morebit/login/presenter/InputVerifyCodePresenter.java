@@ -55,12 +55,12 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
     }
 
     @Override
-    public void weixinRegister(final RxFragment baseFragment, final String phone, String yqm_code, String verifyCode, WeixinInfo weixinInfo) {
+    public void weixinRegister(final RxFragment baseFragment, final String phone, String yqm_code, String verifyCode, WeixinInfo weixinInfo,String areaCode) {
         if (AppUtil.isFastCashMoneyClick(500)) {
             return;
         }
 
-        mModel.getWeixinRegister(baseFragment, phone, yqm_code, verifyCode, weixinInfo)
+        mModel.getWeixinRegister(baseFragment, phone, yqm_code, verifyCode, weixinInfo,areaCode)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -82,11 +82,11 @@ public class InputVerifyCodePresenter extends BaseSendCodePresenter<LoginModel, 
     }
 
     @Override
-    public void weixinLogin(RxFragment baseFragment, String phone, String verifyCode, WeixinInfo weixinInfo) {
+    public void weixinLogin(RxFragment baseFragment, String phone, String verifyCode, WeixinInfo weixinInfo,String areaCode) {
         if (AppUtil.isFastCashMoneyClick(500)) {
             return;
         }
-        mModel.getWeixinLogin(baseFragment, phone, verifyCode, weixinInfo)
+        mModel.getWeixinLogin(baseFragment, phone, verifyCode, weixinInfo,areaCode)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {

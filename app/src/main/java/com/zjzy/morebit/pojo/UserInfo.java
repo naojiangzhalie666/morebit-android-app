@@ -43,7 +43,7 @@ public class UserInfo implements Serializable {
     private String wxNumber;// 微信号
     private String inviteCode = "";//邀请码
     private String userType; // partner  是判断角色字段  0 会员 1：vip会员 2团队长
-    private String calculationRate = "";// 是佣金计算比例
+    private String calculationRate = "60";// 是佣金计算比例
 
 
 

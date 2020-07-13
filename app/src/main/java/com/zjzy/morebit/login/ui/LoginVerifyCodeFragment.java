@@ -315,10 +315,10 @@ public class LoginVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
                 mPresenter.login(this, edtPhone.getText().toString(), edtsms.getText().toString());
                 break;
             case C.sendCodeType.WEIXINREGISTER:
-                mPresenter.weixinRegister(this, edtPhone.getText().toString(), mInvitationCode, edtsms.getText().toString(), mWeixinInfo);
+                mPresenter.weixinRegister(this, edtPhone.getText().toString(), mInvitationCode, edtsms.getText().toString(), mWeixinInfo, mAreaCode.getAreaCode());
                 break;
             case C.sendCodeType.BINDWEIXIN:
-                mPresenter.weixinLogin(this,  edtPhone.getText().toString(), edtsms.getText().toString(), mWeixinInfo);
+                mPresenter.weixinLogin(this,  edtPhone.getText().toString(), edtsms.getText().toString(), mWeixinInfo,mAreaCode.getAreaCode());
                 break;
 
 

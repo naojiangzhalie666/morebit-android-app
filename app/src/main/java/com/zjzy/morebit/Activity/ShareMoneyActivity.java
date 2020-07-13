@@ -6,8 +6,10 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,11 +22,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
+import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
+import com.zjzy.morebit.Module.common.Dialog.ShareDownloadDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ShareMoneyAdapter;
+import com.zjzy.morebit.contact.SdDirPath;
 import com.zjzy.morebit.goods.shopping.ui.ShareMoneyGetImgActivity;
 import com.zjzy.morebit.goods.shopping.ui.dialog.ShareFriendsDialog;
 import com.zjzy.morebit.main.model.ConfigModel;
@@ -47,6 +55,7 @@ import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DownloadManage;
 import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -68,6 +77,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +104,7 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
     private ShareMoneyAdapter mAdapter;
     private TextView tv_copy;
     private TextView et_copy,et_copy2;
-    private LinearLayout weixinCircle, weixinFriend;
+    private LinearLayout weixinCircle, weixinFriend,plct;
     private ShopGoodInfo goodsInfo;
     private TKLBean mTKLBean;
     private RelativeLayout rule_ly;
@@ -105,6 +115,9 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
     private int mPosterPos;
     private ShareFriendsDialog mShareFriendsDialog;
     private int mBitmapPosition = -1;
+    private FileDownloadListener downloadListener;
+
+
 
     public static void start(Activity context, ShopGoodInfo info, TKLBean tklBean) {
         if (tklBean == null || info == null) return;
@@ -165,11 +178,14 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
 
         weixinCircle = (LinearLayout) findViewById(R.id.weixinCircle);
         weixinFriend = (LinearLayout) findViewById(R.id.weixinFriend);
+        plct= (LinearLayout) findViewById(R.id.plct);
+        plct.setOnClickListener(this);
         findViewById(R.id.tv_edit_template).setOnClickListener(this);
         btn_back.setOnClickListener(this);
         tv_copy.setOnClickListener(this);
         weixinCircle.setOnClickListener(this);
         weixinFriend.setOnClickListener(this);
+
         findViewById(R.id.qqFriend).setOnClickListener(this);
         findViewById(R.id.qqRoom).setOnClickListener(this);
         findViewById(R.id.sinaWeibo).setOnClickListener(this);
@@ -208,15 +224,15 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
         rule_ly = (RelativeLayout) findViewById(R.id.rule_ly);
         rule_ly.setOnClickListener(this);
         //设置是否是代理商
-        UserInfo userInfo = UserLocalData.getUser(ShareMoneyActivity.this);
-        if (C.UserType.member.equals(userInfo.getPartner())) { //消费者
-            rule_ly.setVisibility(View.GONE);
-        } else {
-            rule_ly.setVisibility(View.VISIBLE);
-            String discountsMoneyStr = MathUtils.getMuRatioComPrice(userInfo.getCalculationRate(), goodsInfo.getCommission());
-            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(userInfo.getCalculationRate(), goodsInfo.getSubsidiesPrice());
-            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
-        }
+//        UserInfo userInfo = UserLocalData.getUser(ShareMoneyActivity.this);
+//        if (C.UserType.member.equals(userInfo.getPartner())) { //消费者
+//            rule_ly.setVisibility(View.GONE);
+//        } else {
+//            rule_ly.setVisibility(View.VISIBLE);
+//            String discountsMoneyStr = MathUtils.getMuRatioComPrice(userInfo.getCalculationRate(), goodsInfo.getCommission());
+//            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(userInfo.getCalculationRate(), goodsInfo.getSubsidiesPrice());
+//            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
+//        }
         getTemplate();
         ShareMoneySwitchTemplateView viewSwitch = (ShareMoneySwitchTemplateView) findViewById(R.id.view_swicht);
         viewSwitch.setAction(new MyAction.One<Integer>() {
@@ -280,6 +296,9 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
                 intent.putExtras(bundle);
                 intent.putExtra("temp", mTKLBean.getTemp());
                 startActivityForResult(intent, C.Result.shareMoneyToEditTemplateCoad);
+                break;
+            case R.id.plct:
+                startSave();
                 break;
             case R.id.weixinCircle:
                 if (ticknum > 1) {
@@ -394,6 +413,108 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
         shareImg(arrayList, type, isDownload);
     }
 
+    public void startSave() {
+
+        if (AppUtil.isFastClick(500)) return;
+        if (goodsInfo == null || goodsInfo.getAdImgUrl().size() <= 0) {
+            return;
+        }
+        if (ticknum == 0) {
+            Toast.makeText(ShareMoneyActivity.this, "请选择你要保存的图片", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ArrayList<String> arrayList = new ArrayList<>();
+        AppUtil.coayText(this, et_copy.getText().toString());
+        for (int i = 0; i < goodsInfo.getAdImgUrl().size(); i++) {
+            ImageInfo imageInfo = goodsInfo.getAdImgUrl().get(i);
+            if (imageInfo != null && imageInfo.isChecked) {
+                String picture = imageInfo.getPicture();
+                arrayList.add(picture);
+            }
+        }
+        downloadListener =createLis();
+        //DownloadManage.getInstance().start(arrayList, SdDirPath.IMAGE_CACHE_PATH, downloadListener);
+
+        DownloadManage.getInstance().multitaskStart(arrayList,/*SdDirPath.IMAGE_CACHE_PATH+fileName+"."+suffix,*/downloadListener);
+
+       // shareImg(arrayList, type, isDownload);
+    }
+    private FileDownloadListener createLis() {
+        return new FileDownloadListener() {
+
+            @Override
+            protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                // 之所以加这句判断，是因为有些异步任务在pause以后，会持续回调pause回来，而有些任务在pause之前已经完成，
+                // 但是通知消息还在线程池中还未回调回来，这里可以优化
+                // 后面所有在回调中加这句都是这个原因
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+            }
+
+            @Override
+            protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+//                type =DOWNLOADING ;
+//                btn_setting.setVisibility(View.GONE);
+//                MyLog.i("test","progress.getProgress()+1: " +progress.getProgress()+1);
+//                progressPb.setProgress(progressPb.getProgress() + 1);
+//                progressTv.setText("progress: " + progressPb.getProgress());
+//                progressInfoTv.append((int)task.getTag() + " | ");
+
+
+            }
+
+
+
+            @Override
+            protected void completed(BaseDownloadTask task) {
+              //MyLog.i("test","completed: " +mDownloadCount);
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+                // GoodsUtil.updataImgToTK(mContext,new File(task.getPath()),task.getFilename());
+                try {
+                    MediaStore.Images.Media.insertImage(ShareMoneyActivity.this.getContentResolver(), task.getPath(), task.getFilename(), null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                ToastUtils.showShort("图片已存到相册");
+                ShareDownloadDialog dialog=new ShareDownloadDialog(ShareMoneyActivity.this,R.style.dialog);
+                dialog.show();
+            }
+
+            @Override
+            protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+            }
+
+            @Override
+            protected void error(BaseDownloadTask task, Throwable e) {
+                MyLog.i("test","error: "+e.toString());
+
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+                MyLog.i("test","downloadListener: "+downloadListener);
+
+            }
+
+            @Override
+            protected void warn(BaseDownloadTask task) {
+                MyLog.i("test","warn: ");
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+
+            }
+        };
+    }
     public void permission(final int type) {
         RequestPermissionUtlis.requestOne(this, new MyAction.OnResult<String>() {
             @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +101,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("ggss",imageInfo.getUrl());
                 BannerInitiateUtils.gotoAction((Activity) mContext, imageInfo);
                 BannerInitiateUtils.statisticsStartAdOnclick((BaseActivity) mContext, imageInfo.getId() + "", 1);
             }

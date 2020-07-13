@@ -43,6 +43,7 @@ import com.zjzy.morebit.utils.action.MyAction;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.zjzy.morebit.utils.fire.DeviceIDUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -223,9 +224,9 @@ public class ShowWebFragment extends BaseFragment {
             if (url != null) {
                 UserInfo user = UserLocalData.getUser(getActivity());
                 if (url.contains("?")) {
-                    url = url + "&token=" + UserLocalData.getToken() + "&inviteCode=" + user.getInviteCode() + "&appVersion=" + C.Setting.app_version + "&userId=" + user.getId();
+                    url = url + "&token=" + UserLocalData.getToken() + "&inviteCode=" + user.getInviteCode() + "&appVersion=" + C.Setting.app_version + "&userId=" + user.getId()+"&deviceValue="+ DeviceIDUtils.getimei(getActivity())+"&deviceType="+"IMEI"+"&commisonRate="+UserLocalData.getUser(getActivity()).getCalculationRate();
                 } else {
-                    url = url + "?token=" + UserLocalData.getToken() + "&inviteCode=" + user.getInviteCode() + "&appVersion=" + C.Setting.app_version + "&userId=" + user.getId();;
+                    url = url + "?token=" + UserLocalData.getToken() + "&inviteCode=" + user.getInviteCode() + "&appVersion=" + C.Setting.app_version + "&userId=" + user.getId()+"&deviceValue="+ DeviceIDUtils.getimei(getActivity())+"&deviceType="+"IMEI"+"&commisonRate="+UserLocalData.getUser(getActivity()).getCalculationRate();
                 }
             }
             //            }
