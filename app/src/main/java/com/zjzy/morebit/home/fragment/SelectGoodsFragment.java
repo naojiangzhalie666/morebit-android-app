@@ -96,10 +96,10 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
             super.handleMessage(msg);
             if (msg.what == 1) {
                 computeTime();
-//                daysTv.setText("剩余" + days + "天");
-//                hoursTv.setText(String.valueOf(hours).length() == 1 ? "0" + hours + ":" : hours + ":");
-//                minutesTv.setText(String.valueOf(minutes).length() == 1 ? "0" + minutes + ":" : minutes + ":");
-//                secondsTv.setText(String.valueOf(seconds).length() == 1 ? "0" + seconds + "" : seconds+"");
+                daysTv.setText("剩余" + days + "天");
+                hoursTv.setText(String.valueOf(hours).length() == 1 ? "0" + hours + ":" : hours + ":");
+                minutesTv.setText(String.valueOf(minutes).length() == 1 ? "0" + minutes + ":" : minutes + ":");
+                secondsTv.setText(String.valueOf(seconds).length() == 1 ? "0" + seconds + "" : seconds+"");
 
             }
         }
@@ -163,34 +163,34 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
                     @Override
                     protected void onSuccess(final UserZeroInfoBean data) {
 
-//                        initTime(Long.parseLong(data.getTime()));
-//                        UserInfo userInfo1 = UserLocalData.getUser(getActivity());
-//                        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-//                            new_goods.setVisibility(View.VISIBLE);
-//                        } else {
-//                            if (data.isIsNewUser()) {
-//                                new_goods.setVisibility(View.VISIBLE);
-//                            } else {
-//                                new_goods.setVisibility(View.GONE);
-//                            }
-//                        }
-//
-//                        List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
-//
-//                        if (itemList.size() != 0) {
-//                            Paint paint = new Paint();
-//                            paint.setTextSize(tv_icon.getTextSize());
-//                            float size = paint.measureText(tv_icon.getText().toString());
-//                            StringsUtils.retractTitles(tv_title, itemList.get(0).getTitle(), (int) (size) + 35);
-//                            LoadImgUtils.loadingCornerTop2(getActivity(), img, itemList.get(0).getItemPicture(), 8);
-//                        }
-//                        new_goods.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
-//
-//                            }
-//                        });
+                        initTime(Long.parseLong(data.getTime()));
+                        UserInfo userInfo1 = UserLocalData.getUser(getActivity());
+                        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+                            new_goods.setVisibility(View.VISIBLE);
+                        } else {
+                            if (data.isIsNewUser()) {
+                                new_goods.setVisibility(View.VISIBLE);
+                            } else {
+                                new_goods.setVisibility(View.GONE);
+                            }
+                        }
+
+                        List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
+
+                        if (itemList.size() != 0) {
+                            Paint paint = new Paint();
+                            paint.setTextSize(tv_icon.getTextSize());
+                            float size = paint.measureText(tv_icon.getText().toString());
+                            StringsUtils.retractTitles(tv_title, itemList.get(0).getTitle(), (int) (size) + 35);
+                            LoadImgUtils.loadingCornerTop2(getActivity(), img, itemList.get(0).getItemPicture(), 8);
+                        }
+                        new_goods.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
+
+                            }
+                        });
                     }
                 });
     }
@@ -271,29 +271,20 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
         intentFilter.addAction("0");//名字
         getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
 
-//        secondsTv = view.findViewById(R.id.secondsTv);
-//        minutesTv = view.findViewById(R.id.minutesTv);
-//        hoursTv = view.findViewById(R.id.hoursTv);
-//        daysTv = view.findViewById(R.id.daysTv);
+        secondsTv = view.findViewById(R.id.secondsTv);
+        minutesTv = view.findViewById(R.id.minutesTv);
+        hoursTv = view.findViewById(R.id.hoursTv);
+        daysTv = view.findViewById(R.id.daysTv);
         rcy_goods = view.findViewById(R.id.rcy_goods);
       //  netscrollview = view.findViewById(R.id.netscrollview);
-//        new_goods = view.findViewById(R.id.new_goods);
-//        tv_icon = view.findViewById(R.id.tv_icon);
-//        tv_title = view.findViewById(R.id.tv_title);
-//        img = view.findViewById(R.id.img);
+        new_goods = view.findViewById(R.id.new_goods);
+        tv_icon = view.findViewById(R.id.tv_icon);
+        tv_title = view.findViewById(R.id.tv_title);
+        img = view.findViewById(R.id.img);
         rcy_goods.setNestedScrollingEnabled(false);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rcy_goods.setLayoutManager(manager);
-//        netscrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                //判断是否滑到的底部
-//                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-//                    page++;
-//                    getData();//调用刷新控件对应的加载更多方法
-//                }
-//            }
-//        });
+
         rcy_goods.getItemAnimator().setAddDuration(0);
         rcy_goods.getItemAnimator().setChangeDuration(0);
         rcy_goods.getItemAnimator().setMoveDuration(0);
