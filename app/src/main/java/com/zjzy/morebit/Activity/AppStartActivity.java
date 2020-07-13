@@ -61,6 +61,7 @@ public class AppStartActivity extends RxAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppStart);
       //设置用户信息，作为展示的 name
 //        OneApmConfig.setLoginUserName(UserLocalData.getUser().getPhone());
         // 避免从桌面启动程序后，会重新实例化入口类的activity

@@ -12,6 +12,8 @@ import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+
+import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShareHungryActivity;
@@ -114,6 +116,24 @@ public class WebJSHook {
             showText("保存失败");
 
         }
+    }
+
+    /**
+     * 保存图片
+     *
+     *
+     * type: Int/// 0：外卖特惠，
+     *
+     * content: string;
+     *
+     * contentType: Int/// 0是网络图片、1是base64图片
+     */
+    @JavascriptInterface
+    public void downImage(int type,String content,int contentType) {
+        if (type==0){//外卖特惠
+        GoodsUtil.poster(mFragment.getActivity());
+        }
+
     }
 
     /**

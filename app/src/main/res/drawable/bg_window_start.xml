@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-<!--    <item>-->
-<!--        <shape>-->
-<!--            <solid android:color="@color/color_FF645B"/>-->
-<!--        </shape>-->
-<!--    </item>-->
+    <item>
+        <shape>
+            <solid android:color="@color/color_FF2C4C"/>
+        </shape>
+    </item>
 
 <!--    <item>-->
 <!--        <bitmap-->
@@ -25,6 +25,25 @@
 
     <item>
 
-        <bitmap android:src="@drawable/app_start_bg"/>
+        <bitmap
+            android:gravity="fill_horizontal"
+            android:src="@drawable/app_start_bg"/>
     </item>
+<!--    <item>-->
+
+<!--        <bitmap-->
+<!--            -->
+<!--            android:gravity="center"-->
+<!--            android:src="@drawable/appsrart2"/>-->
+<!--    </item>-->
+<!--    <item >-->
+<!--        <bitmap-->
+<!--                android:gravity="bottom|center"-->
+<!--                android:src="@drawable/appsrarttwo"/>-->
+<!--        </item>-->
+
+<!--    <item>-->
+
+<!--        <bitmap android:src="@drawable/app_start_bg"/>-->
+<!--    </item>-->
 </layer-list>

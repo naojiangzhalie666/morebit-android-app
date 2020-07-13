@@ -276,6 +276,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
                         @Override
                         protected void onError(String errorMsg, String errCode) {
                             searchNullTips_ly.setVisibility(View.VISIBLE);
+                            mRecyclerView.setVisibility(View.GONE);
                         }
 
                         @Override
@@ -286,16 +287,21 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
                                 listArray.clear();
                                 listArray.addAll(data);
                                 mAdapter.replace(listArray);
+                                mRecyclerView.setVisibility(View.VISIBLE);
                                 searchNullTips_ly.setVisibility(View.GONE);
 
                             } else {
                                 searchNullTips_ly.setVisibility(View.VISIBLE);
+                                mRecyclerView.setVisibility(View.GONE);
                             }
                             mRecyclerView.notifyDataSetChanged();
                             if (data != null && data.size() == 0){
                                 mRecyclerView.getListView().setNoMore(true);
                             }
                         }
+
+
+
                     });
 
 
@@ -607,7 +613,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
                 yong2=false;
 
                 title_comprehensive_tv.setText("综合");
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 eSortDirection=0;
                 mSortType=0;
                 reLoadData();
@@ -624,7 +630,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
                 yong2=false;
 
                 title_comprehensive_tv.setText("佣金比例");
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 eSortDirection=0;
                 mSortType=1;
                 reLoadData();
@@ -637,7 +643,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
                 zong=false;
                 yong1=false;
                 yong2=true;
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 title_comprehensive_tv.setText("佣金比例");
 
                 eSortDirection=1;

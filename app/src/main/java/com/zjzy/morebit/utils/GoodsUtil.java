@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -30,7 +31,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.zjzy.morebit.Activity.ShareHungryActivity;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.CommonLocalData;
@@ -55,10 +60,12 @@ import com.zjzy.morebit.pojo.goods.PddShareContent;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
 import com.zjzy.morebit.pojo.goods.ShareUrlMoreBaen;
 import com.zjzy.morebit.pojo.goods.TKLBean;
+import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestCheckGoodsBean;
 import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
 import com.zjzy.morebit.pojo.request.RequestPddShareContent;
 import com.zjzy.morebit.pojo.request.RequestTKLBean;
+import com.zjzy.morebit.pojo.request.WxCodeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestUploadCouponInfo;
 import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
 import com.zjzy.morebit.purchase.adapter.PurchsePosterAdapter;
@@ -1562,6 +1569,56 @@ public static Bitmap returnBitMap(final String url){
             return null;
         }
     }
+
+
+    public static void  poster(final Context context){
+        RequestActivityLinkBean bean = new RequestActivityLinkBean();
+        bean.setActivityId("1579491209717");
+        RxHttp.getInstance().getGoodsService()
+                .getQRcode(bean)
+                .compose(RxUtils.<BaseResponse<WxCodeBean>>switchSchedulers())
+                .subscribe(new DataObserver<WxCodeBean>() {
+                    @Override
+                    protected void onSuccess(WxCodeBean data) {
+                        String activityLink = data.getWxQrcodeUrl();
+                        if (TextUtils.isEmpty(activityLink)) return;
+                        Glide.with(context)
+                                .asBitmap()
+                                .load(activityLink)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                        if (resource!=null){
+                                            try {
+                                               String shareHundry = GoodsUtil.saveHungryGoodsImg((Activity) context, resource);
+                                               saveImg(context, shareHundry, FileUtils.getPictureName(shareHundry), new MyAction.OnResultTwo<File, Integer>() {
+                                                   @Override
+                                                   public void invoke(File arg, Integer arg1) {
+                                                       if (arg != null) {
+                                                           ToastUtils.showShort("下载成功请在相册查看");
+                                                       }
+                                                   }
+
+                                                   @Override
+                                                   public void onError() {
+
+                                                   }
+                                               });
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                });
+                        //  LoadImgUtils.setViewBackground(ShareHungryActivity.this, share_img, activityLink);
+
+                    }
+                });
+
+    }
+
+
+
 
 
     /**

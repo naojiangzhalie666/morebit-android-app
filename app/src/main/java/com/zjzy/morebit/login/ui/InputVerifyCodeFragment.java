@@ -151,13 +151,13 @@ public class InputVerifyCodeFragment extends MvpFragment<InputVerifyCodePresente
         ViewShowUtils.hideSoftInput(getActivity(), mVerificationCodeEditText);
         switch (loginType) {
             case C.sendCodeType.REGISTER:
-                mPresenter.register(this, mPhone, mVerificationCodeEditText.getText().toString(), mInvitationCode,null,mWeixinInfo.getOpenid());
+            //    mPresenter.register(this, mPhone, mVerificationCodeEditText.getText().toString(), mInvitationCode,,mWeixinInfo.getOpenid());
                 break;
             case C.sendCodeType.LOGIN:
                 mPresenter.login(this, mPhone, mVerificationCodeEditText.getText().toString());
                 break;
             case C.sendCodeType.WEIXINREGISTER:
-                mPresenter.weixinRegister(this, mPhone, mInvitationCode, mVerificationCodeEditText.getText().toString(), mWeixinInfo);
+             //   mPresenter.weixinRegister(this, mPhone, mInvitationCode, mVerificationCodeEditText.getText().toString(), mWeixinInfo);
                 break;
 
             default:

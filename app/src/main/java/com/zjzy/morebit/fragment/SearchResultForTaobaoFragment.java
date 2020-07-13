@@ -369,6 +369,8 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
         }else if (mSortType==1){//价格
             requestBean.setSort("itemVoucherPrice");
         }
+        requestBean.setMaxPrice(maxprice);
+        requestBean.setMinPrice(minPrice);
         requestBean.setPage(mPage);
         requestBean.setCoupon(coupon);
         requestBean.setKeywords(keywords);
@@ -700,7 +702,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
                 zong=true;
                 yong1=false;
                 yong2=false;
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 title_comprehensive_tv.setText("综合");
 
                 eSortDirection=0;
@@ -717,7 +719,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
                 zong=false;
                 yong1=true;
                 yong2=false;
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 title_comprehensive_tv.setText("佣金比例");
 
                 eSortDirection=0;
@@ -732,7 +734,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
                 zong=false;
                 yong1=false;
                 yong2=true;
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 title_comprehensive_tv.setText("佣金比例");
 
                 eSortDirection=1;

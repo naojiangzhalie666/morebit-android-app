@@ -417,11 +417,12 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         if (page==1){
             mAdapter = new JdSearchAdapter(getActivity(), listArray);
             mRecyclerView.setAdapter(mAdapter);
+            dataList_ly.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
         }else{
             mSwipeList.finishLoadMore(false);
         }
-//        dataList_ly.setVisibility(View.GONE);
-//        searchNullTips_ly.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -568,7 +569,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
                 yong2=false;
 
                 title_comprehensive_tv.setText("综合");
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 eSortDirection=0;
                 mSortType=0;
                 onReload();
@@ -585,7 +586,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
                 yong2=false;
 
                 title_comprehensive_tv.setText("佣金比例");
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 eSortDirection=0;
                 mSortType=3;
                 onReload();
@@ -600,7 +601,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
                 yong2=true;
 
                 title_comprehensive_tv.setText("佣金比例");
-
+                title_comprehensive_tv.setTextColor(Color.parseColor("#F05557"));
                 eSortDirection=1;
                 mSortType=3;
                 onReload();
