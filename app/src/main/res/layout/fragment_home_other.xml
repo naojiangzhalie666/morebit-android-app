@@ -73,20 +73,27 @@
                             app:is_auto_play="true"
                             app:scroll_time="1000" />
 
-                        <RelativeLayout
+                        <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="11dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:background="@drawable/home_banner_bg"
-                            android:orientation="vertical">
+                            />
+
+<!--                        <RelativeLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="11dp"-->
+<!--                            android:layout_alignParentBottom="true"-->
+<!--                            android:background="@drawable/home_banner_bg"-->
+<!--                            android:orientation="vertical">-->
 
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.1dp"
-                                android:layout_alignParentBottom="true"
-                                android:background="@color/color_F8F8F8" />
-                        </RelativeLayout>
+<!--                            <View-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="0.1dp"-->
+<!--                                android:layout_alignParentBottom="true"-->
+<!--                                android:background="@color/color_F8F8F8" />-->
+<!--                        </RelativeLayout>-->
                     </RelativeLayout>
 
                 </com.zjzy.morebit.view.AspectRatioView>

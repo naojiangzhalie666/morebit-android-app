@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
@@ -180,7 +181,7 @@ public class MsgActiityFragment extends MvpFragment<MsgPresenter> implements Msg
 
         @Override
         public void onBindViewHolder(SimpleViewHolder holder, int position) {
-         EarningsMsg item = getItem(position);
+         final EarningsMsg item = getItem(position);
             final ImageInfo imageInfo = new ImageInfo();
 
             imageInfo.setOpen(item.getOpen());
@@ -233,8 +234,10 @@ public class MsgActiityFragment extends MvpFragment<MsgPresenter> implements Msg
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.e("ssss","imginfo"+imageInfo.getUrl()+"");
-                        BannerInitiateUtils.gotoAction((Activity) mContext,imageInfo);
+                      //  Log.e("ssss","imginfo"+imageInfo.getUrl()+"");
+
+                        ShowWebActivity.start((Activity) mContext,item.getContentSourceUrl(),item.getTitle());
+                       // BannerInitiateUtils.gotoAction((Activity) mContext,imageInfo);
                     }
                 });
             }

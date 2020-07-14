@@ -120,21 +120,92 @@ public class WebJSHook {
 
     /**
      * 保存图片
-     *
-     *
+     * <p>
+     * <p>
      * type: Int/// 0：外卖特惠，
-     *
+     * <p>
      * content: string;
-     *
+     * <p>
      * contentType: Int/// 0是网络图片、1是base64图片
      */
     @JavascriptInterface
-    public void downImage(int type,String content,int contentType) {
-        if (type==0){//外卖特惠
-        GoodsUtil.poster(mFragment.getActivity());
+    public void downImage(int type, String content, int contentType) {
+        if (type == 0) {//外卖特惠
+            GoodsUtil.poster(mFragment.getActivity());
         }
 
     }
+
+    /*
+     *
+     *
+url: String ///链接url地址
+title: String///分享显示标题
+text: String///分享显示文案内容
+image:  String///分享显示图片，为base64类型，需要的时候传
+
+type: Int/// 0是网络图片、1是base64图片
+     *
+     *
+     * */
+    @JavascriptInterface
+    public void shareHtml(int type, final String url, final String title, final String image, final String text) {
+        App.mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                LoadingView.dismissDialog();
+                if (!LoginUtil.checkIsLogin(mFragment.getActivity())) {
+                    return;
+                }
+                if (sharePopwindow != null) {
+                    sharePopwindow.dismiss();
+                }
+
+                sharePopwindow = new SharePopwindow(mFragment.getActivity(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.weixinFriend: //分享到好友
+                                if (!AppUtil.isWeixinAvilible(mFragment.getActivity())) {
+                                    ViewShowUtils.showShortToast(mFragment.getActivity(), "请先安装微信客户端");
+                                    return;
+                                }
+                                ShareUtil.App.toWechatFriend(mFragment.getActivity(), title, text, image, url, null);
+
+                                break;
+                            case R.id.weixinCircle: //分享到朋友圈
+                                if (!AppUtil.isWeixinAvilible(mFragment.getActivity())) {
+                                    ViewShowUtils.showShortToast(mFragment.getActivity(), "请先安装微信客户端");
+                                    return;
+                                }
+                                ShareUtil.App.toWechatMoments(mFragment.getActivity(), title,text, image, url, null);
+                                break;
+                            case R.id.qqFriend: //分享到QQ
+                                if (!AppUtil.isQQClientAvailable(mFragment.getActivity())) {
+                                    ViewShowUtils.showShortToast(mFragment.getActivity(), "请先安装QQ客户端");
+                                }
+                                ShareUtil.App.toQQFriend(mFragment.getActivity(), title, text, image, url, null);
+                                break;
+                            case R.id.qqRoom: //分享到QQ空间
+                                if (!AppUtil.isQQClientAvailable(mFragment.getActivity())) {
+                                    ViewShowUtils.showShortToast(mFragment.getActivity(), "请先安装QQ客户端");
+                                    return;
+                                }
+                                ShareUtil.App.toQQRoom(mFragment.getActivity(), title, text, image, url, null);
+                                break;
+
+
+                        }
+                        sharePopwindow.dismiss();
+                    }
+
+                });
+                sharePopwindow.showAtLocation(mFragment.getView().findViewById(R.id.webview), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            }
+        });
+
+    }
+
 
     /**
      * 复制文字
@@ -153,8 +224,9 @@ public class WebJSHook {
     @JavascriptInterface
     public String getUserCode() {
         UserInfo user = UserLocalData.getUser(mFragment.getActivity());
-     return user.getId();
+        return user.getId();
     }
+
     /**
      * 复制文字 不会弹窗
      */
@@ -324,7 +396,6 @@ public class WebJSHook {
     }
 
 
-
     /**
      * 跳转淘宝
      *
@@ -336,15 +407,14 @@ public class WebJSHook {
         if (TextUtils.isEmpty(url)) return;
         if (TaobaoUtil.isAuth()) {//淘宝授权
             TaobaoUtil.getAllianceAppKey((BaseActivity) mFragment.getContext());
-        }else{
+        } else {
             App.mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    TaobaoUtil.showUrl((Activity) mFragment.getContext(),url);
+                    TaobaoUtil.showUrl((Activity) mFragment.getContext(), url);
                 }
             });
         }
-
 
 
     }
@@ -548,8 +618,6 @@ public class WebJSHook {
     }
 
 
-
-
     /**
      * app升级
      */
@@ -655,6 +723,8 @@ public class WebJSHook {
         }
     }
 
+
+
     //qq 空间
     private void shareQQRoom(boolean isShareImg, String url, String title, String content, final String head) {
         if (isShareImg) {
@@ -703,7 +773,6 @@ public class WebJSHook {
         return userInfo.getHeadImg();
 
     }
-
 
 
 }
