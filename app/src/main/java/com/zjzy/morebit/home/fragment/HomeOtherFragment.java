@@ -171,7 +171,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
+    private String newtime="608761808";
 
     private RecyclerView home_rcy;
     private List<DoorGodCategoryBean.ResultListBean> resultList;
@@ -235,6 +235,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private String ischeck;
     private RelativeLayout msg_rl;
     private ConsecutiveScrollerLayout scrollerlayout;
+    private boolean isTime=true;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -327,8 +328,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -477,7 +478,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         }
         activity_rcy.setLayoutManager(manager6);
 
-
+       // initTime(Long.parseLong(newtime));
 
 
 
@@ -1100,6 +1101,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         List<UserZeroInfoBean.ItemListBean> itemList = data.getItemList();
         NewItemAdapter newItemAdapter = new NewItemAdapter(getActivity(), itemList);//新人
         new_rcy.setAdapter(newItemAdapter);
+//        timeHandler.removeMessages(1);
+        newtime=data.getTime();
         initTime(Long.parseLong(data.getTime()));
         UserInfo userInfo1 = UserLocalData.getUser(getActivity());
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
@@ -1113,7 +1116,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 new_goods.setVisibility(View.GONE);
                 shareImageView.setVisibility(View.GONE);
             }
-            initTime(Long.parseLong(data.getTime()));
+
+            Log.e("gyui",data.getTime());
             new_goods.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1143,23 +1147,29 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
      * 开启倒计时
      */
     private void startRun() {
-        new Thread(new Runnable() {
+        //timeHandler.removeMessages(1);
+     //   timeHandler.sendEmptyMessageDelayed(1, 1000);
+        if (isTime){
+            new Thread(new Runnable() {
 
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                while (isRun) {
-                    try {
-                        Thread.sleep(1000); // sleep 1000ms
-                        Message message = Message.obtain();
-                        message.what = 1;
-                        timeHandler.sendMessage(message);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    while (isRun) {
+                        try {
+                            Thread.sleep(1000); // sleep 1000ms
+                            Message message = Message.obtain();
+                            message.what = 1;
+                            timeHandler.sendMessage(message);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        }).start();
+            }).start();
+            isTime=false;
+        }
+
     }
 
     private void onGetLitmitSkill(PanicBuyingListBean data) {

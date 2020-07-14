@@ -98,7 +98,9 @@
 
                 </com.zjzy.morebit.view.AspectRatioView>
 
-
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="12dp" />
                 <LinearLayout
                     android:id="@+id/litmit_ll"
                     android:layout_width="match_parent"
@@ -139,7 +141,9 @@
                         app:ci_drawable="@drawable/icon_huangdian"
                         app:ci_drawable_unselected="@drawable/icon_huidian" />
                 </LinearLayout>
-
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="12dp" />
                 <LinearLayout
                     android:id="@+id/new_goods"
                     android:layout_width="match_parent"

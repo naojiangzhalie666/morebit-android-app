@@ -89,6 +89,7 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
     private LinearLayout new_goods;
     private ImageView img;
     private      SmartRefreshLayout   swpeish;
+    private boolean isTime=true;
     private Handler timeHandler = new Handler() {
 
         @Override
@@ -311,23 +312,27 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
      * 开启倒计时
      */
     private void startRun() {
-        new Thread(new Runnable() {
+        if (isTime){
+            new Thread(new Runnable() {
 
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                while (isRun) {
-                    try {
-                        Thread.sleep(1000); // sleep 1000ms
-                        Message message = Message.obtain();
-                        message.what = 1;
-                        timeHandler.sendMessage(message);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    while (isRun) {
+                        try {
+                            Thread.sleep(1000); // sleep 1000ms
+                            Message message = Message.obtain();
+                            message.what = 1;
+                            timeHandler.sendMessage(message);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        }).start();
+            }).start();
+            isTime=false;
+        }
+
     }
 
     public Observable<BaseResponse<NewRecommendBean>> getNewRecommend(RxFragment fragment, int page, int minNum, int type) {
