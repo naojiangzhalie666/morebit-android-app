@@ -7,7 +7,9 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context=".Activity.ShareHungryActivity">
-
+    <include layout="@layout/view_applets_poster"
+        android:visibility="gone"
+        />
 
         <include
             android:id="@+id/top"

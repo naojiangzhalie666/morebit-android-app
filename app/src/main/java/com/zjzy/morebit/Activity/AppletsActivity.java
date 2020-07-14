@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +52,7 @@ import static com.zjzy.morebit.utils.C.requestType.initData;
 public class AppletsActivity extends BaseActivity implements View.OnClickListener {
     private TextView txt_head_title;
     private LinearLayout btn_back,weixinFriend,weixinCircle,save,applets,qqRoom,ll_more;
-    private ImageView img1,img2;
+    private ImageView img1,img2,imgone,imgtwo;
     private RoundedImageView tv_tou;
     private TextView tv,tv_name;
     private Bitmap bitmap1,bitmap2;
@@ -97,21 +98,14 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
                                     @Override
                                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                                         bitmap1=resource;
+                                        Log.e("qwer","bitmap1"+bitmap1);
                                         img1.setImageBitmap(resource);
+                                        imgone.setImageBitmap(resource);
+                                        imgVIew(resource);
                                     }
                                 });
                         //  LoadImgUtils.setViewBackground(ShareHungryActivity.this, share_img, activityLink);
 
-                        Glide.with(AppletsActivity.this)
-                                .asBitmap()
-                                .load(data.getQrCodeUrl())
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                        bitmap2=resource;
-                                        img2.setImageBitmap(resource);
-                                    }
-                                });
 
 
                         if (TextUtils.isEmpty(data.getShareDesc()))return;
@@ -119,20 +113,47 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
 
 
 
-                        if (bitmap1!=null&&bitmap2!=null){
-                            try {
-                                  shareHundry = GoodsUtil.saveAppletsGoodsImg(AppletsActivity.this, bitmap1,bitmap2);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
+
                       //  LoadingView.dismissDialog();
                     }
                 });
 
     }
 
+    private void imgVIew(final Bitmap resource2) {
+        Glide.with(AppletsActivity.this)
+                .asBitmap()
+                .load(/*data.getQrCodeUrl()*/"https://img.morebit.com.cn/morebit-img/1592219220278.png")
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        bitmap2=resource;
+                        Log.e("qwer","bitmap2"+bitmap2);
+                        img2.setImageBitmap(resource);
+                        imgtwo.setImageBitmap(resource);
+
+                        imgView2(resource2,resource);
+                    }
+                });
+
+
+    }
+
+    private void imgView2(Bitmap resource2, Bitmap resource) {
+        Log.e("qwer","bitmap2"+resource2+"bitmap1"+resource);
+        if (resource2!=null&&resource!=null){
+            try {
+                Log.e("qwer","bitmap1"+resource);
+                shareHundry = GoodsUtil.saveAppletsGoodsImg(AppletsActivity.this, resource2,resource);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void initView() {
+        imgone= (ImageView) findViewById(R.id.imgone);
+        imgtwo= (ImageView) findViewById(R.id.imgtwo);
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setText("小程序分享");
         txt_head_title.setTextSize(18);
@@ -165,6 +186,7 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        Log.e("yyyy","s"+shareHundry);
             if (shareHundry !=null){
                 switch (v.getId()){
                     case R.id.weixinFriend://微信

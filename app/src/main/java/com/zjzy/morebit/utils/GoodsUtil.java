@@ -629,8 +629,8 @@ public class GoodsUtil {
     private static View getAppletsPoster(Activity activity,Bitmap img,Bitmap img2) {
         View view = LayoutInflater.from(activity).inflate(R.layout.view_applets_poster, null);
 
-        ImageView imageView1 = (ImageView) view.findViewById(R.id.img1);
-        ImageView imageView2 = (ImageView) view.findViewById(R.id.img2);
+        ImageView imageView1 = (ImageView) view.findViewById(R.id.imgone);
+        ImageView imageView2 = (ImageView) view.findViewById(R.id.imgtwo);
         RoundedImageView tv_tou= (RoundedImageView) view.findViewById(R.id.tv_tou);
         TextView tv_name= (TextView) view.findViewById(R.id.tv_name);
 
@@ -638,6 +638,7 @@ public class GoodsUtil {
         tv_name.setText(user.getNickName());
         LoadImgUtils.setImgCircle(activity, tv_tou, user.getHeadImg(), R.drawable.head_icon);
         if (img!=null&&img2!=null)
+            Log.e("qwer",img2+"hhhh");
             imageView1.setImageBitmap(img);
             imageView2.setImageBitmap(img2);
 
