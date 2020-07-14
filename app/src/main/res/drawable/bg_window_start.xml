@@ -26,8 +26,7 @@
     <item>
 
         <bitmap
-            android:gravity="fill_horizontal"
-            android:src="@drawable/app"/>
+            android:src="@drawable/app3"/>
     </item>
 <!--    <item>-->
 
