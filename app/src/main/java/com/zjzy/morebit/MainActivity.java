@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -367,6 +368,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                         }
                     }
                 }, 1000);
+
+
+
                 mHomeRedPackageDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {

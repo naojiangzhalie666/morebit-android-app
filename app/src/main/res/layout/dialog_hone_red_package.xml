@@ -22,8 +22,8 @@
 
 
             <com.youth.banner.Banner
-                android:layout_centerInParent="true"
                 android:layout_below="@+id/iv_back"
+                android:layout_centerInParent="true"
                 android:id="@+id/roll_view_pager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.zjzy.morebit.App;
@@ -77,6 +79,7 @@ public class HomeRedPackageDialog extends Dialog implements View.OnClickListener
             imgUrls.add(imageInfo.getThumb());
         }
         //简单使用
+        Log.e("sdfdf",imgUrls+"");
         mRoll_view_pager.setImages(imgUrls)
                 .setImageLoader(new GlideImageLoader(R.color.transparent))
                 .setOnBannerListener(new OnBannerListener() {
@@ -93,6 +96,10 @@ public class HomeRedPackageDialog extends Dialog implements View.OnClickListener
                 .start();
 
 
+        ViewGroup.LayoutParams params = mRoll_view_pager.getLayoutParams();
+        params.width = mData.get(0).getWidth()*2;
+        params.height = mData.get(0).getHeight()*2;
+        mRoll_view_pager.setLayoutParams(params);
 
 
     }

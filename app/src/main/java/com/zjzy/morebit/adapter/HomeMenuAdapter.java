@@ -101,7 +101,6 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("ggss",imageInfo.getUrl());
                 BannerInitiateUtils.gotoAction((Activity) mContext, imageInfo);
                 BannerInitiateUtils.statisticsStartAdOnclick((BaseActivity) mContext, imageInfo.getId() + "", 1);
             }
