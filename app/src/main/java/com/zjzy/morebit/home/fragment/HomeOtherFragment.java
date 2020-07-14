@@ -754,13 +754,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         swipeList.setEnableLoadMore(true);
 
-//        swipeList.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
-//            @Override
-//            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
-//                // 上拉加载时，保证吸顶头部不被推出屏幕。
-//                scrollerlayout.setStickyOffset(offset);
-//            }
-//        });
+        swipeList.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+            @Override
+            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
+                // 上拉加载时，保证吸顶头部不被推出屏幕。
+                scrollerlayout.setStickyOffset(offset);
+            }
+        });
 
         swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
