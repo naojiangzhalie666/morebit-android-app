@@ -511,7 +511,13 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
             }
         });
-
+        LinearLayout ll = inflate.findViewById(R.id.ll);
+        ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
 
 
     }

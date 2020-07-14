@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   android:background="#66000000"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -102,6 +101,16 @@
 
     </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll"
+        android:background="#66000000"
+        android:layout_width="match_parent"
+        android:layout_height="1000dp"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
 
 
 

@@ -344,7 +344,13 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
 
             }
         });
-
+        LinearLayout ll = inflate.findViewById(R.id.ll);
+        ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
 
 
     }
