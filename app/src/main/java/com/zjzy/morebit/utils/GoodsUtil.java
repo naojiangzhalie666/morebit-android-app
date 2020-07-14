@@ -31,6 +31,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.CommonLocalData;
@@ -47,6 +50,7 @@ import com.zjzy.morebit.network.RxWXHttp;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.CheckCouponStatusBean;
 import com.zjzy.morebit.pojo.goods.CouponUrlBean;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
@@ -600,6 +604,45 @@ public class GoodsUtil {
         return view;
     }
 
+
+
+    /**
+     * 生成虚拟页面数据并保存为图片
+     *
+     * @param activity
+     * @throws Exception
+     */
+    public static String saveAppletsGoodsImg(Activity activity,Bitmap img,Bitmap img2) throws Exception {
+        //设置布局数据
+        View view = getAppletsPoster(activity,img,img2);
+        Bitmap vBitmap = getViewBitmap(view);
+        //保存图片到本地
+        String saveMakePath = SdDirPath.IMAGE_CACHE_PATH + "goodqr_" + System.currentTimeMillis() + ".jpg";
+        File file = new File(saveMakePath);
+
+        vBitmap.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(file));
+        vBitmap.recycle();
+        vBitmap = null;
+        return saveMakePath;
+    }
+
+    private static View getAppletsPoster(Activity activity,Bitmap img,Bitmap img2) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.view_applets_poster, null);
+
+        ImageView imageView1 = (ImageView) view.findViewById(R.id.img1);
+        ImageView imageView2 = (ImageView) view.findViewById(R.id.img2);
+        RoundedImageView tv_tou= (RoundedImageView) view.findViewById(R.id.tv_tou);
+        TextView tv_name= (TextView) view.findViewById(R.id.tv_name);
+
+        UserInfo user = UserLocalData.getUser(activity);
+        tv_name.setText(user.getNickName());
+        LoadImgUtils.setImgCircle(activity, tv_tou, user.getHeadImg(), R.drawable.head_icon);
+        if (img!=null&&img2!=null)
+            imageView1.setImageBitmap(img);
+            imageView2.setImageBitmap(img2);
+
+        return view;
+    }
 
     //    public static Bitmap getViewBitmap(View view) {
 //        int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -1681,5 +1724,20 @@ public static Bitmap returnBitMap(final String url){
                 action.invoke(data);
             }
         });
+    }
+
+
+
+//跳转小程序
+    public static  void jumpApplets(Context context){
+        String appId = "wx0d185820ca66c15b"; // 填应用AppId
+        IWXAPI api = WXAPIFactory.createWXAPI(context, appId);
+
+        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+        req.userName = "gh_84aa568cb2a1"; // 填小程序原始id
+        req.path = "pages/index/index";                  //拉起小程序页面的可带参路径，不填默认拉起小程序首页
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开  0是正式 1是开发 2是体验版本
+        api.sendReq(req);
+
     }
 }

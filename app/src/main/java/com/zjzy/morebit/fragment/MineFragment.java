@@ -26,7 +26,11 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.AppletsActivity;
 import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.App;
@@ -73,6 +77,7 @@ import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.GuideViewUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -174,6 +179,7 @@ public class MineFragment extends BaseMainFragmeng {
 
 
     ToolsAdapter mAdapter;
+    private LinearLayout my_little;
     PersonFunctionAdapter mPersonFunctionAdapter;
     ToolsSplendidAdapter mAdapterSplendid;
     private boolean isUserHint = true;
@@ -209,6 +215,7 @@ public class MineFragment extends BaseMainFragmeng {
                 .fitsSystemWindows(false)
                 .statusBarColor(R.color.transparent)
                 .init();
+        my_little=mView.findViewById(R.id.my_little);
         return mView;
     }
 
@@ -390,7 +397,7 @@ public class MineFragment extends BaseMainFragmeng {
 
     @OnClick({R.id.copy_invitation_code, R.id.my_earnings, R.id.rl_set_weixin,
             R.id.my_team, R.id.order_detail, R.id.share_friends, R.id.setting, R.id.tv_y, R.id.iv_wenhao,
-            R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon,R.id.offen_question,R.id.order_search,R.id.my_footmarker,R.id.my_favorite})
+            R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon,R.id.offen_question,R.id.order_search,R.id.my_footmarker,R.id.my_favorite,R.id.my_little})
     public void onClick(View v) {
         switch (v.getId()) {  //复制邀请码
             case R.id.copy_invitation_code:
@@ -527,6 +534,13 @@ public class MineFragment extends BaseMainFragmeng {
             case R.id.userIcon: //个人设置
                 // 个人
                 startActivity(new Intent(getActivity(), SettingMineInfoActivity.class));
+                break;
+            case R.id.my_little://小程序入口
+//               GoodsUtil.jumpApplets(getContext());
+
+                startActivity(new Intent(getActivity(), AppletsActivity.class));
+
+
                 break;
             default:
                 break;

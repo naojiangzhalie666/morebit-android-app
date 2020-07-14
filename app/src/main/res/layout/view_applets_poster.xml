@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+
+
+
+                <ImageView
+                    android:id="@+id/img1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/pianyuanbaoyou"
+                    android:scaleType="fitXY"
+                    />
+                <ImageView
+                    android:layout_above="@+id/share_tv"
+                    android:id="@+id/img2"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@color/color_999999"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="12dp"
+
+                    />
+
+                <TextView
+                    android:id="@+id/share_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/color_666666"
+                    android:text="微信扫码 立即领劵"
+                    android:textSize="13dp"
+                    android:paddingBottom="20dp"
+                    />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:background="@drawable/bg_ff755e_round_right_30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_height="40dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/tv_tou"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@color/white"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="2dp"
+            app:riv_corner_radius="0dip"
+            android:layout_marginLeft="10dp"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+
+        />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我是昵称"
+            android:textColor="#ffffffff"
+            android:layout_gravity="center_vertical"
+            android:textSize="12sp"
+            android:paddingRight="8dp"
+            android:layout_marginLeft="10dp"
+            />
+
+
+    </LinearLayout>
+</RelativeLayout>
