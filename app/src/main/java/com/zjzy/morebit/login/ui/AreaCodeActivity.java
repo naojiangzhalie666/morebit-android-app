@@ -141,8 +141,11 @@ public class AreaCodeActivity extends MvpActivity<AreaCodePresenter> implements 
                     if (country.getCountry().contains(string.toLowerCase())){
                         mSelectCodeList.add(country);
                         searchNullTips_ly.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+
                     }else{
                         searchNullTips_ly.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                     }
 
                 }

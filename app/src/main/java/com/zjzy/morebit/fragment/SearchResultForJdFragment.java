@@ -270,26 +270,27 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
                 showPopupWindow(title_zong_volume_ll);
                 requestClickRadar(null, title_comprehensive_tv, 0);
               //  onReload();
-                mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio);
+
                 title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao);
                 break;
             case R.id.title_sales_volume_ll://销量
                 requestClickRadar(mTitleSalesVolumeIv, mTitleSalesVolumeTv, 4);
                 onReload();
-                mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio);
+
                 title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
                 break;
             case R.id.title_post_coupon_price__ll://价格
                 requestClickRadar(mTitlePostCouponPriceIv, mTitlePostCouponPriceTv, 1);
                 onReload();
-                mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio);
                 title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
                 break;
             case R.id.title_commission_ll://筛选
                 showPopupWindow2(mTitleCommissionLl);
-                requestClickRadar(null, mTitleCommissionTv, 3);
+                //requestClickRadar(null, mTitleCommissionTv, 3);
+                mTitleCommissionTv.setTextColor(Color.parseColor("#F05557"));
+                //  requestClickRadar(null, mTitleCommissionTv, 0);
                 mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio2);
-                title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
+
                 break;
             case R.id.yimg3://优惠券
                 if (!isCoupon){
@@ -335,13 +336,13 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
         mTitleSalesVolumeTv.setSelected(false);
         mTitlePostCouponPriceTv.setSelected(false);
-        mTitleCommissionTv.setSelected(false);
+
 
         title_comprehensive_tv.setTextColor(Color.parseColor("#999999"));
         title_comprehensive_tv.setTextColor(Color.parseColor("#999999"));
         mTitleSalesVolumeTv.setTextColor(Color.parseColor("#999999"));
         mTitlePostCouponPriceTv.setTextColor(Color.parseColor("#999999"));
-        mTitleCommissionTv.setTextColor(Color.parseColor("#999999"));
+
         //对点击的设置 图片
         if (clickIv != null) {
             clickIv.setImageResource(getDrawableIdBySortDir(eSortDir));
@@ -466,9 +467,13 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         final TextView tv_chong= inflate.findViewById(R.id.tv_chong);
         if (!TextUtils.isEmpty(minPrice)){
             tv_min.setText(minPrice);
+        }else{
+            tv_min.setText("");
         }
         if (!TextUtils.isEmpty(maxprice)){
             tv_max.setText(maxprice);
+        }else{
+            tv_max.setText("");
         }
         tv_sure.setOnClickListener(new View.OnClickListener() {//确定
             @Override
@@ -495,9 +500,14 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
         tv_chong.setOnClickListener(new View.OnClickListener() {//重置
             @Override
             public void onClick(View v) {
-                isMethodManager(tv_chong);
-                mPopupWindow.dismiss();
+                maxprice="";
+                minPrice="";
                 hideInput();
+                mTitleCommissionTv.setTextColor(Color.parseColor("#333333"));
+                mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio);
+                onReload();
+                mPopupWindow.dismiss();
+
 
             }
         });

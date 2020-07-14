@@ -255,26 +255,23 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
             case R.id.title_zong_volume_ll://综合
                 requestClickRadar(null, title_comprehensive_tv, 0);
                 onReload();
-                title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio);
                 title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao);
                 break;
             case R.id.title_post_coupon_price__ll://价格
                 requestClickRadar(mTitlePostCouponPriceIv, mTitlePostCouponPriceTv, 1);
                 onReload();
-                title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio);
                 title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
                 break;
             case R.id.title_commission_ll://销量
                 requestClickRadar(mTitleCommissionIv, mTitleCommissionTv, 2);
                 onReload();
-                title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio);
                 title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
                 break;
             case R.id.title_commission_ll2://筛选
                 showPopupWindow2(title_commission_ll2);
-                requestClickRadar(null, title_commission_tv2, 4);
+           //     requestClickRadar(null, title_commission_tv2, 4);
                 title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio2);
-                title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao2);
+                title_commission_tv2.setTextColor(Color.parseColor("#F05557"));
                 break;
         }
     }
@@ -304,9 +301,13 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
         final TextView tv_chong= inflate.findViewById(R.id.tv_chong);
         if (!TextUtils.isEmpty(minPrice)){
             tv_min.setText(minPrice);
+        }else{
+            tv_min.setText("");
         }
         if (!TextUtils.isEmpty(maxprice)){
             tv_max.setText(maxprice);
+        }else{
+            tv_max.setText("");
         }
         tv_sure.setOnClickListener(new View.OnClickListener() {//确定
             @Override
@@ -333,9 +334,13 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
         tv_chong.setOnClickListener(new View.OnClickListener() {//重置
             @Override
             public void onClick(View v) {
-                isMethodManager(tv_chong);
-                mPopupWindow.dismiss();
+                maxprice="";
+                minPrice="";
                 hideInput();
+                title_commission_tv2.setTextColor(Color.parseColor("#333333"));
+                title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio);
+                onReload();
+                mPopupWindow.dismiss();
 
             }
         });
@@ -370,11 +375,11 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
 
         mTitlePostCouponPriceTv.setSelected(false);
         mTitleCommissionTv.setSelected(false);
-        title_commission_tv2.setSelected(false);
+
         title_comprehensive_tv.setTextColor(Color.parseColor("#999999"));
         mTitlePostCouponPriceTv.setTextColor(Color.parseColor("#999999"));
         mTitleCommissionTv.setTextColor(Color.parseColor("#999999"));
-        title_commission_tv2.setTextColor(Color.parseColor("#333333"));
+
         //对点击的设置 图片
         if (clickIv != null) {
             clickIv.setImageResource(getDrawableIdBySortDir(eSortDir));

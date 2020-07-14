@@ -15,6 +15,7 @@ import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShareHungryActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
