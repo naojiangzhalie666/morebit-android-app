@@ -631,9 +631,21 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             }
         });
 
-
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("system");//名字
+        this.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("system")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                mPresenter.getSysNotification(MainActivity.this, true);
+            }
+        }
+    };
 
     @Subscribe  //订阅事件
     public void onEventMainThread(MessageEvent event) {
@@ -641,7 +653,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             if (homePageFragment != null) {
                 homePageFragment.getLoginView();
             }
-            mPresenter.getSysNotification(this, true);
+
 
         } else if (event.getAction().equals(EventBusAction.ACTION_SCHOOL)) {
             //打开会员首页
@@ -914,6 +926,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         }
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
+        }
+        if (mRefreshBroadcastReceiver!=null){
+            unregisterReceiver(mRefreshBroadcastReceiver);
         }
         super.onDestroy();
     }

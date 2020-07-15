@@ -1937,16 +1937,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
     public void getLoginView() {
-        Log.e("ssss", "进来了");
         boolean isLogin = LoginUtil.checkIsLogin(getActivity(), false);
         if (!isLogin) {
-            Log.e("ssss", "进来了1");
             if (getActivity() == null) {
                 return;
             }
-            Log.e("ssss", "进来了2");
             if (noLoginView == null) {
-                Log.e("ssss", "进来了3");
                 noLoginView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_login, null);
                 noLoginView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2017,6 +2013,10 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                                         if (rl_urgency_notifi != null) {
                                             rl_urgency_notifi.removeAllViews();
                                         }
+
+                                        Intent intent=new Intent();
+                                        intent.setAction("system");//要通知的广播名称
+                                        getActivity().sendBroadcast(intent);
 
                                     }
                                 }
