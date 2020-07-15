@@ -114,12 +114,10 @@ public class GuessSearchLikeFragment extends BaseFragment {
                     @Override
                     protected void onSuccess(List<ShopGoodInfo> data) {
                         if (page==1){
-                            mAdapter.add(data);
+                            mAdapter.setData(data);
                         }else{
-                            mAdapter.add(data);
+                            mAdapter.setData(data);
                         }
-
-                        mAdapter.notifyDataSetChanged();
 
                     }
                 });
