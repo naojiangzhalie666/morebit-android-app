@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     tools:context=".Activity.ShareHungryActivity">
     <include layout="@layout/view_applets_poster"
         android:visibility="gone"
@@ -27,6 +28,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="45dp"
+
                 >
 
                 <ImageView
@@ -38,8 +40,8 @@
                 <ImageView
                     android:layout_above="@+id/share_tv"
                     android:id="@+id/img2"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="12dp"
 
@@ -102,7 +104,7 @@
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="分享小程序给好友，如果好友微信未注册过多点优 选，好友通过您的分享进入多点好物小程序，它将 成为您的直属下级，赶紧分享吧！"
+        android:text="分享小程序给好友，如果好友微信未注册过多点优选，好友通过您的分享进入多点好物小程序，它将 成为您的直属下级，赶紧分享吧！"
         android:textColor="#ff333333"
         android:textSize="14sp"
         android:layout_marginRight="12dp"

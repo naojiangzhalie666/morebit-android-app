@@ -73,8 +73,7 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
 
     private void initmData() {
         UserInfo user = UserLocalData.getUser(this);
-        tv_name.setText(user.getNickName());
-        LoadImgUtils.setImgCircle(this, tv_tou, user.getHeadImg(), R.drawable.head_icon);
+        Log.e("qwer",user.getNickName());
         //LoadingView.showDialog(this, "请求中...");
         RequestAppletsBean bean = new RequestAppletsBean();
         bean.setInviteCode(user.getInviteCode());
@@ -101,7 +100,7 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
                                         Log.e("qwer","bitmap1"+bitmap1);
                                         img1.setImageBitmap(resource);
                                         imgone.setImageBitmap(resource);
-                                        imgVIew(resource,data);
+                                        imgVIew(resource,data.getQrCodeUrl());
                                     }
                                 });
                         //  LoadImgUtils.setViewBackground(ShareHungryActivity.this, share_img, activityLink);
@@ -120,10 +119,10 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    private void imgVIew(final Bitmap resource2, AppletsBean data) {
+    private void imgVIew(final Bitmap resource2, String data) {
         Glide.with(AppletsActivity.this)
                 .asBitmap()
-                .load(data.getQrCodeUrl())
+                .load("https://img.morebit.com.cn/morebit-img/1592219220278.png")
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -178,7 +177,12 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
         tv= (TextView) findViewById(R.id.tv);
         tv_tou= (RoundedImageView) findViewById(R.id.tv_tou);
         tv_name= (TextView) findViewById(R.id.tv_name);
+        UserInfo user = UserLocalData.getUser(this);
 
+        String sss=user.getNickName();
+        Log.e("qwer1","sss"+sss);
+        tv_name.setText(sss+"");
+        LoadImgUtils.setImgCircle(this, tv_tou, user.getHeadImg(), R.drawable.head_icon);
 
 
     }
@@ -187,25 +191,42 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         Log.e("yyyy","s"+shareHundry);
-            if (shareHundry !=null){
+
                 switch (v.getId()){
                     case R.id.weixinFriend://微信
-                       ShareUtil.Image.toWechatFriend(AppletsActivity.this, shareHundry, null);
+                        if (shareHundry!=null){
+                            ShareUtil.Image.toWechatFriend(AppletsActivity.this, shareHundry, null);
+
+                        }else{
+                            ToastUtils.showShort("图片生成失败");
+                        }
                         break;
                     case R.id.weixinCircle://微信朋友圈
-                        ShareUtil.Image.toWechatMoments(AppletsActivity.this, shareHundry, null);
+                        if (shareHundry!=null){
+                            ShareUtil.Image.toWechatMoments(AppletsActivity.this, shareHundry, null);
+
+                        }else{
+                            ToastUtils.showShort("图片生成失败");
+                        }
                         break;
                     case R.id.applets://打开小程序
                         GoodsUtil.jumpApplets(this);
                         break;
                     case R.id.save://保存图片
-                        startSave();
+                        if (shareHundry!=null){
+                            startSave();
+                        }else{
+                            ToastUtils.showShort("图片生成失败");
+                        }
+
                         break;
 
                 }
             }
 
-        }
+
+
+
 
 
     public void startSave() {

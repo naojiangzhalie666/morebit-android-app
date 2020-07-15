@@ -631,8 +631,8 @@ public class GoodsUtil {
 
         ImageView imageView1 = (ImageView) view.findViewById(R.id.imgone);
         ImageView imageView2 = (ImageView) view.findViewById(R.id.imgtwo);
-        RoundedImageView tv_tou= (RoundedImageView) view.findViewById(R.id.tv_tou);
-        TextView tv_name= (TextView) view.findViewById(R.id.tv_name);
+        RoundedImageView tv_tou= (RoundedImageView) view.findViewById(R.id.tv_tou2);
+        TextView tv_name= (TextView) view.findViewById(R.id.tv_name2);
 
         UserInfo user = UserLocalData.getUser(activity);
         tv_name.setText(user.getNickName());
