@@ -84,7 +84,7 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
                 .compose(this.<BaseResponse<AppletsBean>>bindToLifecycle())
                 .subscribe(new DataObserver<AppletsBean>() {
                     @Override
-                    protected void onSuccess(AppletsBean data) {
+                    protected void onSuccess(final AppletsBean data) {
 
                         String backgroundImgUrl = data.getBackgroundImgUrl();
 
@@ -101,7 +101,7 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
                                         Log.e("qwer","bitmap1"+bitmap1);
                                         img1.setImageBitmap(resource);
                                         imgone.setImageBitmap(resource);
-                                        imgVIew(resource);
+                                        imgVIew(resource,data);
                                     }
                                 });
                         //  LoadImgUtils.setViewBackground(ShareHungryActivity.this, share_img, activityLink);
@@ -120,10 +120,10 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    private void imgVIew(final Bitmap resource2) {
+    private void imgVIew(final Bitmap resource2, AppletsBean data) {
         Glide.with(AppletsActivity.this)
                 .asBitmap()
-                .load(/*data.getQrCodeUrl()*/"https://img.morebit.com.cn/morebit-img/1592219220278.png")
+                .load(data.getQrCodeUrl())
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
