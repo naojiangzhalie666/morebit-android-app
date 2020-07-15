@@ -45,8 +45,7 @@ import io.reactivex.functions.Action;
 
 public class GuessSearchLikeFragment extends BaseFragment {
     RecyclerView mRlList;
-    RelativeLayout mRlTitle;
-    private TextView titleTv;
+
     private SearchGuessAdapter mAdapter;
     private ShopGoodInfo mGoodsInfo;
 
@@ -65,7 +64,7 @@ public class GuessSearchLikeFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_goods_detail_like_guess, container, false);
+        View view = inflater.inflate(R.layout.fragment_goods_search_like_guess, container, false);
         return view;
     }
 
@@ -75,14 +74,11 @@ public class GuessSearchLikeFragment extends BaseFragment {
         mGoodsInfo = (ShopGoodInfo) getArguments().getSerializable(C.Extras.GOODSBEAN);
         initView(view);
         getData();
-        getRecommodTitle();
 
     }
 
     protected void initView(View view) {
-        titleTv = view.findViewById(R.id.titleTv);
         mRlList = view.findViewById(R.id.rl_list);
-        mRlTitle = view.findViewById(R.id.rl_title);
         mAdapter = new SearchGuessAdapter(getActivity());
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity());
         mRlList.setLayoutManager(gridLayoutManager);
@@ -112,12 +108,10 @@ public class GuessSearchLikeFragment extends BaseFragment {
                 .subscribe(new DataObserver<List<ShopGoodInfo>>() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        mRlTitle.setVisibility(View.GONE);
                     }
 
                     @Override
                     protected void onSuccess(List<ShopGoodInfo> data) {
-                        mRlTitle.setVisibility(View.VISIBLE);
                         mAdapter.replace(data);
                         mAdapter.notifyDataSetChanged();
 
@@ -127,18 +121,5 @@ public class GuessSearchLikeFragment extends BaseFragment {
 
     }
 
-    /**
-     * 获取推荐title
-     */
-    private void getRecommodTitle() {
-        ConfigListUtlis.getConfigListCacheNet((RxAppCompatActivity) getActivity(), ConfigListUtlis.getConfigAllKey(), new MyAction.One<List<SystemConfigBean>>() {
-            @Override
-            public void invoke(List<SystemConfigBean> arg) {
-                SystemConfigBean detailBean = ConfigListUtlis.getSystemConfigBean(C.ConfigKey.ITEM_DETAILS_RECOMMENDED_TITLE);
-                if(null != detailBean && !TextUtils.isEmpty(detailBean.getSysValue())){
-                    titleTv.setText(detailBean.getSysValue());
-                }
-            }
-        });
-    }
+
 }

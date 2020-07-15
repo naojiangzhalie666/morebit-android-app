@@ -55,7 +55,7 @@ public class SearchGuessAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHo
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new HolderLeft(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_goods_guess, parent, false));
+        return new HolderLeft(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_guess, parent, false));
 
 
     }
@@ -84,7 +84,7 @@ public class SearchGuessAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHo
         }
 
 
-        discount_price.setText(MathUtils.getnum(item.getVoucherPrice()));
+        discount_price.setText(MathUtils.getSale(item.getSaleMonth()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
