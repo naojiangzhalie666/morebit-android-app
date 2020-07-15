@@ -454,8 +454,7 @@ dependencies {
     implementation 'com.tokiii:reveal-banner:1.0.2'
     implementation 'com.zyp.cardview:cardview:1.0.1'
     // implementation 'com.github.lzjin:ViewPagerGallery:1.2'
-
-
+    implementation 'com.github.yeaper:XShadow:1.0.1'
 }
 // 依赖插件脚本
 //apply from: 'tinker-support.gradle'
