@@ -18,13 +18,9 @@
         layout="@layout/top" />
 
 
-    <RelativeLayout
-        android:layout_below="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <com.yyp.xshadow.XShadow
         android:id="@+id/rl"
-
+        android:layout_below="@+id/top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:corner_radius="0dp"
@@ -129,7 +125,7 @@
         android:text="分享小程序给好友，如果好友微信未注册过多点优选，好友通过您的分享进入多点好物小程序，它将 成为您的直属下级，赶紧分享吧！"
         android:textColor="#ff333333"
         android:textSize="14sp" />
-    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/ll"
