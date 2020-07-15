@@ -658,10 +658,10 @@ public class MineFragment extends BaseMainFragmeng {
                     mLocalData.put("1",x);
                     it.remove();
                 }
-                if(x.getTitle().equals("常见问题")){
-                    mLocalData.put("5",x);
-                    it.remove();
-                }
+//                if(x.getTitle().equals("常见问题")){
+//                    mLocalData.put("5",x);
+//                    it.remove();
+//                }
                 if(x.getTitle().equals("足迹")){
                     mLocalData.put("3",x);
                     it.remove();

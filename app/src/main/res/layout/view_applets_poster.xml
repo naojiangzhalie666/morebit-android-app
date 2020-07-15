@@ -15,7 +15,7 @@
         android:id="@+id/rl"
         android:layout_below="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="360dp"
+        android:layout_height="match_parent"
 
         >
 
@@ -23,7 +23,6 @@
             android:id="@+id/imgone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/pianyuanbaoyou"
             android:scaleType="fitXY"
             />
         <ImageView
@@ -53,7 +52,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:background="@drawable/bg_ff755e_round_right_30dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="40dp"
             android:layout_height="40dp">
 

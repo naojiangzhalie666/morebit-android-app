@@ -33,14 +33,13 @@
                     android:id="@+id/img1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/pianyuanbaoyou"
                     android:scaleType="fitXY"
                     />
                 <ImageView
                     android:layout_above="@+id/share_tv"
                     android:id="@+id/img2"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="12dp"
 
@@ -63,7 +62,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:background="@drawable/bg_ff755e_round_right_30dp"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="40dp"
                     android:layout_height="40dp">
 
