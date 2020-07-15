@@ -122,7 +122,7 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
     private void imgVIew(final Bitmap resource2, String data) {
         Glide.with(AppletsActivity.this)
                 .asBitmap()
-                .load("https://img.morebit.com.cn/morebit-img/1592219220278.png")
+                .load(data)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
