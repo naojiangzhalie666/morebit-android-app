@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -33,6 +34,8 @@ import com.zjzy.morebit.adapter.JdListAdapter;
 import com.zjzy.morebit.adapter.JdSearchAdapter;
 import com.zjzy.morebit.main.contract.PddContract;
 import com.zjzy.morebit.main.presenter.PddListPresenter;
+import com.zjzy.morebit.main.ui.fragment.GuessDetailLikeFragment;
+import com.zjzy.morebit.main.ui.fragment.GuessSearchLikeFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
@@ -41,6 +44,7 @@ import com.zjzy.morebit.pojo.UI.BaseTitleTabBean;
 import com.zjzy.morebit.pojo.event.SearchGoodsForJdEvent;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -102,6 +106,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     private boolean zong=true;
     private boolean yong1=false;
     private boolean yong2=false;
+    private FrameLayout emityfragment;
 
 
 
@@ -151,7 +156,9 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
     @Override
     protected void initData() {
-
+        GuessSearchLikeFragment mLikeFragment = GuessSearchLikeFragment.newInstance();
+        ActivityUtils.replaceFragmentToActivity(
+                getChildFragmentManager(), mLikeFragment, R.id.emityfragment);
     }
 
     private Bundle bundle;
@@ -165,6 +172,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
 
 
     public void initView(View view) {
+        emityfragment=view.findViewById(R.id.emityfragment);//猜你喜欢
         title_zong_volume_ll = view.findViewById(R.id.title_zong_volume_ll);//综合
         title_comprehensive_tv=view.findViewById(R.id.title_comprehensive_tv);
         title_comprehensive_iv=view.findViewById(R.id.title_comprehensive_iv);
@@ -402,6 +410,9 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     @Override
     public void setJd(List<ShopGoodInfo> data, int loadType) {
         Log.e("ffffff","333空白");
+        if (data!=null){
+            mRecyclerView.setVisibility(View.VISIBLE);
+            emityfragment.setVisibility(View.GONE);
             if (page==1) {
                 //mData.clear();
                 mAdapter = new JdSearchAdapter(getActivity(), data);
@@ -411,6 +422,11 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
                 mAdapter.setData(data);
                 mSwipeList.finishLoadMore(false);
             }
+        }else{
+            mRecyclerView.setVisibility(View.GONE);
+            emityfragment.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -419,7 +435,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
             mAdapter = new JdSearchAdapter(getActivity(), listArray);
             mRecyclerView.setAdapter(mAdapter);
             dataList_ly.setVisibility(View.GONE);
-            mRecyclerView.setVisibility(View.VISIBLE);
+            emityfragment.setVisibility(View.VISIBLE);
         }else{
             mSwipeList.finishLoadMore(false);
         }

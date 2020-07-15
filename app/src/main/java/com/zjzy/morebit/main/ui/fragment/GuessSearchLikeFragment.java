@@ -48,11 +48,11 @@ public class GuessSearchLikeFragment extends BaseFragment {
 
     private SearchGuessAdapter mAdapter;
     private ShopGoodInfo mGoodsInfo;
+    private int page=1;
 
-    public static GuessSearchLikeFragment newInstance(ShopGoodInfo goodsInfo) {
+    public static GuessSearchLikeFragment newInstance() {
         GuessSearchLikeFragment fragment = new GuessSearchLikeFragment();
         Bundle args = new Bundle();
-        args.putSerializable(C.Extras.GOODSBEAN, goodsInfo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -96,6 +96,7 @@ public class GuessSearchLikeFragment extends BaseFragment {
         requestGoodsLike.setItemSourceId(mGoodsInfo.getItemSourceId());
         requestGoodsLike.setDeviceType("IMEI");
         requestGoodsLike.setDeviceValue(getimei);
+        requestGoodsLike.setPage(page);
         RxHttp.getInstance().getCommonService().getRecommendItemsById(requestGoodsLike)
                 .compose(RxUtils.<BaseResponse<List<ShopGoodInfo>>>switchSchedulers())
                 .compose(this.<BaseResponse<List<ShopGoodInfo>>>bindToLifecycle())
@@ -112,7 +113,12 @@ public class GuessSearchLikeFragment extends BaseFragment {
 
                     @Override
                     protected void onSuccess(List<ShopGoodInfo> data) {
-                        mAdapter.replace(data);
+                        if (page==1){
+                            mAdapter.add(data);
+                        }else{
+                            mAdapter.add(data);
+                        }
+
                         mAdapter.notifyDataSetChanged();
 
                     }
