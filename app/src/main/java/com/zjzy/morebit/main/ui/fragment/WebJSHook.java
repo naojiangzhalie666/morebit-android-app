@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -150,7 +151,7 @@ type: Int/// 0是网络图片、1是base64图片
      *
      * */
     @JavascriptInterface
-    public void shareHtml(int type, final String url, final String title, final String image, final String text) {
+    public void shareHtml(final String url, final String title,final String text,  final String image,int type ) {
         App.mHandler.post(new Runnable() {
             @Override
             public void run() {
