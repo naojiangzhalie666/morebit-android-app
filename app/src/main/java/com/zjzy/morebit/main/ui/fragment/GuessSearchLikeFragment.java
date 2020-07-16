@@ -1,6 +1,7 @@
 package com.zjzy.morebit.main.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
@@ -44,11 +50,12 @@ import io.reactivex.functions.Action;
  */
 
 public class GuessSearchLikeFragment extends BaseFragment {
-    RecyclerView mRlList;
+    LRecyclerView mRlList;
 
     private SearchGuessAdapter mAdapter;
     private ShopGoodInfo mGoodsInfo;
     private int page=1;
+    private SmartRefreshLayout swipeList;
 
     public static GuessSearchLikeFragment newInstance() {
         GuessSearchLikeFragment fragment = new GuessSearchLikeFragment();
@@ -78,22 +85,34 @@ public class GuessSearchLikeFragment extends BaseFragment {
     }
 
     protected void initView(View view) {
+        swipeList=view.findViewById(R.id.swipeList);
         mRlList = view.findViewById(R.id.rl_list);
         mAdapter = new SearchGuessAdapter(getActivity());
+        LRecyclerViewAdapter  mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
+        mRlList.setAdapter(mLRecyclerViewAdapter);
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity());
         mRlList.setLayoutManager(gridLayoutManager);
-        mRlList.setAdapter(mAdapter);
         mRlList.setNestedScrollingEnabled(false);
+        View header = LayoutInflater.from(getActivity()).inflate(R.layout.goods_search_guess_emity,null, false);
+        mLRecyclerViewAdapter.addHeaderView(header);
+        swipeList.setEnableRefresh(false);
+
+        swipeList.setEnableLoadMore(true);
+        swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                getData();
+            }
+        });
 
     }
 
 
     public void getData() {
-        if (mGoodsInfo == null) return;
         String getimei = DeviceIDUtils.getimei(getActivity());
         if (TextUtils.isEmpty(getimei))return;
         RequestGoodsLike requestGoodsLike = new RequestGoodsLike();
-        requestGoodsLike.setItemSourceId(mGoodsInfo.getItemSourceId());
         requestGoodsLike.setDeviceType("IMEI");
         requestGoodsLike.setDeviceValue(getimei);
         requestGoodsLike.setPage(page);
@@ -117,6 +136,7 @@ public class GuessSearchLikeFragment extends BaseFragment {
                             mAdapter.setData(data);
                         }else{
                             mAdapter.setData(data);
+                            swipeList.finishLoadMore();
                         }
 
                     }

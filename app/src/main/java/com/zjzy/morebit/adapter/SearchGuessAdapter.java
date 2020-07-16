@@ -1,6 +1,7 @@
 package com.zjzy.morebit.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ public class SearchGuessAdapter extends RecyclerView.Adapter<SearchGuessAdapter.
 
 
     private Context mContext;//
-    private List<ShopGoodInfo> data=new ArrayList<>();
+    private List<ShopGoodInfo> mdata = new ArrayList<>();
 
     public SearchGuessAdapter(Context context) {
 
@@ -46,7 +47,7 @@ public class SearchGuessAdapter extends RecyclerView.Adapter<SearchGuessAdapter.
 
     public void setData(List<ShopGoodInfo> data) {
         if (data != null) {
-            data.addAll(data);
+            mdata.addAll(data);
             notifyItemRangeChanged(0, data.size());
         }
     }
@@ -63,9 +64,9 @@ public class SearchGuessAdapter extends RecyclerView.Adapter<SearchGuessAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final ShopGoodInfo item = data.get(position);
+        final ShopGoodInfo item = mdata.get(position);
         holder.title.setText(MathUtils.getTitle(item));
-        LoadImgUtils.setImg(mContext, holder.img, MathUtils.getPicture(item));
+        LoadImgUtils.loadingCornerBitmap(mContext, holder.iv_icon, item.getItemPicture(), 8);
         if (StringsUtils.isEmpty(item.getCouponPrice())) {
             holder.coupon.setVisibility(View.GONE);
         } else {
@@ -77,9 +78,17 @@ public class SearchGuessAdapter extends RecyclerView.Adapter<SearchGuessAdapter.
         } else {
             holder.commission.setVisibility(View.GONE);
         }
+        if (item.getShoptype() == 1) {
+            holder.good_mall_tag.setImageResource(R.mipmap.guess_tao_icon);
+        } else {
+            holder.good_mall_tag.setImageResource(R.mipmap.guess_tm_icon);
+        }
 
 
-        holder.discount_price.setText(MathUtils.getSale(item.getSaleMonth()));
+        holder.volume.setText(MathUtils.getnum(item.getItemPrice()));
+        holder.volume.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
+        holder.discount_price.setText(MathUtils.getnum(item.getItemVoucherPrice()));
+        holder.shop_name.setText(item.getShopName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +101,7 @@ public class SearchGuessAdapter extends RecyclerView.Adapter<SearchGuessAdapter.
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return mdata.size();
     }
 
 //    @Override
@@ -137,15 +146,19 @@ public class SearchGuessAdapter extends RecyclerView.Adapter<SearchGuessAdapter.
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView title, commission, coupon, discount_price;
-            private ImageView img;
+        private TextView title, commission, coupon, discount_price, volume, shop_name;
+        private ImageView iv_icon, good_mall_tag;
+
         public ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
             commission = itemView.findViewById(R.id.commission);
             coupon = itemView.findViewById(R.id.coupon);
             discount_price = itemView.findViewById(R.id.discount_price);
-            img = itemView.findViewById(R.id.img);
+            iv_icon = itemView.findViewById(R.id.iv_icon);
+            volume = itemView.findViewById(R.id.volume);
+            shop_name = itemView.findViewById(R.id.shop_name);
+            good_mall_tag = itemView.findViewById(R.id.good_mall_tag);
         }
     }
 }

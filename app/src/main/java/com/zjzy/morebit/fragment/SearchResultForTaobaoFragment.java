@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -32,6 +33,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ShoppingListAdapter;
 import com.zjzy.morebit.adapter.TbSearchAdapter;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
+import com.zjzy.morebit.main.ui.fragment.GuessSearchLikeFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
@@ -46,6 +48,7 @@ import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -136,6 +139,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
     private boolean zong=true;
     private boolean yong1=false;
     private boolean yong2=false;
+    private FrameLayout emityfragment;
 
 
     public static SearchResultForTaobaoFragment newInstance(int type) {
@@ -161,6 +165,7 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
     }
 
     private void initmData(View view) {
+        emityfragment=view.findViewById(R.id.emityfragment);//猜你喜欢
         title_zong_volume_ll = view.findViewById(R.id.title_zong_volume_ll);//综合
         title_comprehensive_tv=view.findViewById(R.id.title_comprehensive_tv);
         title_comprehensive_iv=view.findViewById(R.id.title_comprehensive_iv);
@@ -240,7 +245,9 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
             }
         });
         mRecyclerView.getListView().setItemAnimator(null);
-
+        GuessSearchLikeFragment mLikeFragment = GuessSearchLikeFragment.newInstance();
+        ActivityUtils.replaceFragmentToActivity(
+                getChildFragmentManager(), mLikeFragment, R.id.emityfragment);
 //        mRecyclerView.getListView().getItemAnimator().setAddDuration(0);
 //        mRecyclerView.getListView().getItemAnimator().setRemoveDuration(0);
 //        mRecyclerView.getListView().getItemAnimator().setChangeDuration(0);
@@ -309,24 +316,22 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
                         listArray.clear();
                         mAdapter.setData(listArray);
                       mRecyclerView.notifyDataSetChanged();
-                        if (isOneSwitchConpon) {
-                            isOneSwitchConpon = false;
-                        } else {
-                            searchNullTips_ly.setVisibility(View.VISIBLE);
-                        }
+                        emityfragment.setVisibility(View.VISIBLE);
+                        dataList_ly.setVisibility(View.GONE);
                     }
 
                     @Override
                     protected void onSuccess(ShopGoodBean data) {
                         mRecyclerView.getSwipeList().setRefreshing(false);
-                        dataList_ly.setVisibility(View.VISIBLE);
 
                         List<ShopGoodInfo> goodsList = data.getData();
                         if (goodsList != null && goodsList.size() != 0) {
+                            dataList_ly.setVisibility(View.VISIBLE);
+                            emityfragment.setVisibility(View.GONE);
                             mMinId = data.getMinId();
                             mPage = data.getPage();
                             mSearchType = data.getSearchType();
-                            searchNullTips_ly.setVisibility(View.GONE);
+                          //  searchNullTips_ly.setVisibility(View.GONE);
                             listArray.clear();
                             List<ShopGoodInfo> shopGoodInfos = partList(goodsList);
                             mAdapter.setData(shopGoodInfos);
@@ -339,12 +344,8 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
                             mAdapter.setData(listArray);
                           mRecyclerView.notifyDataSetChanged();
                            // mAdapter.notifyItemRangeChanged(0,listArray.size());
-
-                            if (isOneSwitchConpon) {
-                                isOneSwitchConpon = false;
-                            } else {
-                                searchNullTips_ly.setVisibility(View.VISIBLE);
-                            }
+                            dataList_ly.setVisibility(View.GONE);
+                            emityfragment.setVisibility(View.VISIBLE);
                         }
                         if (data.getIsPageEnd() == 1){
                             mRecyclerView.getListView().setNoMore(true);
@@ -608,11 +609,12 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
             public void onClick(View v) {
                 minPrice=tv_min.getText().toString();
                 maxprice=tv_max.getText().toString();
-                int int1 = Integer.parseInt(minPrice);
-                int int2 = Integer.parseInt(maxprice);
+
                 if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
                     ToastUtils.showShort("金额不能为空");
                 }else{
+                    int int1 = Integer.parseInt(minPrice);
+                    int int2 = Integer.parseInt(maxprice);
                     if (int1>int2){
                         ToastUtils.showShort("最高价不得低于最低价");
                     }else{
@@ -645,6 +647,19 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
             @Override
             public void onClick(View v) {
                 mPopupWindow.dismiss();
+            }
+        });
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                hideInput();
+                if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
+                    mTitleCommissionTv.setTextColor(Color.parseColor("#333333"));
+                    mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio);
+                }else{
+                    mTitleCommissionTv.setTextColor(Color.parseColor("#F05557"));
+                    mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio2);
+                }
             }
         });
 

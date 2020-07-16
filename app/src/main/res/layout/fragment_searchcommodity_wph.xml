@@ -39,6 +39,11 @@
             </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/emityfragment"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <LinearLayout
             android:id="@+id/searchNullTips_ly"
             android:layout_width="match_parent"

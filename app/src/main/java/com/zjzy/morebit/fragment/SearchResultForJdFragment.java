@@ -23,6 +23,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.wireless.security.open.middletier.fc.IFCActionCallback;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -411,8 +412,8 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
     public void setJd(List<ShopGoodInfo> data, int loadType) {
         Log.e("ffffff","333空白");
         if (data!=null){
-            mRecyclerView.setVisibility(View.VISIBLE);
             emityfragment.setVisibility(View.GONE);
+            dataList_ly.setVisibility(View.VISIBLE);
             if (page==1) {
                 //mData.clear();
                 mAdapter = new JdSearchAdapter(getActivity(), data);
@@ -423,7 +424,7 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
                 mSwipeList.finishLoadMore(false);
             }
         }else{
-            mRecyclerView.setVisibility(View.GONE);
+            dataList_ly.setVisibility(View.GONE);
             emityfragment.setVisibility(View.VISIBLE);
         }
 
@@ -532,6 +533,21 @@ public class SearchResultForJdFragment extends MvpFragment<PddListPresenter> imp
             @Override
             public void onClick(View v) {
                 mPopupWindow.dismiss();
+            }
+        });
+
+
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                hideInput();
+                if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
+                    mTitleCommissionTv.setTextColor(Color.parseColor("#333333"));
+                    mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio);
+                }else{
+                    mTitleCommissionTv.setTextColor(Color.parseColor("#F05557"));
+                    mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio2);
+                }
             }
         });
 

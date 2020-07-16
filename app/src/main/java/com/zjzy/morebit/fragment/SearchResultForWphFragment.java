@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -31,6 +32,7 @@ import com.zjzy.morebit.adapter.JdListAdapter;
 import com.zjzy.morebit.adapter.WphListAdapter;
 import com.zjzy.morebit.main.contract.PddContract;
 import com.zjzy.morebit.main.presenter.PddListPresenter;
+import com.zjzy.morebit.main.ui.fragment.GuessSearchLikeFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
@@ -40,6 +42,7 @@ import com.zjzy.morebit.pojo.event.SearchGoodsForWphEvent;
 import com.zjzy.morebit.pojo.request.ProgramWphBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -94,6 +97,8 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
     private LinearLayout title_commission_ll2;
     private TextView title_commission_tv2;
     private ImageView title_commission_iv2,title_comprehensive_iv;
+    private FrameLayout emityfragment;
+
 
 
 
@@ -143,7 +148,9 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
 
     @Override
     protected void initData() {
-
+        GuessSearchLikeFragment mLikeFragment = GuessSearchLikeFragment.newInstance();
+        ActivityUtils.replaceFragmentToActivity(
+                getChildFragmentManager(), mLikeFragment, R.id.emityfragment);
     }
 
     private Bundle bundle;
@@ -157,6 +164,7 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
 
 
     public void initView(View view) {
+        emityfragment=view.findViewById(R.id.emityfragment);//猜你喜欢
         title_comprehensive_tv = view.findViewById(R.id.title_comprehensive_tv);//综合
         title_zong_volume_ll=view.findViewById(R.id.title_zong_volume_ll);
         title_comprehensive_iv=view.findViewById(R.id.title_comprehensive_iv);
@@ -351,6 +359,19 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
                 mPopupWindow.dismiss();
             }
         });
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                hideInput();
+                if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
+                    title_commission_tv2.setTextColor(Color.parseColor("#333333"));
+                    title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio);
+                }else{
+                    title_commission_iv2.setImageResource(R.drawable.shaixuan_tubaio2);
+                    title_commission_tv2.setTextColor(Color.parseColor("#F05557"));
+                }
+            }
+        });
 
 
     }
@@ -460,15 +481,23 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
 
     @Override
     public void setWph(List<ShopGoodInfo> data, int loadType) {
-        if (page==1) {
-            //mData.clear();
-            mAdapter = new WphListAdapter(getActivity(), data);
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            // rl_list.getListView().refreshComplete(10);
-            mAdapter.setData(data);
-            mSwipeList.finishLoadMore(false);
+        if (data!=null){
+            emityfragment.setVisibility(View.GONE);
+            dataList_ly.setVisibility(View.VISIBLE);
+            if (page==1) {
+                //mData.clear();
+                mAdapter = new WphListAdapter(getActivity(), data);
+                mRecyclerView.setAdapter(mAdapter);
+            } else {
+                // rl_list.getListView().refreshComplete(10);
+                mAdapter.setData(data);
+                mSwipeList.finishLoadMore(false);
+            }
+        }else{
+            emityfragment.setVisibility(View.VISIBLE);
+            dataList_ly.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -476,6 +505,8 @@ public class SearchResultForWphFragment extends MvpFragment<PddListPresenter> im
         if (page==1){
             mAdapter = new WphListAdapter(getActivity(), listArray);
             mRecyclerView.setAdapter(mAdapter);
+            dataList_ly.setVisibility(View.GONE);
+            emityfragment.setVisibility(View.VISIBLE);
         }else{
             mSwipeList.finishLoadMore(false);
         }

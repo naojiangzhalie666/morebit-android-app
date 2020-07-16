@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -33,6 +34,7 @@ import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ShoppingListForPddAdapter;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
+import com.zjzy.morebit.main.ui.fragment.GuessSearchLikeFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
@@ -46,6 +48,7 @@ import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -113,6 +116,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
     private String minPrice,maxprice;
     private boolean isCoupon = false;//优惠券是否选中
     private String coupon = "0";
+    private FrameLayout emityfragment;
 
 
 
@@ -143,6 +147,7 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
     }
 
     private void initmData(View view) {
+        emityfragment=view.findViewById(R.id.emityfragment);//猜你喜欢
         title_zong_volume_ll = view.findViewById(R.id.title_zong_volume_ll);//综合
         title_comprehensive_tv=view.findViewById(R.id.title_comprehensive_tv);
         title_comprehensive_iv=view.findViewById(R.id.title_comprehensive_iv);
@@ -216,7 +221,9 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
     }
 
     public void initView() {
-
+        GuessSearchLikeFragment mLikeFragment = GuessSearchLikeFragment.newInstance();
+        ActivityUtils.replaceFragmentToActivity(
+                getChildFragmentManager(), mLikeFragment, R.id.emityfragment);
         ActivityStyleUtil.initSystemBar(getActivity(), R.color.white); //设置标题栏颜色值
         mAdapter = new ShoppingListForPddAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
@@ -275,8 +282,8 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
                     .subscribe(new DataObserver<List<ShopGoodInfo> >() {
                         @Override
                         protected void onError(String errorMsg, String errCode) {
-                            searchNullTips_ly.setVisibility(View.VISIBLE);
-                            mRecyclerView.setVisibility(View.GONE);
+                            emityfragment.setVisibility(View.VISIBLE);
+                            dataList_ly.setVisibility(View.GONE);
                         }
 
                         @Override
@@ -288,11 +295,11 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
                                 listArray.addAll(data);
                                 mAdapter.replace(listArray);
                                 mRecyclerView.setVisibility(View.VISIBLE);
-                                searchNullTips_ly.setVisibility(View.GONE);
+                                emityfragment.setVisibility(View.GONE);
 
                             } else {
-                                searchNullTips_ly.setVisibility(View.VISIBLE);
-                                mRecyclerView.setVisibility(View.GONE);
+                                emityfragment.setVisibility(View.VISIBLE);
+                                dataList_ly.setVisibility(View.GONE);
                             }
                             mRecyclerView.notifyDataSetChanged();
                             if (data != null && data.size() == 0){
@@ -520,11 +527,12 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
             public void onClick(View v) {
                 minPrice=tv_min.getText().toString();
                 maxprice=tv_max.getText().toString();
-                int int1 = Integer.parseInt(minPrice);
-                int int2 = Integer.parseInt(maxprice);
+
                 if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
                     ToastUtils.showShort("金额不能为空");
                 }else{
+                    int int1 = Integer.parseInt(minPrice);
+                    int int2 = Integer.parseInt(maxprice);
                     if (int1>int2){
                         ToastUtils.showShort("最高价不得低于最低价");
                     }else{
@@ -560,6 +568,19 @@ public class SearchResultForPddFragment extends BaseMainFragmeng implements View
             }
         });
 
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                hideInput();
+                if (TextUtils.isEmpty(maxprice)&&TextUtils.isEmpty(minPrice)){
+                    mTitleCommissionTv.setTextColor(Color.parseColor("#333333"));
+                    mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio);
+                }else{
+                    mTitleCommissionTv.setTextColor(Color.parseColor("#F05557"));
+                    mTitleCommissionIv.setImageResource(R.drawable.shaixuan_tubaio2);
+                }
+            }
+        });
 
 
     }
