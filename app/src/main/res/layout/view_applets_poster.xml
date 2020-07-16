@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
@@ -12,41 +12,18 @@
 
 
 
-    <RelativeLayout
-        android:id="@+id/rl"
-        android:layout_below="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="360dp"
 
-        >
 
         <ImageView
             android:id="@+id/imgone"
             android:layout_width="match_parent"
-            android:layout_height="360dp"
+            android:layout_height="match_parent"
             android:scaleType="fitXY"
             />
-        <ImageView
-            android:layout_above="@+id/share_tv"
-            android:id="@+id/imgtwo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="12dp"
 
-            />
 
-        <TextView
-            android:id="@+id/share_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:textColor="@color/color_666666"
-            android:text="长按识别二维码"
-            android:textSize="12dp"
-            android:paddingBottom="20dp"
-            />
+
+
 
 
 
@@ -85,10 +62,38 @@
 
 
         </LinearLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/imgtwo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="12dp"
+
+            />
+
+        <TextView
+            android:id="@+id/share_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/imgtwo"
+            android:textColor="@color/color_666666"
+            android:text="长按识别二维码"
+            android:textSize="12dp"
+            android:paddingBottom="20dp"
+            />
+
     </RelativeLayout>
-
-
-
 
 
 
