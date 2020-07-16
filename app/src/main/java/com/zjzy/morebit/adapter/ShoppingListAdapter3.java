@@ -1,13 +1,9 @@
 package com.zjzy.morebit.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.LeadingMarginSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +19,9 @@ import com.zjzy.morebit.goods.shopping.ui.view.ForeshowItemTiemView;
 import com.zjzy.morebit.goods.shopping.ui.view.RecommendIndexView;
 import com.zjzy.morebit.pojo.SelectFlag;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
-import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
-import com.zjzy.morebit.utils.StringsUtils;
-import com.zjzy.morebit.utils.ViewShowUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +30,7 @@ import java.util.List;
 /**
  * 列表新版
  */
-public class ShoppingListAdapter2 extends RecyclerView.Adapter {
+public class ShoppingListAdapter3 extends RecyclerView.Adapter {
     private LayoutInflater mInflater;
     private Context mContext;
     private List<ShopGoodInfo> mDatas = new ArrayList<>();
@@ -47,7 +40,7 @@ public class ShoppingListAdapter2 extends RecyclerView.Adapter {
     private String mMaterialID;
     private boolean showHotTag = true; //标识是否显示多点优选推荐
 
-    public ShoppingListAdapter2(Context context) {
+    public ShoppingListAdapter3(Context context) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
     }
@@ -56,7 +49,7 @@ public class ShoppingListAdapter2 extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            return new ViewHolder(mInflater.inflate(R.layout.item_shoppingaole3, parent, false));
+            return new ViewHolder(mInflater.inflate(R.layout.item_shoppingaole4, parent, false));
 
 
     }

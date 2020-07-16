@@ -2,11 +2,9 @@ package com.zjzy.morebit.main.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +15,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.GoodsAdapter;
 import com.zjzy.morebit.adapter.ShoppingListAdapter;
 import com.zjzy.morebit.adapter.ShoppingListAdapter2;
+import com.zjzy.morebit.adapter.ShoppingListAdapter3;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.main.contract.RankingContract;
 import com.zjzy.morebit.main.presenter.ShoppingListPresenter;
@@ -46,7 +45,7 @@ import butterknife.BindView;
  * 备注:
  */
 
-public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> implements RankingContract.View, ReEndlessGradListView.OnReLoadListener {
+public class ShoppingListFragment3 extends MvpFragment<ShoppingListPresenter> implements RankingContract.View, ReEndlessGradListView.OnReLoadListener {
     public static String Type = "loadType";
     public static String IMAGE_INFO = "IMAGE_INFO"; // 广告加载的跳转info
     public static int TYPEGOODSBYBRAND = 4; //  根据品牌ID获取商品列表
@@ -55,9 +54,10 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
     ReEndlessGradListView rl_list;
     @BindView(R.id.ll_root)
     LinearLayout ll_root;
-
+    @BindView(R.id.go_top)
+    ImageView mGoTop;
     private static final int REQUEST_COUNT = 10;
-    private ShoppingListAdapter2 mAdapter;
+    private ShoppingListAdapter3 mAdapter;
     private GoodsAdapter mAdapter1;
 
     private int mType;
@@ -70,19 +70,18 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
     private LinearLayout mLl_super_tab;
     private ShoppingTabView mShoppingTabView;
     private ImageInfo mImageInfo;
-    private NestedScrollView nscorll;
 
-    public static ShoppingListFragment2 newInstance(int loadType) {
+    public static ShoppingListFragment3 newInstance(int loadType) {
         Bundle args = new Bundle();
-        args.putInt(ShoppingListFragment2.Type, loadType);
-        args.putSerializable(ShoppingListFragment2.IMAGE_INFO, new ImageInfo());
-        ShoppingListFragment2 fragment = new ShoppingListFragment2();
+        args.putInt(ShoppingListFragment3.Type, loadType);
+        args.putSerializable(ShoppingListFragment3.IMAGE_INFO, new ImageInfo());
+        ShoppingListFragment3 fragment = new ShoppingListFragment3();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static ShoppingListFragment2 newInstance(Bundle args) {
-        ShoppingListFragment2 fragment = new ShoppingListFragment2();
+    public static ShoppingListFragment3 newInstance(Bundle args) {
+        ShoppingListFragment3 fragment = new ShoppingListFragment3();
         fragment.setArguments(args);
         return fragment;
     }
@@ -106,16 +105,16 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
     protected void initView(View view) {
         if (getArguments() == null) return;
 
-        mImageInfo = (ImageInfo) getArguments().getSerializable(ShoppingListFragment2.IMAGE_INFO);
+        mImageInfo = (ImageInfo) getArguments().getSerializable(ShoppingListFragment3.IMAGE_INFO);
         if (getArguments() != null && mImageInfo != null) {
-            mType = getArguments().getInt(ShoppingListFragment2.Type);
+            mType = getArguments().getInt(ShoppingListFragment3.Type);
             mActivity_id = mImageInfo.getId() + "";
             mMaterial =  mImageInfo.getUrl();
             mCategoryId = mImageInfo.categoryId + "";
-            headView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.view_goods_news_list_head, null);
-            ImageView iv_banner = (ImageView) view.findViewById(R.id.iv_banner);
-            mLl_super_tab = (LinearLayout) view.findViewById(R.id.ll_super_tab);
-            AspectRatioView as_iv_banner = (AspectRatioView) view.findViewById(R.id.as_iv_banner);
+            headView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.view_goods_news_list_head2, null);
+            ImageView iv_banner = (ImageView) headView.findViewById(R.id.iv_banner);
+            mLl_super_tab = (LinearLayout) headView.findViewById(R.id.ll_super_tab);
+            AspectRatioView as_iv_banner = (AspectRatioView) headView.findViewById(R.id.as_iv_banner);
             initShoppingTabVIew();
             if (isShowHeadPicture(mImageInfo)) {  // 1图片为纵向，0位横向。只有横向才显示图片
                 LoadImgUtils.setImg(getActivity(), iv_banner, mImageInfo.getBackgroundImage());
@@ -126,49 +125,34 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
             }
             if (C.GoodsListType.DiscountStores == mType || C.GoodsListType.WHAT_LIKE == mType || C.GoodsListType.MATERIAL == mType) {
                 mShoppingTabView.setVisibility(View.GONE);
-                //    mLl_super_tab.setVisibility(View.GONE);
+                mLl_super_tab.setVisibility(View.GONE);
             }
         }
 
-        nscorll=view.findViewById(R.id.nscorll);
-        mAdapter = new ShoppingListAdapter2(getActivity());
+
+        mAdapter = new ShoppingListAdapter3(getActivity());
         mAdapter1 = new GoodsAdapter(getActivity());
         mAdapter1.setMaterialID(mMaterial);
         mAdapter.setMaterialID(mMaterial);
         mAdapter.setType(mType);
         mAdapter1.setListType(mType);
-        rl_list.getListView().setNestedScrollingEnabled(false);
-        rl_list.setAdapter(mAdapter, mAdapter1);
-
+        if (headView == null) {
+            rl_list.setAdapter(mAdapter, mAdapter1);
+        } else {
+            rl_list.setAdapterAndHeadView(headView, mAdapter, mAdapter1);
+        }
         rl_list.setOnReLoadListener(this);
-//        mGoTop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                rl_list.getListView().scrollToPosition(0);
-//                scrollHeight = 0;
-//            }
-//        });
+        mGoTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rl_list.getListView().scrollToPosition(0);
+                scrollHeight = 0;
+            }
+        });
         if (mType == C.GoodsListType.WHAT_LIKE) {
             rl_list.switchAdapter(getActivity(), 1);
         }
         rl_list.getListView().addOnScrollListener(new RecyclerViewScrollListener());
-
-
-
-        nscorll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                //判断是否滑到的底部
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    onloadMore();
-                }
-
-
-
-
-
-            }
-        });
     }
 
 
@@ -196,7 +180,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
             public void onReload() {
                 rl_list.getListView().scrollToPosition(0);
                 scrollHeight = 0;
-                ShoppingListFragment2.this.onReload();
+                ShoppingListFragment3.this.onReload();
             }
         });
     }
@@ -208,7 +192,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
      */
     @Override
     protected int getViewLayout() {
-        return R.layout.fragment_shopping_list2;
+        return R.layout.fragment_shopping_list3;
     }
 
     @Override
@@ -221,7 +205,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
         if (rl_list == null) return;
         rl_list.getListView().setNoMore(false);
         if (rl_list.getSwipeList() != null)
-            rl_list.getSwipeList().setRefreshing(false);
+            rl_list.getSwipeList().setRefreshing(true);
         if (mShoppingTabView == null) return;
         BaseTitleTabBean baseTitleTabBean = getBaseTitleTabBean();
         mPresenter.getRankings(this, mType, C.requestType.initData, baseTitleTabBean);
@@ -229,11 +213,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
 
     @Override
     public void onLoadMore() {
-
-    }
-
-
-    private void onloadMore() {
+        if (mShoppingTabView == null) return;
         BaseTitleTabBean baseTitleTabBean = getBaseTitleTabBean();
         mPresenter.getRankings(this, mType, C.requestType.loadMore, baseTitleTabBean);
     }
@@ -308,11 +288,11 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
             super.onScrolled(recyclerView, dx, dy);
             LinearLayoutManager linearManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             int firstVisibleItemPosition = linearManager.findFirstVisibleItemPosition();
-//            if (firstVisibleItemPosition > 3) {
-//                mGoTop.setVisibility(View.VISIBLE);
-//            } else {
-//                mGoTop.setVisibility(View.GONE);
-//            }
+            if (firstVisibleItemPosition > 3) {
+                mGoTop.setVisibility(View.VISIBLE);
+            } else {
+                mGoTop.setVisibility(View.GONE);
+            }
 
             if (isShowHeadPicture(mImageInfo) && headView != null && mShoppingTabView != null && mLl_super_tab != null && ll_root != null)
                 try {
@@ -337,7 +317,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
             boolean b = scrollHeight >= mHeadViewHeight;
             if (b && !mIsAddView) {
                 mIsAddView = true;
-                //  mLl_super_tab.removeView(mShoppingTabView);
+                mLl_super_tab.removeView(mShoppingTabView);
                 ll_root.addView(mShoppingTabView);
             } else if (scrollHeight < mHeadViewHeight && mIsAddView) {
                 mIsAddView = false;

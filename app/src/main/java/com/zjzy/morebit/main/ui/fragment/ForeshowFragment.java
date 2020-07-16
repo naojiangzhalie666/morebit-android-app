@@ -33,9 +33,9 @@ public class ForeshowFragment extends BaseMainFragmeng {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    private ShoppingListFragment2 mGoodsFragment;
-    private ShoppingListFragment2 mGoodsFragment1;
-    private ShoppingListFragment2 mGoodsFragment2;
+    private ShoppingListFragment3 mGoodsFragment;
+    private ShoppingListFragment3 mGoodsFragment1;
+    private ShoppingListFragment3 mGoodsFragment2;
     private View mView;
     List<BaseFragment> mFragments = new ArrayList<>();
     private String[] mTitles = {"火热开抢中", "隔夜单", "活动即将开始"};
@@ -70,13 +70,13 @@ public class ForeshowFragment extends BaseMainFragmeng {
         setupViewPager();
     }
     private void setupViewPager() {
-        mGoodsFragment = ShoppingListFragment2.newInstance(C.GoodsListType.ForeShow_2);
+        mGoodsFragment = ShoppingListFragment3.newInstance(C.GoodsListType.ForeShow_2);
         mFragments.add(mGoodsFragment);
 //            mCirclePagerBaens.add(new CirclePagerBaen(mGoodsFragment, getResources().getString(R.string.main_circle_hotday)));
-        mGoodsFragment1 = ShoppingListFragment2.newInstance(C.GoodsListType.ForeShow_3);
+        mGoodsFragment1 = ShoppingListFragment3.newInstance(C.GoodsListType.ForeShow_3);
         mFragments.add(mGoodsFragment1);
 //        mCirclePagerBaens.add(new CirclePagerBaen(mGoodsFragment1, getResources().getString(R.string.main_circle_adv)));
-        mGoodsFragment2 = ShoppingListFragment2.newInstance(C.GoodsListType.ForeShow_1);
+        mGoodsFragment2 = ShoppingListFragment3.newInstance(C.GoodsListType.ForeShow_1);
         mFragments.add(mGoodsFragment2);
 //        mCirclePagerBaens.add(new CirclePagerBaen(mCommercialCollegeFragment, getResources().getString(R.string.main_commercial_college)));
         viewPager.setAdapter(new ForeshowAdapter(getChildFragmentManager()));
