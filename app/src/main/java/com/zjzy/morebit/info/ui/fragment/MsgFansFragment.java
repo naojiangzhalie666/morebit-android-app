@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
@@ -186,7 +187,7 @@ public class MsgFansFragment extends MvpFragment<MsgPresenter> implements MsgCon
 //                }
 //
 //            } else {
-            ImageView iv_img = holder.viewFinder().view(R.id.iv_icon);
+            RoundedImageView iv_img = holder.viewFinder().view(R.id.iv_icon);
             TextView tv_name = holder.viewFinder().view(R.id.tv_name);
             TextView tv_content = holder.viewFinder().view(R.id.tv_content);
             TextView tv_time = holder.viewFinder().view(R.id.time);

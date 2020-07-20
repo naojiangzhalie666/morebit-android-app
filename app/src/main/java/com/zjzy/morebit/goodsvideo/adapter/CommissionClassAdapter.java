@@ -78,14 +78,10 @@ public class CommissionClassAdapter extends RecyclerView.Adapter<CommissionClass
             holder.img.setImageResource(R.mipmap.tm_icon);
         }
 
-        UserInfo userInfo1 = UserLocalData.getUser();
-        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-            holder.tv_coupul.setText("登录赚佣金");
-        } else {
-            if (C.UserType.operator.equals(UserLocalData.getUser(context).getPartner())
-                    || C.UserType.vipMember.equals(UserLocalData.getUser(context).getPartner())||C.UserType.member.equals(UserLocalData.getUser(context).getPartner())) {
-                holder.tv_coupul.setText("预估收益" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkmoney() + "") + "元");
-            }
+
+        if (!TextUtils.isEmpty(list.get(position).getTkmoney())){
+            holder.tv_coupul.setText("赚 ¥" + MathUtils.getMuRatioComPrice(UserLocalData.getUser(context).getCalculationRate(), list.get(position).getTkmoney() + ""));
+
         }
 
 

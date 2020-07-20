@@ -85,7 +85,7 @@
             android:text="19.9"
             android:textStyle="bold"
             android:textColor="#fff05557"
-            android:textSize="20sp"
+            android:textSize="18sp"
             />
 
         <TextView

@@ -238,6 +238,8 @@ public class MsgFeedbackFragment extends MvpFragment<MsgPresenter> implements Ms
                 TextView tv_content = holder.viewFinder().view(R.id.tv_feedback);
                 TextView tv_time = holder.viewFinder().view(R.id.tv_time);
                 TextView  tv_title= holder.viewFinder().view(R.id.tv_content);
+                TextView tv_name=holder.viewFinder().view(R.id.tv_name);
+                tv_name.setText("回复人："+item.getReplyName());
                 tv_title.setText(item.getTitle());
                 tv_time.setText(item.getHourMinutesSecond());
                 tv_content.setText(item.getReplyContent());

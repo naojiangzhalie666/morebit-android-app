@@ -67,6 +67,7 @@ import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GlideImageLoader;
+import com.zjzy.morebit.utils.GlideImageLoader2;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
@@ -669,7 +670,7 @@ public class BannerInitiateUtils {
         //简单使用
         banner.setImages(imgUrls)
                 .setIndicatorGravity(bannerConfigType)
-                .setImageLoader(new GlideImageLoader())
+                .setImageLoader(new GlideImageLoader2())
                 .setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {

@@ -256,6 +256,14 @@ public class C {
     }
 
     /**
+     * 传值 extrar
+     */
+    public static class Vip {
+        public static final String SKILLID = "SKILLID";
+        public static final String SKILLNAME = "SKILLNAME";
+
+    }
+    /**
      * 商品列表的type
      */
     public static class GoodsListType {

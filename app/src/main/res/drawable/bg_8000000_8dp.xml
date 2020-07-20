@@ -4,7 +4,7 @@
     <item android:state_pressed="false">
         <shape>
 
-            <solid android:color="#80000000" /><!--填充色-->
+            <solid android:color="#80FFFFFF" /><!--填充色-->
             <corners
               android:radius="8dp"
                 />

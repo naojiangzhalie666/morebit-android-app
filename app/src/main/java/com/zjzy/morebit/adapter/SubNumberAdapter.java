@@ -22,6 +22,7 @@ import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.blankj.utilcode.util.StringUtils.getString;
@@ -31,12 +32,11 @@ import static com.blankj.utilcode.util.StringUtils.getString;
  * */
 public class SubNumberAdapter extends RecyclerView.Adapter<SubNumberAdapter.ViewHolder> {
     private Context mContext;
-    private List<NumberGoods> list;
+    private List<NumberGoods> list=new ArrayList<>();
 
 
-    public SubNumberAdapter(Context context, List<NumberGoods> data) {
+    public SubNumberAdapter(Context context) {
         this.mContext = context;
-        this.list = data;
 
     }
 

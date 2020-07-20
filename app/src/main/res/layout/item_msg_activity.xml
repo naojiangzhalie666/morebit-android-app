@@ -69,17 +69,6 @@
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/is_img"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/msg_activity_end"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:paddingBottom="12dp"
-            android:paddingRight="12dp"
-            />
 
         <LinearLayout
             android:id="@+id/rl2"
@@ -94,5 +83,16 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/is_img"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/msg_activity_end"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="12dp"
+            android:paddingRight="12dp"
+            />
     </RelativeLayout>
 </LinearLayout>

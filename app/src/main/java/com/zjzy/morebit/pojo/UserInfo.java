@@ -67,6 +67,7 @@ public class UserInfo implements Serializable {
     private Long settleCoin;//结算成长值
     private Long selfCoin;//自购成长值
 
+
     public Long getSelfCoin() {
         return selfCoin;
     }

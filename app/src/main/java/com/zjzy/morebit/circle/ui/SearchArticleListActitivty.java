@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -15,6 +18,7 @@ import com.zjzy.morebit.pojo.request.RequestCircleSearchBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
+import com.zjzy.morebit.view.SearchClassLayout;
 import com.zjzy.morebit.view.SearchViewLayout;
 
 import java.util.ArrayList;
@@ -32,8 +36,10 @@ import butterknife.BindView;
 public class SearchArticleListActitivty extends BaseActivity {
 
     @BindView(R.id.searchViewLayout)
-    SearchViewLayout searchViewLayout;
+    SearchClassLayout searchViewLayout;
     CircleModel mCircleModel;
+    private TextView txt_head_title;
+    private LinearLayout btn_back;
     List<SearchHotKeyBean> mList = new ArrayList<>();
     public static void start(Context context) {
         Intent intent = new Intent(context, SearchArticleListActitivty.class);
@@ -64,29 +70,42 @@ public class SearchArticleListActitivty extends BaseActivity {
     }
 
     private void initView() {
-
+        txt_head_title = (TextView) findViewById(R.id.txt_head_title);
+        txt_head_title.setText("商学院");
+        txt_head_title.setTextSize(18);
+        txt_head_title.getPaint().setFakeBoldText(true);
+        btn_back= (LinearLayout) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         searchViewLayout.setCacheKey(C.sp.COLLEGE_SEARCH_HISTORY);
 
-        searchViewLayout.setOnClickHotKeyListener(new SearchViewLayout.OnClickHotKeyListener() {
+        searchViewLayout.setOnClickHotKeyListener(new SearchClassLayout.OnClickHotKeyListener() {
             @Override
             public void onClick(int position, SearchHotKeyBean item) {
                 gotoResult(item.getKeyWord(),position);
+                finish();
 //                ViewShowUtils.showShortToast(SearchArticleListActitivty.this,position+","+item.getKeyWord());
             }
         });
 
-        searchViewLayout.setOnClickHistoryListener(new SearchViewLayout.OnClickHistoryListener() {
+        searchViewLayout.setOnClickHistoryListener(new SearchClassLayout.OnClickHistoryListener() {
             @Override
             public void onClick(int position, String item) {
                 gotoResult(item);
+                finish();
 //                ViewShowUtils.showShortToast(SearchArticleListActitivty.this,position+","+item);
             }
         });
 
-        searchViewLayout.setOnClickSearchListener(new SearchViewLayout.OnClickSearchListener() {
+        searchViewLayout.setOnClickSearchListener(new SearchClassLayout.OnClickSearchListener() {
             @Override
             public void onClick(String searchText) {
                 gotoResult(searchText);
+                finish();
 //                ViewShowUtils.showShortToast(SearchArticleListActitivty.this,searchText);
             }
         });
@@ -113,7 +132,6 @@ public class SearchArticleListActitivty extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putString("keyword", keyword);
         OpenFragmentUtils.goToSimpleFragment(this, SearchArticleListResultFragment.class.getName(), bundle);
-
     }
 
 }

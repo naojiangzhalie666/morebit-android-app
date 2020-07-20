@@ -101,12 +101,9 @@ public class NumberFragment extends BaseMainFragmeng {
         tv.getPaint().setFakeBoldText(true);
         if (fanhui == 1) {
             back.setVisibility(View.VISIBLE);
-            // 设置状态栏颜色
-           getActivity().getWindow().setStatusBarColor(Color.parseColor("#EDCFB1"));
+
         } else {
             back.setVisibility(View.GONE);
-            // 设置状态栏颜色
-            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
         viewPager.setAdapter(new NumbersGoodsAdapter(getChildFragmentManager()));
@@ -127,7 +124,6 @@ public class NumberFragment extends BaseMainFragmeng {
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
             // 设置状态栏颜色
-            getActivity().getWindow().setStatusBarColor(Color.parseColor("#EDCFB1"));
         }
     }
 

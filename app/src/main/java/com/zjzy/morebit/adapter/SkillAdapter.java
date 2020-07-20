@@ -21,6 +21,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.VideoPlayerActivity;
 import com.zjzy.morebit.pojo.Article;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -28,6 +29,7 @@ import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UploadingOnclickUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.blankj.utilcode.util.StringUtils.getString;
@@ -37,14 +39,21 @@ import static com.blankj.utilcode.util.StringUtils.getString;
  * */
 public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder> {
     private Context context;
-    private List<Article> list;
+    private List<Article> list = new ArrayList<>();
+    private String sfinalShare,sfinalLike;
 
-
-    public SkillAdapter(Context context, List<Article> data) {
+    public SkillAdapter(Context context) {
         this.context = context;
-        this.list = data;
 
     }
+
+    public void setData(List<Article> data) {
+        if (data != null) {
+            list.addAll(data);
+            notifyItemRangeChanged(0, data.size());
+        }
+    }
+
 
     @NonNull
     @Override
@@ -57,44 +66,59 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Article article = list.get(position);
+
         if (!TextUtils.isEmpty(article.getImage())) {
-            LoadImgUtils.loadingCornerBitmap(context, holder.img, article.getImage(),8);
+            LoadImgUtils.loadingCornerBitmap(context, holder.img, article.getImage(), 8);
         }
         holder.tv_title.setText(article.getTitle());
-        int finalStudyNum = article.getStudyNum() + article.getVirtualStudy();
-        holder.tv_study_num.setText(getString(R.string.college_article_already_study, finalStudyNum));
         if (!TextUtils.isEmpty(article.getReleaseTime())) {
-            holder.tv_time.setText("日期："+ DateTimeUtils.ymdhmsToymd(article.getReleaseTime()) + "");
+            holder.tv_time.setText(DateTimeUtils.ymdhmsToymd(article.getReleaseTime()) + "");
         } else {
             holder.tv_time.setText("");
         }
-        if(article.getType()==2){
+        if (article.getType() == 2) {
             holder.iv_video.setVisibility(View.VISIBLE);
         } else {
             holder.iv_video.setVisibility(View.GONE);
         }
         int finalShare = article.getVirtualShare() + article.getShareNum();
-        holder.tv_share_sum.setText(finalShare+"");
         int finalLike = article.getPraiseNum() + article.getVirtualPraise();
-        holder.tv_like_sum.setText(finalLike+"");
+        if (finalShare > 999) {
+            sfinalShare = 999 + "+";
+        }else{
+            sfinalShare=finalShare+"";
+        }
 
+        if (finalLike > 999) {
+            sfinalLike = 999 + "+";
+        }else{
+            sfinalLike=finalLike+"";
+        }
+
+        holder.tv_dian.setText(sfinalShare + "分享·" + sfinalLike +"点赞");
+
+        if (position == list.size() - 1) {
+            holder.line.setVisibility(View.GONE);
+        } else {
+            holder.line.setVisibility(View.VISIBLE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                    if (article.getType() == 1) {
-                        //文章类型
-                        if (article != null && article.getAuthority() == 1) {
-                            if (!TextUtils.isEmpty(article.getUrl())) {
-                                ShowWebActivity.start((Activity) context, article.getUrl() + "?id=" + article.getId() + "&status=" + article.getStatus(), article.getTitle(), article);
-                            }
+                if (article.getType() == 1) {
+                    //文章类型
+                    if (article != null && article.getAuthority() == 1) {
+                        if (!TextUtils.isEmpty(article.getUrl())) {
+                            ShowWebActivity.start((Activity) context, article.getUrl() + "?id=" + article.getId() + "&status=" + article.getStatus(), article.getTitle(), article);
                         }
-                    }  else if(article.getType()==2){
-                        VideoPlayerActivity.start(context,article);
-                    }else if (article.getType() == 3) {
-                        ShowWebActivity.start((Activity) context, article.getLinkUrl(), article.getTitle());
                     }
+                } else if (article.getType() == 2) {
+                    VideoPlayerActivity.start(context, article);
+                } else if (article.getType() == 3) {
+                    ShowWebActivity.start((Activity) context, article.getLinkUrl(), article.getTitle());
                 }
+            }
         });
     }
 
@@ -109,18 +133,18 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView img,iv_video;
-        private TextView tv_title,tv_study_num,tv_time,tv_share_sum,tv_like_sum;
+        private ImageView img, iv_video;
+        private TextView tv_title, tv_time, tv_dian;
+        private View line;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            img=itemView.findViewById(R.id.img);//主图
-            tv_title=itemView.findViewById(R.id.tv_title);//标题
-            tv_study_num=itemView.findViewById(R.id.tv_study_num);//人数
-            tv_time=itemView.findViewById(R.id.tv_time);//时间
-            tv_share_sum=itemView.findViewById(R.id.tv_share_sum);//分享数
-            tv_like_sum=itemView.findViewById(R.id.tv_like_sum);//收藏数
-            iv_video=itemView.findViewById(R.id.iv_video);//视频
+            img = itemView.findViewById(R.id.img);//主图
+            tv_title = itemView.findViewById(R.id.tv_title);//标题
+            tv_time = itemView.findViewById(R.id.tv_time);//时间
+            tv_dian = itemView.findViewById(R.id.tv_dian);//分享数
+            iv_video = itemView.findViewById(R.id.iv_video);//视频
+            line = itemView.findViewById(R.id.line);
         }
     }
 

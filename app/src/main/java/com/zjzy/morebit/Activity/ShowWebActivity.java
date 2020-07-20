@@ -307,6 +307,7 @@ public class ShowWebActivity extends BaseActivity {
 
                 if ( mIvOff != null && mIvRefresh != null &&mIvBack != null &&mToolbarTtle != null ){
                     if (event.getIconType() == 0) {
+                        mToolbarTtle.setTextSize(18);
                         mToolbarTtle.setTextColor(ContextCompat.getColor(this, R.color.white));
                         mIvBack.setImageResource(R.drawable.btn_title_return_icon_white);
                         mIvRefresh.setImageResource(R.drawable.web_refresh_icon_white);
@@ -314,6 +315,7 @@ public class ShowWebActivity extends BaseActivity {
                     }else {
                         mToolbarTtle.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
                         mIvBack.setImageResource(R.drawable.btn_title_return_icon);
+                        mToolbarTtle.setTextSize(18);
                         mIvRefresh.setImageResource(R.drawable.web_refresh_icon);
                         mIvOff.setImageResource(R.drawable.icon_guanbi_off);
 

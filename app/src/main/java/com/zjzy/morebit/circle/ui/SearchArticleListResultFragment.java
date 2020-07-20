@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -48,6 +49,8 @@ public class SearchArticleListResultFragment extends MvpFragment<ArticlePresente
     EditText mEditSearch;
     @BindView(R.id.text_clear)
     TextView text_clear;
+    private TextView txt_head_title;
+    private LinearLayout btn_back;
 
     private int page = 1;
     private ArticleAdapter mArticleAdapter;
@@ -88,8 +91,20 @@ public class SearchArticleListResultFragment extends MvpFragment<ArticlePresente
 
     @Override
     protected void initView(View view) {
+
+        txt_head_title = (TextView) view.findViewById(R.id.txt_head_title);
+        txt_head_title.setText("商学院");
+        txt_head_title.setTextSize(18);
+        txt_head_title.getPaint().setFakeBoldText(true);
+        btn_back= (LinearLayout) view.findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         mReUseListView.getSwipeList().setEnableRefresh(false);
-        mEmptyView = new CommonEmpty(view, "哎呦,文章不存在~", R.drawable.image_meiyousousuojilu);
+        mEmptyView = new CommonEmpty(view, "暂无文章哦~", R.drawable.search_noresult);
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

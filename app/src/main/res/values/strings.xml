@@ -480,7 +480,7 @@
     <string name="auth_user_private_all"><![CDATA[<font color="#333333">查看完整版《</font><font color="#FF645B">多点用户协议</font><font color="#333333">》</font>]]></string>
     <string name="auth_private_all"><![CDATA[<font color="#333333">和《</font><font color="#FF645B">隐私协议</font><font color="#333333">》</font>]]></string>
     <string name="number_goods_buy_txt">购买立得%1$s成长值</string>
-    <string name="give_growth_value">送%1$s成长值</string>
+    <string name="give_growth_value">成长值%1$s</string>
     <string name="vip_growth_value">您还需要%1$s成长值即可成为团队长</string>
     <string name="number_growth_value">您还需要%1$s成长值即可成为VIP</string>
     <string name="invate_text1">方式一：可以直接复制邀请码给好友下载APP注册填写</string>

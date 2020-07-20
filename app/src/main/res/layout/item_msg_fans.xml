@@ -17,10 +17,10 @@
 
         <View
             android:id="@+id/line"
-            android:layout_width="0.5dp"
+            android:layout_width="1dp"
             android:layout_height="80dp"
             android:layout_marginRight="4dp"
-            android:background="@color/color_cccccc" />
+            android:background="@color/color_999999" />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -29,35 +29,36 @@
             android:background="@color/white"
             app:cardCornerRadius="5dp"
             app:cardElevation="0dp"
+            android:layout_marginLeft="10dp"
             app:cardUseCompatPadding="false">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/white">
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_icon"
+                android:background="@drawable/bg_ffffff_8dp">
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/iv_icon"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
+                    android:scaleType="fitXY"
+                    android:src="@color/white"
+                    app:riv_border_color="@color/white"
+                    app:riv_border_width="2dp"
+                    app:riv_corner_radius="0dip"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:background="@color/white"
-                    app:cardCornerRadius="22dp">
+                    app:riv_mutate_background="true"
+                    app:riv_oval="true" />
 
-                    <ImageView
-                        android:id="@+id/iv_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </android.support.v7.widget.CardView>
+
 
                 <LinearLayout
                     android:id="@+id/ll_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/card_icon"
+                    android:layout_toRightOf="@+id/iv_icon"
                     android:orientation="vertical">
 
                     <TextView

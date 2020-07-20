@@ -3,13 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginBottom="19dp"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_margin="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
 
     <android.support.v7.widget.CardView
-        android:layout_width="180dp"
-        android:layout_height="match_parent"
+        android:layout_width="95dp"
+        android:id="@+id/card"
+        android:layout_height="70dp"
         android:layout_marginRight="9dp"
         android:background="@color/white"
         app:cardCornerRadius="5dp"
@@ -48,7 +53,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
@@ -58,63 +63,38 @@
             android:ellipsize="end"
             android:lines="2"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_16"
             tools:text="点优选，多点优选推荐～" />
         <TextView
-            android:id="@+id/tv_study_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="3dp"
-            android:textColor="@color/colcor_999999"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginTop="5dp"
-            android:textSize="11sp"
-            tools:text="999" />
-        <TextView
             android:id="@+id/tv_time"
+            android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_study_num"
-            android:includeFontPadding="false"
             android:textColor="@color/colcor_999999"
-            android:layout_marginTop="5dp"
-            android:textSize="11sp"
+            android:textSize="14sp"
             tools:text="6547" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+        <TextView
+            android:id="@+id/tv_dian"
             android:layout_alignParentBottom="true"
-            android:id="@+id/rl_bottom"
-            android:paddingBottom="4dp">
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="222分享·999+点赞"
+            android:textColor="#ff999999"
+            android:textSize="14sp"
+            />
 
-            <TextView
-                android:id="@+id/tv_share_sum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="4dp"
-                android:includeFontPadding="false"
-                android:textColor="@color/colcor_999999"
-                android:drawableLeft="@drawable/icon_college_share"
-                android:drawablePadding="4dp"
-                android:textSize="11sp"
-                tools:text="6547" />
-
-            <TextView
-                android:id="@+id/tv_like_sum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:includeFontPadding="false"
-                android:layout_toRightOf="@+id/tv_share_sum"
-                android:layout_marginLeft="32dp"
-                android:textColor="@color/colcor_999999"
-                android:drawableLeft="@drawable/faquan_collect"
-                android:drawablePadding="4dp"
-                android:layout_marginRight="16dp"
-                android:textSize="11sp"
-                tools:text="6547" />
-
-        </RelativeLayout>
     </RelativeLayout>
+    </LinearLayout>
+    
+    
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:background="@color/color_F2F2F2"
+        />
 </LinearLayout>
