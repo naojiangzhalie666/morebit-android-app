@@ -85,6 +85,7 @@ import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.pojo.pddjd.ProgramItem;
+import com.zjzy.morebit.pojo.request.AppletsBean;
 import com.zjzy.morebit.pojo.request.ClassroomBean;
 import com.zjzy.morebit.pojo.request.ProgramWphBean;
 import com.zjzy.morebit.pojo.request.RequesKoalaBean;
@@ -93,6 +94,7 @@ import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
 import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
 import com.zjzy.morebit.pojo.request.RequestAppFeedBackBean;
+import com.zjzy.morebit.pojo.request.RequestAppletsBean;
 import com.zjzy.morebit.pojo.request.RequestArticleBean;
 import com.zjzy.morebit.pojo.request.RequestAuthCodeBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
@@ -2572,6 +2574,13 @@ public interface CommonService {
     @POST("/api/goods/queryOrientationPlanList")
     public Observable<BaseResponse<List<ShopGoodInfo>>> getCommissionGoods(@Body RequestCommissionGoodsBean requestBean);
 
+    /**
+     * 获取小程序
+     *
+     * @return
+     */
+    @POST("/api/user/shareMiniProgramInfo")
+    public Observable<BaseResponse<AppletsBean>> shareMiniProgramInfo(@Body RequestAppletsBean requestBean);
 
 
 }

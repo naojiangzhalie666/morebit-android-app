@@ -25,7 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.barlibrary.ImmersionBar;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.AppletsActivity;
 import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.App;
@@ -72,6 +77,7 @@ import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.GuideViewUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -138,7 +144,7 @@ public class MineFragment extends BaseMainFragmeng {
     LinearLayout ll_my_tootls;
     @BindView(R.id.ll_mine_earnings)
     RelativeLayout ll_mine_earnings;
-//    @BindView(R.id.moneyCardView)
+    //    @BindView(R.id.moneyCardView)
 //    CardView moneyCardView;
     @BindView(R.id.scrollView)
     NestedScrollView nestedScrollView;
@@ -154,13 +160,13 @@ public class MineFragment extends BaseMainFragmeng {
     TextView tvWithDraw;
 
     @BindView(R.id.tv_today_money)
-            TextView tv_today_money;
+    TextView tv_today_money;
     @BindView(R.id.tv_yesterday_estimate_money)
-            TextView tv_yesterday_estimate_money;
+    TextView tv_yesterday_estimate_money;
     @BindView(R.id.tv_this_month_estimate_money)
-            TextView tv_this_month_estimate_money;
+    TextView tv_this_month_estimate_money;
     @BindView(R.id.tv_prev_month_estimate_oney)
-            TextView tv_prev_month_estimate_oney;
+    TextView tv_prev_month_estimate_oney;
     @BindView(R.id.offen_question)
     LinearLayout offen_question;
     @BindView(R.id.order_search)
@@ -173,6 +179,7 @@ public class MineFragment extends BaseMainFragmeng {
 
 
     ToolsAdapter mAdapter;
+    private LinearLayout my_little;
     PersonFunctionAdapter mPersonFunctionAdapter;
     ToolsSplendidAdapter mAdapterSplendid;
     private boolean isUserHint = true;
@@ -203,6 +210,12 @@ public class MineFragment extends BaseMainFragmeng {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_mine, container, false);
+        ImmersionBar.with(this)
+                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .fitsSystemWindows(false)
+                .statusBarColor(R.color.transparent)
+                .init();
+        my_little=mView.findViewById(R.id.my_little);
         return mView;
     }
 
@@ -296,16 +309,16 @@ public class MineFragment extends BaseMainFragmeng {
         if (C.UserType.member.equals(info.getPartner())) {
             tvUserType.setText("会员");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_number);
-           // ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+            // ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
             tvUserType.setText("VIP");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_vip);
-          //  ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+            //  ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
 
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
             llUserGrade.setBackgroundResource(R.drawable.bg_grade_leadr);
-        //    ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+            //    ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
         }
         if (TextUtils.isEmpty(info.getWxNumber())) {
             rl_set_weixin.setVisibility(View.VISIBLE);
@@ -384,7 +397,7 @@ public class MineFragment extends BaseMainFragmeng {
 
     @OnClick({R.id.copy_invitation_code, R.id.my_earnings, R.id.rl_set_weixin,
             R.id.my_team, R.id.order_detail, R.id.share_friends, R.id.setting, R.id.tv_y, R.id.iv_wenhao,
-             R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon,R.id.offen_question,R.id.order_search,R.id.my_footmarker,R.id.my_favorite})
+            R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon,R.id.offen_question,R.id.order_search,R.id.my_footmarker,R.id.my_favorite,R.id.my_little})
     public void onClick(View v) {
         switch (v.getId()) {  //复制邀请码
             case R.id.copy_invitation_code:
@@ -420,7 +433,7 @@ public class MineFragment extends BaseMainFragmeng {
             case R.id.share_friends:   //分享好友
 
                 startActivity(new Intent(getActivity(), InvateActivity.class));
-            //    OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
+                //    OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
 //                PartnerShareActivity.start(getActivity());
                 break;
             case R.id.offen_question:
@@ -433,7 +446,7 @@ public class MineFragment extends BaseMainFragmeng {
             case R.id.order_search:
                 ImageInfo orderSearch = mLocalData.get("2");
                 if (orderSearch == null){
-                  //  ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
+                    //  ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
                     ImageInfo orderSearch2 = new ImageInfo();
                     orderSearch2.setOpen(3);
                     orderSearch2.setUrl("https://helper.morebit.com.cn/#/search");
@@ -459,7 +472,7 @@ public class MineFragment extends BaseMainFragmeng {
 //                if (favorite == null){
 //                    ViewShowUtils.showShortToast(getActivity(),"没有收藏权限");
 //                }else{
-                    BannerInitiateUtils.gotoAction(getActivity(), favorite);
+                BannerInitiateUtils.gotoAction(getActivity(), favorite);
 //                }
                 break;
             case R.id.setting: //设置
@@ -521,6 +534,13 @@ public class MineFragment extends BaseMainFragmeng {
             case R.id.userIcon: //个人设置
                 // 个人
                 startActivity(new Intent(getActivity(), SettingMineInfoActivity.class));
+                break;
+            case R.id.my_little://小程序入口
+//               GoodsUtil.jumpApplets(getContext());
+
+                startActivity(new Intent(getActivity(), AppletsActivity.class));
+
+
                 break;
             default:
                 break;
@@ -638,10 +658,10 @@ public class MineFragment extends BaseMainFragmeng {
                     mLocalData.put("1",x);
                     it.remove();
                 }
-                if(x.getTitle().equals("常见问题")){
-                    mLocalData.put("5",x);
-                    it.remove();
-                }
+//                if(x.getTitle().equals("常见问题")){
+//                    mLocalData.put("5",x);
+//                    it.remove();
+//                }
                 if(x.getTitle().equals("足迹")){
                     mLocalData.put("3",x);
                     it.remove();
@@ -716,7 +736,7 @@ public class MineFragment extends BaseMainFragmeng {
 //                        day_price.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
                         tv_today_money.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
                         tv_yesterday_estimate_money.setText(MathUtils.getMoney(data.getYesterdayEstimateMoney()));
-                        checkWithdrawTime();
+                        //  checkWithdrawTime();
 //                        tvWithDraw
 
                     }
@@ -844,9 +864,9 @@ public class MineFragment extends BaseMainFragmeng {
 
                         if (!C.requestCode.B10301.equals(errCode) && money >= 1) {//因为成功的话data会为空，所以判断下
                             MyLog.d("test","提现报错：B10301：不在提现时间");
-                            } else {
+                        } else {
 
-                            }
+                        }
 
                     }
                 });

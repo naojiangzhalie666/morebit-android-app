@@ -81,7 +81,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activity.InvateActivity"></activity>
+        <activity android:name=".Activity.AppletsActivity"></activity>
+        <activity android:name=".Activity.InvateActivity" />
         <activity
             android:name=".Activity.KoalaWebActivity"
             android:hardwareAccelerated="true" />

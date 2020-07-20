@@ -230,7 +230,6 @@ public class FloorAdapter extends RecyclerView.Adapter<FloorAdapter.ViewHolder> 
             if(null != holder.recommod_external_layout){
                 holder.recommod_external_layout.setVisibility(View.GONE);
             }
-            holder.recommondLayout.setVisibility(View.GONE);
         }
     }
 
