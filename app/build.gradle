@@ -454,6 +454,7 @@ dependencies {
     implementation 'com.tokiii:reveal-banner:1.0.2'
     implementation 'com.zyp.cardview:cardview:1.0.1'
     // implementation 'com.github.lzjin:ViewPagerGallery:1.2'
+
     // 万能布局管理器VirtualLayout
     implementation 'com.alibaba.android:vlayout:1.2.8@aar'
     //viewpager指示器
@@ -464,6 +465,8 @@ dependencies {
 
     implementation 'com.github.donkingliang:ConsecutiveScroller:4.0.0-support'
 
+    implementation 'com.github.yeaper:XShadow:1.0.1'
+ 
 }
 // 依赖插件脚本
 //apply from: 'tinker-support.gradle'
