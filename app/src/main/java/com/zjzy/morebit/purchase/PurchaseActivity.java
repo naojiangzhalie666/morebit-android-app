@@ -76,11 +76,12 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
 
 
     private TextView txt_head_title, tv_rule;
+    private LinearLayout btn_back;
     private RecyclerView rl_list, rcy_product;
     private PurchseAdapter adapter;
     private ProductAdapter padapter;
     private ImageView share;
-    private LinearLayout btn_back;
+
     CommercialShareDialog shareDialog;
     private List<ShopGoodInfo> data, mdata;
     private NestedScrollView nscorll;
@@ -142,6 +143,8 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
 
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
 
+        btn_back = (LinearLayout) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(this);
         rl_list = (RecyclerView) findViewById(R.id.rl_list);
         rl_list.setNestedScrollingEnabled(false);
         rl_list.setFocusable(false);
@@ -158,8 +161,6 @@ public class PurchaseActivity extends MvpActivity<PurchasePresenter> implements 
         tv_rule = (TextView) findViewById(R.id.tv_rule);//活动规则
         tv_rule.setOnClickListener(this);
 
-        btn_back = (LinearLayout) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(this);
         nscorll = (NestedScrollView) findViewById(R.id.nscorll);
 
         linear_more= (LinearLayout) findViewById(R.id.linear_more);

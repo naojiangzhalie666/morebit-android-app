@@ -19,9 +19,16 @@
 
     <item>
 
+
+        <shape>
+
+            <solid android:color="@color/color_F05557"/>
+        </shape>
+    </item>
+    <item  android:top="-50dp" android:left="-50dp" android:right="-50dp">
+
         <bitmap
-            android:gravity="center"
-            android:src="@drawable/start"/>
+            android:src="@drawable/app7"/>
     </item>
 <!--    <item>-->
 

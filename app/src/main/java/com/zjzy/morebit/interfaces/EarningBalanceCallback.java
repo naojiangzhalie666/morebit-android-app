@@ -1,9 +1,9 @@
 package com.zjzy.morebit.interfaces;
 
 
-import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.UserIncomeDetail;
 
 public interface EarningBalanceCallback {
-    void getBalance(DayEarnings earnings);
+    void getBalance(UserIncomeDetail earnings);
     void refreshComplete();
 }

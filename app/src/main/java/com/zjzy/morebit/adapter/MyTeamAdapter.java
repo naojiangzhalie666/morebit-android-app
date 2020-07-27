@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -90,16 +91,20 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
         }
 
         viewHolder.name.setText(info.getNickName());
-
-        viewHolder.userLevel.setText(info.getGrade());
-        if(C.UserType.member.equals(info.getUserType()+"")){
-            viewHolder.userLevel.setBackgroundResource(R.drawable.bg_corners_ff645b_30);
-            viewHolder.userLevel.setTextColor(ContextCompat.getColor(mContext,R.color.white));
-        } else {
-            viewHolder.userLevel.setBackgroundResource(R.drawable.bg_corners_ff645b_30);
-            viewHolder.userLevel.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+        if (TextUtils.isEmpty(info.getInvitationUserName())){
+            viewHolder.tv_yao.setVisibility(View.GONE);
+        }else{
+            viewHolder.tv_yao.setVisibility(View.VISIBLE);
         }
-        viewHolder.people_count.setText("已推"+info.getChildCount()+"人");
+        viewHolder.tv_yao.setText("邀请人："+info.getInvitationUserName());
+        if(C.UserType.member.equals(info.getUserType()+"")){
+            viewHolder.vip_img.setImageResource(R.mipmap.vip_icon_right);
+            viewHolder.userLevel.setText("普通会员");
+        } else {
+            viewHolder.vip_img.setImageResource(R.mipmap.vip_bg_icon2);
+            viewHolder.userLevel.setText("VIP");
+        }
+        viewHolder.people_count.setText("粉丝数"+info.getChildCount());
         viewHolder.item_ly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,7 +128,8 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
             viewHolder.tv_remark.setText(mContext.getString(R.string.fans_remark,"未填写"));
         } else {
             viewHolder.input_remark.setText("修改备注");
-            viewHolder.input_remark.setBackgroundResource(R.drawable.bg_item_fans_remark_gray);
+            viewHolder.input_remark.setTextColor(Color.parseColor("#F05557"));
+            viewHolder.input_remark.setBackgroundResource(R.mipmap.bg_item_fans_remark);
             viewHolder.tv_remark.setText(mContext.getString(R.string.fans_remark,info.getRemark()));
         }
 
@@ -143,9 +149,10 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView userIcon;
-        TextView phone, userLevel, createTime, people_count,tv_remark,input_remark,authorization,name;
+        TextView phone, userLevel, createTime, people_count,tv_remark,input_remark,authorization,name,tv_yao;
         View bottomLine;
         RelativeLayout item_ly;
+        ImageView vip_img;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -161,6 +168,8 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
             people_count = (TextView) itemView.findViewById(R.id.people_count);
             authorization=itemView.findViewById(R.id.authorization);
             name = (TextView) itemView.findViewById(R.id.name);
+            vip_img=itemView.findViewById(R.id.vip_img);
+            tv_yao=itemView.findViewById(R.id.tv_yao);
         }
     }
 

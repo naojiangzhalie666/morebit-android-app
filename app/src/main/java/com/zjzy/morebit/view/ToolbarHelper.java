@@ -68,6 +68,7 @@ public class ToolbarHelper {
                 mTitle = (TextView) mToolbar.findViewById(mTitleId);
                 mRightTitle = (TextView) mToolbar.findViewById(mRighTitleId);
                 mRightImg = (ImageView) mToolbar.findViewById(mRighImgId);
+                mTitle.setTextSize(18);
             }
         }
     }

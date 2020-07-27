@@ -561,6 +561,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
             List<String> getBanner = info.getImageList();
 
             indexbannerdataArray.clear();
+            if (getBanner==null)return;
             for (int i = 0; i < getBanner.size(); i++) {
                 String s = StringsUtils.checkHttp(getBanner.get(i));
                 if (TextUtils.isEmpty(s)) return;

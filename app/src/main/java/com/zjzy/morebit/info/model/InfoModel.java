@@ -1,13 +1,12 @@
 package com.zjzy.morebit.info.model;
 
 
-import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
-import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.UserIncomeDetail;
 import com.zjzy.morebit.pojo.DayHotBean;
 import com.zjzy.morebit.pojo.EarningExplainBean;
 import com.zjzy.morebit.pojo.EarningsMsg;
@@ -128,25 +127,16 @@ public class InfoModel extends MvpModel {
 
 
     /**
-     * 获取收入明细(日)
+     * 获取收益
      *
      * @param rxFragment
      */
-    public Observable<BaseResponse<DayEarnings>> getDayIncome(RxFragment rxFragment) {
-        return RxHttp.getInstance().getUsersService().getDayIncome()
-                .compose(RxUtils.<BaseResponse<DayEarnings>>switchSchedulers())
-                .compose(rxFragment.<BaseResponse<DayEarnings>>bindToLifecycle());
+    public Observable<BaseResponse<UserIncomeDetail>> getUserIncomeDetail(RxFragment rxFragment) {
+        return RxHttp.getInstance().getUsersService().getUserIncomeDetail()
+                .compose(RxUtils.<BaseResponse<UserIncomeDetail>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<UserIncomeDetail>>bindToLifecycle());
     }
-    /**
-     * 获取收入明细(月)
-     *
-     * @param rxFragment
-     */
-    public Observable<BaseResponse<MonthEarnings>> getMonthIncome(RxFragment rxFragment) {
-        return RxHttp.getInstance().getUsersService().getMonthIncome()
-                .compose(RxUtils.<BaseResponse<MonthEarnings>>switchSchedulers())
-                .compose(rxFragment.<BaseResponse<MonthEarnings>>bindToLifecycle());
-    }
+
     /**
      * 获取分享海报列表
      *
@@ -307,12 +297,12 @@ public class InfoModel extends MvpModel {
      *
      * @param rxFragment
      */
-    public Observable<BaseResponse<DayEarnings>> getPlatformDayIncome(RxFragment rxFragment,int type) {
+    public Observable<BaseResponse<UserIncomeDetail>> getPlatformDayIncome(RxFragment rxFragment, int type) {
         RequestIncomeBean incomeBean = new RequestIncomeBean();
         incomeBean.setType(type);
         return RxHttp.getInstance().getUsersService().getPlatformDayIncome(incomeBean)
-                .compose(RxUtils.<BaseResponse<DayEarnings>>switchSchedulers())
-                .compose(rxFragment.<BaseResponse<DayEarnings>>bindToLifecycle());
+                .compose(RxUtils.<BaseResponse<UserIncomeDetail>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<UserIncomeDetail>>bindToLifecycle());
     }
 
     /**

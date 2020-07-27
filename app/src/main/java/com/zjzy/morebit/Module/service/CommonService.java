@@ -4,8 +4,6 @@ import com.zjzy.morebit.pojo.ActivityLinkBean;
 import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.FloorBean2;
-import com.zjzy.morebit.pojo.JpBannerBean;
-import com.zjzy.morebit.pojo.KaolaBean;
 import com.zjzy.morebit.pojo.NoticemBean;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.pojo.ProgramCatItemBean;
@@ -17,6 +15,7 @@ import com.zjzy.morebit.pojo.RequestNineBean;
 import com.zjzy.morebit.pojo.RequestReadNotice;
 import com.zjzy.morebit.pojo.TkBean;
 import com.zjzy.morebit.pojo.UnreadInforBean;
+import com.zjzy.morebit.pojo.UserIncomeDetail2;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
@@ -26,7 +25,6 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.pojo.goods.FloorBean;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
 import com.zjzy.morebit.pojo.goods.ShareUrlMoreBaen;
-import com.zjzy.morebit.pojo.goods.VideoBean;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
 import com.zjzy.morebit.pojo.order.OrderSyncResult;
 import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
@@ -41,7 +39,7 @@ import com.zjzy.morebit.pojo.CheckWithDrawBean;
 import com.zjzy.morebit.pojo.CircleBrand;
 import com.zjzy.morebit.pojo.CollegeHome;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
-import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.UserIncomeDetail;
 import com.zjzy.morebit.pojo.DayHotBean;
 import com.zjzy.morebit.pojo.EarningExplainBean;
 import com.zjzy.morebit.pojo.EarningsMsg;
@@ -224,7 +222,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -232,22 +229,7 @@ import retrofit2.http.POST;
  */
 
 public interface CommonService {
-    /**
-     * 我的收益(日)
-     *
-     * @return
-     */
-    @POST("/api/user/getDayIncome")
-    public Observable<BaseResponse<DayEarnings>> getDayIncome();
 
-
-    /**
-     * 我的收益(月)
-     *
-     * @return
-     */
-    @POST("/api/user/getMonthIncome")
-    public Observable<BaseResponse<MonthEarnings>> getMonthIncome();
 
 
     /**
@@ -256,7 +238,7 @@ public interface CommonService {
      * @return
      */
     @POST("/api/order/getOrderIncomeTodayByJdSn")
-    public Observable<BaseResponse<DayEarnings>> getPlatformDayIncome(@Body RequestIncomeBean requestBean);
+    public Observable<BaseResponse<UserIncomeDetail>> getPlatformDayIncome(@Body RequestIncomeBean requestBean);
 
     /**
      * 京东、苏宁、拼多多收益-月
@@ -684,8 +666,8 @@ public interface CommonService {
     );
 
     /**
-     * @param picture 反馈图片地址(多张图片请使用，隔开)
-     * @param message 反馈文本
+     *   picture 反馈图片地址(多张图片请使用，隔开)
+     *   message 反馈文本
      * @return
      */
 //    @FormUrlEncoded
@@ -1344,8 +1326,7 @@ public interface CommonService {
     /**
      * 通过品牌ID获取商品列表
      *
-     * @param brandId 品牌ID
-     * @param page
+     *
      * @return
      */
     //    @FormUrlEncoded
@@ -1548,7 +1529,7 @@ public interface CommonService {
     /**
      * 获取团队管理微信信息
      *
-     * @param acition
+     *
      * @return
      */
     @POST("/api/user/findWechatInfo")
@@ -1557,7 +1538,7 @@ public interface CommonService {
     /**
      * 注销用户提示
      *
-     * @param acition
+     *
      * @return
      */
     @POST("/api/user/logout/rtnInfo")
@@ -1633,7 +1614,7 @@ public interface CommonService {
     /**
      * 查询订单列表(多点优选生活的订单)
      *
-     * @param acition
+     *
      * @return
      */
     @POST("/api/order/life/getOrderList")
@@ -1643,7 +1624,7 @@ public interface CommonService {
     /**
      * 我的团队 获取团队长信息
      *
-     * @param action
+     *
      * @return
      */
     @POST("/api/user/getQrCode")
@@ -1653,7 +1634,7 @@ public interface CommonService {
     /**
      * 获取消息(收益,粉丝,系统)
      *
-     * @param action
+     *
      * @return
      */
     @POST("/api/system/systemNotice")
@@ -1665,7 +1646,7 @@ public interface CommonService {
     /**
      * 显示未读数
      *
-     * @param action
+     *
      * @return
      */
     @POST("/api/system/countNoticeByReadStatus")
@@ -1701,7 +1682,7 @@ public interface CommonService {
     /**
      * app闪屏页点击统计
      *
-     * @param acition
+     *
      * @return
      */
     @POST("/api/system/clickStatistics")
@@ -1710,7 +1691,7 @@ public interface CommonService {
     /**
      * vip个人中心
      *
-     * @param requestBean
+     *
      * @return
      */
     @POST("/api/user/userApplyToUpgrade/list")
@@ -2120,8 +2101,8 @@ public interface CommonService {
     /**
      * 商学院反馈意见
      *
-     * @param picture 反馈图片地址(多张图片请使用，隔开)
-     * @param message 反馈文本
+     *    反馈图片地址(多张图片请使用，隔开)
+     *  message 反馈文本
      * @return
      */
 //    @FormUrlEncoded
@@ -2697,4 +2678,21 @@ public interface CommonService {
 //    @FormUrlEncoded
     @POST("/api/system/readNotice")
     public Observable<BaseResponse<String>> getReadNotice(@Body RequestReadNotice body);
+
+    /**
+     * 新获取收益（
+     *
+     * @return
+     */
+    @POST("/api/user/getUserIncomeDetail")
+    public Observable<BaseResponse<UserIncomeDetail>> getUserIncomeDetail();
+
+    /**
+     * 新获取收益（我的页面使用）
+     *
+     * @return
+     */
+    @POST("/api/user/getUserIncome")
+    public Observable<BaseResponse<UserIncomeDetail2>> getUserIncome();
+
 }

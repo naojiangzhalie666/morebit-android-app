@@ -244,6 +244,15 @@ public class C {
         public static final  String KEY_SERVER_TYPE = "serverType";
 
         public static final String SEARCH_TYPE = "SEARCH_TYPE";
+        public static final String EARNING = "EARNING";
+        public static final String SEARCHINFO = "SEARCHINFO";
+        public static final String ORDERTYPE = "ORDERTYPE";
+        public static final String ORDERTEAM = "ORDERTEAM";
+        public static final String ORDERSTATUS = "ORDERSTATUS";
+        public static final String ELEORDER = "ELEORDER";
+        public static final String ELETYPE = "ELETYPE";
+        public static final String YXTYPE = "YXTYPE";
+
 
     }
 
@@ -415,6 +424,7 @@ public class C {
 
         public static final String WEB_COMMSSION_RULE = "COMMISSION_RULES";// 返佣规则
         public static final String SHARE_COURES = "SHARE_COURES";// 分享三部曲
+        public static final String UPGRADE_H5 = "UPGRADE_H5";// VIP升级地址
     }
 
     /**

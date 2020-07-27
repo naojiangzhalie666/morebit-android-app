@@ -3,6 +3,7 @@ package com.zjzy.morebit.info.ui;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -62,11 +63,14 @@ public class LoadUserInfoActivity extends BaseActivity implements View.OnClickLi
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         }else{
-            ActivityStyleUtil.initSystemBar(this, R.color.color_757575); //设置标题栏颜色值
+            ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         }
 
         txt_head_title=(TextView)findViewById(R.id.txt_head_title);
         txt_head_title.setText(title);
+        txt_head_title.setTextSize(18);
+        txt_head_title.setTextColor(Color.parseColor("#333333"));
+        txt_head_title.getPaint().setFakeBoldText(true);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);
         btn_back.setVisibility(View.VISIBLE);

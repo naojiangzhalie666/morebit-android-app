@@ -218,7 +218,7 @@
     <string name="official_recom">官方推荐</string>
     <string name="login_error">登录失败</string>
     <string name="discount_stores">店铺优惠</string>
-    <string name="goods_browsing_history">足迹</string>
+    <string name="goods_browsing_history">我的足迹</string>
     <string name="team_wechat">团队管理微信</string>
     <string name="team_wechat_hint">便于您的粉丝和推荐人联系您</string>
     <string name="service_text">客服</string>
@@ -309,10 +309,9 @@
     <string-array name="self_order_type">
         <item>全部</item>
         <item>待支付 </item>
-        <item>已付款 </item>
-        <item>待收货 </item>
-        <item>已结算</item>
-        <item>已关闭</item>
+        <item>待发货 </item>
+        <item>待收货</item>
+        <item>已完成</item>
 
     </string-array>
     <string-array name="order_live_type">
@@ -486,7 +485,9 @@
     <string name="invate_text1">方式一：可以直接复制邀请码给好友下载APP注册填写</string>
     <string name="invate_text2">方式二：专属海报中的二维码和邀请链接已经包含您的邀请信息以直接复制邀请码给好友下载APP注册填写</string>
     <string name="invate_text3">方式三：好友通过您的邀请码或者邀请海报注册会员并下载APP后，Ta将成为您的粉丝</string>
-
+    <string name="month1">*每月24日结算的佣金和积分是确认收货的佣金。</string>
+    <string name="month2">例如：11月预估自购收益1000元,\n其中700元的订单是11月内收货,12月24日结算\n有300元的订单是12月内收货,1月24日结算;\n11月预估积分15000,\n其中10000积分是11月内收货,12月24日结算\n有5000积分的订单是12月内收货,1月24日结算。</string>
+    <string name="month3">*本数据仅供参考,系统于次月生成报表快照。\n*后续产生的售后扣除不更新报表快照,最终收益以实际\n结算为准。</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

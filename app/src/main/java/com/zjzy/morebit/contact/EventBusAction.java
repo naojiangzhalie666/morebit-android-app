@@ -14,5 +14,11 @@ public class EventBusAction {
 
     public final static String ACTION_SCHOOL = "action_school"; //商学院首页
     public final static String ACTION_WEBVIEW_TITLE = "action_webview_title"; //webview的title
+    public final static String ORDERTYPE_ALL = "ORDERTYPE_ALL";  //订单类型  全部
+    public final static String ORDERTYPE_TAO = "ORDERTYPE_TAO";  //订单类型  淘宝
+    public final static String ORDERTYPE_JD = "ORDERTYPE_JD";  //订单类型  京东
+    public final static String ORDERTYPE_PDD = "ORDERTYPE_PDD";  //订单类型  拼多多
+    public final static String ORDERTYPE_WPH = "ORDERTYPE_WPH";  //订单类型  唯品会
+    public final static String ORDERTYPE_KAOLA = "ORDERTYPE_KAOLA";  //订单类型  考拉
 
 }

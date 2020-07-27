@@ -95,7 +95,7 @@ public class SearchFansActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_fans);
-        ImmersionBar.with(this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
+        ImmersionBar.with(this).statusBarColor(R.color.transparent).fitsSystemWindows(false).statusBarDarkFont(true, 0.2f).init();
         mSearchKey = getIntent().getStringExtra("search_key");
         initView();
     }
@@ -104,7 +104,7 @@ public class SearchFansActivity extends BaseActivity {
         search_rl.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ECECEC));
         search_et.setHintTextColor(ContextCompat.getColor(this, R.color.color_999999));
         search_et.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
-        mEmptyView = new CommonEmpty(this, "未找到相关数据", R.drawable.image_meiyousousuojilu);
+        mEmptyView = new CommonEmpty(this, "暂无数据", R.drawable.search_no);
         myTeamAdapter = new MyTeamAdapter(this, listArray);
         myTeamAdapter.setUserInfo(UserLocalData.getUser(this));
         myTeamAdapter.setOnAdapterClickListener(new MyTeamAdapter.OnAdapterClickListener() {

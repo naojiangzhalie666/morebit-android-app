@@ -9,6 +9,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjzy.morebit.R;
@@ -31,6 +32,7 @@ public class FansRemarkDialog extends Dialog {
      private TextView tv_confirm;
      OnClickListener onClickListener;
     private  int position;
+    private ImageView diss;
     public FansRemarkDialog(Context context) {
         super(context, R.style.dialog);
         this.mContext = context;
@@ -46,9 +48,16 @@ public class FansRemarkDialog extends Dialog {
     }
 
     private void initView() {
+        diss=findViewById(R.id.diss);
         tv_cancel = findViewById(R.id.tv_cancel);
         tv_confirm = findViewById(R.id.tv_confirm);
         edt_remark = findViewById(R.id.edt_remark);
+        diss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         tv_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

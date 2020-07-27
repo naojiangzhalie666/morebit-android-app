@@ -38,7 +38,9 @@ import com.bumptech.glide.request.transition.Transition;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.ShareMoneyActivity;
+import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.CommonLocalData;
 import com.zjzy.morebit.LocalData.UserLocalData;
@@ -53,6 +55,7 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.RxWXHttp;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.CommonShareTemplateBean;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.TkBean;
@@ -69,6 +72,7 @@ import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
 import com.zjzy.morebit.pojo.request.RequestPddShareContent;
 import com.zjzy.morebit.pojo.request.RequestTKLBean;
 import com.zjzy.morebit.pojo.request.WxCodeBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestUploadCouponInfo;
 import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
 import com.zjzy.morebit.purchase.adapter.PurchsePosterAdapter;
@@ -1889,6 +1893,34 @@ public static Bitmap returnBitMap(final String url){
         req.path = "pages/index/index";                  //拉起小程序页面的可带参路径，不填默认拉起小程序首页
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开  0是正式 1是开发 2是体验版本
         api.sendReq(req);
+
+    }
+
+
+    //获取vip页面地址
+    public static  void getVipH5(final Context context){
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.UPGRADE_H5))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                         ShowWebActivity.start((Activity) context,commssionH5,"");
+                        }
+
+                        Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
 
     }
 }

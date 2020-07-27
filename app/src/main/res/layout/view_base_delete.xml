@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:visibility="gone"
-        android:paddingRight="13dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         >
@@ -61,9 +60,9 @@
             android:layout_marginRight="10dp"/>
         <TextView
             android:id="@+id/share"
-            android:layout_width="117dp"
-            android:layout_height="39dp"
-            android:background="@drawable/bg_collect_delete_but"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_F05557"
             android:gravity="center"
             android:text="删除"
             android:textColor="@color/color_FFFFFF"

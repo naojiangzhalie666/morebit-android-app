@@ -108,6 +108,7 @@
                     android:gravity="bottom"
                     android:text="29.90"
                     android:textStyle="bold"
+                    android:textSize="16sp"
                     android:textColor="@color/color_EE403A"
                     android:layout_marginTop="3dp"
                     android:visibility="visible"
@@ -123,6 +124,11 @@
                 android:layout_below="@id/ll_goods_price"
                 />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
             <TextView
                 android:id="@+id/order_goods_unit"
                 android:layout_width="wrap_content"
@@ -131,7 +137,7 @@
                 android:layout_marginTop="5dp"
                 android:text="232"
                 android:textColor="@color/color_999999"
-                android:textSize="@dimen/sp_11"
+                android:textSize="@dimen/sp_12"
                 android:layout_below="@id/title"
                 />
             <TextView
@@ -149,7 +155,7 @@
                 android:gravity="center"
                 android:paddingTop="2dp"
                 android:text="送30成长值"
-                android:textColor="@color/white"
+                android:textColor="@color/color_F05557"
                 android:background="@mipmap/czz_bg"
                 android:textSize="10sp"
                 />
@@ -214,7 +220,7 @@
                         android:textSize="11sp"
                         android:layout_marginTop="2dp"
                         android:visibility="visible"
-                        android:text="重新购买"
+                        android:text="再次购买"
                         />
                     <TextView
                         android:id="@+id/go_goods_pay_tv"
@@ -280,15 +286,16 @@
                 android:text="@string/number_order_no"/>
 
             <TextView
+                android:layout_toRightOf="@+id/tv_order_no"
                 android:id="@+id/tv_copy"
                 android:layout_width="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:text="@string/copy"
-                android:textColor="@color/color_333333"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/color_F05557"
                 android:textSize="@dimen/sp_11" />
         </RelativeLayout>
         <TextView

@@ -72,7 +72,7 @@
                             android:layout_toRightOf="@+id/vip_tou"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:maxEms="8"
+                            android:maxEms="4"
                             android:text="我是昵称"
                             android:textColor="#ffffffff"
                             android:textSize="18sp" />
@@ -112,7 +112,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:src="@mipmap/vip_icon_right" />
+                                android:src="@mipmap/vip_icon_right2" />
 
                             <TextView
                                 android:id="@+id/vip_grade"

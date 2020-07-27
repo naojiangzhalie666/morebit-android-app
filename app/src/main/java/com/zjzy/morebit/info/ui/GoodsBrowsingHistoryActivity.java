@@ -30,6 +30,8 @@ import com.zjzy.morebit.Module.common.View.ReUseGridView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
+import com.zjzy.morebit.interfaces.EmptyView;
+import com.zjzy.morebit.network.CommonEmpty;
 import com.zjzy.morebit.pojo.EarningsMsg;
 import com.zjzy.morebit.pojo.GoodsBrowsHistory;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
@@ -73,14 +75,16 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
     @BindView(R.id.toolbar_right_title)
     TextView editor;
     @BindView(R.id.toolbar_right_img)
-    ImageView toolbar_right_img;
+    TextView toolbar_right_img;
     private Drawable drawable;
+    private LinearLayout searchNullTips_ly;
 
     private List<GoodsBrowsHistory> listArray = new ArrayList<>();
     GoodsHistoryAdapter mAdapter;
     private boolean isAllSelect;
     private boolean isEditor;
     private boolean isNoMore;
+
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, GoodsBrowsingHistoryActivity.class);
@@ -96,19 +100,22 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 
     private void initView() {
         ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
+  //      mEmptyView = new CommonEmpty(this, "您还没有浏览任何商品哦~", R.drawable.image_meiyoushoucang);
 //        ((EmptyView) mEmptyView).setMessage("您还没有浏览任何商品哦~");
 //        ((EmptyView) mEmptyView).setIcon(R.drawable.image_meiyoushoucang);
+        searchNullTips_ly= (LinearLayout) findViewById(R.id.searchNullTips_ly);
         new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.goods_browsing_history));
         toolbar_right_img.setVisibility(View.VISIBLE);
         editor.setVisibility(View.GONE);
         editor.setText(R.string.finish);
-        editor.setTextColor(ContextCompat.getColor(this, R.color.color_F0A300));
+        editor.setTextColor(ContextCompat.getColor(this, R.color.color_F05557));
 
         mRecyclerView.setOnReLoadListener(new ReUseGridView.OnReLoadListener() {
 
             @Override
             public void onReload() {
                 getFirstData();
+
             }
 
             @Override
@@ -130,10 +137,12 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
             mAdapter.replace(listArray);
             setItemStatus(isAllSelect);
             mAdapter.notifyDataSetChanged();
+
         } else {
             MyLog.i("test", "setNoMore: ");
             isNoMore = true;
             mRecyclerView.getListView().setNoMore(true);
+
         }
 
 
@@ -158,10 +167,12 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
             page++;
             mAdapter.replace(listArray);
             mRecyclerView.removeNetworkError();
+            searchNullTips_ly.setVisibility(View.GONE);
         } else {
             toolbar_right_img.setVisibility(View.GONE);
             reset();
             mAdapter.clear();
+            searchNullTips_ly.setVisibility(View.VISIBLE);
 
         }
         setItemStatus(isAllSelect);
@@ -175,7 +186,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
         isNoMore = false;
         ll_remove.setVisibility(View.GONE);
         editor.setVisibility(View.GONE);
-        mRecyclerView.showNetworkError(false);
+       // mRecyclerView.showNetworkError(false);
     }
 
     @OnClick({R.id.share, R.id.ll_check_all, R.id.toolbar_right_title, R.id.toolbar_right_img})
@@ -362,21 +373,22 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                     }
                 });
             } else {
-                TextView title = holder.viewFinder().view(R.id.title);
-                TextView commission = holder.viewFinder().view(R.id.commission);
+                TextView title = holder.viewFinder().view(R.id.tv_title);
+                TextView commission = holder.viewFinder().view(R.id.tv_zhuan);
                 TextView coupon = holder.viewFinder().view(R.id.coupon);
-                TextView discount_price = holder.viewFinder().view(R.id.discount_price);
-                TextView price = holder.viewFinder().view(R.id.price);
-                TextView tv_shop_name = holder.viewFinder().view(R.id.tv_shop_name);
-                TextView sales = holder.viewFinder().view(R.id.sales);
+               TextView discount_price = holder.viewFinder().view(R.id.tv_price);
+               // TextView price = holder.viewFinder().view(R.id.tv_price);
+                TextView tv_shop_name = holder.viewFinder().view(R.id.shop_name);
+                TextView sales = holder.viewFinder().view(R.id.volnum);
 //                TextView browse_time = holder.viewFinder().view(R.id.browse_time);
                 ImageView goods_bg = holder.viewFinder().view(R.id.goods_bg);
                 ImageView video_play = holder.viewFinder().view(R.id.video_play);
                 ImageView good_mall_tag = holder.viewFinder().view(R.id.good_mall_tag);
                 LinearLayout ll_shop_name=holder.viewFinder().view(R.id.ll_shop_name);
-                View line = holder.viewFinder().view(R.id.line);
+                View line1 = holder.viewFinder().view(R.id.line1);
+                View line2 = holder.viewFinder().view(R.id.line2);
                 final ImageView checkbox = holder.viewFinder().view(R.id.checkbox);
-                LinearLayout ll_return_cash = holder.viewFinder().view(R.id.ll_return_cash);
+             //   LinearLayout ll_return_cash = holder.viewFinder().view(R.id.ll_return_cash);
 //                if (!TextUtils.isEmpty(item.getItemPicture())) {
                 LoadImgUtils.setImg(mContext, goods_bg, item.getItemPicture());
 //                TextView subsidiesPriceTv = holder.viewFinder().view(R.id.subsidiesPriceTv);
@@ -389,7 +401,8 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 
 
                 if (!TextUtils.isEmpty(item.getItemTitle())) {
-                    StringsUtils.retractTitle(good_mall_tag,title,item.getItemTitle());
+                    title.setText(item.getItemTitle());
+                   // StringsUtils.retractTitle(good_mall_tag,title,);
                 }
                 if (!StringsUtils.isShowVideo(item.getItemVideoid())) {
                     video_play.setVisibility(View.GONE);
@@ -397,16 +410,16 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                     video_play.setVisibility(View.VISIBLE);
                 }
                 if (StringsUtils.isEmpty(item.getCouponPrice() + "")) {
-                    ll_return_cash.setVisibility(View.GONE);
+                    coupon.setVisibility(View.GONE);
                 } else {
-                    ll_return_cash.setVisibility(View.VISIBLE);
+                    coupon.setVisibility(View.VISIBLE);
                     coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
                 }
                 if(position+1<getItems().size()){
                     if(TextUtils.isEmpty(getItem(position+1).getBrowse_time()+"")&&!TextUtils.isEmpty(getItem(position+1).getTime())){
-                        line.setVisibility(View.GONE);
+                       // line.setVisibility(View.GONE);
                     } else {
-                        line.setVisibility(View.VISIBLE);
+                       // line.setVisibility(View.VISIBLE);
                     }
                 }
 //                commission.setVisibility(View.GONE);
@@ -414,17 +427,12 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(item.getShopName())) {
                     tv_shop_name.setText(item.getShopName());
                 }
-                if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
-                    commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
-                } else {
-                    UserInfo userInfo1 =UserLocalData.getUser();
-                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                        commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
-                    }else{
-                        commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+
+                    if (!TextUtils.isEmpty(item.getCommission())) {
+                        commission.setText( "赚 ¥ "+MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission()));
                     }
-//                    commission.setText(getString(R.string.upgrade_commission));
-                }
+
+
 //                //平台补贴
 //                if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(item.getSubsidiesPrice())){
 //                    subsidiesPriceTv.setVisibility(View.VISIBLE);
@@ -435,20 +443,21 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 //                    subsidiesPriceTv.setText("");
 //                }
                 MyLog.i("test", "item.getShopName(): " + item.getShopName() + " url: " + item.getItemPicture());
-                if (shopType == 3){
-                    discount_price.setText(getString(R.string.income, MathUtils.getnum(item.getItemVoucherPrice())));
-                }else{
-                    discount_price.setText(getString(R.string.income, MathUtils.getnum(item.getItemVoucherPrice())));
-                }
 
-                price.setText(getString(R.string.income, MathUtils.getnum(item.getItemPrice())));
-                price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+                    discount_price.setText(MathUtils.getnum(item.getItemVoucherPrice()));
+
+//                price.setText(MathUtils.getnum(item.getItemPrice()));
+//                price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
                 sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
 
                 if (isEditor) {
+                    line1.setVisibility(View.GONE);
+                    line2.setVisibility(View.VISIBLE);
                     checkbox.setVisibility(View.VISIBLE);
                 } else {
+                    line1.setVisibility(View.VISIBLE);
+                    line2.setVisibility(View.GONE);
                     checkbox.setVisibility(View.GONE);
                 }
                 checkbox.setOnClickListener(new View.OnClickListener() {
@@ -468,39 +477,37 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                 checkbox.setSelected(item.isSelect());
                 switch (shopType){
                     case 2:
-                        drawable = mContext.getResources().getDrawable(R.drawable.tianmao);
-                        //good_mall_tag.setImageResource(R.drawable.tianmao);
+                      //  drawable = mContext.getResources().getDrawable(R.drawable.tianmao);
+                       good_mall_tag.setImageResource(R.drawable.tm_list_icon);
                         break;
                     case 1:
-                        drawable = mContext.getResources().getDrawable(R.drawable.taobao);
-                      //  good_mall_tag.setImageResource(R.drawable.taobao);
+                       // drawable = mContext.getResources().getDrawable(R.drawable.taobao);
+                       good_mall_tag.setImageResource(R.drawable.tb_list_icon);
                         break;
                     case 3:
-                        drawable = mContext.getResources().getDrawable(R.drawable.pdd_icon);
-                       // good_mall_tag.setImageResource(R.drawable.pdd_icon);
+                       // drawable = mContext.getResources().getDrawable(R.drawable.pdd_icon);
+                         good_mall_tag.setImageResource(R.mipmap.pdd_list_icon);
                         break;
                     case 4:
-                        drawable = mContext.getResources().getDrawable(R.mipmap.jdong_icon);
-                        //good_mall_tag.setImageResource(R.mipmap.jdong_icon);
+                       // drawable = mContext.getResources().getDrawable(R.mipmap.jdong_icon);
+                        good_mall_tag.setImageResource(R.mipmap.jd_icon);
                         break;
                     case 5:
-                        drawable = mContext.getResources().getDrawable(R.mipmap.kaola);
-                       // good_mall_tag.setImageResource(R.mipmap.kaola);
+                      //  drawable = mContext.getResources().getDrawable(R.mipmap.kaola);
+                     //   good_mall_tag.setImageResource(R.mipmap.kaola);
                         sales.setVisibility(View.GONE);
                         ll_shop_name.setVisibility(View.INVISIBLE);
                         break;
                     case 6:
-                        drawable = mContext.getResources().getDrawable(R.mipmap.wph_icon);
-                        //good_mall_tag.setImageResource(R.mipmap.wph_icon);
+                       // drawable = mContext.getResources().getDrawable(R.mipmap.wph_icon);
+                     //   good_mall_tag.setImageResource(R.mipmap.wph_icon);
+                        ll_shop_name.setVisibility(View.INVISIBLE);
                         sales.setVisibility(View.GONE);
                         break;
                     default:
                         break;
                 }
-                SpannableString spannableString = new SpannableString("  " + item.getItemTitle());
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                spannableString.setSpan(new VerticalImageSpan(drawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                title.setText(spannableString);
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

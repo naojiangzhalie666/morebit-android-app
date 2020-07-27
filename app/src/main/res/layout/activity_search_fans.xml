@@ -16,7 +16,11 @@
             android:layout_height="wrap_content"
             android:background="@color/white">
         <!--<include layout="@layout/searc_fans_top" />-->
-            <include layout="@layout/include_searchview_input" />
+
+            <include layout="@layout/include_searchview_input3" />
+            <include layout="@layout/include_searchview_input"
+                android:visibility="gone"
+                />
         </RelativeLayout>
         <FrameLayout
             android:layout_width="match_parent"

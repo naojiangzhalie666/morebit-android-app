@@ -45,6 +45,25 @@ public class TeamInfo implements Serializable {
 
     private String specialId;//是否授权
 
+    private String invitationUserName;
+    private String fsType;
+
+    public String getFsType() {
+        return fsType;
+    }
+
+    public void setFsType(String fsType) {
+        this.fsType = fsType;
+    }
+
+    public String getInvitationUserName() {
+        return invitationUserName;
+    }
+
+    public void setInvitationUserName(String invitationUserName) {
+        this.invitationUserName = invitationUserName;
+    }
+
     public String getSpecialId() {
         return specialId;
     }

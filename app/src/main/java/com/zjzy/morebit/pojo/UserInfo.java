@@ -66,7 +66,33 @@ public class UserInfo implements Serializable {
     private Long indirectCoin;//间接推荐成长值
     private Long settleCoin;//结算成长值
     private Long selfCoin;//自购成长值
+    private String accumulatedAmount;//省赚金额
+    private String collectCount;//用户收藏总数
+    private String balance;//可提现余额
 
+    public String getCollectCount() {
+        return collectCount;
+    }
+
+    public void setCollectCount(String collectCount) {
+        this.collectCount = collectCount;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getAccumulatedAmount() {
+        return accumulatedAmount;
+    }
+
+    public void setAccumulatedAmount(String accumulatedAmount) {
+        this.accumulatedAmount = accumulatedAmount;
+    }
 
     public Long getSelfCoin() {
         return selfCoin;

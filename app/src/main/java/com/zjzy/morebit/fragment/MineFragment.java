@@ -1,73 +1,66 @@
 package com.zjzy.morebit.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.AppletsActivity;
+import com.zjzy.morebit.Activity.FansDragonActivity;
+import com.zjzy.morebit.Activity.FansListFragment;
 import com.zjzy.morebit.Activity.InvateActivity;
+import com.zjzy.morebit.Activity.MyOrderActivity;
 import com.zjzy.morebit.Activity.SettingActivity;
-import com.zjzy.morebit.App;
+import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.EarningsHintDialog;
-import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
-import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
+import com.zjzy.morebit.Module.common.Dialog.InterIconDialog;
 import com.zjzy.morebit.Module.common.Dialog.UpgradeUserDialog;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
+import com.zjzy.morebit.Module.common.Dialog.WxBindDialog;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.info.model.InfoModel;
+import com.zjzy.morebit.info.ui.AppFeedActivity;
 import com.zjzy.morebit.info.ui.FansActivity;
+import com.zjzy.morebit.info.ui.GoodsBrowsingHistoryActivity;
 import com.zjzy.morebit.info.ui.SettingMineInfoActivity;
 import com.zjzy.morebit.info.ui.SettingWechatActivity;
 import com.zjzy.morebit.info.ui.VipActivity;
 import com.zjzy.morebit.info.ui.fragment.EarningsFragment;
-import com.zjzy.morebit.info.ui.fragment.OrderDetailFragment;
-import com.zjzy.morebit.info.ui.fragment.ShareFriendsFragment;
+import com.zjzy.morebit.main.ui.CollectFragment2;
 import com.zjzy.morebit.main.ui.adapter.PersonFunctionAdapter;
-import com.zjzy.morebit.main.ui.adapter.ToolsAdapter;
 import com.zjzy.morebit.main.ui.adapter.ToolsSplendidAdapter;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.order.ui.OrderTeamActivity;
-import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.UserIncomeDetail;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.MonthEarnings;
-import com.zjzy.morebit.pojo.ProtocolRuleBean;
 import com.zjzy.morebit.pojo.UpgradeCarousel;
+import com.zjzy.morebit.pojo.UserIncomeDetail2;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
@@ -75,24 +68,20 @@ import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
-import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
-import com.zjzy.morebit.utils.GuideViewUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.PageToUtil;
-import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.view.AspectRatioView;
-import com.zjzy.morebit.view.UPMarqueeView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.youth.banner.Banner;
@@ -125,8 +114,29 @@ public class MineFragment extends BaseMainFragmeng {
     TextView mInvitationCode;
     @BindView(R.id.tv_remainder)
     TextView tv_remainder;
+    @BindView(R.id.jifen)
+    TextView jifen;
+    @BindView(R.id.today_jifen)
+    TextView today_jifen;
+    @BindView(R.id.today_yugu)
+    TextView today_yugu;
     @BindView(R.id.userName)
     TextView mUserName;
+    @BindView(R.id.tv_collectnum)
+    TextView tv_collectnum;
+    @BindView(R.id.tv_tixian)
+    TextView tv_tixian;
+    @BindView(R.id.tv1)
+    TextView tv1;
+    @BindView(R.id.tv2)
+    TextView tv2;
+    @BindView(R.id.tv3)
+    TextView tv3;
+    @BindView(R.id.tv4)
+    TextView tv4;
+    @BindView(R.id.tv_wx)
+    TextView tv_wx;
+
 
     @BindView(R.id.ll_user_grade)
     LinearLayout llUserGrade;
@@ -138,18 +148,18 @@ public class MineFragment extends BaseMainFragmeng {
     AspectRatioView mAsBanner;
     @BindView(R.id.banner)
     Banner mBanner;
-    @BindView(R.id.recyclerview)
-    RecyclerView mRecyclerview;
-    @BindView(R.id.ll_my_tootls)
-    LinearLayout ll_my_tootls;
-    @BindView(R.id.ll_mine_earnings)
-    RelativeLayout ll_mine_earnings;
+    @BindView(R.id.icon_tou)
+    ImageView icon_tou;
+    //    @BindView(R.id.recyclerview)
+//    RecyclerView mRecyclerview;
+//    @BindView(R.id.ll_my_tootls)
+//    LinearLayout ll_my_tootls;
+//    @BindView(R.id.ll_mine_earnings)
+//    RelativeLayout ll_mine_earnings;
     //    @BindView(R.id.moneyCardView)
 //    CardView moneyCardView;
     @BindView(R.id.scrollView)
     NestedScrollView nestedScrollView;
-    @BindView(R.id.rl_set_weixin)
-    RelativeLayout rl_set_weixin;
     @BindView(R.id.my_earnings)
     LinearLayout my_earnings;
 
@@ -157,7 +167,13 @@ public class MineFragment extends BaseMainFragmeng {
 //    TextView tv_role;
 
     @BindView(R.id.tv_withdraw)
-    TextView tvWithDraw;
+    LinearLayout tvWithDraw;
+    @BindView(R.id.privacy_agreement)
+    LinearLayout privacy_agreement;
+
+    @BindView(R.id.user_agreemen)
+    LinearLayout user_agreemen;
+
 
     @BindView(R.id.tv_today_money)
     TextView tv_today_money;
@@ -175,10 +191,19 @@ public class MineFragment extends BaseMainFragmeng {
     LinearLayout my_footmarker;
     @BindView(R.id.my_favorite)
     LinearLayout my_favorite;
+    @BindView(R.id.ll_new)
+    LinearLayout ll_new;
+    @BindView(R.id.ll_coustom)
+    LinearLayout ll_coustom;
+    @BindView(R.id.ll_jian)
+    LinearLayout ll_jian;
+    @BindView(R.id.ll_dragon)
+    LinearLayout ll_dragon;
+    @BindView(R.id.integer_icon)
+    LinearLayout integer_icon;
 
 
-
-    ToolsAdapter mAdapter;
+    // ToolsAdapter mAdapter;
     private LinearLayout my_little;
     PersonFunctionAdapter mPersonFunctionAdapter;
     ToolsSplendidAdapter mAdapterSplendid;
@@ -186,7 +211,7 @@ public class MineFragment extends BaseMainFragmeng {
     private View mView;
     private InfoModel mInfoModel;
 
-    public static DayEarnings mDayEarnings;
+    public static UserIncomeDetail mDayEarnings;
     public static MonthEarnings mMonthEarnings;
     private String mTotalMoney;
     private ClearSDdataDialog mLogoutDialog;
@@ -198,6 +223,12 @@ public class MineFragment extends BaseMainFragmeng {
     List<View> mHotviews = new ArrayList<>();
     private boolean isLogin;
     private int mIsUpgrade;
+    private LinearLayout tab_title;
+    private float duration = 855.0f;//在0-855.0之间去改变头部的透明度
+    private int mTitleHeight;
+    private boolean isTitleBarSetBg = true;
+    private TextView tv_mine;
+    private String newUrl, customerUrl;
 
 
     @Override
@@ -215,7 +246,9 @@ public class MineFragment extends BaseMainFragmeng {
                 .fitsSystemWindows(false)
                 .statusBarColor(R.color.transparent)
                 .init();
-        my_little=mView.findViewById(R.id.my_little);
+        my_little = mView.findViewById(R.id.my_little);
+        tab_title = mView.findViewById(R.id.tab_title);
+        tv_mine = mView.findViewById(R.id.tv_mine);
         return mView;
     }
 
@@ -264,6 +297,7 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
     private void initView() {
+        tv_mine.getPaint().setFakeBoldText(true);
         mSwipeList.setRefreshing(false);
         mSwipeList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -272,8 +306,37 @@ public class MineFragment extends BaseMainFragmeng {
             }
         });
 //        mLLFindSplendid.setVisibility(View.GONE);
-        mAdapter = new ToolsAdapter(getActivity());
-        mRecyclerview.setAdapter(mAdapter);
+//        mAdapter = new ToolsAdapter(getActivity());
+//        mRecyclerview.setAdapter(mAdapter);
+        tab_title.setAlpha(0);
+        mTitleHeight = getResources().getDimensionPixelSize(R.dimen.title_height);
+        duration = getActivity().getWindowManager().getDefaultDisplay().getWidth() - mTitleHeight + 0.0F;
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                Log.e("gggg", scrollY + "");
+                float alpha = (float) (scrollY / duration);
+                if (duration > scrollY) {
+                    if (scrollY < 5) {
+
+                        tab_title.setVisibility(View.GONE);
+                        tab_title.setAlpha(0);
+                    } else {
+                        if (tab_title.getVisibility() == View.GONE) {
+                            tab_title.setVisibility(View.VISIBLE);
+                        }
+                        tab_title.setAlpha(alpha);
+                    }
+                } else {
+
+                    if (tab_title.getVisibility() == View.GONE) {
+                        tab_title.setVisibility(View.VISIBLE);
+                    }
+                    tab_title.setAlpha(1);
+
+                }
+            }
+        });
 
     }
 
@@ -305,37 +368,49 @@ public class MineFragment extends BaseMainFragmeng {
 
         mInvitationCode.setText(getResources().getString(R.string.number_invite_code, info.getInviteCode()));
         mUserName.setText(info.getNickName());
+        if (!TextUtils.isEmpty(info.getWxNumber())) {
+            tv_wx.setVisibility(View.GONE);
+        } else {
+            tv_wx.setVisibility(View.VISIBLE);
+        }
 
         if (C.UserType.member.equals(info.getPartner())) {
-            tvUserType.setText("会员");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_number);
-            // ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+            tvUserType.setText("普通会员");
+            icon_tou.setImageResource(R.mipmap.mine_memeber_icon);
+            tv1.setVisibility(View.VISIBLE);
+            tv1.setText("升级");
+            tv2.setText("VIP");
+            tv3.setText("享更多权益");
+            tv4.setText("立即升级");
+
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
             tvUserType.setText("VIP");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_vip);
-            //  ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+            icon_tou.setImageResource(R.mipmap.mine_vip_icon);
+            tv1.setVisibility(View.VISIBLE);
+            tv1.setText("升级");
+            tv2.setText("团队长");
+            tv3.setText("享更多权益");
+            tv4.setText("立即升级");
 
         } else if (C.UserType.operator.equals(info.getPartner())) {
             tvUserType.setText("团队长");
-            llUserGrade.setBackgroundResource(R.drawable.bg_grade_leadr);
-            //    ll_mine_earnings.setBackgroundResource(R.drawable.bg_mine_earnings_big);
+            icon_tou.setImageResource(R.mipmap.mine_operator_icon);
+            tv1.setVisibility(View.GONE);
+            tv2.setText("团队长");
+            tv3.setText("权益享不停");
+            tv4.setText("查看权益");
         }
-        if (TextUtils.isEmpty(info.getWxNumber())) {
-            rl_set_weixin.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(info.getBalance())) {
+            tv_tixian.setText("¥ " + info.getBalance());
+        }
+
+        if (!TextUtils.isEmpty(info.getCollectCount())) {
+            tv_collectnum.setText(info.getCollectCount() + "个喜欢");
         } else {
-            rl_set_weixin.setVisibility(View.GONE);
+            tv_collectnum.setText("0个喜欢");
         }
-        if (UserLocalData.getUser().getReleasePermission() == 1) {
-//            fl_share_expert.setVisibility(View.VISIBLE);
-//            if (!TextUtils.isEmpty(UserLocalData.getUser().getLabelPicture())) {
-//                LoadImgUtils.setImg(getActivity(), iv_bg_expert, UserLocalData.getUser().getLabelPicture());
-//            }
-            if (!TextUtils.isEmpty(UserLocalData.getUser().getLabel())) {
-//                tv_role.setText(UserLocalData.getUser().getLabel());
-            }
-        } else {
-//            fl_share_expert.setVisibility(View.GONE);
-        }
+
+
     }
 
 
@@ -373,15 +448,9 @@ public class MineFragment extends BaseMainFragmeng {
         getBannerData(C.UIShowType.myTool);   //福利津贴
         getBannerData(C.UIShowType.PERSONAL_FUNCTION);   //功能区
 //        getFindSplendidList();
-        getDayIncome();
+
         getMonthIncome();
-        if (!C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
 
-//            boolean isShow = (boolean) SharedPreferencesUtils.get(App.getAppContext(),C.sp.DIALOG_USER_IS_UPGRADE,false);
-//            getIsUpgrade();
-        }
-
-//        getAccumulatedAmount();
     }
 
 
@@ -395,9 +464,12 @@ public class MineFragment extends BaseMainFragmeng {
         }
     }
 
-    @OnClick({R.id.copy_invitation_code, R.id.my_earnings, R.id.rl_set_weixin,
-            R.id.my_team, R.id.order_detail, R.id.share_friends, R.id.setting, R.id.tv_y, R.id.iv_wenhao,
-            R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon,R.id.offen_question,R.id.order_search,R.id.my_footmarker,R.id.my_favorite,R.id.my_little})
+    @OnClick({R.id.copy_invitation_code, R.id.my_earnings,
+            R.id.my_team, R.id.order_detail, R.id.share_friends, R.id.tv_y, R.id.iv_wenhao,
+            R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon, R.id.offen_question, R.id.order_search,
+            R.id.my_footmarker, R.id.my_favorite, R.id.my_little, R.id.user_agreemen, R.id.privacy_agreement,
+            R.id.ll_new, R.id.ll_coustom, R.id.ll_jian, R.id.tv_wx, R.id.img_right, R.id.ll_dragon, R.id.integer_icon,
+            R.id.tv4})
     public void onClick(View v) {
         switch (v.getId()) {  //复制邀请码
             case R.id.copy_invitation_code:
@@ -411,30 +483,23 @@ public class MineFragment extends BaseMainFragmeng {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), EarningsFragment.class.getName(), bundle);
-//                String appId = "wx92f654d146c13d44"; // 填应用AppId
-//                IWXAPI api = WXAPIFactory.createWXAPI(getActivity(), appId);
-//                WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-//                req.userName = "gh_f8d561cd1942"; // 填小程序原始id
-//                req.userName = "gh_5bfc84043725"; // 填小程序原始id（测试）
-//                req.path = "pages/index/index/index?token="+UserLocalData.getToken()+"&inviteCode="+UserLocalData.getUser().getInviteCode()+"&appVersion="+C.Setting.app_version;                  //拉起小程序页面的可带参路径，不填默认拉起小程序首页
-//                req.miniprogramType = WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW;// 可选打开 开发版，体验版和正式版
-//                api.sendReq(req);
+
                 break;
-            case R.id.my_team:  //我的团队
-                FansActivity.start(getActivity());
-//                openUpgradeUserDialog();
+            case R.id.my_team:  //我的粉丝
+                Bundle bundle2 = new Bundle();
+                bundle2.putBoolean(C.Extras.openFragment_isSysBar, true);
+                OpenFragmentUtils.goToSimpleFragment(getActivity(), FansListFragment.class.getName(), bundle2);
+                //FansActivity.start(getActivity());
+                FansListFragment.newInstance();
                 break;
             case R.id.order_detail:   //订单明细
-                OrderTeamActivity.start(getActivity());
-//                OpenFragmentUtils.goToSimpleFragment(getActivity(), OrderDetailFragment.class.getName(), new Bundle());
-//                OpenFragmentUtils.goToSimpleFragment(getActivity(), OrderFragment.class.getName(), new Bundle());
-//                TaobaoUtil.authTaobao(getActivity(), "25107719");
+                Intent intent = new Intent(getActivity(), MyOrderActivity.class);
+                intent.putExtra(C.Extras.SEARCHINFO, mLocalData.get("2"));
+                startActivity(intent);
+                //OrderTeamActivity.start(getActivity());
                 break;
             case R.id.share_friends:   //分享好友
-
                 startActivity(new Intent(getActivity(), InvateActivity.class));
-                //    OpenFragmentUtils.goToSimpleFragment(getActivity(), ShareFriendsFragment.class.getName(), new Bundle());
-//                PartnerShareActivity.start(getActivity());
                 break;
             case R.id.offen_question:
                 ImageInfo question = new ImageInfo();
@@ -445,7 +510,7 @@ public class MineFragment extends BaseMainFragmeng {
                 break;
             case R.id.order_search:
                 ImageInfo orderSearch = mLocalData.get("2");
-                if (orderSearch == null){
+                if (orderSearch == null) {
                     //  ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
                     ImageInfo orderSearch2 = new ImageInfo();
                     orderSearch2.setOpen(3);
@@ -454,56 +519,38 @@ public class MineFragment extends BaseMainFragmeng {
                     orderSearch2.setTitle("订单查询");
                     orderSearch2.setSort(2);
                     BannerInitiateUtils.gotoAction(getActivity(), orderSearch2);
-                }else{
+                } else {
                     BannerInitiateUtils.gotoAction(getActivity(), orderSearch);
                 }
 
                 break;
-            case R.id.my_footmarker:
-                ImageInfo footMarker = mLocalData.get("3");
-                if (footMarker == null){
-                    ViewShowUtils.showShortToast(getActivity(),"没有足迹浏览");
-                }else{
-                    BannerInitiateUtils.gotoAction(getActivity(), footMarker);
-                }
+            case R.id.my_footmarker://足迹
+                GoodsBrowsingHistoryActivity.start(getActivity());
                 break;
-            case R.id.my_favorite:
-                ImageInfo favorite = mLocalData.get("4");
-//                if (favorite == null){
-//                    ViewShowUtils.showShortToast(getActivity(),"没有收藏权限");
-//                }else{
-                BannerInitiateUtils.gotoAction(getActivity(), favorite);
-//                }
-                break;
-            case R.id.setting: //设置
-                Intent in = new Intent(getActivity(), SettingActivity.class);
-                startActivity(in);
+            case R.id.my_favorite://收藏
+                OpenFragmentUtils.goToSimpleFragment(getActivity(), CollectFragment2.class.getName(), null);
                 break;
             case R.id.iv_wenhao:
                 openDialog("累计收益说明", "累计收益=已提现金额+余额");
                 break;
-            case R.id.rl_set_weixin:
-                SettingWechatActivity.start(getActivity(), 0);
-                break;
-
             case R.id.tv_withdraw: //提现
                 mInfoModel.checkWithdrawTime(this)
                         .subscribe(new DataObserver<String>(false) {
                             @Override
                             protected void onSuccess(String data) {
                                 UserInfo info = UserLocalData.getUser(getActivity());
-                                if (TextUtils.isEmpty(mTotalMoney)){
+                                if (TextUtils.isEmpty(mTotalMoney)) {
                                     mTotalMoney = "0";
                                 }
-                                if(Double.parseDouble(mTotalMoney) < 1){
-                                    ViewShowUtils.showShortToast(getActivity(),"不足1元，无法提现");
+                                if (Double.parseDouble(mTotalMoney) < 1) {
+                                    ViewShowUtils.showShortToast(getActivity(), "不足1元，无法提现");
                                 } else {
                                     if (TaobaoUtil.isAuth()) {   //淘宝授权
                                         TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
                                     } else {
                                         if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
                                             AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
-                                        }else{
+                                        } else {
                                             PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
                                             ToastUtils.showLong("请先绑定支付宝!");
                                         }
@@ -531,17 +578,51 @@ public class MineFragment extends BaseMainFragmeng {
                         });
 
                 break;
-            case R.id.userIcon: //个人设置
-                // 个人
-                startActivity(new Intent(getActivity(), SettingMineInfoActivity.class));
-                break;
             case R.id.my_little://小程序入口
-//               GoodsUtil.jumpApplets(getContext());
-
                 startActivity(new Intent(getActivity(), AppletsActivity.class));
-
+                break;
+            case R.id.user_agreemen://用户协议
+                LoginUtil.getUserProtocol((RxAppCompatActivity) getActivity());
+                break;
+            case R.id.privacy_agreement://隐私
+                LoginUtil.getPrivateProtocol((RxAppCompatActivity) getActivity());
+                break;
+            case R.id.ll_new://新手教程
+                if (!TextUtils.isEmpty(newUrl)) {
+                    ShowWebActivity.start(getActivity(), newUrl, "新手教程");
+                }
 
                 break;
+            case R.id.ll_coustom://客服中心
+                if (!TextUtils.isEmpty(customerUrl)) {
+                    ShowWebActivity.start(getActivity(), customerUrl, "专属客服");
+                }
+                break;
+            case R.id.ll_jian://反馈建议
+                Intent feedBackIt = new Intent(getActivity(), AppFeedActivity.class);
+                Bundle feedBackBundle = new Bundle();
+                feedBackBundle.putString("title", "意见反馈");
+                feedBackBundle.putString("fragmentName", "AppFeedBackFragment");
+                feedBackIt.putExtras(feedBackBundle);
+                getActivity().startActivity(feedBackIt);
+                break;
+
+            case R.id.tv_wx:
+            case R.id.img_right:
+                Intent in = new Intent(getActivity(), SettingActivity.class);
+                startActivity(in);
+                break;
+            case R.id.ll_dragon:
+                startActivity(new Intent(getActivity(), FansDragonActivity.class));
+                break;
+            case R.id.integer_icon://积分弹框
+                InterIconDialog iconDialog = new InterIconDialog(getActivity());
+                iconDialog.show();
+                break;
+            case R.id.tv4://升级页面
+                GoodsUtil.getVipH5(getActivity());
+                break;
+
             default:
                 break;
 
@@ -566,15 +647,7 @@ public class MineFragment extends BaseMainFragmeng {
                             case C.UIShowType.Personal:
                                 mAsBanner.setVisibility(View.GONE);
                                 break;
-                            case C.UIShowType.Welfare:
-//                                mRedPackages.setVisibility(View.GONE);
-                                break;
-                            case C.UIShowType.myTool:
-                                ll_my_tootls.setVisibility(View.GONE);
-                                break;
-                            case C.UIShowType.PERSONAL_FUNCTION:
-//                                recyclerView_recommend.setVisibility(View.GONE);
-                                break;
+
 
                         }
                     }
@@ -605,71 +678,21 @@ public class MineFragment extends BaseMainFragmeng {
                             mAsBanner.setVisibility(View.VISIBLE);
                             setBanner(data, mBanner, mAsBanner);
                         } else if (C.UIShowType.myTool == back) {
-                            List<ImageInfo> list = new ArrayList<ImageInfo>();
-                            for (int i = 0; i < data.size(); i++) {
-                                ImageInfo imageInfo = data.get(i);
-                                String partner = UserLocalData.getUser().getPartner();
-                                if (imageInfo == null) continue;
-                                String permission = imageInfo.getPermission();
-                                if (TextUtils.isEmpty(permission) || TextUtils.isEmpty(partner))
-                                    continue;
-                                if ("发布管理".equals(data.get(i).getTitle())) {
-                                    if (UserLocalData.getUser().getReleasePermission() == 1) {
-                                        list.add(data.get(i));
-                                    }
-                                    continue;
-                                }
-                                if (permission.contains("3") || permission.contains(partner)) {//Permission为"0,1,2,3"格式的字符串，
-                                    list.add(imageInfo);
-                                }
-                                //
-                                if ((C.UserType.member.equals(partner) || C.UserType.operator.equals(partner))
-                                        && "足迹".equals(data.get(i).getTitle())){
-                                    list.add(imageInfo);
-                                }
-                            }
-
-                            if (list.size() == 0) {
-                                ll_my_tootls.setVisibility(View.GONE);
-                                return;
-                            }
-                            ll_my_tootls.setVisibility(View.VISIBLE);
-                            //过滤掉一部分固定的项目
-                            filterMyTools(list);
-                            mAdapter.replace(list);
-                            mAdapter.notifyDataSetChanged();
+                            setTool(data);
                         }
 
                     }
                 });
     }
 
-    private void filterMyTools(List<ImageInfo> list){
-        if (list != null && list.size() > 0){
-            int size = list.size();
-            Iterator it = list.iterator();
-            while(it.hasNext()){
-                ImageInfo x =(ImageInfo) it.next();
-                if(x.getTitle().equals("我的收藏")){
-                    mLocalData.put("4",x);
-                    it.remove();
-                }
-                if(x.getTitle().equals("发布管理")){
-                    mLocalData.put("1",x);
-                    it.remove();
-                }
-//                if(x.getTitle().equals("常见问题")){
-//                    mLocalData.put("5",x);
-//                    it.remove();
-//                }
-                if(x.getTitle().equals("足迹")){
-                    mLocalData.put("3",x);
-                    it.remove();
-                }
-
+    private void setTool(List<ImageInfo> data) {
+        for (int i = 0; i < data.size(); i++) {
+            if ("专属客服".equals(data.get(i).getTitle())) {
+                customerUrl = data.get(i).getUrl();
+            } else if ("新手教程".equals(data.get(i).getTitle())) {
+                newUrl = data.get(i).getUrl();
             }
         }
-
     }
 
 
@@ -714,91 +737,46 @@ public class MineFragment extends BaseMainFragmeng {
                 .start();
     }
 
-    public void getDayIncome() {
-        mInfoModel.getDayIncome(this)
+
+    public void getMonthIncome() {
+        getUserIncomeDetail(this)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
-                        if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
-                            getUpgradeCarousel();
-                        }
 
                     }
-                })
-                .subscribe(new DataObserver<DayEarnings>(false) {
+                }).subscribe(new DataObserver<UserIncomeDetail2>() {
 
-                    @Override
-                    protected void onSuccess(DayEarnings data) {
-                        MyLog.i("test", "data: " + data.getTodayMoney());
-                        mDayEarnings = data;
-                        mTotalMoney = MathUtils.getMoney(data.getTotalMoney());
-                        tv_remainder.setText(MathUtils.getMoney(data.getAccumulatedAmount()));
-//                        day_price.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
-                        tv_today_money.setText(MathUtils.getMoney(data.getTodayEstimateMoney()));
-                        tv_yesterday_estimate_money.setText(MathUtils.getMoney(data.getYesterdayEstimateMoney()));
-
-                      //  checkWithdrawTime();
-
-                        //  checkWithdrawTime();
-
-//                        tvWithDraw
-
-                    }
-                });
+            @Override
+            protected void onSuccess(UserIncomeDetail2 data) {
+                getDaySuccess(data);
+            }
+        });
     }
 
-    public void getMonthIncome() {
-        mInfoModel.getMonthIncome(this)
-                .subscribe(new DataObserver<MonthEarnings>(false) {
-                    @Override
-                    protected void onSuccess(MonthEarnings data) {
-                        mMonthEarnings = data;
-//                        month_price.setText(MathUtils.getMoney(data.getThisMonthEstimateMoney()));
-                        tv_this_month_estimate_money.setText(MathUtils.getMoney(data.getThisMonthEstimateMoney()));
-                        tv_prev_month_estimate_oney.setText(MathUtils.getMoney(data.getPrevMonthEstimateMoney()));
-                    }
-                });
+    private void getDaySuccess(UserIncomeDetail2 data) {
+        if (data != null) {
+            tv_remainder.setText(data.getTotalIncome() + "");
+            jifen.setText(data.getTotalIntegral() + "");
+            today_yugu.setText(data.getTodayEstimateMoney() + "");
+            today_jifen.setText(data.getTotalEstimateIntegral() + "");
+        }
+
+
     }
-
-    /**
-     * 升级运营商弹窗提示
-     */
-    public void getUpgradeCarousel() {
-        mInfoModel.getUpgradeCarousel(this)
-                .subscribe(new DataObserver<List<UpgradeCarousel>>(false) {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        if (StringsUtils.isDataEmpty(errCode)) {
-//                            ll_up_marquee.setVisibility(View.VISIBLE);
-//                            setHotView(null);
-                        } else {
-//                            ll_up_marquee.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    protected void onSuccess(List<UpgradeCarousel> data) {
-                        if (data.size() > 0) {
-//                            ll_up_marquee.setVisibility(View.VISIBLE);
-//                            setHotView(data);
-                        }
-                    }
-                });
-    }
-
-
 
 
     /**
      * 设置推荐
      */
     //本地数据
-    HashMap<String ,ImageInfo> mLocalData = new HashMap<String,ImageInfo>();
+    HashMap<String, ImageInfo> mLocalData = new HashMap<String, ImageInfo>();
+
     private void setPersonalFunction(List<ImageInfo> datas) {
         int size = datas.size();
-        for(int i = 0; i < size; i++ ){
-            if ("订单查询".equals(datas.get(i).getTitle())){
-                mLocalData.put("2",datas.get(i));
+        for (int i = 0; i < size; i++) {
+            if ("订单查询".equals(datas.get(i).getTitle())) {
+                mLocalData.put("2", datas.get(i));
                 break;
             }
         }
@@ -847,34 +825,7 @@ public class MineFragment extends BaseMainFragmeng {
 
         }
     }
-    public void checkWithdrawTime() {
-        if (AppUtil.isFastClick(500)) return;
-        mInfoModel.checkWithdrawTime(this)
-                .subscribe(new DataObserver<String>(false) {
-                    @Override
-                    protected void onSuccess(String data) {
-                        AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
-                    }
 
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        MyLog.i("test", "errCode: " + errCode);
-                        double money = 0;
-                        try {
-                            money = Double.parseDouble(mTotalMoney);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        if (!C.requestCode.B10301.equals(errCode) && money >= 1) {//因为成功的话data会为空，所以判断下
-                            MyLog.d("test","提现报错：B10301：不在提现时间");
-                        } else {
-
-                        }
-
-                    }
-                });
-    }
 
     WithdrawErrorDialog withdrawErrorDialog;
 
@@ -894,218 +845,37 @@ public class MineFragment extends BaseMainFragmeng {
 
     }
 
-    public void showGuideInvite() {
-        GuideViewUtil.showGuideView(getActivity(), mInvitationCode, GuideViewUtil.GUIDE_INVITE, 0, null, new GuideViewUtil.GuideCallback() {
-            @Override
-            public void onDissmiss() {
-                App.mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showGuideMoney();
-                    }
-                }, 200);
-
-            }
-        });
-    }
-
-    public void showGuideMoney() {
-        GuideViewUtil.showGuideView(getActivity(), my_earnings, GuideViewUtil.GUIDE_MONEY, 0, null, new GuideViewUtil.GuideCallback() {
-            @Override
-            public void onDissmiss() {
-                showGuideService();
-            }
-        });
-    }
-
-    public void showGuideService() {
-        if (null != mAdapter) {
-            if (null != mAdapter.getItems() && mAdapter.getItems().size() > 0) {
-                for (int i = 0; i < mAdapter.getItems().size(); i++) {
-                    if ("专属客服".equals(mAdapter.getItems().get(i).getTitle())) {
-                        serviceRvPositon = i;
-                    }
-                }
-
-
-                //待优化
-                int position = serviceRvPositon + 1;
-                if (position <= 4) {
-                    if (position <= 2) isleft = true;
-                } else {
-                    if (position % 2 != 0) {
-                        if ((position - 4) == 1) isleft = true;
-                        if ((position - 4) == 5) isleft = true;
-                        if ((position - 4) == 9) isleft = true;
-                    } else {
-                        if ((position - 4) == 2) isleft = true;
-                        if ((position - 4) == 6) isleft = true;
-                        if ((position - 4) == 10) isleft = true;
-                    }
-                }
-
-                App.mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        nestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                        App.mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                View view = null;
-                                if (null != mRecyclerview) {
-                                    view = mRecyclerview.getLayoutManager().findViewByPosition(serviceRvPositon);
-                                    Rect viewRect = new Rect();
-                                    view.getGlobalVisibleRect(viewRect);
-                                    int width = viewRect.right - viewRect.left;
-
-                                    GuideViewUtil.showGuideView(getActivity(), view, GuideViewUtil.GUIDE_SERVICE, width / 2, isleft, serviceRvPositon + 1, null, new GuideViewUtil.GuideCallback() {
-                                        @Override
-                                        public void onDissmiss() {
-                                            SharedPreferencesUtils.put(App.getAppContext(), C.sp.isShowGuide, false);
-                                        }
-                                    });
-
-                                    App.mHandler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            GuideViewUtil.dismiss();
-                                        }
-                                    }, 3000);
-                                }
-
-                            }
-                        }, 200);
-
-                    }
-                });
-            }
-        }
-
-    }
 
     @Override
     protected void onVisible() {
         super.onVisible();
-        if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuideMine()) {
-            if (!isShowGuide) {
-                isShowGuide = true;
-                App.mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showGuideInvite();
-                    }
-                }, 300);
 
-            }
-        }
     }
 
     @Override
     protected void onInvisible() {
         super.onInvisible();
-        isShowGuide = false;
-    }
-
-
-    /**
-     * 升级团队长的弹框
-     */
-    private void updateGradeForLeader() {
-        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(getActivity(), R.style.dialog);
-        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener() {
-
-            @Override
-            public void onClick() {
-                updateGradePresenter(MineFragment.this, Integer.parseInt(C.UserType.operator));
-            }
-
-        });
-        vipUpgradeDialog.show();
 
     }
 
-
-    /**
-     * 升级
-     *
-     * @param fragment
-     * @param userType
-     */
-    public void updateGradePresenter(RxFragment fragment, int userType) {
-        updateUserGrade(fragment, userType)
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                    }
-                })
-                .subscribe(new DataObserver<UpdateInfoBean>() {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-
-                        showError(errCode, errorMsg);
-                    }
-
-                    @Override
-                    protected void onDataListEmpty() {
-
-                    }
-
-                    @Override
-                    protected void onSuccess(UpdateInfoBean data) {
-                        onGradeSuccess(data);
-                    }
-                });
-    }
-
-    public void showError(String errorNo, String msg) {
-        MyLog.i("test", "onFailure: " + this);
-        if ("B1100007".equals(errorNo)
-                || "B1100008".equals(errorNo)
-                || "B1100009".equals(errorNo)
-                || "B1100010".equals(errorNo)) {
-            ViewShowUtils.showShortToast(getActivity(), msg);
-        }
-
-    }
-
-    public void onGradeSuccess(UpdateInfoBean info) {
-        if (info != null) {
-            UserInfo userInfo = UserLocalData.getUser();
-            userInfo.setUserType(String.valueOf(info.getUserType()));
-            userInfo.setMoreCoin(info.getMoreCoin());
-            UserLocalData.setUser(getActivity(), userInfo);
-            updataUser();
-        } else {
-            MyLog.d("test", "用户信息为空");
-        }
-
-    }
-
-    /**
-     * 用户等级升级
-     *
-     * @param fragment
-     * @return
-     */
-    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxFragment fragment, int userGrade) {
-        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
-        updateUserBean.setType(userGrade);
-        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
-                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
-    }
 
     @Subscribe
-    public void onEventMainThread(RefreshUserInfoEvent event){
+    public void onEventMainThread(RefreshUserInfoEvent event) {
 
         updataUser();
     }
 
 
-
-
-
-
+    /**
+     * 获取收益
+     *
+     * @param rxFragment
+     */
+    public Observable<BaseResponse<UserIncomeDetail2>> getUserIncomeDetail(RxFragment rxFragment) {
+        return RxHttp.getInstance().getUsersService().getUserIncome()
+                .compose(RxUtils.<BaseResponse<UserIncomeDetail2>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<UserIncomeDetail2>>bindToLifecycle());
+    }
 
 
 }

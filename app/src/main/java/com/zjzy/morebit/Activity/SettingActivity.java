@@ -1,6 +1,8 @@
 package com.zjzy.morebit.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,11 +15,18 @@ import android.widget.TextView;
 import com.ali.auth.third.ui.context.CallbackContext;
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.blankj.utilcode.util.ToastUtils;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.UnBingdingWechatDialog;
+import com.zjzy.morebit.Module.common.Dialog.WxBindDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.address.ui.ManageGoodsAddressActivity;
@@ -32,7 +41,10 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.request.RequestNickNameBean;
+import com.zjzy.morebit.pojo.request.RequestUpdateHeadPortraitBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
+import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.CleanSdUtil;
 import com.zjzy.morebit.utils.FileSizeUtil;
@@ -40,28 +52,35 @@ import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PageToUtil;
+import com.zjzy.morebit.utils.ReadImgUtils;
 import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
+import com.zjzy.morebit.utils.encrypt.EncryptUtlis;
 import com.zjzy.morebit.utils.fire.OssManage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.functions.Action;
 
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
-    private RelativeLayout item1_rl, item9_rl, item_tabao_rl;
-    private TextView item_tv1, item_tv8, item_tv9, item_tv10, logout, item_tabao_tv;
+    private RelativeLayout item1_rl, item9_rl, item_tabao_rl,accountsecurity,rl_head,rl_nickname,rl_sex;
+    private TextView item_tv1, item_tv8, item_tv9, item_tv10, logout, item_tabao_tv,txt_head_title,tv_banben,
+            tv_nickname,tv_sex;
     private RelativeLayout mModifyPassword;
-    private ImageView mUserIcon;
+    private ImageView userIcon2;
     private UnBingdingWechatDialog mUnBingdingWechatDialog;
     private LinearLayout ll_weichat;
+    private OptionsPickerView<String> mPvCustomOptions;
+    private UserInfo info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +99,20 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         } else {
             ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
         }
+        tv_nickname= (TextView) findViewById(R.id.tv_nickname);
+        tv_sex= (TextView) findViewById(R.id.tv_sex);
+        txt_head_title= (TextView) findViewById(R.id.txt_head_title);
+        txt_head_title.getPaint().setFakeBoldText(true);
         item1_rl = (RelativeLayout) findViewById(R.id.item1_rl);
-        mUserIcon = (ImageView) findViewById(R.id.userIcon);
+        userIcon2 = (ImageView) findViewById(R.id.userIcon2);
         item9_rl = (RelativeLayout) findViewById(R.id.item9_rl);
         item_tabao_rl = (RelativeLayout) findViewById(R.id.item_tabao_rl);
+        rl_head= (RelativeLayout) findViewById(R.id.rl_head);
+        rl_nickname= (RelativeLayout) findViewById(R.id.rl_nickname);
+        rl_sex= (RelativeLayout) findViewById(R.id.rl_sex);
+        rl_sex.setOnClickListener(this);
+        rl_nickname.setOnClickListener(this);
+        rl_head.setOnClickListener(this);
         item1_rl.setOnClickListener(this);
         item9_rl.setOnClickListener(this);
         item_tabao_rl.setOnClickListener(this);
@@ -100,8 +129,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         item_tv10 = (TextView) findViewById(R.id.item_tv10);
         logout = (TextView) findViewById(R.id.logout);
         item_tabao_tv = (TextView) findViewById(R.id.item_tabao_tv);
-
-
+        tv_banben= (TextView) findViewById(R.id.tv_banben);
+        accountsecurity= (RelativeLayout) findViewById(R.id.accountsecurity);
+        accountsecurity.setOnClickListener(this);
         logout.setOnClickListener(this);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
@@ -109,26 +139,45 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         mModifyPassword.setOnClickListener(this);
         findViewById(R.id.modify_phone_num).setOnClickListener(this);
         ll_weichat = (LinearLayout) findViewById(R.id.ll_weichat);
+
+        try {
+            tv_banben.setText("V" + AppUtil.getVersionName(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initViewData() {
-        UserInfo info = UserLocalData.getUser(this);
+          info = UserLocalData.getUser(this);
 
         try {
             if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
                 item_tv8.setText(info.getAliPayNumber());
             }
             if (!TextUtils.isEmpty(info.getHeadImg())) {
-                LoadImgUtils.setImgCircle(this, mUserIcon, info.getHeadImg());
+                LoadImgUtils.setImgCircle(this, userIcon2, info.getHeadImg());
             } else {
-                mUserIcon.setImageResource(R.drawable.head_icon); //显示图片
+                userIcon2.setImageResource(R.drawable.head_icon); //显示图片
+            }
+            if (info.getNickName() != null && !"".equals(info.getNickName())) {
+                tv_nickname.setText(info.getNickName());
+            }
+            if (info.getSex() != 0) {
+                tv_sex.setText(info.getSex() == 1 ? "男" : "女");
+            }
+            if (!TextUtils.isEmpty(info.getWxNumber())){
+                item_tv9.setText(info.getWxNumber()+"");
             }
 
-            if (C.UserType.operator.equals(info.getUserType())){
-                ll_weichat.setVisibility(View.VISIBLE);
-            }else{
-                ll_weichat.setVisibility(View.GONE);
-            }
+
+
+
+
+//            if (C.UserType.operator.equals(info.getUserType())){
+//                ll_weichat.setVisibility(View.VISIBLE);
+//            }else{
+//                ll_weichat.setVisibility(View.GONE);
+//            }
             //淘宝授权
             if (info.isNeedAuth()) { //是否需要授权
                 item_tabao_rl.setVisibility(View.GONE);
@@ -141,13 +190,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 item_tabao_tv.setText("未授权");
             }
 
-            if (!TextUtils.isEmpty(info.getOauthWx())) {
-                item_tv9.setText("已绑定");
-                item_tv9.setTag(true);
-            } else {
-                item_tv9.setTag(false);
-                item_tv9.setText("未绑定");
-            }
+
             //计算缓存的容量
             item_tv10.setText(FileSizeUtil.getAutoFileOrFilesSize(SdDirPath.APK_CACHE_PATH));
         } catch (Exception e) {
@@ -171,10 +214,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.item1_rl:
                 // 个人
+
+                break;
+            case R.id.accountsecurity://账户安全
                 startActivity(new Intent(this, SettingMineInfoActivity.class));
                 break;
-
-
             case R.id.item8_rl:  //绑定支付宝
                 PageToUtil.goToUserInfoSimpleFragment(SettingActivity.this, "绑定支付宝", "BindZhiFuBaoFragment");
 
@@ -212,28 +256,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     });
                 }
                 break;
-            case R.id.item9_rl: //绑定微信
-                //去绑定微信
-                if ((Boolean) item_tv9.getTag()) {
-                    showUnBingdingWechatDialog();
-                } else {
-                    if (TextUtils.isEmpty(UserLocalData.getUser().getWxNumber())) {
-                        SettingWechatActivity.start(this, 1);
-                    } else {
-                        new WechatModel(SettingActivity.this, new MyAction.OnResult<String>() {
-                            @Override
-                            public void invoke(String arg) {
-                                ViewShowUtils.showShortToast(SettingActivity.this, SettingActivity.this.getString(R.string.binding_wechat_succeed));
-                                EventBus.getDefault().post(new MessageEvent(EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA));
-                            }
-
-                            @Override
-                            public void onError() {
-
-                            }
-                        }).authorize();
-                    }
-                }
+            case R.id.item9_rl: //填写微信号
+                WxBindDialog wxBindDialog=new WxBindDialog(this);
+                wxBindDialog.show();
                 break;
             case R.id.message_notification: //消息通知
                 startActivity(new Intent(this, SettingNotificationActivity.class));
@@ -266,16 +291,58 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
 
+            case R.id.rl_sex://性别
+                openDialogUsersex();
+                break;
+            case R.id.rl_nickname://昵称
+                openDialogUserName();
+                break;
+            case R.id.rl_head://头像
+                ReadImgUtils.callPermissionOfEnableCrop(this);
+                break;
+
             default:
                 break;
         }
     }
 
-    private void untiedWechat() {
-        LoadingView.showDialog(this);
+    private void openDialogUserName() {
+        Bundle bundle6 = new Bundle();
+        bundle6.putString("title", "昵称");
+        bundle6.putString("fragmentName", "RenameFragment");
+        bundle6.putString("UserName", UserLocalData.getUser().getNickName());
+        PageToUtil.goToUserInfoSimpleFragment(this, bundle6);
+    }
 
-
-        RxHttp.getInstance().getUsersService().untiedWechat()
+    private void openDialogUsersex() {
+        if (mPvCustomOptions == null) {
+            mPvCustomOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+                @Override
+                public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                    //返回的分别是三个级别的选中位置
+                    MyLog.d(options1);
+                    updataSex(options1 + 1);
+                }
+            })
+                    .setDividerColor(Color.BLACK)
+                    .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+                    .setContentTextSize(20)
+                    .build();
+            ArrayList<String> cardItem = new ArrayList<>();
+            cardItem.add("男");
+            cardItem.add("女");
+            mPvCustomOptions.setPicker(cardItem);//添加数据
+        }
+        mPvCustomOptions.show();
+    }
+    private void updataSex(final int sex) {
+        if (sex == 0) return;
+        RequestNickNameBean requestBean = new RequestNickNameBean();
+        requestBean.setSex(sex+"");
+        String sign = EncryptUtlis.getSign2(requestBean);
+        requestBean.setSign(sign);
+        RxHttp.getInstance().getUsersService()
+                .setNickname(requestBean)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(this.<BaseResponse<String>>bindToLifecycle())
                 .doFinally(new Action() {
@@ -292,28 +359,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                     @Override
                     protected void onSuccess(String data) {
-                        UserLocalData.getUser().setOauthWx("");
-                        if (item_tv9 != null) {
-                            item_tv9.setTag(false);
-                            item_tv9.setText("未绑定");
-                            ViewShowUtils.showShortToast(SettingActivity.this, SettingActivity.this.getString(R.string.untied_wechat_succeed));
-                        }
+                        ViewShowUtils.showShortToast(SettingActivity.this, "修改成功");
+                        //更新个人数据
+                        UserLocalData.getUser().setSex(sex);
+                        tv_sex.setText(sex == 1 ? "男" : "女");
+
                     }
                 });
     }
 
-    private void showUnBingdingWechatDialog() {
-        if (mUnBingdingWechatDialog == null) {
-            mUnBingdingWechatDialog = new UnBingdingWechatDialog(this);
-            mUnBingdingWechatDialog.setmCancelListener(new UnBingdingWechatDialog.OnCancelListner() {
-                @Override
-                public void onClick(View view) {
-                    untiedWechat();
-                }
-            });
-        }
-        mUnBingdingWechatDialog.show();
-    }
+
 
 
     @Override
@@ -421,7 +476,99 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public boolean isShowAllSeek() {
         return false;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片、视频、音频选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    if (selectList == null || selectList.size() == 0) return;
+                    LocalMedia localMedia = selectList.get(0);
+                    String compressPath = localMedia.getCompressPath();
+                    if (!TextUtils.isEmpty(compressPath)) {
 
+                        uploadPicOnly(compressPath);
+                    } else {
+                        if (!TextUtils.isEmpty(localMedia.getPath())) {
+                            uploadPicOnly(localMedia.getPath());
+                        }
+                    }
+
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 上传图片到服务器
+     *
+     * @param
+     */
+    private void uploadPicOnly(String path) {
+        LoadingView.showDialog(this, "提交中...");
+        OssManage.newInstance().putFielToOss(path, new MyAction.OnResult<String>() {
+            @Override
+            public void invoke(final String arg) {
+                if (!TextUtils.isEmpty(arg)) {
+                    setHead(arg);
+                }
+            }
+
+            @Override
+            public void onError() {
+                LoadingView.dismissDialog();
+            }
+        });
+
+    }
+
+    /**
+     * 修改头像
+     *
+     * @param picPath
+     */
+    private void setHead(final String picPath) {
+        LoadingView.showDialog(this, "提交中...");
+        RequestUpdateHeadPortraitBean requestBean = new RequestUpdateHeadPortraitBean();
+        requestBean.setHeadImg(picPath);
+        String sign = EncryptUtlis.getSign2(requestBean);
+        requestBean.setSign(sign);
+        RxHttp.getInstance().getUsersService()
+                .setHead(requestBean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(this.<BaseResponse<String>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                })
+                .subscribe(new DataObserver<String>() {
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        super.onError(errorMsg, errCode);
+                        LoadingView.dismissDialog();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onSuccess("");
+                    }
+
+                    @Override
+                    protected void onSuccess(String data) {
+                        ViewShowUtils.showShortToast(SettingActivity.this, "修改成功");
+                        //更新个人数据
+                        UserLocalData.getUser(SettingActivity.this).setHeadImg(picPath);
+                        UserLocalData.isPartner = true;
+                        LoadImgUtils.setImgCircle(SettingActivity.this, userIcon2, picPath);
+                        EventBus.getDefault().post(new MessageEvent(EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA));
+                    }
+                });
+    }
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {

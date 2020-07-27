@@ -1,49 +1,33 @@
 package com.zjzy.morebit.info.ui.fragment;
 
 import android.content.Intent;
-import android.graphics.Paint;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.flyco.tablayout.SlidingTabLayout;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Activity.ConsComGoodsDeailListActivity;
-import com.zjzy.morebit.LocalData.UserLocalData;
-import com.zjzy.morebit.Module.common.Dialog.EarningsHintNewsDialog;
+import com.zjzy.morebit.Activity.MonthAgoActivity;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
-import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
+
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.fragment.MineFragment;
 import com.zjzy.morebit.info.contract.EarningsContract;
 import com.zjzy.morebit.info.presenter.EarningsPresenter;
-import com.zjzy.morebit.interfaces.EarningBalanceCallback;
-import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
-import com.zjzy.morebit.network.observer.DataObserver;
-import com.zjzy.morebit.payment.PayDemoActivity;
-import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.UserIncomeDetail;
 import com.zjzy.morebit.pojo.EarningExplainBean;
-import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.MonthEarnings;
-import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
-import com.zjzy.morebit.utils.MathUtils;
-import com.zjzy.morebit.view.ChildViewPager;
-import com.zjzy.morebit.view.ConsCommissionRuleDialog;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,35 +38,24 @@ import butterknife.OnClick;
 
 public class EarningsFragment extends MvpFragment<EarningsPresenter> implements EarningsContract.View {
 
-    @BindView(R.id.tv_rule)
-    TextView tv_rule;
-    @BindView(R.id.balance)
-    TextView balance;
     @BindView(R.id.swipeList)
     SwipeRefreshLayout swipeList;
     @BindView(R.id.status_bar)
     View status_bar;
-    @BindView(R.id.orderTabLayout)
-    SlidingTabLayout mTablayout;
-    @BindView(R.id.orderViewPager)
-    ChildViewPager mViewPager;
+
     @BindView(R.id.withDrawTimeTv)
     TextView withDrawTimeTv;
-    private CategoryAdapter mAdapter;
-    private ConsCommissionRuleDialog consCommissionRuleDialog;
+    @BindView(R.id.month_ago)
+    TextView month_ago;
+
     private String mTotalMoney = "";
-//    String[] tagTitle = new String[]{"淘宝","苏宁","其他"};
-    String[] tagTitle = new String[]{"淘宝","优选"};
-    String[] tagTitleNoSelfYouxuan = new String[]{"淘宝"};
-    private List<EarningDetailFragment> fragments = null;
-    private int currentTab = 0;
-    private TextView tao_money,pin_money,profit_money,tv_today_paymen_total,tv_today_integral,tv_today_estimate_money,tv_today_money
-            ,tv_yesterday_payment_total,tv_yestaday_integral,tv_yesterday_estimate_money,tv_yesterday_money,tv_month_estimate_money
-            ,tv_month_money,tv_last__month_estimate_money,tv_last_month_money,tv_month_profit,tv_last_month_profit,tv_day_hint,tv_month_hint
-            ,jd_moeny,kaola_moeny,wph_moeny;
-    EarningsHintNewsDialog mMonthdialog;
-    EarningsHintNewsDialog mDayialog;
-    EarningExplainBean mExplainData;
+
+    private TextView withdrawable,cumulativereceipt,withdrawn,unassignedintegral,unsettledearnings,earningsforecasty,estimatedpointsy
+            ,exclusivefansaddedy,newordinaryfansy,estimatedearningsm,estimatedpointsm,exclusivefansaddedm
+            ,newordinaryfansm,tv_title,tv_dialy,tv_month;
+    private UserIncomeDetail mdata;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,64 +63,18 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
     @Override
     protected void initData() {
-//        SystemConfigBean systemConfigBean = ConfigListUtlis.getSystemConfigBean(C.ConfigKey.WEB_WITHDRAW_TIME);
-//        if(null != systemConfigBean && C.ConfigKey.WEB_WITHDRAW_TIME.equals(systemConfigBean.getSysKey()) && !TextUtils.isEmpty(systemConfigBean.getSysValue())){
-//            withDrawTimeTv.setText(getString(R.string.withdraw_time,systemConfigBean.getSysValue()));
-//        }
-        withDrawTimeTv.setText("每月25~31号可提现上月结算收益");
+        withDrawTimeTv.setText("每月25～31日可提现上月【确认收货】的收益");
 
-        mPresenter.getDayMoney(this);
-        mPresenter.getMontMoney(this);
-        if(null == mExplainData){
-            mPresenter.getEarningsExplain(this);
-        }
+        mPresenter.getUserIncomeDetail(this);
 
-        tv_day_hint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDaydialog();
-            }
-        });
-
-        tv_month_hint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMonthdialog();
-            }
-        });
 
     }
 
-    private void openMonthdialog() {//月说明
-
-        if (mMonthdialog == null) {
-            mMonthdialog = new EarningsHintNewsDialog(getActivity());
-        }
-
-        if (!mMonthdialog.isShowing()) {
-            mMonthdialog.show(1, mExplainData);
-        }
-    }
-
-    private void openDaydialog() {//日说明
-        if (mDayialog == null) {
-            mDayialog = new EarningsHintNewsDialog(getActivity());
-        }
-
-        if (!mDayialog.isShowing()) {
-            mDayialog.show(0, mExplainData);
-        }
-    }
 
     @Override
     protected void initView(View view) {
-        initBundle();
-        fragments = new ArrayList<>();
 
 
-        EarningDetailFragment taobaoFragment = EarningDetailFragment.newInstance(C.OrderType.TAOBAO);
-        taobaoFragment.setEarningBalanceCallback(callback);
-        fragments.add(taobaoFragment);
 
 
 //        EarningDetailFragment otherFragment = EarningDetailFragment.newInstance(C.OrderType.OTHER);
@@ -155,74 +82,57 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
 
 //        fragments.add(otherFragment);
+        swipeList.setEnabled(true);
+        swipeList.setNestedScrollingEnabled(true);
+        //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
+        swipeList.setProgressViewOffset(true, -0, 100);
+        //设置进度View下拉的结束点，scale 是指设置是否需要放大或者缩小动画
+        swipeList.setProgressViewEndTarget(true, 180);
+        //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
+        swipeList.setColorSchemeColors(Color.parseColor("#FF645B"));
+        //设置触发刷新的距离
+        swipeList.setDistanceToTriggerSync(200);
         swipeList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//               if(null != mAdapter){
-//                   mAdapter.update(currentTab);
-//               }
-
                 initData();
-
+                swipeList.setRefreshing(false);
             }
         });
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //处理全屏显示
             ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
         }
-        tv_rule.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
-        tv_rule.getPaint().setAntiAlias(true);//抗锯齿
-        UserInfo info = UserLocalData.getUser();
-        //不是会员的时候才展示优选的内容
-        if (info != null && !C.UserType.member.equals(info.getPartner())){
-            EarningDetailFragment yuxuanFragment = EarningDetailFragment.newInstance(C.OrderType.YUXUAN);
-            yuxuanFragment.setEarningBalanceCallback(callback);
-            fragments.add(yuxuanFragment);
-            setupViewPager(tagTitle);
-        }else{
-            setupViewPager(tagTitleNoSelfYouxuan);
-        }
 
 
-        tao_money=view.findViewById(R.id.tao_money);//淘宝总收益
-        pin_money=view.findViewById(R.id.pin_moeny);//拼多多总收益
-        profit_money=view.findViewById(R.id.profit_money);//积分总收益
-        jd_moeny=view.findViewById(R.id.jd_moeny);//京东总收益
-        tv_today_paymen_total=view.findViewById(R.id.tv_today_paymen_total);//今日付款笔数
-        tv_today_integral=view.findViewById(R.id.tv_today_integral);//今日积分收益
-        tv_today_estimate_money=view.findViewById(R.id.tv_today_estimate_money);//今日预估收益
-        tv_today_money=view.findViewById(R.id.tv_today_money);//今日结算收益
-        tv_yesterday_payment_total=view.findViewById(R.id.tv_yesterday_payment_total);//昨日付款笔数
-        tv_yestaday_integral=view.findViewById(R.id.tv_yestaday_integral);//昨日积分收益
-        tv_yesterday_estimate_money=view.findViewById(R.id.tv_yesterday_estimate_money);//昨日预估收益
-        tv_yesterday_money=view.findViewById(R.id.tv_yesterday_money);//昨日结算收益
+        withdrawable=view.findViewById(R.id.withdrawable);//可提现
+        cumulativereceipt=view.findViewById(R.id.cumulativereceipt);//累计到账
+        withdrawn=view.findViewById(R.id.withdrawn);//已提现
+        unsettledearnings=view.findViewById(R.id.unsettledearnings);//未结算收益
+        unassignedintegral=view.findViewById(R.id.unassignedintegral);//未归属积分
+        earningsforecasty=view.findViewById(R.id.earningsforecasty);//昨日预估收益
+        estimatedpointsy=view.findViewById(R.id.estimatedpointsy);//昨日预估积分
+        exclusivefansaddedy=view.findViewById(R.id.exclusivefansaddedy);//昨日专属粉丝新增
+        newordinaryfansy=view.findViewById(R.id.newordinaryfansy);//昨日普通粉丝新增
+        estimatedearningsm=view.findViewById(R.id.estimatedearningsm);//本月预估收益
+        estimatedpointsm=view.findViewById(R.id.estimatedpointsm);//本月预估积分
+        exclusivefansaddedm=view.findViewById(R.id.exclusivefansaddedm);//本月专属粉丝新增
+        newordinaryfansm=view.findViewById(R.id.newordinaryfansm);//本月普通粉丝新增
 
-        tv_month_estimate_money=view.findViewById(R.id.tv_month_estimate_money);//本月预估收益
-        tv_month_money=view.findViewById(R.id.tv_month_money);//本月结算收益
-        tv_last__month_estimate_money=view.findViewById(R.id.tv_last__month_estimate_money);//上月预估
-        tv_last_month_money=view.findViewById(R.id.tv_last_month_money);//上月结算收益
-        tv_month_profit=view.findViewById(R.id.tv_month_profit);//本月积分收益
-        tv_last_month_profit=view.findViewById(R.id.tv_last_month_profit);//上月积分收益
-
-        tv_day_hint=view.findViewById(R.id.tv_day_hint);//日说明
-        tv_month_hint=view.findViewById(R.id.tv_month_hint);//月说明
-        kaola_moeny=view.findViewById(R.id.kaola_moeny);//考拉收益
-        wph_moeny=view.findViewById(R.id.wph_moeny);//唯品会预估收益
-
+         tv_title = view.findViewById(R.id.tv_title);
+        tv_title.getPaint().setFakeBoldText(true);
+        tv_dialy=view.findViewById(R.id.tv_dialy);
+        tv_dialy.getPaint().setFakeBoldText(true);
+        tv_month=view.findViewById(R.id.tv_month);
+        tv_month.getPaint().setFakeBoldText(true);
 
 
     }
 
-    private void initBundle() {
-        MineFragment.mMonthEarnings = null;
-        if (MineFragment.mDayEarnings == null || MineFragment.mMonthEarnings == null)
-            swipeList.setRefreshing(true);
-        if(null != MineFragment.mDayEarnings){
-            setDayEarnings(MineFragment.mDayEarnings);
-        }
-    }
 
 
 
@@ -260,46 +170,24 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     }
 
     @Override
-    public void getMontnSuccess(MonthEarnings data) {//月收益
-        //本月
-        tv_month_estimate_money.setText(""+MathUtils.getMoney(data.getThisMonthEstimateMoney()));
-        tv_month_money.setText(""+MathUtils.getMoney(data.getThisMonthMoney()));
-        tv_month_profit.setText(""+MathUtils.getMoney(data.getThisMonthIntegral()));
+    public void getDaySuccess(UserIncomeDetail data) {//我的收益
+        if (data!=null){
+            mdata=data;
+            withdrawable.setText(data.getBalance()+"");
+            cumulativereceipt.setText(data.getTotalIncome()+"");
+            withdrawn.setText(data.getReceiveAmount()+"");
+            unsettledearnings.setText(data.getUnsettleAmount()+"");
+            unassignedintegral.setText(data.getUnsettleIntegral()+"");
+            earningsforecasty.setText(data.getYesterdayEstimateMoney()+"");
+            estimatedpointsy.setText(data.getYesterdayIntegral()+"");
+            exclusivefansaddedy.setText(data.getYesterdayDirectUser()+"");
+            newordinaryfansy.setText(data.getYesterdayIndirectUser()+"");
+            estimatedearningsm.setText(data.getThisMonthEstimateMoney()+"");
+            estimatedpointsm.setText(data.getThisMonthIntegral()+"");
+            exclusivefansaddedm.setText(data.getThisMonthDirectUser()+"");
+            newordinaryfansm.setText(data.getThisMonthIndirectUser()+"");
+        }
 
-        //上月
-        tv_last__month_estimate_money.setText(""+MathUtils.getMoney(data.getPrevMonthEstimateMoney()));
-        tv_last_month_money.setText(""+MathUtils.getMoney(data.getPrevMonthMoney()));
-        tv_last_month_profit.setText(""+MathUtils.getMoney(data.getPrevMonthIntegral()));
-
-        //平台收益总额
-        tao_money.setText(""+MathUtils.getMoney(data.getTotalTaoBaoEstimateMoney()));
-        pin_money.setText(""+MathUtils.getMoney(data.getTotalPddEstimateMoney()));
-        profit_money.setText(""+MathUtils.getMoney(data.getTotalIntegral()));
-        jd_moeny.setText(""+MathUtils.getMoney(data.getTotalJdEstimateMoney()));
-        kaola_moeny.setText(""+MathUtils.getMoney(data.getTotalKlEstimateMoney()));
-        wph_moeny.setText(""+MathUtils.getMoney(data.getTotalWphEstimateMoney()));
-
-
-
-    }
-
-    @Override
-    public void getMonthError(String errMsg, String errCode) {
-
-    }
-
-    @Override
-    public void getDaySuccess(DayEarnings data) {//日收益
-        //今日
-        tv_today_estimate_money.setText(""+ MathUtils.getMoney(data.getTodayEstimateMoney()));
-        tv_today_paymen_total.setText(data.getTodayPamentTotal());
-        tv_today_money.setText(""+MathUtils.getMoney(data.getTodayMoney()));
-        tv_today_integral.setText(""+MathUtils.getMoney(data.getTotalEstimateIntegral()));
-        //昨天
-        tv_yesterday_money.setText(""+MathUtils.getMoney(data.getYesterdayMoney()));
-        tv_yesterday_payment_total.setText(data.getYestredayPaymentTotal());
-        tv_yesterday_estimate_money.setText("" +MathUtils.getMoney(data.getYesterdayEstimateMoney()));
-        tv_yestaday_integral.setText(""+MathUtils.getMoney(data.getYesterdayEstimateIntegral()));
     }
 
     @Override
@@ -309,13 +197,11 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
     @Override
     public void onExplainSuccess(EarningExplainBean data) {
-        if (null != data) {
-            mExplainData = data;
-        }
+
     }
 
 
-    @OnClick({R.id.bill_details, R.id.withdraw, R.id.back, R.id.tv_rule})
+    @OnClick({R.id.bill_details, R.id.withdraw, R.id.back,R.id.month_ago})
     public void onCLick(View v) {
         switch (v.getId()) {
             case R.id.bill_details:   //账单详情
@@ -338,10 +224,10 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
             case R.id.back:   //箭头退出
                 getActivity().finish();
                 break;
-            case R.id.tv_rule:    //规则说明
-//                Intent communityIt11 = new Intent(getActivity(), PayDemoActivity.class);
-//                startActivity(communityIt11);
-                getRule();
+            case R.id.month_ago:    //上月月报
+                Intent intent = new Intent(getActivity(), MonthAgoActivity.class);
+                intent.putExtra(C.Extras.EARNING,mdata);
+                startActivity(intent);
                 break;
 
         }
@@ -349,36 +235,9 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
 
 
-    public void setDayEarnings(DayEarnings earnings) {
-        if (earnings == null) {
-            return;
-        }
-        MineFragment.mDayEarnings = earnings;
-        mTotalMoney = MathUtils.getMoney(earnings.getTotalMoney());
-        balance.setText(mTotalMoney);
-
-    }
 
 
 
-    private void getRule() {
-        if (consCommissionRuleDialog == null) {
-            ConfigModel.getInstance().getConfigForKey((RxAppCompatActivity) getActivity(), C.SysConfig.WEB_WALLET_RULE)
-
-                    .subscribe(new DataObserver<HotKeywords>() {
-                        @Override
-                        protected void onSuccess(HotKeywords data) {
-                            String sysValue = data.getSysValue();
-                            if (!TextUtils.isEmpty(sysValue)) {
-                                consCommissionRuleDialog = new ConsCommissionRuleDialog(getActivity(), R.style.dialog, "规则说明", sysValue, null);
-                                consCommissionRuleDialog.show();
-                            }
-                        }
-                    });
-        } else {
-            consCommissionRuleDialog.show();
-        }
-    }
 
 
     WithdrawErrorDialog withdrawErrorDialog;
@@ -404,99 +263,8 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
 
 
-    private void setupViewPager(String[] tagTitle) {
-
-        mAdapter = new CategoryAdapter(getChildFragmentManager(), tagTitle);
-        mViewPager.setOffscreenPageLimit(2);
-        mViewPager.setAdapter(mAdapter);
-        mTablayout.setViewPager(mViewPager);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentTab = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-
-    private class CategoryAdapter extends FragmentPagerAdapter {
-        private final String[] homeColumns;
-        private List<String> tagList = new ArrayList<String>();
-        private FragmentManager mFragmentManager;
-
-        public CategoryAdapter(FragmentManager fragmentManager, String[] datas) {
-            super(fragmentManager);
-            this.mFragmentManager = fragmentManager;
-            this.homeColumns = datas;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            tagList.add(makeFragmentName(container.getId(), getItemId(position)));
-            return super.instantiateItem(container, position);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object){
-            super.destroyItem(container, position, object);
-            tagList.remove(makeFragmentName(container.getId(), getItemId(position)));
-        }
-
-        private  String makeFragmentName(int viewId, long id) {
-            return "android:switcher:" + viewId + ":" + id;
-        }
-
-        public void update(int position){
-            Fragment fragment = mFragmentManager.findFragmentByTag(tagList.get(position));
-            if(fragment == null){
-                return;
-            }
-            if(fragment instanceof EarningDetailFragment){
-                EarningDetailFragment earningDetailFragment = (EarningDetailFragment) fragment;
-                earningDetailFragment.refresh();
-            }
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return homeColumns.length;
-        }
 
 
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return homeColumns[position];
-        }
 
-    }
-
-    EarningBalanceCallback callback = new EarningBalanceCallback() {
-        @Override
-        public void getBalance(DayEarnings earnings) {
-            if(null != earnings){
-                setDayEarnings(earnings);
-            }
-        }
-
-        @Override
-        public void refreshComplete() {
-            swipeList.setRefreshing(false);
-        }
-    };
 }

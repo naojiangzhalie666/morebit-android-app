@@ -7,6 +7,7 @@
     android:layout_marginLeft="6dp"
     android:layout_marginTop="10dp"
     android:layout_marginRight="6dp"
+    android:visibility="gone"
     android:background="@drawable/mine_bg_gridview"
     android:orientation="vertical">
 

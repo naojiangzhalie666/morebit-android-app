@@ -87,6 +87,7 @@ import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DensityUtil;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
@@ -257,7 +258,12 @@ public class NumberSubFragment extends BaseFragment {
         group_ll = view.findViewById(R.id.group_ll);//团队长模块
         vip_ll = view.findViewById(R.id.vip_ll);//VIP模块
         img_vip = view.findViewById(R.id.img_vip);//vip icon
-
+        upgrade.setOnClickListener(new View.OnClickListener() {//升级VIP
+            @Override
+            public void onClick(View v) {
+                GoodsUtil.getVipH5(getActivity());
+            }
+        });
         initTou();
 
 
@@ -268,6 +274,18 @@ public class NumberSubFragment extends BaseFragment {
         if (mUserInfo != null) {
             initViewData(mUserInfo);
         }
+        getUserDetails(this).doFinally(new Action() {
+            @Override
+            public void run() throws Exception {
+            }
+        })
+                .subscribe(new DataObserver<UserInfo>() {
+                    @Override
+                    protected void onSuccess(UserInfo data) {
+                        showDetailsView(data);
+
+                    }
+                });
 
     }
 
@@ -568,7 +586,7 @@ public class NumberSubFragment extends BaseFragment {
         // refreshUserInfo(info);
         String userType = info.getUserType();
         if (C.UserType.operator.equals(userType)) {
-            img_vip.setImageResource(R.mipmap.vip_bg_icon);
+            img_vip.setImageResource(R.mipmap.group_bg_icon);
             vip_ll.setVisibility(View.GONE);
             group_ll.setVisibility(View.VISIBLE);
             vip_grade.setText("团队长");
@@ -579,7 +597,7 @@ public class NumberSubFragment extends BaseFragment {
             group_ll.setVisibility(View.GONE);
             if (info != null) {
                 if (C.UserType.member.equals(info.getUserType())) {
-                    img_vip.setImageResource(R.mipmap.vip_icon_right);
+                    img_vip.setImageResource(R.mipmap.vip_icon_right2);
                     vip_grade.setText("普通会员");
                     horzProgressView.setMax(360.00);
                     Long coin = info.getMoreCoin();
@@ -594,7 +612,7 @@ public class NumberSubFragment extends BaseFragment {
                     }
                     more_corn_biaozhun.setText(coin1);
                 } else if (C.UserType.vipMember.equals(info.getUserType())) {
-                    img_vip.setImageResource(R.mipmap.group_bg_icon);
+                    img_vip.setImageResource(R.mipmap.vip_bg_icon);
                     vip_grade.setText("VIP");
                     horzProgressView.setMax(50000.00);
                     horzProgressView.setCurrentNum(info.getMoreCoin());
@@ -619,56 +637,12 @@ public class NumberSubFragment extends BaseFragment {
 
     protected void initData() {
         updataUser();
-        getSkillClass(this).compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
-                .compose(this.<BaseResponse<List<Article>>>bindToLifecycle())
-                .subscribe(new DataObserver<List<Article>>() {
-                    @Override
-                    protected void onDataListEmpty() {
-                        rl4.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    protected void onSuccess(List<Article> data) {
-                        if (data != null) {
-                            rl4.setVisibility(View.VISIBLE);
-                            skillAdapter = new SkillAdapter(getActivity());
-                            if (skillAdapter != null) {
-                                skill_rcy.setAdapter(skillAdapter);
-                            }
-                        } else {
-                            rl4.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
-        RequestInviteCodeBean requestBean = new RequestInviteCodeBean();
-        requestBean.setWxShowType(1);
-        RxHttp.getInstance().getCommonService().getServiceQrcode(requestBean)
-                .compose(RxUtils.<BaseResponse<TeamInfo>>switchSchedulers())
-                .compose(this.<BaseResponse<TeamInfo>>bindToLifecycle())
-                .subscribe(new DataObserver<TeamInfo>() {
-                    @Override
-                    protected void onSuccess(TeamInfo data) {
-                        if (data != null) {
-                            if (!TextUtils.isEmpty(data.getWxNumber())) {
-                                copyWx(data);
-                            }
-                        }
-                    }
-                });
 
     }
 
-    private void copyWx(final TeamInfo data) {
-        vip_kefu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppUtil.coayText(getActivity(), data.getWxNumber());
-                Toast.makeText(getActivity(), "微信号复制成功，快去添加吧", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-    }
+
+
 
     @Override
     public void onResume() {
@@ -720,18 +694,7 @@ public class NumberSubFragment extends BaseFragment {
             public void onError() {
             }
         });
-        getUserDetails(this).doFinally(new Action() {
-            @Override
-            public void run() throws Exception {
-            }
-        })
-                .subscribe(new DataObserver<UserInfo>() {
-                    @Override
-                    protected void onSuccess(UserInfo data) {
-                        showDetailsView(data);
 
-                    }
-                });
 
 
         getVipFloor(this).compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
@@ -763,138 +726,15 @@ public class NumberSubFragment extends BaseFragment {
 
     //获取用户详情
     private void showDetailsView(UserInfo data) {
-        vip_intermedium.setText(data.getIndirectCoin() + "");//间属
-        vip_directly.setText(data.getDirectCoin() + "");//直属
-        vip_settlement.setText(data.getSettleCoin() + "");//结算
-        vip_optional.setText(data.getSelfCoin() + "");//自购
-    }
+        if (!TextUtils.isEmpty(data.getAccumulatedAmount())){
+            vip_zhuan.setText("累计省赚"+data.getAccumulatedAmount()+"元");
 
-
-    /**
-     * number的view
-     */
-    private void gradeForNumberView() {
-        huiyuan1.setImageResource(R.mipmap.huiyuan1);
-        vip_rl1.setVisibility(View.VISIBLE);
-        vip_rl3.setVisibility(View.GONE);
-        vip_reward.setVisibility(View.GONE);
-        grade.setImageResource(R.mipmap.icon_huiyuan);
-        tv_huiyuan2.setText("会员权益");
-        tv_vip2.setText("VIP专享权益");
-        hy.setVisibility(View.VISIBLE);
-        tdz.setVisibility(View.GONE);
-        vip.setVisibility(View.GONE);
-        ll4.setVisibility(View.VISIBLE);
-        ll5.setVisibility(View.GONE);
-        final TextPaint tp = tv_huiyuan2.getPaint();
-        final TextPaint tp2 = tv_vip2.getPaint();
-        tp.setFakeBoldText(true);
-        tp2.setFakeBoldText(false);
-        tv_huiyuan2.setTextSize(18);
-        tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
-        tv_vip2.setTextSize(16);
-        tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
-        tv_huiyuan2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_huiyuan2.setTextSize(18);
-                tv_vip2.setTextSize(16);
-                tp.setFakeBoldText(true);
-                tp2.setFakeBoldText(false);
-                tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
-                tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
-                hy.setVisibility(View.VISIBLE);
-                tdz.setVisibility(View.GONE);
-                vip.setVisibility(View.GONE);
-            }
-        });
-        tv_vip2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_huiyuan2.setTextSize(16);
-                tv_vip2.setTextSize(18);
-                tp.setFakeBoldText(false);
-                tp2.setFakeBoldText(true);
-                tv_vip2.setTextColor(Color.parseColor("#EFD3B7"));
-                tv_huiyuan2.setTextColor(Color.parseColor("#CFC5BA"));
-                hy.setVisibility(View.GONE);
-                tdz.setVisibility(View.GONE);
-                vip.setVisibility(View.VISIBLE);
-            }
-        });
+        }
 
     }
 
-    /**
-     * vip的view
-     */
-    private void gradeForVipView() {
-        huiyuan1.setImageResource(R.mipmap.vip1);
-        grade.setImageResource(R.mipmap.icon_vip);
-        vip_reward.setVisibility(View.VISIBLE);
-        vip_rl1.setVisibility(View.VISIBLE);
-        vip_rl3.setVisibility(View.GONE);
-        tv_huiyuan2.setText("VIP专享权益");
-        tv_vip2.setText("团队长尊享权益");
-        hy.setVisibility(View.GONE);
-        tdz.setVisibility(View.GONE);
-        vip.setVisibility(View.VISIBLE);
-        ll4.setVisibility(View.VISIBLE);
-        ll5.setVisibility(View.GONE);
-        final TextPaint tp = tv_huiyuan2.getPaint();
-        final TextPaint tp2 = tv_vip2.getPaint();
-        tp.setFakeBoldText(true);
-        tp2.setFakeBoldText(false);
-        tv_huiyuan2.setTextSize(18);
-        tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
-        tv_vip2.setTextSize(16);
-        tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
-        tv_huiyuan2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_huiyuan2.setTextSize(18);
-                tv_vip2.setTextSize(16);
-                tp.setFakeBoldText(true);
-                tp2.setFakeBoldText(false);
-                tv_vip2.setTextColor(Color.parseColor("#CFC5BA"));
-                tv_huiyuan2.setTextColor(Color.parseColor("#EFD3B7"));
-                hy.setVisibility(View.GONE);
-                tdz.setVisibility(View.GONE);
-                vip.setVisibility(View.VISIBLE);
-            }
-        });
-        tv_vip2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_huiyuan2.setTextSize(16);
-                tv_vip2.setTextSize(18);
-                tp.setFakeBoldText(false);
-                tp2.setFakeBoldText(true);
-                tv_vip2.setTextColor(Color.parseColor("#EFD3B7"));
-                tv_huiyuan2.setTextColor(Color.parseColor("#CFC5BA"));
-                hy.setVisibility(View.GONE);
-                tdz.setVisibility(View.VISIBLE);
-                vip.setVisibility(View.GONE);
-            }
-        });
-    }
-
-    /**
-     * 团队长的view
-     */
-    private void gradeForLeaderView() {
-        vip_rl1.setVisibility(View.GONE);
-        vip_rl3.setVisibility(View.VISIBLE);
-        grade.setImageResource(R.mipmap.icon_tuanduizhang);
-        vip_reward.setVisibility(View.GONE);
-        hy.setVisibility(View.GONE);
-        tdz.setVisibility(View.VISIBLE);
-        vip.setVisibility(View.GONE);
-        ll4.setVisibility(View.GONE);
-        ll5.setVisibility(View.VISIBLE);
 
 
-    }
 
 
     public void showSuccessful(NumberGoodsList datas) {
@@ -946,62 +786,6 @@ public class NumberSubFragment extends BaseFragment {
 
     }
 
-    private void refreshUserInfo(UserInfo info) {
-        if (info == null) {
-            MyLog.d("test", "用户信息为空");
-            return;
-        }
-
-        if (C.UserType.vipMember.equals(info.getUserType())) {
-            mHorzProgressView.setMax(50000.00);
-            mHorzProgressView.setCurrentNum(info.getMoreCoin());
-            Long moreCoin = info.getMoreCoin();
-            String coin1;
-            if (moreCoin == null) {
-                coin1 = "成长值：" + "0/50000";
-            } else {
-                coin1 = "成长值：" + moreCoin + "/50000";
-            }
-            moreCoinBiaozhun.setText(coin1);
-            Long growthValue = 50000 - info.getMoreCoin();
-            if (growthValue > 0) {
-                tvGrowthValue.setVisibility(View.VISIBLE);
-                tvGrowthValue.setText(getResources().getString(R.string.vip_growth_value,
-                        growthValue.toString()));
-            } else {
-                tvGrowthValue.setVisibility(View.INVISIBLE);
-            }
-
-            gradeForVipView();
-        } else if (C.UserType.operator.equals(info.getUserType())) {
-            gradeForLeaderView();
-            get_operator_growth.setText("成长值： " + info.getMoreCoin());
-        } else {
-            mHorzProgressView.setMax(360.00);
-            Long coin = info.getMoreCoin();
-            String coin1;
-            if (coin != null) {
-                mHorzProgressView.setCurrentNum(info.getMoreCoin());
-                coin1 = "成长值：" + info.getMoreCoin() + "/360";
-            } else {
-                mHorzProgressView.setCurrentNum(0);
-                coin1 = "成长值：" + "0/360";
-                return;
-            }
-            Long growthValue = 360 - coin;
-            moreCoinBiaozhun.setText(coin1);
-            if (growthValue > 0) {
-                tvGrowthValue.setVisibility(View.VISIBLE);
-                tvGrowthValue.setText(getResources().getString(R.string.number_growth_value,
-                        growthValue.toString()));
-            } else {
-                tvGrowthValue.setVisibility(View.INVISIBLE);
-            }
-            gradeForNumberView();
-        }
-
-
-    }
 
     /**
      * 商品列表

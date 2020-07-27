@@ -87,14 +87,14 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         if (TextUtils.isEmpty(info.getItemImg())) {
             viewHolder.pic.setImageResource(R.drawable.icon_default);
         } else {
-            LoadImgUtils.setImg(mContext, viewHolder.pic, info.getItemImg());
+            LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.pic, info.getItemImg(),5);
         }
 
 
         try {
             viewHolder.title.setText(info.getItemName());
             if (!TextUtils.isEmpty(info.getCreateTime()) && !"0".equals(info.getCreateTime())) {
-                viewHolder.createDay.setText("创建: " + info.getCreateTime());
+                viewHolder.createDay.setText("下单时间: " + info.getCreateTime());
             } else {
                 viewHolder.createDay.setText("");
             }
@@ -194,27 +194,6 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 }
 
 
-            } else if ("1".equals(info.getStatus())) {//已支付
-                viewHolder.tv_order_status.setText("已支付");
-                viewHolder.shipGoodsTv.setVisibility(View.GONE);
-                viewHolder.receiverGoodsTv.setVisibility(View.GONE);
-                viewHolder.go_goods_detail_tv.setVisibility(View.VISIBLE);
-                viewHolder.go_goods_detail_tv.setText("再次购买");
-                viewHolder.go_goods_detail_tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //重新购买，商品详情
-                        if (info.isOnSale()){
-                            NumberGoodsDetailsActivity.start((Activity) mContext, info.getItemId());
-                        }else{
-                            ToastUtils.showLong("商品已下架");
-                        }
-                    }
-                });
-                viewHolder.tv_num.setVisibility(View.VISIBLE);
-                viewHolder.tv_num.setText("送"+goodsPrice+"成长值");
-                viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
-                viewHolder.tv_date.setVisibility(View.GONE);
             } else if ("6".equals(info.getStatus())) {
                 viewHolder.tv_order_status.setText("待收货");
                 Log.e("wwww","物流");

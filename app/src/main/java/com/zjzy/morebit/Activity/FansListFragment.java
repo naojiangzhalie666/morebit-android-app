@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Dialog.CustomerDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.fragment.MyTeamListFragment;
@@ -38,6 +40,7 @@ import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.event.MyFansEvent;
 import com.zjzy.morebit.pojo.requestbodybean.RequestInviteCodeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
+import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -102,6 +105,10 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
     TextView people_num_text;
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinator;
+    @BindView(R.id.tv_kefu)
+    TextView tv_kefu;
+    @BindView(R.id.rl_search)
+    RelativeLayout rl_search;
     ViewPager viewpager;
     private TeamAdapter mAdapter;
     private ImageInfo mImageInfo;
@@ -140,38 +147,22 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 float verticalOffsetABs = Math.abs(verticalOffset * 1.0f);
-                //用偏移量/最大偏移量得出百分比
-                float percent = verticalOffsetABs / appBarLayout.getTotalScrollRange();
-                ArgbEvaluator evaluator = new ArgbEvaluator();
-                ArgbEvaluator evaluatorSearch = new ArgbEvaluator();
-                //滑动渐变
-                int colorSearch = (int) evaluatorSearch.evaluate(percent, ContextCompat.getColor(getActivity(), R.color.color_FFC200), ContextCompat.getColor(getActivity(), R.color.color_ECECEC));
-                int color = (int) evaluator.evaluate(percent, ContextCompat.getColor(getActivity(), R.color.color_FFD800), ContextCompat.getColor(getActivity(), R.color.white));
-//                toolbar.setBackgroundColor(color);
-            //    appbar.setBackgroundColor(color);
-              //  mTabLayout.setBackgroundColor(color);
-//                search_rl.setBackgroundColor(colorSearch);
-//                status_bar.setBackgroundColor(color);
-                ((FansActivity)getActivity()).setTopBg(percent);
+
                 if (verticalOffsetABs >= appBarLayout.getTotalScrollRange()) {
-                 //   mTabLayout.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.color_FFD800));
-                    ((FansActivity)getActivity()).setImmersionBarBg(true);
-                     ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
+                      ImmersionBar.with(getActivity()).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
                 } else if (verticalOffset == 0) {
-                    ((FansActivity)getActivity()).setImmersionBarBg(false);
-                    ImmersionBar.with(FansListFragment.this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
-                    mTabLayout.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.color_F05557));
+                ImmersionBar.with(getActivity()).statusBarColor(R.color.transparent).fitsSystemWindows(false).statusBarDarkFont(true, 0.2f).init();
                 }
 
             }
         });
-        if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
-            rl_teamLeader.setVisibility(View.VISIBLE);
-           // tv_contact.setVisibility(View.VISIBLE);
-        } else {
-            rl_teamLeader.setVisibility(View.VISIBLE);
-          //  tv_contact.setVisibility(View.GONE);
-        }
+//        if (C.UserType.operator.equals(UserLocalData.getUser().getPartner())) {
+//            rl_teamLeader.setVisibility(View.VISIBLE);
+//           // tv_contact.setVisibility(View.VISIBLE);
+//        } else {
+//            rl_teamLeader.setVisibility(View.VISIBLE);
+//          //  tv_contact.setVisibility(View.GONE);
+//        }
         getTabText();
         getTeamLeader();
 //        search_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -236,15 +227,15 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
 //    }
 
 
-    @OnClick({ R.id.tv_contact, R.id.btn_stick,R.id.tv_copy})
+    @OnClick({ R.id.tv_contact, R.id.btn_stick,R.id.tv_copy,R.id.btn_back,R.id.rl_search})
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.btn_back:
-//                finish();
-//                break;
-//            case R.id.search:
-//                searchFans();
-//                break;
+            case R.id.btn_back:
+                getActivity().finish();
+                break;
+            case R.id.rl_search:
+                SearchFansActivity.start(getActivity(), "");
+                break;
             case R.id.tv_contact:
                 if (mImageInfo == null) {
                     getCustomService();
@@ -302,6 +293,14 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
 
     private void setTeamLeaderInfo(final TeamInfo data) {
 
+
+        tv_kefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomerDialog customerDialog=new CustomerDialog(getActivity(),data);
+                customerDialog.show();
+            }
+        });
         if (TextUtils.isEmpty(data.getWxNumber())) {
             mTeamLeaderCode.setText("未填写");
           //  mTeamLeaderCode.setTextColor(ContextCompat.getColor(getActivity(),R.color.color_999999));
@@ -477,14 +476,10 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
         if (ll_num.getVisibility() != (View.VISIBLE)) {
             ll_num.setVisibility(View.VISIBLE);
         }
-        if (data.getConsumerCount() == 0 && data.getAgentCount() == 0) {
+        if (data.getAllFansCount() == 0) {
             ll_num.setVisibility(View.GONE);
-        } else if (data.getConsumerCount() == 0 & data.getAgentCount() != 0) {
-            people_num_text.setText("VIP会员共" + data.getAgentCount() + "位");
-        } else if (data.getAgentCount() == 0 & data.getConsumerCount() != 0) {
-            people_num_text.setText("会员共" + data.getConsumerCount() + "位");
-        } else {
-            people_num_text.setText("会员共" + data.getConsumerCount() + "位" + ", vip会员共" + data.getAgentCount() + "位");
+        } else{
+            people_num_text.setText("全部粉丝：" + data.getAllFansCount());
         }
     }
 
