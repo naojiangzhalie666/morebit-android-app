@@ -1,5 +1,6 @@
 package com.zjzy.morebit.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -14,11 +15,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.Dialog.QrcodeDialog;
 import com.zjzy.morebit.R;
 
 import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 
 import java.util.ArrayList;
@@ -63,20 +66,24 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.ViewHolder
         LoadImgUtils.setImgHead(mContext,viewHolder.userIcon,info.getHeadImg());
         viewHolder.name.setText(info.getNickName());
         if (mType==4){//总预估
+            viewHolder.people_count.setVisibility(View.GONE);
             viewHolder.ll_la.setVisibility(View.VISIBLE);
             viewHolder.createTime.setVisibility(View.GONE);
             viewHolder.tv_title.setText("总预估佣金：");
             viewHolder.tv_content.setText("¥"+info.getSevenCommission());
         }else if (mType==1){//活跃
+            viewHolder.people_count.setVisibility(View.VISIBLE);
             viewHolder.ll_la.setVisibility(View.GONE);
             viewHolder.createTime.setVisibility(View.VISIBLE);
             viewHolder.createTime.setText(info.getCreateTime());
         }else if (mType==3){//七日
+            viewHolder.people_count.setVisibility(View.GONE);
             viewHolder.ll_la.setVisibility(View.VISIBLE);
             viewHolder.createTime.setVisibility(View.GONE);
             viewHolder.tv_title.setText("近七日拉新：");
             viewHolder.tv_content.setText(info.getSevenNewUsers()+"人");
         }else if (mType==2){//近30日
+            viewHolder.people_count.setVisibility(View.GONE);
             viewHolder.ll_la.setVisibility(View.VISIBLE);
             viewHolder.createTime.setVisibility(View.GONE);
             viewHolder.tv_title.setText("近30日预估佣金：");
@@ -114,6 +121,16 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.ViewHolder
         }else{
             viewHolder.vip_img2.setImageResource(R.mipmap.vip_bg_icon2);
         }
+
+
+        viewHolder.people_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if (!TextUtils.isEmpty(info.getUserH5Url())){
+                ShowWebActivity.start((Activity) mContext,info.getUserH5Url(),"");
+            }
+            }
+        });
 
     }
 
@@ -215,7 +232,7 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView userIcon;
-        TextView phone, userLevel, createTime, tv_content,tv_remark,input_remark,tv_title,name,tv_yao,tv_zhuan;
+        TextView people_count, userLevel, createTime, tv_content,tv_remark,input_remark,tv_title,name,tv_yao,tv_zhuan;
         View bottomLine;
         RelativeLayout item_ly;
         ImageView vip_img2;
@@ -226,7 +243,7 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.ViewHolder
             item_ly = (RelativeLayout) itemView.findViewById(R.id.item_ly);
             userIcon = (RoundedImageView) itemView.findViewById(R.id.userIcon);
 //
-//            phone = (TextView) itemView.findViewById(R.id.phone);
+            people_count = (TextView) itemView.findViewById(R.id.people_count);
 //            bottomLine = (View) itemView.findViewById(R.id.bottomLine);
 //            userLevel = (TextView) itemView.findViewById(R.id.userLevel);
             createTime = (TextView) itemView.findViewById(R.id.createTime);

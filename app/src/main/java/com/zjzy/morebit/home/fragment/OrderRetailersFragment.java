@@ -1,13 +1,16 @@
 package com.zjzy.morebit.home.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.RetailersAdapter;
@@ -21,6 +24,7 @@ import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.request.RequestGoodsOrderBean;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,6 +46,7 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
     private int order_type=5;//全部  1待返佣  2已到账
     private int teamType=0;//全部订单
     private LinearLayout dateNullView;
+    private TextView btn_invite;
 
 
 
@@ -165,6 +170,14 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
         });
         mReUseListView.setAdapter(mAdapter);
         getTime();
+        btn_invite=view.findViewById(R.id.btn_invite);
+        btn_invite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
+               EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_HOME));
+            }
+        });
 
     }
 

@@ -20,5 +20,6 @@ public class EventBusAction {
     public final static String ORDERTYPE_PDD = "ORDERTYPE_PDD";  //订单类型  拼多多
     public final static String ORDERTYPE_WPH = "ORDERTYPE_WPH";  //订单类型  唯品会
     public final static String ORDERTYPE_KAOLA = "ORDERTYPE_KAOLA";  //订单类型  考拉
+    public final static String ACTION_HOME = "ACTION_HOME"; //首页
 
 }

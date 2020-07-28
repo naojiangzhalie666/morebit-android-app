@@ -24,8 +24,50 @@
                 android:orientation="vertical"
               >
 
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_myhead"
+                    android:paddingTop="20dp"
+                    android:background="@color/color_F05557"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/no_login"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="立即登录"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="#ffffffff"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="20dp"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/mine_right"
+                        android:paddingRight="14dp"
+                        />
+
+                </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_myhead"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 

@@ -11,18 +11,24 @@ import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.LifeAdapter;
 import com.zjzy.morebit.adapter.RetailersAdapter;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.request.RequestGoodsOrderBean;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -38,6 +44,7 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
     private int order_type=5;//全部  1待返佣  2已到账
     private int teamType=7;//全部订单
     private LinearLayout dateNullView;
+    private TextView btn_invite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +93,8 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
             }
         });
         getData(teamType);
+        btn_invite= (TextView) findViewById(R.id.btn_invite);
+        btn_invite.setOnClickListener(this);
 
 
     }
@@ -152,6 +161,10 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()){
             case R.id.btn_back:
                 finish();
+                break;
+            case R.id.btn_invite://跳转首页
+                ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_HOME));
                 break;
         }
     }

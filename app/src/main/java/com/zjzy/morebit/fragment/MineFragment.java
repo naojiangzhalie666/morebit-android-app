@@ -203,6 +203,8 @@ public class MineFragment extends BaseMainFragmeng {
     LinearLayout integer_icon;
 
 
+
+
     // ToolsAdapter mAdapter;
     private LinearLayout my_little;
     PersonFunctionAdapter mPersonFunctionAdapter;
@@ -229,6 +231,8 @@ public class MineFragment extends BaseMainFragmeng {
     private boolean isTitleBarSetBg = true;
     private TextView tv_mine;
     private String newUrl, customerUrl;
+    private LinearLayout ll_myhead;
+    private   RelativeLayout rl_myhead;;
 
 
     @Override
@@ -249,6 +253,8 @@ public class MineFragment extends BaseMainFragmeng {
         my_little = mView.findViewById(R.id.my_little);
         tab_title = mView.findViewById(R.id.tab_title);
         tv_mine = mView.findViewById(R.id.tv_mine);
+        ll_myhead=mView.findViewById(R.id.ll_myhead);
+        rl_myhead=mView.findViewById(R.id.rl_myhead);
         return mView;
     }
 
@@ -297,6 +303,8 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
     private void initView() {
+
+
         tv_mine.getPaint().setFakeBoldText(true);
         mSwipeList.setRefreshing(false);
         mSwipeList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -423,6 +431,15 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
     private void refreshData() {
+        UserInfo usInfo = UserLocalData.getUser(getActivity());
+
+        if (usInfo == null || TextUtils.isEmpty(UserLocalData.getToken())) {
+            ll_myhead.setVisibility(View.VISIBLE);
+            rl_myhead.setVisibility(View.GONE);
+        } else {
+            ll_myhead.setVisibility(View.GONE);
+            rl_myhead.setVisibility(View.VISIBLE);
+        }
         LoginUtil.getUserInfo((RxAppCompatActivity) getActivity(), false, new MyAction.OnResultFinally<UserInfo>() {
             /**
              * 结束
@@ -469,10 +486,16 @@ public class MineFragment extends BaseMainFragmeng {
             R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon, R.id.offen_question, R.id.order_search,
             R.id.my_footmarker, R.id.my_favorite, R.id.my_little, R.id.user_agreemen, R.id.privacy_agreement,
             R.id.ll_new, R.id.ll_coustom, R.id.ll_jian, R.id.tv_wx, R.id.img_right, R.id.ll_dragon, R.id.integer_icon,
-            R.id.tv4})
+            R.id.tv4,R.id.ll_myhead})
     public void onClick(View v) {
-        switch (v.getId()) {  //复制邀请码
-            case R.id.copy_invitation_code:
+        if (LoginUtil.checkIsLogin(getActivity())){
+
+
+        switch (v.getId()) {
+            case R.id.ll_myhead:
+
+                break;
+            case R.id.copy_invitation_code: //复制邀请码
 
                 AppUtil.coayText(getActivity(), UserLocalData.getUser(getActivity()).getInviteCode());
                 Toast.makeText(getActivity(), "已复制到粘贴版", Toast.LENGTH_SHORT).show();
@@ -612,7 +635,7 @@ public class MineFragment extends BaseMainFragmeng {
                 Intent in = new Intent(getActivity(), SettingActivity.class);
                 startActivity(in);
                 break;
-            case R.id.ll_dragon:
+            case R.id.ll_dragon://粉丝龙虎榜
                 startActivity(new Intent(getActivity(), FansDragonActivity.class));
                 break;
             case R.id.integer_icon://积分弹框
@@ -626,6 +649,7 @@ public class MineFragment extends BaseMainFragmeng {
             default:
                 break;
 
+        }
         }
     }
 
@@ -727,9 +751,12 @@ public class MineFragment extends BaseMainFragmeng {
                 .setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        ImageInfo imageInfo = data.get(position);
+                        if (LoginUtil.checkIsLogin(getActivity())){
+                            ImageInfo imageInfo = data.get(position);
 //                        SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(),imageInfo.getId()+"",imageInfo.getOpen()+"","我的",position,imageInfo.getClassId()+"",imageInfo.getUrl());
-                        BannerInitiateUtils.gotoAction(getActivity(), imageInfo);
+                            BannerInitiateUtils.gotoAction(getActivity(), imageInfo);
+                        }
+
                     }
                 })
                 .isAutoPlay(true)

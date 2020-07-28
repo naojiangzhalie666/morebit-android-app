@@ -47,6 +47,15 @@ public class TeamInfo implements Serializable {
 
     private String invitationUserName;
     private String fsType;
+    private String userH5Url;//新人H5地址
+
+    public String getUserH5Url() {
+        return userH5Url;
+    }
+
+    public void setUserH5Url(String userH5Url) {
+        this.userH5Url = userH5Url;
+    }
 
     public String getFsType() {
         return fsType;

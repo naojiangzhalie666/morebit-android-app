@@ -658,6 +658,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         } else if (event.getAction().equals(EventBusAction.ACTION_SCHOOL)) {
             //打开会员首页
             onClick(rl_number);
+        }else if (event.getAction().equals(EventBusAction.ACTION_HOME)){
+            //打开首页
+            onClick(rl_homepage);
         }
     }
 
@@ -872,9 +875,6 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 setSysNotificationView();
                 break;
             case R.id.rl_mine: //我的
-                if (!LoginUtil.checkIsLogin(MainActivity.this)) {
-                    return;
-                }
                 mViewPager.setCurrentItem(4, false);
                 curPosition = C.mainPage.MINE;
                 setSysNotificationView();

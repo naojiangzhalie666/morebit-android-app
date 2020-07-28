@@ -307,7 +307,6 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     @Override
     public void showEmity() {
-        Log.e("hhhh","1");
         if (mPage==1){
             searchNullTips_ly.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
