@@ -57,6 +57,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout;
 import com.donkingliang.consecutivescroller.ConsecutiveViewPager;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
+import com.gyf.barlibrary.ImmersionBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -531,35 +532,35 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 swipeDirectionDetector.onPageSelected(position);
                 currentViewPagerPosition = position;
                 if (position % 3 == 0) {
-                    tv_time1.setTextColor(Color.parseColor("#FFFF005E"));
-                    tv_title1.setBackgroundResource(R.drawable.background_f05557_radius_10dp);
+
+                    tv_title1.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
                     tv_title1.setTextColor(Color.parseColor("#FFFFFF"));
-                    tv_time2.setTextColor(Color.parseColor("#FF999999"));
+
                     tv_title2.setTextColor(Color.parseColor("#FF999999"));
                     tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-                    tv_time3.setTextColor(Color.parseColor("#FF999999"));
+
                     tv_title3.setTextColor(Color.parseColor("#FF999999"));
                     tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
                 } else if (position % 3 == 1) {
-                    tv_time1.setTextColor(Color.parseColor("#FF999999"));
+
                     tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
                     tv_title1.setTextColor(Color.parseColor("#FF999999"));
-                    tv_time2.setTextColor(Color.parseColor("#FFFF005E"));
+
                     tv_title2.setTextColor(Color.parseColor("#FFFFFF"));
-                    tv_title2.setBackgroundResource(R.drawable.background_f05557_radius_10dp);
-                    tv_time3.setTextColor(Color.parseColor("#FF999999"));
+                    tv_title2.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
+
                     tv_title3.setTextColor(Color.parseColor("#FF999999"));
                     tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
                 } else {
-                    tv_time1.setTextColor(Color.parseColor("#FF999999"));
+
                     tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
                     tv_title1.setTextColor(Color.parseColor("#FF999999"));
-                    tv_time2.setTextColor(Color.parseColor("#FF999999"));
+
                     tv_title2.setTextColor(Color.parseColor("#FF999999"));
                     tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-                    tv_time3.setTextColor(Color.parseColor("#FFFF005E"));
+
                     tv_title3.setTextColor(Color.parseColor("#FFFFFF"));
-                    tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_10dp);
+                    tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
                 }
                 icon_pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                     @Override
@@ -721,6 +722,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
+
+           getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
             // 设置状态栏颜色
             //   getActivity().getWindow().setStatusBarColor(Color.parseColor("#F05557"));
 
@@ -1601,39 +1604,39 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.linear1:
-                tv_time1.setTextColor(Color.parseColor("#FFFF005E"));
-                tv_title1.setBackgroundResource(R.drawable.background_f05557_radius_10dp);
+
+                tv_title1.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
                 tv_title1.setTextColor(Color.parseColor("#FFFFFF"));
-                tv_time2.setTextColor(Color.parseColor("#FF999999"));
+
                 tv_title2.setTextColor(Color.parseColor("#FF999999"));
                 tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-                tv_time3.setTextColor(Color.parseColor("#FF999999"));
+
                 tv_title3.setTextColor(Color.parseColor("#FF999999"));
                 tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
                 litmited_pager.setCurrentItem(auplay(0));
                 break;
             case R.id.linear2:
-                tv_time1.setTextColor(Color.parseColor("#FF999999"));
+
                 tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
                 tv_title1.setTextColor(Color.parseColor("#FF999999"));
-                tv_time2.setTextColor(Color.parseColor("#FFFF005E"));
+
                 tv_title2.setTextColor(Color.parseColor("#FFFFFF"));
-                tv_title2.setBackgroundResource(R.drawable.background_f05557_radius_10dp);
-                tv_time3.setTextColor(Color.parseColor("#FF999999"));
+                tv_title2.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
+
                 tv_title3.setTextColor(Color.parseColor("#FF999999"));
                 tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
                 litmited_pager.setCurrentItem(auplay(1));
                 break;
             case R.id.linear3:
-                tv_time1.setTextColor(Color.parseColor("#FF999999"));
+
                 tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
                 tv_title1.setTextColor(Color.parseColor("#FF999999"));
-                tv_time2.setTextColor(Color.parseColor("#FF999999"));
+
                 tv_title2.setTextColor(Color.parseColor("#FF999999"));
                 tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-                tv_time3.setTextColor(Color.parseColor("#FFFF005E"));
+
                 tv_title3.setTextColor(Color.parseColor("#FFFFFF"));
-                tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_10dp);
+                tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
                 litmited_pager.setCurrentItem(auplay(2));
                 break;
             case R.id.searchTv:

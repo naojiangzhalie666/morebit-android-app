@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
+    android:background="@color/color_F0F1F5"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
@@ -147,7 +148,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="bottom"
-                                        android:textColor="@color/color_999999"
+                                        android:textColor="@color/colcor_D3D3D3"
                                         android:textSize="12sp"
                                         tools:text="￥120" />
 
@@ -218,7 +219,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="12dp"
-                            android:background="@color/color_F8F8F8" />
+                            android:background="@color/color_F0F1F5" />
 
 
                         <LinearLayout
@@ -274,7 +275,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="12dp"
-                            android:background="@color/color_F8F8F8" />
+                            android:background="@color/color_F0F1F5" />
 
                         <LinearLayout
                             android:id="@+id/tv_fan"
@@ -321,7 +322,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="12dp"
-                        android:background="@color/color_F8F8F8" />
+                        android:background="@color/color_F0F1F5" />
 
                     <LinearLayout
                         android:background="@color/white"
@@ -350,7 +351,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="12dp"
-                        android:background="@color/color_F8F8F8" />
+                        android:background="@color/color_F0F1F5" />
 
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>

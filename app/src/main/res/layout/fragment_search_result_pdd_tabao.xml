@@ -110,7 +110,7 @@
             app:xTabMode="scrollable"
             app:xTabSelectedTextColor="@color/color_FF645B"
             app:xTabSelectedTextSize="@dimen/sp_15"
-            app:xTabTextColor="@color/color_666666"
+            app:xTabTextColor="@color/color_333333"
             app:xTabTextSize="@dimen/sp_15" />
 
         <android.support.v4.view.ViewPager

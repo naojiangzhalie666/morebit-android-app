@@ -109,7 +109,7 @@
             android:id="@+id/item_detials"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="11dp"
             android:layout_toRightOf="@+id/img_cv"
             android:orientation="vertical">
 
@@ -117,7 +117,6 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="11dp"
                 android:layout_marginRight="11dp"
                 android:ellipsize="end"
                 android:lines="2"
@@ -132,7 +131,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="11dp"
                 android:layout_marginTop="7dp"
                 android:gravity="center_vertical">
 
@@ -168,7 +166,7 @@
                     android:id="@+id/ll1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp">
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -217,10 +215,10 @@
                         android:id="@+id/coupon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="11dp"
                         android:background="@mipmap/yhj_bg_goods"
                         android:gravity="center"
                         android:text="10元券"
+                       android:layout_marginRight="11dp"
                         android:textColor="#ffffffff"
                         android:textSize="14sp" />
 
@@ -229,7 +227,6 @@
                         android:id="@+id/commission"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="11dp"
                         android:background="@drawable/background_ffebce_radius_2dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"

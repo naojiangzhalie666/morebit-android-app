@@ -3,24 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_icon"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="70dp"
+    android:layout_height="32dp"
+    android:layout_marginTop="5dp"
+    android:paddingBottom="5dp"
     android:background="@drawable/selector_iconbg"
     android:gravity="center"
-    android:paddingLeft="20dp"
-    android:paddingTop="4dp"
-    android:paddingRight="20dp"
-    android:paddingBottom="6dp">
-
+>
+<!---->
     <ImageView
         android:id="@+id/icon_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginBottom="3dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:visibility="gone"
         android:src="@mipmap/icon_bg_remen"
-        android:visibility="gone" />
+         />
 
     <TextView
         android:id="@+id/tv_name"
@@ -29,7 +28,6 @@
         android:layout_gravity="center"
         android:layout_marginLeft="3dp"
         android:gravity="center"
-        android:layout_marginBottom="3dp"
         android:text="1111"
         android:textSize="13sp"
         android:textColor="@drawable/selector_iconbgcolor" />

@@ -73,9 +73,9 @@ public class CommissionClassAdapter extends RecyclerView.Adapter<CommissionClass
         holder.tv_price.setText(list.get(position).getItemendprice());
         holder.img_bo.setVisibility(View.GONE);
         if (videoBean.getShoptype() == 1) {
-            holder.img.setImageResource(R.mipmap.tb_icon);
+            holder.img.setImageResource(R.drawable.tb_list_icon);
         } else {
-            holder.img.setImageResource(R.mipmap.tm_icon);
+            holder.img.setImageResource(R.drawable.tm_list_icon);
         }
 
 

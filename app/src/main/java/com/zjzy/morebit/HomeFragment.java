@@ -274,6 +274,7 @@ public class HomeFragment extends BaseMainFragmeng implements AppBarLayout.OnOff
             ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
         }
         fragments.clear();

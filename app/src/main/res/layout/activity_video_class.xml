@@ -22,14 +22,14 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             app:xTabDisplayNum="7"
-            app:xTabIndicatorColor="#FF645B"
+            app:xTabIndicatorColor="@color/color_F05557"
             app:xTabIndicatorHeight="3dp"
             app:xTabIndicatorWidth="20dp"
             app:xTabMode="scrollable"
-            app:xTabSelectedTextColor="#333333"
-            app:xTabSelectedTextSize="@dimen/sp_15"
+            app:xTabSelectedTextColor="@color/color_F05557"
+            app:xTabSelectedTextSize="@dimen/sp_14"
             app:xTabTextColor="#999999"
-            app:xTabTextSize="@dimen/sp_12"/>
+            app:xTabTextSize="@dimen/sp_14"/>
     </LinearLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/video_pager"

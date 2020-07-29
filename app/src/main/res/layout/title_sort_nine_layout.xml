@@ -23,7 +23,7 @@
             android:gravity="center"
             android:text="综合"
             android:textColor="#FF645B"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_14" />
 
 
 
@@ -42,7 +42,7 @@
             android:gravity="center"
             android:text="劵后价"
             android:textColor="@color/colcor_999999"
-            android:textSize="@dimen/sp_12"/>
+            android:textSize="@dimen/sp_14"/>
 
         <ImageView
             android:id="@+id/title_sales_volume_iv"
@@ -69,7 +69,7 @@
             android:gravity="center"
             android:text="销量"
             android:textColor="@color/colcor_999999"
-            android:textSize="@dimen/sp_12"/>
+            android:textSize="@dimen/sp_14"/>
 
         <ImageView
             android:id="@+id/title_post_coupon_price_iv"

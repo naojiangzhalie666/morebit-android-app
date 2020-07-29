@@ -24,17 +24,17 @@
 
             <ImageView
                 android:layout_marginLeft="12dp"
-                android:src="@mipmap/tao_biao"
-                android:layout_width="28dp"
-                android:layout_height="28dp"/>
+                android:src="@mipmap/tao_shou"
+                android:layout_width="16dp"
+                android:layout_height="16dp"/>
 
             <TextView
                 android:layout_width="0dp"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:textColor="@color/white"
-                android:text="一键授权淘宝，尽享百万优惠！"
+                android:text="授权领取淘宝大额优惠券"
                 android:layout_weight="0.6"
                 android:layout_height="wrap_content"/>
 
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_000fff_1dpline_round_30dp"
-                android:text="立即授权"
+                android:text="申请授权"
                 android:paddingTop="4dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"

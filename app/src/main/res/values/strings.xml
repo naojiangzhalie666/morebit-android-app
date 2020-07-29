@@ -188,7 +188,7 @@
     <string name="order_invalid">已失效</string>
     <string name="order_closed">已关闭</string>
     <string name="share_moeny">预估收益:%s元</string>
-    <string name="goods_share_moeny">分享\n（收益%s元）</string>
+    <string name="goods_share_moeny">立即分享\n赚¥%s</string>
     <string name="also_collect">已收藏</string>
     <string name="collect">收藏</string>    <!--<string name="add_qrcode_hint">温馨提示：商务合作请联系官方招商部负责人\n\n\n合作商家后台管理地址：\n%1$s</string>-->
     <string name="collect_succeed">收藏成功</string>
@@ -347,7 +347,7 @@
     <string name="estimate">即可获得收益%s元</string>
     <string name="to_update">去升级</string>
     <string name="update_vip">升级VIP</string>
-    <string name="immediately_buy_discounts">立即购买\n(省%s元)</string>
+    <string name="immediately_buy_discounts">立即购买\n省¥%s</string>
     <string name="open_push_head">开启消息通知提醒</string>
     <string name="open_push_com1">收益通知，所有收益尽在手中</string>
     <string name="open_push_com2">每日爆款，帮你找到心仪好物</string>
