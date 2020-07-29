@@ -32,11 +32,13 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SelectGoodsAdapter;
 import com.zjzy.morebit.adapter.SubNumberAdapter;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
@@ -47,6 +49,9 @@ import com.zjzy.morebit.pojo.request.RequestRecommendBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.StringsUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +96,9 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         getData();
         getTime();
         initView(view);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         return view;
     }
 
@@ -188,6 +196,18 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
                 .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
                 .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
     }
+    @Subscribe  //订阅事件
+    public void onEventMainThread(MessageEvent event) {
+        if (event.getAction().equals(EventBusAction.ACTION_REFRSH)) {
+            getData();
 
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
 }

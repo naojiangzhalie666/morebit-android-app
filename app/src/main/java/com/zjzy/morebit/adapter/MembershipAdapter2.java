@@ -32,11 +32,9 @@ public class MembershipAdapter2 extends RecyclerView.Adapter<MembershipAdapter2.
     }
 
     public void setData(List<VipBean> data) {
-        Log.e("sssss", "捡来的7" + data);
         if (data != null) {
             list.clear();
             list.addAll(data);
-            Log.e("sssss", "捡来的6");
             notifyDataSetChanged();
         }
     }

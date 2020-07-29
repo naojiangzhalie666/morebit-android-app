@@ -273,6 +273,7 @@ public class NumberSubFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 initTou();
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_REFRSH));
             }
         });
 
@@ -293,6 +294,7 @@ public class NumberSubFragment extends BaseFragment {
                     @Override
                     protected void onSuccess(UserInfo data) {
                         showDetailsView(data);
+                        swipeRefreshLayout.setRefreshing(false);
 
                     }
                 });

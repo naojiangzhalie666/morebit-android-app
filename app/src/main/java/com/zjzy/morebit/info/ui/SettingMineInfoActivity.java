@@ -42,6 +42,7 @@ import com.zjzy.morebit.pojo.request.RequestNickNameBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateHeadPortraitBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.DateTimeUtils;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
@@ -164,7 +165,7 @@ public class SettingMineInfoActivity extends BaseActivity {
                 openDialogUserAge();
                 break;
             case R.id.item_account_destroy://用户注销
-
+                GoodsUtil.getLogout(this);
                 break;
             case R.id.item3_rl://隐私协议
                 LoginUtil.getPrivateProtocolForHome(this);

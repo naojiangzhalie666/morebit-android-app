@@ -425,6 +425,7 @@ public class C {
         public static final String WEB_COMMSSION_RULE = "COMMISSION_RULES";// 返佣规则
         public static final String SHARE_COURES = "SHARE_COURES";// 分享三部曲
         public static final String UPGRADE_H5 = "UPGRADE_H5";// VIP升级地址
+        public static final String LOGOUT_H5 = "LOGOUT_H5";// 注销地址
     }
 
     /**

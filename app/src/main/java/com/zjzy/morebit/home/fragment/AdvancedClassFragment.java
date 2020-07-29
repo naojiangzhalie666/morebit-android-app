@@ -27,12 +27,14 @@ import com.zjzy.morebit.adapter.SkillAdapter;
 import com.zjzy.morebit.adapter.StudyTitleAdapter;
 import com.zjzy.morebit.adapter.SubNumberAdapter;
 import com.zjzy.morebit.circle.ui.SearchArticleListActitivty;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.Article;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.StudyRank;
 import com.zjzy.morebit.pojo.number.NumberGoods;
@@ -40,6 +42,9 @@ import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.RequestListBody;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.pojo.requestbodybean.RequestTwoLevel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,24 +78,15 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
         getData();
         getStudyRank();
         initView(view);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         return view;
     }
 
     private void getStudyRank() {
 
-        getStudyRankTitle(this)
-                .subscribe(new DataObserver<List<StudyRank>>() {
-                    @Override
-                    protected void onDataListEmpty() {
-                        onStudyRankEmpty();
-                    }
 
-
-                    @Override
-                    protected void onSuccess(List<StudyRank> data) {
-                        onStudyRankSuccessful(data);
-                    }
-                });
     }
 
     private void onStudyRankSuccessful(List<StudyRank> data) {
@@ -108,6 +104,22 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
 
 
     private void getData() {
+        getStudyRankTitle(this)
+                .subscribe(new DataObserver<List<StudyRank>>() {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onStudyRankEmpty();
+                    }
+
+
+                    @Override
+                    protected void onSuccess(List<StudyRank> data) {
+                        onStudyRankSuccessful(data);
+                    }
+                });
+
+
+
         getRecommendMoreList(this, page)
                 .doFinally(new Action() {
                     @Override
@@ -238,6 +250,20 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
         return RxHttp.getInstance().getCommonService().getStudyRank()
                 .compose(RxUtils.<BaseResponse<List<StudyRank>>>switchSchedulers())
                 .compose(fragment.<BaseResponse<List<StudyRank>>>bindToLifecycle());
+    }
+
+    @Subscribe  //订阅事件
+    public void onEventMainThread(MessageEvent event) {
+        if (event.getAction().equals(EventBusAction.ACTION_REFRSH)) {
+            getData();
+
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 }

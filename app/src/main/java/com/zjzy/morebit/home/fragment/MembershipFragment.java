@@ -81,7 +81,9 @@ public class MembershipFragment extends BaseMainFragmeng {
         initView(view);
         getData();
         getStudyRank();
-
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         return view;
     }
 
@@ -258,6 +260,18 @@ public class MembershipFragment extends BaseMainFragmeng {
                 .compose(RxUtils.<BaseResponse<List<VipBean>>>switchSchedulers())
                 .compose(fragment.<BaseResponse<List<VipBean>>>bindToLifecycle());
     }
+    @Subscribe  //订阅事件
+    public void onEventMainThread(MessageEvent event) {
+        if (event.getAction().equals(EventBusAction.ACTION_REFRSH)) {
+            getData();
 
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
 }
