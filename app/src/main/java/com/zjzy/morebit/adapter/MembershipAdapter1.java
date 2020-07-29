@@ -70,7 +70,9 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         String categoryTitle = list.get(position).getCategoryTitle();
         if (!TextUtils.isEmpty(categoryTitle)){
-            holder.title.setText(categoryTitle);
+            StringBuffer buffer=new StringBuffer(categoryTitle);
+            buffer.insert(2,"\n");
+            holder.title.setText(buffer.toString());
         }
 
 

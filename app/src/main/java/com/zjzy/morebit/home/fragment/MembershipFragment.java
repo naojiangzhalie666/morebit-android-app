@@ -71,7 +71,6 @@ public class MembershipFragment extends BaseMainFragmeng {
         MembershipFragment fragment = new MembershipFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
-        Log.e("sssss", "捡来的4");
         return fragment;
     }
 
@@ -125,12 +124,9 @@ public class MembershipFragment extends BaseMainFragmeng {
 
 
     private void onGetDoorGodCategory(List<VipBean> data) {
-        Log.e("sssss","捡来的8"+data);
 
-        Log.e("sssss","捡来的2");
         adapter1.setData(data);
         adapter2.setData(data);
-        Log.e("sssss","捡来的3");
 
     }
 
@@ -241,7 +237,7 @@ public class MembershipFragment extends BaseMainFragmeng {
     private void changePosition() {
 
         int firstPosition = manager.findFirstVisibleItemPosition();
-        if (adapter1.mCheckedPosition != -1) {
+        if (adapter1.mCheckedPosition != firstPosition) {
             adapter1.mCheckedPosition = firstPosition;
             adapter1.notifyDataSetChanged();
 
