@@ -18,6 +18,7 @@ import com.zjzy.morebit.pojo.UnreadInforBean;
 import com.zjzy.morebit.pojo.UserIncomeDetail2;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
+import com.zjzy.morebit.pojo.VipBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.pojo.address.AddressInfoList;
 import com.zjzy.morebit.pojo.address.AllRegionInfoList;
@@ -187,6 +188,7 @@ import com.zjzy.morebit.pojo.request.RequestWechatCodeBean;
 import com.zjzy.morebit.pojo.request.RequestWeixiLoginBean;
 import com.zjzy.morebit.pojo.request.RequestWhatLike;
 import com.zjzy.morebit.pojo.request.WxCodeBean;
+import com.zjzy.morebit.pojo.request.base.RequestBaseOs;
 import com.zjzy.morebit.pojo.request.base.RequestBaseTypeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestAnalysisTKL;
 import com.zjzy.morebit.pojo.requestbodybean.RequestCheckWithdrawBean;
@@ -2694,5 +2696,13 @@ public interface CommonService {
      */
     @POST("/api/user/getUserIncome")
     public Observable<BaseResponse<UserIncomeDetail2>> getUserIncome();
+
+    /**
+     * 获取会员特权
+     *
+     * @return
+     */
+    @POST("/api/system/getVipRights")
+    public Observable<BaseResponse<List<VipBean>>> getVipRights(@Body RequestBaseOs body);
 
 }

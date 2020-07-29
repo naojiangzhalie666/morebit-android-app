@@ -69,11 +69,13 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.Article;
+import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.VipBean;
 import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.goods.Child2;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
@@ -82,6 +84,7 @@ import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.pddjd.PddJdTitleTypeItem;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
+import com.zjzy.morebit.pojo.request.base.RequestBaseOs;
 import com.zjzy.morebit.pojo.requestbodybean.RequestInviteCodeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.AppUtil;
@@ -266,6 +269,13 @@ public class NumberSubFragment extends BaseFragment {
         });
         initTou();
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initTou();
+            }
+        });
+
 
     }
 
@@ -286,6 +296,7 @@ public class NumberSubFragment extends BaseFragment {
 
                     }
                 });
+
 
     }
 
@@ -868,6 +879,9 @@ public class NumberSubFragment extends BaseFragment {
                 .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
                 .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
     }
+
+
+
 
     /**
      * 获取楼层
