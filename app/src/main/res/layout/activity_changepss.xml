@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:maxLength="100"
                 android:background="@color/white"
-                android:hint="请在此输入新密码"
+                android:hint="请确认您的新密码"
                 android:textSize="14sp"
                 android:inputType="textPassword"
                 android:singleLine="true"

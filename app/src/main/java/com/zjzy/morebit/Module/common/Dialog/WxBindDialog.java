@@ -61,6 +61,7 @@ public class WxBindDialog extends Dialog {
     }
     private void initView() {
 
+        UserInfo user = UserLocalData.getUser(mContext);
         btn_ok = findViewById(R.id.btn_ok);
         mEditText=findViewById(R.id.mEditText);
         btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +71,10 @@ public class WxBindDialog extends Dialog {
                 dismiss();
             }
         });
+        if (!TextUtils.isEmpty(user.getWxNumber())){
+            mEditText.setText(user.getWxNumber());
+            mEditText.setSelection(mEditText.getText().toString().length());
+        }
         diss=findViewById(R.id.diss);
         diss.setOnClickListener(new View.OnClickListener() {
             @Override

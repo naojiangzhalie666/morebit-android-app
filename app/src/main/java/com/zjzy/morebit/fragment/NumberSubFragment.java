@@ -178,6 +178,7 @@ public class NumberSubFragment extends BaseFragment {
     private HorzProgressView horzProgressView;
     private LinearLayout group_ll, vip_ll;
     private ImageView img_vip;
+    private TextView tv_coin;
 
 
     @Override
@@ -248,7 +249,7 @@ public class NumberSubFragment extends BaseFragment {
         swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
         //设置触发刷新的距离
         swipeRefreshLayout.setDistanceToTriggerSync(200);
-
+        tv_coin=view.findViewById(R.id.tv_coin);//成长值
         vip_tou = view.findViewById(R.id.vip_tou);//头像
         vip_name = view.findViewById(R.id.vip_name);//昵称
         getMorce = view.findViewById(R.id.getMorce);//获取成长值
@@ -612,31 +613,35 @@ public class NumberSubFragment extends BaseFragment {
                 if (C.UserType.member.equals(info.getUserType())) {
                     img_vip.setImageResource(R.mipmap.vip_icon_right2);
                     vip_grade.setText("普通会员");
+                    upgrade.setText("升级VIP");
                     horzProgressView.setMax(360.00);
                     Long coin = info.getMoreCoin();
                     String coin1;
                     if (coin != null) {
                         horzProgressView.setCurrentNum(info.getMoreCoin());
-                        coin1 = "成长值：" + info.getMoreCoin() + "/360";
+                        coin1 = info.getMoreCoin()+"";
                     } else {
                         horzProgressView.setCurrentNum(0);
-                        coin1 = "成长值：" + "0/360";
+                        coin1 =  "0";
                         return;
                     }
                     more_corn_biaozhun.setText(coin1);
+                    tv_coin.setText("/360");
                 } else if (C.UserType.vipMember.equals(info.getUserType())) {
                     img_vip.setImageResource(R.mipmap.vip_bg_icon);
+                    upgrade.setText("升级团队长");
                     vip_grade.setText("VIP");
                     horzProgressView.setMax(50000.00);
                     horzProgressView.setCurrentNum(info.getMoreCoin());
                     Long moreCoin = info.getMoreCoin();
                     String coin1;
                     if (moreCoin == null) {
-                        coin1 = "成长值：" + "0/50000";
+                        coin1 ="0";
                     } else {
-                        coin1 = "成长值：" + moreCoin + "/50000";
+                        coin1 = moreCoin + "";
                     }
                     more_corn_biaozhun.setText(coin1);
+                    tv_coin.setText("/50000");
                 }
             }
             getMorce.setOnClickListener(new View.OnClickListener() {
@@ -657,10 +662,11 @@ public class NumberSubFragment extends BaseFragment {
 
 
 
+
     @Override
     public void onResume() {
         super.onResume();
-        // refreshData();
+      initTou();
 
     }
 

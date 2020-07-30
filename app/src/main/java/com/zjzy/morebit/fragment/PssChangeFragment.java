@@ -98,16 +98,8 @@ public class PssChangeFragment extends BaseFragment implements View.OnClickListe
             return;
         }
         phone.setText(LoginUtil.hideNumber(mUsInfo.getPhone()));
-        try {
-            if (mUsInfo.getTealName() != null && !"".equals(mUsInfo.getTealName())) {
-                zhifubaoagin_et.setText(mUsInfo.getTealName());
-            }
-            if (mUsInfo.getAliPayNumber() != null && !"".equals(mUsInfo.getAliPayNumber())) {
-                zhifubao_et.setText(mUsInfo.getAliPayNumber());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+
 
     }
 
@@ -195,76 +187,6 @@ public class PssChangeFragment extends BaseFragment implements View.OnClickListe
 
     }
 
-    /**
-     * 绑定支付宝
-     */
-    public void bindZhiFuBao() {
-        UserInfo usInfo = UserLocalData.getUser(getActivity());
-        if (usInfo == null) {
-            return;
-        }
-        if (TextUtils.isEmpty(zhifubaoagin_et.getText().toString().trim())) {
-            ViewShowUtils.showShortToast(getActivity(), "请输入姓名");
-            return;
-        }
-        if (TextUtils.isEmpty(zhifubao_et.getText().toString().trim())) {
-            ViewShowUtils.showShortToast(getActivity(), "输入支付宝账号");
-            return;
-        }
-        if (TextUtils.isEmpty(edt_yanzhengma.getText().toString().trim())) {
-            ViewShowUtils.showShortToast(getActivity(), "请输入验证码");
-            return;
-        }
-        LoadingView.showDialog(getActivity(), "请求中...");
-        String alipayNumber = zhifubao_et.getText().toString().trim();
-        String realName = zhifubaoagin_et.getText().toString().trim();
-        String verCode = edt_yanzhengma.getText().toString().trim();
-
-
-        RequestSetAlipayBean requestBean = new RequestSetAlipayBean();
-        requestBean.setAlipayNumber(alipayNumber);
-        requestBean.setRealName(realName);
-        requestBean.setVerCode(verCode);
-        String sign = EncryptUtlis.getSign2(requestBean);
-        requestBean.setSign(sign);
-
-        RxHttp.getInstance().getUsersService().getUserSetAlipay(
-//                alipayNumber,
-//                realName,
-//                verCode,
-//                sign
-                requestBean)
-                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
-                .doFinally(new Action() {
-
-                    @Override
-                    public void run() throws Exception {
-                        LoadingView.dismissDialog();
-                    }
-                })
-                .subscribe(new DataObserver<String>() {
-                    @Override
-                    protected void onDataNull() {
-                        onSuccess("");
-                    }
-
-                    /**
-                     * 成功回调
-                     *
-                     * @param data 结果
-                     */
-                    @Override
-                    protected void onSuccess(String data) {
-                        ViewShowUtils.showShortToast(getActivity(), "绑定成功");
-                        //更新个人数据
-                        mUsInfo.setAliPayNumber(zhifubao_et.getText().toString().trim());
-                        mUsInfo.setTealName(zhifubaoagin_et.getText().toString().trim());
-                        EventBus.getDefault().post(new MessageEvent(EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA));
-                        getActivity().finish();
-
-                    }
-                });
-    }
 
     @Override
     public void onClick(View v) {

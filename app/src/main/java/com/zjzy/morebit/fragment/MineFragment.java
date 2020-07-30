@@ -629,7 +629,7 @@ public class MineFragment extends BaseMainFragmeng {
                 feedBackIt.putExtras(feedBackBundle);
                 getActivity().startActivity(feedBackIt);
                 break;
-
+            case R.id.userIcon:
             case R.id.tv_wx:
             case R.id.img_right:
                 Intent in = new Intent(getActivity(), SettingActivity.class);

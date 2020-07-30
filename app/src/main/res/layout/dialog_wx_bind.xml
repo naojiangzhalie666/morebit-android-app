@@ -42,6 +42,7 @@
             />
 
         <EditText
+            android:singleLine="true"
             android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/tv2"

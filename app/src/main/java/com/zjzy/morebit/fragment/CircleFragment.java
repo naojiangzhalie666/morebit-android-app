@@ -22,10 +22,12 @@ import com.zjzy.morebit.circle.ui.CircleBusinessFragment;
 import com.zjzy.morebit.circle.ui.CircleCategoryFragment;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.main.ui.fragment.HomeCollegeFragment;
+import com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.CategoryListChildDtos;
 import com.zjzy.morebit.pojo.CategoryListDtos;
 import com.zjzy.morebit.pojo.request.RequestReleaseCategory;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
@@ -45,14 +47,13 @@ import butterknife.ButterKnife;
  * 首页分类-发圈
  */
 public class CircleFragment extends BaseMainFragmeng {
-    @BindView(R.id.tab)
-    SlidingTabLayout tab;
+    @BindView(R.id.xablayout)
+    XTabLayout tab;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.status_bar)
     View status_bar;
-    @BindView(R.id.myCollectIv)
-    ImageView myCollectIv;
+
 
     List<BaseFragment> mFragments = new ArrayList<>();
     private String[] mTitles;
@@ -140,24 +141,24 @@ public class CircleFragment extends BaseMainFragmeng {
         mTitles = new String[size+1];
 
         for (int i = 0; i < size; i++) {
-            String title = data.get(i).getTitle();
-            if (data.get(i).getChild() == null || data.get(i).getChild().size() == 0) {
-//                if ("商学院".equals(title)){
-//                    mFragments.add(new HomeCollegeFragment());
-//                }else{
-                CategoryListDtos categoryDtos = data.get(i);
-                mFragments.add(CircleDayHotFragment.newInstance(categoryDtos,data.get(i).getTitle()));
-//                }
-            } else {
-                mFragments.add(CircleCategoryFragment.newInstance(data.get(i).getChild(), data.get(i).getId(), data.get(i).getTitle()));
-            }
+            List<CategoryListChildDtos> categoryDtos = data.get(i).getChild();
+
+//            String title = data.get(i).getTitle();
+//            if (data.get(i).getChild() == null || data.get(i).getChild().size() == 0) {
+//
+//                mFragments.add(CircleDayHotFragment.newInstance(categoryDtos,data.get(i).getTitle()));
+//            } else {
+//                mFragments.add(CircleCategoryFragment.newInstance(data.get(i).getChild(), data.get(i).getId(), data.get(i).getTitle()));
+//            }
+
+            mFragments.add(GoodDailyFragment.newInstance(categoryDtos,data.get(i).getId()));
             mTitles[i] = data.get(i).getTitle();
         }
-        mTitles[size]="商学院";
-        //mFragments.add(new HomeCollegeFragment());
-        mFragments.add(new CircleBusinessFragment());//跳转商学院二级页面
+//        mTitles[size]="商学院";
+//        //mFragments.add(new HomeCollegeFragment());
+//        mFragments.add(new CircleBusinessFragment());//跳转商学院二级页面
         viewPager.setAdapter(new ChannelAdapter(getChildFragmentManager()));
-        tab.setViewPager(viewPager);
+        tab.setupWithViewPager(viewPager);
     }
 
     /**
@@ -175,13 +176,7 @@ public class CircleFragment extends BaseMainFragmeng {
 //        viewPager .setOffscreenPageLimit(3);
 
 
-        myCollectIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!LoginUtil.checkIsLogin((Activity) getActivity())) return;
-               CircleCollectFragment.start(getActivity());
-            }
-        });
+
     }
 
 

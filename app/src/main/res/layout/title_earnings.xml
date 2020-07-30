@@ -13,17 +13,21 @@
         android:layout_height="match_parent"
         >
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingLeft="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/icon_return"
-            android:id="@+id/back"/>
+        <LinearLayout
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_return"
+                android:id="@+id/back"/>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_title"

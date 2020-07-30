@@ -315,8 +315,8 @@ public class ModifyPhoneNumAcitivity extends BaseActivity {
             try {
                 mTvVerfyCode.setEnabled(true);
                 mTvVerfyCode.setText("重新获取");
-                mTvVerfyCode.setBackgroundResource(R.drawable.bg_ffe10a_rightround_2dp);
-                mTvVerfyCode.setTextColor(getResources().getColor(R.color.color_000000));
+                mTvVerfyCode.setBackgroundResource(R.drawable.background_f05557_radius_30dp);
+                mTvVerfyCode.setTextColor(getResources().getColor(R.color.color_F05557));
             } catch (Exception e) {
                 e.printStackTrace();
             }

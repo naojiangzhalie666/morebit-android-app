@@ -106,6 +106,10 @@ public class SettingMineInfoActivity extends BaseActivity {
     RelativeLayout item3_rl;
     @BindView(R.id.item_account_destroy)
     RelativeLayout item_account_destroy;
+    @BindView(R.id.phone)
+    TextView phone;
+    @BindView(R.id.item_tv8)
+    TextView item_tv8;
 
     private TimePickerView mPvTime;
     private OptionsPickerView<String> mPvCustomOptions;
@@ -144,6 +148,15 @@ public class SettingMineInfoActivity extends BaseActivity {
         }
         if (!TextUtils.isEmpty(user.getBirthDate())) {
             mTvAge.setText(user.getBirthDate());
+        }
+        if (!TextUtils.isEmpty(user.getPhone())){
+            phone.setText(user.getPhone());
+        }
+
+        if (!TextUtils.isEmpty(user.getAliPayNumber())){
+            item_tv8.setText("已绑定");
+        }else{
+            item_tv8.setText("未绑定");
         }
     }
 

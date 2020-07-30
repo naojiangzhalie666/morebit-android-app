@@ -755,5 +755,11 @@ public class C {
         public static final  int E_UPLIMIT_SORT_UP=1;//升序
 
     }
+
+    public static class Circle {
+        public static final String CIRCLE_TITLE ="CIRCLE_TITLE";
+        public static final String CIRCLE_ONEID ="CIRCLE_ONEID";
+
+    }
 }
 

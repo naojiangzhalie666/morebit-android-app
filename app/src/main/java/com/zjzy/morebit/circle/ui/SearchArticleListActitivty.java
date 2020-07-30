@@ -71,7 +71,7 @@ public class SearchArticleListActitivty extends BaseActivity {
 
     private void initView() {
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
-        txt_head_title.setText("商学院");
+        txt_head_title.setText("进阶学院");
         txt_head_title.setTextSize(18);
         txt_head_title.getPaint().setFakeBoldText(true);
         btn_back= (LinearLayout) findViewById(R.id.btn_back);

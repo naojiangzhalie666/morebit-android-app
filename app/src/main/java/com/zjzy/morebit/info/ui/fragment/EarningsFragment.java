@@ -201,7 +201,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     }
 
 
-    @OnClick({R.id.bill_details, R.id.withdraw, R.id.back,R.id.month_ago})
+    @OnClick({R.id.bill_details, R.id.withdraw, R.id.btn_back,R.id.month_ago})
     public void onCLick(View v) {
         switch (v.getId()) {
             case R.id.bill_details:   //账单详情
@@ -221,7 +221,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 //                }
 
                 break;
-            case R.id.back:   //箭头退出
+            case R.id.btn_back:   //箭头退出
                 getActivity().finish();
                 break;
             case R.id.month_ago:    //上月月报
