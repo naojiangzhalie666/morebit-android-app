@@ -168,7 +168,7 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
         if (page == 1) {
             mAdapter.setData(list);
         } else {
-            mAdapter.setData(list);
+            mAdapter.addData(list);
             swipeList.finishLoadMore();
 
          }

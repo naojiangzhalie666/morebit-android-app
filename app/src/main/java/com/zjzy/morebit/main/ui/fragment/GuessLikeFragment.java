@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -35,6 +36,7 @@ import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.requestbodybean.RequestGoodsLike;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.ConfigListUtlis;
+import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.fire.DeviceIDUtils;
 
@@ -98,6 +100,7 @@ public class GuessLikeFragment extends BaseFragment {
         mAdapter = new SelectGoodsAdapter2(getActivity());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRlList.setLayoutManager(gridLayoutManager);
+        mRlList.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 6)));
         mRlList.setAdapter(mAdapter);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("1");//名字

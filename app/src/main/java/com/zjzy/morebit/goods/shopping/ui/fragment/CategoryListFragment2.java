@@ -179,7 +179,7 @@ public class CategoryListFragment2 extends BaseFragment implements ReEndlessGrad
         mRecyclerView = (RecyclerView) view.findViewById(R.id.listview_aole);
         GridLayoutManager manager3 = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(manager3);
-        mRecyclerView.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 8)));
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 6)));
 
           shoppingAoLeAdapter1=new SelectGoodsAdapter2(getActivity());
 

@@ -1,6 +1,7 @@
 package com.zjzy.morebit.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zjzy.morebit.Activity.CircleActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.CategoryListChildDtos;
 import com.zjzy.morebit.pojo.CategoryListDtos;
 import com.zjzy.morebit.pojo.VipBean;
+import com.zjzy.morebit.utils.C;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +49,7 @@ public class GoodDialyTitleAdapter extends RecyclerView.Adapter<GoodDialyTitleAd
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        String categoryTitle = list.get(position).getTitle();
+        final String categoryTitle = list.get(position).getTitle();
         if (!TextUtils.isEmpty(categoryTitle)){
             holder.tv_title.setText(categoryTitle);
         }
@@ -56,7 +59,12 @@ public class GoodDialyTitleAdapter extends RecyclerView.Adapter<GoodDialyTitleAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, CircleActivity.class);
+                intent.putExtra(C.Circle.CIRCLE_ONEID,oneLevelId+"");
+                intent.putExtra(C.Circle.CIRCLE_TYPE,list.get(position).getType()+"");
+                intent.putExtra(C.Circle.CIRCLE_FUTITLE,categoryTitle+"");
+                intent.putExtra(C.Circle.CIRCLE_TWOID,list.get(position).getId()+"");
+                context.startActivity(intent);
             }
         });
 

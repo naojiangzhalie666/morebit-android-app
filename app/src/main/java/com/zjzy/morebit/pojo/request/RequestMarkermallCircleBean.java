@@ -6,6 +6,17 @@ public class RequestMarkermallCircleBean extends RequestBaseBean {
     private int type;
     private String twoLevelId;//二级id
     private String oneLevelId; // 一级id 没有二级id就传一级id
+    private String threeLevelId;//三级id
+
+
+    public String getThreeLevelId() {
+        return threeLevelId;
+    }
+
+    public void setThreeLevelId(String threeLevelId) {
+        this.threeLevelId = threeLevelId;
+    }
+
 
     public int getType() {
         return type;

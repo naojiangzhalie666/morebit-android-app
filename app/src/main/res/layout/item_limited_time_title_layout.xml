@@ -24,6 +24,8 @@
         android:background="@drawable/bg_ffffff_8dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:singleLine="true"
         android:ellipsize="end"
         android:includeFontPadding="true"

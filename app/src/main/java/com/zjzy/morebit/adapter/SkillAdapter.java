@@ -49,11 +49,17 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder> 
 
     public void setData(List<Article> data) {
         if (data != null) {
+            list.clear();
+            list.addAll(data);
+           notifyDataSetChanged();
+        }
+    }
+    public void addData(List<Article> data) {
+        if (data != null) {
             list.addAll(data);
             notifyItemRangeChanged(0, data.size());
         }
     }
-
 
     @NonNull
     @Override
@@ -72,7 +78,7 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder> 
         }
         holder.tv_title.setText(article.getTitle());
         if (!TextUtils.isEmpty(article.getReleaseTime())) {
-            holder.tv_time.setText(DateTimeUtils.ymdhmsToymd(article.getReleaseTime()) + "");
+            holder.tv_time.setText(DateTimeUtils.getShortTime2(article.getReleaseTime()) + "");
         } else {
             holder.tv_time.setText("");
         }

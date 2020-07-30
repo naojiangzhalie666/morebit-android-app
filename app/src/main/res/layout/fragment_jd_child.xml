@@ -31,7 +31,7 @@
 
                 <ImageView
                     android:id="@+id/iv_back"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"

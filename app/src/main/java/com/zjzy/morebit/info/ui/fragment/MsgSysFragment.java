@@ -83,7 +83,6 @@ public class MsgSysFragment extends MvpFragment<MsgPresenter> implements MsgCont
         txt_head_title = (TextView) view.findViewById(R.id.txt_head_title);
         txt_head_title.setText("系统通知");
         txt_head_title.setTextSize(18);
-        txt_head_title.getPaint().setFakeBoldText(true);
         btn_back = (LinearLayout) view.findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override

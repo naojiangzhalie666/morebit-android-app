@@ -759,6 +759,10 @@ public class C {
     public static class Circle {
         public static final String CIRCLE_TITLE ="CIRCLE_TITLE";
         public static final String CIRCLE_ONEID ="CIRCLE_ONEID";
+        public static final String CIRCLE_TWOID ="CIRCLE_TWOID";
+        public static final String CIRCLE_THREEID ="CIRCLE_THREEID";
+        public static final String CIRCLE_TYPE ="CIRCLE_TYPE";
+        public static final String CIRCLE_FUTITLE ="CIRCLE_FUTITLE";
 
     }
 }

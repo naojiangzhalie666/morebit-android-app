@@ -103,7 +103,6 @@ public class MsgFeedbackFragment extends MvpFragment<MsgPresenter> implements Ms
         txt_head_title = (TextView) view.findViewById(R.id.txt_head_title);
         txt_head_title.setText("反馈回复");
         txt_head_title.setTextSize(18);
-        txt_head_title.getPaint().setFakeBoldText(true);
         btn_back = (LinearLayout) view.findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,6 +8,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,16 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.GoodDialyTitleAdapter;
+import com.zjzy.morebit.adapter.GoodsDialyAdapter;
 import com.zjzy.morebit.adapter.SelectGoodsAdapter;
 import com.zjzy.morebit.adapter.SubNumberAdapter;
 import com.zjzy.morebit.contact.EventBusAction;
@@ -37,10 +40,12 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.CategoryListChildDtos;
 import com.zjzy.morebit.pojo.CategoryListDtos;
+import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.request.RequestMarkermallCircleBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.C;
 
@@ -65,6 +70,10 @@ public class GoodDailyFragment extends BaseMainFragmeng {
     private ImageView img_below;
     private View view2;
     private int oneLevelId;
+    private ReUseListView mListView;
+    private int page=1;
+    private LinearLayout dateNullView;
+    private GoodsDialyAdapter goodsDialyAdapter;
 
 
 
@@ -80,12 +89,13 @@ public class GoodDailyFragment extends BaseMainFragmeng {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_goodsdaily, container, false);
-        getData();
+
         getTime();
         initView(view);
 //        if (!EventBus.getDefault().isRegistered(this)) {
 //            EventBus.getDefault().register(this);
 //        }
+        getData();
         return view;
     }
 
@@ -96,9 +106,54 @@ public class GoodDailyFragment extends BaseMainFragmeng {
 
 
     private void getData() {
+        getMarkermallCircle()
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
 
+
+                    }
+                })
+                .subscribe(new DataObserver<List<MarkermallCircleInfo>>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+//                        super.onError(errorMsg, errCode);
+                        showError(errCode, errorMsg);
+                    }
+
+                    @Override
+                    protected void onDataListEmpty() {
+                        if (page==1){
+                            mListView.setVisibility(View.GONE);
+                            dateNullView.setVisibility(View.VISIBLE);
+                        }
+                        mListView.getListView().setNoMore(true);
+                    }
+
+                    @Override
+                    protected void onSuccess(List<MarkermallCircleInfo> data) {
+                        showSuccessful(data);
+                    }
+                });
     }
 
+    private void showSuccessful(List<MarkermallCircleInfo> data) {
+        if (data!=null&&data.size()!=0){
+            dateNullView.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+            if (page==1){
+                goodsDialyAdapter.setData(data);
+            }else{
+                goodsDialyAdapter.addData(data);
+                mListView.getListView().setNoMore(true);
+            }
+
+        }else{
+            dateNullView.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
+            mListView.getListView().setNoMore(true);
+        }
+    }
 
 
     private void showError(String errCode, String errorMsg) {
@@ -113,6 +168,7 @@ public class GoodDailyFragment extends BaseMainFragmeng {
         if (arguments != null) {
             mchild= (List<CategoryListChildDtos>) arguments.getSerializable(C.Circle.CIRCLE_TITLE);
             oneLevelId=arguments.getInt(C.Circle.CIRCLE_ONEID);
+            Log.e("sfsdfsdf",oneLevelId+"");
         }
 
         rcy_title=view.findViewById(R.id.rcy_title);
@@ -127,6 +183,38 @@ public class GoodDailyFragment extends BaseMainFragmeng {
             @Override
             public void onClick(View v) {
                 showPopupWindow(view2);
+            }
+        });
+
+        mListView=view.findViewById(R.id.listview);
+        dateNullView=view.findViewById(R.id.dateNullView);
+        goodsDialyAdapter=new GoodsDialyAdapter(getActivity());
+        LinearLayoutManager manager=new LinearLayoutManager(getActivity());
+        mListView.setLayoutManager(manager);
+        mListView.setAdapter(goodsDialyAdapter);
+
+        mListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mListView.getSwipeList().post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mListView.getSwipeList().setRefreshing(true);
+                    }
+                });
+                page = 1;
+                getData();
+            }
+        });
+        mListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (!mListView.getSwipeList().isRefreshing()) {
+                    page++;
+                    getData();
+                }
+
             }
         });
 
@@ -192,6 +280,21 @@ public class GoodDailyFragment extends BaseMainFragmeng {
             }
         });
 
+    }
+
+
+
+    //获取发圈数据
+    public Observable<BaseResponse<List<MarkermallCircleInfo>>> getMarkermallCircle() {
+        RequestMarkermallCircleBean requestBean = new RequestMarkermallCircleBean();
+        requestBean.setType(1);
+        requestBean.setPage(page);
+        requestBean.setOneLevelId(oneLevelId+"");
+
+
+        return RxHttp.getInstance().getGoodsService().getMarkermallCircle(requestBean)
+                .compose(RxUtils.<BaseResponse<List<MarkermallCircleInfo>>>switchSchedulers())
+                .compose(this.<BaseResponse<List<MarkermallCircleInfo>>>bindToLifecycle());
     }
 
 }

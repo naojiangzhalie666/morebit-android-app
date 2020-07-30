@@ -73,7 +73,7 @@ public class SelectGoodsAdapter2 extends RecyclerView.Adapter{
         StringsUtils.retractTitle(holder1.tv_icon, holder1.tv_title, info.getItemTitle());
         LoadImgUtils.loadingCornerBitmap(mContext, holder1.img, MathUtils.getPicture(info), 4);
         holder1.tv_price.setText(MathUtils.getnum(info.getVoucherPrice()));
-        holder1.volnum.setText("销量" + MathUtils.getSales(info.getSaleMonth()));
+        holder1.volnum.setText("月销" + MathUtils.getSales(info.getSaleMonth()));
         LoadImgUtils.loadingCornerBitmap(mContext, holder1.img, info.getImageUrl());
         if (StringsUtils.isEmpty(info.getCouponPrice())) {
             holder1.coupon.setVisibility(View.GONE);

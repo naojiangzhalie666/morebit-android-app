@@ -241,6 +241,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:text=""
+                        android:maxLength="16"
+                        android:ellipsize="end"
                         android:textColor="@color/color_999999"
                         android:textSize="14sp" />
 

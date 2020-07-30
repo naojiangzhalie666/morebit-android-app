@@ -79,8 +79,9 @@ public class StudyTitleAdapter extends RecyclerView.Adapter<StudyTitleAdapter.Vi
 
     public void setData(List<StudyRank> data) {
         if (data != null) {
+            list.clear();
             list.addAll(data);
-            notifyItemRangeChanged(0,data.size());
+            notifyDataSetChanged();
         }
     }
 
