@@ -2,8 +2,10 @@ package com.zjzy.morebit.Activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,7 +20,7 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.MarkermallCircleInfo;
-import com.zjzy.morebit.pojo.request.RequestMarkermallCircleBean;
+import com.zjzy.morebit.pojo.request.RequestCircleBransBean;
 import com.zjzy.morebit.utils.C;
 
 import java.util.List;
@@ -26,82 +28,34 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
-//发圈类目内容
-public class CircleActivity extends BaseActivity implements View.OnClickListener {
+/*
+ * 发圈搜索
+ * */
+public class CircleSearchActivity extends BaseActivity implements View.OnClickListener {
     private TextView txt_head_title;
     private LinearLayout btn_back;
-    private  String oneLevelId,type,title,twoLevelId;
     private ReUseListView mListView;
     private int page=1;
     private GoodsDialyAdapter goodsDialyAdapter;
     private LinearLayout dateNullView;
+    private EditText mEditText;
     private String circletype;
-    private String threeLevelId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_circle);
+        setContentView(R.layout.activity_circle_search);
         ImmersionBar.with(this)
                 .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                 .fitsSystemWindows(true)
                 .statusBarColor(R.color.white)
                 .init();
         initView();
-        initData();
-    }
-
-
-    private void initView() {
-        oneLevelId = getIntent().getStringExtra(C.Circle.CIRCLE_ONEID);
-        type = getIntent().getStringExtra(C.Circle.CIRCLE_TYPE);
-        title = getIntent().getStringExtra(C.Circle.CIRCLE_FUTITLE);
-        twoLevelId = getIntent().getStringExtra(C.Circle.CIRCLE_TWOID);
-        circletype=  getIntent().getStringExtra(C.Circle.CIRCLEFRAGMENT);
-        threeLevelId=getIntent().getStringExtra(C.Circle.CIRCLE_THREEID);
-        txt_head_title = (TextView) findViewById(R.id.txt_head_title);
-        if (!TextUtils.isEmpty(title)){
-            txt_head_title.setText(title);
-        }
-        txt_head_title.getPaint().setFakeBoldText(true);
-        btn_back = (LinearLayout) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(this);
-        mListView= (ReUseListView) findViewById(R.id.mListView);
-        dateNullView= (LinearLayout) findViewById(R.id.dateNullView);
-          goodsDialyAdapter=new GoodsDialyAdapter(this, Integer.parseInt(circletype));
-        LinearLayoutManager manager=new LinearLayoutManager(this);
-        mListView.setLayoutManager(manager);
-        mListView.setAdapter(goodsDialyAdapter);
-
-        mListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mListView.getSwipeList().post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mListView.getSwipeList().setRefreshing(true);
-                    }
-                });
-                page = 1;
-                initData();
-            }
-        });
-        mListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (!mListView.getSwipeList().isRefreshing()) {
-                    page++;
-                    initData();
-                }
-
-            }
-        });
 
     }
 
-
-    private void initData() {
-        getMarkermallCircle()
+    private void getData(String search) {
+        getSearchList(search)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -149,14 +103,72 @@ public class CircleActivity extends BaseActivity implements View.OnClickListener
             mListView.setVisibility(View.GONE);
             mListView.getListView().setNoMore(true);
         }
-
-
     }
 
     private void showError(String errCode, String errorMsg) {
 
     }
 
+    private void initView() {
+        circletype=  getIntent().getStringExtra(C.Circle.CIRCLEFRAGMENT);
+        txt_head_title = (TextView) findViewById(R.id.txt_head_title);
+        txt_head_title.setText("宣传素材");
+        txt_head_title.getPaint().setFakeBoldText(true);
+        btn_back = (LinearLayout) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(this);
+        mEditText= (EditText) findViewById(R.id.mEditText);
+        mListView= (ReUseListView) findViewById(R.id.mListView);
+        dateNullView= (LinearLayout) findViewById(R.id.dateNullView);
+        goodsDialyAdapter=new GoodsDialyAdapter(this, Integer.parseInt(circletype));
+        LinearLayoutManager manager=new LinearLayoutManager(this);
+        mListView.setLayoutManager(manager);
+        mListView.setAdapter(goodsDialyAdapter);
+
+        mListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mListView.getSwipeList().post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mListView.getSwipeList().setRefreshing(true);
+                    }
+                });
+                page = 1;
+                getSearch();
+            }
+        });
+        mListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (!mListView.getSwipeList().isRefreshing()) {
+                    page++;
+                    getSearch();
+                }
+
+            }
+        });
+
+
+        getSearch();
+
+
+
+    }
+
+    public void getSearch(){
+        mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String search = mEditText.getText().toString().trim();
+                    getData(search);
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
@@ -168,20 +180,15 @@ public class CircleActivity extends BaseActivity implements View.OnClickListener
     }
 
 
-    //获取发圈数据
-    public Observable<BaseResponse<List<MarkermallCircleInfo>>> getMarkermallCircle() {
-        RequestMarkermallCircleBean requestBean = new RequestMarkermallCircleBean();
-        requestBean.setPage(page);
-        requestBean.setOneLevelId(oneLevelId);
-        requestBean.setTwoLevelId(twoLevelId);
-        requestBean.setType(Integer.parseInt(type));
-        requestBean.setThreeLevelId(threeLevelId);
 
+    private Observable<BaseResponse<List<MarkermallCircleInfo>>> getSearchList(String mSearchName) {
+            RequestCircleBransBean requestCircleBean = new RequestCircleBransBean();
+            requestCircleBean.setName(mSearchName);
+            requestCircleBean.setPage(page);
+            return RxHttp.getInstance().getSysteService()
+                    .getCollectSearchList(requestCircleBean)
+                    .compose(RxUtils.<BaseResponse<List<MarkermallCircleInfo>>>switchSchedulers())
+                    .compose(this.<BaseResponse<List<MarkermallCircleInfo>>>bindToLifecycle());
 
-        return RxHttp.getInstance().getGoodsService().getMarkermallCircle(requestBean)
-                .compose(RxUtils.<BaseResponse<List<MarkermallCircleInfo>>>switchSchedulers())
-                .compose(this.<BaseResponse<List<MarkermallCircleInfo>>>bindToLifecycle());
-    }
-
-
+        }
 }

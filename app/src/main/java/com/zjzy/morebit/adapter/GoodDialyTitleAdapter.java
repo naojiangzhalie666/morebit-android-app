@@ -29,11 +29,16 @@ public class GoodDialyTitleAdapter extends RecyclerView.Adapter<GoodDialyTitleAd
     private Context context;
     private List<CategoryListChildDtos> list = new ArrayList<>();
     private int oneLevelId;
+    private int circletype;
+    private int twoLevelId;
 
-    public GoodDialyTitleAdapter(Context context, List<CategoryListChildDtos> mchild,int oneid) {
+    public GoodDialyTitleAdapter(Context context, List<CategoryListChildDtos> mchild,int oneid,int circletype,int twoLevelId) {
         this.context = context;
         this.list=mchild;
         this.oneLevelId=oneid;
+        this.circletype=circletype;
+        this.twoLevelId=twoLevelId;
+
 
     }
 
@@ -63,7 +68,13 @@ public class GoodDialyTitleAdapter extends RecyclerView.Adapter<GoodDialyTitleAd
                 intent.putExtra(C.Circle.CIRCLE_ONEID,oneLevelId+"");
                 intent.putExtra(C.Circle.CIRCLE_TYPE,list.get(position).getType()+"");
                 intent.putExtra(C.Circle.CIRCLE_FUTITLE,categoryTitle+"");
-                intent.putExtra(C.Circle.CIRCLE_TWOID,list.get(position).getId()+"");
+                if (circletype==0){
+                    intent.putExtra(C.Circle.CIRCLE_TWOID,list.get(position).getId()+"");
+                }else{
+                    intent.putExtra(C.Circle.CIRCLE_TWOID,twoLevelId+"");
+                    intent.putExtra(C.Circle.CIRCLE_THREEID,list.get(position).getId()+"");
+                }
+                intent.putExtra(C.Circle.CIRCLEFRAGMENT,circletype+"");
                 context.startActivity(intent);
             }
         });

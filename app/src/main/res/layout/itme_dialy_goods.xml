@@ -80,12 +80,12 @@
                     android:layout_width="match_parent"
                     android:layout_toLeftOf="@+id/tv_shart"
                     android:layout_height="wrap_content"
-                    android:maxLines="4"
+                    android:lineSpacingMultiplier="1.2"
                     android:text="DEPERLITE天丝四件套质感完全\n可以替代真丝啊！水洗完全不缩\n水，还不易皱轻奢风真的hin高级\n巨好看1"
                     android:textColor="#ff333333"
                     android:textSize="14sp"/>
 
-                <TextView
+              <!--  <TextView
                     android:layout_toRightOf="@+id/content"
                     android:layout_alignBottom="@+id/content"
                     android:layout_width="wrap_content"
@@ -94,20 +94,32 @@
                     android:layout_marginLeft="10dp"
                     android:textColor="#fff05557"
                     android:textSize="14sp"
-                    />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rcy_photo"
-                    android:nestedScrollingEnabled="false"
+                    />-->
+                <RelativeLayout
+                    android:id="@+id/rl"
                     android:layout_below="@+id/content"
                     android:layout_toRightOf="@+id/userIcon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rcy_photo"
+                        android:paddingLeft="-6dp"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                    </android.support.v7.widget.RecyclerView>
+
+
+
+                </RelativeLayout>
+
 
                 <com.zjzy.morebit.view.CopyTextView
                     android:id="@+id/tv_time"
                     android:layout_toRightOf="@+id/userIcon"
-                    android:layout_below="@+id/rcy_photo"
+                    android:layout_below="@+id/rl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2天前"

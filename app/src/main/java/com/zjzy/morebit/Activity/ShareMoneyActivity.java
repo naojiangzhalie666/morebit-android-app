@@ -630,7 +630,7 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
                 });
     }
 
-    ;
+
 
     public void getImg(final int pos) {
 

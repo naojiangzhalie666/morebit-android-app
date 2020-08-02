@@ -81,7 +81,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activity.CircleActivity"></activity>
+        <activity android:name=".Activity.CircleSearchActivity"></activity>
+        <activity android:name=".Activity.CircleActivity" />
         <activity android:name=".Activity.LifeServiceActivity" />
         <activity android:name=".Activity.RetailersActivity" />
         <activity android:name=".Activity.MyOrderActivity" />

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_white_left_top_ringht_top_round_20dp"
+        android:background="@color/white"
         android:orientation="vertical"
         android:id="@+id/ll_dialog"
         android:paddingTop="5dp">
@@ -22,20 +22,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="选择分享渠道"
+                android:text="分享图文到"
                 android:textColor="@color/color_333333"
                 android:id="@+id/title"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_16" />
 
-            <ImageButton
-                android:id="@+id/iv_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="12dp"
-                android:background="@color/transparent"
-                android:src="@drawable/icon_share_close" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -43,9 +35,30 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            android:paddingBottom="36dp"
-            android:paddingLeft="22dp"
-            android:paddingRight="22dp">
+            android:paddingBottom="12dp"
+           >
+
+            <LinearLayout
+                android:id="@+id/plct"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_share_money_plct"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="批量存图"
+                    android:textColor="@color/color_333333"
+                    android:textSize="12sp"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/weixinFriend"

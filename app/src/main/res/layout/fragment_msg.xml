@@ -471,6 +471,80 @@
                     />
 
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/activity_day"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_ffffff_8dp"
+                android:paddingLeft="10dp"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="70dp"
+                    android:layout_gravity="center"
+                    android:layout_height="70dp">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@mipmap/day_haohuo" />
+
+                    <ImageView
+                        android:id="@+id/img6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/notice_yuan"
+                        android:layout_alignParentRight="true"
+                        />
+                </RelativeLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="每日好货"
+                        android:textColor="#ff333333"
+                        android:textSize="18sp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="今日优选商品"
+                        android:textColor="#ff999999"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/notice_right"
+                    android:paddingRight="12dp"
+                    />
+
+            </LinearLayout>
 
 
         </LinearLayout>

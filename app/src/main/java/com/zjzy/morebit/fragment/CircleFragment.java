@@ -151,7 +151,12 @@ public class CircleFragment extends BaseMainFragmeng {
 //                mFragments.add(CircleCategoryFragment.newInstance(data.get(i).getChild(), data.get(i).getId(), data.get(i).getTitle()));
 //            }
 
-            mFragments.add(GoodDailyFragment.newInstance(categoryDtos,data.get(i).getId()));
+            if(i==0){
+                mFragments.add(GoodDailyFragment.newInstance(categoryDtos,data.get(i).getId(), Integer.parseInt(data.get(i).getType()),i));
+            }else{
+                mFragments.add(NewMaterialFragment.newInstance(categoryDtos,data.get(i).getId(), Integer.parseInt(data.get(i).getType()),i));
+            }
+
             mTitles[i] = data.get(i).getTitle();
         }
 //        mTitles[size]="商学院";

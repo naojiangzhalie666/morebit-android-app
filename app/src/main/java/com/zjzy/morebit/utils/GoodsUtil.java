@@ -68,6 +68,7 @@ import com.zjzy.morebit.pojo.goods.ShareUrlMoreBaen;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestCheckGoodsBean;
+import com.zjzy.morebit.pojo.request.RequestCircleShareBean;
 import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
 import com.zjzy.morebit.pojo.request.RequestPddShareContent;
 import com.zjzy.morebit.pojo.request.RequestTKLBean;
@@ -1951,4 +1952,6 @@ public static Bitmap returnBitMap(final String url){
                 });
 
     }
+
+
 }

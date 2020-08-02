@@ -58,6 +58,8 @@ public class MarkermallCircleInfo {
     private String labelPic;
     private int isRecommend;
 
+
+
     public String getLabelName() {
         return labelName;
     }

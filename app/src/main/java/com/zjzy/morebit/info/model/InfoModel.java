@@ -44,6 +44,7 @@ public class InfoModel extends MvpModel {
     public static final int msgAwardType = 3;//奖励
     public static final int msgFansType = 2;//粉丝
     public static final int msgActivityType = 6;//活动
+    public static final int msgGoodsype = 7;//活动
 
     //消息已读
     public Observable<BaseResponse<String>> getReadNotice(RxFragment fragment,int  type) {

@@ -1,6 +1,7 @@
 package com.zjzy.morebit.Module.service;
 
 import com.zjzy.morebit.pojo.ActivityLinkBean;
+import com.zjzy.morebit.pojo.CircleCopyBean;
 import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.FloorBean2;
@@ -119,6 +120,7 @@ import com.zjzy.morebit.pojo.request.RequestCircleBransBean;
 import com.zjzy.morebit.pojo.request.RequestCircleCollectBean;
 import com.zjzy.morebit.pojo.request.RequestCircleFeedBackBean;
 import com.zjzy.morebit.pojo.request.RequestCircleSearchBean;
+import com.zjzy.morebit.pojo.request.RequestCircleShareBean;
 import com.zjzy.morebit.pojo.request.RequestCircleShareCountBean;
 import com.zjzy.morebit.pojo.request.RequestCollectionListBean;
 import com.zjzy.morebit.pojo.request.RequestCommissionGoodsBean;
@@ -1619,7 +1621,7 @@ public interface CommonService {
      *
      * @return
      */
-    @POST("/api/order/life/getOrderList")
+    @POST("/api/order/life/getOrderListNew")
     public Observable<BaseResponse<List<ConsComGoodsInfo>>> getGoodsLiveOrder(@Body RequestGoodsOrderBean requestBean);
 
 
@@ -2704,5 +2706,13 @@ public interface CommonService {
      */
     @POST("/api/system/getVipRights")
     public Observable<BaseResponse<List<VipBean>>> getVipRights(@Body RequestBaseOs body);
+
+    /**
+     * 获取会员特权
+     *
+     * @return
+     */
+    @POST("/api/goods/getGoodsPurchaseLink")
+    public Observable<BaseResponse<CircleCopyBean>> getGoodsPurchaseLink(@Body RequestCircleShareBean body);
 
 }

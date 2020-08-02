@@ -50,6 +50,7 @@ public class ShopGoodInfo implements Serializable {
     private String dyLikeCount="";//抖货点赞数
     private String itemVideoPic="";//视频第一帧
 
+
     public String getDyLikeCount() {
         return dyLikeCount;
     }

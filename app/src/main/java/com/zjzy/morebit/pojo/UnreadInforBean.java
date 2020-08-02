@@ -17,8 +17,17 @@ public class UnreadInforBean implements Serializable {
         private boolean feedback;
         private boolean activity;
         private boolean system;
+        private boolean shop;
 
-        public boolean isFs() {
+    public boolean isShop() {
+        return shop;
+    }
+
+    public void setShop(boolean shop) {
+        this.shop = shop;
+    }
+
+    public boolean isFs() {
             return fs;
         }
 

@@ -74,11 +74,11 @@ public class MsgEarningsFragment extends BaseFragment implements View.OnClickLis
         txt_head_title = (TextView) view.findViewById(R.id.txt_head_title);
         txt_head_title.setText("收益通知");
         txt_head_title.setTextSize(18);
-        txt_head_title.getPaint().setFakeBoldText(true);
         btn_back = (LinearLayout) view.findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);
         title.add("普通订单");
         title.add("优选订单");
+        title.add("售后扣除");
 
         for (int i = 0; i < title.size(); i++) {
             MsgEarningsFragment2 fragment = null;

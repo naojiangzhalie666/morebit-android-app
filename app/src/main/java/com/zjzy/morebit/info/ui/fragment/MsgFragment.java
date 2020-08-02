@@ -71,8 +71,8 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     private int mNureadConut;
     private int page = 1;
     private MsgDayHotAdapter mAdapter;
-    private TextView tv1, tv2, tv3, tv4, tv5;
-    private ImageView img1, img2, img3, img4, img5;
+    private TextView tv1, tv2, tv3, tv4, tv5,tv6;
+    private ImageView img1, img2, img3, img4, img5,img6;
     private  UnreadInforBean mdata;
 
     private CommonEmpty mEmptyView;
@@ -127,6 +127,8 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
                     tv4.setText(data.getList().get(i).getMsg());
                 } else if (data.getList().get(i).getType() == 6) {
                     tv5.setText(data.getList().get(i).getMsg());
+                }else if (data.getList().get(i).getType()==7){
+                    tv6.setText(data.getList().get(i).getMsg());
                 }
             }
         }
@@ -154,11 +156,13 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
         tv3 = view.findViewById(R.id.tv3);
         tv4 = view.findViewById(R.id.tv4);
         tv5 = view.findViewById(R.id.tv5);
+        tv6 = view.findViewById(R.id.tv6);
         img1 = view.findViewById(R.id.img1);
         img2 = view.findViewById(R.id.img2);
         img3 = view.findViewById(R.id.img3);
         img4 = view.findViewById(R.id.img4);
         img5 = view.findViewById(R.id.img5);
+        img6 = view.findViewById(R.id.img6);
         getNotice();
 
         initPush();
@@ -229,6 +233,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
         img3.setVisibility(data.isSystem() ? View.VISIBLE : View.GONE);
         img4.setVisibility(data.isFeedback() ? View.VISIBLE : View.GONE);
         img5.setVisibility(data.isActivity() ? View.VISIBLE : View.GONE);
+        img6.setVisibility(data.isShop() ? View.VISIBLE : View.GONE);
 
     }
 
@@ -248,7 +253,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     }
 
 
-    @OnClick({R.id.back, R.id.msgSetIv, R.id.openNoticationBtn, R.id.closeNoticationIv, R.id.earningLay, R.id.fansLay, R.id.sysLay, R.id.feedbackLay, R.id.activity_huo})
+    @OnClick({R.id.back, R.id.msgSetIv, R.id.openNoticationBtn, R.id.closeNoticationIv, R.id.earningLay, R.id.fansLay, R.id.sysLay, R.id.feedbackLay, R.id.activity_huo,R.id.activity_day})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -285,6 +290,10 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
              //   getReadNoticed(6);
               //  mPresenter.getNoticede(this,6);
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgActiityFragment.class.getName(), new Bundle());
+                break;
+            case R.id.activity_day:
+
+                OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgGoodsFragment.class.getName(), new Bundle());
                 break;
             default:
                 break;

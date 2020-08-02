@@ -763,6 +763,7 @@ public class C {
         public static final String CIRCLE_THREEID ="CIRCLE_THREEID";
         public static final String CIRCLE_TYPE ="CIRCLE_TYPE";
         public static final String CIRCLE_FUTITLE ="CIRCLE_FUTITLE";
+        public static final String CIRCLEFRAGMENT ="CIRCLEFRAGMENT";
 
     }
 }

@@ -8,6 +8,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,18 +72,37 @@ public class GoodDailyFragment extends BaseMainFragmeng {
     private ImageView img_below;
     private View view2;
     private int oneLevelId;
+    private int twoLevelId;
+
     private ReUseListView mListView;
     private int page=1;
     private LinearLayout dateNullView;
     private GoodsDialyAdapter goodsDialyAdapter;
+    private int type;
+    private int  circletype;
 
 
 
-    public static GoodDailyFragment newInstance(List<CategoryListChildDtos> child, int id) {
+    public static GoodDailyFragment newInstance(List<CategoryListChildDtos> child, int id,int twoid,int type,int circletype,int threeid) {
         GoodDailyFragment fragment = new GoodDailyFragment();
         Bundle args = new Bundle();
         args.putSerializable(C.Circle.CIRCLE_TITLE, (Serializable) child);
         args.putInt(C.Circle.CIRCLE_ONEID, id);
+        args.putInt(C.Circle.CIRCLE_TWOID, twoid);
+        args.putInt(C.Circle.CIRCLE_THREEID, threeid);
+        args.putInt(C.Circle.CIRCLE_TYPE,type);
+        args.putInt(C.Circle.CIRCLEFRAGMENT,circletype);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    public static GoodDailyFragment newInstance(List<CategoryListChildDtos> child, int id,int type,int circletype) {
+        GoodDailyFragment fragment = new GoodDailyFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(C.Circle.CIRCLE_TITLE, (Serializable) child);
+        args.putInt(C.Circle.CIRCLE_ONEID, id);
+        args.putInt(C.Circle.CIRCLE_TYPE,type);
+        args.putInt(C.Circle.CIRCLEFRAGMENT,circletype);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -168,11 +189,14 @@ public class GoodDailyFragment extends BaseMainFragmeng {
         if (arguments != null) {
             mchild= (List<CategoryListChildDtos>) arguments.getSerializable(C.Circle.CIRCLE_TITLE);
             oneLevelId=arguments.getInt(C.Circle.CIRCLE_ONEID);
-            Log.e("sfsdfsdf",oneLevelId+"");
+            twoLevelId=arguments.getInt(C.Circle.CIRCLE_TWOID);
+            type=arguments.getInt(C.Circle.CIRCLE_TYPE);
+            circletype=arguments.getInt(C.Circle.CIRCLEFRAGMENT);
+            Log.e("sfsdfsdf",twoLevelId+"");
         }
 
         rcy_title=view.findViewById(R.id.rcy_title);
-        GoodDialyTitleAdapter titleAdapter=new GoodDialyTitleAdapter(getActivity(),mchild,oneLevelId);
+        GoodDialyTitleAdapter titleAdapter=new GoodDialyTitleAdapter(getActivity(),mchild,oneLevelId,circletype,type);
         LinearLayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rcy_title.setLayoutManager(gridLayoutManager);
@@ -188,7 +212,7 @@ public class GoodDailyFragment extends BaseMainFragmeng {
 
         mListView=view.findViewById(R.id.listview);
         dateNullView=view.findViewById(R.id.dateNullView);
-        goodsDialyAdapter=new GoodsDialyAdapter(getActivity());
+        goodsDialyAdapter=new GoodsDialyAdapter(getActivity(),circletype);
         LinearLayoutManager manager=new LinearLayoutManager(getActivity());
         mListView.setLayoutManager(manager);
         mListView.setAdapter(goodsDialyAdapter);
@@ -261,7 +285,7 @@ public class GoodDailyFragment extends BaseMainFragmeng {
         ImageView img_up = inflate.findViewById(R.id.img_up);
         LinearLayout ll=inflate.findViewById(R.id.ll);
 
-        GoodDialyTitleAdapter titleAdapter=new GoodDialyTitleAdapter(getActivity(),mchild,oneLevelId);
+        GoodDialyTitleAdapter titleAdapter=new GoodDialyTitleAdapter(getActivity(),mchild,oneLevelId,circletype,type);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),4);
         rcy.setLayoutManager(gridLayoutManager);
         rcy.setAdapter(titleAdapter);
@@ -287,10 +311,12 @@ public class GoodDailyFragment extends BaseMainFragmeng {
     //获取发圈数据
     public Observable<BaseResponse<List<MarkermallCircleInfo>>> getMarkermallCircle() {
         RequestMarkermallCircleBean requestBean = new RequestMarkermallCircleBean();
-        requestBean.setType(1);
+        requestBean.setType(type);
         requestBean.setPage(page);
         requestBean.setOneLevelId(oneLevelId+"");
-
+        if (twoLevelId!=0){
+            requestBean.setTwoLevelId(twoLevelId+"");
+        }
 
         return RxHttp.getInstance().getGoodsService().getMarkermallCircle(requestBean)
                 .compose(RxUtils.<BaseResponse<List<MarkermallCircleInfo>>>switchSchedulers())

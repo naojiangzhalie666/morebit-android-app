@@ -22,6 +22,15 @@ public class MarkermallCircleItemInfo implements Serializable {
     private int imageSource;
     private String link;
     private String pictureTitle;
+    private String shopType; //1-淘宝，2-天猫，3-拼多多，4-京东
+
+    public String getShopType() {
+        return shopType;
+    }
+
+    public void setShopType(String shopType) {
+        this.shopType = shopType;
+    }
 
     public String getPictureTitle() {
         return pictureTitle;

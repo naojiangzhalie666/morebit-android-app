@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -52,6 +53,7 @@ import com.app.hubert.guide.listener.OnPageChangedListener;
 import com.app.hubert.guide.model.GuidePage;
 import com.app.hubert.guide.model.HighLight;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout;
@@ -661,14 +663,26 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             }
         });
 
+
+
+
+        scrollerlayout.setOnPermanentStickyChangeListener(new ConsecutiveScrollerLayout.OnPermanentStickyChangeListener() {
+            @Override
+            public void onStickyChange(@NonNull List<View> mCurrentStickyViews) {//监听tablayout背景颜色
+                if (mCurrentStickyViews.size()<3){
+                    xablayout.setBackgroundColor(Color.parseColor("#F8F8F8"));
+                }else{
+                    xablayout.setBackgroundColor(Color.WHITE);
+                }
+            }
+        });
+
         scrollerlayout.setOnVerticalScrollChangeListener(new ConsecutiveScrollerLayout.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollY, int oldScrollY, int scrollState) {
 
                 int ownScrollY = scrollerlayout.getOwnScrollY();
-                Log.e("hhhh",scrollY+"");
-                Log.e("tttt",oldScrollY+"");
-                Log.e("yyyy",ownScrollY+"");
+                Log.e("hhhh",scrollState+"");
                 if (ownScrollY <=0 ) {
                     swipeRefreshLayout.setEnabled(true);//设置可触发
 
