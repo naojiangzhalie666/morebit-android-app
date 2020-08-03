@@ -76,7 +76,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
     private  UnreadInforBean mdata;
 
     private CommonEmpty mEmptyView;
-    private TextView tv_shouyi, tv_fans, tv_system, tv_answer, tv_activity;
+    private TextView tv_shouyi, tv_fans, tv_system, tv_answer, tv_activity,tv_day;
     private LinearLayout activity_huo;
 
     @Override
@@ -140,6 +140,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
     @Override
     protected void initView(View view) {
+        tv_day=view.findViewById(R.id.tv_day);
         tv_shouyi = view.findViewById(R.id.tv_shouyi);
         tv_fans = view.findViewById(R.id.tv_fans);
         tv_system = view.findViewById(R.id.tv_system);
@@ -150,6 +151,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
         tv_system.getPaint().setFakeBoldText(true);
         tv_fans.getPaint().setFakeBoldText(true);
         tv_shouyi.getPaint().setFakeBoldText(true);
+        tv_day.getPaint().setFakeBoldText(true);
         activity_huo = view.findViewById(R.id.activity_huo);
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);

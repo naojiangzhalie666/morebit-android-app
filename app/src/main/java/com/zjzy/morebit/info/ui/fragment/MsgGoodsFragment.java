@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
@@ -24,8 +26,11 @@ import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.network.CommonEmpty;
 import com.zjzy.morebit.pojo.EarningsMsg;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.action.MyAction;
 
 import java.util.List;
 
@@ -103,7 +108,7 @@ public class MsgGoodsFragment extends MvpFragment<MsgPresenter> implements MsgCo
         page = 1;
         mReUseListView.getListView().setNoMore(false);
         mReUseListView.getListView().setFootViewVisibility(View.GONE);
-        mPresenter.getMsg(this, InfoModel.msgActivityType, page, mEmptyView);
+        mPresenter.getMsg(this, InfoModel.msgGoodsype, page, mEmptyView);
     }
 
     @Override
@@ -207,7 +212,13 @@ public class MsgGoodsFragment extends MvpFragment<MsgPresenter> implements MsgCo
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        GoodsUtil.checkGoods((RxAppCompatActivity) mContext,item.getGoodsId(), new MyAction.One<ShopGoodInfo>() {
+                            @Override
+                            public void invoke(ShopGoodInfo arg) {
+                                MyLog.i("test", "arg: " + arg);
+                                GoodsDetailActivity.start(mContext, arg);
+                            }
+                        });
                     }
                 });
             }

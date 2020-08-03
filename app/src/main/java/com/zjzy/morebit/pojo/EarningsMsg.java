@@ -49,6 +49,15 @@ public class EarningsMsg implements Serializable {
     private String headImg;//头像
     private boolean hasEnd;//是否结束 true结束  false不结束
     private String contentDesc;//内容描述
+    private String goodsId;//商品id
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
 
     public String getReplyName() {
         return replyName;

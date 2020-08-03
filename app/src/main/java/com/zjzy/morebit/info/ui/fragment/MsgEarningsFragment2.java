@@ -63,7 +63,7 @@ public class MsgEarningsFragment2 extends MvpFragment<MsgPresenter> implements M
 
         }
         mEmptyView = new CommonEmpty(view, getString(R.string.no_msg), R.drawable.image_meiyouxiaoxi);
-        mAdapter = new MsgEarningsAdapter(getActivity());
+        mAdapter = new MsgEarningsAdapter(getActivity(),mtype);
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

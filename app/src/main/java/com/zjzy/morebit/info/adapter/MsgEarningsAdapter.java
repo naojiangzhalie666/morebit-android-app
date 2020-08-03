@@ -26,11 +26,13 @@ public class MsgEarningsAdapter extends SimpleAdapter<EarningsMsg, SimpleViewHol
 
     private LayoutInflater mInflater;
     private Context mContext;
+    private int type;
 
 
-    public MsgEarningsAdapter(Context context) {
+    public MsgEarningsAdapter(Context context, int mtype) {
         super(context);
         this.mContext = context;
+        type=mtype;
     }
 
     @Override
@@ -54,9 +56,17 @@ public class MsgEarningsAdapter extends SimpleAdapter<EarningsMsg, SimpleViewHol
             tv_order_type.setVisibility(View.VISIBLE);
             tv_order_money.setVisibility(View.VISIBLE);
             tv_order_type.setText(getString(R.string.order_type, item.getOrderSource()));
-            tv_order_money.setText(getString(R.string.order_money, item.getPayPrice()));
             String totalIncome = MathUtils.getTotleSubSidies(item.getCommission(), item.getSubsidy());
-            earnings.setText(getString(R.string.order_earnings, totalIncome));
+            if (type==3){
+                tv_order_money.setText("失效金额："+item.getPayPrice());
+
+                earnings.setText("失效佣金："+totalIncome);
+            }else{
+                tv_order_money.setText(getString(R.string.order_money, item.getPayPrice()));
+
+                earnings.setText(getString(R.string.order_earnings, totalIncome));
+            }
+
         }
         tv_order_sn.setText(getString(R.string.order_sn, item.getOrderId()));
         tv_name.setText(item.getMessage());

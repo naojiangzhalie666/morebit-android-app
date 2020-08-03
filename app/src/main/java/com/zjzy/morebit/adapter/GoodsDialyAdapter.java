@@ -23,9 +23,11 @@ import com.liulishuo.filedownloader.FileDownloadListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ShareDownloadDialog;
+import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CallBackObserver;
@@ -37,33 +39,45 @@ import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.MarkermallCircleItemInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.event.CirleUpdataShareCountEvent;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
 import com.zjzy.morebit.pojo.request.RequestCircleShareBean;
+import com.zjzy.morebit.pojo.request.RequestCircleShareCountBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.DownloadManage;
+import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PageToUtil;
+import com.zjzy.morebit.utils.ShareUtil;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
+import com.zjzy.morebit.utils.encrypt.EncryptUtlis;
 import com.zjzy.morebit.utils.share.ShareMore;
 import com.zjzy.morebit.utils.sys.RequestPermissionUtlis;
 import com.zjzy.morebit.view.CircleShareDialog;
 import com.zjzy.morebit.view.CopyTextView;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -154,14 +168,15 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
         if (!TextUtils.isEmpty(circleInfo.getName())){
             holder.title.setText(circleInfo.getName());
         }
-        final List<ShopGoodInfo> goods = circleInfo.getGoods();
-
-          arrayList = new ArrayList<>();
+        arrayList = new ArrayList<>();
         List<MarkermallCircleItemInfo> items = circleInfo.getShareRangItems();
         for (int i=0;i<items.size();i++){
             String picture = items.get(i).getPicture();
             arrayList.add(picture);
         }
+        final List<ShopGoodInfo> goods = circleInfo.getGoods();
+
+
         if (arrayList==null||arrayList.size()==0)
             return;
 
@@ -170,8 +185,6 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             }else{
                 manager=new GridLayoutManager(context,3);
             }
-
-
         holder.rcy_photo.setLayoutManager(manager);
         //设置图标的间距
         if (holder.rcy_photo.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
@@ -248,6 +261,12 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                     case 4://jd
                         getTao(shopType,itemSourceId);
                         break;
+                    default:
+                        AppUtil.coayTextPutNative((Activity) context,holder.tv_comment.getText().toString());
+                        ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
+                        //跳转微信
+                        PageToUtil.goToWeixin(context);
+                        break;
 
                 }
 
@@ -276,7 +295,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 //                            share(item, mLoadType);
 //                        } else {
 //                        SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"发圈",position,"","","","","","","",1,"");
-                    showChoosePicDialog((Activity) context, circleInfo);
+                    showChoosePicDialog((Activity) context, circleInfo,position);
 //                        }
                 }
             }
@@ -378,25 +397,25 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 
 
 
-    private void showChoosePicDialog(Activity context, final MarkermallCircleInfo circleInfo) {
+    private void showChoosePicDialog(Activity context, final MarkermallCircleInfo circleInfo, final int position) {
             shareDialog = new CircleShareDialog(context, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getshareCount(list.get(position).getId());
                 switch (v.getId()) {
                     case R.id.weixinFriend: //分享到好友
-                       // share(item, type, ShareUtil.WechatType);
+                        shareImg(ShareUtil.WechatType,circleInfo,position);
                         break;
                     case R.id.weixinCircle: //分享到朋友圈
-                       // share(item, type, ShareUtil.WeMomentsType);
+                        shareImg(ShareUtil.WeMomentsType,circleInfo,position);
                         break;
                     case R.id.qqFriend: //分享到QQ
-                       // share(item, type, ShareUtil.QQType);
+                        shareImg(ShareUtil.QQType,circleInfo,position);
                         break;
                     case R.id.qqRoom: //分享到QQ空间
-                       // share(item, type, ShareUtil.QQZoneType);
+                        shareImg(ShareUtil.QQZoneType,circleInfo,position);
                         break;
                     case R.id.plct: //批量存图
-                       // share(item, type, ShareUtil.WeiboType);
                         startSave(circleInfo.getShareRangItems());
                         break;
                     default:
@@ -412,6 +431,109 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             shareDialog.show();
         }
     }
+
+    private void getshareCount(int id) {
+        try {
+        RequestCircleShareCountBean requestBean = new RequestCircleShareCountBean();
+        requestBean.setId(id+"");
+        String sign = EncryptUtlis.getSign2(requestBean);
+        requestBean.setSign(sign);
+
+        RxHttp.getInstance().getOrdersService()
+                .getMarkermallShareCount(requestBean)
+                .compose(RxUtils.<BaseResponse>switchSchedulers())
+                .subscribe(new Consumer<BaseResponse>() {
+                    @Override
+                    public void accept(BaseResponse response) throws Exception {
+                       notifyDataSetChanged();
+                    }
+                });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /* 分享图片,
+     *
+     * @param picture
+     */
+    protected void shareImg(final int sharePlatform, MarkermallCircleInfo info, int position) {
+
+        final List<String> picture=new ArrayList<>();
+            LoadingView.showDialog(context, "");
+        List<MarkermallCircleItemInfo> shareRangItems= list.get(position).getShareRangItems();
+        for (int i=0;i<shareRangItems.size();i++){
+            picture.add(shareRangItems.get(i).getPicture());
+        }
+
+        Observable.just(picture)
+                .observeOn(Schedulers.io())
+                .map(new Function<List<String>, Map<String, File>>() {
+                    @Override
+                    public Map<String, File> apply(List<String> strings) throws Exception {
+                        Map<String, File> map = new HashMap<>();
+                        for (int i = 0; i < picture.size(); i++) {
+                            final String s = picture.get(i);
+                            if (TextUtils.isEmpty(s)) {
+                                continue;
+                            }
+                            Bitmap bitmap = null;
+                            File img = null;
+                            try {
+                                bitmap = LoadImgUtils.getImgBitmapOnIo1(context, s);
+                                String pictureName = FileUtils.getPictureName(s);
+                                img = GoodsUtil.saveBitmapToFile(context, bitmap, pictureName);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            if (bitmap == null || img == null) continue;
+                            map.put(s, img);
+                        }
+                        return map;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        LoadingView.dismissDialog();
+                    }
+                })
+                .subscribe(new CallBackObserver<Map<String, File>>() {
+                    @Override
+                    public void onNext(Map<String, File> map) {
+                        ArrayList<File> urlList = new ArrayList();
+                        for (String str : picture) {
+                            if (!TextUtils.isEmpty(str)) {
+                                File file = map.get(str);
+                                if (file != null) {
+                                    urlList.add(file);
+                                }
+                            }
+                        }
+
+                        if (urlList.size() != 0) {
+                            if (sharePlatform == ShareUtil.WeMomentsType && urlList.size() > 1) {
+                                ViewShowUtils.showShortToast(context, context.getString(R.string.save_succeed));
+                            } else {
+                                GoodsUtil.sysShareImage(context, urlList, sharePlatform);
+                                LoadingView.dismissDialog();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+
+    }
+
+
+
 
     private void startSave(List<MarkermallCircleItemInfo> circleInfo) {
 
