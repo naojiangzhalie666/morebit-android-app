@@ -59,51 +59,23 @@
                     android:layout_height="wrap_content"
                     android:text="我是昵称啊啊"
                     android:textColor="#ff333333"
-                    android:maxEms="6"
+                    android:maxLength="8"
                     android:ellipsize="end"
                     android:textSize="16sp"
                     />
-                <TextView
-                    android:id="@+id/phone"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:ellipsize="end"
-                   android:layout_toRightOf="@+id/name"
-                    android:lineSpacingExtra="4dp"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:text="15600716026"
-                    android:textColor="@color/color_999999"
-                    android:layout_marginLeft="12dp"
-                    android:textSize="15sp" />
 
 
 
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/authorization"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/bg_corners_f8ce77_30"
-                    android:gravity="center"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
-                    android:paddingTop="2dp"
-                    android:text="已授权"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
+
+
             </RelativeLayout>
 
 
 
             <LinearLayout
+                android:id="@+id/ll_vip"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_white_stroke_f05557_9dp"
+                android:background="@drawable/bg_e9c8a7_round_9dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -111,7 +83,7 @@
                     android:id="@+id/vip_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/vip_icon_right"
+                    android:src="@mipmap/vip_icon_right2"
                     android:paddingLeft="8dp"
                     android:layout_gravity="center_vertical"
                     />
@@ -126,8 +98,8 @@
                     android:layout_marginLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingTop="2dp"
-                    android:text="普通会员"
-                    android:textColor="@color/color_F05557"
+                    android:text="VIP"
+                    android:textColor="#A8947A"
                     android:textSize="12sp" />
 
             </LinearLayout>

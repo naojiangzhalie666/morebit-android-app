@@ -229,9 +229,22 @@
                         android:textColor="#ff975400"
                         android:textSize="14sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_qiang2"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_litmitskill2"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="19点\n开抢"
+                    android:textColor="#ffffffff"
+                    android:textSize="12sp"
+                    />
             </RelativeLayout>
         </LinearLayout>
-
 
     </RelativeLayout>
     <View

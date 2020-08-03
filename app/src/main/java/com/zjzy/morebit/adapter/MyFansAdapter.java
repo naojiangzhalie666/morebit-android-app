@@ -21,6 +21,7 @@ import com.zjzy.morebit.R;
 
 import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 
@@ -112,14 +113,16 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.ViewHolder
 
         if ("0".equals(info.getFsType())){
             viewHolder.tv_zhuan.setText("专属");
+            viewHolder.tv_zhuan.setBackgroundResource(R.drawable.bg_fans_ff5b4d_4dp);
         }else{
             viewHolder.tv_zhuan.setText("普通");
+            viewHolder.tv_zhuan.setBackgroundResource(R.drawable.bg_fans_d8d8d8_4dp);
         }
 
         if ("0".equals(info.getUserType())){
-            viewHolder.vip_img2.setImageResource(R.mipmap.vip_icon_right);
+            viewHolder.vip_img2.setImageResource(R.mipmap.vip_icon_right2);
         }else{
-            viewHolder.vip_img2.setImageResource(R.mipmap.vip_bg_icon2);
+            viewHolder.vip_img2.setImageResource(R.mipmap.vip_bg_icon);
         }
 
 

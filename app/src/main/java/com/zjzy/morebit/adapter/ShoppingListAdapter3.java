@@ -22,6 +22,7 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
+import com.zjzy.morebit.utils.ViewShowUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            return new ViewHolder(mInflater.inflate(R.layout.item_shoppingaole4, parent, false));
+        return new ViewHolder(mInflater.inflate(R.layout.item_shoppingaole4, parent, false));
 
 
     }
@@ -59,7 +60,7 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
         if (data != null) {
             mDatas.clear();
             mDatas.addAll(data);
-           // notifyItemRangeChanged(0,data.size());
+            // notifyItemRangeChanged(0,data.size());
             //处理官方推荐
             if (C.GoodsListType.officialrecomList == mType) {
                 slFlag.clear();
@@ -71,8 +72,6 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
             }
         }
     }
-
-
 
 
     /**
@@ -94,58 +93,66 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
         viewHolder.textview_original.setText(MathUtils.getnum(info.getVoucherPrice()));
         viewHolder.textvihew_Preco.setText("¥ " + MathUtils.getnum(info.getPrice()));
         viewHolder.textvihew_Preco.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        String  itemLabeling = info.getItemLabeling();
-        if(!TextUtils.isEmpty(info.getMarkValue()) && info.getItemFrom().equals("1") && showHotTag){
+        String itemLabeling = info.getItemLabeling();
+        if (!TextUtils.isEmpty(info.getMarkValue()) && info.getItemFrom().equals("1") && showHotTag) {
             viewHolder.markTv.setVisibility(View.VISIBLE);
             viewHolder.markTv.setBackgroundResource(R.drawable.bg_search_recommod_good);
             viewHolder.markTv.setText(info.getMarkValue());
-        }else if(!TextUtils.isEmpty(itemLabeling)
-        && (itemLabeling !=null && !itemLabeling.equals("NULL"))){
+        } else if (!TextUtils.isEmpty(itemLabeling)
+                && (itemLabeling != null && !itemLabeling.equals("NULL"))) {
             viewHolder.markTv.setVisibility(View.VISIBLE);
             viewHolder.markTv.setText(info.getItemLabeling());
-        }else{
+        } else {
             viewHolder.markTv.setVisibility(View.GONE);
         }
         viewHolder.momVolume.setText("销量：" + MathUtils.getSales(info.getSaleMonth()));
 
-        viewHolder.textview.setText(info.getItemTitle()+"");
+        viewHolder.textview.setText(info.getItemTitle() + "");
 
 
+        viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum(info.getCouponPrice())));
 
 
+        if (!TextUtils.isEmpty(info.getCommission())) {
+            viewHolder.commission.setText(mContext.getString(R.string.mcommission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
+        }
 
 
+        if (TextUtils.isEmpty(info.getVideoid()) || "0".equals(info.getVideoid())) {
+            viewHolder.video_play.setVisibility(View.GONE);
+        } else {
+            viewHolder.video_play.setVisibility(View.VISIBLE);
+        }
 
 
-            viewHolder.coupon.setText(mContext.getString(R.string.yuan, MathUtils.getnum(info.getCouponPrice())));
-
-
-            if (!TextUtils.isEmpty(info.getCommission())){
-                viewHolder.commission.setText(mContext.getString(R.string.mcommission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), info.getCommission())));
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodsDetailActivity.start(mContext, info);
             }
+        });
 
 
-            if (TextUtils.isEmpty(info.getVideoid()) || "0".equals(info.getVideoid())) {
-                viewHolder.video_play.setVisibility(View.GONE);
-            } else {
-                viewHolder.video_play.setVisibility(View.VISIBLE);
+        if (mDatas.size() - 1 == position && mDatas.size() != 0) {
+            viewHolder.line.setVisibility(View.GONE);
+        } else {
+            viewHolder.line.setVisibility(View.VISIBLE);
+        }
+
+
+        if (C.GoodsListType.ForeShow_1 == mType) {//即将开抢
+            viewHolder.tv_qiang2.setText(info.getCountDownStr()+"\n开抢");
+            viewHolder.tv_qiang2.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.tv_qiang2.setVisibility(View.GONE);
+        }
+
+        viewHolder.tv_qiang2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewShowUtils.showShortToast(mContext,"活动即将开始，敬请期待");
             }
-
-
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    GoodsDetailActivity.start(mContext, info);
-                }
-            });
-
-
-
-            if (mDatas.size()-1==position&&mDatas.size()!=0){
-                viewHolder.line.setVisibility(View.GONE);
-            }else{
-                viewHolder.line.setVisibility(View.VISIBLE);
-            }
+        });
 
     }
 
@@ -154,7 +161,6 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
     public int getItemCount() {
         return mDatas == null ? 0 : mDatas.size();
     }
-
 
 
     public void setMaterialID(String materialID) {
@@ -169,14 +175,15 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
         LinearLayout return_cash;
         RelativeLayout toDetail, img_rl;
         ImageView select_tag, video_play;
-        View iv_icon_bg, ll_prise,line;
+        View iv_icon_bg, ll_prise, line;
         ImageView checkBox, good_mall_tag;
         private TextView markTv;
+        private TextView tv_qiang2;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            markTv = (TextView)itemView.findViewById(R.id.markTv);
+            markTv = (TextView) itemView.findViewById(R.id.markTv);
             textview = (TextView) itemView.findViewById(R.id.title);
             textview_original = (TextView) itemView.findViewById(R.id.discount_price);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
@@ -188,13 +195,15 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
             select_tag = (ImageView) itemView.findViewById(R.id.select_tag);
             video_play = (ImageView) itemView.findViewById(R.id.video_play);
             iv_icon_bg = (View) itemView.findViewById(R.id.iv_icon_bg);
-            line=itemView.findViewById(R.id.line);
+            line = itemView.findViewById(R.id.line);
+            tv_qiang2 = itemView.findViewById(R.id.tv_qiang2);
 
         }
     }
 
     private class OuterViewHolder extends RecyclerView.ViewHolder {
-            View line;
+        View line;
+
         public OuterViewHolder(View itemView) {
             super(itemView);
             line = itemView.findViewById(R.id.line);

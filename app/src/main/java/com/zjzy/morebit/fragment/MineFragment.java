@@ -1,6 +1,7 @@
 package com.zjzy.morebit.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -232,7 +233,9 @@ public class MineFragment extends BaseMainFragmeng {
     private TextView tv_mine;
     private String newUrl, customerUrl;
     private LinearLayout ll_myhead;
-    private   RelativeLayout rl_myhead;;
+    private   RelativeLayout rl_myhead;
+    private ImageView img_yu;
+    private    String balance;
 
 
     @Override
@@ -383,32 +386,39 @@ public class MineFragment extends BaseMainFragmeng {
         }
 
         if (C.UserType.member.equals(info.getPartner())) {
-            tvUserType.setText("普通会员");
-            icon_tou.setImageResource(R.mipmap.mine_memeber_icon);
+            llUserGrade.setBackgroundResource(R.drawable.bg_e9c8a7_round_9dp);
+            tvUserType.setText("VIP");
+            tvUserType.setTextColor(Color.parseColor("#A8947A"));
+            icon_tou.setImageResource(R.mipmap.vip_icon_right2);
             tv1.setVisibility(View.VISIBLE);
             tv1.setText("升级");
-            tv2.setText("VIP");
+            tv2.setText("掌柜(黄金)");
             tv3.setText("享更多权益");
             tv4.setText("立即升级");
 
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
-            tvUserType.setText("VIP");
-            icon_tou.setImageResource(R.mipmap.mine_vip_icon);
+            tvUserType.setText("掌柜(黄金)");
+            llUserGrade.setBackgroundResource(R.drawable.bg_vip_round_9dp);
+            tvUserType.setTextColor(Color.parseColor("#FCAF00"));
+            icon_tou.setImageResource(R.mipmap.vip_bg_icon);
             tv1.setVisibility(View.VISIBLE);
             tv1.setText("升级");
-            tv2.setText("团队长");
+            tv2.setText("掌柜(黑金)");
             tv3.setText("享更多权益");
             tv4.setText("立即升级");
 
         } else if (C.UserType.operator.equals(info.getPartner())) {
-            tvUserType.setText("团队长");
-            icon_tou.setImageResource(R.mipmap.mine_operator_icon);
+            tvUserType.setText("掌柜(黑金)");
+            llUserGrade.setBackgroundResource(R.drawable.bg_opertoater_round_9dp);
+            tvUserType.setTextColor(Color.parseColor("#222222"));
+            icon_tou.setImageResource(R.mipmap.group_bg_icon);
             tv1.setVisibility(View.GONE);
-            tv2.setText("团队长");
+            tv2.setText("掌柜(黑金)");
             tv3.setText("权益享不停");
             tv4.setText("查看权益");
         }
         if (!TextUtils.isEmpty(info.getBalance())) {
+            balance = info.getBalance();
             tv_tixian.setText("¥ " + info.getBalance());
         }
 
@@ -485,7 +495,7 @@ public class MineFragment extends BaseMainFragmeng {
             R.id.my_team, R.id.order_detail, R.id.share_friends, R.id.tv_y, R.id.iv_wenhao,
             R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon, R.id.offen_question, R.id.order_search,
             R.id.my_footmarker, R.id.my_favorite, R.id.my_little, R.id.user_agreemen, R.id.privacy_agreement,
-            R.id.ll_new, R.id.ll_coustom, R.id.ll_jian, R.id.tv_wx, R.id.img_right, R.id.ll_dragon, R.id.integer_icon,
+            R.id.ll_new, R.id.ll_coustom, R.id.ll_jian, R.id.tv_wx, R.id.img_right, R.id.ll_dragon, R.id.img_yu,
             R.id.tv4,R.id.ll_myhead})
     public void onClick(View v) {
         if (LoginUtil.checkIsLogin(getActivity())){
@@ -561,22 +571,23 @@ public class MineFragment extends BaseMainFragmeng {
               //  openDialog("累计收益说明", "累计收益=已提现金额+余额");
                 break;
             case R.id.tv_withdraw: //提现
+
                 mInfoModel.checkWithdrawTime(this)
                         .subscribe(new DataObserver<String>(false) {
                             @Override
                             protected void onSuccess(String data) {
                                 UserInfo info = UserLocalData.getUser(getActivity());
-                                if (TextUtils.isEmpty(mTotalMoney)) {
-                                    mTotalMoney = "0";
+                                if (TextUtils.isEmpty(balance)) {
+                                      balance  = "0";
                                 }
-                                if (Double.parseDouble(mTotalMoney) < 1) {
+                                if (Double.parseDouble(balance) < 1) {
                                     ViewShowUtils.showShortToast(getActivity(), "不足1元，无法提现");
                                 } else {
                                     if (TaobaoUtil.isAuth()) {   //淘宝授权
                                         TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
                                     } else {
                                         if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
-                                            AppUtil.gotoCashMoney(getActivity(), mTotalMoney);
+                                            AppUtil.gotoCashMoney(getActivity(), balance);
                                         } else {
                                             PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
                                             ToastUtils.showLong("请先绑定支付宝!");
@@ -592,7 +603,7 @@ public class MineFragment extends BaseMainFragmeng {
                                 MyLog.i("test", "errCode: " + errCode);
                                 double money = 0;
                                 try {
-                                    money = Double.parseDouble(mTotalMoney);
+                                    money = Double.parseDouble(balance);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -642,7 +653,7 @@ public class MineFragment extends BaseMainFragmeng {
             case R.id.ll_dragon://粉丝龙虎榜
                 startActivity(new Intent(getActivity(), FansDragonActivity.class));
                 break;
-            case R.id.integer_icon://积分弹框
+            case R.id.img_yu://积分弹框
                 InterIconDialog iconDialog = new InterIconDialog(getActivity());
                 iconDialog.show();
                 break;

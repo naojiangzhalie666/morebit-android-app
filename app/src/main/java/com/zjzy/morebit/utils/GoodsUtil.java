@@ -1926,7 +1926,7 @@ public static Bitmap returnBitMap(final String url){
     }
 
 
-    //获取vip页面地址
+    //获取注销页面
     public static  void getLogout(final Context context){
 
         RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.LOGOUT_H5))
@@ -1953,5 +1953,31 @@ public static Bitmap returnBitMap(final String url){
 
     }
 
+    //获取vip页面地址
+    public static  void getOrderSearch(final Context context){
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.ORDER_TRACKING))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            ShowWebActivity.start((Activity) context,commssionH5,"订单找回");
+                        }
+
+                        Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
+
+    }
 
 }

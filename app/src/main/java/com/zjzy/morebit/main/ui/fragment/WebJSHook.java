@@ -15,6 +15,7 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
@@ -23,13 +24,20 @@ import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
+import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
+import com.zjzy.morebit.Module.common.Dialog.InputVerificationCodeDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.OpinionpReplyFragment;
 import com.zjzy.morebit.info.ui.AppFeedActivity;
 import com.zjzy.morebit.login.ui.LoginMainFragment;
+import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CallBackObserver;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.AppUpgradeInfo;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
@@ -62,6 +70,7 @@ import java.io.File;
 public class WebJSHook {
     private Fragment mFragment;
     private SharePopwindow sharePopwindow;
+    private String mAccountDestroyHit;
 
     public WebJSHook(ShowWebFragment fragment) {
         this.mFragment = fragment;
@@ -103,6 +112,20 @@ public class WebJSHook {
             }
         });
     }
+
+
+    /**
+     * 账号注销
+     */
+    @JavascriptInterface
+    public void RegularOpreate(int type,String content) {
+        if (TextUtils.isEmpty(mAccountDestroyHit)) {
+            getAccountDestroyHint();
+        } else {
+            openAccountDestroyDialog(mAccountDestroyHit);
+        }
+    }
+
 
 
     /**
@@ -775,6 +798,44 @@ type: Int/// 0是网络图片、1是base64图片
         return userInfo.getHeadImg();
 
     }
+    /**
+     * 返回账号注销提示
+     */
+    private void getAccountDestroyHint() {
+        RxHttp.getInstance().getCommonService().getRtnInfo()
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        if (!TextUtils.isEmpty(data.getSysValue())) {
+                            mAccountDestroyHit = data.getSysValue();
+                            openAccountDestroyDialog(data.getSysValue());
+                        }
+                    }
+                });
 
+    }
+
+    private void openAccountDestroyDialog(String data) {  //注销确认弹窗
+        if (TextUtils.isEmpty(data)) return;
+        ClearSDdataDialog  mAccountDestroyDialog = new ClearSDdataDialog(mFragment.getActivity(), R.style.dialog, "提示", data, new ClearSDdataDialog.OnOkListener() {
+            @Override
+            public void onClick(View view, String text) {
+                destroyAccount();
+            }
+        });
+        mAccountDestroyDialog.setOkTextAndColor(R.color.color_FF4848, "确认注销");
+        mAccountDestroyDialog.setCancelTextAndColor(R.color.color_808080, "再想想");
+        mAccountDestroyDialog.show();
+    }
+
+    /**
+     * 账号注销
+     */
+    private void destroyAccount() {
+        InputVerificationCodeDialog mInputVerificationCodeDialog = new InputVerificationCodeDialog((RxAppCompatActivity) mFragment.getActivity());
+        mInputVerificationCodeDialog.show();
+
+    }
 
 }

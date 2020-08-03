@@ -313,7 +313,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     AppUtil.coayText((Activity) mContext, info.getOrderSn());
-                    ViewShowUtils.showShortToast(mContext, mContext.getString(R.string.coayTextSucceed));
+                    ViewShowUtils.showShortToast(mContext, "已复制订单号，点击粘贴文案");
                 }
             });
 

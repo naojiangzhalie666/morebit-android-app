@@ -100,7 +100,7 @@ public class CustomerDialog extends Dialog {
         copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtil.coayText((Activity) mContext,   tv_wx.getText().toString().trim());
+                AppUtil.coayText((Activity) mContext,   mdata.getWxNumber()+"");
                 Toast.makeText(mContext, "复制成功", Toast.LENGTH_SHORT).show();
             }
         });

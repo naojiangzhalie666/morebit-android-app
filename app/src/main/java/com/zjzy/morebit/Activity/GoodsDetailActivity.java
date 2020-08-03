@@ -392,7 +392,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getVideoid()) || "0".equals(mGoodsInfo.getVideoid())) {
             videopaly_btn.setVisibility(View.GONE);
         } else {
-            videopaly_btn.setVisibility(View.VISIBLE);
+            videopaly_btn.setVisibility(View.GONE);
         }
         go_top.setOnClickListener(new View.OnClickListener() {
             @Override

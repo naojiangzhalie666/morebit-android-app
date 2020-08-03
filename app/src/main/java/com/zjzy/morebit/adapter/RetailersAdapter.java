@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.ShowWebActivity;
+import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.VideoPlayerActivity;
 import com.zjzy.morebit.pojo.Article;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -113,10 +115,19 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
             @Override
             public void onClick(View v) {
                 AppUtil.coayText((Activity) context, info.getOrderSn());
-                ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
+                ViewShowUtils.showShortToast(context, "已复制订单号，点击粘贴文案");
             }
         });
 
+        holder.img_question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfo usInfo = UserLocalData.getUser(context);
+                if (!TextUtils.isEmpty(usInfo.getProblemUrl())){
+                    ShowWebActivity.start((Activity) context,usInfo.getProblemUrl(),"常见问题");
+                }
+            }
+        });
 
     }
 

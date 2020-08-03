@@ -116,6 +116,7 @@ public class ShopGoodInfo implements Serializable {
     private String couponendtime;//优惠券结束时间
     private String itemdesc;//推荐语
 
+
     public int getShoptype() {
         return shoptype;
     }

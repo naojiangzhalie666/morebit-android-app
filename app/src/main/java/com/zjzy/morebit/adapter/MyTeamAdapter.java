@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -73,7 +74,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
         final TeamInfo info = mDatas.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
 //        ImageLoader.getInstance().displayImage(info.getHeadImg(), viewHolder.userIcon, options);
-        viewHolder.phone.setText(LoginUtil.hideNumber(info.getPhone()));
+
         LoadImgUtils.setImgHead(mContext,viewHolder.userIcon,info.getHeadImg());
         if(MyTeamListFragment.TYPE_DYNAMIC_RANK_ACTIVITY.equals(mType)){
             if(!TextUtils.isEmpty(info.getLastActiveTime())){
@@ -98,11 +99,15 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
         }
         viewHolder.tv_yao.setText("邀请人："+info.getInvitationUserName());
         if(C.UserType.member.equals(info.getUserType()+"")){
-            viewHolder.vip_img.setImageResource(R.mipmap.vip_icon_right);
-            viewHolder.userLevel.setText("普通会员");
-        } else {
-            viewHolder.vip_img.setImageResource(R.mipmap.vip_bg_icon2);
+            viewHolder.vip_img.setImageResource(R.mipmap.vip_icon_right2);
             viewHolder.userLevel.setText("VIP");
+            viewHolder.ll_vip.setBackgroundResource(R.drawable.bg_e9c8a7_round_9dp);
+            viewHolder.userLevel.setTextColor(Color.parseColor("#A8947A"));
+        } else {
+            viewHolder.vip_img.setImageResource(R.mipmap.vip_bg_icon);
+            viewHolder.userLevel.setText("掌柜(黄金)");
+            viewHolder.ll_vip.setBackgroundResource(R.drawable.bg_vip_round_9dp);
+            viewHolder.userLevel.setTextColor(Color.parseColor("#FCAF00"));
         }
         viewHolder.people_count.setText("粉丝数"+info.getChildCount());
         viewHolder.item_ly.setOnClickListener(new View.OnClickListener() {
@@ -133,11 +138,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
             viewHolder.tv_remark.setText(mContext.getString(R.string.fans_remark,info.getRemark()));
         }
 
-        if (TextUtils.isEmpty(info.getSpecialId())){
-            viewHolder.authorization.setVisibility(View.GONE);
-        }else{
-            viewHolder.authorization.setVisibility(View.VISIBLE);
-        }
+
 
 
     }
@@ -149,27 +150,28 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView userIcon;
-        TextView phone, userLevel, createTime, people_count,tv_remark,input_remark,authorization,name,tv_yao;
+        TextView  userLevel, createTime, people_count,tv_remark,input_remark,name,tv_yao;
         View bottomLine;
         RelativeLayout item_ly;
         ImageView vip_img;
+        LinearLayout ll_vip;
 
         public ViewHolder(View itemView) {
             super(itemView);
             item_ly = (RelativeLayout) itemView.findViewById(R.id.item_ly);
             userIcon = (RoundedImageView) itemView.findViewById(R.id.userIcon);
 
-            phone = (TextView) itemView.findViewById(R.id.phone);
             bottomLine = (View) itemView.findViewById(R.id.bottomLine);
             userLevel = (TextView) itemView.findViewById(R.id.userLevel);
             createTime = (TextView) itemView.findViewById(R.id.createTime);
             tv_remark = (TextView) itemView.findViewById(R.id.tv_remark);
             input_remark = (TextView) itemView.findViewById(R.id.input_remark);
             people_count = (TextView) itemView.findViewById(R.id.people_count);
-            authorization=itemView.findViewById(R.id.authorization);
+
             name = (TextView) itemView.findViewById(R.id.name);
             vip_img=itemView.findViewById(R.id.vip_img);
             tv_yao=itemView.findViewById(R.id.tv_yao);
+            ll_vip=itemView.findViewById(R.id.ll_vip);
         }
     }
 

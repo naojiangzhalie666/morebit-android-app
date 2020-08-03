@@ -39,7 +39,7 @@
                 <ImageView
                     android:id="@+id/iv_wenhao"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/order_question" />
 
@@ -100,8 +100,9 @@
 
 
                 <ImageView
+                    android:id="@+id/img_yu"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/order_question" />

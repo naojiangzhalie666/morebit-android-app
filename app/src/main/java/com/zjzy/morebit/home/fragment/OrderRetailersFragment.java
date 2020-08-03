@@ -119,8 +119,10 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
                         mAdapter.setData(data);
                     }else{
                         mAdapter.addData(data);
-                        mReUseListView.getListView().setNoMore(true);
+                        mReUseListView.getListView().setNoMore(false);
                     }
+
+                    page++;
 
                 }else{
                     dateNullView.setVisibility(View.VISIBLE);
@@ -161,10 +163,10 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
         mReUseListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                if (!mReUseListView.getSwipeList().isRefreshing()) {
-                    page++;
-                   getData(teamType);
-                }
+//                if (!mReUseListView.getSwipeList().isRefreshing()) {
+//
+//                }
+                getData(teamType);
 
             }
         });
@@ -192,7 +194,7 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
         page = 1;
         mReUseListView.getListView().setNoMore(false);
         mReUseListView.getListView().setMarkermallNoMore(true);
-        mReUseListView.getListView().setFootViewVisibility(View.VISIBLE);
+        mReUseListView.getListView().setFootViewVisibility(View.GONE);
         mReUseListView.getListView().setFooterViewHint("","仅支持查看近3个月订单","");
         getData(teamType);
     }

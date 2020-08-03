@@ -15,6 +15,7 @@ import com.zjzy.morebit.info.ui.fragment.OrderDetailFragment;
 import com.zjzy.morebit.order.ui.OrderTeamActivity;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 
@@ -98,9 +99,7 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.search_rl:
-                if (orderSearch != null) {
-                    BannerInitiateUtils.gotoAction(this, orderSearch);
-                }
+                GoodsUtil.getOrderSearch(this);
                 break;
             case R.id.order_all://全部订单
                 RetailersActivity.start(this, 0);

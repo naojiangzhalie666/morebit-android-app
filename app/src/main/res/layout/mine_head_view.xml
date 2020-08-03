@@ -74,7 +74,7 @@
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
                         android:layout_toRightOf="@id/userName"
-                        android:background="@drawable/bg_5f2c06_round_9dp"
+                        android:background="@drawable/bg_e9c8a7_round_9dp"
                         android:paddingRight="8dp">
 
                         <ImageView
@@ -83,15 +83,15 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:scaleType="centerInside"
-                            android:src="@mipmap/mine_memeber_icon" />
+                            android:src="@mipmap/vip_icon_right2" />
 
                         <TextView
                             android:id="@+id/tv_user_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="普通会员"
-                            android:textColor="@color/color_FEEACE"
+                            android:text="VIP"
+                            android:textColor="#A8947A"
                             android:textSize="@dimen/sp_12" />
                     </LinearLayout>
 

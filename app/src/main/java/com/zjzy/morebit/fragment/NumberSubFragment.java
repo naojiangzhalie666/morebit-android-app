@@ -176,7 +176,7 @@ public class NumberSubFragment extends BaseFragment {
     private RoundedImageView vip_tou;
     private TextView vip_name, vip_grade, group_quanyi, more_corn_biaozhun, vip_zhuan, upgrade;
     private HorzProgressView horzProgressView;
-    private LinearLayout group_ll, vip_ll;
+    private LinearLayout group_ll, vip_ll,ll_vip;
     private ImageView img_vip;
     private TextView tv_coin;
 
@@ -262,6 +262,7 @@ public class NumberSubFragment extends BaseFragment {
         group_ll = view.findViewById(R.id.group_ll);//团队长模块
         vip_ll = view.findViewById(R.id.vip_ll);//VIP模块
         img_vip = view.findViewById(R.id.img_vip);//vip icon
+        ll_vip=view.findViewById(R.id.ll_vip);
         upgrade.setOnClickListener(new View.OnClickListener() {//升级VIP
             @Override
             public void onClick(View v) {
@@ -603,7 +604,9 @@ public class NumberSubFragment extends BaseFragment {
             img_vip.setImageResource(R.mipmap.group_bg_icon);
             vip_ll.setVisibility(View.GONE);
             group_ll.setVisibility(View.VISIBLE);
-            vip_grade.setText("团队长");
+            vip_grade.setText("掌柜(黑金)");
+            vip_grade.setTextColor(Color.parseColor("#222222"));
+            ll_vip.setBackgroundResource(R.drawable.bg_opertoater_round_9dp);
             getMorce.setText("成长值：" + info.getMoreCoin());
         } else {
             getMorce.setText("获取成长值");
@@ -614,6 +617,8 @@ public class NumberSubFragment extends BaseFragment {
                     img_vip.setImageResource(R.mipmap.vip_icon_right2);
                     vip_grade.setText("普通会员");
                     upgrade.setText("升级VIP");
+                    vip_grade.setTextColor(Color.parseColor("#A8947A"));
+                    ll_vip.setBackgroundResource(R.drawable.bg_e9c8a7_round_9dp);
                     horzProgressView.setMax(360.00);
                     Long coin = info.getMoreCoin();
                     String coin1;
@@ -629,8 +634,10 @@ public class NumberSubFragment extends BaseFragment {
                     tv_coin.setText("/360");
                 } else if (C.UserType.vipMember.equals(info.getUserType())) {
                     img_vip.setImageResource(R.mipmap.vip_bg_icon);
-                    upgrade.setText("升级团队长");
-                    vip_grade.setText("VIP");
+                    upgrade.setText("升级掌柜(黑金)");
+                    ll_vip.setBackgroundResource(R.drawable.bg_vip_round_9dp);
+                    vip_grade.setText("掌柜(黄金)");
+                    vip_grade.setTextColor(Color.parseColor("#FCAF00"));
                     horzProgressView.setMax(50000.00);
                     horzProgressView.setCurrentNum(info.getMoreCoin());
                     Long moreCoin = info.getMoreCoin();

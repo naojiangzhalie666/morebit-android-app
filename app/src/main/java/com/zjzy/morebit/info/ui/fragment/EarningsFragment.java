@@ -6,28 +6,39 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Activity.ConsComGoodsDeailListActivity;
 import com.zjzy.morebit.Activity.MonthAgoActivity;
+import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
 
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.info.contract.EarningsContract;
+import com.zjzy.morebit.info.model.InfoModel;
 import com.zjzy.morebit.info.presenter.EarningsPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.UserIncomeDetail;
 import com.zjzy.morebit.pojo.EarningExplainBean;
 import com.zjzy.morebit.pojo.MonthEarnings;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.PageToUtil;
+import com.zjzy.morebit.utils.TaobaoUtil;
+import com.zjzy.morebit.utils.ViewShowUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,6 +58,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     TextView withDrawTimeTv;
     @BindView(R.id.month_ago)
     TextView month_ago;
+    private  String receiveAmount;
 
     private String mTotalMoney = "";
 
@@ -176,6 +188,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
             withdrawable.setText(data.getBalance()+"");
             cumulativereceipt.setText(data.getTotalIncome()+"");
             withdrawn.setText(data.getReceiveAmount()+"");
+            receiveAmount = data.getBalance();
             unsettledearnings.setText(data.getUnsettleAmount()+"");
             unassignedintegral.setText(data.getUnsettleIntegral()+"");
             earningsforecasty.setText(data.getYesterdayEstimateMoney()+"");
@@ -213,12 +226,11 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
                 startActivity(communityIt);
                 break;
             case R.id.withdraw:   //提现
-//                if (!UserLocalData.getUser(getActivity()).isNeedAuth()) {
-//                    if (AppUtil.isFastClick(500)) return;
-                mPresenter.checkWithdrawTime(this);
-//                } else {
-//                    TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
-//                }
+                InfoModel   mInfoModel = new InfoModel();
+                getTiXian(mInfoModel);
+
+
+
 
                 break;
             case R.id.btn_back:   //箭头退出
@@ -233,11 +245,50 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         }
     }
 
+    private void getTiXian(InfoModel mInfoModel) {
+        mInfoModel.checkWithdrawTime(this)
+                .subscribe(new DataObserver<String>(false) {
+                    @Override
+                    protected void onSuccess(String data) {
+                        UserInfo info = UserLocalData.getUser(getActivity());
+                        if (TextUtils.isEmpty(receiveAmount)) {
+                            mTotalMoney = "0";
+                        }
+                        if (Double.parseDouble(receiveAmount) < 1) {
+                            ViewShowUtils.showShortToast(getActivity(), "不足1元，无法提现");
+                        } else {
+                            if (TaobaoUtil.isAuth()) {   //淘宝授权
+                                TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
+                            } else {
+                                if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
+                                    AppUtil.gotoCashMoney(getActivity(), receiveAmount);
+                                } else {
+                                    PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
+                                    ToastUtils.showLong("请先绑定支付宝!");
+                                }
 
+                            }
+                        }
 
+                    }
 
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        MyLog.i("test", "errCode: " + errCode);
+                        double money = 0;
+                        try {
+                            money = Double.parseDouble(receiveAmount);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
+                        if (C.requestCode.B10301.equals(errCode)) {//因为成功的话data会为空，所以判断下
+                            ToastUtils.showLong("提现时间为每月25,26,27,28,29,30,31号");
+                        }
 
+                    }
+                });
+    }
 
 
     WithdrawErrorDialog withdrawErrorDialog;

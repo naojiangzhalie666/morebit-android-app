@@ -292,7 +292,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getVideoid()) || "0".equals(mGoodsInfo.getVideoid())) {
             videopaly_btn.setVisibility(View.GONE);
         } else {
-            videopaly_btn.setVisibility(View.VISIBLE);
+            videopaly_btn.setVisibility(View.GONE);
         }
         tv_fan= (LinearLayout) findViewById(R.id.tv_fan);
         getReturning();

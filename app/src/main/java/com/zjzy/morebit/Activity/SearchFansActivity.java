@@ -133,13 +133,13 @@ public class SearchFansActivity extends BaseActivity {
             }
         });
         search_et.setText(mSearchKey);
-        search_et.setHint("输入粉丝手机号/邀请码/备注");
+        search_et.setHint("输入粉丝手机号/用户名/备注");
 //        searchUser(mSearchKey,true);
     }
 
     private void searchUser(String phoneOrActivationCode,boolean isFrist) {
         if (TextUtils.isEmpty(phoneOrActivationCode)) {
-            ViewShowUtils.showShortToast(this, "输入粉丝手机号/邀请码");
+            ViewShowUtils.showShortToast(this, "输入粉丝手机号/用户名/备注");
             return;
         }
 
@@ -165,7 +165,7 @@ public class SearchFansActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search:
-                searchUser(search_et.getText().toString().trim(),false);
+                searchUser(search_et.getText().toString().trim(),true);
                 break;
             case R.id.iv_back:
                 finish();

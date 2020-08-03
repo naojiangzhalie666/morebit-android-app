@@ -347,7 +347,7 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         if (mGoodsInfo == null || TextUtils.isEmpty(mGoodsInfo.getVideoid()) || "0".equals(mGoodsInfo.getVideoid())) {
             videopaly_btn.setVisibility(View.GONE);
         } else {
-            videopaly_btn.setVisibility(View.VISIBLE);
+            videopaly_btn.setVisibility(View.GONE);
         }
         view_bar.setAlpha(0);
 
