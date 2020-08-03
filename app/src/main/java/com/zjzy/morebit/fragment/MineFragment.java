@@ -554,7 +554,11 @@ public class MineFragment extends BaseMainFragmeng {
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), CollectFragment2.class.getName(), null);
                 break;
             case R.id.iv_wenhao:
-                openDialog("累计收益说明", "累计收益=已提现金额+余额");
+                UserInfo usInfo = UserLocalData.getUser(getActivity());
+                if (!TextUtils.isEmpty(usInfo.getProblemUrl())){
+                    ShowWebActivity.start(getActivity(),usInfo.getProblemUrl(),"常见问题");
+                }
+              //  openDialog("累计收益说明", "累计收益=已提现金额+余额");
                 break;
             case R.id.tv_withdraw: //提现
                 mInfoModel.checkWithdrawTime(this)

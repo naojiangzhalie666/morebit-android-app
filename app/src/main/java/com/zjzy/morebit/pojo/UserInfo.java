@@ -69,6 +69,15 @@ public class UserInfo implements Serializable {
     private String accumulatedAmount;//省赚金额
     private String collectCount;//用户收藏总数
     private String balance;//可提现余额
+    private String problemUrl;//常见问题
+
+    public String getProblemUrl() {
+        return problemUrl;
+    }
+
+    public void setProblemUrl(String problemUrl) {
+        this.problemUrl = problemUrl;
+    }
 
     public String getCollectCount() {
         return collectCount;
