@@ -1,12 +1,16 @@
 package com.zjzy.morebit.Activity;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -42,6 +46,10 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
     TextView tv_save;
     private String url = "";
     private int mType;
+    private LinearLayout ll;
+    private  boolean open=false;
+    private ImageView tv_bo;
+    private  MediaPlayer mp;
     public static void start(Activity activity,int type,String videoUrl) {
         Intent intent = new Intent(activity, ShortVideoPlayActivity.class);
         intent.putExtra("type",type);
@@ -57,14 +65,17 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
     }
 
     private void inview(){
-        ActivityStyleUtil.initSystemBar(ShortVideoPlayActivity.this,R.color.color_757575); //设置标题栏颜色值
+        ActivityStyleUtil.initSystemBar(ShortVideoPlayActivity.this,R.color.color_F05557); //设置标题栏颜色值
 
         findViewById(R.id.closs).setOnClickListener(this);
+        findViewById(R.id.sp_close).setOnClickListener(this);
         findViewById(R.id.playorpause).setOnClickListener(this);
+          ll = (LinearLayout) findViewById(R.id.ll);
 
         videoView = (VideoView)findViewById(R.id.videoView);
         seekBar = (SeekBar)findViewById(R.id.seekBar);
         progress_text = (TextView)findViewById(R.id.progress_text);
+        tv_bo= (ImageView) findViewById(R.id.tv_bo);
 
 
         if(!TextUtils.isEmpty(url)){
@@ -74,10 +85,12 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
                 videoView.requestFocus();
                 videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
-                    public void onPrepared(MediaPlayer mediaPlayer) {
+                    public void onPrepared(final MediaPlayer mediaPlayer) {
+
+                        mp=mediaPlayer;
                         //视频装载好
                         videoView.start();
-                        findViewById(R.id.playorpause).setBackgroundResource(R.drawable.short_video_stop_icon);
+                        findViewById(R.id.playorpause).setBackgroundResource(R.mipmap.comm_fang_bg);
                         //得到总时长
                         int duration = videoView.getDuration();
                         seekBar.setMax(duration);
@@ -89,6 +102,8 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
                         String curTimeStr = DateTimeUtils.getVideoTime(currentPosition);
                         progress_text.setText(curTimeStr + "/" + durTimeStr);
                         startTime();
+
+
                     }
                 });
                 videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -97,14 +112,14 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
 //                        seekBar.setMax(100);
 //                        seekBar.setProgress(0);
 //                        progress_text.setText("00:00" + "/" + "00:00");
-                        findViewById(R.id.playorpause).setBackgroundResource(R.drawable.short_video_play_icon);
+                        findViewById(R.id.playorpause).setBackgroundResource(R.mipmap.comm_bo_bg);
                     }
                 });
                 videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                     @Override
                     public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
                         ViewShowUtils.showShortToast(ShortVideoPlayActivity.this,"视频出错了");
-                        findViewById(R.id.playorpause).setBackgroundResource(R.drawable.short_video_play_icon);
+                        findViewById(R.id.playorpause).setBackgroundResource(R.mipmap.comm_bo_bg);
                         return false;
                     }
                 });
@@ -113,7 +128,7 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
             }
         }
         if(mType==0){
-            tv_save.setVisibility(View.GONE);
+            tv_save.setVisibility(View.VISIBLE);
 
         } else {
             tv_save.setVisibility(View.VISIBLE);
@@ -141,6 +156,25 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
                 }
             }
         });
+
+
+
+        ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 设置静音
+                if (!open){
+                    mp.setVolume(0, 0);
+                    tv_bo.setImageResource(R.mipmap.bo_jing);
+                    open=true;
+                }else{
+                    open=false;
+                    mp.setVolume(1,1);
+                    tv_bo.setImageResource(R.mipmap.bo_kai);
+                }
+
+            }
+        });
     }
 
     private void initBundle(){
@@ -151,19 +185,23 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
         }
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.closs://关闭
                 finish();
                 break;
+            case R.id.sp_close://关闭
+                finish();
+                break;
             case R.id.playorpause: //播放或暂停
                 if(videoView.isPlaying()){
                     videoView.pause();
-                    findViewById(R.id.playorpause).setBackgroundResource(R.drawable.short_video_play_icon);
+                    findViewById(R.id.playorpause).setBackgroundResource(R.mipmap.comm_bo_bg);
                 }else{
                     videoView.start();
-                    findViewById(R.id.playorpause).setBackgroundResource(R.drawable.short_video_stop_icon);
+                    findViewById(R.id.playorpause).setBackgroundResource(R.mipmap.comm_fang_bg);
                 }
                 break;
             case R.id.tv_save:
