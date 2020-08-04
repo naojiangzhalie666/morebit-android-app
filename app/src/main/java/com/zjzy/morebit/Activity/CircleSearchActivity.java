@@ -136,7 +136,8 @@ public class CircleSearchActivity extends BaseActivity implements View.OnClickLi
                     }
                 });
                 page = 1;
-                getSearch();
+                String search = mEditText.getText().toString().trim();
+                getData(search);
             }
         });
         mListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -146,7 +147,8 @@ public class CircleSearchActivity extends BaseActivity implements View.OnClickLi
 //
 //                }
 
-                getSearch();
+                String search = mEditText.getText().toString().trim();
+                getData(search);
 
             }
         });

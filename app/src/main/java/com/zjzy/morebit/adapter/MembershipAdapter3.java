@@ -1,5 +1,6 @@
 package com.zjzy.morebit.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,9 +13,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.pojo.DoorGodCategoryBean;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.VipBean;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +67,16 @@ public class MembershipAdapter3 extends RecyclerView.Adapter<MembershipAdapter3.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VipBean.VoBean info = list.get(position);
+        final ImageInfo imageInfo = new ImageInfo();
 
+        imageInfo.setId(info.getId());
+        imageInfo.setMediaType(info.getMediaType());
+        imageInfo.setClassId(info.getClassId());
+        imageInfo.setTitle(info.getTitle());
+        imageInfo.setUrl(info.getUrl());
+        imageInfo.setOpen(info.getOpen());
+        imageInfo.setSort(info.getSort());
+        imageInfo.setSubTitle(info.getSubTitle());
         if (!TextUtils.isEmpty(info.getPicture())){
             LoadImgUtils.setImgCircle(context,holder.img,info.getPicture());
         }
@@ -75,6 +89,14 @@ public class MembershipAdapter3 extends RecyclerView.Adapter<MembershipAdapter3.
             holder.content.setText(info.getSubTitle());
         }
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BannerInitiateUtils.gotoAction((Activity) context, imageInfo);
+                BannerInitiateUtils.statisticsStartAdOnclick((BaseActivity) context, imageInfo.getId() + "", 1);
+            }
+        });
 
 
 

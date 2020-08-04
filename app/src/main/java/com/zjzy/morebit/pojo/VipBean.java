@@ -68,12 +68,12 @@ public class VipBean implements Serializable {
             private int type;
             private int sort;
             private int open;
-            private Object classId;
+            private int classId;
             private Object os;
             private int width;
             private int height;
-            private Object couponUrl;
-            private Object itemTitle;
+            private String couponUrl;
+            private String itemTitle;
             private String backgroundImage;
             private String splicePid;
             private String subTitle;
@@ -143,11 +143,11 @@ public class VipBean implements Serializable {
                 this.open = open;
             }
 
-            public Object getClassId() {
+            public int getClassId() {
                 return classId;
             }
 
-            public void setClassId(Object classId) {
+            public void setClassId(int classId) {
                 this.classId = classId;
             }
 
@@ -175,19 +175,19 @@ public class VipBean implements Serializable {
                 this.height = height;
             }
 
-            public Object getCouponUrl() {
+            public String getCouponUrl() {
                 return couponUrl;
             }
 
-            public void setCouponUrl(Object couponUrl) {
+            public void setCouponUrl(String couponUrl) {
                 this.couponUrl = couponUrl;
             }
 
-            public Object getItemTitle() {
+            public String getItemTitle() {
                 return itemTitle;
             }
 
-            public void setItemTitle(Object itemTitle) {
+            public void setItemTitle(String itemTitle) {
                 this.itemTitle = itemTitle;
             }
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -32,7 +33,7 @@ import static com.blankj.utilcode.util.StringUtils.getString;
  * */
 public class SubNumberAdapter extends RecyclerView.Adapter<SubNumberAdapter.ViewHolder> {
     private Context mContext;
-    private List<NumberGoods> list=new ArrayList<>();
+    private List<NumberGoods> list = new ArrayList<>();
 
 
     public SubNumberAdapter(Context context) {
@@ -54,27 +55,32 @@ public class SubNumberAdapter extends RecyclerView.Adapter<SubNumberAdapter.View
 
         String img = goods.getPicUrl();
         if (!TextUtils.isEmpty(img)) {
-            LoadImgUtils.loadingCornerTop(mContext, holder.pic, img,4);
+            LoadImgUtils.loadingCornerTop(mContext, holder.pic, img, 4);
         }
         holder.desc.setText(goods.getName());
         String price = goods.getRetailPrice();
 
 
-
-        if (TextUtils.isEmpty(price)){
+        if (TextUtils.isEmpty(price)) {
             holder.tvPrice.setText("0");
-        }else{
+        } else {
             holder.tvPrice.setText(MathUtils.getnum(price));
         }
         String moreCoin = MathUtils.getMorebitCorn(price);
-        holder. morebitCorn.setText(mContext.getResources().getString(R.string.give_growth_value,moreCoin));
-        holder.itemView.setOnClickListener(new View.OnClickListener(){
+        holder.morebitCorn.setText(mContext.getResources().getString(R.string.give_growth_value, moreCoin));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                NumberGoodsDetailsActivity.start((Activity) mContext,String.valueOf(goods.getId()));
+                NumberGoodsDetailsActivity.start((Activity) mContext, String.valueOf(goods.getId()));
             }
         });
+
+        if (position==0&&list.size()!=0){
+            holder.rl_tou.setVisibility(View.VISIBLE);
+        }else{
+            holder.rl_tou.setVisibility(View.GONE);
+        }
     }
 
 
@@ -89,21 +95,23 @@ public class SubNumberAdapter extends RecyclerView.Adapter<SubNumberAdapter.View
     public void setData(List<NumberGoods> data) {
         if (data != null) {
             list.addAll(data);
-            notifyItemRangeChanged(0,data.size());
+            notifyItemRangeChanged(0, data.size());
         }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private RoundedImageView pic;
-        private TextView desc,tvPrice,morebitCorn;
+        private TextView desc, tvPrice, morebitCorn;
+        private RelativeLayout rl_tou;
 
         public ViewHolder(View itemView) {
             super(itemView);
-              pic = itemView.findViewById(R.id.number_goods_pic);
-              desc =  itemView.findViewById(R.id.number_goods_desc);
-              tvPrice =  itemView.findViewById(R.id.number_goods_price);
-              morebitCorn =  itemView.findViewById(R.id.txt_morebit_corn);
+            pic = itemView.findViewById(R.id.number_goods_pic);
+            desc = itemView.findViewById(R.id.number_goods_desc);
+            tvPrice = itemView.findViewById(R.id.number_goods_price);
+            morebitCorn = itemView.findViewById(R.id.txt_morebit_corn);
+            rl_tou = itemView.findViewById(R.id.rl_tou);
 
         }
     }

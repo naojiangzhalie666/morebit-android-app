@@ -3,8 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:attr="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+<RelativeLayout
+    android:id="@+id/rl_tou"
+    android:visibility="gone"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/shop_left_icon"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="爆款热销"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:textColor="#fff05557"
+            android:textSize="16sp"
+            android:shadowColor="#80f05557"
+            android:elevation="4dp"
+
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/shop_right_icon"
+            />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
     <com.zyp.cardview.YcCardView
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"

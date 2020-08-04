@@ -64,7 +64,7 @@ import io.reactivex.functions.Action;
  */
 public class ShoppingMallFragment extends BaseMainFragmeng {
 
-    private LRecyclerView rcy_goods;
+    private RecyclerView rcy_goods;
 
     private List<ShopGoodInfo> list = new ArrayList<>();
     private LinearLayout searchNullTips_ly;
@@ -168,12 +168,10 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         mAdapter = new SubNumberAdapter(getActivity());
         swipeList=view.findViewById(R.id.swipeList);
         rcy_goods = view.findViewById(R.id.rcy_goods);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
-        rcy_goods.setAdapter(mLRecyclerViewAdapter);
+
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rcy_goods.setLayoutManager(manager);
-        View header = LayoutInflater.from(getActivity()).inflate(R.layout.item_vip_head_bao,null, false);
-        mLRecyclerViewAdapter.addHeaderView(header);
+        rcy_goods.setAdapter(mAdapter);
         swipeList.setEnableRefresh(false);
 
         swipeList.setEnableLoadMore(true);

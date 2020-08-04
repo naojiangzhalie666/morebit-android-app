@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -290,7 +293,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 
     }
 
-    private void getTao(int shopType, String itemSourceId, final int position) {
+    private void getTao(final int shopType, String itemSourceId, final int position) {
 
         RequestCircleShareBean bean = new RequestCircleShareBean();
         bean.setItemId(itemSourceId);
@@ -303,15 +306,24 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                     @Override
                     protected void onSuccess(CircleCopyBean data) {
                         if (data != null) {
-                            String s="";
+
                             String comment = list.get(position).getComment();
                             if (!TextUtils.isEmpty(comment)){
-                                  s = comment.replaceAll("\\{.*\\}", data.getTkl());
+                                String quStr=comment.substring(comment.indexOf("{")+1,comment.indexOf("}"));
+                                Log.e("sfsdfsd",quStr+"");
+                              String replace="";
+                                if (!TextUtils.isEmpty(data.getTkl())){
+                                   replace = comment.replace(quStr, data.getTkl() + "");
+                                }else{
+                                     replace = comment.replace(quStr, data.getPurchaseLink() + "");
+                                }
+                                AppUtil.coayTextPutNative((Activity) context, replace);
+                                ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
+                                //跳转微信
+                                PageToUtil.goToWeixin(context);
+
                             }
-                            AppUtil.coayTextPutNative((Activity) context, s.toString());
-                            ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
-                            //跳转微信
-                            PageToUtil.goToWeixin(context);
+
 
 
                         }

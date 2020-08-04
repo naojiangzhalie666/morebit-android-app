@@ -76,19 +76,29 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
 
     }
 
+
+
+
     @Subscribe  //订阅事件
     public void onEventMainThread(MessageEvent event) {
+        page=1;
         if (event.getAction().equals(EventBusAction.ORDERTYPE_ALL)) {
+            teamType=0;
             getData(0);
         }else if (event.getAction().equals(EventBusAction.ORDERTYPE_JD)){
+            teamType=2;
             getData(2);
         }else if (event.getAction().equals(EventBusAction.ORDERTYPE_PDD)){
+            teamType=4;
             getData(4);
         }else if (event.getAction().equals(EventBusAction.ORDERTYPE_TAO)){
+            teamType=1;
             getData(1);
         }else if (event.getAction().equals(EventBusAction.ORDERTYPE_WPH)){
+            teamType=6;
             getData(6);
         }else if (event.getAction().equals(EventBusAction.ORDERTYPE_KAOLA)){
+            teamType=5;
             getData(5);
         }
     }

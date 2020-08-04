@@ -66,7 +66,7 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
     }
 
     private void inview(){
-        ActivityStyleUtil.initSystemBar(ShortVideoPlayActivity.this,R.color.color_F05557); //设置标题栏颜色值
+        ActivityStyleUtil.initSystemBar(ShortVideoPlayActivity.this,R.color.color_000000); //设置标题栏颜色值
 
         findViewById(R.id.closs).setOnClickListener(this);
         findViewById(R.id.sp_close).setOnClickListener(this);
@@ -130,14 +130,14 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
                 e.printStackTrace();
             }
         }
-        if(mType==0){
-            tv_save.setVisibility(View.VISIBLE);
-
-        } else {
-            tv_save.setVisibility(View.VISIBLE);
-            tv_save.setOnClickListener(this);
-        }
-
+//        if(mType==0){
+//            tv_save.setVisibility(View.VISIBLE);
+//
+//        } else {
+//            tv_save.setVisibility(View.VISIBLE);
+//
+//        }
+        tv_save.setOnClickListener(this);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -51,6 +52,7 @@ import com.zjzy.morebit.view.helper.ToolbarWebHelper;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
@@ -478,7 +480,11 @@ public class ShowWebActivity extends BaseActivity {
 
         @Override
         public void onCancel(Platform platform, int i) {
-            ViewShowUtils.showShortToast(com.zjzy.morebit.App.getAppContext(), "分享取消");
+            if (i==9){
+                ViewShowUtils.showShortToast(com.zjzy.morebit.App.getAppContext(), "分享成功");
+            }else{
+                ViewShowUtils.showShortToast(com.zjzy.morebit.App.getAppContext(), "分享取消");
+            }
         }
     }
 

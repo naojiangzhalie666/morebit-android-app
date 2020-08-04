@@ -21,6 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -30,6 +31,7 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.GoodDialyTitleAdapter;
+import com.zjzy.morebit.adapter.GoodDialyTitleAdapter2;
 import com.zjzy.morebit.adapter.GoodsDialyAdapter;
 import com.zjzy.morebit.adapter.SelectGoodsAdapter;
 import com.zjzy.morebit.adapter.SubNumberAdapter;
@@ -49,6 +51,7 @@ import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.RequestMarkermallCircleBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DensityUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -285,8 +288,9 @@ public class GoodDailyFragment extends BaseMainFragmeng {
         ImageView img_up = inflate.findViewById(R.id.img_up);
         LinearLayout ll=inflate.findViewById(R.id.ll);
 
-        GoodDialyTitleAdapter titleAdapter=new GoodDialyTitleAdapter(getActivity(),mchild,oneLevelId,circletype,type);
+        GoodDialyTitleAdapter2 titleAdapter=new GoodDialyTitleAdapter2(getActivity(),mchild,oneLevelId,circletype,type);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),4);
+        rcy.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 6)));
         rcy.setLayoutManager(gridLayoutManager);
         rcy.setAdapter(titleAdapter);
 
@@ -314,9 +318,16 @@ public class GoodDailyFragment extends BaseMainFragmeng {
         requestBean.setType(type);
         requestBean.setPage(page);
         requestBean.setOneLevelId(oneLevelId+"");
-        if (twoLevelId!=0){
-            requestBean.setTwoLevelId(twoLevelId+"");
+        if (circletype==0){
+            if (twoLevelId!=0){
+                requestBean.setTwoLevelId(twoLevelId+"");
+            }
+        }else{
+            if (type!=0){
+                requestBean.setTwoLevelId(type+"");
+            }
         }
+
 
         return RxHttp.getInstance().getGoodsService().getMarkermallCircle(requestBean)
                 .compose(RxUtils.<BaseResponse<List<MarkermallCircleInfo>>>switchSchedulers())

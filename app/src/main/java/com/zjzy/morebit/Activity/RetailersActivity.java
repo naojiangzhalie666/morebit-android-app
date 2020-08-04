@@ -10,9 +10,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -122,6 +124,7 @@ public class RetailersActivity extends BaseActivity implements View.OnClickListe
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         xTablayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     private class PagerAdapter extends FragmentPagerAdapter {
@@ -140,10 +143,13 @@ public class RetailersActivity extends BaseActivity implements View.OnClickListe
         @Override
         public Fragment getItem(int position) {
             if (position==0){
+                Log.e("hjhjhj",type+"01");
                 return OrderRetailersFragment.newInstance(5,type);//全部
             }else if (position==1){
+                Log.e("hjhjhj",type+"02");
                 return OrderRetailersFragment.newInstance(1,type);//待返佣
             }else{
+                Log.e("hjhjhj",type+"03");
                 return OrderRetailersFragment.newInstance(3,type);//已到账
             }
 
@@ -153,6 +159,8 @@ public class RetailersActivity extends BaseActivity implements View.OnClickListe
         public int getCount() {
             return list != null ? list.size() : 0;
         }
+
+
 
 
     }
