@@ -1,5 +1,6 @@
 package com.zjzy.morebit.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,6 +50,8 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
@@ -540,7 +545,10 @@ public class MyTeamListFragment extends BaseFragment {
                 @Override
                 public void onClick(View v, String remark, int position) {
                     updateRemark(remark, position);
+
                     mRemarkDialog.dismiss();
+
+
                 }
             });
         }
@@ -553,6 +561,8 @@ public class MyTeamListFragment extends BaseFragment {
         message.setData(bundle);
         handler.sendMessage(message);
     }
+
+
 
     private void updateRemark(String remark, int position) {
 //        if (TextUtils.isEmpty(remark)) {

@@ -188,8 +188,9 @@ public class SelectGoodsFragment extends BaseMainFragmeng {
                         new_goods.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
-
+                                if (LoginUtil.checkIsLogin(getActivity())) {
+                                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
+                                }
                             }
                         });
                     }

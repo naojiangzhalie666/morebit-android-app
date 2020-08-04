@@ -50,6 +50,7 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
     private  boolean open=false;
     private ImageView tv_bo;
     private  MediaPlayer mp;
+    private TextView progress_text2;
     public static void start(Activity activity,int type,String videoUrl) {
         Intent intent = new Intent(activity, ShortVideoPlayActivity.class);
         intent.putExtra("type",type);
@@ -75,6 +76,7 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
         videoView = (VideoView)findViewById(R.id.videoView);
         seekBar = (SeekBar)findViewById(R.id.seekBar);
         progress_text = (TextView)findViewById(R.id.progress_text);
+        progress_text2= (TextView) findViewById(R.id.progress_text2);
         tv_bo= (ImageView) findViewById(R.id.tv_bo);
 
 
@@ -100,7 +102,8 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
                         //更新文字
                         String durTimeStr = DateTimeUtils.getVideoTime(duration);
                         String curTimeStr = DateTimeUtils.getVideoTime(currentPosition);
-                        progress_text.setText(curTimeStr + "/" + durTimeStr);
+                        progress_text2.setText(curTimeStr+"");
+                        progress_text.setText(durTimeStr+"");
                         startTime();
 
 
@@ -162,17 +165,18 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
         ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 设置静音
-                if (!open){
-                    mp.setVolume(0, 0);
-                    tv_bo.setImageResource(R.mipmap.bo_jing);
-                    open=true;
-                }else{
-                    open=false;
-                    mp.setVolume(1,1);
-                    tv_bo.setImageResource(R.mipmap.bo_kai);
+                if (mp!=null){
+                    // 设置静音
+                    if (!open){
+                        mp.setVolume(0, 0);
+                        tv_bo.setImageResource(R.mipmap.bo_jing);
+                        open=true;
+                    }else{
+                        open=false;
+                        mp.setVolume(1,1);
+                        tv_bo.setImageResource(R.mipmap.bo_kai);
+                    }
                 }
-
             }
         });
     }
@@ -277,7 +281,8 @@ public class ShortVideoPlayActivity extends BaseActivity implements View.OnClick
                             //更新文字
                             String durTimeStr = DateTimeUtils.getVideoTime(duration);
                             String curTimeStr = DateTimeUtils.getVideoTime(currentPosition);
-                            progress_text.setText(curTimeStr + "/" + durTimeStr);
+                            progress_text2.setText(curTimeStr+"");
+                            progress_text.setText(durTimeStr+"");
                         }catch (Exception e){
                             e.printStackTrace();
                         }

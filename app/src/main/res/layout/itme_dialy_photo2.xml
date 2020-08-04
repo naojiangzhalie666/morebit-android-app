@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <TextView
+        android:visibility="gone"
         android:text="已抢光"
         android:id="@+id/tv_qiang"
         android:textColor="@color/white"

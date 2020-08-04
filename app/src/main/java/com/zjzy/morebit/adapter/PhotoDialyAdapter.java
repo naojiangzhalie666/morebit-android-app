@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +33,14 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<String> list = new ArrayList<>();
     private MarkermallCircleInfo circleInfo;
+    private int circletype;
 
 
-    public PhotoDialyAdapter(Context context, List<String> picture, MarkermallCircleInfo circleInfo) {
+    public PhotoDialyAdapter(Context context, List<String> picture, MarkermallCircleInfo circleInfo, int circletype) {
         this.context = context;
         this.list = picture;
         this.circleInfo = circleInfo;
+        this.circletype=circletype;
     }
 
 
@@ -116,12 +119,15 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
 
             List<ShopGoodInfo> goods = circleInfo.getGoods();
             for (ShopGoodInfo info : goods) {
-                if (info.getIsExpire() == 0) {
-                    holder2.tv_qiang.setVisibility(View.GONE);
-                } else {
 
-                    holder2.tv_qiang.setVisibility(View.VISIBLE);
-                }
+                    if (info.getIsExpire() == 0) {
+                        holder2.tv_qiang.setVisibility(View.GONE);
+                    } else {
+
+                        holder2.tv_qiang.setVisibility(View.VISIBLE);
+                    }
+
+
 
         }
 
@@ -132,6 +138,7 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
     private void getPhoto(ViewHolder3 holder3) {
             List<ShopGoodInfo> goods = circleInfo.getGoods();
             for (ShopGoodInfo info : goods) {
+
                 if (info.getIsExpire() == 0) {
 
                     holder3.tv_qiang.setVisibility(View.GONE);
@@ -139,6 +146,7 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
 
                     holder3.tv_qiang.setVisibility(View.VISIBLE);
                 }
+
 
         }
     }
@@ -148,6 +156,7 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
 
             List<ShopGoodInfo> goods = circleInfo.getGoods();
             for (ShopGoodInfo info : goods) {
+
                 if (info.getIsExpire() == 0) {
 
                     holder1.tv_qiang.setVisibility(View.GONE);
@@ -155,6 +164,7 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
 
                     holder1.tv_qiang.setVisibility(View.VISIBLE);
                 }
+
             }
 
     }

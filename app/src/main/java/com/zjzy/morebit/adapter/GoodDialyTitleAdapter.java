@@ -80,6 +80,11 @@ public class GoodDialyTitleAdapter extends RecyclerView.Adapter<GoodDialyTitleAd
         });
 
 
+        if (list.size()!=0 && list.size()-1==position){
+            holder.tv.setVisibility(View.VISIBLE);
+        }else {
+            holder.tv.setVisibility(View.GONE);
+        }
 
 
 
@@ -97,13 +102,14 @@ public class GoodDialyTitleAdapter extends RecyclerView.Adapter<GoodDialyTitleAd
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private TextView tv_title;
+        private TextView tv_title,tv;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             tv_title = itemView.findViewById(R.id.tv_title);//标题
+            tv=itemView.findViewById(R.id.tv);
 
 
         }

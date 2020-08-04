@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +21,7 @@ import com.zjzy.morebit.pojo.request.RequestCircleSearchBean;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
+import com.zjzy.morebit.view.ClearEditText;
 import com.zjzy.morebit.view.SearchClassLayout;
 import com.zjzy.morebit.view.SearchViewLayout;
 
@@ -40,6 +44,7 @@ public class SearchArticleListActitivty extends BaseActivity {
     CircleModel mCircleModel;
     private TextView txt_head_title;
     private LinearLayout btn_back;
+    private ClearEditText search_et;
     List<SearchHotKeyBean> mList = new ArrayList<>();
     public static void start(Context context) {
         Intent intent = new Intent(context, SearchArticleListActitivty.class);
@@ -70,6 +75,7 @@ public class SearchArticleListActitivty extends BaseActivity {
     }
 
     private void initView() {
+        search_et= (ClearEditText) findViewById(R.id.search_et);
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setText("进阶学院");
         txt_head_title.setTextSize(18);
@@ -109,7 +115,28 @@ public class SearchArticleListActitivty extends BaseActivity {
 //                ViewShowUtils.showShortToast(SearchArticleListActitivty.this,searchText);
             }
         });
-    }
+
+
+
+        search_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                /*判断是否是“搜索”键*/
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    String key = search_et.getText().toString().trim();
+                    if(!TextUtils.isEmpty(key)){
+                        gotoResult(key);
+                        finish();
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+        });
+            }
+
 
 
     private void gotoResult(String keyword,int position) {

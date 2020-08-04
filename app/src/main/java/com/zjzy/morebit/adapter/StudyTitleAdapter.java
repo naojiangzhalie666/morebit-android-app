@@ -52,7 +52,7 @@ public class StudyTitleAdapter extends RecyclerView.Adapter<StudyTitleAdapter.Vi
 
         String img = goods.getImage();
         if (!TextUtils.isEmpty(img)) {
-            LoadImgUtils.loadingCornerTop(mContext, holder.title_img, img,4);
+            LoadImgUtils.loadingCornerBitmap(mContext, holder.title_img, img,4);
 
         }
 

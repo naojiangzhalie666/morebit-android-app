@@ -53,7 +53,7 @@ public class SkillClassAdapter extends RecyclerView.Adapter<SkillClassAdapter.Vi
          int finalStudyNum = article.getStudyNum() + article.getVirtualStudy();
 //        holder.tv_study_num.setText(getString(R.string.college_article_already_study, finalStudyNum));
         if (!TextUtils.isEmpty(article.getReleaseTime())) {
-            holder.tv_time.setText(DateTimeUtils.ymdhmsToymd(article.getReleaseTime()) + "");
+            holder.tv_time.setText(DateTimeUtils.getShortTime2(article.getReleaseTime()) + "");
         } else {
             holder.tv_time.setText("");
         }

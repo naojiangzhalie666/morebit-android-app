@@ -690,6 +690,34 @@ public class DateTimeUtils {
         return shortString;
     }
 
+
+    public static String getShortTime3(String time) {
+        String shortString = null;
+        long now = Calendar.getInstance().getTimeInMillis();
+        Date date = getDateByString(time);
+        if (date == null) {
+            return shortString;
+        }
+        long delTime = (now - date.getTime()) / 1000;
+        if (delTime > 365 * 24 * 60 * 60) {
+            shortString = DateTimeUtils.ymdhmsToymd(time);
+        } else if (delTime > 24 * 60 * 60) {
+            if ((int) (delTime / (24 * 60 * 60))>7){
+                shortString = DateTimeUtils.ymdhmsToymd(time);
+            }else{
+                if ((int) (delTime / (24 * 60 * 60))==1){
+                    shortString ="昨天";
+                }else if ((int) (delTime / (24 * 60 * 60))==2){
+                    shortString ="前天";
+                }else{
+                    shortString = (int) (delTime / (24 * 60 * 60)) + "天前";
+                }
+            }
+
+        }
+        return shortString;
+    }
+
     /**
      * yyyy-MM-dd HH:mm:ss转
      *

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 
@@ -76,7 +78,9 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.ViewHolder
             viewHolder.people_count.setVisibility(View.VISIBLE);
             viewHolder.ll_la.setVisibility(View.GONE);
             viewHolder.createTime.setVisibility(View.VISIBLE);
-            viewHolder.createTime.setText(info.getCreateTime());
+            String time = DateTimeUtils.ymdhmsToymd(info.getCreateTime());
+            Log.e("sfsfdsf",time+"");
+            viewHolder.createTime.setText(DateTimeUtils.getShortTime3(info.getCreateTime())+ "");
         }else if (mType==3){//七日
             viewHolder.people_count.setVisibility(View.GONE);
             viewHolder.ll_la.setVisibility(View.VISIBLE);

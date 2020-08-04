@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -42,6 +43,7 @@ import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.request.RequestListBody;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.pojo.requestbodybean.RequestTwoLevel;
+import com.zjzy.morebit.utils.DensityUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -211,6 +213,7 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
         //头部title列表
         rcy_title = header.findViewById(R.id.rcy_title);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        rcy_title.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 6)));
         rcy_title.setLayoutManager(gridLayoutManager);
         titleAdapter = new StudyTitleAdapter(getActivity());
         rcy_title.setAdapter(titleAdapter);

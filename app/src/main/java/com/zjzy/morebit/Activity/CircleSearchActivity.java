@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,9 +96,9 @@ public class CircleSearchActivity extends BaseActivity implements View.OnClickLi
                 goodsDialyAdapter.setData(data);
             }else{
                 goodsDialyAdapter.addData(data);
-                mListView.getListView().setNoMore(true);
+                mListView.getListView().setNoMore(false);
             }
-
+            page++;
         }else{
             dateNullView.setVisibility(View.VISIBLE);
             mListView.setVisibility(View.GONE);
@@ -106,7 +107,7 @@ public class CircleSearchActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void showError(String errCode, String errorMsg) {
-
+        mListView.getListView().setNoMore(true);
     }
 
     private void initView() {
@@ -141,10 +142,11 @@ public class CircleSearchActivity extends BaseActivity implements View.OnClickLi
         mListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                if (!mListView.getSwipeList().isRefreshing()) {
-                    page++;
-                    getSearch();
-                }
+//                if (!mListView.getSwipeList().isRefreshing()) {
+//
+//                }
+
+                getSearch();
 
             }
         });
@@ -163,13 +165,23 @@ public class CircleSearchActivity extends BaseActivity implements View.OnClickLi
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String search = mEditText.getText().toString().trim();
                     getData(search);
+                    hideInput();
                     return true;
                 }
                 return false;
             }
         });
     }
-
+    /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View v = getWindow().peekDecorView();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

@@ -59,7 +59,8 @@
                     android:layout_height="wrap_content"
                     android:text="我是昵称啊啊"
                     android:textColor="#ff333333"
-                    android:maxLength="8"
+                    android:maxEms="8"
+                    android:maxLines="1"
                     android:ellipsize="end"
                     android:textSize="16sp"
                     />
@@ -117,6 +118,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_remark"
                     android:text=""
+                    android:maxEms="7"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/sp_14" />
                 <TextView

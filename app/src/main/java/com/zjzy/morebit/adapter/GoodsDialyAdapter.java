@@ -23,7 +23,6 @@ import com.liulishuo.filedownloader.FileDownloadListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
-import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ShareDownloadDialog;
@@ -39,7 +38,6 @@ import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.MarkermallCircleItemInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
-import com.zjzy.morebit.pojo.event.CirleUpdataShareCountEvent;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
 import com.zjzy.morebit.pojo.request.RequestCircleShareBean;
 import com.zjzy.morebit.pojo.request.RequestCircleShareCountBean;
@@ -63,8 +61,6 @@ import com.zjzy.morebit.utils.sys.RequestPermissionUtlis;
 import com.zjzy.morebit.view.CircleShareDialog;
 import com.zjzy.morebit.view.CopyTextView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -87,22 +83,24 @@ import io.reactivex.schedulers.Schedulers;
 public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.ViewHolder> {
     private Context context;
     private List<MarkermallCircleInfo> list = new ArrayList<>();
-    private  GridLayoutManager manager;
-    private    CircleShareDialog   shareDialog;
+    private GridLayoutManager manager;
+    private CircleShareDialog shareDialog;
     private FileDownloadListener downloadListener;
     private String mExtension = "";
     private String mPosterPicPath;
-    private   ArrayList<String> arrayList;
-    private  int shopType;
-    private  String itemSourceId;
+    private ArrayList<String> arrayList;
+    private int shopType;
+    private String itemSourceId;
     private String taourl;
-    private    MarkermallCircleInfo circleInfo;
-    private  int circletype;
+    private MarkermallCircleInfo circleInfo;
+    private int circletype;
+    private int mDownloadCount=0;
+    private  List<String> mlist;
 
 
     public GoodsDialyAdapter(Context context, int circletype) {
         this.context = context;
-        this.circletype=circletype;
+        this.circletype = circletype;
     }
 
     public void setData(List<MarkermallCircleInfo> data) {
@@ -132,17 +130,17 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        if (list==null&&list.size()==0)return;
-         circleInfo = list.get(position);
+        if (list == null && list.size() == 0) return;
+        circleInfo = list.get(position);
         if (!TextUtils.isEmpty(circleInfo.getIcon())) {
             LoadImgUtils.setImgCircle(context, holder.userIcon, circleInfo.getIcon());
         }
         if (!TextUtils.isEmpty(circleInfo.getContent())) {
-            if (circletype==0){
-                holder.content.setText(circleInfo.getContent()+"  ");
+            if (circletype == 0) {
+                holder.content.setText(circleInfo.getContent() + "  ");
                 holder.content.append(colorText("查看详情"));
-            }else{
-                holder.content.setText(circleInfo.getContent()+"  ");
+            } else {
+                holder.content.setText(circleInfo.getContent() + "  ");
             }
 
         }
@@ -151,56 +149,55 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             holder.tv_time.setText(DateTimeUtils.getShortTime2(circleInfo.getCreateTime()) + "");
         }
         if (!TextUtils.isEmpty(circleInfo.getComment())) {
-            if (circletype==0){
+            if (circletype == 0) {
                 holder.tv_comment.setText(circleInfo.getComment());
-            }else{
+            } else {
                 UserInfo usInfo = UserLocalData.getUser(context);
 
                 if (usInfo == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                    holder.tv_comment.setText(circleInfo.getComment()+"\n邀请ID:* * *");
+                    holder.tv_comment.setText(circleInfo.getComment() + "\n邀请ID:* * *");
                 } else {
-                    holder.tv_comment.setText(circleInfo.getComment()+"\n邀请ID:"+usInfo.getInviteCode());
+                    holder.tv_comment.setText(circleInfo.getComment() + "\n邀请ID:" + usInfo.getInviteCode());
                 }
 
             }
 
         }
-        if (!TextUtils.isEmpty(circleInfo.getName())){
+        if (!TextUtils.isEmpty(circleInfo.getName())) {
             holder.title.setText(circleInfo.getName());
         }
         arrayList = new ArrayList<>();
         List<MarkermallCircleItemInfo> items = circleInfo.getShareRangItems();
-        for (int i=0;i<items.size();i++){
+        for (int i = 0; i < items.size(); i++) {
             String picture = items.get(i).getPicture();
             arrayList.add(picture);
         }
         final List<ShopGoodInfo> goods = circleInfo.getGoods();
 
 
-        if (arrayList==null||arrayList.size()==0)
+        if (arrayList == null || arrayList.size() == 0)
             return;
 
-            if (arrayList.size()==4 ||arrayList.size()==2){
-                manager=new GridLayoutManager(context,2);
-            }else{
-                manager=new GridLayoutManager(context,3);
-            }
+        if (arrayList.size() == 4 || arrayList.size() == 2) {
+            manager = new GridLayoutManager(context, 2);
+        } else {
+            manager = new GridLayoutManager(context, 3);
+        }
         holder.rcy_photo.setLayoutManager(manager);
         //设置图标的间距
         if (holder.rcy_photo.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
             holder.rcy_photo.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(context, 6)));
         }
-        PhotoDialyAdapter photoDialyAdapter=new PhotoDialyAdapter(context,arrayList,circleInfo);
+        PhotoDialyAdapter photoDialyAdapter = new PhotoDialyAdapter(context, arrayList, circleInfo,circletype);
         holder.rcy_photo.setAdapter(photoDialyAdapter);
 
-        for (ShopGoodInfo info:goods){
-           shopType =info.getShopType();
-           itemSourceId = info.getItemSourceId();
+        for (ShopGoodInfo info : goods) {
+            shopType = info.getShopType();
+            itemSourceId = info.getItemSourceId();
             info.setGoodsId(Long.parseLong(itemSourceId));
-           // getImg(0,arrayList,info);
+            // getImg(0,arrayList,info);
 
         }
-
 
 
         holder.content.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +205,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             public void onClick(View v) {
 
                 for (ShopGoodInfo info : goods) {
-                    switch (shopType){
+                    switch (shopType) {
                         case 1://淘宝
                             GoodsUtil.checkGoods((RxAppCompatActivity) context, itemSourceId, new MyAction.One<ShopGoodInfo>() {
                                 @Override
@@ -230,11 +227,11 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                             break;
                         case 3://pdd
                             info.setItemSource("2");
-                            GoodsDetailForJdActivity.start(context,info);
+                            GoodsDetailForJdActivity.start(context, info);
                             break;
                         case 4://jd
                             info.setItemSource("1");
-                            GoodsDetailForJdActivity.start(context,info);
+                            GoodsDetailForJdActivity.start(context, info);
                             break;
 
                     }
@@ -243,26 +240,25 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
         });
 
 
-
         holder.tv_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (shopType){
+                switch (shopType) {
                     case 1://淘宝
-                        getTao(shopType,itemSourceId);
+                        getTao(shopType, itemSourceId,position);
                         break;
                     case 2://天猫
-                        getTao(shopType,itemSourceId);
+                        getTao(shopType, itemSourceId, position);
 
                         break;
                     case 3://pdd
-                        getTao(shopType,itemSourceId);
+                        getTao(shopType, itemSourceId, position);
                         break;
                     case 4://jd
-                        getTao(shopType,itemSourceId);
+                        getTao(shopType, itemSourceId, position);
                         break;
                     default:
-                        AppUtil.coayTextPutNative((Activity) context,holder.tv_comment.getText().toString());
+                        AppUtil.coayTextPutNative((Activity) context, holder.tv_comment.getText().toString());
                         ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
                         //跳转微信
                         PageToUtil.goToWeixin(context);
@@ -274,7 +270,6 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
         });
 
 
-
         holder.tv_shart.setOnClickListener(new View.OnClickListener() {
             @Override //
             public void onClick(View view) {
@@ -283,31 +278,19 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                     TaobaoUtil.getAllianceAppKey((BaseActivity) context);
                 } else {
                     if (AppUtil.isFastClick(1000)) return;
-                  //  mTvShart = tv_shart;
-                    AppUtil.coayText((Activity) context, circleInfo.getContent());
-                    if ((circleInfo.getGoods() == null || circleInfo.getGoods().size() == 0) &&
-                            (circleInfo.getShareRangItems() == null || circleInfo.getShareRangItems().size() == 0)&&(circleInfo.getPicture()==null||circleInfo.getPicture().size()==0)) {
-                        ViewShowUtils.showShortToast(context, "文案复制成功");
-                        return;
-                    }
-//                        if (mLoadType == CircleDayHotFragment.TypeImg) {
-//                            //TODO
-//                            share(item, mLoadType);
-//                        } else {
-//                        SensorsDataUtil.getInstance().mifenClickTrack(mMainTitle,mSubTitle,"发圈",position,"","","","","","","",1,"");
-                    showChoosePicDialog((Activity) context, circleInfo,position);
-//                        }
+
+                    AppUtil.coayText((Activity) context, list.get(position).getContent());
+                    ViewShowUtils.showShortToast(context, "文案复制成功");
+
+                    showChoosePicDialog((Activity) context, circleInfo, position);
                 }
             }
         });
 
 
-
-
-
     }
 
-    private void getTao(int shopType, String itemSourceId) {
+    private void getTao(int shopType, String itemSourceId, final int position) {
 
         RequestCircleShareBean bean = new RequestCircleShareBean();
         bean.setItemId(itemSourceId);
@@ -319,11 +302,13 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                 .subscribe(new DataObserver<CircleCopyBean>() {
                     @Override
                     protected void onSuccess(CircleCopyBean data) {
-                        if (data!=null){
-                            String comment = circleInfo.getComment();
-                            String s = comment.replaceAll("\\{[^}]*\\}", data.getTkl());
-
-                            AppUtil.coayTextPutNative((Activity) context,s);
+                        if (data != null) {
+                            String s="";
+                            String comment = list.get(position).getComment();
+                            if (!TextUtils.isEmpty(comment)){
+                                  s = comment.replaceAll("\\{.*\\}", data.getTkl());
+                            }
+                            AppUtil.coayTextPutNative((Activity) context, s.toString());
                             ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
                             //跳转微信
                             PageToUtil.goToWeixin(context);
@@ -349,7 +334,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 //                    return;
 //                }
 
-                String finalDownPath =arrayList.get(0);
+                String finalDownPath = arrayList.get(0);
                 Observable<Bitmap> flowable1 = LoadImgUtils.getImgToBitmapObservable(context, finalDownPath);
                 Observable<Bitmap> flowable2 = getShareEWMBitmap(goods);
 
@@ -370,7 +355,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                             public void onNext(String picPath) {
                                 mPosterPicPath = picPath;
                                 MyLog.threadName();
-                                updatePoster(picPath, pos,arrayList);
+                                updatePoster(picPath, pos, arrayList);
                             }
                         });
             }
@@ -382,7 +367,6 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
         }, false, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
 
-
     }
 
     public void updatePoster(String picPath, int finalIndex, ArrayList<String> arrayList) {
@@ -390,33 +374,33 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             return;
         }
 
-       arrayList.remove(0);
-        arrayList.add(0,picPath);
+        arrayList.remove(0);
+        arrayList.add(0, picPath);
 
     }
 
 
-
     private void showChoosePicDialog(Activity context, final MarkermallCircleInfo circleInfo, final int position) {
-            shareDialog = new CircleShareDialog(context, new View.OnClickListener() {
+        shareDialog = new CircleShareDialog(context, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getshareCount(list.get(position).getId());
                 switch (v.getId()) {
                     case R.id.weixinFriend: //分享到好友
-                        shareImg(ShareUtil.WechatType,circleInfo,position);
+                        shareImg(ShareUtil.WechatType, circleInfo, position);
                         break;
                     case R.id.weixinCircle: //分享到朋友圈
-                        shareImg(ShareUtil.WeMomentsType,circleInfo,position);
+                        startSave(position);
+                       // shareImg(ShareUtil.WeMomentsType, circleInfo, position);
                         break;
                     case R.id.qqFriend: //分享到QQ
-                        shareImg(ShareUtil.QQType,circleInfo,position);
+                        shareImg(ShareUtil.QQType, circleInfo, position);
                         break;
                     case R.id.qqRoom: //分享到QQ空间
-                        shareImg(ShareUtil.QQZoneType,circleInfo,position);
+                        shareImg(ShareUtil.QQZoneType, circleInfo, position);
                         break;
                     case R.id.plct: //批量存图
-                        startSave(circleInfo.getShareRangItems());
+                        startSave(position);
                         break;
                     default:
                         break;
@@ -434,20 +418,20 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 
     private void getshareCount(int id) {
         try {
-        RequestCircleShareCountBean requestBean = new RequestCircleShareCountBean();
-        requestBean.setId(id+"");
-        String sign = EncryptUtlis.getSign2(requestBean);
-        requestBean.setSign(sign);
+            RequestCircleShareCountBean requestBean = new RequestCircleShareCountBean();
+            requestBean.setId(id + "");
+            String sign = EncryptUtlis.getSign2(requestBean);
+            requestBean.setSign(sign);
 
-        RxHttp.getInstance().getOrdersService()
-                .getMarkermallShareCount(requestBean)
-                .compose(RxUtils.<BaseResponse>switchSchedulers())
-                .subscribe(new Consumer<BaseResponse>() {
-                    @Override
-                    public void accept(BaseResponse response) throws Exception {
-                       notifyDataSetChanged();
-                    }
-                });
+            RxHttp.getInstance().getOrdersService()
+                    .getMarkermallShareCount(requestBean)
+                    .compose(RxUtils.<BaseResponse>switchSchedulers())
+                    .subscribe(new Consumer<BaseResponse>() {
+                        @Override
+                        public void accept(BaseResponse response) throws Exception {
+                            notifyDataSetChanged();
+                        }
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -460,10 +444,10 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
      */
     protected void shareImg(final int sharePlatform, MarkermallCircleInfo info, int position) {
 
-        final List<String> picture=new ArrayList<>();
-            LoadingView.showDialog(context, "");
-        List<MarkermallCircleItemInfo> shareRangItems= list.get(position).getShareRangItems();
-        for (int i=0;i<shareRangItems.size();i++){
+        final List<String> picture = new ArrayList<>();
+        LoadingView.showDialog(context, "");
+        List<MarkermallCircleItemInfo> shareRangItems = list.get(position).getShareRangItems();
+        for (int i = 0; i < shareRangItems.size(); i++) {
             picture.add(shareRangItems.get(i).getPicture());
         }
 
@@ -533,21 +517,24 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
     }
 
 
-
-
-    private void startSave(List<MarkermallCircleItemInfo> circleInfo) {
+    private void startSave(int position) {
 
 
         if (AppUtil.isFastClick(500)) return;
-        if (circleInfo == null ) {
+        if (circleInfo == null) {
             return;
         }
 
-        downloadListener =createLis();
+        downloadListener = createLis();
+        mlist = new ArrayList<>();
+        List<MarkermallCircleItemInfo> shareRangItems = list.get(position).getShareRangItems();
 
-
-        DownloadManage.getInstance().multitaskStart(arrayList,downloadListener);
+        for (int i = 0; i < shareRangItems.size(); i++) {
+            mlist.add(shareRangItems.get(i).getPicture());
+        }
+        DownloadManage.getInstance().multitaskStart(mlist, downloadListener);
     }
+
     private FileDownloadListener createLis() {
         return new FileDownloadListener() {
 
@@ -569,22 +556,28 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             }
 
 
-
             @Override
             protected void completed(BaseDownloadTask task) {
                 //MyLog.i("test","completed: " +mDownloadCount);
+
                 if (task.getListener() != downloadListener) {
                     return;
                 }
+
                 try {
                     MediaStore.Images.Media.insertImage(context.getContentResolver(), task.getPath(), task.getFilename(), null);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                mDownloadCount++;
 
-                ToastUtils.showShort("图片已存到相册");
-                ShareDownloadDialog dialog=new ShareDownloadDialog(context,R.style.dialog);
-                dialog.show();
+                if (mDownloadCount == mlist.size()) {
+                    ToastUtils.showShort("图片已存到相册");
+                    ShareDownloadDialog dialog = new ShareDownloadDialog(context, R.style.dialog);
+                    dialog.show();
+                }
+
+
             }
 
             @Override
@@ -596,18 +589,18 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 
             @Override
             protected void error(BaseDownloadTask task, Throwable e) {
-                MyLog.i("test","error: "+e.toString());
+                MyLog.i("test", "error: " + e.toString());
 
                 if (task.getListener() != downloadListener) {
                     return;
                 }
-                MyLog.i("test","downloadListener: "+downloadListener);
+                MyLog.i("test", "downloadListener: " + downloadListener);
 
             }
 
             @Override
             protected void warn(BaseDownloadTask task) {
-                MyLog.i("test","warn: ");
+                MyLog.i("test", "warn: ");
                 if (task.getListener() != downloadListener) {
                     return;
                 }
@@ -615,9 +608,11 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             }
         };
     }
+
     private Spanned colorText(String text) {
         return Html.fromHtml(String.format("<font color='#F05557'>%1$s</font>", text));
     }
+
     @Override
     public int getItemCount() {
 
@@ -630,17 +625,15 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private CopyTextView tv_shart, content, tv_time, tv_comment, tv_copy,title;
+        private CopyTextView tv_shart, content, tv_time, tv_comment, tv_copy, title;
         private ImageView userIcon;
         private RecyclerView rcy_photo;
-
-
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            title=itemView.findViewById(R.id.title);//名字
+            title = itemView.findViewById(R.id.title);//名字
             userIcon = itemView.findViewById(R.id.userIcon);//头像
             tv_shart = itemView.findViewById(R.id.tv_shart);//分享
             content = itemView.findViewById(R.id.content);//内容
@@ -648,7 +641,6 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             tv_time = itemView.findViewById(R.id.tv_time);//时间
             tv_comment = itemView.findViewById(R.id.tv_comment);//复制内容
             tv_copy = itemView.findViewById(R.id.tv_copy);//复制
-
 
 
         }
@@ -667,9 +659,9 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
     }
 
 
-
     /**
      * 回去分享海报二维码
+     *
      * @param goods
      */
     private Observable<Bitmap> getShareEWMBitmap(ShopGoodInfo goods) {
@@ -693,9 +685,6 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                         return null;
                     }
                 });
-
-
-
 
 
     }

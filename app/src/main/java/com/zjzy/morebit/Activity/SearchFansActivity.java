@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -53,12 +54,13 @@ public class SearchFansActivity extends BaseActivity {
     RelativeLayout search_rl;
     @BindView(R.id.listview)
     RecyclerView mRecyclerView;
-    private CommonEmpty mEmptyView;
+
     private QrcodeDialog mQrcodeDialog;
     private MyTeamAdapter myTeamAdapter;
     List<TeamInfo> listArray = new ArrayList<>();
     private String mSearchKey;
     private FansRemarkDialog mRemarkDialog;
+    private LinearLayout dateNullView;
     public static void start(Context context, String search_key) {
         Intent intent = new Intent(context, SearchFansActivity.class);
         intent.putExtra("search_key", search_key);
@@ -104,7 +106,7 @@ public class SearchFansActivity extends BaseActivity {
         search_rl.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ECECEC));
         search_et.setHintTextColor(ContextCompat.getColor(this, R.color.color_999999));
         search_et.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
-        mEmptyView = new CommonEmpty(this, "暂无数据", R.drawable.search_no);
+        dateNullView= (LinearLayout) findViewById(R.id.dateNullView);
         myTeamAdapter = new MyTeamAdapter(this, listArray);
         myTeamAdapter.setUserInfo(UserLocalData.getUser(this));
         myTeamAdapter.setOnAdapterClickListener(new MyTeamAdapter.OnAdapterClickListener() {
@@ -147,14 +149,24 @@ public class SearchFansActivity extends BaseActivity {
         requestFansInfoBean.setPhoneOrActivationCode(phoneOrActivationCode);
         RxHttp.getInstance().getCommonService().searchUser(requestFansInfoBean)
                 .compose(RxUtils.<BaseResponse<List<TeamInfo>>>switchSchedulers())
-                .compose(mEmptyView.<BaseResponse<List<TeamInfo>>>bind())
                 .subscribe(new DataObserver<List<TeamInfo>>() {
                     @Override
                     protected void onSuccess(List<TeamInfo> data) {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        dateNullView.setVisibility(View.GONE);
                         listArray.clear();
                         listArray.addAll(data);
                         myTeamAdapter.setData(listArray);
                         myTeamAdapter.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    protected void onDataListEmpty() {
+                        super.onDataListEmpty();
+                        mRecyclerView.setVisibility(View.GONE);
+                        dateNullView.setVisibility(View.VISIBLE);
+
                     }
                 });
 

@@ -25,7 +25,9 @@ import com.blankj.utilcode.util.SPUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.FansRemarkDialog;
 import com.zjzy.morebit.Module.common.Dialog.PurchaseRuleDialog;
@@ -156,9 +158,16 @@ public class FansDragonActivity extends BaseActivity implements View.OnClickList
         rcy_fans.setLayoutManager(linearLayout);
         fansAdapter=new MyFansAdapter(this);
         rcy_fans.setAdapter(fansAdapter);
-        swipeList.setEnableRefresh(false);
+        //弹出圆圈 样式
 
         swipeList.setEnableLoadMore(true);
+        swipeList.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page=1;
+                getData();
+            }
+        });
         swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -266,7 +275,7 @@ public class FansDragonActivity extends BaseActivity implements View.OnClickList
 
                     @Override
                     protected void onSuccess(List<TeamInfo> data) {
-
+                        swipeList.finishRefresh();
                         if (data!=null && data.size() > 0){
                             mdata=data;
                             dateNullView.setVisibility(View.GONE);

@@ -134,6 +134,7 @@ public class NewMaterialFragment extends BaseMainFragmeng {
             GoodDailyFragment fragment = null;
             fragment = new GoodDailyFragment();
             mFragments.add(fragment.newInstance(mchild.get(i).getChild(),oneLevelId,mchild.get(i).getId(),type));
+            Log.e("sfsdfs",mchild.get(i).getId()+"");
         }
         viewPager.setAdapter(new ChannelAdapter(getChildFragmentManager()));
         tab.setViewPager(viewPager);

@@ -457,6 +457,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         activity_hao = mView.findViewById(R.id.activity_hao);  //好单预告
         GridLayoutManager manager4 = new GridLayoutManager(getActivity(), 2);
+        activity_hao.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 6)));
         activity_hao.setLayoutManager(manager4);
         if (activity_hao.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
             activity_hao.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
@@ -1135,19 +1136,24 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             }
 
             Log.e("gyui",data.getTime());
-            new_goods.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
-                }
-            });
-            shareImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
-                }
-            });
+
         }
+        new_goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (LoginUtil.checkIsLogin(getActivity())) {
+                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
+                }
+            }
+        });
+        shareImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (LoginUtil.checkIsLogin(getActivity())) {
+                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
+                }
+            }
+        });
 
     }
 

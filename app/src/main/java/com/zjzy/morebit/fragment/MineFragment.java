@@ -450,15 +450,14 @@ public class MineFragment extends BaseMainFragmeng {
             ll_myhead.setVisibility(View.GONE);
             rl_myhead.setVisibility(View.VISIBLE);
         }
+
         LoginUtil.getUserInfo((RxAppCompatActivity) getActivity(), false, new MyAction.OnResultFinally<UserInfo>() {
             /**
              * 结束
              */
             @Override
             public void onFinally() {
-                if (mSwipeList != null) {
-                    mSwipeList.setRefreshing(false);
-                }
+
             }
 
             @Override
@@ -471,12 +470,10 @@ public class MineFragment extends BaseMainFragmeng {
             }
         });
         getBannerData(C.UIShowType.Personal);   //个人轮播
-//        getBannerData(C.UIShowType.Welfare);   //福利津贴
         getBannerData(C.UIShowType.myTool);   //福利津贴
         getBannerData(C.UIShowType.PERSONAL_FUNCTION);   //功能区
-//        getFindSplendidList();
-
         getMonthIncome();
+        mSwipeList.setRefreshing(false);
 
     }
 
