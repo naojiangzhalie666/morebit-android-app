@@ -105,21 +105,38 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_level"
+                    <LinearLayout
+                        android:id="@+id/ll_vip"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/bg_e9c8a7_round_9dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/bg_solid_333333_5dp"
-                        android:paddingBottom="1dp"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="3dp"
-                        android:paddingTop="1dp"
-                        android:text="VIP会员"
-                        android:textColor="@color/color_FFD800"
-                        android:textSize="@dimen/sp_11" />
+                        android:layout_height="wrap_content">
 
+                        <ImageView
+                            android:id="@+id/vip_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/vip_icon_right2"
+                            android:paddingLeft="8dp"
+                            android:layout_gravity="center_vertical"
+                            />
+
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:id="@+id/userLevel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingBottom="2dp"
+                            android:layout_marginLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingTop="2dp"
+                            android:text="VIP"
+                            android:textColor="#A8947A"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
                     <ImageButton
                         android:paddingLeft="10dp"
                         android:paddingBottom="10dp"
