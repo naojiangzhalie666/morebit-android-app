@@ -45,9 +45,6 @@ public class ToolsAdapter2 extends RecyclerView.Adapter<ToolsAdapter2.ViewHolder
     }
 
 
-
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,22 +56,22 @@ public class ToolsAdapter2 extends RecyclerView.Adapter<ToolsAdapter2.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final ImageInfo imageInfo = list.get(position);
-        if (!TextUtils.isEmpty(imageInfo.getTitle())){
+        if (!TextUtils.isEmpty(imageInfo.getTitle())) {
             holder.tv.setText(imageInfo.getTitle());
         }
 
-        if (!TextUtils.isEmpty(imageInfo.getPicture())){
-            LoadImgUtils.setImg(context,holder.img,imageInfo.getPicture());
+        if (!TextUtils.isEmpty(imageInfo.getPicture())) {
+            LoadImgUtils.setImg(context, holder.img, imageInfo.getPicture());
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BannerInitiateUtils.gotoAction((Activity) context, imageInfo);
-                BannerInitiateUtils.statisticsStartAdOnclick((BaseActivity) context, imageInfo.getId() + "", 1);
-            }
-        });
-
+        if (LoginUtil.checkIsLogin((Activity) context)) {//未登录去登录
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BannerInitiateUtils.gotoAction((Activity) context, imageInfo);
+                    BannerInitiateUtils.statisticsStartAdOnclick((BaseActivity) context, imageInfo.getId() + "", 1);
+                }
+            });
+        }
     }
 
 
@@ -94,8 +91,8 @@ public class ToolsAdapter2 extends RecyclerView.Adapter<ToolsAdapter2.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tv= itemView.findViewById(R.id.tv);
-            img=itemView.findViewById(R.id.img);
+            tv = itemView.findViewById(R.id.tv);
+            img = itemView.findViewById(R.id.img);
         }
     }
 
