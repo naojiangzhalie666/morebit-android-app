@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -202,6 +203,8 @@ public class MineFragment extends BaseMainFragmeng {
     LinearLayout ll_dragon;
     @BindView(R.id.integer_icon)
     LinearLayout integer_icon;
+    @BindView(R.id.rcy_tools)
+    RecyclerView rcy_tools;
 
 
 
@@ -348,6 +351,17 @@ public class MineFragment extends BaseMainFragmeng {
                 }
             }
         });
+
+
+        //必备工具
+
+
+
+
+
+
+
+
 
     }
 
@@ -722,6 +736,7 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
     private void setTool(List<ImageInfo> data) {
+        Log.e("sfsdfsdfsd",data.size()+"");
         for (int i = 0; i < data.size(); i++) {
             if ("专属客服".equals(data.get(i).getTitle())) {
                 customerUrl = data.get(i).getUrl();

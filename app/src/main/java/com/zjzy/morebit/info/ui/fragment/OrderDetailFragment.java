@@ -190,7 +190,7 @@ public class OrderDetailFragment extends BaseFragment {
             } else if (getString(R.string.order_wait_pay).equals(homeColumns.get(position))) {
                 return OrderListFragment.newInstance(2, mTeamType);
             } else if ("待发货".equals(homeColumns.get(position))) {
-                return OrderListFragment.newInstance(3, mTeamType);
+                return OrderListFragment.newInstance(1, mTeamType);
             }else if (getString(R.string.order_receive_goods).equals(homeColumns.get(position))){
                 return OrderListFragment.newInstance(6, mTeamType);
             } else if ("已完成".equals(homeColumns.get(position))) {

@@ -253,7 +253,13 @@
                         android:background="@color/color_F0F1F5" />
 
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rcy_tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
