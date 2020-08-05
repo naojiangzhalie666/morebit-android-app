@@ -28,6 +28,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ShareDownloadDialog;
@@ -39,6 +40,7 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.CircleCopyBean;
+import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.MarkermallCircleInfo;
 import com.zjzy.morebit.pojo.MarkermallCircleItemInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
@@ -100,7 +102,8 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
     private int mDownloadCount = 0;
     private List<String> mlist;
     private  ShopGoodInfo goodInfo;
-    private List<String>  picture=new ArrayList<>();;
+    private List<String>  picture=new ArrayList<>();
+    private Bitmap shareEWMBitmap;
 
 
     public GoodsDialyAdapter(Context context, int circletype) {
@@ -269,20 +272,22 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                             goodInfo.setSaleMonth(info.getSaleMonth());
                             goodInfo.setShopType(info.getShopType());
                             goodInfo.setTitle(info.getItemTitle());
+                            goodInfo.setItemPicture(info.getItemPicture());
+                            goodInfo.setItemSourceId(info.getItemSourceId());
                             shopType = info.getShopType();
                             switch (shopType) {
                                 case 1://淘宝
-                                    getTao2(shopType, info.getItemSourceId(), position);
+                                    getTao2(shopType, info.getItemSourceId(), position,goodInfo);
                                     break;
                                 case 2://天猫
-                                    getTao2(shopType, info.getItemSourceId(), position);
+                                    getTao2(shopType, info.getItemSourceId(), position, goodInfo);
 
                                     break;
                                 case 3://pdd
-                                    getTao2(shopType, info.getItemSourceId(), position);
+                                    getTao2(shopType, info.getItemSourceId(), position, goodInfo);
                                     break;
                                 case 4://jd
-                                    getTao2(shopType, info.getItemSourceId(), position);
+                                    getTao2(shopType, info.getItemSourceId(), position, goodInfo);
                                     break;
                             }
                         }
@@ -343,7 +348,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
     }
 
 
-    private void getTao2(final int shopType, String itemSourceId, final int position) {
+    private void getTao2(final int shopType, String itemSourceId, final int position, final ShopGoodInfo goodInfo) {
 
         RequestCircleShareBean bean = new RequestCircleShareBean();
         bean.setItemId(itemSourceId);
@@ -356,7 +361,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                     @Override
                     protected void onSuccess(CircleCopyBean data) {
                         if (data != null) {
-                            Bitmap shareEWMBitmap;
+
                             String comment = list.get(position).getComment();
                             if (!TextUtils.isEmpty(comment)) {
                                 String quStr = comment.substring(comment.indexOf("{") + 1, comment.indexOf("}"));
@@ -364,16 +369,24 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                                 String replace = "";
                                 if (!TextUtils.isEmpty(data.getTkl())) {
                                     replace = comment.replace(quStr, data.getTkl() + "");
-                                    shareEWMBitmap = GoodsUtil.getShareEWMBitmap((Activity) context, data.getTkl());
+                                    goodInfo.setCouponUrl(data.getTkl());
+                                    getShareEWMBitmap(goodInfo,position);
+
                                 } else {
                                     replace = comment.replace(quStr, data.getPurchaseLink() + "");
                                     shareEWMBitmap = GoodsUtil.getShareEWMBitmap((Activity) context, data.getPurchaseLink());
+                                    if (shareEWMBitmap==null)return;
+                                    Log.e("sfdf",shareEWMBitmap+"");
+                                    getPoster(position,shareEWMBitmap);//第一张图生成海报
                                 }
                                 AppUtil.coayTextPutNative((Activity) context, replace);
                                 ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
-                                if (shareEWMBitmap==null)return;
-                                Log.e("sfdf",shareEWMBitmap+"");
-                                getPoster(position,shareEWMBitmap);//第一张图生成海报
+
+
+
+
+
+
                             }
 
                             }
@@ -433,6 +446,41 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 
                     }
                 });
+    }
+
+
+    /**
+     * 回去分享海报二维码
+     * @param goodInfo
+     * @param position
+     */
+    private void getShareEWMBitmap(ShopGoodInfo goodInfo, final int position) {
+
+
+        ArrayList<ShopGoodInfo> shopGoodInfos = new ArrayList<>();
+        shopGoodInfos.add(goodInfo);
+        ShareMore.getShareGoodsUrlListObservable((RxAppCompatActivity) context, shopGoodInfos, goodInfo.getItemSourceId())
+                .compose(RxUtils.<BaseResponse<ShareUrlListBaen>>switchSchedulers())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<ShareUrlListBaen>() {
+                    @Override
+                    protected void onSuccess(ShareUrlListBaen data) {
+                        List<String> link = data.getLink();
+                        if (link != null && link.size() != 0) {
+                            shareEWMBitmap = GoodsUtil.getShareEWMBitmap((Activity) context, link.get(0));
+                            if (shareEWMBitmap==null)return;
+                            getPoster(position,shareEWMBitmap);//第一张图生成海报
+                        }
+
+                    }
+
+                });
+
+
     }
 
     //生成海报
@@ -747,33 +795,5 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
     }
 
 
-    /**
-     * 回去分享海报二维码
-     *
-     * @param goods
-     */
-    private Observable<Bitmap> getShareEWMBitmap(ShopGoodInfo goods) {
-        ArrayList<ShopGoodInfo> shopGoodInfos = new ArrayList<>();
-        shopGoodInfos.add(goods);
-        return ShareMore.getShareGoodsUrlListObservable((RxAppCompatActivity) context, shopGoodInfos, goods.getItemSourceId())
-                .observeOn(Schedulers.io())
-                .flatMap(new Function<BaseResponse<ShareUrlListBaen>, ObservableSource<Bitmap>>() {
-                    @Override
-                    public ObservableSource<Bitmap> apply(BaseResponse<ShareUrlListBaen> baseResponse) throws Exception {
-                        MyLog.threadName();
-                        ShareUrlListBaen data = baseResponse.getData();
-                        if (data != null) {
-                            mExtension = data.getExtension();
-                            List<String> link = data.getLink();
-                            if (link != null && link.size() != 0) {
-                                return GoodsUtil.getShareEWMBitmapObservable((Activity) context, link.get(0));
 
-                            }
-                        }
-                        return null;
-                    }
-                });
-
-
-    }
 }
