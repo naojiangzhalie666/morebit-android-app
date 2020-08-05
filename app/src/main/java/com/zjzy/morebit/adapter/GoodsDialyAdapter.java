@@ -588,6 +588,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                     ToastUtils.showShort("图片已存到相册");
                     ShareDownloadDialog dialog = new ShareDownloadDialog(context, R.style.dialog);
                     dialog.show();
+                    mDownloadCount=0;
                 }
 
 
