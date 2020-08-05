@@ -80,7 +80,7 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.ViewHolder
             viewHolder.createTime.setVisibility(View.VISIBLE);
             String time = DateTimeUtils.ymdhmsToymd(info.getCreateTime());
             Log.e("sfsfdsf",time+"");
-            viewHolder.createTime.setText(DateTimeUtils.getShortTime3(info.getCreateTime())+ "");
+            viewHolder.createTime.setText(DateTimeUtils.getShortTime3(info.getLastActiveTime())+ "");
         }else if (mType==3){//七日
             viewHolder.people_count.setVisibility(View.GONE);
             viewHolder.ll_la.setVisibility(View.VISIBLE);
