@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -361,7 +362,19 @@ public class NumberSubFragment extends BaseFragment {
         });
 
     }
-
+    public void scrollToTop() {
+        //拿到 appbar 的 behavior,让 appbar 滚动
+        ViewGroup.LayoutParams layoutParams = mAppBarLt.getLayoutParams();
+        CoordinatorLayout.Behavior behavior =
+                ((CoordinatorLayout.LayoutParams) layoutParams).getBehavior();
+        if (behavior instanceof AppBarLayout.Behavior) {
+            AppBarLayout.Behavior appBarLayoutBehavior = (AppBarLayout.Behavior) behavior;
+            //拿到下方tabs的y坐标，即为我要的偏移量
+            float y = xablayout.getY();
+            //注意传递负值
+            appBarLayoutBehavior.setTopAndBottomOffset((int) -y);
+        }
+    }
 
     private class PagerAdapter extends FragmentPagerAdapter {
         public PagerAdapter(FragmentManager fm) {
@@ -656,6 +669,7 @@ public class NumberSubFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     xablayout.getTabAt(0).select();
+                    scrollToTop();
                 }
             });
         }
