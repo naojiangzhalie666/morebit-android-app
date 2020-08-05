@@ -63,15 +63,17 @@ public class ToolsAdapter2 extends RecyclerView.Adapter<ToolsAdapter2.ViewHolder
         if (!TextUtils.isEmpty(imageInfo.getPicture())) {
             LoadImgUtils.setImg(context, holder.img, imageInfo.getPicture());
         }
-        if (LoginUtil.checkIsLogin((Activity) context)) {//未登录去登录
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (LoginUtil.checkIsLogin((Activity) context)) {//未登录去登录
                     BannerInitiateUtils.gotoAction((Activity) context, imageInfo);
                     BannerInitiateUtils.statisticsStartAdOnclick((BaseActivity) context, imageInfo.getId() + "", 1);
                 }
+                }
             });
-        }
+
     }
 
 
