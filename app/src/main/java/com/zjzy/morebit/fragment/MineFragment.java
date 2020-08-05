@@ -480,9 +480,8 @@ public class MineFragment extends BaseMainFragmeng {
         }
 
         LoginUtil.getUserInfo((RxAppCompatActivity) getActivity(), false, new MyAction.OnResultFinally<UserInfo>() {
-            /**
-             * 结束
-             */
+
+
             @Override
             public void onFinally() {
 
@@ -490,11 +489,13 @@ public class MineFragment extends BaseMainFragmeng {
 
             @Override
             public void invoke(UserInfo arg) {
-                updataUser();
+              updataUser();
+
             }
 
             @Override
             public void onError() {
+
             }
         });
         getBannerData(C.UIShowType.Personal);   //个人轮播

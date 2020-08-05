@@ -132,8 +132,8 @@ public class LoginUtil {
 
             @Override
             protected void onSuccess(UserInfo data) {
-                UserLocalData.setUser(activity, data);
-                //通知刷新合伙人首页数据
+              UserLocalData.setUser(activity, data);
+//                //通知刷新合伙人首页数据
                 MessageEvent messageEvent4 = new MessageEvent();
                 messageEvent4.setAction(EventBusAction.MAINPAGE_MYCENTER_REFRESH_DATA);
                 messageEvent4.setMsg("");
