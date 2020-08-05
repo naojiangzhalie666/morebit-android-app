@@ -100,7 +100,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
     private int mDownloadCount = 0;
     private List<String> mlist;
     private  ShopGoodInfo goodInfo;
-    private List<String>  picture;
+    private List<String>  picture=new ArrayList<>();;
 
 
     public GoodsDialyAdapter(Context context, int circletype) {
@@ -216,31 +216,35 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
             @Override
             public void onClick(View v) {
                 List<ShopGoodInfo> goods = list.get(position).getGoods();
-                for (ShopGoodInfo info : goods) {
-                    shopType = info.getShopType();
-                    switch (shopType) {
-                        case 1://淘宝
-                            getTao(shopType, info.getItemSourceId(), position);
-                            break;
-                        case 2://天猫
-                            getTao(shopType, info.getItemSourceId(), position);
+                if (circletype==0){
+                    for (ShopGoodInfo info : goods) {
+                        shopType = info.getShopType();
+                        switch (shopType) {
+                            case 1://淘宝
+                                getTao(shopType, info.getItemSourceId(), position);
+                                break;
+                            case 2://天猫
+                                getTao(shopType, info.getItemSourceId(), position);
 
-                            break;
-                        case 3://pdd
-                            getTao(shopType, info.getItemSourceId(), position);
-                            break;
-                        case 4://jd
-                            getTao(shopType, info.getItemSourceId(), position);
-                            break;
-                        default:
-                            AppUtil.coayTextPutNative((Activity) context, holder.tv_comment.getText().toString());
-                            ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
-                            //跳转微信
-                            PageToUtil.goToWeixin(context);
-                            break;
+                                break;
+                            case 3://pdd
+                                getTao(shopType, info.getItemSourceId(), position);
+                                break;
+                            case 4://jd
+                                getTao(shopType, info.getItemSourceId(), position);
+                                break;
+                            default:
+                                break;
 
+                        }
                     }
+                }else{
+                    AppUtil.coayTextPutNative((Activity) context, holder.tv_comment.getText().toString());
+                    ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
+                    //跳转微信
+                    PageToUtil.goToWeixin(context);
                 }
+
 
             }
         });
@@ -255,34 +259,43 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                 } else {
                     if (AppUtil.isFastClick(1000)) return;
 
-                    AppUtil.coayText((Activity) context, list.get(position).getContent());
-                    ViewShowUtils.showShortToast(context, "文案复制成功");
                     List<ShopGoodInfo> goods = list.get(position).getGoods();
-                    for (ShopGoodInfo info : goods) {
-                        goodInfo=new ShopGoodInfo();
-                        goodInfo.setCouponPrice(info.getCouponPrice());
-                        goodInfo.setVoucherPrice(info.getItemVoucherPrice());
-                        goodInfo.setPrice(info.getItemprice());
-                        goodInfo.setSaleMonth(info.getSaleMonth());
-                        goodInfo.setShopType(info.getShopType());
-                        goodInfo.setTitle(info.getItemTitle());
-                        shopType = info.getShopType();
-                        switch (shopType) {
-                            case 1://淘宝
-                                getTao2(shopType, info.getItemSourceId(), position);
-                                break;
-                            case 2://天猫
-                                getTao2(shopType, info.getItemSourceId(), position);
+                    if (circletype==0){
+                        for (ShopGoodInfo info : goods) {
+                            goodInfo=new ShopGoodInfo();
+                            goodInfo.setCouponPrice(info.getCouponPrice());
+                            goodInfo.setVoucherPrice(info.getItemVoucherPrice());
+                            goodInfo.setPrice(info.getItemprice());
+                            goodInfo.setSaleMonth(info.getSaleMonth());
+                            goodInfo.setShopType(info.getShopType());
+                            goodInfo.setTitle(info.getItemTitle());
+                            shopType = info.getShopType();
+                            switch (shopType) {
+                                case 1://淘宝
+                                    getTao2(shopType, info.getItemSourceId(), position);
+                                    break;
+                                case 2://天猫
+                                    getTao2(shopType, info.getItemSourceId(), position);
 
-                                break;
-                            case 3://pdd
-                                getTao2(shopType, info.getItemSourceId(), position);
-                                break;
-                            case 4://jd
-                                getTao2(shopType, info.getItemSourceId(), position);
-                                break;
+                                    break;
+                                case 3://pdd
+                                    getTao2(shopType, info.getItemSourceId(), position);
+                                    break;
+                                case 4://jd
+                                    getTao2(shopType, info.getItemSourceId(), position);
+                                    break;
+                            }
                         }
+                    }else{
+                        picture.clear();
+                        List<MarkermallCircleItemInfo> shareRangItems = list.get(position).getShareRangItems();
+                        if (shareRangItems.size() == 0 || shareRangItems == null) return;
+                        for (int i = 0; i < shareRangItems.size(); i++) {
+                            picture.add(shareRangItems.get(i).getPicture());//取出图片
+                        }
+                        showChoosePicDialog((Activity) context, circleInfo, position,picture);
                     }
+
 
                 }
             }
@@ -344,14 +357,25 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                     protected void onSuccess(CircleCopyBean data) {
                         if (data != null) {
                             Bitmap shareEWMBitmap;
+                            String comment = list.get(position).getComment();
+                            if (!TextUtils.isEmpty(comment)) {
+                                String quStr = comment.substring(comment.indexOf("{") + 1, comment.indexOf("}"));
+                                Log.e("sfsdfsd", quStr + "");
+                                String replace = "";
                                 if (!TextUtils.isEmpty(data.getTkl())) {
-                                      shareEWMBitmap = GoodsUtil.getShareEWMBitmap((Activity) context, data.getTkl());
+                                    replace = comment.replace(quStr, data.getTkl() + "");
+                                    shareEWMBitmap = GoodsUtil.getShareEWMBitmap((Activity) context, data.getTkl());
                                 } else {
-                                      shareEWMBitmap = GoodsUtil.getShareEWMBitmap((Activity) context, data.getPurchaseLink());
+                                    replace = comment.replace(quStr, data.getPurchaseLink() + "");
+                                    shareEWMBitmap = GoodsUtil.getShareEWMBitmap((Activity) context, data.getPurchaseLink());
                                 }
-                            if (shareEWMBitmap==null)return;
-                            Log.e("sfdf",shareEWMBitmap+"");
-                            getPoster(position,shareEWMBitmap);//第一张图生成海报
+                                AppUtil.coayTextPutNative((Activity) context, replace);
+                                ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
+                                if (shareEWMBitmap==null)return;
+                                Log.e("sfdf",shareEWMBitmap+"");
+                                getPoster(position,shareEWMBitmap);//第一张图生成海报
+                            }
+
                             }
 
 
@@ -413,9 +437,10 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
 
     //生成海报
     private void getPoster(final int position, final Bitmap shareEWMBitmap) {
+        picture.clear();
         List<MarkermallCircleItemInfo> shareRangItems = list.get(position).getShareRangItems();
         final List<String> poster = new ArrayList<>();
-      picture=new ArrayList<>();
+
         if (shareRangItems.size() == 0 || shareRangItems == null) return;
         for (int i = 0; i < shareRangItems.size(); i++) {
             poster.add(shareRangItems.get(i).getPicture());//取出图片

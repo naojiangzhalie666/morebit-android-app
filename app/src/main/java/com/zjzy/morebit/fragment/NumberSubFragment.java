@@ -177,7 +177,7 @@ public class NumberSubFragment extends BaseFragment {
     private RoundedImageView vip_tou;
     private TextView vip_name, vip_grade, group_quanyi, more_corn_biaozhun, vip_zhuan, upgrade;
     private HorzProgressView horzProgressView;
-    private LinearLayout group_ll, vip_ll,ll_vip;
+    private LinearLayout group_ll, vip_ll, ll_vip;
     private ImageView img_vip;
     private TextView tv_coin;
 
@@ -250,7 +250,7 @@ public class NumberSubFragment extends BaseFragment {
         swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
         //设置触发刷新的距离
         swipeRefreshLayout.setDistanceToTriggerSync(200);
-        tv_coin=view.findViewById(R.id.tv_coin);//成长值
+        tv_coin = view.findViewById(R.id.tv_coin);//成长值
         vip_tou = view.findViewById(R.id.vip_tou);//头像
         vip_name = view.findViewById(R.id.vip_name);//昵称
         getMorce = view.findViewById(R.id.getMorce);//获取成长值
@@ -263,8 +263,14 @@ public class NumberSubFragment extends BaseFragment {
         group_ll = view.findViewById(R.id.group_ll);//团队长模块
         vip_ll = view.findViewById(R.id.vip_ll);//VIP模块
         img_vip = view.findViewById(R.id.img_vip);//vip icon
-        ll_vip=view.findViewById(R.id.ll_vip);
+        ll_vip = view.findViewById(R.id.ll_vip);
         upgrade.setOnClickListener(new View.OnClickListener() {//升级VIP
+            @Override
+            public void onClick(View v) {
+                GoodsUtil.getVipH5(getActivity());
+            }
+        });
+        group_quanyi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GoodsUtil.getVipH5(getActivity());
@@ -362,6 +368,7 @@ public class NumberSubFragment extends BaseFragment {
         });
 
     }
+
     public void scrollToTop() {
         //拿到 appbar 的 behavior,让 appbar 滚动
         ViewGroup.LayoutParams layoutParams = mAppBarLt.getLayoutParams();
@@ -622,10 +629,12 @@ public class NumberSubFragment extends BaseFragment {
             vip_grade.setTextColor(Color.parseColor("#222222"));
             ll_vip.setBackgroundResource(R.drawable.bg_opertoater_round_9dp);
             getMorce.setText("成长值：" + info.getMoreCoin());
+            group_quanyi.setVisibility(View.VISIBLE);
         } else {
             getMorce.setText("获取成长值");
             vip_ll.setVisibility(View.VISIBLE);
             group_ll.setVisibility(View.GONE);
+            group_quanyi.setVisibility(View.GONE);
             if (info != null) {
                 if (C.UserType.member.equals(info.getUserType())) {
                     img_vip.setImageResource(R.mipmap.vip_icon_right2);
@@ -638,10 +647,10 @@ public class NumberSubFragment extends BaseFragment {
                     String coin1;
                     if (coin != null) {
                         horzProgressView.setCurrentNum(info.getMoreCoin());
-                        coin1 = info.getMoreCoin()+"";
+                        coin1 = info.getMoreCoin() + "";
                     } else {
                         horzProgressView.setCurrentNum(0);
-                        coin1 =  "0";
+                        coin1 = "0";
                         return;
                     }
                     more_corn_biaozhun.setText(coin1);
@@ -657,7 +666,7 @@ public class NumberSubFragment extends BaseFragment {
                     Long moreCoin = info.getMoreCoin();
                     String coin1;
                     if (moreCoin == null) {
-                        coin1 ="0";
+                        coin1 = "0";
                     } else {
                         coin1 = moreCoin + "";
                     }
@@ -681,14 +690,10 @@ public class NumberSubFragment extends BaseFragment {
     }
 
 
-
-
-
-
     @Override
     public void onResume() {
         super.onResume();
-      initTou();
+        initTou();
 
     }
 
@@ -737,7 +742,6 @@ public class NumberSubFragment extends BaseFragment {
         });
 
 
-
         getVipFloor(this).compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
                 .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
                 .subscribe(new DataObserver<List<ImageInfo>>() {
@@ -745,6 +749,7 @@ public class NumberSubFragment extends BaseFragment {
                     protected void onDataListEmpty() {
                         rl3.setVisibility(View.GONE);
                     }
+
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         if (data != null) {
@@ -767,15 +772,12 @@ public class NumberSubFragment extends BaseFragment {
 
     //获取用户详情
     private void showDetailsView(UserInfo data) {
-        if (!TextUtils.isEmpty(data.getAccumulatedAmount())){
-            vip_zhuan.setText("累计省赚"+data.getAccumulatedAmount()+"元");
+        if (!TextUtils.isEmpty(data.getAccumulatedAmount())) {
+            vip_zhuan.setText("累计省赚" + data.getAccumulatedAmount() + "元");
 
         }
 
     }
-
-
-
 
 
     public void showSuccessful(NumberGoodsList datas) {
@@ -911,8 +913,6 @@ public class NumberSubFragment extends BaseFragment {
     }
 
 
-
-
     /**
      * 获取楼层
      *
@@ -995,6 +995,7 @@ public class NumberSubFragment extends BaseFragment {
     public void onEventMainThread(RefreshUserInfoEvent event) {
         updataUser();
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
