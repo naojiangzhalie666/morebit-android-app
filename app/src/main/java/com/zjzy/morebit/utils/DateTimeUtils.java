@@ -714,6 +714,8 @@ public class DateTimeUtils {
                 }
             }
 
+        }else if (delTime > 60 * 60) {
+            shortString = "今天";
         }
         return shortString;
     }
