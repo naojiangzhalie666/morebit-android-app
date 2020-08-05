@@ -629,8 +629,8 @@ public class NumberSubFragment extends BaseFragment {
             if (info != null) {
                 if (C.UserType.member.equals(info.getUserType())) {
                     img_vip.setImageResource(R.mipmap.vip_icon_right2);
-                    vip_grade.setText("普通会员");
-                    upgrade.setText("升级VIP");
+                    vip_grade.setText("VIP");
+                    upgrade.setText("升级掌柜(黄金)");
                     vip_grade.setTextColor(Color.parseColor("#A8947A"));
                     ll_vip.setBackgroundResource(R.drawable.bg_e9c8a7_round_9dp);
                     horzProgressView.setMax(360.00);
