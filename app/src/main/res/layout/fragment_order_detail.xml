@@ -9,11 +9,15 @@
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="12dp"
         android:background="@color/white">
 
         <ImageView
             android:id="@+id/back"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
