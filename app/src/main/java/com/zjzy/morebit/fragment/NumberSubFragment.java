@@ -313,6 +313,7 @@ public class NumberSubFragment extends BaseFragment {
         swipeDirectionDetector = new SwipeDirectionDetector();
         viewPager.setAdapter(pagerAdapter);
         xablayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(3);
 
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -129,6 +129,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
                         //                if (mReUseListView.getSwipeList() != null) {
                         //                    mReUseListView.getSwipeList().setRefreshing(false);
                         //                }
+                        swipeList.finishLoadMore();
 
                     }
 
@@ -142,6 +143,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
     private void showSuccessful(NumberGoodsList data) {
         List<NumberGoods> list = data.getList();
         if (list == null || (list != null && list.size() == 0)) {
+            swipeList.finishLoadMore();
             return;
         }
         if (page == 1) {
