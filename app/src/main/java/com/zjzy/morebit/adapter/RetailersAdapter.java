@@ -106,7 +106,12 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
             holder.tv_fanyong.getPaint().setFakeBoldText(true);
         }
 
-        if (ordertype == 3) {
+        int  status = Integer.parseInt(info.getStatus());
+        if (status==4){
+            holder.tv_content.setText("订单失效(退款)");
+        }else if (status==5){
+            holder.tv_content.setText("维权订单");
+        }else if (status==3){
             holder.tv_content.setText("已到账");
         }else{
             holder.tv_content.setText("收货后次月结算");

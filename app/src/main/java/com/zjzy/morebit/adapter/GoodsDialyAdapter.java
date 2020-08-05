@@ -24,6 +24,7 @@ import com.liulishuo.filedownloader.FileDownloadListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ShareDownloadDialog;
@@ -230,7 +231,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                             break;
                         case 3://pdd
                             info.setItemSource("2");
-                            GoodsDetailForJdActivity.start(context, info);
+                            GoodsDetailForPddActivity.start(context, info);
                             break;
                         case 4://jd
                             info.setItemSource("1");
