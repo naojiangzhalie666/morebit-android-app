@@ -83,6 +83,8 @@ public class GoodDailyFragment extends BaseMainFragmeng {
     private GoodsDialyAdapter goodsDialyAdapter;
     private int type;
     private int  circletype;
+    private  int stype;
+    private RelativeLayout rl_title;
 
 
 
@@ -98,18 +100,16 @@ public class GoodDailyFragment extends BaseMainFragmeng {
         fragment.setArguments(args);
         return fragment;
     }
-    public static GoodDailyFragment newInstance(List<CategoryListChildDtos> child, int id,int type,int circletype) {
+    public static GoodDailyFragment newInstance(List<CategoryListChildDtos> child, int id,int type,int circletype ) {
         GoodDailyFragment fragment = new GoodDailyFragment();
         Bundle args = new Bundle();
         args.putSerializable(C.Circle.CIRCLE_TITLE, (Serializable) child);
         args.putInt(C.Circle.CIRCLE_ONEID, id);
         args.putInt(C.Circle.CIRCLE_TYPE,type);
         args.putInt(C.Circle.CIRCLEFRAGMENT,circletype);
-
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_goodsdaily, container, false);
@@ -195,15 +195,24 @@ public class GoodDailyFragment extends BaseMainFragmeng {
             twoLevelId=arguments.getInt(C.Circle.CIRCLE_TWOID);
             type=arguments.getInt(C.Circle.CIRCLE_TYPE);
             circletype=arguments.getInt(C.Circle.CIRCLEFRAGMENT);
+            stype=arguments.getInt(C.Circle.CIRCLE_TWO);
             Log.e("sfsdfsdf",twoLevelId+"");
         }
-
+        rl_title=view.findViewById(R.id.rl_title);
         rcy_title=view.findViewById(R.id.rcy_title);
-        GoodDialyTitleAdapter titleAdapter=new GoodDialyTitleAdapter(getActivity(),mchild,oneLevelId,circletype,type);
-        LinearLayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
-        gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rcy_title.setLayoutManager(gridLayoutManager);
-        rcy_title.setAdapter(titleAdapter);
+        Log.e("mbbmbmbm",mchild+"");
+        if (mchild!=null){
+            rl_title.setVisibility(View.VISIBLE);
+            GoodDialyTitleAdapter titleAdapter=new GoodDialyTitleAdapter(getActivity(),mchild,oneLevelId,circletype,type);
+            LinearLayoutManager gridLayoutManager=new LinearLayoutManager(getActivity());
+            gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            rcy_title.setLayoutManager(gridLayoutManager);
+            rcy_title.setAdapter(titleAdapter);
+        }else{
+            rl_title.setVisibility(View.GONE);
+        }
+
+
         img_below=view.findViewById(R.id.img_below);
         view2=view.findViewById(R.id.view);
         img_below.setOnClickListener(new View.OnClickListener() {
