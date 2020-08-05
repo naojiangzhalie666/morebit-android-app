@@ -11,6 +11,7 @@ import android.util.Log;
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zjzy.morebit.Activity.AppletsActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.Activity.MyMaterialActivity;
@@ -432,7 +433,9 @@ public class BannerInitiateUtils {
             Log.e("ksjs", info.getUrl() + info.getTitle());
             KoalaWebActivity.start(activity, info.getUrl(), info.getTitle());
 
-        } else {
+        } else if (type == C.BannerIntentionType.XCX) {  //小程序
+            activity.startActivity(new Intent(activity, AppletsActivity.class));
+        }else {
             showUptate(activity, type);
         }
     }

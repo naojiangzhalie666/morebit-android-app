@@ -339,6 +339,7 @@ public class C {
         public static final int SHOPMALL = 45;//优选商城
         public static final int KOALA = 46;//考拉海购
         public static final int WPH = 47;//唯品会
+        public static final int XCX = 101;//小程序
 
 
     }

@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.AppletsActivity;
@@ -39,6 +41,7 @@ import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
 import com.zjzy.morebit.Module.common.Dialog.WxBindDialog;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.adapter.ToolsAdapter2;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.info.model.InfoModel;
@@ -70,6 +73,7 @@ import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -209,6 +213,7 @@ public class MineFragment extends BaseMainFragmeng {
 
 
 
+
     // ToolsAdapter mAdapter;
     private LinearLayout my_little;
     PersonFunctionAdapter mPersonFunctionAdapter;
@@ -239,6 +244,9 @@ public class MineFragment extends BaseMainFragmeng {
     private   RelativeLayout rl_myhead;
     private ImageView img_yu;
     private    String balance;
+    private   ToolsAdapter2 adapter2;
+    private LinearLayout ll_tools;
+    private View view;
 
 
     @Override
@@ -261,6 +269,8 @@ public class MineFragment extends BaseMainFragmeng {
         tv_mine = mView.findViewById(R.id.tv_mine);
         ll_myhead=mView.findViewById(R.id.ll_myhead);
         rl_myhead=mView.findViewById(R.id.rl_myhead);
+        ll_tools=mView.findViewById(R.id.ll_tools);
+        view=mView.findViewById(R.id.view);
         return mView;
     }
 
@@ -354,7 +364,11 @@ public class MineFragment extends BaseMainFragmeng {
 
 
         //必备工具
-
+        adapter2=new ToolsAdapter2(getActivity());
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),4);
+        rcy_tools.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 6)));
+        rcy_tools.setLayoutManager(gridLayoutManager);
+        rcy_tools.setAdapter(adapter2);
 
 
 
@@ -628,7 +642,7 @@ public class MineFragment extends BaseMainFragmeng {
 
                 break;
             case R.id.my_little://小程序入口
-                startActivity(new Intent(getActivity(), AppletsActivity.class));
+
                 break;
             case R.id.user_agreemen://用户协议
                 LoginUtil.getUserProtocol((RxAppCompatActivity) getActivity());
@@ -697,6 +711,10 @@ public class MineFragment extends BaseMainFragmeng {
                             case C.UIShowType.Personal:
                                 mAsBanner.setVisibility(View.GONE);
                                 break;
+                            case C.UIShowType.myTool:
+                                ll_tools.setVisibility(View.GONE);
+                                view.setVisibility(View.GONE);
+                                break;
 
 
                         }
@@ -704,7 +722,14 @@ public class MineFragment extends BaseMainFragmeng {
 
                     @Override
                     protected void onDataNull() {
-                        mAsBanner.setVisibility(View.GONE);
+                        if (C.UIShowType.Personal == back){
+                            mAsBanner.setVisibility(View.GONE);
+                        }else if (C.UIShowType.myTool == back){
+                            ll_tools.setVisibility(View.GONE);
+                            view.setVisibility(View.GONE);
+                        }
+
+
                     }
 
                     @Override
@@ -728,7 +753,13 @@ public class MineFragment extends BaseMainFragmeng {
                             mAsBanner.setVisibility(View.VISIBLE);
                             setBanner(data, mBanner, mAsBanner);
                         } else if (C.UIShowType.myTool == back) {
+                            if (data == null || data.size() == 0) {
+                                ll_tools.setVisibility(View.GONE);
+                                view.setVisibility(View.GONE);
+                                return;
+                            }
                             setTool(data);
+
                         }
 
                     }
@@ -743,6 +774,15 @@ public class MineFragment extends BaseMainFragmeng {
             } else if ("新手教程".equals(data.get(i).getTitle())) {
                 newUrl = data.get(i).getUrl();
             }
+        }
+
+        if (data!=null){
+            ll_tools.setVisibility(View.VISIBLE);
+            view.setVisibility(View.VISIBLE);
+            adapter2.setData(data);
+        }else{
+            ll_tools.setVisibility(View.GONE);
+            view.setVisibility(View.GONE);
         }
     }
 

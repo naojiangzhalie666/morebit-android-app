@@ -230,6 +230,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_tools"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -358,6 +359,7 @@
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="12dp"
                     android:background="@color/color_F0F1F5" />
