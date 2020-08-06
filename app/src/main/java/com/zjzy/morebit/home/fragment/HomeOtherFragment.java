@@ -2003,48 +2003,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 if (rl_urgency_notifi != null) {
                     rl_urgency_notifi.removeAllViews();
                 }
-                RxHttp.getInstance().getCommonService().checkPruchase()
-                        .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
-                        .compose(this.<BaseResponse<String>>bindToLifecycle())
-                        .subscribe(new DataObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data) {
-
-                                ischeck = data;
-
-                                if (!TextUtils.isEmpty(ischeck)) {
-                                    if (ischeck.equals("true")) {//是否有新人首单
-                                        if (nonewbuyView == null) {
-                                            nonewbuyView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_no_new_buy, null);
-                                            nonewbuyView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    if (TimeUtils.isFrequentOperation()) {//防止用户多次点击跳两次页面
-                                                        return;
-                                                    }
-                                                    getActivity().startActivity(new Intent(getActivity(), PurchaseActivity.class));//跳转新人免单
-
-                                                }
-                                            });
-                                        }
-                                        if (rl_urgency_notifi != null) {
-                                            rl_urgency_notifi.removeAllViews();
-                                            rl_urgency_notifi.addView(nonewbuyView);
-                                        }
-
-                                    } else {
-                                        if (rl_urgency_notifi != null) {
-                                            rl_urgency_notifi.removeAllViews();
-                                        }
-
-                                        Intent intent=new Intent();
-                                        intent.setAction("system");//要通知的广播名称
-                                        getActivity().sendBroadcast(intent);
-
-                                    }
-                                }
-                            }
-                        });
+                Intent intent=new Intent();
+                intent.setAction("system");//要通知的广播名称
+                getActivity().sendBroadcast(intent);
 
 
             }

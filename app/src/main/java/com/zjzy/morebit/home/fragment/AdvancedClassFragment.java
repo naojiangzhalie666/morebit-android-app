@@ -201,6 +201,7 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.item_vip_skill_head, null, false);
         mLRecyclerViewAdapter.addHeaderView(header);
         swipeList.setEnableRefresh(false);
+        swipeList.finishRefresh();
 
         swipeList.setEnableLoadMore(true);
         swipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
