@@ -55,6 +55,7 @@ public class LimiteSkillFragment extends BaseMainFragmeng {
     private int pageNum = 1;
     private List<ShopGoodInfo> listArray = new ArrayList<>();
     private LimitSkillAdapter mAdapter;
+    private LinearLayout dataList_ly;
 
     public static LimiteSkillFragment newInstance(String startTime, String subTitle) {
         LimiteSkillFragment fragment = new LimiteSkillFragment();
@@ -89,6 +90,7 @@ public class LimiteSkillFragment extends BaseMainFragmeng {
             type = (String) arguments.getSerializable(C.UserType.SKILLITEM);
             mtitle = (String) arguments.getSerializable(C.UserType.SKILLTITLE);
         }
+        dataList_ly=view.findViewById(R.id.dataList_ly);
         mRecyclerView = view.findViewById(R.id.rcy_litmit);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
@@ -135,6 +137,8 @@ public class LimiteSkillFragment extends BaseMainFragmeng {
                         listArray.clear();
                         mAdapter.setData(listArray);
                         mRecyclerView.notifyDataSetChanged();
+                        dataList_ly.setVisibility(View.VISIBLE);
+                        mRecyclerView.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -150,6 +154,8 @@ public class LimiteSkillFragment extends BaseMainFragmeng {
                             listArray.clear();
                             mAdapter.setData(listArray);
                             mRecyclerView.notifyDataSetChanged();
+                            dataList_ly.setVisibility(View.VISIBLE);
+                            mRecyclerView.setVisibility(View.GONE);
                         }
                     }
                 });
