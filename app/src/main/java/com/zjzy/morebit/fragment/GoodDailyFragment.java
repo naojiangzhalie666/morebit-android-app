@@ -169,8 +169,9 @@ public class GoodDailyFragment extends BaseMainFragmeng {
                 goodsDialyAdapter.setData(data);
             }else{
                 goodsDialyAdapter.addData(data);
-                mListView.getListView().setNoMore(true);
+                mListView.getListView().setNoMore(false);
             }
+
 
         }else{
             dateNullView.setVisibility(View.VISIBLE);
