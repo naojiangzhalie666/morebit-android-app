@@ -211,12 +211,13 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
             case R.id.share:
                 // shareGoods();
-                /*if (checkIsSelect()) {
-                    openlogoutDialog(0);
+
+            if (checkIsSelect()) {
+                openlogoutDialog(0);
 //                    LoadingView.showDialog(getActivity(), "");
 //                    String ids = getIds();
 //                    mPresenter.getDeleteCollection(this, ids);
-                }*/
+              }
                 break;
         }
     }
@@ -253,9 +254,9 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
      * @param select
      */
     private void setItemStatus(boolean select) {
-//        for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
-//            shopGoodInfo.setSelect(select);
-//        }
+        for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getShop()) {
+            shopGoodInfo.setSelect(select);
+        }
     }
 
     @Override
@@ -289,7 +290,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             searchNullTips_ly.setVisibility(View.VISIBLE);
         }
 
-        setItemStatus(isAllSelect);
+
         mPage++;
 
 
@@ -351,18 +352,18 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     private void deleteGoods() {
         StringBuffer ids = new StringBuffer();
-//        for (int i = 0; i < mGuessGoodsAdapter.getItems().size(); i++) {
-//            ShopGoodInfo shopGoodInfo = mGuessGoodsAdapter.getItem(i);
-//            if (shopGoodInfo.getType() == 0) {
-//                if (shopGoodInfo.isSelect()) {
-//                    ids.append(shopGoodInfo.getId() + ",");
-//                }
-//            }
-//        }
+        for (int i = 0; i < mGuessGoodsAdapter.getShop().size(); i++) {
+            ShopGoodInfo shopGoodInfo = mGuessGoodsAdapter.getShop().get(i);
+            if (shopGoodInfo.getType() == 0) {
+                if (shopGoodInfo.isSelect()) {
+                    ids.append(shopGoodInfo.getId() + ",");
+                }
+            }
+        }
         MyLog.i("test", "ids.to: " + ids.toString());
         MyLog.i("test", "ids: " + ids.toString().substring(0, ids.lastIndexOf(",")));
         mPresenter.getDeleteCollection(CollectFragment2.this, ids.toString());
-        ;
+
     }
 
 
@@ -390,6 +391,10 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 list.addAll(data);
                 notifyItemRangeChanged(0, data.size());
             }
+        }
+
+        public List<ShopGoodInfo> getShop(){
+            return list;
         }
 
 
@@ -429,11 +434,12 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             } else {
                 holder.checkbox.setVisibility(View.GONE);
             }
+
             holder.checkbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     item.setSelect(!item.isSelect());
-                    if (/*checkSelect() && */isNoMore) {
+                    if (checkSelect() && isNoMore) {
                         isAllSelect = true;
                         holder.checkbox.setSelected(true);
                     } else {
@@ -490,15 +496,15 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             });
         }
 
-//        private boolean checkSelect() {
-//            boolean isAllSelect = true;
-//            for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
-//                if (!shopGoodInfo.isSelect()) {
-//                    isAllSelect = false;
-//                }
-//            }
-//            return isAllSelect;
-//        }
+        private boolean checkSelect() {
+            boolean isAllSelect = true;
+            for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getShop()) {
+                if (!shopGoodInfo.isSelect()) {
+                    isAllSelect = false;
+                }
+            }
+            return isAllSelect;
+        }
 
 
         public boolean isEditor() {
@@ -541,18 +547,18 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     }
 
 
-//    private boolean checkIsSelect() {
-//        boolean isSelect = false;
-//        for (ShopGoodInfo goodsHistory : mGuessGoodsAdapter.getItems()) {
-//            if (goodsHistory.getType() == 0) {
-//                if (goodsHistory.isSelect() == true) {
-//                    isSelect = true;
-//                    break;
-//                }
-//            }
-//        }
-//        return isSelect;
-//    }
+    private boolean checkIsSelect() {
+        boolean isSelect = false;
+        for (ShopGoodInfo goodsHistory : mGuessGoodsAdapter.getShop()) {
+            if (goodsHistory.getType() == 0) {
+                if (goodsHistory.isSelect() == true) {
+                    isSelect = true;
+                    break;
+                }
+            }
+        }
+        return isSelect;
+    }
 
 
 }
