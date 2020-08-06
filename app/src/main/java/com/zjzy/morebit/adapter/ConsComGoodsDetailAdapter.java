@@ -228,6 +228,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 });
                 viewHolder.tv_num.setVisibility(View.GONE);
                 viewHolder.tv_date.setVisibility(View.GONE);
+            }else if ("1".equals(info.getStatus())){
+                viewHolder.tv_order_status.setText("待发货");
             }
 
 

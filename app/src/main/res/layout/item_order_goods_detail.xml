@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:gravity="left|center_vertical"
-                android:textColor="@color/color_999999"
+                android:textColor="@color/color_F05557"
                 android:textSize="12sp"
                 android:text="已支付"/>
         </RelativeLayout>
