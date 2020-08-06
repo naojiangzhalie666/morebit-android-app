@@ -53,6 +53,17 @@ public class FansRemarkDialog extends Dialog {
         initView();
     }
 
+    @Override
+    public void dismiss() {
+        View view = getCurrentFocus();
+        if(view instanceof TextView){
+            InputMethodManager mInputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            mInputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+        }
+
+        super.dismiss();
+    }
+
     private void initView() {
         diss=findViewById(R.id.diss);
         tv_cancel = findViewById(R.id.tv_cancel);

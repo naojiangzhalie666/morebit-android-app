@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class SearchFansActivity extends BaseActivity {
     private String mSearchKey;
     private FansRemarkDialog mRemarkDialog;
     private LinearLayout dateNullView;
+    private ImageView iv_back;
     public static void start(Context context, String search_key) {
         Intent intent = new Intent(context, SearchFansActivity.class);
         intent.putExtra("search_key", search_key);
@@ -103,6 +105,7 @@ public class SearchFansActivity extends BaseActivity {
     }
 
     private void initView() {
+        iv_back= (ImageView) findViewById(R.id.iv_back);
         search_rl.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ECECEC));
         search_et.setHintTextColor(ContextCompat.getColor(this, R.color.color_999999));
         search_et.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
@@ -181,6 +184,7 @@ public class SearchFansActivity extends BaseActivity {
                 break;
             case R.id.iv_back:
                 finish();
+                isMethodManager(iv_back);
                 break;
         }
     }
