@@ -143,7 +143,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     private AuthForPersonDialog mAuthForPersonDialog;
 
     private AuthForPersonDialog.OnAuthListener mAuthListener;
-    private ImageView iv_number;
+    private ImageView img_vip;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -588,7 +588,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     }
 
     public void initView() {
-        iv_number= (ImageView) findViewById(R.id.iv_number);
+        img_vip= (ImageView) findViewById(R.id.img_vip);
         rl_mine = (RelativeLayout) findViewById(R.id.rl_mine);
         rl_community = (RelativeLayout) findViewById(R.id.rl_community);
         rl_homepage = (RelativeLayout) findViewById(R.id.rl_homepage);
@@ -853,18 +853,18 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 }
                 curPosition = C.mainPage.HOME;
                 setSysNotificationView();
-                iv_number.setImageResource(R.drawable.tabbar_college);
+                img_vip.setVisibility(View.GONE);
 
                 break;
             case R.id.rl_shop: //分类
-                iv_number.setImageResource(R.drawable.tabbar_college);
+                img_vip.setVisibility(View.GONE);
                 mViewPager.setCurrentItem(1, false);
                 curPosition = C.mainPage.SUPER_NAVIGATION;
                 superNavigationFragment.onResume();
                 setSysNotificationView();
                 break;
             case R.id.rl_number:
-                iv_number.setImageResource(R.drawable.tabbar_college_select);
+                img_vip.setVisibility(View.VISIBLE);
                 if (!LoginUtil.checkIsLogin(MainActivity.this)) {
                     return;
                 }
@@ -876,15 +876,14 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 setSysNotificationView();
                 break;
             case R.id.rl_community: //发圈
-                iv_number.setImageResource(R.drawable.tabbar_college);
+                img_vip.setVisibility(View.GONE);
 
                 mViewPager.setCurrentItem(3, false);
                 curPosition = C.mainPage.CIRCLE;
                 setSysNotificationView();
                 break;
             case R.id.rl_mine: //我的
-                iv_number.setImageResource(R.drawable.tabbar_college);
-
+                img_vip.setVisibility(View.GONE);
                 mViewPager.setCurrentItem(4, false);
                 curPosition = C.mainPage.MINE;
                 setSysNotificationView();

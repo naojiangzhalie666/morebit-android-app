@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -36,6 +38,7 @@ import com.zjzy.morebit.main.presenter.CollectPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -81,7 +84,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     TextView share;
     @BindView(R.id.delete)
     TextView delete;
-    private  Drawable drawable;
+    private Drawable drawable;
 
     private List<ShopGoodInfo> collectArray = new ArrayList<>(); //收藏
     int mPage = 1;
@@ -93,7 +96,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     private static final int REQUEST_COUNT = 10;
     private boolean isEditor;
     private String mCheckIds = "";
-   // private CommonEmpty mEmptyView;
+    // private CommonEmpty mEmptyView;
     private boolean isAllSelect;
     private boolean isNoMore;
     private LinearLayout searchNullTips_ly;
@@ -113,7 +116,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     @Override
     protected void initData() {
-        MyLog.i("test","getData");
+        MyLog.i("test", "getData");
         getData(true);
     }
 
@@ -123,16 +126,16 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         editor.setVisibility(View.VISIBLE);
         editor.setText(R.string.editor);
         editor.setTextColor(Color.parseColor("#F05557"));
-        searchNullTips_ly=view.findViewById(R.id.searchNullTips_ly);
+        searchNullTips_ly = view.findViewById(R.id.searchNullTips_ly);
         mGuessGoodsAdapter = new CollectAdapter(getActivity());
         mRecyclerView.setAdapter(mGuessGoodsAdapter);
-    //    mEmptyView = new CommonEmpty(view, "",0);
+        //    mEmptyView = new CommonEmpty(view, "",0);
 
         mRecyclerView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 scrollHeight = 0; //重置滚动高度为0
-                MyLog.i("test","getData");
+                MyLog.i("test", "getData");
                 getData(true);
             }
         });
@@ -141,8 +144,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             @Override
             public void onLoadMore() {
                 if (!mRecyclerView.getSwipeList().isRefreshing())
-                    MyLog.i("test","getData");
-                    getData(false);
+                    MyLog.i("test", "getData");
+                getData(false);
             }
         });
         ll_check_all.setOnClickListener(new View.OnClickListener() {
@@ -178,14 +181,14 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         if (isRefresh) {
             mPage = 1;
             mRecyclerView.getListView().setNoMore(false);
-         //   mEmptyView.setmFirstComplete(false);
+            //   mEmptyView.setmFirstComplete(false);
         }
 
         mPresenter.getCollectData(this, mPage);
     }
 
 
-    @OnClick({R.id.toolbar_right_title,R.id.share})
+    @OnClick({R.id.toolbar_right_title, R.id.share})
     public void onClick(View v) {
         switch (v.getId()) {
 
@@ -207,13 +210,13 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 break;
 
             case R.id.share:
-               // shareGoods();
-                if (checkIsSelect()) {
+                // shareGoods();
+                /*if (checkIsSelect()) {
                     openlogoutDialog(0);
 //                    LoadingView.showDialog(getActivity(), "");
 //                    String ids = getIds();
 //                    mPresenter.getDeleteCollection(this, ids);
-                }
+                }*/
                 break;
         }
     }
@@ -250,9 +253,9 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
      * @param select
      */
     private void setItemStatus(boolean select) {
-        for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
-            shopGoodInfo.setSelect(select);
-        }
+//        for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
+//            shopGoodInfo.setSelect(select);
+//        }
     }
 
     @Override
@@ -274,24 +277,21 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     @Override
     public void showCollectSuccess(List<ShopGoodInfo> data) {
-        if (data!=null){
+        if (data != null) {
             mRecyclerView.setVisibility(View.VISIBLE);
             searchNullTips_ly.setVisibility(View.GONE);
             if (mPage == 1) {
-                collectArray.clear();
-              collectArray.addAll(data);
-                mGuessGoodsAdapter.replace(collectArray);
+                mGuessGoodsAdapter.setData(data);
             } else {
-              collectArray.addAll(data);
-                mGuessGoodsAdapter.replace(collectArray);
+                mGuessGoodsAdapter.addData(data);
             }
-        }else{
+        } else {
             searchNullTips_ly.setVisibility(View.VISIBLE);
         }
 
         setItemStatus(isAllSelect);
         mPage++;
-        mRecyclerView.notifyDataSetChanged();
+
 
     }
 
@@ -301,13 +301,13 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         ViewShowUtils.showShortToast(getActivity(), getString(R.string.delete_success));
         mCheckIds = "";
         mCheckbox.setSelected(false);
-       // mEmptyView.setmFirstComplete(false);
+        // mEmptyView.setmFirstComplete(false);
         getData(true);
     }
 
     @Override
     public void showEmity() {
-        if (mPage==1){
+        if (mPage == 1) {
             searchNullTips_ly.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }
@@ -351,160 +351,155 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     private void deleteGoods() {
         StringBuffer ids = new StringBuffer();
-        for (int i = 0; i < mGuessGoodsAdapter.getItems().size(); i++) {
-            ShopGoodInfo shopGoodInfo = mGuessGoodsAdapter.getItem(i);
-            if (shopGoodInfo.getType() == 0) {
-                if (shopGoodInfo.isSelect()) {
-                    ids.append(shopGoodInfo.getId() + ",");
-                }
-            }
-        }
+//        for (int i = 0; i < mGuessGoodsAdapter.getItems().size(); i++) {
+//            ShopGoodInfo shopGoodInfo = mGuessGoodsAdapter.getItem(i);
+//            if (shopGoodInfo.getType() == 0) {
+//                if (shopGoodInfo.isSelect()) {
+//                    ids.append(shopGoodInfo.getId() + ",");
+//                }
+//            }
+//        }
         MyLog.i("test", "ids.to: " + ids.toString());
         MyLog.i("test", "ids: " + ids.toString().substring(0, ids.lastIndexOf(",")));
-        mPresenter.getDeleteCollection(CollectFragment2.this, ids.toString());;
+        mPresenter.getDeleteCollection(CollectFragment2.this, ids.toString());
+        ;
     }
 
 
-    class CollectAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> {
+    class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHolder> {
         Context mContext;
         private boolean isEditor;//收藏列表是否是编辑状态
+        private List<ShopGoodInfo> list=new ArrayList<>();
 
 
         public CollectAdapter(Context context) {
-            super(context);
             mContext = context;
 
         }
-
-        @Override
-        public int getItemViewType(int position) {
-
-            return 0;
+        public void setData(List<ShopGoodInfo> data) {
+            if (data != null) {
+                list.clear();
+                list.addAll(data);
+                notifyDataSetChanged();
+            }
         }
+
+
+        public void addData(List<ShopGoodInfo> data) {
+            if (data != null) {
+                list.addAll(data);
+                notifyItemRangeChanged(0, data.size());
+            }
+        }
+
+
+
         @Override
-        public void onBindViewHolder(SimpleViewHolder holder, int position) {
-            final ShopGoodInfo item = getItem(position);
+        public int getItemCount() {
+            return list == null ? 0 : list.size();
+        }
 
-                TextView title = holder.viewFinder().view(R.id.tv_title);
-                TextView commission = holder.viewFinder().view(R.id.tv_zhuan);
-                TextView coupon = holder.viewFinder().view(R.id.coupon);
-                TextView discount_price = holder.viewFinder().view(R.id.tv_price);
+        @Override
+        public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+            final ShopGoodInfo item = list.get(position);
+            LoadImgUtils.loadingCornerBitmap(mContext, holder.goods_bg, item.getItemPicture(), 5);
 
-                ImageView goods_bg = holder.viewFinder().view(R.id.goods_bg);
-                ImageView video_play = holder.viewFinder().view(R.id.video_play);
-
-                final ImageView checkbox = holder.viewFinder().view(R.id.checkbox);
-
-
-                LoadImgUtils.loadingCornerBitmap(mContext, goods_bg, item.getItemPicture(),5);
-
-                if (!StringsUtils.isShowVideo(item.getVideoid())) {
-                    video_play.setVisibility(View.GONE);
-                } else {
-                    video_play.setVisibility(View.VISIBLE);
-                }
-                if (StringsUtils.isEmpty(item.getCouponPrice() + "")) {
-                    coupon.setVisibility(View.GONE);
-                } else {
-                    coupon.setVisibility(View.VISIBLE);
-                    coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
-                }
+            if (!StringsUtils.isShowVideo(item.getVideoid())) {
+                holder.video_play.setVisibility(View.GONE);
+            } else {
+                holder.video_play.setVisibility(View.VISIBLE);
+            }
+            if (StringsUtils.isEmpty(item.getCouponPrice() + "")) {
+                holder.coupon.setVisibility(View.GONE);
+            } else {
+                holder.coupon.setVisibility(View.VISIBLE);
+                holder.coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
+            }
 //
 
-                if (!TextUtils.isEmpty(item.getCommission())) {
-                    commission.setText( "赚 ¥ "+MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission()));
-                }
+            if (!TextUtils.isEmpty(item.getCommission())) {
+                holder.commission.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission()));
+            }
 
-                discount_price.setText(MathUtils.getnum(item.getItemVoucherPrice()));
+            holder.discount_price.setText(MathUtils.getnum(item.getItemVoucherPrice()));
 
 
-                if (isEditor) {
-                    checkbox.setVisibility(View.VISIBLE);
-                } else {
-                    checkbox.setVisibility(View.GONE);
-                }
-                checkbox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        item.setSelect(!item.isSelect());
-                        if (checkSelect() && isNoMore) {
-                            isAllSelect = true;
-                            checkbox.setSelected(true);
-                        } else {
-                            isAllSelect = false;
-                            checkbox.setSelected(false);
-                        }
-                        notifyDataSetChanged();
+            if (isEditor) {
+                holder.checkbox.setVisibility(View.VISIBLE);
+            } else {
+                holder.checkbox.setVisibility(View.GONE);
+            }
+            holder.checkbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    item.setSelect(!item.isSelect());
+                    if (/*checkSelect() && */isNoMore) {
+                        isAllSelect = true;
+                        holder.checkbox.setSelected(true);
+                    } else {
+                        isAllSelect = false;
+                        holder.checkbox.setSelected(false);
                     }
-                });
-                checkbox.setSelected(item.isSelect());
-
-                if (!TextUtils.isEmpty(item.getItemTitle())) {
-                    title.setText(item.getItemTitle());
+                    notifyDataSetChanged();
                 }
+            });
+            holder.checkbox.setSelected(item.isSelect());
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (isEditor) {
-                            checkbox.performClick();
+            if (!TextUtils.isEmpty(item.getItemTitle())) {
+                holder.title.setText(item.getItemTitle());
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isEditor) {
+                        holder.checkbox.performClick();
+                    } else {
+                        ShopGoodInfo shopGoodInfo = (ShopGoodInfo) MyGsonUtils.jsonToBean(MyGsonUtils.beanToJson(item), ShopGoodInfo.class);
+
+                        if (shopGoodInfo == null) return;
+                        if (item.getShopType() == 3) {
+                            String itemSourceId = item.getItemSourceId();
+                            shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                            shopGoodInfo.setItemSource("2");
+                            shopGoodInfo.setPrice(item.getPrice());
+                            GoodsDetailForPddActivity.start(mContext, shopGoodInfo);
+                        } else if (item.getShopType() == 4) {
+                            String itemSourceId = item.getItemSourceId();
+                            shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                            shopGoodInfo.setItemSource("1");
+                            shopGoodInfo.setPrice(item.getPrice());
+                            GoodsDetailForJdActivity.start(mContext, shopGoodInfo);
+                        } else if (item.getShopType() == 5) {
+                            GoodsDetailForKoalaActivity.start(getActivity(), shopGoodInfo.getItemSourceId());
+                        } else if (item.getShopType() == 6) {
+                            GoodsDetailForWphActivity.start(getActivity(), shopGoodInfo.getItemSourceId());
                         } else {
-                            ShopGoodInfo shopGoodInfo = (ShopGoodInfo) MyGsonUtils.jsonToBean(MyGsonUtils.beanToJson(item), ShopGoodInfo.class);
+                            GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
+                                @Override
+                                public void invoke(ShopGoodInfo arg) {
+                                    MyLog.i("test", "arg: " + arg);
+                                    GoodsDetailActivity.start(mContext, arg);
+                                }
+                            });
 
-                            if (shopGoodInfo == null) return;
-                            if (item.getShopType() == 3){
-                                String itemSourceId = item.getItemSourceId();
-                                shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
-                                shopGoodInfo.setItemSource("2");
-                                shopGoodInfo.setPrice(item.getPrice());
-                                GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
-                            }else if (item.getShopType()==4){
-                                String itemSourceId = item.getItemSourceId();
-                                shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
-                                shopGoodInfo.setItemSource("1");
-                                shopGoodInfo.setPrice(item.getPrice());
-                                GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
-                            } else if (item.getShopType()==5){
-                                GoodsDetailForKoalaActivity.start(getActivity(),shopGoodInfo.getItemSourceId());
-                            } else if (item.getShopType()==6){
-                                GoodsDetailForWphActivity.start(getActivity(),shopGoodInfo.getItemSourceId());
-                            }else{
-                                GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
-                                    @Override
-                                    public void invoke(ShopGoodInfo arg) {
-                                        MyLog.i("test", "arg: " + arg);
-                                        GoodsDetailActivity.start(mContext, arg);
-                                    }
-                                });
-
-                            }
+                        }
 //                            GoodsDetailActivity.start(mContext, shopGoodInfo);
-                        }
                     }
-                });
-            }
-
-
-
-
-
-
-        private boolean checkSelect() {
-            boolean isAllSelect = true;
-            for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
-                if (!shopGoodInfo.isSelect()) {
-                    isAllSelect = false;
                 }
-            }
-            return isAllSelect;
+            });
         }
 
+//        private boolean checkSelect() {
+//            boolean isAllSelect = true;
+//            for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
+//                if (!shopGoodInfo.isSelect()) {
+//                    isAllSelect = false;
+//                }
+//            }
+//            return isAllSelect;
+//        }
 
-
-        @Override
-        protected View onCreateView(LayoutInflater layoutInflater, ViewGroup parent, int viewType) {
-            return layoutInflater.inflate(R.layout.item_goods_history2, parent, false);
-        }
 
         public boolean isEditor() {
             return isEditor;
@@ -514,34 +509,50 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             isEditor = editor;
         }
 
+
+        @NonNull
         @Override
-        public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == 1)
-                return new TimeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_goods_history_time, parent, false));
-            return super.onCreateViewHolder(parent, viewType);
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_goods_history2, parent, false);
+            ViewHolder holder = new ViewHolder(view);
+            return holder;
+
         }
 
-        public class TimeViewHolder extends SimpleViewHolder {
-            public TimeViewHolder(View itemView) {
+
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            private TextView title, commission, coupon, discount_price;
+            private ImageView goods_bg, video_play, checkbox;
+
+            public ViewHolder(View itemView) {
                 super(itemView);
+                title = itemView.findViewById(R.id.tv_title);
+                commission = itemView.findViewById(R.id.tv_zhuan);
+                coupon = itemView.findViewById(R.id.coupon);
+                discount_price = itemView.findViewById(R.id.tv_price);
+
+                goods_bg = itemView.findViewById(R.id.goods_bg);
+                video_play = itemView.findViewById(R.id.video_play);
+
+                checkbox = itemView.findViewById(R.id.checkbox);
             }
         }
     }
 
 
-
-    private boolean checkIsSelect() {
-        boolean isSelect = false;
-        for (ShopGoodInfo goodsHistory : mGuessGoodsAdapter.getItems()) {
-            if (goodsHistory.getType() == 0) {
-                if (goodsHistory.isSelect() == true) {
-                    isSelect = true;
-                    break;
-                }
-            }
-        }
-        return isSelect;
-    }
+//    private boolean checkIsSelect() {
+//        boolean isSelect = false;
+//        for (ShopGoodInfo goodsHistory : mGuessGoodsAdapter.getItems()) {
+//            if (goodsHistory.getType() == 0) {
+//                if (goodsHistory.isSelect() == true) {
+//                    isSelect = true;
+//                    break;
+//                }
+//            }
+//        }
+//        return isSelect;
+//    }
 
 
 }

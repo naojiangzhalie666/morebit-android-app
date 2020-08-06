@@ -42,6 +42,7 @@ public class ActivityFloorAdapter1 extends RecyclerView.Adapter{
     private static final int TwoType = 5;
     private static final int ThreeType = 6;
     private String ext;
+    private boolean iszhu=false;
 
     public ActivityFloorAdapter1(Context context, List<FloorBean2.ListDataBean> listData, String ext) {
         mInflater = LayoutInflater.from(context);
@@ -86,47 +87,74 @@ public class ActivityFloorAdapter1 extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+        if (mDatas==null)return;
         List<FloorBean2.ListDataBean.ChildBean> child = mDatas.get(position).getChild();
         int viewType = getItemViewType(position);
-        final FloorChildInfo floorChildInfo=new FloorChildInfo();
-        floorChildInfo.setId(child.get(position).getId());
-        floorChildInfo.setOpen(child.get(position).getOpen());
-        floorChildInfo.setMainTitle(child.get(position).getMainTitle());
-        floorChildInfo.setClassId(child.get(position).getClassId());
-        floorChildInfo.setUrl(child.get(position).getUrl());
-        floorChildInfo.setSubTitle(child.get(position).getSubTitle());
+
 
        if (viewType==FristType){
+           final FloorChildInfo floorChildInfo=new FloorChildInfo();
+           Log.e("sfsdf",floorChildInfo+"");
            ViewHolder1 holder1= (ViewHolder1) holder;
-           LoadImgUtils.setImg(mContext,holder1.imageView,child.get(position).getPicture());
-           holder1.imageView.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   SensorsDataUtil.getInstance().advClickTrack(floorChildInfo.getId()+"",floorChildInfo.getOpen()+"", "楼层管理"+position, position,floorChildInfo.getMainTitle(), floorChildInfo.getClassId()+"", floorChildInfo.getUrl(), floorChildInfo.getSubTitle());
-                   BannerInitiateUtils.gotoAction((Activity) mContext, MyGsonUtils.toImageInfo(floorChildInfo));
-               }
-           });
+
+           if (child==null ){
+               holder1.imageView.setVisibility(View.GONE);
+               iszhu=true;
+           }else{
+               iszhu=false;
+               holder1.imageView.setVisibility(View.VISIBLE);
+               floorChildInfo.setId(child.get(position).getId());
+               floorChildInfo.setOpen(child.get(position).getOpen());
+               floorChildInfo.setMainTitle(child.get(position).getMainTitle());
+               floorChildInfo.setClassId(child.get(position).getClassId());
+               floorChildInfo.setUrl(child.get(position).getUrl());
+               floorChildInfo.setSubTitle(child.get(position).getSubTitle());
+
+               LoadImgUtils.setImg(mContext,holder1.imageView,child.get(position).getPicture());
+               holder1.imageView.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       SensorsDataUtil.getInstance().advClickTrack(floorChildInfo.getId()+"",floorChildInfo.getOpen()+"", "楼层管理"+position, position,floorChildInfo.getMainTitle(), floorChildInfo.getClassId()+"", floorChildInfo.getUrl(), floorChildInfo.getSubTitle());
+                       BannerInitiateUtils.gotoAction((Activity) mContext, MyGsonUtils.toImageInfo(floorChildInfo));
+                   }
+               });
+
+           }
 
        }else if (viewType==TwoType){
+           if (mDatas.get(position).getChild()==null)return;
            ViewHolder2 holder2= (ViewHolder2) holder;
-           GridLayoutManager manager3 = new GridLayoutManager(mContext, 2);
-           holder2.rcy1.setLayoutManager(manager3);
-           if (holder2.rcy1.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-               holder2.rcy1.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(mContext, 3)));
+           if (iszhu){
+               holder2.ll1.setVisibility(View.GONE);
+           }else{
+               holder2.ll1.setVisibility(View.VISIBLE);
+               GridLayoutManager manager3 = new GridLayoutManager(mContext, 2);
+               holder2.rcy1.setLayoutManager(manager3);
+               if (holder2.rcy1.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
+                   holder2.rcy1.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(mContext, 3)));
+               }
+               holder2.ll1.setBackgroundColor(Color.parseColor(ext));
+               FloorAdapter2 adapter2=new FloorAdapter2(mContext,mDatas.get(position).getChild());
+               holder2.rcy1.setAdapter(adapter2);
            }
-           holder2.ll1.setBackgroundColor(Color.parseColor(ext));
-           FloorAdapter2 adapter2=new FloorAdapter2(mContext,mDatas.get(position).getChild());
-           holder2.rcy1.setAdapter(adapter2);
+
+
        }else if (viewType==ThreeType){
+           if (mDatas.get(position).getChild()==null)return;
            ViewHolder3 holder3= (ViewHolder3) holder;
-           GridLayoutManager manager3 = new GridLayoutManager(mContext,4);
-           holder3.rcy2.setLayoutManager(manager3);
-           if (holder3.rcy2.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
-               holder3.rcy2.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(mContext, 3)));
+           if (iszhu){
+               holder3.ll2.setVisibility(View.GONE);
+           }else {
+               holder3.ll2.setVisibility(View.VISIBLE);
+               GridLayoutManager manager3 = new GridLayoutManager(mContext, 4);
+               holder3.rcy2.setLayoutManager(manager3);
+               if (holder3.rcy2.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
+                   holder3.rcy2.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(mContext, 3)));
+               }
+               holder3.ll2.setBackgroundColor(Color.parseColor(ext));
+               FloorAdapter3 adapter3 = new FloorAdapter3(mContext, mDatas.get(position).getChild());
+               holder3.rcy2.setAdapter(adapter3);
            }
-           holder3.ll2.setBackgroundColor(Color.parseColor(ext));
-           FloorAdapter3 adapter3=new FloorAdapter3(mContext,mDatas.get(position).getChild());
-           holder3.rcy2.setAdapter(adapter3);
 
        }
     }
@@ -156,7 +184,7 @@ public class ActivityFloorAdapter1 extends RecyclerView.Adapter{
     public int getItemCount() {
 
         Log.e("sfsf",mDatas.size()+"");
-        return mDatas.size();
+        return mDatas==null ? 0:mDatas.size();
 
     }
 

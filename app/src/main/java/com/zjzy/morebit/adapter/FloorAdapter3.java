@@ -89,7 +89,7 @@ public class FloorAdapter3 extends RecyclerView.Adapter<FloorAdapter3.ViewHolder
         if (mDatas.size()>4){
             return 4;
         }else{
-            return mDatas.size();
+            return mDatas ==null ? 0 : mDatas.size();
         }
     }
 

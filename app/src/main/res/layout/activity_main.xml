@@ -2,34 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#00000000"
                 android:orientation="vertical">
 
 
     <com.zjzy.morebit.view.NoScrollViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_above="@+id/ll_tab"
         />
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="60dp"
+        android:background="@color/white"
         android:orientation="vertical">
-
         <RelativeLayout
             android:id="@+id/rl_urgency_notifi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <TextView style="@style/line"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:background="@color/color_FFFFFF"
             >
+
+
+
 
             <RelativeLayout
                 android:id="@+id/rl_homepage"
@@ -171,7 +181,23 @@
                     android:textSize="10sp"/>
 
             </RelativeLayout>
+
         </LinearLayout>
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/img_vip"
+                android:layout_above="@+id/ll"
+                android:layout_marginBottom="-30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tabbar_college_select"
+
+                />
+
+
+        </RelativeLayout>
     </LinearLayout>
+
 
 </LinearLayout>
