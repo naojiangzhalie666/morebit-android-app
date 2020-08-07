@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
-    android:background="@color/color_F8F8F8">
+    android:background="@color/color_F0F1F5"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-        <com.makeramen.roundedimageview.RoundedImageView
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/icon_img"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@mipmap/about_icon"
-            android:scaleType="centerInside"
             android:layout_marginTop="30dp"
-            app:riv_corner_radius="5dip"
-            app:riv_border_width="0dip"
+            android:scaleType="centerInside"
+            android:src="@mipmap/about_icon"
             app:riv_border_color="@color/white"
+            app:riv_border_width="0dip"
+            app:riv_corner_radius="5dip"
             app:riv_mutate_background="true"
             app:riv_oval="false" />
-
 
 
     </LinearLayout>
@@ -48,9 +47,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:text="当前版本"
                 android:textColor="@color/color_333333"
-                android:textSize="15sp"
-                android:text="当前版本" />
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,8 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
                 android:text=""
-                android:textSize="13sp"
-                android:textColor="@color/color_333333" />
+                android:textColor="@color/colcor_D3D3D3"
+                android:textSize="13sp" />
 
         </LinearLayout>
     </RelativeLayout>
@@ -75,7 +74,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/color_F2F2F2"/>
+        android:background="@color/color_F2F2F2" />
 
     <RelativeLayout
         android:id="@+id/item2_rl"
@@ -92,11 +91,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:text="新版更新"
                 android:textColor="@color/color_333333"
-                android:textSize="15sp"
-                android:text="新版更新" />
+                android:textSize="15sp" />
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -112,8 +110,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
                 android:text=""
-                android:textSize="13sp"
-                android:textColor="@color/color_333333" />
+                android:textColor="@color/colcor_D3D3D3"
+                android:textSize="13sp" />
 
         </LinearLayout>
     </RelativeLayout>
@@ -124,6 +122,16 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="35dp"
+        android:text="copyright@杭州之江之约科技有限公司"
+        android:textColor="#ff999999"
+        android:textSize="14sp" />
 
 </LinearLayout>

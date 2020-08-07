@@ -3,6 +3,7 @@ package com.zjzy.morebit.info.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -72,10 +73,6 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
     View ll_remove;
     @BindView(android.R.id.checkbox)
     ImageView mCheckbox;
-    @BindView(R.id.toolbar_right_title)
-    TextView editor;
-    @BindView(R.id.toolbar_right_img)
-    TextView toolbar_right_img;
     private Drawable drawable;
     private LinearLayout searchNullTips_ly;
 
@@ -84,6 +81,8 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
     private boolean isAllSelect;
     private boolean isEditor;
     private boolean isNoMore;
+    private TextView txt_head_title,txt_head_title2;
+    private LinearLayout btn_back;
 
 
     public static void start(Activity activity) {
@@ -103,12 +102,12 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
   //      mEmptyView = new CommonEmpty(this, "您还没有浏览任何商品哦~", R.drawable.image_meiyoushoucang);
 //        ((EmptyView) mEmptyView).setMessage("您还没有浏览任何商品哦~");
 //        ((EmptyView) mEmptyView).setIcon(R.drawable.image_meiyoushoucang);
+        txt_head_title2= (TextView) findViewById(R.id.txt_head_title2);
+        txt_head_title= (TextView) findViewById(R.id.txt_head_title);
         searchNullTips_ly= (LinearLayout) findViewById(R.id.searchNullTips_ly);
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.goods_browsing_history));
-        toolbar_right_img.setVisibility(View.VISIBLE);
-        editor.setVisibility(View.GONE);
-        editor.setText(R.string.finish);
-        editor.setTextColor(ContextCompat.getColor(this, R.color.color_F05557));
+        txt_head_title.setText("我的足迹");
+        txt_head_title2.setText("删除");
+        txt_head_title2.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
 
         mRecyclerView.setOnReLoadListener(new ReUseGridView.OnReLoadListener() {
 
@@ -168,8 +167,9 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
             mAdapter.replace(listArray);
             mRecyclerView.removeNetworkError();
             searchNullTips_ly.setVisibility(View.GONE);
+            txt_head_title2.setVisibility(View.VISIBLE);
         } else {
-            toolbar_right_img.setVisibility(View.GONE);
+            txt_head_title2.setVisibility(View.GONE);
             reset();
             mAdapter.clear();
             searchNullTips_ly.setVisibility(View.VISIBLE);
@@ -185,13 +185,16 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
         isAllSelect = false;
         isNoMore = false;
         ll_remove.setVisibility(View.GONE);
-        editor.setVisibility(View.GONE);
+        txt_head_title2.setVisibility(View.GONE);
        // mRecyclerView.showNetworkError(false);
     }
 
-    @OnClick({R.id.share, R.id.ll_check_all, R.id.toolbar_right_title, R.id.toolbar_right_img})
+    @OnClick({R.id.share, R.id.ll_check_all, R.id.txt_head_title2,R.id.btn_back})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_back:
+                finish();
+                break;
             case R.id.share:
                 if (checkIsSelect()) {
                     openlogoutDialog();
@@ -211,20 +214,23 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
                 mCheckbox.setSelected(isAllSelect);
                 mAdapter.notifyDataSetChanged();
                 break;
-            case R.id.toolbar_right_title:
-            case R.id.toolbar_right_img:
+            case R.id.txt_head_title2:
                 if (isEditor) {
                     isEditor = false;
                     ll_remove.setVisibility(View.GONE);
-                    editor.setVisibility(View.GONE);
-                    toolbar_right_img.setVisibility(View.VISIBLE);
+                    txt_head_title2.setVisibility(View.VISIBLE);
                     mAdapter.setEditor(false);
+                    txt_head_title2.setText("删除");
+                    txt_head_title2.setTextColor(Color.parseColor("#333333"));
                 } else {
                     isEditor = true;
                     ll_remove.setVisibility(View.VISIBLE);
-                    toolbar_right_img.setVisibility(View.GONE);
-                    editor.setVisibility(View.VISIBLE);
+
+                    txt_head_title2.setVisibility(View.VISIBLE);
                     mAdapter.setEditor(true);
+                    txt_head_title2.setText("完成");
+                    txt_head_title2.setTextColor(Color.parseColor("#F05557"));
+
 
                 }
                 mAdapter.notifyDataSetChanged();

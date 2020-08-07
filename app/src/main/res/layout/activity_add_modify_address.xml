@@ -14,7 +14,7 @@
             style="@style/TopSizeTitle"
             android:layout_centerInParent="true"
             android:text=""
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/btn_back"
@@ -26,7 +26,8 @@
             android:paddingBottom="10dp">
 
             <ImageView
-                style="@style/TopSizeBack"
+                android:src="@drawable/btn_title_return_icon"
+                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true" />
         </LinearLayout>
@@ -35,10 +36,10 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/sp_16"
             android:gravity="right|center_vertical"
             android:text="保存"
-            android:textColor="@color/color_FD4804"
+            android:textColor="#FF645B"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
     <!--收货人-->
@@ -58,7 +59,7 @@
                 android:layout_height="50dp"
                 android:paddingLeft="10dp"
                 android:background="@color/white"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:singleLine="true"
                 android:maxLength="10"
                 android:text=""
@@ -66,11 +67,14 @@
                 android:gravity="left|center_vertical"
                 android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
                 android:textColor="@color/color_333333"
-                android:textColorHint="@color/color_cccccc"
+                android:textColorHint="@color/color_999999"
                 />
         </LinearLayout>
 
-        <View style="@style/line_f1f1f1"/>
+      <View android:layout_height="1dp"
+          android:layout_width="wrap_content"
+          android:background="@color/color_F0F1F5"
+          />
 
         <!--手机号码-->
         <LinearLayout
@@ -86,19 +90,22 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:paddingLeft="10dp"
-                android:hint="请填写收货人手机号"
+                android:hint="手机号"
                 android:inputType="number"
                 android:maxLength="11"
                 android:paddingRight="30dp"
                 android:textColor="@color/color_3A3A3A"
-                android:textColorHint="@color/color_cccccc"
+                android:textColorHint="@color/color_999999"
                 android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
-                android:textSize="13sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
 
 
-        <View style="@style/line_f1f1f1"/>
+        <View android:layout_height="1dp"
+            android:layout_width="wrap_content"
+            android:background="@color/color_F0F1F5"
+            />
         <RelativeLayout
             android:id="@+id/rl_add_address_region"
             android:layout_width="match_parent"
@@ -112,9 +119,9 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:hint="所在地区"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:layout_centerVertical="true"
-                android:textColor="@color/color_333333"/>
+                android:textColor="@color/color_999999"/>
             <RelativeLayout
                 android:id="@+id/rl_select_area"
                 android:layout_width="50dp"
@@ -134,7 +141,10 @@
 
         </RelativeLayout>
 
-        <View style="@style/line_f1f1f1"/>
+        <View android:layout_height="1dp"
+            android:layout_width="wrap_content"
+            android:background="@color/color_F0F1F5"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -152,7 +162,7 @@
                 android:maxLines="3"
                 android:maxLength="50"
                 android:text=""
-                android:hint="请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元室"
+                android:hint="详细地址：如道路、门牌号、小区、楼栋号等"
                 android:gravity="left|center_vertical"
                 android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
                 android:textColor="@color/color_333333"

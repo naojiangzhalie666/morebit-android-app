@@ -78,7 +78,7 @@
                 android:background="@color/color_F8F8F8"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="100dp"/>
+                android:layout_marginRight="50dp"/>
             <LinearLayout
                 android:id="@+id/modify_address"
                 android:layout_width="40dp"

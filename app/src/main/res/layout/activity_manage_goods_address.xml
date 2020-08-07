@@ -11,10 +11,9 @@
         <TextView
             android:id="@+id/txt_head_title"
             style="@style/TopSizeTitle"
-            android:textStyle="bold"
             android:layout_centerInParent="true"
             android:text=""
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/btn_back"
@@ -26,7 +25,8 @@
             android:paddingBottom="10dp">
 
             <ImageView
-                style="@style/TopSizeBack"
+                android:src="@drawable/btn_title_return_icon"
+                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true" />
         </LinearLayout>

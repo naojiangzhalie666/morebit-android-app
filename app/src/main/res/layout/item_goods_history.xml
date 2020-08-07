@@ -17,7 +17,8 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/selector_checkbox"
             tools:layout_height="wrap_content"
             tools:layout_width="wrap_content" />

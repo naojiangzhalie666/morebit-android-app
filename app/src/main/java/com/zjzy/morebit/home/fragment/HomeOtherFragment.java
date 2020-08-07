@@ -1198,7 +1198,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private void onGetLitmitSkill(PanicBuyingListBean data) {
         String title = "";
         timeList = data.getTimeList();
-        if (timeList.size() != 0 && timeList.size() > 1) {
+        if (timeList.size() != 0 && timeList.size() > 2) {
             tv_time1.setText(timeList.get(0).getTitle());
             tv_time2.setText(timeList.get(1).getTitle());
             tv_time3.setText(timeList.get(2).getTitle());
@@ -1771,7 +1771,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         @Override
         public Fragment getItem(int position) {
-            int mpostion = position % 3;
+            int mpostion = position % timeList.size();
             return LimiteFragment.newInstance(timeList.get(mpostion).getItemList(),timeList.get(mpostion).getTitle());
         }
 

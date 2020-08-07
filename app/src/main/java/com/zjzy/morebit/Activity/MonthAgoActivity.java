@@ -42,7 +42,6 @@ public class MonthAgoActivity extends BaseActivity {
          mdata = (UserIncomeDetail) getIntent().getSerializableExtra(C.Extras.EARNING);
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setText("上月月报");
-        txt_head_title.getPaint().setFakeBoldText(true);
         txt_head_title.setTextSize(18);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {

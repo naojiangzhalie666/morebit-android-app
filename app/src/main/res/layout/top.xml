@@ -26,8 +26,8 @@
             android:paddingBottom="10dp">
 
             <ImageView
-
-                style="@style/TopSizeBack"
+                android:src="@drawable/btn_title_return_icon"
+                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true" />
         </LinearLayout>
@@ -37,6 +37,16 @@
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_centerVertical="true" />-->
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txt_head_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 

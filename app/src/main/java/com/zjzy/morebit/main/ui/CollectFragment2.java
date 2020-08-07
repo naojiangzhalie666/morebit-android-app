@@ -76,8 +76,6 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     View ll_remove;
     @BindView(android.R.id.checkbox)
     ImageView mCheckbox;
-    @BindView(R.id.toolbar_right_title)
-    TextView editor;
     @BindView(R.id.ll_check_all)
     LinearLayout ll_check_all;
     @BindView(R.id.share)
@@ -100,6 +98,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     private boolean isAllSelect;
     private boolean isNoMore;
     private LinearLayout searchNullTips_ly;
+    private TextView txt_head_title,txt_head_title2;
 
 //    public void onResume() {
 //        super.onResume();
@@ -122,10 +121,14 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     @Override
     protected void initView(View view) {
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.my_collect));
-        editor.setVisibility(View.VISIBLE);
-        editor.setText(R.string.editor);
-        editor.setTextColor(Color.parseColor("#F05557"));
+        txt_head_title2= view.findViewById(R.id.txt_head_title2);
+        txt_head_title= view.findViewById(R.id.txt_head_title);
+        txt_head_title2.setText("管理");
+       // new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.my_collect));
+        txt_head_title.setText("我的收藏");
+        txt_head_title2.setVisibility(View.VISIBLE);
+        txt_head_title.setTextColor(Color.parseColor("#333333"));
+        txt_head_title2.setTextColor(Color.parseColor("#F05557"));
         searchNullTips_ly = view.findViewById(R.id.searchNullTips_ly);
         mGuessGoodsAdapter = new CollectAdapter(getActivity());
         mRecyclerView.setAdapter(mGuessGoodsAdapter);
@@ -188,22 +191,24 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     }
 
 
-    @OnClick({R.id.toolbar_right_title, R.id.share})
+    @OnClick({R.id.txt_head_title2, R.id.share,R.id.btn_back})
     public void onClick(View v) {
         switch (v.getId()) {
-
-            case R.id.toolbar_right_title:
+            case R.id.btn_back:
+                getActivity().finish();
+                break;
+            case R.id.txt_head_title2:
                 if (isEditor) {
                     isEditor = false;
                     mGuessGoodsAdapter.setEditor(false);
                     ll_remove.setVisibility(View.GONE);
-                    editor.setText(R.string.editor);
+                    txt_head_title2.setText(R.string.editor);
 
                 } else {
                     isEditor = true;
                     mGuessGoodsAdapter.setEditor(true);
                     ll_remove.setVisibility(View.VISIBLE);
-                    editor.setText(R.string.finish);
+                    txt_head_title2.setText(R.string.finish);
 
                 }
                 mGuessGoodsAdapter.notifyDataSetChanged();
@@ -227,7 +232,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         isAllSelect = false;
         isNoMore = false;
         ll_remove.setVisibility(View.GONE);
-        editor.setVisibility(View.GONE);
+        txt_head_title.setVisibility(View.GONE);
         searchNullTips_ly.setVisibility(View.VISIBLE);
 
     }

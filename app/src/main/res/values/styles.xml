@@ -15,7 +15,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:background">@color/white</item>
         <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingRight">12dp</item>
     </style>
 
     <style name="TopSizeTitle">
@@ -31,7 +31,7 @@
         <item name="android:background">@drawable/btn_title_return_icon</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">20dp</item>
-        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginLeft">12dp</item>
     </style>
 
 

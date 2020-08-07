@@ -153,7 +153,7 @@ public class ManageGoodsAddressActivity extends MvpActivity<ManageAddressPresent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         } else {
-            ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
+            ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         }
         fromOrderActivity = getIntent().getIntExtra(C.Extras.SELECTED_ADDRESS_FROM_CONFIRM_ORDER,0);
 

@@ -136,7 +136,6 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         newordinaryfansm=view.findViewById(R.id.newordinaryfansm);//本月普通粉丝新增
 
          tv_title = view.findViewById(R.id.tv_title);
-        tv_title.getPaint().setFakeBoldText(true);
         tv_dialy=view.findViewById(R.id.tv_dialy);
         tv_dialy.getPaint().setFakeBoldText(true);
         tv_month=view.findViewById(R.id.tv_month);
