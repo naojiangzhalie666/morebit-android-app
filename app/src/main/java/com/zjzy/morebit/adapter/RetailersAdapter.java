@@ -20,6 +20,7 @@ import com.zjzy.morebit.pojo.ConsComGoodsInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.DateTimeUtils;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 
@@ -127,10 +128,7 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
         holder.img_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfo usInfo = UserLocalData.getUser(context);
-                if (!TextUtils.isEmpty(usInfo.getProblemUrl())){
-                    ShowWebActivity.start((Activity) context,usInfo.getProblemUrl(),"常见问题");
-                }
+                GoodsUtil.getOrdeRule(context);
             }
         });
 

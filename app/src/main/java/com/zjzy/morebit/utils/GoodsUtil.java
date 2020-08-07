@@ -1979,5 +1979,31 @@ public static Bitmap returnBitMap(final String url){
                 });
 
     }
+    //获取订单问题
+    public static  void getOrdeRule(final Context context){
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.ORDER_COMMON_RULES))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            ShowWebActivity.start((Activity) context,commssionH5,"常见问题");
+                        }
+
+                        Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
+
+    }
 
 }

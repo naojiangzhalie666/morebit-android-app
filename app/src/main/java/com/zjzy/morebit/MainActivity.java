@@ -143,7 +143,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     private AuthForPersonDialog mAuthForPersonDialog;
 
     private AuthForPersonDialog.OnAuthListener mAuthListener;
-    private ImageView img_vip;
+    private ImageView img_vip,iv_number;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -588,6 +588,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     }
 
     public void initView() {
+        iv_number= (ImageView) findViewById(R.id.iv_number);
         img_vip= (ImageView) findViewById(R.id.img_vip);
         rl_mine = (RelativeLayout) findViewById(R.id.rl_mine);
         rl_community = (RelativeLayout) findViewById(R.id.rl_community);
@@ -854,10 +855,12 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 curPosition = C.mainPage.HOME;
                 setSysNotificationView();
                 img_vip.setVisibility(View.GONE);
+                iv_number.setVisibility(View.VISIBLE);
 
                 break;
             case R.id.rl_shop: //分类
                 img_vip.setVisibility(View.GONE);
+                iv_number.setVisibility(View.VISIBLE);
                 mViewPager.setCurrentItem(1, false);
                 curPosition = C.mainPage.SUPER_NAVIGATION;
                 superNavigationFragment.onResume();
@@ -865,6 +868,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 break;
             case R.id.rl_number:
                 img_vip.setVisibility(View.VISIBLE);
+                iv_number.setVisibility(View.INVISIBLE);
                 if (!LoginUtil.checkIsLogin(MainActivity.this)) {
                     return;
                 }
@@ -877,6 +881,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 break;
             case R.id.rl_community: //发圈
                 img_vip.setVisibility(View.GONE);
+                iv_number.setVisibility(View.VISIBLE);
 
                 mViewPager.setCurrentItem(3, false);
                 curPosition = C.mainPage.CIRCLE;
@@ -884,6 +889,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 break;
             case R.id.rl_mine: //我的
                 img_vip.setVisibility(View.GONE);
+                iv_number.setVisibility(View.VISIBLE);
                 mViewPager.setCurrentItem(4, false);
                 curPosition = C.mainPage.MINE;
                 setSysNotificationView();

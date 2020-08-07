@@ -187,17 +187,9 @@ public class GuessGoodDialog extends Dialog implements View.OnClickListener {
 
             if (!StringsUtils.isEmpty(mData.getCommission())){
                 commission.setVisibility(View.VISIBLE);
-                if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
-                    commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), mData.getCommission())));
-                } else {
-                    UserInfo userInfo1 = UserLocalData.getUser();
-                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                        commission.setText("登录赚佣金");
-                    } else {
-                        commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), mData.getCommission())));
-                    }
-//                commission.setText(mContext.getString(R.string.upgrade_commission));
-                }
+                commission.setText("赚"+MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), mData.getCommission())+"元");
+
+
             }else{
                 commission.setVisibility(View.INVISIBLE);
             }
