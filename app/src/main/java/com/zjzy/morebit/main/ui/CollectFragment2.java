@@ -289,11 +289,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         } else {
             searchNullTips_ly.setVisibility(View.VISIBLE);
         }
-
-
         mPage++;
-
-
     }
 
 

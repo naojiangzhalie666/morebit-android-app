@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.FansInfo;
 import com.zjzy.morebit.pojo.TeamInfo;
@@ -30,7 +31,7 @@ public class QrcodeDialog extends AlertDialog {
     private Context mContext;
 
     private TextView tv_level;
-    private ImageView iv_head;
+    private RoundedImageView iv_head;
     private TextView tv_name;
     private TextView invitation_code;
     private TextView wx_code;
@@ -112,7 +113,7 @@ public class QrcodeDialog extends AlertDialog {
             }
 
 
-            LoadImgUtils.setImgHead(mContext, iv_head, teamIfo.getHeadImg());
+            LoadImgUtils.setImgCircle(mContext, iv_head, teamIfo.getHeadImg(),R.drawable.head_icon);
             if (TextUtils.isEmpty(teamIfo.getNickName())) {
                 tv_name.setText("暂未填写");
             } else {

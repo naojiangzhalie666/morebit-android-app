@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -45,23 +46,21 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
     private ArrayList<String> mHistoryData = new ArrayList<>();
     private LayoutInflater mLayoutInflater;
     private Context mContext;
-    private RelativeLayout historyReLay;
-    private TagFlowLayout historyFlowLayout;
+
     private ImageView iv_back;
     private TextView searchTv;
     private EditText search_et;
     private String mCacheKey = null;
     private ImageView clearLy;
     private Dialog textDialog;
-    private LinearLayout moreHistoryLL;
+
     private String search_hint_text = "";
     private OnClickHotKeyListener onClickHotKeyListener;
     private OnClickHistoryListener onClickHistoryListener;
     private OnClickSearchListener onClickSearchListener;
-    private TextView moreHistoryTv;
-    private  ImageView arrowIv;
-    private int mSearchBtnColor = getResources().getColor(R.color.color_FFE033);
-    boolean isShowMoreHistory = false;
+
+    private RelativeLayout historyReLay;
+    private LinearLayout hotKey_list;
     public SearchClassLayout(Context context) {
         super(context);
         this.mContext = context;
@@ -94,8 +93,8 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
         mLayoutInflater.inflate(R.layout.view_search_flow2, this, true);
         hotSearchLL  = findViewById(R.id.hotSearchLL);
         hotkeyFlowLayout = findViewById(R.id.search_hot_key);
-        historyReLay = findViewById(R.id.historyReLay);
-        historyFlowLayout = findViewById(R.id.search_history_key);
+        hotKey_list=findViewById(R.id.hotKey_list);
+        historyReLay=findViewById(R.id.historyReLay);
         iv_back = findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
         searchTv = findViewById(R.id.search);
@@ -103,10 +102,8 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
         search_et = findViewById(R.id.search_et);
         clearLy = findViewById(R.id.clearLy);
         clearLy.setOnClickListener(this);
-        moreHistoryLL = findViewById(R.id.moreHistoryLL);
-        moreHistoryLL.setOnClickListener(this);
-        moreHistoryTv = findViewById(R.id.moreHistoryTv);
-        arrowIv = findViewById(R.id.arrowIv);
+
+
         if(!TextUtils.isEmpty(search_hint_text)){
             search_et.setHint(search_hint_text);
         }
@@ -123,17 +120,7 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
             }
         });
 
-        historyFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener()
-        {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent)
-            {
-                if(null != onClickHistoryListener){
-                    onClickHistoryListener.onClick(position,mHistoryData.get(position));
-                }
-                return true;
-            }
-        });
+
 
 
     }
@@ -180,54 +167,7 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
         }
     }
 
-    /**
-     * 设置搜索历史数据
-     */
-    public void setHistoryData(ArrayList<String> historyData){
-        if(null != historyData && historyData.size()>0){
-            historyReLay.setVisibility(View.VISIBLE);
-            mHistoryData = historyData;
-            historyFlowLayout.setAdapter(new TagAdapter<String>(historyData)
-            {
 
-                @Override
-                public View getView(FlowLayout parent, int position, String text)
-                {
-                    View  flowView =   mLayoutInflater.inflate(R.layout.flowlayout_tv,
-                            historyFlowLayout, false);
-                    TextView tv =  flowView.findViewById(R.id.flow_text);
-                    tv.setText(text.length()>24 ?text.substring(0,24)+"...":text);
-
-                    return flowView;
-                }
-            });
-
-            historyFlowLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    if(historyFlowLayout.isMore()){
-                        if(!isShowMoreHistory){
-                            isShowMoreHistory = true;
-                            App.mHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    moreHistoryLL.setVisibility(View.VISIBLE);
-                                }
-                            },200);
-
-                        }
-                    }else{
-                            isShowMoreHistory = false;
-                        moreHistoryLL.setVisibility(View.GONE);
-                    }
-                    historyFlowLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-            });
-
-        }else{
-            historyReLay.setVisibility(View.GONE);
-        }
-    }
 
     /**
      * 设置缓存数据的key
@@ -240,7 +180,7 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
             mHistoryData.addAll(asObject);
         }
         if(null != mHistoryData && mHistoryData.size() >0){
-           setHistoryData(mHistoryData);
+
         }
     }
 
@@ -251,34 +191,25 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
                 ((Activity) mContext).finish();
                 break;
             case R.id.search:
+                Log.e("sdfsfsf"," 4"+search_et.getText().toString());
                 if (TextUtils.isEmpty(search_et.getText().toString().trim())) {
                     ViewShowUtils.showShortToast(mContext,"请输入搜索内容");
+                    Log.e("sdfsfsf","7");
                     search_et.requestFocus();
                     return;
                 } else {
+                    ViewShowUtils.showShortToast(mContext,"请输入搜索内容"+search_et.getText().toString());
                     if(null != onClickSearchListener){
                         onClickSearchListener.onClick(search_et.getText().toString());
                     }
+                    Log.e("sdfsfsf","进来了4");
                     addSearchText(search_et.getText().toString());
                 }
                 break;
             case R.id.clearLy: //清楚历史数据
                 openCleanDataDialog();
                 break;
-            case R.id.moreHistoryLL:
-                if(moreHistoryTv.getText().equals("更多搜索历史")){
-                    isShowMoreHistory = true;
-                    moreHistoryTv.setText("收起搜索历史");
-                    arrowIv.setImageResource(R.drawable.icon_arrow_up);
-                    historyFlowLayout.setMaxLine(12);
-                }else{
-                    isShowMoreHistory = false;
-                    moreHistoryTv.setText("更多搜索历史");
-                    arrowIv.setImageResource(R.drawable.icon_arrow_down);
-                    historyFlowLayout.setMaxLine(3);
-                }
-                historyFlowLayout.onChanged();
-                break;
+
         }
     }
 
@@ -295,8 +226,8 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
 
         mHistoryData.add(0, text);
         if(null != mHistoryData && mHistoryData.size() >0){
-            historyReLay.setVisibility(View.VISIBLE);
-            setHistoryData(mHistoryData);
+
+            Log.e("sdfsfsf","进来了3");
         }
 
 
@@ -312,14 +243,12 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
             @Override
             public void onClick(View dialog, String text) {
                 mHistoryData.clear();
-                historyFlowLayout.removeAllViews();
-                historyReLay.setVisibility(View.GONE);
+
                 if(!TextUtils.isEmpty(mCacheKey)){
                     App.getACache().put(mCacheKey, mHistoryData);
                 }
-                historyFlowLayout.setMaxLine(3);
+
                 clearLy.setVisibility(View.INVISIBLE);
-                moreHistoryLL.setVisibility(View.GONE);
                 ViewShowUtils.showShortToast(mContext, "删除成功");
             }
 

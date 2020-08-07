@@ -23,72 +23,52 @@
         android:orientation="vertical"
         android:paddingBottom="5dp">
 
-
-        <RelativeLayout
-            android:background="@color/white"
-            android:id="@+id/historyReLay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="3dp"
-            android:visibility="gone"
-         >
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:text="历史搜索"
-                android:textStyle="bold"
-                android:textColor="@color/color_333333"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/clearLy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/icon_shanchutubiao" />
-        </RelativeLayout>
-
-        <com.zjzy.morebit.view.flowlayout.TagFlowLayout
-            android:id="@+id/search_history_key"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="6dp"
-            android:paddingRight="15dp"
-            zhy:max_line="3"
-            zhy:max_select="1" />
-
         <LinearLayout
-            android:id="@+id/moreHistoryLL"
+            android:background="@color/white"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="4dp"
-            android:paddingBottom="10dp"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/moreHistoryTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="历史搜索"
-                android:textColor="@color/color_333333"
-                android:textStyle="bold"
-                android:textSize="@dimen/sp_16" />
 
-            <ImageView
-                android:id="@+id/arrowIv"
-                android:layout_width="wrap_content"
+
+            <RelativeLayout
+                android:id="@+id/historyReLay"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:src="@drawable/icon_arrow_down" />
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/white"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="历史搜索"
+                    android:textColor="@color/color_333333"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/clearLy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/icon_shanchutubiao" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/hotKey_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"></LinearLayout>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
