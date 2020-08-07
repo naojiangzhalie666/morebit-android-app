@@ -466,6 +466,7 @@ dependencies {
     implementation 'com.github.donkingliang:ConsecutiveScroller:4.0.0-support'
 
     implementation 'com.github.yeaper:XShadow:1.0.1'
+    implementation 'com.google.android:flexbox:0.3.0-alpha3'
 
 }
 // 依赖插件脚本

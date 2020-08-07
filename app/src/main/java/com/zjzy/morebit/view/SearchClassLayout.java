@@ -5,34 +5,50 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
+import com.google.android.flexbox.AlignItems;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.adapter.SearchHistoryAdapter;
 import com.zjzy.morebit.pojo.SearchHotKeyBean;
+import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.SharePreferenceUtil;
+import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.StringsUtils;
+import com.zjzy.morebit.utils.UI.DeviceUtil;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.view.flowlayout.FlowLayout;
 import com.zjzy.morebit.view.flowlayout.TagAdapter;
 import com.zjzy.morebit.view.flowlayout.TagFlowLayout;
-
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxItemDecoration;
+import com.google.android.flexbox.FlexboxLayoutManager;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+
 
 /**
  - @Description:  发圈搜索，商学院搜索
@@ -53,14 +69,14 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
     private String mCacheKey = null;
     private ImageView clearLy;
     private Dialog textDialog;
-
+    private RelativeLayout historyReLay;
+    private LinearLayout hotKey_list;
     private String search_hint_text = "";
     private OnClickHotKeyListener onClickHotKeyListener;
     private OnClickHistoryListener onClickHistoryListener;
     private OnClickSearchListener onClickSearchListener;
 
-    private RelativeLayout historyReLay;
-    private LinearLayout hotKey_list;
+
     public SearchClassLayout(Context context) {
         super(context);
         this.mContext = context;
@@ -89,20 +105,20 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
     }
 
     public void initView(Context context){
+
         mLayoutInflater =  LayoutInflater.from(context);
         mLayoutInflater.inflate(R.layout.view_search_flow2, this, true);
         hotSearchLL  = findViewById(R.id.hotSearchLL);
         hotkeyFlowLayout = findViewById(R.id.search_hot_key);
         hotKey_list=findViewById(R.id.hotKey_list);
-        historyReLay=findViewById(R.id.historyReLay);
+      //  historyReLay=findViewById(R.id.historyReLay);
         iv_back = findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
         searchTv = findViewById(R.id.search);
         searchTv.setOnClickListener(this);
         search_et = findViewById(R.id.search_et);
-        clearLy = findViewById(R.id.clearLy);
-        clearLy.setOnClickListener(this);
-
+//        clearLy = findViewById(R.id.clearLy);
+//        clearLy.setOnClickListener(this);
 
         if(!TextUtils.isEmpty(search_hint_text)){
             search_et.setHint(search_hint_text);
@@ -206,9 +222,9 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
                     addSearchText(search_et.getText().toString());
                 }
                 break;
-            case R.id.clearLy: //清楚历史数据
-                openCleanDataDialog();
-                break;
+//            case R.id.clearLy: //清楚历史数据
+//                openCleanDataDialog();
+//                break;
 
         }
     }
@@ -235,7 +251,7 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
             App.getACache().put(mCacheKey, mHistoryData);
         }
 
-        clearLy.setVisibility(View.VISIBLE);
+      //  clearLy.setVisibility(View.VISIBLE);
     }
 
     private void openCleanDataDialog() {  //打开清理缓存
@@ -248,7 +264,7 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
                     App.getACache().put(mCacheKey, mHistoryData);
                 }
 
-                clearLy.setVisibility(View.INVISIBLE);
+             //   clearLy.setVisibility(View.INVISIBLE);
                 ViewShowUtils.showShortToast(mContext, "删除成功");
             }
 

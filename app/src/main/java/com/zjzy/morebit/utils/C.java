@@ -235,8 +235,10 @@ public class C {
         //从订单确认页面跳转
         public static final String SELECTED_ADDRESS_FROM_CONFIRM_ORDER = "SELECT_ADDRESS_FROM_CONFIRM_ORDER";
 
-        //是否显示 切换环境item
-        public static final String KEY_SHOW_DEVELOPER_SETTING = "key_show_developer_setting";
+        //历史数据
+        public static final String KEY_SAVE_SEARCH_HISTORY = "KEY_SAVE_SEARCH_HISTORY";
+
+
 
         /**
          * 切换服务器类型

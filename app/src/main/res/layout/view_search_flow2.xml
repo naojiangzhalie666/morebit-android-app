@@ -10,11 +10,59 @@
 
     <include layout="@layout/include_searchview_input2" />
 
-    <View
+
+
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_history"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:background="@color/color_F0F1F5"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@color/color_F0F1F5" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:text="历史搜索"
+                android:textColor="#ff333333"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/clear"
+                android:paddingLeft="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/history"
+                android:layout_alignParentRight="true"
+                android:paddingTop="12dp"
+                android:paddingRight="12dp"
+                android:src="@mipmap/history_clear" />
+
+
+        </RelativeLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ryc_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,65 +71,19 @@
         android:orientation="vertical"
         android:paddingBottom="5dp">
 
-        <LinearLayout
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
 
-
-            <RelativeLayout
-                android:id="@+id/historyReLay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="3dp"
-                android:background="@color/white"
-                android:visibility="gone">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="历史搜索"
-                    android:textColor="@color/color_333333"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/clearLy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/icon_shanchutubiao" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/hotKey_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"></LinearLayout>
-        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="12dp"
-            android:background="@color/color_F0F1F5"
-            />
+            android:background="@color/color_F0F1F5" />
 
         <LinearLayout
             android:id="@+id/hotSearchLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:background="@color/white"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingTop="12dp"
             android:visibility="gone">
@@ -91,9 +93,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:text="大家都在搜"
-                android:textStyle="bold"
                 android:textColor="@color/color_333333"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"

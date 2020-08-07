@@ -59,12 +59,11 @@ import io.reactivex.functions.Action;
  */
 public class AdvancedClassFragment extends BaseMainFragmeng {
 
-    private LRecyclerView rcy_goods;
+    private RecyclerView rcy_goods;
     private int page = 1;
     private SkillAdapter mAdapter;
     private SmartRefreshLayout swipeList;
-    private RecyclerView rcy_title;
-    private StudyTitleAdapter titleAdapter;
+
 
 
     public static AdvancedClassFragment newInstance() {
@@ -94,7 +93,7 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
     private void onStudyRankSuccessful(List<StudyRank> data) {
 
         if (data != null) {
-            titleAdapter.setData(data);
+            mAdapter.setData2(data);
         }
 
 
@@ -194,12 +193,11 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
         swipeList = view.findViewById(R.id.swipeList);
         //底部课程列表
         rcy_goods = view.findViewById(R.id.rcy_goods);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
-        rcy_goods.setAdapter(mLRecyclerViewAdapter);
+
+
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rcy_goods.setLayoutManager(manager);
-        View header = LayoutInflater.from(getActivity()).inflate(R.layout.item_vip_skill_head, null, false);
-        mLRecyclerViewAdapter.addHeaderView(header);
+        rcy_goods.setAdapter(mAdapter);
         swipeList.setEnableRefresh(false);
         swipeList.finishRefresh();
 
@@ -211,21 +209,10 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
                 getData();
             }
         });
-        //头部title列表
-        rcy_title = header.findViewById(R.id.rcy_title);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        rcy_title.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 6)));
-        rcy_title.setLayoutManager(gridLayoutManager);
-        titleAdapter = new StudyTitleAdapter(getActivity());
-        rcy_title.setAdapter(titleAdapter);
 
-        RelativeLayout search_rl = header.findViewById(R.id.search_rl);
-        search_rl.setOnClickListener(new View.OnClickListener() {//进入商学院搜索
-            @Override
-            public void onClick(View v) {
-                SearchArticleListActitivty.start(getActivity());
-            }
-        });
+
+
+
 
 
     }
