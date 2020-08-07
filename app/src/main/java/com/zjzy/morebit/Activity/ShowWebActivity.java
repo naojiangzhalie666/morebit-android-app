@@ -100,8 +100,8 @@ public class ShowWebActivity extends BaseActivity {
     ImageView mIvBack;
     @BindView(R.id.iv_refresh)
     ImageView mIvRefresh;
-    @BindView(R.id.iv_off)
-    ImageView mIvOff;
+//    @BindView(R.id.iv_off)
+//    ImageView mIvOff;
 
     @Override
     public boolean isShowAllSeek() {
@@ -307,19 +307,19 @@ public class ShowWebActivity extends BaseActivity {
                 mViewBar.setBackgroundColor(color);
                 mViewLine.setBackgroundColor(color);
 
-                if ( mIvOff != null && mIvRefresh != null &&mIvBack != null &&mToolbarTtle != null ){
+                if ( /*mIvOff != null &&*/ mIvRefresh != null &&mIvBack != null &&mToolbarTtle != null ){
                     if (event.getIconType() == 0) {
                         mToolbarTtle.setTextSize(18);
                         mToolbarTtle.setTextColor(ContextCompat.getColor(this, R.color.white));
                         mIvBack.setImageResource(R.drawable.btn_title_return_icon_white);
                         mIvRefresh.setImageResource(R.drawable.web_refresh_icon_white);
-                        mIvOff.setImageResource(R.drawable.icon_guanbi_off_white);
+                      //  mIvOff.setImageResource(R.drawable.icon_guanbi_off_white);
                     }else {
                         mToolbarTtle.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
                         mIvBack.setImageResource(R.drawable.btn_title_return_icon);
                         mToolbarTtle.setTextSize(18);
                         mIvRefresh.setImageResource(R.drawable.web_refresh_icon);
-                        mIvOff.setImageResource(R.drawable.icon_guanbi_off);
+                      //  mIvOff.setImageResource(R.drawable.icon_guanbi_off);
 
                     }
                 }

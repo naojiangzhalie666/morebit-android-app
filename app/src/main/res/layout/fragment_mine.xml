@@ -233,7 +233,7 @@
                     android:id="@+id/ll_tools"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="12dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -256,6 +256,7 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rcy_tools"
+                        android:nestedScrollingEnabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
@@ -405,6 +406,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
                     android:background="@color/color_F2F2F2"/>
                 <LinearLayout
                     android:id="@+id/privacy_agreement"
@@ -495,6 +498,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
                     android:background="@color/color_F2F2F2"/>
                 <LinearLayout
                     android:id="@+id/my_footmarker"
@@ -536,6 +541,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
                     android:background="@color/color_F2F2F2"/>
                 <LinearLayout
                     android:id="@+id/my_favorite"

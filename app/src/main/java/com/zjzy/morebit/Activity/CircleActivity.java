@@ -62,7 +62,6 @@ public class CircleActivity extends BaseActivity implements View.OnClickListener
         if (!TextUtils.isEmpty(title)){
             txt_head_title.setText(title);
         }
-        txt_head_title.getPaint().setFakeBoldText(true);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);
         mListView= (ReUseListView) findViewById(R.id.mListView);

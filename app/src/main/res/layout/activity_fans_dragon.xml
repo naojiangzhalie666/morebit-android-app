@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcy_fans"
-        android:layout_marginBottom="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
@@ -64,7 +63,7 @@
             android:paddingTop="5dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="立即邀请"
+            android:text="马上去邀请"
             android:textColor="@color/color_FFFFFF"
             android:textSize="@dimen/sp_14" />
 

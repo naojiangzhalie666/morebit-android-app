@@ -11,6 +11,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
        <TextView
+           android:paddingTop="12dp"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="全部频道"
@@ -23,6 +24,8 @@
            android:id="@+id/img_up"
            android:paddingRight="12dp"
            android:paddingTop="12dp"
+           android:paddingLeft="12dp"
+           android:paddingBottom="12dp"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:src="@mipmap/daily_up"

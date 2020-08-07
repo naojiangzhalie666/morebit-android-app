@@ -274,7 +274,8 @@
                 app:xTabSelectedTextColor="@color/color_F05557"
                 app:xTabSelectedTextSize="@dimen/sp_16"
                 app:xTabTextColor="@color/color_333333"
-                app:xTabTextSize="@dimen/sp_16" />
+                app:xTabTextSize="@dimen/sp_16"
+                android:paddingBottom="2dp"/>
 
         </android.support.design.widget.AppBarLayout>
 

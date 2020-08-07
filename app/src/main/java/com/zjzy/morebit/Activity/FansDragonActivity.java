@@ -76,6 +76,7 @@ public class FansDragonActivity extends BaseActivity implements View.OnClickList
     private String mOrder="desc";//排序
 
     private LinearLayout dateNullView;
+    private LinearLayout top;
 
 
     //排序方向
@@ -121,7 +122,7 @@ public class FansDragonActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
-
+        top= (LinearLayout) findViewById(R.id.top);
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setText("粉丝龙虎榜");
         txt_head_title.getPaint().setFakeBoldText(true);
@@ -303,7 +304,7 @@ public class FansDragonActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.title_zong_volume_ll:
                 requestClickRadar(null, title_comprehensive_tv, 4);
-                showPopupWindow(title_zong_volume_ll);
+                showPopupWindow(top);
                 title_comprehensive_iv.setImageResource(R.drawable.zong_tubiao);
                 break;
             case R.id.title_sales_volume_ll:

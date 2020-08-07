@@ -14,14 +14,15 @@
         android:padding="12dp"
         android:src="@drawable/btn_title_return_icon" />
 
-    <ImageView
+    <TextView
         android:id="@+id/iv_off"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/iv_back"
-        android:padding="12dp"
-        android:src="@drawable/icon_guanbi_off"
-        android:visibility="gone" />
+        android:text="关闭"
+        android:textColor="#333333"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/toolbar_title"
@@ -58,9 +59,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:paddingBottom="13dp"
-            android:paddingRight="13dp"
             android:paddingTop="13dp"
+            android:paddingRight="13dp"
+            android:paddingBottom="13dp"
             android:src="@drawable/icon_commercial_college_fenxiang"
             android:visibility="gone" />
     </LinearLayout>
