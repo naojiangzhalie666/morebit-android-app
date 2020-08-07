@@ -251,11 +251,14 @@ public class KoalaWebActivity extends BaseActivity {
                             return true;
                         }else if (newurl.contains("https://m.vip.com/product")) {
                             String shopid = "";
-                            String[] split = newurl.split("-");
-                            String informationId = split[2];
+                            String[] split = newurl.split(".html");
+                            String informationId = split[0];
+                            String[] split1 = informationId.split("-");
+                            shopid = split1[2];
 
-                            shopid = informationId.replace(".html", "");
                             final String finalShopid = shopid;
+                            Log.e("uuuu",informationId+"列表3");
+                            Log.e("uuuu",newurl+"列表2");
                            Log.e("uuuu",shopid+"列表");
                             getBaseResponseObservableForWei(KoalaWebActivity.this,shopid)
                                     .doFinally(new Action() {
