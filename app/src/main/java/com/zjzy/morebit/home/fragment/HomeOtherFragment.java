@@ -685,11 +685,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
                 int ownScrollY = scrollerlayout.getOwnScrollY();
                 Log.e("hhhh",scrollState+"");
-                if (ownScrollY <=0 ) {
+                if (scroll <=0 ) {
                     swipeRefreshLayout.setEnabled(true);//设置可触发
 
-                } else if (ownScrollY > 0) {
-
+                } else{
+                    scroll = ownScrollY;
                     swipeRefreshLayout.setEnabled(false);
                 }
 
