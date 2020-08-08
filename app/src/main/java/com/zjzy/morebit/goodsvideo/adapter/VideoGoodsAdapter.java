@@ -8,13 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.tencent.mm.opensdk.utils.Log;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.goodsvideo.VideoActivity;
@@ -101,10 +101,12 @@ public class VideoGoodsAdapter extends RecyclerView.Adapter<VideoGoodsAdapter.Vi
 //            commission.setVisibility(View.GONE);
 
         //  holder.tv_coupul.setText("预估收益"+list.get(position).getTkMoney()+"元");
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (LoginUtil.checkIsLogin((Activity) context)) {
+                    Log.e("sfsdf","cid+"+cid+"position+"+position+"page+"+page);
                     VideoActivity.start(context, (List<ShopGoodInfo>) list,position,cid,page);
                 }
 

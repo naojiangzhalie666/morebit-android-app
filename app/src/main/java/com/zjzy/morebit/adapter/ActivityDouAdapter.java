@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,25 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
     public void onBindViewHolder(ActivityDouAdapter.ViewHolder holder, final int position) {
         List<QueryDhAndGyBean.DhListBean> dhList = data.getDhList();//抖货
         List<QueryDhAndGyBean.GyListBean> gyList = data.getGyList();//高佣
+
+        final ShopGoodInfo dhBean = new ShopGoodInfo();
+        final List<ShopGoodInfo> list=new ArrayList<>();
+        for (int i=0;i<dhList.size();i++){
+            dhBean.setItemTitle(dhList.get(position).getItemTitle());
+            dhBean.setItemSourceId(dhList.get(position).getItemId()+"");
+            dhBean.setGoodsId(Long.valueOf(dhList.get(position).getItemId()));
+            dhBean.setItemPic(dhList.get(position).getItemPic());
+            dhBean.setCouponMoney(dhList.get(position).getCouponMoney()+"");
+            dhBean.setGoodsId(Long.valueOf(gyList.get(position).getItemid()));
+            dhBean.setPrice(dhList.get(position).getItemPrice());
+            dhBean.setItemVideo(dhList.get(position).getItemVideo());
+            dhBean.setCouponUrl(dhList.get(position).getCouponUrl());
+            dhBean.setCouponMoney(dhList.get(position).getCouponMoney());
+            dhBean.setTkMoney(dhList.get(position).getTkMoney());
+            dhBean.setItemSale(dhList.get(position).getItemSale());
+            dhBean.setItemVideoPic(dhList.get(position).getItemVideoPic());
+            list.add(dhBean);
+        }
         if (position == 0) {
             final ShopGoodInfo gyBean = new ShopGoodInfo();
             gyBean.setItemSourceId(gyList.get(0).getItemid()+"");
@@ -106,22 +126,10 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 }
             });
         } else {
-            final ShopGoodInfo dhBean = new ShopGoodInfo();
-            final List<ShopGoodInfo> list=new ArrayList<>();
-            dhBean.setItemTitle(dhList.get(0).getItemTitle());
-            dhBean.setItemSourceId(dhList.get(0).getItemId()+"");
-            dhBean.setGoodsId(Long.valueOf(dhList.get(0).getItemId()));
-            dhBean.setItemPic(dhList.get(0).getItemPic());
-            dhBean.setCouponMoney(dhList.get(0).getCouponMoney()+"");
-            dhBean.setGoodsId(Long.valueOf(gyList.get(0).getItemid()));
-            dhBean.setPrice(dhList.get(0).getItemPrice());
-            dhBean.setItemVideo(dhList.get(0).getItemVideo());
-            dhBean.setCouponUrl(dhList.get(0).getCouponUrl());
-            dhBean.setCouponMoney(dhList.get(0).getCouponMoney());
-            dhBean.setTkMoney(dhList.get(0).getTkMoney());
-            dhBean.setItemSale(dhList.get(0).getItemSale());
-            dhBean.setItemVideoPic(dhList.get(0).getItemVideoPic());
-            list.add(dhBean);
+
+
+            Log.e("sfsdfsd",list.size()+"");
+
 
 
             holder.title1.setText("抖货爆款");
@@ -154,7 +162,7 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 @Override
                 public void onClick(View v) {
                     if (LoginUtil.checkIsLogin((Activity) mContext)) {
-                        VideoActivity.start(mContext,list,0,"1",1);
+                        VideoActivity.start(mContext,(List<ShopGoodInfo>)list,0,"0",1);
                     }
                 }
             });

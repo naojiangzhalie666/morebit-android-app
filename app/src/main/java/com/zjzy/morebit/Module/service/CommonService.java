@@ -651,7 +651,7 @@ public interface CommonService {
      * @return
      */
 //    @FormUrlEncoded
-    @POST("/api/order/getOrderList")
+    @POST("/api/order/getOrderListNew")
     public Observable<BaseResponse<List<ConsComGoodsInfo>>> getGoodsOrder(
             @Body RequestGoodsOrderBean requestBean);
 //            @Field("orderStatus") int orderStatus,

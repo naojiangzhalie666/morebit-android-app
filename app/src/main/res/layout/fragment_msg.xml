@@ -149,6 +149,10 @@
                         android:textColor="#ff333333"
                         android:textSize="16sp"
                           />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
 
 
                     <TextView
@@ -220,6 +224,11 @@
                         android:textColor="#ff333333"
                         android:textSize="18sp"
                         />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
 
                     <TextView
                         android:id="@+id/tv2"
@@ -290,6 +299,11 @@
                         android:textColor="#ff333333"
                         android:textSize="16sp"
                       />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
 
 
 
@@ -364,6 +378,11 @@
                         android:textSize="16sp"
                          />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
 
 
                     <TextView
@@ -437,6 +456,11 @@
                         android:textSize="16sp"
                         />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
 
 
                     <TextView
@@ -508,6 +532,11 @@
                         android:textColor="#ff333333"
                         android:textSize="16sp"
                         />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
 
 
                     <TextView

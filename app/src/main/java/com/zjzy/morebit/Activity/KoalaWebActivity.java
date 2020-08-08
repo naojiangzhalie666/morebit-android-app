@@ -72,7 +72,8 @@ public class KoalaWebActivity extends BaseActivity {
     private View mViewBar,mViewLine;
     private RelativeLayout mRlToolbar;
     private TextView mToolbarTtle;
-    ImageView mIvBack,mIvRefresh,mIvOff;
+    ImageView mIvBack,mIvRefresh;
+    TextView mIvOff;
     private ToolbarWebHelper mToolbarWebHelper;
     private boolean mIsStop;
     private String url = "";
@@ -119,7 +120,7 @@ public class KoalaWebActivity extends BaseActivity {
         mToolbarTtle= (TextView) findViewById(R.id.toolbar_title);
         mIvBack= (ImageView) findViewById(R.id.iv_back);
         mIvRefresh= (ImageView) findViewById(R.id.iv_refresh);
-        mIvOff= (ImageView) findViewById(R.id.iv_off);
+        mIvOff= (TextView) findViewById(R.id.iv_off);
         web= (WebView) findViewById(R.id.web);
         tv_no= (TextView) findViewById(R.id.tv_no);
         tv_no.setOnClickListener(new View.OnClickListener() {
@@ -382,12 +383,12 @@ public class KoalaWebActivity extends BaseActivity {
                         mToolbarTtle.setTextColor(ContextCompat.getColor(this, R.color.white));
                         mIvBack.setImageResource(R.drawable.btn_title_return_icon_white);
                         mIvRefresh.setImageResource(R.drawable.web_refresh_icon_white);
-                        mIvOff.setImageResource(R.drawable.icon_guanbi_off_white);
+                      //  mIvOff.setImageResource(R.drawable.icon_guanbi_off_white);
                     }else {
                         mToolbarTtle.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
                         mIvBack.setImageResource(R.drawable.btn_title_return_icon);
                         mIvRefresh.setImageResource(R.drawable.web_refresh_icon);
-                        mIvOff.setImageResource(R.drawable.icon_guanbi_off);
+                      //  mIvOff.setImageResource(R.drawable.icon_guanbi_off);
 
                     }
                 }

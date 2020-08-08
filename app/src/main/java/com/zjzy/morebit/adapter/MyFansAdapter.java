@@ -123,13 +123,12 @@ public class MyFansAdapter extends RecyclerView.Adapter<MyFansAdapter.ViewHolder
             viewHolder.tv_zhuan.setBackgroundResource(R.drawable.bg_fans_d8d8d8_4dp);
         }
 
-        if ("0".equals(info.getUserType())){
+        int userType = info.getUserType();
+        if (userType==0){
             viewHolder.vip_img2.setImageResource(R.mipmap.vip_icon_right2);
         }else{
             viewHolder.vip_img2.setImageResource(R.mipmap.vip_bg_icon);
         }
-
-
         viewHolder.people_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
