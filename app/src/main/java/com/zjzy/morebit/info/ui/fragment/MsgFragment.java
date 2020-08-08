@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +19,7 @@ import com.zjzy.morebit.Activity.SettingNotificationActivity;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
+import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.MsgDayHotAdapter;
@@ -61,7 +64,7 @@ import io.reactivex.functions.Action;
  * Created by fengrs on 2018/12/4.
  */
 
-public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgDayHotContract.View {
+public class MsgFragment extends BaseFragment {
     private static final int REQUEST_COUNT = 10;
     @BindView(R.id.msgNoticationRl)
     RelativeLayout msgNoticationRl;
@@ -85,9 +88,17 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
     }
 
-
     @Override
-    protected void initData() {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View   mView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_msg, null);
+        initView(mView);
+        initData();
+        return mView;
+    }
+
+
+    private void  initData(){
 
         getUserNoticeList(this)
                 .subscribe(new DataObserver<NoticemBean>(false) {
@@ -138,8 +149,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
     }
 
-    @Override
-    protected void initView(View view) {
+    private void initView(View view) {
         tv_day=view.findViewById(R.id.tv_day);
         tv_shouyi = view.findViewById(R.id.tv_shouyi);
         tv_fans = view.findViewById(R.id.tv_fans);
@@ -169,17 +179,6 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
         initPush();
 
-    }
-
-    @Override
-    protected int getViewLayout() {
-        return R.layout.fragment_msg;
-    }
-
-
-    @Override
-    public BaseView getBaseView() {
-        return this;
     }
 
 
@@ -239,21 +238,6 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
     }
 
-    @Override
-    public void onMsgSuccessful(List<DayHotBean> data) {
-
-
-    }
-
-    @Override
-    public void onMsgfailure() {
-    }
-
-    @Override
-    public void onMsgFinally() {
-
-    }
-
 
     @OnClick({R.id.back, R.id.msgSetIv, R.id.openNoticationBtn, R.id.closeNoticationIv, R.id.earningLay, R.id.fansLay, R.id.sysLay, R.id.feedbackLay, R.id.activity_huo,R.id.activity_day})
     public void onClick(View view) {
@@ -272,25 +256,23 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
                 msgNoticationRl.setVisibility(View.GONE);
                 break;
             case R.id.earningLay:
-                //getReadNoticed(3);
 
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgEarningsFragment.class.getName(), new Bundle());
                 break;
             case R.id.fansLay:
-                //getReadNoticed(2);
+
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgFansFragment.class.getName(), new Bundle());
                 break;
             case R.id.sysLay:
-               // getReadNoticed(1);
+
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgSysFragment.class.getName(), new Bundle());
                 break;
             case R.id.feedbackLay:
-               // getReadNoticed(4);
+
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgFeedbackFragment.class.getName(), new Bundle());
                 break;
             case R.id.activity_huo:
-             //   getReadNoticed(6);
-              //  mPresenter.getNoticede(this,6);
+
                 OpenFragmentUtils.goToSimpleFragment(getActivity(), MsgActiityFragment.class.getName(), new Bundle());
                 break;
             case R.id.activity_day:
@@ -309,7 +291,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
         EventBus.getDefault().unregister(this);
     }
 
-    public List<DayHotBean> handlerData(List<DayHotBean> data) {
+   /* public List<DayHotBean> handlerData(List<DayHotBean> data) {
         List<DayHotBean> dayHotBeans = new ArrayList<>();
         String lastTime = "";
         if (null != data && data.size() > 0) {
@@ -341,7 +323,7 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
 
         return dayHotBeans;
     }
-
+*/
     @Override
     public void onResume() {
         super.onResume();
@@ -349,42 +331,8 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
         getNotice();
     }
 
-    private void getReadNoticed(int type) {
-        getReadNotice(this,type)
-                .subscribe(new DataObserver<String>(false) {
-                    @Override
-                    protected void onDataListEmpty() {
-                        onActivityFailure();
-                    }
 
-                    @Override
-                    protected void onDataNull() {
-                        onActivityFailure();
-                    }
 
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onSuccess(String data) {
-
-                    }
-                });
-//                .subscribe(new DataObserver<String>(false) {
-//                    @Override
-//                    protected void onSuccess(String data) {
-//                        Log.e("sssss","1");
-//                    }
-//
-//                    @Override
-//                    protected void onError(String errorMsg, String errCode) {
-//                        Log.e("sssss","2");
-//                    }
-//                });
-
-    }
 
     private void checkNoticationEnable() {
         boolean isshow = (boolean) SharedPreferencesUtils.get(App.getAppContext(), C.sp.isShowMsgNotication, true);
@@ -411,12 +359,4 @@ public class MsgFragment extends MvpFragment<MsgDayHotPresenter> implements MsgD
                 .compose(fragment.<BaseResponse<UnreadInforBean>>bindToLifecycle());
     }
 
-    //消息已读
-    public Observable<BaseResponse<String>> getReadNotice(RxFragment fragment,int  type) {
-        RequestReadNotice notice=new RequestReadNotice();
-        notice.setType(type);
-        return RxHttp.getInstance().getSysteService().getReadNotice(notice)
-                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
-                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
-    }
 }

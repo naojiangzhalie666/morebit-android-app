@@ -104,23 +104,24 @@
             <LinearLayout
                 android:id="@+id/earningLay"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="66dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_ffffff_8dp"
                 android:paddingLeft="10dp"
                 android:orientation="horizontal">
                 <RelativeLayout
-                    android:layout_width="70dp"
+                    android:layout_width="50dp"
                     android:layout_gravity="center"
-                    android:layout_height="70dp">
+                    android:layout_height="50dp">
 
                     <ImageView
                         android:layout_centerInParent="true"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:src="@drawable/icon_bg_earning" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/img1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -146,13 +147,9 @@
                         android:layout_height="wrap_content"
                         android:text="收益通知"
                         android:textColor="#ff333333"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                           />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/tv1"
@@ -169,7 +166,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/notice_right"
+                    android:src="@drawable/msg_right"
                     android:paddingRight="12dp"
                     />
 
@@ -178,23 +175,24 @@
                 android:id="@+id/fansLay"
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="66dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_ffffff_8dp"
                 android:paddingLeft="10dp"
                 android:orientation="horizontal">
                 <RelativeLayout
-                    android:layout_width="70dp"
+                    android:layout_width="50dp"
                     android:layout_gravity="center"
-                    android:layout_height="70dp">
+                    android:layout_height="50dp">
 
                     <ImageView
                         android:layout_centerInParent="true"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:src="@drawable/icon_bg_msg_fans" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/img2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -224,11 +222,6 @@
                         />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <TextView
                         android:id="@+id/tv2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -243,7 +236,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/notice_right"
+                    android:src="@drawable/msg_right"
                     android:paddingRight="12dp"
                     />
 
@@ -252,23 +245,24 @@
                 android:id="@+id/sysLay"
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="66dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_ffffff_8dp"
                 android:paddingLeft="10dp"
                 android:orientation="horizontal">
                 <RelativeLayout
-                    android:layout_width="70dp"
+                    android:layout_width="50dp"
                     android:layout_gravity="center"
-                    android:layout_height="70dp">
+                    android:layout_height="50dp">
 
                     <ImageView
                         android:layout_centerInParent="true"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:src="@drawable/icon_bg_msg_system" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/img3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -294,13 +288,10 @@
                         android:layout_height="wrap_content"
                         android:text="系统通知"
                         android:textColor="#ff333333"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                       />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+
 
                     <TextView
                         android:id="@+id/tv3"
@@ -317,7 +308,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/notice_right"
+                    android:src="@drawable/msg_right"
                     android:paddingRight="12dp"
                     />
 
@@ -327,23 +318,24 @@
                 android:id="@+id/feedbackLay"
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="66dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_ffffff_8dp"
                 android:paddingLeft="10dp"
                 android:orientation="horizontal">
                 <RelativeLayout
-                    android:layout_width="70dp"
+                    android:layout_width="50dp"
                     android:layout_gravity="center"
-                    android:layout_height="70dp">
+                    android:layout_height="50dp">
 
                     <ImageView
                         android:layout_centerInParent="true"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:src="@drawable/icon_bg_msg_feedback" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/img4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -369,13 +361,10 @@
                         android:layout_height="wrap_content"
                         android:text="反馈回复"
                         android:textColor="#ff333333"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                          />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+
 
                     <TextView
                         android:id="@+id/tv4"
@@ -392,7 +381,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/notice_right"
+                    android:src="@drawable/msg_right"
                     android:paddingRight="12dp"
                     />
 
@@ -402,23 +391,24 @@
                 android:id="@+id/activity_huo"
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="66dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_ffffff_8dp"
                 android:paddingLeft="10dp"
                 android:orientation="horizontal">
                 <RelativeLayout
-                    android:layout_width="70dp"
+                    android:layout_width="50dp"
                     android:layout_gravity="center"
-                    android:layout_height="70dp">
+                    android:layout_height="50dp">
 
                     <ImageView
                         android:layout_centerInParent="true"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:src="@drawable/icon_bg_msg_activity" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/img5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -444,13 +434,10 @@
                         android:layout_height="wrap_content"
                         android:text="活动公告"
                         android:textColor="#ff333333"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+
 
                     <TextView
                         android:id="@+id/tv5"
@@ -467,7 +454,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/notice_right"
+                    android:src="@drawable/msg_right"
                     android:paddingRight="12dp"
                     />
 
@@ -476,23 +463,24 @@
                 android:id="@+id/activity_day"
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="66dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_ffffff_8dp"
                 android:paddingLeft="10dp"
                 android:orientation="horizontal">
                 <RelativeLayout
-                    android:layout_width="70dp"
+                    android:layout_width="50dp"
                     android:layout_gravity="center"
-                    android:layout_height="70dp">
+                    android:layout_height="50dp">
 
                     <ImageView
                         android:layout_centerInParent="true"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:src="@mipmap/day_haohuo" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/img6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -518,13 +506,9 @@
                         android:layout_height="wrap_content"
                         android:text="每日好货"
                         android:textColor="#ff333333"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/tv6"
@@ -541,7 +525,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/notice_right"
+                    android:src="@drawable/msg_right"
                     android:paddingRight="12dp"
                     />
 
