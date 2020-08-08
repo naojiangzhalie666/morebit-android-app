@@ -25,7 +25,7 @@ import butterknife.OnClick;
 
 
 /**
- * 首页分类-热门排行
+ * 好单预告
  */
 public class ForeshowFragment extends BaseMainFragmeng {
     @BindView(R.id.xTablayout)

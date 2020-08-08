@@ -133,11 +133,7 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
         });
 
 
-        if (mDatas.size() - 1 == position && mDatas.size() != 0) {
-            viewHolder.line.setVisibility(View.GONE);
-        } else {
-            viewHolder.line.setVisibility(View.VISIBLE);
-        }
+
 
 
         if (C.GoodsListType.ForeShow_1 == mType) {//即将开抢
@@ -175,7 +171,7 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
         LinearLayout return_cash;
         RelativeLayout toDetail, img_rl;
         ImageView select_tag, video_play;
-        View iv_icon_bg, ll_prise, line;
+        View iv_icon_bg, ll_prise;
         ImageView checkBox, good_mall_tag;
         private TextView markTv;
         private TextView tv_qiang2;
@@ -195,7 +191,6 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
             select_tag = (ImageView) itemView.findViewById(R.id.select_tag);
             video_play = (ImageView) itemView.findViewById(R.id.video_play);
             iv_icon_bg = (View) itemView.findViewById(R.id.iv_icon_bg);
-            line = itemView.findViewById(R.id.line);
             tv_qiang2 = itemView.findViewById(R.id.tv_qiang2);
 
         }
