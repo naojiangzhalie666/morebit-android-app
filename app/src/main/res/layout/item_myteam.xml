@@ -133,7 +133,7 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:textColor="#ff999999"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginRight="12dp"
                     android:textSize="14sp"
                     />
             </RelativeLayout>
@@ -162,13 +162,13 @@
             android:id="@+id/people_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="6dp"
             android:gravity="center"
             android:drawablePadding="4dp"
             android:layout_marginTop="12dp"
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/icon_fans_arrow"
-            android:includeFontPadding="false"
+
             android:singleLine="true"
             android:text="粉丝数"
             android:textColor="@color/color_333333"

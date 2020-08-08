@@ -104,7 +104,6 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 
         if (!TextUtils.isEmpty(info.getCommission())){
             holder.tv_fanyong.setText("返还 "+info.getCommission()+"元");
-            holder.tv_fanyong.getPaint().setFakeBoldText(true);
         }
 
         int  status = Integer.parseInt(info.getStatus());

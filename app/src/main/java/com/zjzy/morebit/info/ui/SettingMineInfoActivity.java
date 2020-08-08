@@ -114,6 +114,7 @@ public class SettingMineInfoActivity extends BaseActivity {
     private TimePickerView mPvTime;
     private OptionsPickerView<String> mPvCustomOptions;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +125,6 @@ public class SettingMineInfoActivity extends BaseActivity {
             ActivityStyleUtil.initSystemBar(this, R.color.color_757575); //设置标题栏颜色值
         }
         EventBus.getDefault().register(this);
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle("账户安全");
         initView();
         initData();
     }
@@ -162,9 +162,12 @@ public class SettingMineInfoActivity extends BaseActivity {
 
 
     @OnClick({R.id.rl_head, R.id.rl_nickname, R.id.rl_sex, R.id.rl_age,R.id.item_account_destroy,R.id.item3_rl,R.id.item4_rl,
-            R.id.my_goods_address,R.id.item8_rl,R.id.modify_password,R.id.modify_phone_num})
+            R.id.my_goods_address,R.id.item8_rl,R.id.modify_password,R.id.modify_phone_num,R.id.btn_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btn_back:
+                finish();
+                break;
             case R.id.rl_head:
                 ReadImgUtils.callPermissionOfEnableCrop(this);
                 break;

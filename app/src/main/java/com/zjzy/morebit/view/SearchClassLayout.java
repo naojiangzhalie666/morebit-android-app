@@ -210,15 +210,12 @@ public class SearchClassLayout extends LinearLayout implements View.OnClickListe
                 Log.e("sdfsfsf"," 4"+search_et.getText().toString());
                 if (TextUtils.isEmpty(search_et.getText().toString().trim())) {
                     ViewShowUtils.showShortToast(mContext,"请输入搜索内容");
-                    Log.e("sdfsfsf","7");
                     search_et.requestFocus();
                     return;
                 } else {
-                    ViewShowUtils.showShortToast(mContext,"请输入搜索内容"+search_et.getText().toString());
                     if(null != onClickSearchListener){
                         onClickSearchListener.onClick(search_et.getText().toString());
                     }
-                    Log.e("sdfsfsf","进来了4");
                     addSearchText(search_et.getText().toString());
                 }
                 break;

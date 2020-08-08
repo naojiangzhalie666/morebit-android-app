@@ -1,55 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_F5F5F5">
-    <com.zjzy.morebit.Module.common.View.ReUseListView
-        android:id="@+id/mListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         />
+        android:background="@color/color_F0F1F5">
+
+        <com.zjzy.morebit.Module.common.View.ReUseListView
+            android:id="@+id/mListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <LinearLayout
             android:id="@+id/dateNullView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+
             android:gravity="center"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/dateNullView_clickbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/image_meiyousousuojilu"/>
+                    android:background="@drawable/search_no" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="很抱歉，没找到相关内容~"
+                    android:text="很抱歉，暂无相关数据哦~"
                     android:textColor="@color/color_8B8B8B"
-                    android:textSize="15sp"/>
+                    android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/dateNullView_tips_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-
-                    android:text="立即去推荐好友吧"
-                    android:textColor="@color/color_8B8B8B"
-                    android:textSize="13sp"/>
             </LinearLayout>
-        </LinearLayout></FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

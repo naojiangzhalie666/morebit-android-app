@@ -574,40 +574,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     tv_title3.setTextColor(Color.parseColor("#FFFFFF"));
                     tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
                 }
-                icon_pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        super.onPageScrollStateChanged(state);
-                        if (state == 1) {
-                        //    swipeRefreshLayout.setEnabled(false);//设置不可触发
-                        } else if (state == 2 && canRefresh) {
-                         //   swipeRefreshLayout.setEnabled(true);//设置可触发
-                        }
-                    }
-                });
 
 
 
-                banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                    }
 
-                    @Override
-                    public void onPageSelected(int position) {
-
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        if (state == 1) {
-                          //  swipeRefreshLayout.setEnabled(false);//设置不可触发
-                        } else if (state == 2 && canRefresh) {
-                          //  swipeRefreshLayout.setEnabled(true);//设置可触发
-                        }
-                    }
-                });
                 icon_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -629,32 +600,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                         MyLog.d("addOnPageChangeListener", " onPageScrollStateChanged  state = " + state);
                     }
                 });
-                litmited_pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        super.onPageScrollStateChanged(state);
-                        if (state == 1) {
-                           // swipeRefreshLayout.setEnabled(false);//设置不可触发
-                        } else if (state == 2 && canRefresh) {
-                            //swipeRefreshLayout.setEnabled(true);//设置可触发
-                        }
-                    }
-                });
 
 
 
 
-                mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        super.onPageScrollStateChanged(state);
-                        if (state == 1) {
-                          //  swipeRefreshLayout.setEnabled(false);//设置不可触发
-                        } else if (state == 2 && canRefresh) {
-                          //  swipeRefreshLayout.setEnabled(true);//设置可触发
-                        }
-                    }
-                });
+
+
                 mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -679,11 +630,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == 1) {
-                   // swipeRefreshLayout.setEnabled(false);//设置不可触发
-                } else if (state == 2 && canRefresh) {
-                  //  swipeRefreshLayout.setEnabled(true);//设置可触发
-                }
             }
         });
 
@@ -709,15 +655,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             public void onScrollChange(View v, int scrollY, int oldScrollY, int scrollState) {
 
                 int ownScrollY = sroller.getOwnScrollY();
-                Log.e("hhhh",scrollState+"");
-                if (scroll <=0 ) {
-                  //  swipeRefreshLayout.setEnabled(true);//设置可触发
-
-                } else{
-                    scroll = ownScrollY;
-                  //  swipeRefreshLayout.setEnabled(false);
-                }
-
                 if (scroll == ownScrollY) {
                     showShareImage();
                 } else {

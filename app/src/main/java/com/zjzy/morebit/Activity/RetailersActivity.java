@@ -209,7 +209,7 @@ public class RetailersActivity extends BaseActivity implements View.OnClickListe
             //对他进行编译
             mPopupWindow.showAsDropDown(view, 0, 0, Gravity.BOTTOM);
         }
-        backgroundAlpha(0.5f);
+        backgroundAlpha(0.2f);
         //对popupWindow进行显示
         mPopupWindow.update();
 

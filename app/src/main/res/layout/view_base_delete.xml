@@ -20,15 +20,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="20dp"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@android:id/checkbox"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/selector_checkbox"
                 tools:layout_height="wrap_content"
                 tools:layout_width="wrap_content"/>
@@ -39,8 +39,8 @@
                 android:layout_marginLeft="9dp"
                 android:background="@color/white"
                 android:text="全选"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/sp_14"/>
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_16"/>
         </LinearLayout>
 
         <TextView

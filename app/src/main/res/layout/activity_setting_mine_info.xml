@@ -6,7 +6,37 @@
     android:background="@color/color_F0F1F5"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar_actionbar_no_shadow"/>
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        style="@style/TopSize">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_head_title"
+            android:textSize="18sp"
+            android:textColor="@color/color_333333"
+            android:layout_centerInParent="true"
+            android:text="账户安全" />
+
+        <LinearLayout
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingTop="10dp"
+            android:paddingRight="35dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:src="@drawable/btn_title_return_icon"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
     <RelativeLayout
         android:layout_marginTop="12dp"
         android:id="@+id/modify_phone_num"
@@ -22,7 +52,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:text="手机号"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp" />
@@ -73,7 +103,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:text="@string/modify_password"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp" />
@@ -124,7 +154,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:text="支付宝绑定"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp" />
@@ -179,7 +209,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:text="我的地址"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp" />
@@ -221,7 +251,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:text="用户协议"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp" />
@@ -257,7 +287,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:text="隐私协议"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp" />
@@ -292,7 +322,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp"
                 android:text="用户注销" />

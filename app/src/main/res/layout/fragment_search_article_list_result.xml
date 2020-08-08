@@ -83,7 +83,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/input_text_delete_icon"
+                android:background="@drawable/input_search_text_delete_icon"
                 android:visibility="invisible"/>
         </RelativeLayout>
 

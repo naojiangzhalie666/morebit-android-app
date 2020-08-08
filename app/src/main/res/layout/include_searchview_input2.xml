@@ -37,7 +37,6 @@
             android:layout_marginLeft="15dp"
             android:gravity="center"
             android:text="搜索"
-            android:textStyle="bold"
             android:textColor="@color/color_F05557"
             android:textSize="18sp"
             />
