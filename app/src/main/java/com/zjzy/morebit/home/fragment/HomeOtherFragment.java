@@ -10,12 +10,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.DataSetObserver;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.renderscript.ScriptC;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -64,6 +66,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Banner;
@@ -183,7 +186,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private View mView;
     private Banner banner;
     private AspectRatioView mAsTitleBanner;
-    private SwipeRefreshLayout swipeRefreshLayout;
+  //  private SwipeRefreshLayout swipeRefreshLayout;
     private List<String> title = new ArrayList<>();
 
     private List<IconFragment> mFragments = new ArrayList<>();
@@ -237,7 +240,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     View noLoginView, noaurthorView, nonewbuyView;
     private String ischeck;
     private RelativeLayout msg_rl;
-    private ConsecutiveScrollerLayout scrollerlayout;
+    private ConsecutiveScrollerLayout sroller;
     private boolean isTime=true;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
@@ -374,12 +377,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //        IntentFilter intentFilter = new IntentFilter();
 //        intentFilter.addAction("0");//名字
 //        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
-        scrollerlayout=mView.findViewById(R.id.scrollerlayout);
+
+        sroller=mView.findViewById(R.id.sroller);
         swipeList=mView.findViewById(R.id.swipeList);
         msg_rl = mView.findViewById(R.id.msg_rl);
         ll_new = mView.findViewById(R.id.ll_new);
         img_bao = mView.findViewById(R.id.img_bao);
-        swipeRefreshLayout = mView.findViewById(R.id.swipeRefreshLayout);
+     //   swipeRefreshLayout = mView.findViewById(R.id.swipeRefreshLayout);
         status_bar = mView.findViewById(R.id.status_bar);
         mViewPager = mView.findViewById(R.id.viewPager);
         xablayout = mView.findViewById(R.id.xablayout);
@@ -483,6 +487,10 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         }
         activity_rcy.setLayoutManager(manager6);
 
+
+
+
+
        // initTime(Long.parseLong(newtime));
 
 
@@ -571,9 +579,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     public void onPageScrollStateChanged(int state) {
                         super.onPageScrollStateChanged(state);
                         if (state == 1) {
-                            swipeRefreshLayout.setEnabled(false);//设置不可触发
+                        //    swipeRefreshLayout.setEnabled(false);//设置不可触发
                         } else if (state == 2 && canRefresh) {
-                            swipeRefreshLayout.setEnabled(true);//设置可触发
+                         //   swipeRefreshLayout.setEnabled(true);//设置可触发
                         }
                     }
                 });
@@ -594,9 +602,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     @Override
                     public void onPageScrollStateChanged(int state) {
                         if (state == 1) {
-                            swipeRefreshLayout.setEnabled(false);//设置不可触发
+                          //  swipeRefreshLayout.setEnabled(false);//设置不可触发
                         } else if (state == 2 && canRefresh) {
-                            swipeRefreshLayout.setEnabled(true);//设置可触发
+                          //  swipeRefreshLayout.setEnabled(true);//设置可触发
                         }
                     }
                 });
@@ -621,15 +629,29 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                         MyLog.d("addOnPageChangeListener", " onPageScrollStateChanged  state = " + state);
                     }
                 });
+                litmited_pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        super.onPageScrollStateChanged(state);
+                        if (state == 1) {
+                           // swipeRefreshLayout.setEnabled(false);//设置不可触发
+                        } else if (state == 2 && canRefresh) {
+                            //swipeRefreshLayout.setEnabled(true);//设置可触发
+                        }
+                    }
+                });
+
+
+
 
                 mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                     @Override
                     public void onPageScrollStateChanged(int state) {
                         super.onPageScrollStateChanged(state);
                         if (state == 1) {
-                            swipeRefreshLayout.setEnabled(false);//设置不可触发
+                          //  swipeRefreshLayout.setEnabled(false);//设置不可触发
                         } else if (state == 2 && canRefresh) {
-                            swipeRefreshLayout.setEnabled(true);//设置可触发
+                          //  swipeRefreshLayout.setEnabled(true);//设置可触发
                         }
                     }
                 });
@@ -658,9 +680,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (state == 1) {
-                    swipeRefreshLayout.setEnabled(false);//设置不可触发
+                   // swipeRefreshLayout.setEnabled(false);//设置不可触发
                 } else if (state == 2 && canRefresh) {
-                    swipeRefreshLayout.setEnabled(true);//设置可触发
+                  //  swipeRefreshLayout.setEnabled(true);//设置可触发
                 }
             }
         });
@@ -668,10 +690,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
 
 
-        scrollerlayout.setOnPermanentStickyChangeListener(new ConsecutiveScrollerLayout.OnPermanentStickyChangeListener() {
+
+
+        sroller.setOnPermanentStickyChangeListener(new ConsecutiveScrollerLayout.OnPermanentStickyChangeListener() {
             @Override
             public void onStickyChange(@NonNull List<View> mCurrentStickyViews) {//监听tablayout背景颜色
-                if (mCurrentStickyViews.size()<3){
+                Log.e("lllll",mCurrentStickyViews.size()+"");
+                if (mCurrentStickyViews.size()==0){
                     xablayout.setBackgroundColor(Color.parseColor("#F8F8F8"));
                 }else{
                     xablayout.setBackgroundColor(Color.WHITE);
@@ -679,18 +704,18 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             }
         });
 
-        scrollerlayout.setOnVerticalScrollChangeListener(new ConsecutiveScrollerLayout.OnScrollChangeListener() {
+        sroller.setOnVerticalScrollChangeListener(new ConsecutiveScrollerLayout.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollY, int oldScrollY, int scrollState) {
 
-                int ownScrollY = scrollerlayout.getOwnScrollY();
+                int ownScrollY = sroller.getOwnScrollY();
                 Log.e("hhhh",scrollState+"");
                 if (scroll <=0 ) {
-                    swipeRefreshLayout.setEnabled(true);//设置可触发
+                  //  swipeRefreshLayout.setEnabled(true);//设置可触发
 
                 } else{
                     scroll = ownScrollY;
-                    swipeRefreshLayout.setEnabled(false);
+                  //  swipeRefreshLayout.setEnabled(false);
                 }
 
                 if (scroll == ownScrollY) {
@@ -702,6 +727,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             }
         });
 
+
+
     }
 
     @Override
@@ -709,6 +736,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         super.onResume();
         getLoginView();
         getNotice();
+
 
         if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuide() && !isShowGuide) {
             isShowGuide = true;
@@ -747,29 +775,38 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
     private void initRefresh() {
-        swipeRefreshLayout.setEnabled(true);
-        swipeRefreshLayout.setNestedScrollingEnabled(true);
-        //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
-        swipeRefreshLayout.setProgressViewOffset(true, -0, 100);
-        //设置进度View下拉的结束点，scale 是指设置是否需要放大或者缩小动画
-        swipeRefreshLayout.setProgressViewEndTarget(true, 180);
-        //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
-        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
-        //设置触发刷新的距离
-        swipeRefreshLayout.setDistanceToTriggerSync(200);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+//        swipeRefreshLayout.setEnabled(true);
+//        swipeRefreshLayout.setNestedScrollingEnabled(true);
+//        //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
+//        swipeRefreshLayout.setProgressViewOffset(true, -0, 100);
+//        //设置进度View下拉的结束点，scale 是指设置是否需要放大或者缩小动画
+//        swipeRefreshLayout.setProgressViewEndTarget(true, 180);
+//        //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
+//        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
+//        //设置触发刷新的距离
+//        swipeRefreshLayout.setDistanceToTriggerSync(200);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+//                refreshData();
+//                initData();
+//                initBanner();
+//                swipeRefreshLayout.setRefreshing(false);
+//
+//            }
+//        });
 
+        swipeList.setEnableRefresh(true);
+        swipeList.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshData();
                 initData();
                 initBanner();
-                swipeRefreshLayout.setRefreshing(false);
-
+                swipeList.finishRefresh();
             }
         });
-
-        swipeList.setEnableRefresh(false);
 
         swipeList.setEnableLoadMore(true);
 
@@ -777,7 +814,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             @Override
             public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
                 // 上拉加载时，保证吸顶头部不被推出屏幕。
-                scrollerlayout.setStickyOffset(offset);
+                sroller.setStickyOffset(offset);
             }
         });
 
