@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * Created by haipingliu on 2019/12/25.
  */
 
-public class OrderDetailFragment extends BaseFragment {
+public class  OrderDetailFragment extends BaseFragment {
 
     @BindView(R.id.xTablayout)
     SlidingTabLayout mTablayout;

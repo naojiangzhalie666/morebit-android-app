@@ -236,6 +236,7 @@
                         />
                 </RelativeLayout>
                 <TextView
+
                     android:id="@+id/ship_goods_tv"
                     android:layout_width="@dimen/dp_72"
                     android:layout_height="24dp"
@@ -250,7 +251,7 @@
                     android:textColor="@color/color_333333"
                     android:textSize="11sp"
                     android:text="查看物流"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     />
 <!--                </LinearLayout>-->
 
