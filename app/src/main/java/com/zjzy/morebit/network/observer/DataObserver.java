@@ -89,14 +89,14 @@ public abstract class DataObserver<T> extends BaseDataObserver<T> {
                 }
                 break;
             case C.requestCode.B10019://账号异常去登陆
-                if (isShowError && !TextUtils.isEmpty(data.getMsg())) {
-                   // ViewShowUtils.showShortToast(App.getAppContext(), data.getMsg());
-                }
-                if (!ActivityLifeHelper.getInstance().isContainsActivity(LoginSinglePaneActivity.class)) {
-                    if (!AppUtil.isFastClick(100)) {
-                        LoginUtil.logout(true);
-                    }
-                }
+//                if (isShowError && !TextUtils.isEmpty(data.getMsg())) {
+//                   // ViewShowUtils.showShortToast(App.getAppContext(), data.getMsg());
+//                }
+//                if (!ActivityLifeHelper.getInstance().isContainsActivity(LoginSinglePaneActivity.class)) {
+//                    if (!AppUtil.isFastClick(100)) {
+//                        LoginUtil.logout(true);
+//                    }
+//                }
                 break;
 
             case C.requestCode.B10035://  不存在的邀请码

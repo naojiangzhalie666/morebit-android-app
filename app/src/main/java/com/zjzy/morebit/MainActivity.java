@@ -867,11 +867,11 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 setSysNotificationView();
                 break;
             case R.id.rl_number:
-                img_vip.setVisibility(View.VISIBLE);
-                iv_number.setVisibility(View.INVISIBLE);
                 if (!LoginUtil.checkIsLogin(MainActivity.this)) {
                     return;
                 }
+                img_vip.setVisibility(View.VISIBLE);
+                iv_number.setVisibility(View.INVISIBLE);
                 //会员
                 mViewPager.setCurrentItem(2, false);
                 curPosition = C.mainPage.NUMBER;

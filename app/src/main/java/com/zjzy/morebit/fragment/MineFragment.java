@@ -306,7 +306,7 @@ public class MineFragment extends BaseMainFragmeng {
         super.setUserVisibleHint(isVisibleToUser);
         MyLog.d("setUserVisibleHint", "CircleFragment  " + isVisibleToUser);
         if (isVisibleToUser && isUserHint && mView != null) {
-          //  refreshData();
+          refreshData();
             isUserHint = false;
         }
         MyLog.i("test", "isLogin: " + isLogin);
@@ -495,7 +495,7 @@ public class MineFragment extends BaseMainFragmeng {
         getBannerData(C.UIShowType.Personal);   //个人轮播
         getBannerData(C.UIShowType.myTool);   //福利津贴
         getBannerData(C.UIShowType.PERSONAL_FUNCTION);   //功能区
-//        getMonthIncome();
+        getMonthIncome();
         mSwipeList.setRefreshing(false);
 
     }
