@@ -39,6 +39,7 @@ import com.zjzy.morebit.Module.common.Dialog.InterIconDialog;
 import com.zjzy.morebit.Module.common.Dialog.UpgradeUserDialog;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
 import com.zjzy.morebit.Module.common.Dialog.WxBindDialog;
+import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ToolsAdapter2;
@@ -105,6 +106,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
+
+import static org.greenrobot.eventbus.EventBus.*;
 
 /**
  * Created by YangBoTian on 2018/9/10.
@@ -211,9 +214,6 @@ public class MineFragment extends BaseMainFragmeng {
     RecyclerView rcy_tools;
 
 
-
-
-
     // ToolsAdapter mAdapter;
     private LinearLayout my_little;
     PersonFunctionAdapter mPersonFunctionAdapter;
@@ -241,10 +241,10 @@ public class MineFragment extends BaseMainFragmeng {
     private TextView tv_mine;
     private String newUrl, customerUrl;
     private LinearLayout ll_myhead;
-    private   RelativeLayout rl_myhead;
+    private RelativeLayout rl_myhead;
     private ImageView img_yu;
-    private    String balance;
-    private   ToolsAdapter2 adapter2;
+    private String balance;
+    private ToolsAdapter2 adapter2;
     private LinearLayout ll_tools;
     private View view;
 
@@ -252,7 +252,7 @@ public class MineFragment extends BaseMainFragmeng {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+        getDefault().register(this);
         mInfoModel = new InfoModel();
     }
 
@@ -267,10 +267,10 @@ public class MineFragment extends BaseMainFragmeng {
         my_little = mView.findViewById(R.id.my_little);
         tab_title = mView.findViewById(R.id.tab_title);
         tv_mine = mView.findViewById(R.id.tv_mine);
-        ll_myhead=mView.findViewById(R.id.ll_myhead);
-        rl_myhead=mView.findViewById(R.id.rl_myhead);
-        ll_tools=mView.findViewById(R.id.ll_tools);
-        view=mView.findViewById(R.id.view);
+        ll_myhead = mView.findViewById(R.id.ll_myhead);
+        rl_myhead = mView.findViewById(R.id.rl_myhead);
+        ll_tools = mView.findViewById(R.id.ll_tools);
+        view = mView.findViewById(R.id.view);
         return mView;
     }
 
@@ -306,15 +306,14 @@ public class MineFragment extends BaseMainFragmeng {
         super.setUserVisibleHint(isVisibleToUser);
         MyLog.d("setUserVisibleHint", "CircleFragment  " + isVisibleToUser);
         if (isVisibleToUser && isUserHint && mView != null) {
-            refreshData();
+          //  refreshData();
             isUserHint = false;
         }
         MyLog.i("test", "isLogin: " + isLogin);
-        if (isVisibleToUser && isLogin) {
-            MyLog.i("test1", "isLogin: " + isLogin);
-            isLogin = false;
-            openUpgradeUserDialog();
-        }
+//        if (isVisibleToUser) {
+//            MyLog.i("test1", "isLogin: " + isLogin);
+//            openUpgradeUserDialog();
+//        }
 
     }
 
@@ -364,17 +363,11 @@ public class MineFragment extends BaseMainFragmeng {
 
 
         //必备工具
-        adapter2=new ToolsAdapter2(getActivity());
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),4);
+        adapter2 = new ToolsAdapter2(getActivity());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         rcy_tools.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 6)));
         rcy_tools.setLayoutManager(gridLayoutManager);
         rcy_tools.setAdapter(adapter2);
-
-
-
-
-
-
 
 
     }
@@ -393,7 +386,7 @@ public class MineFragment extends BaseMainFragmeng {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        getDefault().unregister(this);
     }
 
     private void initViewData(UserInfo info) {
@@ -479,6 +472,7 @@ public class MineFragment extends BaseMainFragmeng {
             rl_myhead.setVisibility(View.VISIBLE);
         }
 
+
         LoginUtil.getUserInfo((RxAppCompatActivity) getActivity(), false, new MyAction.OnResultFinally<UserInfo>() {
 
 
@@ -489,8 +483,8 @@ public class MineFragment extends BaseMainFragmeng {
 
             @Override
             public void invoke(UserInfo arg) {
-              updataUser();
 
+                updataUser();
             }
 
             @Override
@@ -501,7 +495,7 @@ public class MineFragment extends BaseMainFragmeng {
         getBannerData(C.UIShowType.Personal);   //个人轮播
         getBannerData(C.UIShowType.myTool);   //福利津贴
         getBannerData(C.UIShowType.PERSONAL_FUNCTION);   //功能区
-        getMonthIncome();
+//        getMonthIncome();
         mSwipeList.setRefreshing(false);
 
     }
@@ -522,175 +516,175 @@ public class MineFragment extends BaseMainFragmeng {
             R.id.tv_withdraw, R.id.ll_earnings, R.id.userIcon, R.id.offen_question, R.id.order_search,
             R.id.my_footmarker, R.id.my_favorite, R.id.my_little, R.id.user_agreemen, R.id.privacy_agreement,
             R.id.ll_new, R.id.ll_coustom, R.id.ll_jian, R.id.tv_wx, R.id.img_right, R.id.ll_dragon, R.id.img_yu,
-            R.id.tv4,R.id.ll_myhead})
+            R.id.tv4, R.id.ll_myhead})
     public void onClick(View v) {
-        if (LoginUtil.checkIsLogin(getActivity())){
+        if (LoginUtil.checkIsLogin(getActivity())) {
 
 
-        switch (v.getId()) {
-            case R.id.ll_myhead:
+            switch (v.getId()) {
+                case R.id.ll_myhead:
 
-                break;
-            case R.id.copy_invitation_code: //复制邀请码
+                    break;
+                case R.id.copy_invitation_code: //复制邀请码
 
-                AppUtil.coayText(getActivity(), UserLocalData.getUser(getActivity()).getInviteCode());
-                Toast.makeText(getActivity(), "已复制到粘贴版", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.my_earnings: //我的收益
-            case R.id.ll_earnings:
-            case R.id.tv_y:
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), EarningsFragment.class.getName(), bundle);
+                    AppUtil.coayText(getActivity(), UserLocalData.getUser(getActivity()).getInviteCode());
+                    Toast.makeText(getActivity(), "已复制到粘贴版", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.my_earnings: //我的收益
+                case R.id.ll_earnings:
+                case R.id.tv_y:
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
+                    OpenFragmentUtils.goToSimpleFragment(getActivity(), EarningsFragment.class.getName(), bundle);
 
-                break;
-            case R.id.my_team:  //我的粉丝
-                Bundle bundle2 = new Bundle();
-                bundle2.putBoolean(C.Extras.openFragment_isSysBar, true);
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), FansListFragment.class.getName(), bundle2);
-                //FansActivity.start(getActivity());
-                FansListFragment.newInstance();
-                break;
-            case R.id.order_detail:   //订单明细
-                Intent intent = new Intent(getActivity(), MyOrderActivity.class);
-                intent.putExtra(C.Extras.SEARCHINFO, mLocalData.get("2"));
-                startActivity(intent);
-                //OrderTeamActivity.start(getActivity());
-                break;
-            case R.id.share_friends:   //分享好友
-                startActivity(new Intent(getActivity(), InvateActivity.class));
-                break;
-            case R.id.offen_question:
-                ImageInfo question = new ImageInfo();
-                question.setOpen(3);//打开外部链接。
-                question.setUrl("https://helper.morebit.com.cn/#/question");
-                BannerInitiateUtils.gotoAction(getActivity(), question);
+                    break;
+                case R.id.my_team:  //我的粉丝
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putBoolean(C.Extras.openFragment_isSysBar, true);
+                    OpenFragmentUtils.goToSimpleFragment(getActivity(), FansListFragment.class.getName(), bundle2);
+                    //FansActivity.start(getActivity());
+                    FansListFragment.newInstance();
+                    break;
+                case R.id.order_detail:   //订单明细
+                    Intent intent = new Intent(getActivity(), MyOrderActivity.class);
+                    intent.putExtra(C.Extras.SEARCHINFO, mLocalData.get("2"));
+                    startActivity(intent);
+                    //OrderTeamActivity.start(getActivity());
+                    break;
+                case R.id.share_friends:   //分享好友
+                    startActivity(new Intent(getActivity(), InvateActivity.class));
+                    break;
+                case R.id.offen_question:
+                    ImageInfo question = new ImageInfo();
+                    question.setOpen(3);//打开外部链接。
+                    question.setUrl("https://helper.morebit.com.cn/#/question");
+                    BannerInitiateUtils.gotoAction(getActivity(), question);
 
-                break;
-            case R.id.order_search:
-                ImageInfo orderSearch = mLocalData.get("2");
-                if (orderSearch == null) {
-                    //  ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
-                    ImageInfo orderSearch2 = new ImageInfo();
-                    orderSearch2.setOpen(3);
-                    orderSearch2.setUrl("https://helper.morebit.com.cn/#/search");
-                    orderSearch2.setSubTitle("找回订单");
-                    orderSearch2.setTitle("订单查询");
-                    orderSearch2.setSort(2);
-                    BannerInitiateUtils.gotoAction(getActivity(), orderSearch2);
-                } else {
-                    BannerInitiateUtils.gotoAction(getActivity(), orderSearch);
-                }
+                    break;
+                case R.id.order_search:
+                    ImageInfo orderSearch = mLocalData.get("2");
+                    if (orderSearch == null) {
+                        //  ViewShowUtils.showShortToast(getActivity(),"没有订单查询权限");
+                        ImageInfo orderSearch2 = new ImageInfo();
+                        orderSearch2.setOpen(3);
+                        orderSearch2.setUrl("https://helper.morebit.com.cn/#/search");
+                        orderSearch2.setSubTitle("找回订单");
+                        orderSearch2.setTitle("订单查询");
+                        orderSearch2.setSort(2);
+                        BannerInitiateUtils.gotoAction(getActivity(), orderSearch2);
+                    } else {
+                        BannerInitiateUtils.gotoAction(getActivity(), orderSearch);
+                    }
 
-                break;
-            case R.id.my_footmarker://足迹
-                GoodsBrowsingHistoryActivity.start(getActivity());
-                break;
-            case R.id.my_favorite://收藏
-                OpenFragmentUtils.goToSimpleFragment(getActivity(), CollectFragment2.class.getName(), null);
-                break;
-            case R.id.iv_wenhao:
-                UserInfo usInfo = UserLocalData.getUser(getActivity());
-                if (!TextUtils.isEmpty(usInfo.getProblemUrl())){
-                    ShowWebActivity.start(getActivity(),usInfo.getProblemUrl(),"常见问题");
-                }
-              //  openDialog("累计收益说明", "累计收益=已提现金额+余额");
-                break;
-            case R.id.tv_withdraw: //提现
+                    break;
+                case R.id.my_footmarker://足迹
+                    GoodsBrowsingHistoryActivity.start(getActivity());
+                    break;
+                case R.id.my_favorite://收藏
+                    OpenFragmentUtils.goToSimpleFragment(getActivity(), CollectFragment2.class.getName(), null);
+                    break;
+                case R.id.iv_wenhao:
+                    UserInfo usInfo = UserLocalData.getUser(getActivity());
+                    if (!TextUtils.isEmpty(usInfo.getProblemUrl())) {
+                        ShowWebActivity.start(getActivity(), usInfo.getProblemUrl(), "常见问题");
+                    }
+                    //  openDialog("累计收益说明", "累计收益=已提现金额+余额");
+                    break;
+                case R.id.tv_withdraw: //提现
 
-                mInfoModel.checkWithdrawTime(this)
-                        .subscribe(new DataObserver<String>(false) {
-                            @Override
-                            protected void onSuccess(String data) {
-                                UserInfo info = UserLocalData.getUser(getActivity());
-                                if (TextUtils.isEmpty(balance)) {
-                                      balance  = "0";
-                                }
-                                if (Double.parseDouble(balance) < 1) {
-                                    ViewShowUtils.showShortToast(getActivity(), "不足1元，无法提现");
-                                } else {
-                                    if (TaobaoUtil.isAuth()) {   //淘宝授权
-                                        TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
-                                    } else {
-                                        if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
-                                            AppUtil.gotoCashMoney(getActivity(), balance);
-                                        } else {
-                                            PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
-                                            ToastUtils.showLong("请先绑定支付宝!");
-                                        }
-
+                    mInfoModel.checkWithdrawTime(this)
+                            .subscribe(new DataObserver<String>(false) {
+                                @Override
+                                protected void onSuccess(String data) {
+                                    UserInfo info = UserLocalData.getUser(getActivity());
+                                    if (TextUtils.isEmpty(balance)) {
+                                        balance = "0";
                                     }
+                                    if (Double.parseDouble(balance) < 1) {
+                                        ViewShowUtils.showShortToast(getActivity(), "不足1元，无法提现");
+                                    } else {
+                                        if (TaobaoUtil.isAuth()) {   //淘宝授权
+                                            TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
+                                        } else {
+                                            if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
+                                                AppUtil.gotoCashMoney(getActivity(), balance);
+                                            } else {
+                                                PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
+                                                ToastUtils.showLong("请先绑定支付宝!");
+                                            }
+
+                                        }
+                                    }
+
                                 }
 
-                            }
+                                @Override
+                                protected void onError(String errorMsg, String errCode) {
+                                    MyLog.i("test", "errCode: " + errCode);
+                                    double money = 0;
+                                    try {
+                                        money = Double.parseDouble(balance);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
 
-                            @Override
-                            protected void onError(String errorMsg, String errCode) {
-                                MyLog.i("test", "errCode: " + errCode);
-                                double money = 0;
-                                try {
-                                    money = Double.parseDouble(balance);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                    if (C.requestCode.B10301.equals(errCode)) {//因为成功的话data会为空，所以判断下
+                                        ToastUtils.showLong("提现时间为每月25,26,27,28,29,30,31号");
+                                    }
+
                                 }
+                            });
 
-                                if (C.requestCode.B10301.equals(errCode)) {//因为成功的话data会为空，所以判断下
-                                    ToastUtils.showLong("提现时间为每月25,26,27,28,29,30,31号");
-                                }
+                    break;
+                case R.id.my_little://小程序入口
 
-                            }
-                        });
+                    break;
+                case R.id.user_agreemen://用户协议
+                    LoginUtil.getUserProtocol((RxAppCompatActivity) getActivity());
+                    break;
+                case R.id.privacy_agreement://隐私
+                    LoginUtil.getPrivateProtocol((RxAppCompatActivity) getActivity());
+                    break;
+                case R.id.ll_new://新手教程
+                    if (!TextUtils.isEmpty(newUrl)) {
+                        ShowWebActivity.start(getActivity(), newUrl, "新手教程");
+                    }
 
-                break;
-            case R.id.my_little://小程序入口
+                    break;
+                case R.id.ll_coustom://客服中心
+                    if (!TextUtils.isEmpty(customerUrl)) {
+                        ShowWebActivity.start(getActivity(), customerUrl, "专属客服");
+                    }
+                    break;
+                case R.id.ll_jian://反馈建议
+                    Intent feedBackIt = new Intent(getActivity(), AppFeedActivity.class);
+                    Bundle feedBackBundle = new Bundle();
+                    feedBackBundle.putString("title", "意见反馈");
+                    feedBackBundle.putString("fragmentName", "AppFeedBackFragment");
+                    feedBackIt.putExtras(feedBackBundle);
+                    getActivity().startActivity(feedBackIt);
+                    break;
+                case R.id.userIcon:
+                case R.id.tv_wx:
+                case R.id.img_right:
+                    Intent in = new Intent(getActivity(), SettingActivity.class);
+                    startActivity(in);
+                    break;
+                case R.id.ll_dragon://粉丝龙虎榜
+                    startActivity(new Intent(getActivity(), FansDragonActivity.class));
+                    break;
+                case R.id.img_yu://积分弹框
+                    InterIconDialog iconDialog = new InterIconDialog(getActivity());
+                    iconDialog.show();
+                    break;
+                case R.id.tv4://升级页面
+                    GoodsUtil.getVipH5(getActivity());
+                    break;
 
-                break;
-            case R.id.user_agreemen://用户协议
-                LoginUtil.getUserProtocol((RxAppCompatActivity) getActivity());
-                break;
-            case R.id.privacy_agreement://隐私
-                LoginUtil.getPrivateProtocol((RxAppCompatActivity) getActivity());
-                break;
-            case R.id.ll_new://新手教程
-                if (!TextUtils.isEmpty(newUrl)) {
-                    ShowWebActivity.start(getActivity(), newUrl, "新手教程");
-                }
+                default:
+                    break;
 
-                break;
-            case R.id.ll_coustom://客服中心
-                if (!TextUtils.isEmpty(customerUrl)) {
-                    ShowWebActivity.start(getActivity(), customerUrl, "专属客服");
-                }
-                break;
-            case R.id.ll_jian://反馈建议
-                Intent feedBackIt = new Intent(getActivity(), AppFeedActivity.class);
-                Bundle feedBackBundle = new Bundle();
-                feedBackBundle.putString("title", "意见反馈");
-                feedBackBundle.putString("fragmentName", "AppFeedBackFragment");
-                feedBackIt.putExtras(feedBackBundle);
-                getActivity().startActivity(feedBackIt);
-                break;
-            case R.id.userIcon:
-            case R.id.tv_wx:
-            case R.id.img_right:
-                Intent in = new Intent(getActivity(), SettingActivity.class);
-                startActivity(in);
-                break;
-            case R.id.ll_dragon://粉丝龙虎榜
-                startActivity(new Intent(getActivity(), FansDragonActivity.class));
-                break;
-            case R.id.img_yu://积分弹框
-                InterIconDialog iconDialog = new InterIconDialog(getActivity());
-                iconDialog.show();
-                break;
-            case R.id.tv4://升级页面
-                GoodsUtil.getVipH5(getActivity());
-                break;
-
-            default:
-                break;
-
-        }
+            }
         }
     }
 
@@ -723,9 +717,9 @@ public class MineFragment extends BaseMainFragmeng {
 
                     @Override
                     protected void onDataNull() {
-                        if (C.UIShowType.Personal == back){
+                        if (C.UIShowType.Personal == back) {
                             mAsBanner.setVisibility(View.GONE);
-                        }else if (C.UIShowType.myTool == back){
+                        } else if (C.UIShowType.myTool == back) {
                             ll_tools.setVisibility(View.GONE);
                             view.setVisibility(View.GONE);
                         }
@@ -768,7 +762,7 @@ public class MineFragment extends BaseMainFragmeng {
     }
 
     private void setTool(List<ImageInfo> data) {
-        Log.e("sfsdfsdfsd",data.size()+"");
+        Log.e("sfsdfsdfsd", data.size() + "");
         for (int i = 0; i < data.size(); i++) {
             if ("专属客服".equals(data.get(i).getTitle())) {
                 customerUrl = data.get(i).getUrl();
@@ -777,11 +771,11 @@ public class MineFragment extends BaseMainFragmeng {
             }
         }
 
-        if (data!=null){
+        if (data != null) {
             ll_tools.setVisibility(View.VISIBLE);
             view.setVisibility(View.VISIBLE);
             adapter2.setData(data);
-        }else{
+        } else {
             ll_tools.setVisibility(View.GONE);
             view.setVisibility(View.GONE);
         }
@@ -819,7 +813,7 @@ public class MineFragment extends BaseMainFragmeng {
                 .setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        if (LoginUtil.checkIsLogin(getActivity())){
+                        if (LoginUtil.checkIsLogin(getActivity())) {
                             ImageInfo imageInfo = data.get(position);
 //                        SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(),imageInfo.getId()+"",imageInfo.getOpen()+"","我的",position,imageInfo.getClassId()+"",imageInfo.getUrl());
                             BannerInitiateUtils.gotoAction(getActivity(), imageInfo);

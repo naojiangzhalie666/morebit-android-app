@@ -892,7 +892,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 iv_number.setVisibility(View.VISIBLE);
                 mViewPager.setCurrentItem(4, false);
                 curPosition = C.mainPage.MINE;
-                setSysNotificationView();
+                 setSysNotificationView();
                 break;
 
             default:
