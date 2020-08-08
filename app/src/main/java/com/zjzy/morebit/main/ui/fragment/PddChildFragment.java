@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -75,7 +76,7 @@ public class PddChildFragment extends BaseMainFragmeng {
     @BindView(R.id.iv_right_search)
     ImageView iv_right_search;
 
-    boolean isUserHint =true;
+    boolean isUserHint = true;
     private View mView;
     private int mPushType;
     private ChannelAdapter mChannelAdapter;
@@ -86,6 +87,7 @@ public class PddChildFragment extends BaseMainFragmeng {
     private AppBarLayout mAppBarLt;
     private Banner banner;
     private AspectRatioView ar_title_banner;
+    private CoordinatorLayout super_header_cl;
 
     /**
      * 拼多多商品页面
@@ -144,11 +146,11 @@ public class PddChildFragment extends BaseMainFragmeng {
 
         }
 
-        banner=view.findViewById(R.id.banner);
-        ar_title_banner=view.findViewById(R.id.ar_title_banner);
+        banner = view.findViewById(R.id.banner);
+        ar_title_banner = view.findViewById(R.id.ar_title_banner);
 
-       // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
-      //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
+        // App.getACache().put(C.sp.PDD_CATEGORY, (ArrayList) initPddTitle());
+        //  List<PddJdTitleTypeItem> data = (List<PddJdTitleTypeItem>) App.getACache().getAsObject(C.sp.PDD_CATEGORY);
 
         RxHttp.getInstance().getCommonService().getPddTitle()//获取拼多多栏目
                 .compose(RxUtils.<BaseResponse<List<PddJdTitleTypeItem>>>switchSchedulers())
@@ -171,7 +173,6 @@ public class PddChildFragment extends BaseMainFragmeng {
                 });
 
 
-
         initBanner();
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,14 +184,14 @@ public class PddChildFragment extends BaseMainFragmeng {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
-                intent.putExtra(C.Extras.SEARCH_TYPE,1);
+                intent.putExtra(C.Extras.SEARCH_TYPE, 1);
                 startActivity(intent);
             }
         });
 
-
+        super_header_cl = view.findViewById(R.id.super_header_cl);
         mAppBarLt = view.findViewById(R.id.app_bar_lt);
-        swipeRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setEnabled(true);
         swipeRefreshLayout.setNestedScrollingEnabled(true);
         //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
@@ -273,19 +274,22 @@ public class PddChildFragment extends BaseMainFragmeng {
                     protected void onError(String errorMsg, String errCode) {
                         ar_title_banner.setVisibility(View.GONE);
                         swipeRefreshLayout.setRefreshing(false);
+                        super_header_cl.setVisibility(View.GONE);
                     }
 
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         swipeRefreshLayout.setRefreshing(false);
-                        Log.e("pdd",data+"");
-                        if (data!=null){
+                        Log.e("pdd", data + "");
+                        if (data != null) {
                             if (data != null && data.size() != 0) {
+                                super_header_cl.setVisibility(View.VISIBLE);
                                 BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner);
                             }
-                        } else{
-                                ar_title_banner.setVisibility(View.GONE);
-                            }
+                        } else {
+                            super_header_cl.setVisibility(View.GONE);
+                            ar_title_banner.setVisibility(View.GONE);
+                        }
                     }
                 });
     }
@@ -335,6 +339,7 @@ public class PddChildFragment extends BaseMainFragmeng {
             super(fm);
 
         }
+
         public void setHomeColumns(List<PddJdTitleTypeItem> homeColumns) {
             mHomeColumns.clear();
             if (homeColumns == null && homeColumns.size() == 0) {

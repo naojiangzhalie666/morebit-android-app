@@ -6,7 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -80,6 +83,8 @@ public class JdChildFragment extends BaseMainFragmeng {
     private AppBarLayout mAppBarLt;
     private Banner banner;
     private AspectRatioView ar_title_banner;
+    private CollapsingToolbarLayout  toolbar;
+    private CoordinatorLayout super_header_cl;
 
     /**
      * jd商品页面
@@ -158,6 +163,8 @@ public class JdChildFragment extends BaseMainFragmeng {
                 startActivity(intent);
             }
         });
+        super_header_cl=view.findViewById(R.id.super_header_cl);
+        toolbar=view.findViewById(R.id.toolbar);
         mAppBarLt = view.findViewById(R.id.app_bar_lt);
         banner = view.findViewById(R.id.banner);
         ar_title_banner=view.findViewById(R.id.ar_title_banner);
@@ -243,6 +250,8 @@ public class JdChildFragment extends BaseMainFragmeng {
                     protected void onError(String errorMsg, String errCode) {
                         ar_title_banner.setVisibility(View.GONE);
                         swipeRefreshLayout.setRefreshing(false);
+                        super_header_cl.setVisibility(View.GONE);
+
                     }
 
                     @Override
@@ -250,9 +259,12 @@ public class JdChildFragment extends BaseMainFragmeng {
                         swipeRefreshLayout.setRefreshing(false);
 
                             if (data != null && data.size() != 0) {
+                                super_header_cl.setVisibility(View.VISIBLE);
+                                ar_title_banner.setVisibility(View.VISIBLE);
                               BannerInitiateUtils.setJpBanner(getActivity(), data, banner, ar_title_banner);
                             }else{
                                 ar_title_banner.setVisibility(View.GONE);
+                                super_header_cl.setVisibility(View.GONE);
                             }
 
                         }
