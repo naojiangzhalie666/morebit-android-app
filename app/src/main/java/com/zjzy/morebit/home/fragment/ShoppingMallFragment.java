@@ -147,7 +147,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
             return;
         }
         if (page == 1) {
-            mAdapter.setData(list);
+            mAdapter.addData(list);
         } else {
             mAdapter.setData(list);
             swipeList.finishLoadMore();

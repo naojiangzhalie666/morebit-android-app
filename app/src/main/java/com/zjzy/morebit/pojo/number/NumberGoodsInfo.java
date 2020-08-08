@@ -42,6 +42,15 @@ public class NumberGoodsInfo implements Serializable {
      * 库存
      */
     private int inventory;
+    private String  buyPicUrl;//商品主图
+
+    public String getBuyPicUrl() {
+        return buyPicUrl;
+    }
+
+    public void setBuyPicUrl(String buyPicUrl) {
+        this.buyPicUrl = buyPicUrl;
+    }
 
     public String getGoodsSn() {
         return goodsSn;

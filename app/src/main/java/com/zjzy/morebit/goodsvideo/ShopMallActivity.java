@@ -160,7 +160,7 @@ public class ShopMallActivity extends BaseActivity {
                         list = data.getList();
 
                      if (page==1){
-                         mAdapter.setData(list);
+                         mAdapter.addData(list);
                      }else{
                          mAdapter.setData(list);
                          refreshLayout.finishLoadMore(true);

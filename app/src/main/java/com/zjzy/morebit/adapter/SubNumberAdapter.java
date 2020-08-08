@@ -92,6 +92,14 @@ public class SubNumberAdapter extends RecyclerView.Adapter<SubNumberAdapter.View
 
     }
 
+    public void addData(List<NumberGoods> data) {
+        if (data != null) {
+            list.clear();
+            list.addAll(data);
+            notifyDataSetChanged();
+        }
+    }
+
     public void setData(List<NumberGoods> data) {
         if (data != null) {
             list.addAll(data);
