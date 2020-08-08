@@ -429,6 +429,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         initBar();
 
         initOnresh();
+        getCategoryData();
 
 
 
@@ -981,7 +982,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
 
 
-        getCategoryData();
+
 
     }
 
