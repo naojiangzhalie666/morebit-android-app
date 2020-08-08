@@ -61,24 +61,28 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
         List<QueryDhAndGyBean.DhListBean> dhList = data.getDhList();//抖货
         List<QueryDhAndGyBean.GyListBean> gyList = data.getGyList();//高佣
 
-        final ShopGoodInfo dhBean = new ShopGoodInfo();
+
         final List<ShopGoodInfo> list=new ArrayList<>();
+
         for (int i=0;i<dhList.size();i++){
-            dhBean.setItemTitle(dhList.get(position).getItemTitle());
-            dhBean.setItemSourceId(dhList.get(position).getItemId()+"");
-            dhBean.setGoodsId(Long.valueOf(dhList.get(position).getItemId()));
-            dhBean.setItemPic(dhList.get(position).getItemPic());
-            dhBean.setCouponMoney(dhList.get(position).getCouponMoney()+"");
-            dhBean.setGoodsId(Long.valueOf(gyList.get(position).getItemid()));
-            dhBean.setPrice(dhList.get(position).getItemPrice());
-            dhBean.setItemVideo(dhList.get(position).getItemVideo());
-            dhBean.setCouponUrl(dhList.get(position).getCouponUrl());
-            dhBean.setCouponMoney(dhList.get(position).getCouponMoney());
-            dhBean.setTkMoney(dhList.get(position).getTkMoney());
-            dhBean.setItemSale(dhList.get(position).getItemSale());
-            dhBean.setItemVideoPic(dhList.get(position).getItemVideoPic());
+           ShopGoodInfo dhBean = new ShopGoodInfo();
+            dhBean.setItemTitle(dhList.get(i).getItemTitle());
+            dhBean.setItemSourceId(dhList.get(i).getItemId()+"");
+            dhBean.setGoodsId(Long.valueOf(dhList.get(i).getItemId()));
+            dhBean.setItemPic(dhList.get(i).getItemPic());
+            dhBean.setCouponMoney(dhList.get(i).getCouponMoney()+"");
+            dhBean.setGoodsId(Long.valueOf(gyList.get(i).getItemid()));
+            dhBean.setPrice(dhList.get(i).getItemPrice());
+            dhBean.setItemVideo(dhList.get(i).getItemVideo());
+            dhBean.setCouponUrl(dhList.get(i).getCouponUrl());
+            dhBean.setCouponMoney(dhList.get(i).getCouponMoney());
+            dhBean.setTkMoney(dhList.get(i).getTkMoney());
+            dhBean.setItemSale(dhList.get(i).getItemSale());
+            dhBean.setItemVideoPic(dhList.get(i).getItemVideoPic());
             list.add(dhBean);
+
         }
+        Log.e("kkkk",list.size()+"");
         if (position == 0) {
             final ShopGoodInfo gyBean = new ShopGoodInfo();
             gyBean.setItemSourceId(gyList.get(0).getItemid()+"");
@@ -126,12 +130,6 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 }
             });
         } else {
-
-
-            Log.e("sfsdfsd",list.size()+"");
-
-
-
             holder.title1.setText("抖货爆款");
             holder.title1.setTextColor(Color.parseColor("#CC2498"));
             if (dhList.size() == 0) return;
@@ -162,7 +160,8 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 @Override
                 public void onClick(View v) {
                     if (LoginUtil.checkIsLogin((Activity) mContext)) {
-                        VideoActivity.start(mContext,(List<ShopGoodInfo>)list,0,"0",1);
+                        Log.e("sfsdfsd",list.size()+"");
+                        VideoActivity.start(mContext,(List<ShopGoodInfo>)list,position,"0",1);
                     }
                 }
             });
