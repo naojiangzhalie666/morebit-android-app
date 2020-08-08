@@ -91,7 +91,7 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
             holder.tv.setBackgroundColor( Color.parseColor("#FFFFFF"));//选中灰色，不选择白色
             holder.line.setVisibility(View.VISIBLE);
         }else{
-            holder.tv.setBackgroundColor( Color.parseColor("#F0F1F5"));//选中灰色，不选择白色
+            holder.tv.setBackgroundColor( Color.parseColor("#F8F8F8"));//选中灰色，不选择白色
             holder.line.setVisibility(View.GONE);
             holder.title.setTextColor(Color.parseColor("#333333"));
         }

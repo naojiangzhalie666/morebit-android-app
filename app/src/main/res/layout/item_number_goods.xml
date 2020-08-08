@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 <RelativeLayout
     android:id="@+id/rl_tou"
-    android:visibility="gone"
+android:visibility="gone"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -25,6 +25,10 @@
             />
 
         <TextView
+
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="爆款热销"
@@ -33,7 +37,7 @@
             android:textColor="#fff05557"
             android:textSize="16sp"
             android:shadowColor="#80f05557"
-            android:elevation="4dp"
+            android:textStyle="bold"
 
             />
         <ImageView

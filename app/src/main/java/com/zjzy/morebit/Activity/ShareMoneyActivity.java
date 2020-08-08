@@ -116,6 +116,7 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
     private ShareFriendsDialog mShareFriendsDialog;
     private int mBitmapPosition = -1;
     private FileDownloadListener downloadListener;
+    private int donwloda=0;
 
 
 
@@ -481,10 +482,14 @@ public class ShareMoneyActivity extends BaseActivity implements View.OnClickList
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                donwloda++;
+                if (donwloda==ticknum){
+                    ToastUtils.showShort("图片已存到相册");
+                    ShareDownloadDialog dialog=new ShareDownloadDialog(ShareMoneyActivity.this,R.style.dialog);
+                    dialog.show();
+                    donwloda=0;
+                }
 
-                ToastUtils.showShort("图片已存到相册");
-                ShareDownloadDialog dialog=new ShareDownloadDialog(ShareMoneyActivity.this,R.style.dialog);
-                dialog.show();
             }
 
             @Override

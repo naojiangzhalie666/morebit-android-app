@@ -55,9 +55,10 @@ public class SubNumberAdapter extends RecyclerView.Adapter<SubNumberAdapter.View
 
         String img = goods.getPicUrl();
         if (!TextUtils.isEmpty(img)) {
-            LoadImgUtils.loadingCornerTop(mContext, holder.pic, img, 4);
+            LoadImgUtils.loadingCornerBitmap(mContext, holder.pic, img);
         }
         holder.desc.setText(goods.getName());
+        holder.desc.getPaint().setFakeBoldText(true);
         String price = goods.getRetailPrice();
 
 

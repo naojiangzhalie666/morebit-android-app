@@ -6,7 +6,7 @@
     android:layout_height="80dp"
     android:gravity="center"
     android:id="@+id/tv"
-    android:background="@color/color_F0F1F5"
+    android:background="@color/color_F8F8F8"
     android:orientation="vertical"
     >
 
