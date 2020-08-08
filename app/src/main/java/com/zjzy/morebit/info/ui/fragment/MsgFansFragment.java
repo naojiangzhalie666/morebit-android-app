@@ -191,7 +191,7 @@ public class MsgFansFragment extends MvpFragment<MsgPresenter> implements MsgCon
             TextView tv_content = holder.viewFinder().view(R.id.tv_content);
             TextView tv_time = holder.viewFinder().view(R.id.time);
             MyLog.i("test", "item.getPicture(): " + item.getPicture());
-            LoadImgUtils.setImgHead(mContext, iv_img, item.getPicture());
+            LoadImgUtils.setImg(mContext, iv_img, item.getPicture());
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tv_time.getLayoutParams();
             layoutParams.setMargins(DensityUtil.dip2px(mContext, (float) 10), DensityUtil.dip2px(mContext, (float) 11), 0, 0);
             tv_time.setLayoutParams(layoutParams);

@@ -210,7 +210,7 @@ public class MsgActiityFragment extends MvpFragment<MsgPresenter> implements Msg
                 TextView tv_title = holder.viewFinder().view(R.id.tv_title);
                 TextView tv_content = holder.viewFinder().view(R.id.tv_content);
                 MyLog.i("test", "item.getPicture(): " + item.getPicture());
-                LoadImgUtils.setImgHead(mContext, img_bg, item.getDigest());
+                LoadImgUtils.setImg(mContext, img_bg, item.getDigest());
                 time.setText(item.getCreateTime()+"");
 //            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tv_time.getLayoutParams();
 //            layoutParams.setMargins(DensityUtil.dip2px(mContext,(float)10),DensityUtil.dip2px(mContext,(float)11),0,0);

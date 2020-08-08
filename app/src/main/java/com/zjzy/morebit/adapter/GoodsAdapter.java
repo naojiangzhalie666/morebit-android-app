@@ -165,18 +165,15 @@ public class GoodsAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> 
 //        }
 
         UserInfo userInfo1 =UserLocalData.getUser();
-        if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-            commission.setText("登录赚佣金");
-        }else{
-            if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
+
                 if(!StringsUtils.isEmpty(item.getCommission())){
-                    commission.setText(mContext.getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
+                    commission.setText("赚 ¥ "+MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())+"元");
                 } else {
                     commission.setVisibility(View.GONE);
                 }
 
-            }
-        }
+
+
         //平台补贴
         if(LoginUtil.checkIsLogin((Activity) mContext, false) && !TextUtils.isEmpty(item.getSubsidiesPrice())){
             subsidiesPriceTv.setVisibility(View.VISIBLE);

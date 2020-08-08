@@ -11,14 +11,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.RankTimeBean;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.number.NumberGoods;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
+import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.StringsUtils;
+import com.zjzy.morebit.utils.action.MyAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +32,7 @@ import java.util.List;
 /**
  *爆款排行
  **/
-public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHolder1>{
+public class  RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHolder1>{
     private LayoutInflater mInflater;
     private List<RankTimeBean.ItemListBean> mDatas = new ArrayList<>();
     private Context mContext;
@@ -57,7 +63,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder1 holder, int position) {
 
-        RankTimeBean.ItemListBean listBean = mDatas.get(position);
+        final RankTimeBean.ItemListBean listBean = mDatas.get(position);
 
         if (!TextUtils.isEmpty(listBean.getItemPicture())) {
             LoadImgUtils.loadingCornerBitmap(mContext, holder.img,listBean.getItemPicture(), 8);
@@ -101,6 +107,26 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
         }else{
             holder.view.setVisibility(View.VISIBLE);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                GoodsUtil.checkGoods((RxAppCompatActivity) mContext, listBean.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
+                    @Override
+                    public void invoke(ShopGoodInfo arg) {
+                        MyLog.i("test", "arg: " + arg);
+                        GoodsDetailActivity.start(mContext, arg);
+
+                    }
+                });
+
+            }
+        });
+
+
+
+
 
 
     }
