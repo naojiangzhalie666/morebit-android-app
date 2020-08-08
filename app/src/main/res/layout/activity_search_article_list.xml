@@ -11,7 +11,7 @@
         android:id="@+id/searchViewLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:s_search_hint_text="我想学什么？">
+        app:s_search_hint_text="搜你想要的">
     </com.zjzy.morebit.view.SearchClassLayout>
 
 </LinearLayout>

@@ -54,6 +54,7 @@
                 android:paddingBottom="7dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
+                android:padding="0dip"
                 >
 
                 <ImageView

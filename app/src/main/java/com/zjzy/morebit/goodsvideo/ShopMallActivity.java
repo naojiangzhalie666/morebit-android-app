@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
+import com.zjzy.morebit.adapter.SubNumberAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsDetailImgContract;
 import com.zjzy.morebit.goodsvideo.adapter.ShopmallAdapter;
@@ -50,7 +52,7 @@ import io.reactivex.functions.Action;
 *
 * */
 public class ShopMallActivity extends BaseActivity {
-    ShopmallAdapter mAdapter;
+    SubNumberAdapter mAdapter;
     private RecyclerView rcy_shopmall;
     private List<NumberGoods> list;
     private int page=1;
@@ -86,15 +88,13 @@ public class ShopMallActivity extends BaseActivity {
         });
         rcy_shopmall= (RecyclerView) findViewById(R.id.rcy_shopmall);
         refreshLayout= (SmartRefreshLayout) findViewById(R.id.refreshLayout);
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
-        //设置图标的间距
-        SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(20, 2);
-
-
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         rcy_shopmall.setLayoutManager(manager);
-        rcy_shopmall.addItemDecoration(spaceItemDecorationUtils);
 
 
+
+        mAdapter=new SubNumberAdapter(ShopMallActivity.this);
+        rcy_shopmall.setAdapter(mAdapter);
 
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -112,8 +112,6 @@ public class ShopMallActivity extends BaseActivity {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page=1;
                 initData();
-                mAdapter.refreshData(list);
-                mAdapter.notifyDataSetChanged();
                 refreshLayout.finishRefresh(true);//刷新完成
             }
         });
@@ -162,11 +160,9 @@ public class ShopMallActivity extends BaseActivity {
                         list = data.getList();
 
                      if (page==1){
-                         mAdapter=new ShopmallAdapter(ShopMallActivity.this,list);
-                         rcy_shopmall.setAdapter(mAdapter);
+                         mAdapter.setData(list);
                      }else{
-                         mAdapter.loadMore(list);
-                         mAdapter.notifyDataSetChanged();
+                         mAdapter.setData(list);
                          refreshLayout.finishLoadMore(true);
                      }
                     }
