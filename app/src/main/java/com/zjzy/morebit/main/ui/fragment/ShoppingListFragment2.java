@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.zjzy.morebit.Module.common.View.ReEndlessGradListView;
 import com.zjzy.morebit.R;
@@ -71,6 +73,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
     private ShoppingTabView mShoppingTabView;
     private ImageInfo mImageInfo;
     private NestedScrollView nscorll;
+    private TextView  tv;
 
     public static ShoppingListFragment2 newInstance(int loadType) {
         Bundle args = new Bundle();
@@ -116,12 +119,17 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
             ImageView iv_banner = (ImageView) view.findViewById(R.id.iv_banner);
             mLl_super_tab = (LinearLayout) view.findViewById(R.id.ll_super_tab);
             AspectRatioView as_iv_banner = (AspectRatioView) view.findViewById(R.id.as_iv_banner);
+            tv=view.findViewById(R.id.tv);
             initShoppingTabVIew();
             if (isShowHeadPicture(mImageInfo)) {  // 1图片为纵向，0位横向。只有横向才显示图片
                 LoadImgUtils.setImg(getActivity(), iv_banner, mImageInfo.getBackgroundImage());
                 mLl_super_tab.addView(mShoppingTabView);
+                mLl_super_tab.setVisibility(View.VISIBLE);
+                tv.setVisibility(View.VISIBLE);
             } else {
                 as_iv_banner.setVisibility(View.GONE);
+                mLl_super_tab.setVisibility(View.GONE);
+                tv.setVisibility(View.GONE);
                 ll_root.addView(mShoppingTabView);
             }
             if (C.GoodsListType.DiscountStores == mType || C.GoodsListType.WHAT_LIKE == mType || C.GoodsListType.MATERIAL == mType) {
@@ -129,6 +137,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
                 //    mLl_super_tab.setVisibility(View.GONE);
             }
         }
+
 
         nscorll=view.findViewById(R.id.nscorll);
         mAdapter = new ShoppingListAdapter2(getActivity());
