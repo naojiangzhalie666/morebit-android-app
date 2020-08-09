@@ -150,8 +150,11 @@ public class GoodDailyFragment extends BaseMainFragmeng {
                         if (page==1){
                             mListView.setVisibility(View.GONE);
                             dateNullView.setVisibility(View.VISIBLE);
+                            mListView.getListView().setNoMore(true);
+                        }else{
+                            mListView.getListView().setNoMore(true);
                         }
-                        mListView.getListView().setNoMore(true);
+
                     }
 
                     @Override
