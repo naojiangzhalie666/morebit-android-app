@@ -175,15 +175,37 @@
         <RelativeLayout
             android:id="@+id/rl_add_address"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@color/color_FFFFFF"
             >
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设为默认收货地址"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/color_333333"
+                android:layout_centerVertical="true"
+                />
+
+
+            <ImageView
+                android:id="@+id/switch_address"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/selector_shouhuo"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                />
+
+
             <android.support.v7.widget.SwitchCompat
+                android:visibility="gone"
                 android:id="@+id/switch_address_default"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_margin="10dp"
                 android:checked="true"

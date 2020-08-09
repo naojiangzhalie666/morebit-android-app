@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,10 +40,10 @@ import butterknife.OnClick;
  * Created by haiping.liu on 2019-12-14.
  */
 public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPresenter> implements View.OnClickListener,
-        OnAddressSelectedListener, AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener ,
+        OnAddressSelectedListener, AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener,
         AddOrModifyAddressContract.View {
 
-    private static  final String TAG = AddModifyAddressActivity.class.getSimpleName();
+    private static final String TAG = AddModifyAddressActivity.class.getSimpleName();
     @BindView(R.id.txt_head_title)
     TextView headTitle;
 
@@ -59,7 +60,6 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     EditText phone;
 
 
-
     @BindView(R.id.txt_provice_city_dist)
     TextView proviceCityDist;
 
@@ -68,7 +68,9 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
 
 
     @BindView(R.id.rl_add_address)
-    RelativeLayout rlAddAddress;
+            RelativeLayout rlAddAddress;
+    @BindView(R.id.switch_address)
+            ImageView switch_address;
 
     @BindView(R.id.switch_address_default)
     SwitchCompat swtichAddressDefault;
@@ -105,30 +107,31 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
 
     /**
      * 更新或者增加地址的页面
+     *
      * @param activity
      * @param info
      * @param type
      */
-    public static void start(Activity activity, AddressInfo info,int type) {
+    public static void start(Activity activity, AddressInfo info, int type) {
         //跳转到网页
         Intent it = new Intent(activity, AddModifyAddressActivity.class);
 
-            Bundle bundle = new Bundle();
-            bundle.putInt(C.Extras.TYPE_ADDRESS,type);
-            if (info != null){
-                bundle.putSerializable(C.Extras.GOODS_ADDRESS_INFO,info);
-            }
-            it.putExtras(bundle);
-            switch (type){
-                case C.Address.UPDATE_TYPE:
-                    activity.startActivityForResult(it,ManageGoodsAddressActivity.REQUEST_UPDATE_ADDRESS_CODE);
-                    break;
-                case C.Address.ADD_TYPE:
-                    activity.startActivityForResult(it,ManageGoodsAddressActivity.REQUEST_ADD_ADDRESS_CODE);
-                    break;
-                    default:
-                        break;
-            }
+        Bundle bundle = new Bundle();
+        bundle.putInt(C.Extras.TYPE_ADDRESS, type);
+        if (info != null) {
+            bundle.putSerializable(C.Extras.GOODS_ADDRESS_INFO, info);
+        }
+        it.putExtras(bundle);
+        switch (type) {
+            case C.Address.UPDATE_TYPE:
+                activity.startActivityForResult(it, ManageGoodsAddressActivity.REQUEST_UPDATE_ADDRESS_CODE);
+                break;
+            case C.Address.ADD_TYPE:
+                activity.startActivityForResult(it, ManageGoodsAddressActivity.REQUEST_ADD_ADDRESS_CODE);
+                break;
+            default:
+                break;
+        }
 
 
     }
@@ -143,9 +146,9 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
 
     @Override
     public void onAddSuccessful(Boolean isSuccess) {
-        if (isSuccess){
+        if (isSuccess) {
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "收货地址添加成功");
-        }else{
+        } else {
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "添加失败");
         }
         setResult(Activity.RESULT_OK);
@@ -155,9 +158,9 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
 
     @Override
     public void onUpdateSuccessful(Boolean isSuccess) {
-        if (isSuccess){
+        if (isSuccess) {
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "收货地址更新成功");
-        }else{
+        } else {
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "更新地址失败");
         }
 
@@ -165,13 +168,14 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
         finish();
     }
 
-     @Override
+    @Override
     public void onUpdateError() {
-         ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "更新失败");
+        ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "更新失败");
     }
-     @Override
+
+    @Override
     public void onAddError() {
-         ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "添加失败");
+        ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "添加失败");
     }
 
     @Override
@@ -184,57 +188,73 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
         return R.layout.activity_add_modify_address;
     }
 
-    private void initView(){
+    private void initView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ActivityStyleUtil.initSystemBar(this, R.color.white); //设置标题栏颜色值
         } else {
             ActivityStyleUtil.initSystemBar(this, R.color.color_F8F8F8); //设置标题栏颜色值
         }
-        type = getIntent().getIntExtra(C.Extras.TYPE_ADDRESS,0);
-        if (type == C.Address.UPDATE_TYPE){
+        type = getIntent().getIntExtra(C.Extras.TYPE_ADDRESS, 0);
+        if (type == C.Address.UPDATE_TYPE) {
             mAddressPosition = getIntent().getExtras().getInt("addressPosition");
         }
+        switch_address.setSelected(true);
 
-
-        swtichAddressDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-
+        switch_address.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    mDefaultFlag = 1;
-                    swtichAddressDefault.setChecked(true);
-                }else{
+            public void onClick(View v) {
+                if (switch_address.isSelected()){
                     mDefaultFlag = 0;
-                    swtichAddressDefault.setChecked(false);
+                    switch_address.setSelected(false);
+                }else{
+                    mDefaultFlag = 1;
+                    switch_address.setSelected(true);
                 }
+
             }
         });
-        if (type == C.Address.UPDATE_TYPE){
+
+//        swtichAddressDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    mDefaultFlag = 1;
+//                    swtichAddressDefault.setChecked(true);
+//                } else {
+//                    mDefaultFlag = 0;
+//                    swtichAddressDefault.setChecked(false);
+//                }
+//            }
+//        });
+        if (type == C.Address.UPDATE_TYPE) {
             headTitle.setText("更新收货地址");
-        }else{
+        } else {
             headTitle.setText("添加收货地址");
         }
 
 
-    };
+    }
+
+    ;
 
     /**
      * 初始化数据
      */
-    private void initData(){
+    private void initData() {
 
 
-        if (type == C.Address.UPDATE_TYPE){
+        if (type == C.Address.UPDATE_TYPE) {
             mAddressInfo = (AddressInfo) getIntent().getSerializableExtra(C.Extras.GOODS_ADDRESS_INFO);
-            if (mAddressInfo == null){
-                MyLog.e(TAG,"更新地址，没有传递地址信息");
+            if (mAddressInfo == null) {
+                MyLog.e(TAG, "更新地址，没有传递地址信息");
                 return;
             }
             mDefaultFlag = mAddressInfo.getIsDefault();
-            if (mDefaultFlag == 1 ){
-                swtichAddressDefault.setChecked(true);
-            }else{
-                swtichAddressDefault.setChecked(false);
+            if (mDefaultFlag == 1) {
+                switch_address.setSelected(true);
+            } else {
+                switch_address.setSelected(false);
             }
             userName.setText(mAddressInfo.getName());
             phone.setText(mAddressInfo.getTel());
@@ -245,11 +265,11 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
             mCity = mAddressInfo.getCity();
             mDistinct = mAddressInfo.getDistrict();
             mDetail = mAddressInfo.getDetailAddress();
-            proviceCityDist.setText(mAddressInfo.getProvince()+mAddressInfo.getCity()+mAddressInfo.getDistrict());
+            proviceCityDist.setText(mAddressInfo.getProvince() + mAddressInfo.getCity() + mAddressInfo.getDistrict());
             editDetail.setText(mAddressInfo.getDetailAddress());
 
-        }else{
-            mDefaultFlag= (swtichAddressDefault.isChecked()? 1:0);
+        } else {
+            mDefaultFlag = (switch_address.isSelected() ? 1 : 0);
         }
 //        AddressSelector selector = new AddressSelector(this);
 //        AddressDictManager addressDictManager = selector.getAddressDictManager();
@@ -259,25 +279,26 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
 //        }
 
     }
-    @OnClick({R.id.btn_save,R.id.btn_back,R.id.rl_select_area})
+
+    @OnClick({R.id.btn_save, R.id.btn_back, R.id.rl_select_area})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_back:
                 //返回
                 finish();
                 break;
             case R.id.btn_save:
-                if (type == C.Address.UPDATE_TYPE){
+                if (type == C.Address.UPDATE_TYPE) {
                     mAddressInfo = createAddressInfo();
-                    if (mAddressInfo != null){
+                    if (mAddressInfo != null) {
                         mAddressInfo.setId(mAddressId);
-                        mPresenter.updateAddress(AddModifyAddressActivity.this,mAddressInfo);
+                        mPresenter.updateAddress(AddModifyAddressActivity.this, mAddressInfo);
                     }
-                }else{
+                } else {
                     mAddressInfo = createAddressInfo();
-                    if (mAddressInfo != null){
-                        mPresenter.addAddress(AddModifyAddressActivity.this,mAddressInfo);
+                    if (mAddressInfo != null) {
+                        mPresenter.addAddress(AddModifyAddressActivity.this, mAddressInfo);
                     }
                 }
 
@@ -305,24 +326,24 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     /**
      * 检查地址信息
      */
-    private boolean checkInfo(){
+    private boolean checkInfo() {
         boolean checkFlag = false;
         mName = userName.getText().toString();
-        if (TextUtils.isEmpty(mName)){
+        if (TextUtils.isEmpty(mName)) {
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "请输入收货人");
             return checkFlag;
         }
         mPhone = phone.getText().toString();
-        if (TextUtils.isEmpty(mPhone)){
+        if (TextUtils.isEmpty(mPhone)) {
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "请输入手机号");
             return checkFlag;
         }
-        if (TextUtils.isEmpty(mProvice)&&TextUtils.isEmpty(mCity)&&TextUtils.isEmpty(mDistinct)){
+        if (TextUtils.isEmpty(mProvice) && TextUtils.isEmpty(mCity) && TextUtils.isEmpty(mDistinct)) {
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "请选择所在地区");
             return checkFlag;
         }
         mDetail = editDetail.getText().toString();
-        if (TextUtils.isEmpty(mDetail)){
+        if (TextUtils.isEmpty(mDetail)) {
             ViewShowUtils.showShortToast(AddModifyAddressActivity.this, "请输入详细地址");
             return checkFlag;
         }
@@ -333,29 +354,29 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
     /**
      * 创建地址信息
      */
-    private AddressInfo createAddressInfo(){
-        if (!checkInfo()){
+    private AddressInfo createAddressInfo() {
+        if (!checkInfo()) {
             return null;
         }
-            AddressInfo info = new AddressInfo();
+        AddressInfo info = new AddressInfo();
 
-            info.setName(mName);
-            info.setTel(mPhone);
-            info.setProvince(mProvice);
-            info.setCity(mCity);
-            info.setDistrict(mDistinct);
-            info.setDetailAddress(mDetail);
-            info.setIsDefault(mDefaultFlag);
-            return info;
+        info.setName(mName);
+        info.setTel(mPhone);
+        info.setProvince(mProvice);
+        info.setCity(mCity);
+        info.setDistrict(mDistinct);
+        info.setDetailAddress(mDetail);
+        info.setIsDefault(mDefaultFlag);
+        return info;
     }
 
-    private void AddressSelectorCreate(){
+    private void AddressSelectorCreate() {
 
     }
 
     @Override
     public void dialogclose() {
-        if(dialog!=null){
+        if (dialog != null) {
             dialog.dismiss();
         }
     }
@@ -382,9 +403,9 @@ public class AddModifyAddressActivity extends MvpActivity<AddOrModifyAddressPres
         MyLog.d("数据", "城市id=" + cityCode);
         MyLog.d("数据", "乡镇id=" + countyCode);
         MyLog.d("数据", "街道id=" + streetCode);
-         mProvice = (province == null ? "" : province.name);
-         mCity = (city == null ? "" : city.name);
-         mDistinct = (county == null ? "" : county.name);
+        mProvice = (province == null ? "" : province.name);
+        mCity = (city == null ? "" : city.name);
+        mDistinct = (county == null ? "" : county.name);
 
         String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
                 (street == null ? "" : street.name);

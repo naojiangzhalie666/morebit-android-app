@@ -299,6 +299,8 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                             picture.add(shareRangItems.get(i).getPicture());//取出图片
                         }
                         showChoosePicDialog((Activity) context, circleInfo, position,picture);
+                        AppUtil.coayTextPutNative((Activity) context, holder.tv_comment.getText().toString());
+                        ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
                     }
 
 
