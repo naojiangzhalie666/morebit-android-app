@@ -6,18 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-<!--    <android.support.v7.widget.CardView-->
-<!--        android:id="@+id/moneyCardView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:cardCornerRadius="6dp"-->
-<!--        android:visibility="gone"-->
-<!--        app:cardElevation="0dp"-->
-<!--        app:cardUseCompatPadding="false"-->
-<!--        android:background="@drawable/bg_mine_shouyi"-->
-<!--        >-->
 
-<!--    </android.support.v7.widget.CardView>-->
+
+
 <!--    <com.yyp.xshadow.XShadow-->
 <!--        app:shadow_side="left|bottom|right"-->
 <!--        app:shadow_width="2dp"-->
@@ -28,7 +19,16 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content">-->
 
-
+    <com.zyp.cardview.YcCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:cardBackgroundColor="@color/color_FFFFFF"
+        app:cardUseCompatPadding="false"
+        app:ycCardCornerRadius="8dp"
+        app:ycCardElevation="3dp"
+        app:ycCardPreventCornerOverlap="false"
+        app:ycStartShadowColor="@color/colcor_D3D3D3">
         <LinearLayout
             android:id="@+id/ll_mine_earnings"
             android:orientation="vertical"
@@ -250,5 +250,6 @@
 
 
         </LinearLayout>
+        </com.zyp.cardview.YcCardView>
 <!--    </com.yyp.xshadow.XShadow>-->
 </LinearLayout>

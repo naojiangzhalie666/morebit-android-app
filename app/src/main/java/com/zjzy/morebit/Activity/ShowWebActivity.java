@@ -100,8 +100,8 @@ public class ShowWebActivity extends BaseActivity {
     ImageView mIvBack;
     @BindView(R.id.iv_refresh)
     ImageView mIvRefresh;
-    @BindView(R.id.iv_off)
-    ImageView mIvOff;
+//    @BindView(R.id.iv_off)
+//    ImageView mIvOff;
 
     @Override
     public boolean isShowAllSeek() {
