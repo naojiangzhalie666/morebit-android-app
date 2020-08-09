@@ -102,7 +102,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tv_nickname= (TextView) findViewById(R.id.tv_nickname);
         tv_sex= (TextView) findViewById(R.id.tv_sex);
         txt_head_title= (TextView) findViewById(R.id.txt_head_title);
-        txt_head_title.getPaint().setFakeBoldText(true);
         item1_rl = (RelativeLayout) findViewById(R.id.item1_rl);
         userIcon2 = (ImageView) findViewById(R.id.userIcon2);
         item9_rl = (RelativeLayout) findViewById(R.id.item9_rl);

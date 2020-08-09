@@ -65,7 +65,6 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
         if (!TextUtils.isEmpty(title)){
             txt_head_title.setText(title);
         }
-        txt_head_title.getPaint().setFakeBoldText(true);
         txt_head_title.setTextSize(18);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);

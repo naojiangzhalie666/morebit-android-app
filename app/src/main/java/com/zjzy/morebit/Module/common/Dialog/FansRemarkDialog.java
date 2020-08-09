@@ -7,8 +7,10 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -84,6 +86,33 @@ public class FansRemarkDialog extends Dialog {
                     hideShowKeyboard();
 
                 }
+            }
+        });
+
+        edt_remark.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                /*判断是否是“GO”键*/
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
+                    /*隐藏软键盘*/
+                    InputMethodManager imm = (InputMethodManager) v
+                            .getContext().getSystemService(
+                                    Context.INPUT_METHOD_SERVICE);
+                    if (imm.isActive()) {
+                        imm.hideSoftInputFromWindow(
+                                v.getApplicationWindowToken(), 0);
+                    }
+
+                    if(onClickListener!=null){
+                        onClickListener.onClick(v,edt_remark.getText().toString().trim(),position);
+                        hideShowKeyboard();
+
+                    }
+
+                    return true;
+                }
+                return false;
             }
         });
         tv_cancel.setOnClickListener(new View.OnClickListener() {

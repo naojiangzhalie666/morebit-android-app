@@ -125,7 +125,6 @@ public class FansDragonActivity extends BaseActivity implements View.OnClickList
         top= (LinearLayout) findViewById(R.id.top);
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setText("粉丝龙虎榜");
-        txt_head_title.getPaint().setFakeBoldText(true);
         txt_head_title.setTextSize(18);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);

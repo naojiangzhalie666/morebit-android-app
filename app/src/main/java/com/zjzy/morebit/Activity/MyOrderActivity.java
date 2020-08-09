@@ -50,7 +50,6 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
         orderSearch = (ImageInfo) intent.getSerializableExtra(C.Extras.SEARCHINFO);
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setText("我的订单");
-        txt_head_title.getPaint().setFakeBoldText(true);
         txt_head_title.setTextSize(18);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);
