@@ -83,6 +83,7 @@ import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.PageToUtil;
+import com.zjzy.morebit.utils.StatusBarUtils;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.TaobaoUtil;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
@@ -258,12 +259,15 @@ public class MineFragment extends BaseMainFragmeng {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_mine, container, false);
+        StatusBarUtils.addTranslucentColorView(getActivity(), Color.TRANSPARENT, 0);
         ImmersionBar.with(this)
-                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .fitsSystemWindows(false)
-                .statusBarColor(R.color.transparent)
+                .navigationBarColorInt(Color.WHITE)
+                .navigationBarDarkIcon(true)
+                .keyboardEnable(true)
+                .statusBarDarkFont(false)
+                .statusBarColorInt(Color.TRANSPARENT)
                 .init();
+        mView = inflater.inflate(R.layout.fragment_mine, container, false);
         my_little = mView.findViewById(R.id.my_little);
         tab_title = mView.findViewById(R.id.tab_title);
         tv_mine = mView.findViewById(R.id.tv_mine);

@@ -124,6 +124,7 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EventBus.getDefault().register(this);
     }
 
@@ -151,7 +152,7 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
                 if (verticalOffsetABs >= appBarLayout.getTotalScrollRange()) {
                       ImmersionBar.with(getActivity()).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
                 } else if (verticalOffset == 0) {
-                ImmersionBar.with(getActivity()).statusBarColor(R.color.transparent).fitsSystemWindows(false).statusBarDarkFont(true, 0.2f).init();
+                ImmersionBar.with(getActivity()).statusBarColor(R.color.transparent).fitsSystemWindows(false).statusBarDarkFont(false, 0.2f).init();
                 }
 
             }

@@ -99,7 +99,7 @@ public class SearchFansActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_fans);
-        ImmersionBar.with(this).statusBarColor(R.color.transparent).fitsSystemWindows(false).statusBarDarkFont(true, 0.2f).init();
+        ImmersionBar.with(this).statusBarColor(R.color.transparent).fitsSystemWindows(false).statusBarDarkFont(false, 0.2f).init();
         mSearchKey = getIntent().getStringExtra("search_key");
         initView();
     }
