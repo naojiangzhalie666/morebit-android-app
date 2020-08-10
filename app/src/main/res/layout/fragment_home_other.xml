@@ -691,14 +691,20 @@
     </LinearLayout>
 
         <ImageView
+            android:layout_above="@+id/view"
             android:id="@+id/shareImageView"
             android:layout_width="55dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginRight="12dp"
-            android:layout_marginBottom="70dp"
             />
+
+        <LinearLayout
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical" />
 
         <RelativeLayout
             android:id="@+id/rl_urgency_notifi"

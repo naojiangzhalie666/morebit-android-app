@@ -95,11 +95,11 @@ public class HomeRedPackageDialog extends Dialog implements View.OnClickListener
                 .setDelayTime(4000)
                 .start();
 
-
-        ViewGroup.LayoutParams params = mRoll_view_pager.getLayoutParams();
-        params.width = mData.get(0).getWidth()*2;
-        params.height = mData.get(0).getHeight()*2;
-        mRoll_view_pager.setLayoutParams(params);
+//
+//        ViewGroup.LayoutParams params = mRoll_view_pager.getLayoutParams();
+//        params.width = mData.get(0).getWidth()*2;
+//        params.height = mData.get(0).getHeight()*2;
+//        mRoll_view_pager.setLayoutParams(params);
 
 
     }

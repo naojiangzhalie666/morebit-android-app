@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ThreadUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
@@ -88,6 +89,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
     private ProgressDialog dialog;
     private Runnable mLoadingRunnable;
     private Handler mHandler;
+
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -281,6 +283,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
             MyLog.i("test", "o: " + o + " replaceClipText: " + replaceClipText + " getClipText: " + getClipText);
             if (null != mGuessGoodDialog && mGuessGoodDialog.isShowing()) {
                 getAnalysis(getClipText);
+                Log.e("sdfsfdfs","66666");
             }
             if (!TextUtils.isEmpty(o) && replaceClipText.equals(o)) {
                 return;
@@ -293,6 +296,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 //                }
 //            }
             getAnalysis(getClipText);
+            Log.e("sdfsfdfs","777");
 
         } catch (Exception e) {
             MyLog.d("SearchActivity ", "Exception  " + e.getMessage());
@@ -306,6 +310,8 @@ public abstract class BaseActivity extends SwipeBaseActivity {
 
     protected void openSearchDialog(final String getClipStr) {
 
+        String clipstr = SPUtils.getInstance().getString("clipstr");
+        if (getClipStr.equals(clipstr))return;
         searchDialog = new SearchGoodsDialog(BaseActivity.this, R.style.dialog, "", getClipStr, new SearchGoodsDialog.OnCloseListener() {
             @Override
             public void onClick(Dialog dialog, String text) {
@@ -347,10 +353,17 @@ public abstract class BaseActivity extends SwipeBaseActivity {
             try {
                 searchDialog.show();
                 SensorsDataUtil.getInstance().dialogSearch(getClipStr);
+                SPUtils.getInstance().put("clipstr",getClipStr);
+
             } catch (Exception e) {
 
             }
         }
+
+
+
+
+
     }
 
 
@@ -518,6 +531,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
             wphDialog(s);
 
         }else{
+            Log.e("itemsoure","lllll");
             openSearchDialog(s);
         }
 

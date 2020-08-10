@@ -411,8 +411,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         img_go = mView.findViewById(R.id.img_go);
         Glide.with(this).asGif().load(R.drawable.must_go).into(img_go);
-        Glide.with(this).asGif().load(R.drawable.new_hongbao).into(shareImageView);
-
         home_msg = mView.findViewById(R.id.home_msg);
         home_msg.setOnClickListener(this);
         msg_rl.setOnClickListener(this);
@@ -955,10 +953,41 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         getNotice();//消息
 
 
+        getBanner(this, 32)
+                .subscribe(new DataObserver<List<ImageInfo>>(false) {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onBannerFailure(errorMsg, 32);
 
+                    }
+
+
+                    @Override
+                    protected void onSuccess(List<ImageInfo> data) {
+                        if (null != data && data.size() > 0) {
+                            final ImageInfo adInfo = data.get(0);
+                            if (!TextUtils.isEmpty(adInfo.getPicture())) {
+                                shareImageView.setVisibility(View.VISIBLE);
+                                LoadImgUtils.setImg(getActivity(), shareImageView, adInfo.getPicture(), false);
+                                shareImageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        BannerInitiateUtils.gotoAction(getActivity(), adInfo);
+                                    }
+                                });
+                            } else {
+                                shareImageView.setVisibility(View.GONE);
+                            }
+                        }
+
+                    }
+                });
 
 
     }
+
+
+
 
     private void getNotice() {
 
@@ -1100,14 +1129,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         UserInfo userInfo1 = UserLocalData.getUser(getActivity());
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             new_goods.setVisibility(View.VISIBLE);
-            shareImageView.setVisibility(View.VISIBLE);
         }else{
             if (data.isIsNewUser()) {
                 new_goods.setVisibility(View.VISIBLE);
-                shareImageView.setVisibility(View.VISIBLE);
             } else {
                 new_goods.setVisibility(View.GONE);
-                shareImageView.setVisibility(View.GONE);
             }
 
             Log.e("gyui",data.getTime());
@@ -1121,15 +1147,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 }
             }
         });
-        shareImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (LoginUtil.checkIsLogin(getActivity())) {
-                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
-                }
-            }
-        });
-
     }
 
     private void initTime(long mss) {
@@ -1547,7 +1564,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private void showShareImage() {
         float translationX = shareImageView.getTranslationX();
         ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 0);
-        animator.setDuration(0);
+        animator.setDuration(1000);
         if (!isAnimatorEnd) {
             animator.setStartDelay(1200);
         }
@@ -1557,7 +1574,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private void hideShareImage() {
         isAnimatorEnd = false;
         float translationX = shareImageView.getTranslationX();
-        ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 100);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 120);
         animator.setDuration(0);
         animator.addListener(new Animator.AnimatorListener() {
             @Override
