@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusableInTouchMode="true"
+    android:descendantFocusability="blocksDescendants"
+    android:fillViewport="true"
     android:orientation="vertical">
 
 
