@@ -43,6 +43,30 @@ public class MsgPresenter extends MvpPresenter<InfoModel, MsgContract.View> impl
                 });
     }
 
+
+    public void getMsg2(RxFragment fragment,int type, int page,int orderSource, CommonEmpty emptyView) {
+        mModel.getMsg2(fragment,type, page,orderSource)
+                .compose(emptyView.<BaseResponse<List<EarningsMsg>>>bind())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getIView().onMsgFinally();
+                    }
+                })
+                .subscribe(new DataObserver<List<EarningsMsg>>() {
+                    @Override
+                    protected void onDataListEmpty() {
+                        getIView().onMsgfailure();
+                    }
+
+
+
+                    @Override
+                    protected void onSuccess(List<EarningsMsg> data) {
+                        getIView().onMsgSuccessful(data);
+                    }
+                });
+    }
     public void getFeedbackMsg(RxFragment fragment, int page, CommonEmpty emptyView) {
         mModel.getFeedbackMsg(fragment, page)
                 .compose(emptyView.<BaseResponse<List<EarningsMsg>>>bind())

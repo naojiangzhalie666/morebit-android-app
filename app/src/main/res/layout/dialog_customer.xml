@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:background="@drawable/bg_ffffff_12dp"
+        android:layout_width="match_parent"
+       android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:paddingBottom="30dp"
+        android:layout_height="wrap_content">
+
+
+
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/userIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                android:src="@color/color_8ed6fd"
+                app:riv_border_color="@color/white"
+                app:riv_border_width="2dip"
+                app:riv_corner_radius="5dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="true" />
+        <LinearLayout
+            android:paddingTop="30dp"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/userIcon"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我是昵称"
+                android:textColor="#ff333333"
+                android:textSize="18sp"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/tv_wx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="微信号：17665437658"
+                    android:textColor="#ff333333"
+                    android:textSize="14sp"
+                    />
+
+                <ImageView
+                    android:id="@+id/copy"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/fans_wxcopy"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+        <ImageView
+            android:id="@+id/diss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/wx_tian_icon"
+            android:layout_alignParentRight="true"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

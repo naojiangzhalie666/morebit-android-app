@@ -55,6 +55,7 @@
     <dimen name="grid_line_6dp">6dp</dimen>
     <dimen name="goods_consumer_itme_padding">15dp</dimen>
     <dimen name="goods_detail_title_height">50dp</dimen>
+    <dimen name="title_height">100dp</dimen>
     <dimen name="home_menu_Horizontal">25dp</dimen>
     <dimen name="home_menu_Vertical">17dp</dimen>
     <dimen name="ranking_tab_one_height">40dp</dimen>

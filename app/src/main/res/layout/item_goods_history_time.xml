@@ -1,35 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/color_F5F5F5"
-              android:orientation="horizontal"
-              android:paddingLeft="6dp"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@color/color_F0F1F5" />
 
     <LinearLayout
-        android:paddingBottom="12dp"
-        android:paddingTop="12dp"
-        android:id="@+id/checkbox_time_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:paddingLeft="22dp">
 
-        <ImageView
-            android:id="@+id/checkbox_time"
+        <LinearLayout
+            android:id="@+id/checkbox_time_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/selector_checkbox"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:text="昨日"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/sp_12"/>
+            <ImageView
+                android:id="@+id/checkbox_time"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/selector_checkbox" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昨日"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

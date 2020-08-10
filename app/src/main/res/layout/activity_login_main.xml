@@ -132,7 +132,7 @@
                         android:layout_marginLeft="9dp"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:hint="请输入手机号码"
+                        android:hint="海外用户请切换国际区号"
                         android:inputType="number"
                         android:maxLength="11"
                         android:paddingRight="10dp"
@@ -145,7 +145,7 @@
                     <Button
                         android:id="@+id/areaCodeBtn"
                         style="@style/areaCodeStyle"
-                        android:visibility="gone" />
+                      />
                 </LinearLayout>
 
                 <View

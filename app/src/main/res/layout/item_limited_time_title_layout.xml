@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="80dp"
+              android:layout_height="50dp"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:padding="2dp">
+
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="@color/color_FCDDDD"
+        android:textSize="@dimen/sp_18"
+        tools:text="0.11"/>
+
+    <TextView
+        android:id="@+id/tips_tv"
+      android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/bg_ffffff_8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:includeFontPadding="true"
+        android:textColor="@color/color_F05557"
+        android:textSize="@dimen/sp_12"
+        tools:text="秒杀"/>
+</LinearLayout>

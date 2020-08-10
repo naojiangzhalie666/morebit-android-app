@@ -15,7 +15,7 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_F8F8F8"
+            android:background="@color/color_F0F1F5"
             android:orientation="vertical"
             app:elevation="0dp"
             app:layout_behavior="com.zjzy.morebit.view.FlingBehavior">
@@ -28,27 +28,17 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fans_bg">
 
 
                     <LinearLayout
                         android:id="@+id/liner"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:background="@mipmap/fans_bg2"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:id="@+id/fans_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="8dp"
-                            android:text="0"
-                            android:textColor="@color/white"
-                            android:textSize="40sp" />
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ll_sou"
+                        android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -56,19 +46,81 @@
                             android:layout_marginTop="10dp"
                             android:text="@string/my_team"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp_16" />
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/fans_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="4dp"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/tv_kefu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:text="查看我的专属客服 >"
+                            android:textColor="#ffffffff"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_sou"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp">
+
+
+                        <ImageView
+                            android:id="@+id/btn_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="10dp"
+                            android:src="@mipmap/fans_retrurn"
+
+                            />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="36dp"
+                            android:background="@drawable/bg_ffffff_30dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:drawableLeft="@drawable/icon_sousuo"
+                                android:drawablePadding="8dp"
+                                android:gravity="center"
+                                android:text="搜索用户名"
+                                android:textColor="#ff999999"
+
+                                android:textSize="14sp" />
+                        </RelativeLayout>
 
 
                     </LinearLayout>
+
                     <RelativeLayout
-                        android:layout_below="@+id/liner"
                         android:id="@+id/rl_teamLeader"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:layout_below="@+id/liner"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:background="@color/white"
                         android:layout_marginBottom="12dp"
-                        >
+                        android:background="@color/white"
+                        android:visibility="gone">
 
                         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/userIcon"
@@ -108,8 +160,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="微信号："
                                     android:textColor="@color/color_666666"
-                                    android:textSize="@dimen/sp_14"
-                                />
+                                    android:textSize="@dimen/sp_14" />
 
                                 <TextView
                                     android:id="@+id/team_leader_wxcode"
@@ -123,11 +174,11 @@
                                     android:id="@+id/tv_copy"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="24dp"
                                     android:background="@drawable/bg_item_fans"
-                                    android:text="@string/copy"
                                     android:paddingLeft="7dp"
                                     android:paddingRight="7dp"
-                                    android:layout_marginLeft="24dp"
+                                    android:text="@string/copy"
                                     android:textColor="@color/color_DB493E"
                                     android:textSize="@dimen/sp_13" />
                             </LinearLayout>
@@ -138,12 +189,12 @@
                     </RelativeLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:background="@color/color_FFD800"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -211,17 +262,17 @@
                 <com.flyco.tablayout.SlidingTabLayout
                     android:id="@+id/slidingTabLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="34dp"
+                    android:layout_height="40dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    app:tl_indicator_color="@color/color_FFFFFF"
+                    app:tl_indicator_color="@color/color_F05557"
                     app:tl_indicator_corner_radius="2dp"
                     app:tl_indicator_height="2dp"
-                    app:tl_indicator_width="14dp"
+                    app:tl_indicator_width="20dp"
                     app:tl_tab_space_equal="true"
                     app:tl_textSelectColor="#F05557"
-                    app:tl_textUnselectColor="@color/color_999999"
-                    app:tl_textsize="@dimen/sp_15" />
+                    app:tl_textUnselectColor="@color/color_333333"
+                    app:tl_textsize="@dimen/sp_16" />
 
             </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
@@ -231,7 +282,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.zjzy.morebit.view.NoScrollViewPager
+            <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -254,21 +305,27 @@
     <LinearLayout
         android:id="@+id/ll_num"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:visibility="gone">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_F0F1F5" />
+
         <TextView
             android:id="@+id/people_num_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:background="@color/color_FFFFFF"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
             android:text=""
             android:textColor="@color/color_EE403A"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 </RelativeLayout>

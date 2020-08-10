@@ -156,7 +156,6 @@ public class AppletsActivity extends BaseActivity implements View.OnClickListene
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setText("小程序分享");
         txt_head_title.setTextSize(18);
-        txt_head_title.getPaint().setFakeBoldText(true);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top"
     android:layout_width="fill_parent"
     android:layout_height="45dp"
     android:orientation="vertical">
@@ -13,7 +14,7 @@
             style="@style/TopSizeTitle"
             android:layout_centerInParent="true"
             android:text=""
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/btn_back"
@@ -25,7 +26,8 @@
             android:paddingBottom="10dp">
 
             <ImageView
-                style="@style/TopSizeBack"
+                android:src="@drawable/btn_title_return_icon"
+                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true" />
         </LinearLayout>
@@ -35,6 +37,16 @@
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_centerVertical="true" />-->
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txt_head_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 

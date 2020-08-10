@@ -6,6 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.MainActivity;
@@ -76,13 +79,14 @@ public class HomeRedPackageDialog extends Dialog implements View.OnClickListener
             imgUrls.add(imageInfo.getThumb());
         }
         //简单使用
+        Log.e("sdfdf",imgUrls+"");
         mRoll_view_pager.setImages(imgUrls)
-                .setImageLoader(new GlideImageLoader( R.color.transparent))
+                .setImageLoader(new GlideImageLoader(R.color.transparent))
                 .setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
                         ImageInfo imageInfo = info.get(position);
-                        SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(),imageInfo.getId()+"",imageInfo.getOpen()+"","首页活动弹窗",0,imageInfo.getClassId()+"",imageInfo.getUrl());
+                        SensorsDataUtil.getInstance().advClickTrack(imageInfo.getTitle(), imageInfo.getId() + "", imageInfo.getOpen() + "", "首页活动弹窗", 0, imageInfo.getClassId() + "", imageInfo.getUrl());
                         BannerInitiateUtils.gotoAction((Activity) mContext, imageInfo);
                         HomeRedPackageDialog.this.dismiss();
                     }
@@ -90,6 +94,14 @@ public class HomeRedPackageDialog extends Dialog implements View.OnClickListener
                 .isAutoPlay(true)
                 .setDelayTime(4000)
                 .start();
+
+
+        ViewGroup.LayoutParams params = mRoll_view_pager.getLayoutParams();
+        params.width = mData.get(0).getWidth()*2;
+        params.height = mData.get(0).getHeight()*2;
+        mRoll_view_pager.setLayoutParams(params);
+
+
     }
 
 
@@ -117,16 +129,17 @@ public class HomeRedPackageDialog extends Dialog implements View.OnClickListener
                     protected void onSuccess(List<ImageInfo> data) {
                         action.invoke(data);
                         List<Records> records = data.get(0).getRecords();
-                        MyLog.i("test","times: " +records);
-                        Log.d("RequestPopupBean", "onError: records  "+records);
-                        if (records!=null&&records.size()>0) {
-                            App.getACache().put(C.sp.homeRedPagckageRecord,  (ArrayList)records);
+                        MyLog.i("test", "times: " + records);
+                        Log.d("RequestPopupBean", "onError: records  " + records);
+                        if (records != null && records.size() > 0) {
+                            App.getACache().put(C.sp.homeRedPagckageRecord, (ArrayList) records);
+
+
                         }
                     }
 
                 });
     }
-
 
 
 }

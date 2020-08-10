@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.HomeFragment;
@@ -154,6 +155,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     @BindView(R.id.status_bar)
     View status_bar;
     private int  search_type;
+    private XTabLayout xablayout;
+    private ArrayList<String> title=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +167,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     }
 
     public void inview() {
+        xablayout= (XTabLayout) findViewById(R.id.xablayout);
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //处理全屏显示
             ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
@@ -255,6 +261,31 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         getTodayTitle();
         getTodayGood();
 
+        if (search_type==0){
+            xablayout.getTabAt(0).select();
+        }else if (search_type==1){
+            xablayout.getTabAt(1).select();
+        }else if (search_type==2){
+            xablayout.getTabAt(2).select();
+        }
+        xablayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(XTabLayout.Tab tab) {
+                int position=tab.getPosition();
+                search_type=position;
+            }
+
+            @Override
+            public void onTabUnselected(XTabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(XTabLayout.Tab tab) {
+
+            }
+        });
+
     }
 
     @OnTextChanged(value = R.id.search_et, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -281,7 +312,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.search:
-                goToSearch();
+               // goToSearch();
+                finish();
                 break;
             case R.id.clearLy: //清楚历史数据
                 openCleanDataDialog();

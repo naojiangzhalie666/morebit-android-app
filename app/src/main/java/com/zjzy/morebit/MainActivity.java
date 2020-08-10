@@ -22,15 +22,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.gyf.barlibrary.ImmersionBar;
-import com.trello.rxlifecycle2.components.support.RxFragment;
-import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.LocalData.CommonLocalData;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -44,13 +43,12 @@ import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.CircleFragment;
 import com.zjzy.morebit.fragment.MineFragment;
 import com.zjzy.morebit.fragment.NumberFragment;
-import com.zjzy.morebit.fragment.NumberSubFragment;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.home.contract.MainContract;
+import com.zjzy.morebit.home.fragment.HomeOtherFragment;
 import com.zjzy.morebit.home.presenter.MainPresenter;
 import com.zjzy.morebit.interfaces.GuideNextCallback;
 import com.zjzy.morebit.main.ui.dialog.HomeRedPackageDialog;
-import com.zjzy.morebit.main.ui.fragment.HomeCollegeFragment;
 import com.zjzy.morebit.main.ui.fragment.SuperNavigationFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
@@ -64,7 +62,6 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.LogoutEvent;
-import com.zjzy.morebit.pojo.event.MyGrowthEvent;
 import com.zjzy.morebit.pojo.event.OpenCategoryEvent;
 import com.zjzy.morebit.pojo.event.OpenNumberEvent;
 import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
@@ -82,7 +79,6 @@ import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PutErrorUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
-import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.ACache;
@@ -92,7 +88,6 @@ import com.zjzy.morebit.utils.appDownload.update_app.UpdateAppBean;
 import com.zjzy.morebit.utils.fire.DeviceIDUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.view.AuthForPersonDialog;
-import com.zjzy.morebit.view.ConsCommissionRuleDialog;
 import com.zjzy.morebit.view.GrayUpgradeDialog;
 import com.zjzy.morebit.view.NoScrollViewPager;
 import com.zjzy.morebit.view.main.SysNotificationView;
@@ -120,7 +115,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     public static boolean isNetwork = true;
     private RelativeLayout rl_mine, rl_community, rl_homepage, rl_shop, rl_number;
     //Fragment
-    HomeFragment homePageFragment;
+    HomeOtherFragment homePageFragment;
     BaseMainFragmeng superNavigationFragment;
     BaseMainFragmeng circleFragment;
     //    BaseMainFragmeng collegeFragment;
@@ -148,6 +143,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     private AuthForPersonDialog mAuthForPersonDialog;
 
     private AuthForPersonDialog.OnAuthListener mAuthListener;
+    private ImageView img_vip,iv_number;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -374,6 +370,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                         }
                     }
                 }, 1000);
+
+
+
                 mHomeRedPackageDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -589,6 +588,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     }
 
     public void initView() {
+        iv_number= (ImageView) findViewById(R.id.iv_number);
+        img_vip= (ImageView) findViewById(R.id.img_vip);
         rl_mine = (RelativeLayout) findViewById(R.id.rl_mine);
         rl_community = (RelativeLayout) findViewById(R.id.rl_community);
         rl_homepage = (RelativeLayout) findViewById(R.id.rl_homepage);
@@ -607,7 +608,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         rl_homepage.setSelected(true);
 
         mViewPager = (NoScrollViewPager) findViewById(R.id.viewPager);
-        homePageFragment = new HomeFragment();
+        homePageFragment = new HomeOtherFragment();
         superNavigationFragment = new SuperNavigationFragment();
 //        collegeFragment = new HomeCollegeFragment();
         numberFragment = new NumberFragment();
@@ -624,7 +625,7 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         mViewPager.setAdapter(myFragmentPagerAdapter);
         mViewPager.setOffscreenPageLimit(5);
 
-        ((HomeFragment) homePageFragment).setmGuideNextCallback(new GuideNextCallback() {
+        ((HomeOtherFragment) homePageFragment).setmGuideNextCallback(new GuideNextCallback() {
             @Override
             public void nextGuide() {
                 if (LoginUtil.checkIsLogin(MainActivity.this, false) && UserLocalData.isShowGuide()) {
@@ -634,9 +635,21 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             }
         });
 
-
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("system");//名字
+        this.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("system")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
+                mPresenter.getSysNotification(MainActivity.this, true);
+            }
+        }
+    };
 
     @Subscribe  //订阅事件
     public void onEventMainThread(MessageEvent event) {
@@ -644,11 +657,14 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
             if (homePageFragment != null) {
                 homePageFragment.getLoginView();
             }
-            mPresenter.getSysNotification(this, true);
+
 
         } else if (event.getAction().equals(EventBusAction.ACTION_SCHOOL)) {
             //打开会员首页
             onClick(rl_number);
+        }else if (event.getAction().equals(EventBusAction.ACTION_HOME)){
+            //打开首页
+            onClick(rl_homepage);
         }
     }
 
@@ -833,14 +849,18 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 mViewPager.setCurrentItem(0, false);
                 if (homePageFragment != null) {
                     if (mViewPager.getCurrentItem() == curPosition) {
-                        ((HomeFragment) homePageFragment).selectFirst();
+                        ((HomeOtherFragment) homePageFragment).selectFirst();
                     }
                 }
                 curPosition = C.mainPage.HOME;
                 setSysNotificationView();
+                img_vip.setVisibility(View.GONE);
+                iv_number.setVisibility(View.VISIBLE);
 
                 break;
             case R.id.rl_shop: //分类
+                img_vip.setVisibility(View.GONE);
+                iv_number.setVisibility(View.VISIBLE);
                 mViewPager.setCurrentItem(1, false);
                 curPosition = C.mainPage.SUPER_NAVIGATION;
                 superNavigationFragment.onResume();
@@ -850,6 +870,8 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 if (!LoginUtil.checkIsLogin(MainActivity.this)) {
                     return;
                 }
+                img_vip.setVisibility(View.VISIBLE);
+                iv_number.setVisibility(View.INVISIBLE);
                 //会员
                 mViewPager.setCurrentItem(2, false);
                 curPosition = C.mainPage.NUMBER;
@@ -858,17 +880,19 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 setSysNotificationView();
                 break;
             case R.id.rl_community: //发圈
+                img_vip.setVisibility(View.GONE);
+                iv_number.setVisibility(View.VISIBLE);
+
                 mViewPager.setCurrentItem(3, false);
                 curPosition = C.mainPage.CIRCLE;
                 setSysNotificationView();
                 break;
             case R.id.rl_mine: //我的
-                if (!LoginUtil.checkIsLogin(MainActivity.this)) {
-                    return;
-                }
+                img_vip.setVisibility(View.GONE);
+                iv_number.setVisibility(View.VISIBLE);
                 mViewPager.setCurrentItem(4, false);
                 curPosition = C.mainPage.MINE;
-                setSysNotificationView();
+                 setSysNotificationView();
                 break;
 
             default:
@@ -917,6 +941,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
         }
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
+        }
+        if (mRefreshBroadcastReceiver!=null){
+            unregisterReceiver(mRefreshBroadcastReceiver);
         }
         super.onDestroy();
     }

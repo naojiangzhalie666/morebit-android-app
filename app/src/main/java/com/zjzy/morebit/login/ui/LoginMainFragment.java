@@ -72,6 +72,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
     private TextView tv_bind;
 
    private int phoneLength = 11; //默认是中国11位
+    private int sphoneLengh=8;//国外手机位数
     private String areaCode = "86"; //默认是中国的86
     private AreaCodeBean mAreaCode;
     private boolean wxLoginFlag = false;
@@ -193,10 +194,10 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
                 break;
             case R.id.next_login:
                String  mEditPhone = edtPhone.getText().toString().trim();
-               if (!isMobile()){
-                   ToastUtils.showLong("请输入正确的手机号");
-                   return;
-               }
+//               if (!isMobile()){
+//                   ToastUtils.showLong("请输入正确的手机号");
+//                   return;
+//               }
                 if (mEditPhone != null  && checkPhone()) {
                     if (mid==2){
                         mPresenter.checkoutPhone(this,mEditPhone,1,areaCode);
@@ -225,7 +226,7 @@ public class LoginMainFragment extends MvpFragment<LoginMainPresenter> implement
             return false;
         }
 
-        if (mEditPhone != null  && "86".equals(areaCode) && mEditPhone.length() < phoneLength || mEditPhone.length()> phoneLength) {
+        if (mEditPhone != null  && mEditPhone.length() < C.PHONE.MIN_LENGTH  || mEditPhone.length()> C.PHONE.MAX_LENGTH ) {
             return false;
         }else if(mEditPhone != null  && mEditPhone.length() < C.PHONE.MIN_LENGTH ){
             return false;

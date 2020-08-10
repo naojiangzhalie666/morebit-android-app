@@ -23,10 +23,9 @@ import io.reactivex.functions.Action;
 public class CollectPresenter extends MvpPresenter<MainModel, CollectContract.View> implements CollectContract.Present {
 
     @Override
-    public void getCollectData(CollectFragment2 fragment, int page, CommonEmpty emptyView) {
+    public void getCollectData(CollectFragment2 fragment, int page) {
 
         mModel.getCollectData(fragment, page)
-                .compose(emptyView.<BaseResponse<List<ShopGoodInfo>>>bind())
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -34,6 +33,12 @@ public class CollectPresenter extends MvpPresenter<MainModel, CollectContract.Vi
                     }
                 })
                 .subscribe(new DataObserver<List<ShopGoodInfo>>() {
+
+                    @Override
+                    protected void onDataListEmpty() {
+                        getIView().showEmity();
+
+                    }
 
                     @Override
                     protected void onError(String errorMsg, String errCode) {

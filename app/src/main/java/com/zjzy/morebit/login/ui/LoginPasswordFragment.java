@@ -77,7 +77,7 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
     private int phoneLength = 11; //默认是中国11位
     private String areaCode = "86";
     private RelativeLayout rl;//返回键
-    private TextView next_login;
+    private TextView next_login,tv_area;
     private NestedScrollView netscroll;
     @Override
     protected int getViewLayout() {
@@ -114,6 +114,10 @@ public class LoginPasswordFragment extends MvpFragment<LoginPasswordPresenter> i
         mAreaCode = (AreaCodeBean) getArguments().getSerializable(C.Extras.COUNTRY);
         mEdtPhoneText = mPhone.trim();
         rl=view.findViewById(R.id.rl);
+        tv_area=view.findViewById(R.id.tv_area);
+        if (!TextUtils.isEmpty(mAreaCode.getAreaCode())){
+            tv_area.setText("+"+mAreaCode.getAreaCode());
+        }
 
 
 

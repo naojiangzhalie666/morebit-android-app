@@ -9,11 +9,15 @@
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="12dp"
         android:background="@color/white">
 
         <ImageView
             android:id="@+id/back"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -63,6 +67,7 @@
             app:tl_indicator_height="3dp"
             app:tl_indicator_width="14dp"
             app:tl_tab_padding="25dp"
+            app:tl_tab_space_equal="true"
             app:tl_textSelectColor="@color/color_333333"
             app:tl_textUnselectColor="@color/color_999999"
             app:tl_textsize="@dimen/sp_14"

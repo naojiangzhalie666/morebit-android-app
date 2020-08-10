@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F5F5F5">
-    <include layout="@layout/toolbar_actionbar_no_shadow" />
+    android:background="@color/color_F0F1F5">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

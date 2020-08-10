@@ -10,6 +10,24 @@ public class RequestSearchBean implements Serializable {
     private String keywords;
     private String minId;
     private int searchType;
+    private String maxPrice;
+    private String minPrice;
+
+    public String getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(String maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public String getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(String minPrice) {
+        this.minPrice = minPrice;
+    }
 
     public int getSearchType() {
         return searchType;

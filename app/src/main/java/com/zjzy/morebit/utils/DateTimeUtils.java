@@ -660,6 +660,66 @@ public class DateTimeUtils {
         return shortString;
     }
 
+
+    public static String getShortTime2(String time) {
+        String shortString = null;
+        long now = Calendar.getInstance().getTimeInMillis();
+        Date date = getDateByString(time);
+        if (date == null) {
+            return shortString;
+        }
+        long delTime = (now - date.getTime()) / 1000;
+        if (delTime > 365 * 24 * 60 * 60) {
+            shortString = DateTimeUtils.ymdhmsToymd(time);
+        } else if (delTime > 24 * 60 * 60) {
+            if ((int) (delTime / (24 * 60 * 60))>7){
+                shortString = DateTimeUtils.ymdhmsToymd(time);
+            }else{
+                shortString = (int) (delTime / (24 * 60 * 60)) + "天前";
+            }
+
+        } else if (delTime > 60 * 60) {
+            shortString = (int) (delTime / (60 * 60)) + "小时前";
+        } else if (delTime > 60) {
+            shortString = (int) (delTime / (60)) + "分钟前";
+        } else if (delTime > 1) {
+            shortString = delTime + "秒前";
+        } else {
+            shortString = "1秒前";
+        }
+        return shortString;
+    }
+
+
+    public static String getShortTime3(String time) {
+        String shortString = null;
+        long now = Calendar.getInstance().getTimeInMillis();
+        Date date = getDateByString(time);
+        if (date == null) {
+            return shortString;
+        }
+        long delTime = (now - date.getTime()) / 1000;
+        if (delTime > 365 * 24 * 60 * 60) {
+            shortString = DateTimeUtils.ymdhmsToymd(time);
+        } else if (delTime > 24 * 60 * 60) {
+            if ((int) (delTime / (24 * 60 * 60))>7){
+                shortString = DateTimeUtils.ymdhmsToymd(time);
+            }else{
+                if ((int) (delTime / (24 * 60 * 60))==1){
+                    shortString ="昨天";
+                }else if ((int) (delTime / (24 * 60 * 60))==2){
+                    shortString ="前天";
+                }else{
+                    shortString = (int) (delTime / (24 * 60 * 60)) + "天前";
+                }
+            }
+
+        }else if (delTime > 60 * 60) {
+            shortString = "今天";
+        }
+        return shortString;
+    }
+
     /**
      * yyyy-MM-dd HH:mm:ss转
      *

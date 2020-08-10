@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
@@ -32,11 +34,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     private Context mContext;
     private FragmentManager fm;
     private int screenWidth = 0;
+    private List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> list;
 
-    public HomeMenuAdapter(Context mContext, int itmeWidth) {
+    public HomeMenuAdapter(Context mContext,/* int itmeWidth,*/List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> wheelChartDisplayVo) {
         mInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
-        mItmeWidth = itmeWidth;
+       // mItmeWidth = itmeWidth;
+        this.list=wheelChartDisplayVo;
     }
 
 
@@ -68,19 +72,29 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final HomeMenuAdapter.ViewHolder holder, int position) {
-        final ImageInfo imageInfo = mDatas.get(position);
-        if (imageInfo != null) {
+        final ImageInfo imageInfo = new ImageInfo();
+        final   DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean wheelChartDisplayVoBean = list.get(position);
+        imageInfo.setId(wheelChartDisplayVoBean.getId());
+        imageInfo.setMediaType(wheelChartDisplayVoBean.getMediaType());
+        imageInfo.setClassId(wheelChartDisplayVoBean.getClassId());
+        imageInfo.setTitle(wheelChartDisplayVoBean.getTitle());
+        imageInfo.setUrl(wheelChartDisplayVoBean.getUrl());
+        imageInfo.setOpen(wheelChartDisplayVoBean.getOpen());
+        imageInfo.setSort(wheelChartDisplayVoBean.getSort());
+        imageInfo.setSubTitle(wheelChartDisplayVoBean.getSubTitle());
+        imageInfo.setDesc(wheelChartDisplayVoBean.getDesc());
+        if (wheelChartDisplayVoBean != null) {
             if (null != holder.itemMainTitle) {
-                holder.itemMainTitle.setText(mDatas.get(position).getTitle());
+                holder.itemMainTitle.setText(wheelChartDisplayVoBean.getTitle());
             }
             if (null != holder.imageView) {
-                if (mItmeWidth != 0) {
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItmeWidth, mItmeWidth);
-                    holder.imageView.setLayoutParams(layoutParams);
-                    LinearLayout.LayoutParams itmeLayoutParams = new LinearLayout.LayoutParams(mItmeWidth,  LinearLayout.LayoutParams.WRAP_CONTENT );
-                    holder.itemLayout.setLayoutParams(itmeLayoutParams );
-                }
-                LoadImgUtils.setImg(mContext, holder.imageView, imageInfo.getPicture());
+//                if (mItmeWidth != 0) {
+//                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItmeWidth, mItmeWidth);
+//                    holder.imageView.setLayoutParams(layoutParams);
+//                    LinearLayout.LayoutParams itmeLayoutParams = new LinearLayout.LayoutParams(mItmeWidth,  LinearLayout.LayoutParams.WRAP_CONTENT );
+//                    holder.itemLayout.setLayoutParams(itmeLayoutParams );
+//                }
+                LoadImgUtils.setImg(mContext, holder.imageView, wheelChartDisplayVoBean.getPicture());
             }
         }
 
@@ -96,7 +110,11 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        if (list.size()>10){
+            return 10;
+        }else{
+            return list.size();
+        }
     }
 
 

@@ -3,7 +3,14 @@ package com.zjzy.morebit.main.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.pdf.PdfDocument;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +38,7 @@ import com.zjzy.morebit.main.presenter.CollectPresenter;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpFragment;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
+import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -40,6 +48,7 @@ import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.StringsUtils;
+import com.zjzy.morebit.utils.VerticalImageSpan;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.network.CommonEmpty;
 import com.zjzy.morebit.utils.action.MyAction;
@@ -67,14 +76,13 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     View ll_remove;
     @BindView(android.R.id.checkbox)
     ImageView mCheckbox;
-    @BindView(R.id.toolbar_right_title)
-    TextView editor;
     @BindView(R.id.ll_check_all)
     LinearLayout ll_check_all;
     @BindView(R.id.share)
     TextView share;
     @BindView(R.id.delete)
     TextView delete;
+    private Drawable drawable;
 
     private List<ShopGoodInfo> collectArray = new ArrayList<>(); //收藏
     int mPage = 1;
@@ -86,9 +94,11 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     private static final int REQUEST_COUNT = 10;
     private boolean isEditor;
     private String mCheckIds = "";
-    private CommonEmpty mEmptyView;
+    // private CommonEmpty mEmptyView;
     private boolean isAllSelect;
     private boolean isNoMore;
+    private LinearLayout searchNullTips_ly;
+    private TextView txt_head_title,txt_head_title2;
 
 //    public void onResume() {
 //        super.onResume();
@@ -105,24 +115,30 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     @Override
     protected void initData() {
-        MyLog.i("test","getData");
+        MyLog.i("test", "getData");
         getData(true);
     }
 
     @Override
     protected void initView(View view) {
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.my_collect));
-        editor.setVisibility(View.VISIBLE);
-        editor.setText(R.string.editor);
+        txt_head_title2= view.findViewById(R.id.txt_head_title2);
+        txt_head_title= view.findViewById(R.id.txt_head_title);
+        txt_head_title2.setText("管理");
+       // new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.my_collect));
+        txt_head_title.setText("我的收藏");
+        txt_head_title2.setVisibility(View.VISIBLE);
+        txt_head_title.setTextColor(Color.parseColor("#333333"));
+        txt_head_title2.setTextColor(Color.parseColor("#F05557"));
+        searchNullTips_ly = view.findViewById(R.id.searchNullTips_ly);
         mGuessGoodsAdapter = new CollectAdapter(getActivity());
         mRecyclerView.setAdapter(mGuessGoodsAdapter);
-        mEmptyView = new CommonEmpty(view, "您还没有收藏任何商品哦~", R.drawable.image_meiyoushoucang);
+        //    mEmptyView = new CommonEmpty(view, "",0);
 
         mRecyclerView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 scrollHeight = 0; //重置滚动高度为0
-                MyLog.i("test","getData");
+                MyLog.i("test", "getData");
                 getData(true);
             }
         });
@@ -131,8 +147,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             @Override
             public void onLoadMore() {
                 if (!mRecyclerView.getSwipeList().isRefreshing())
-                    MyLog.i("test","getData");
-                    getData(false);
+                    MyLog.i("test", "getData");
+                getData(false);
             }
         });
         ll_check_all.setOnClickListener(new View.OnClickListener() {
@@ -149,8 +165,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 mGuessGoodsAdapter.notifyDataSetChanged();
             }
         });
-        share.setText("分享");
-        delete.setVisibility(View.VISIBLE);
+
+
     }
 
     @Override
@@ -168,45 +184,45 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         if (isRefresh) {
             mPage = 1;
             mRecyclerView.getListView().setNoMore(false);
-            mEmptyView.setmFirstComplete(false);
+            //   mEmptyView.setmFirstComplete(false);
         }
 
-        mPresenter.getCollectData(this, mPage, mEmptyView);
+        mPresenter.getCollectData(this, mPage);
     }
 
 
-    @OnClick({R.id.delete, R.id.toolbar_right_title, R.id.empty_view,R.id.share})
+    @OnClick({R.id.txt_head_title2, R.id.share,R.id.btn_back})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.delete:
-                if (checkIsSelect()) {
-                    openlogoutDialog(0);
-//                    LoadingView.showDialog(getActivity(), "");
-//                    String ids = getIds();
-//                    mPresenter.getDeleteCollection(this, ids);
-                }
+            case R.id.btn_back:
+                getActivity().finish();
                 break;
-            case R.id.toolbar_right_title:
+            case R.id.txt_head_title2:
                 if (isEditor) {
                     isEditor = false;
                     mGuessGoodsAdapter.setEditor(false);
                     ll_remove.setVisibility(View.GONE);
-                    editor.setText(R.string.editor);
+                    txt_head_title2.setText(R.string.editor);
+
                 } else {
                     isEditor = true;
                     mGuessGoodsAdapter.setEditor(true);
                     ll_remove.setVisibility(View.VISIBLE);
-                    editor.setText(R.string.finish);
+                    txt_head_title2.setText(R.string.finish);
 
                 }
                 mGuessGoodsAdapter.notifyDataSetChanged();
                 break;
-            case R.id.empty_view:
-                MyLog.i("test","getData");
-                getData(true);
-                break;
+
             case R.id.share:
-                shareGoods();
+                // shareGoods();
+
+            if (checkIsSelect()) {
+                openlogoutDialog(0);
+//                    LoadingView.showDialog(getActivity(), "");
+//                    String ids = getIds();
+//                    mPresenter.getDeleteCollection(this, ids);
+              }
                 break;
         }
     }
@@ -216,7 +232,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         isAllSelect = false;
         isNoMore = false;
         ll_remove.setVisibility(View.GONE);
-        editor.setVisibility(View.GONE);
+        txt_head_title.setVisibility(View.GONE);
+        searchNullTips_ly.setVisibility(View.VISIBLE);
 
     }
 
@@ -242,7 +259,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
      * @param select
      */
     private void setItemStatus(boolean select) {
-        for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
+        for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getShop()) {
             shopGoodInfo.setSelect(select);
         }
     }
@@ -266,18 +283,18 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     @Override
     public void showCollectSuccess(List<ShopGoodInfo> data) {
-        if (mPage == 1) {
-            collectArray.clear();
-            collectArray.addAll(handlerData(data));
-            mGuessGoodsAdapter.replace(collectArray);
+        if (data != null) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            searchNullTips_ly.setVisibility(View.GONE);
+            if (mPage == 1) {
+                mGuessGoodsAdapter.setData(data);
+            } else {
+                mGuessGoodsAdapter.addData(data);
+            }
         } else {
-            collectArray.addAll(handlerData(data));
-            mGuessGoodsAdapter.replace(collectArray);
+            searchNullTips_ly.setVisibility(View.VISIBLE);
         }
-        setItemStatus(isAllSelect);
         mPage++;
-        mRecyclerView.notifyDataSetChanged();
-
     }
 
 
@@ -286,8 +303,16 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         ViewShowUtils.showShortToast(getActivity(), getString(R.string.delete_success));
         mCheckIds = "";
         mCheckbox.setSelected(false);
-        mEmptyView.setmFirstComplete(false);
+        // mEmptyView.setmFirstComplete(false);
         getData(true);
+    }
+
+    @Override
+    public void showEmity() {
+        if (mPage == 1) {
+            searchNullTips_ly.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
     }
 
 
@@ -328,8 +353,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     private void deleteGoods() {
         StringBuffer ids = new StringBuffer();
-        for (int i = 0; i < mGuessGoodsAdapter.getItems().size(); i++) {
-            ShopGoodInfo shopGoodInfo = mGuessGoodsAdapter.getItem(i);
+        for (int i = 0; i < mGuessGoodsAdapter.getShop().size(); i++) {
+            ShopGoodInfo shopGoodInfo = mGuessGoodsAdapter.getShop().get(i);
             if (shopGoodInfo.getType() == 0) {
                 if (shopGoodInfo.isSelect()) {
                     ids.append(shopGoodInfo.getId() + ",");
@@ -339,278 +364,142 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         MyLog.i("test", "ids.to: " + ids.toString());
         MyLog.i("test", "ids: " + ids.toString().substring(0, ids.lastIndexOf(",")));
         mPresenter.getDeleteCollection(CollectFragment2.this, ids.toString());
+
     }
 
-    public List<ShopGoodInfo> handlerData(List<ShopGoodInfo> datas) {
-        List<ShopGoodInfo> list = new ArrayList<>();
-        List<ShopGoodInfo> allList = new ArrayList<>();
-        allList.addAll(collectArray);
-        allList.addAll(datas);
-        int index = collectArray.size();
-        for (int i = index; i < allList.size(); i++) {
-            String date = DateTimeUtils.getYMDTime(allList.get(i).getCreateTime());
-            if (i == 0) {
-                if (!TextUtils.isEmpty(date)) {
-                    ShopGoodInfo shopGoodInfo = new ShopGoodInfo();
-                    shopGoodInfo.setType(1);
-                    if (DateTimeUtils.IsToday(date)) {
-                        shopGoodInfo.setTime("今日");
-                    } else if (DateTimeUtils.IsYesterday(date)) {
-                        shopGoodInfo.setTime("昨日");
-                    } else {
-                        shopGoodInfo.setTime(date);
-                    }
-                    list.add(shopGoodInfo);
-                }
-                list.add(allList.get(i));
-            } else {
-                String date1 = DateTimeUtils.getYMDTime(allList.get(i - 1).getCreateTime());
-                if (!TextUtils.isEmpty(date) && !date.equals(date1)) {
-                    ShopGoodInfo shopGoodInfo = new ShopGoodInfo();
-                    shopGoodInfo.setType(1);
-                    if (DateTimeUtils.IsToday(date)) {
-                        shopGoodInfo.setTime("今日");
-                    } else if (DateTimeUtils.IsYesterday(date)) {
-                        shopGoodInfo.setTime("昨日");
-                    } else {
-                        shopGoodInfo.setTime(date);
-                    }
 
-                    list.add(shopGoodInfo);
-                }
-                list.add(allList.get(i));
-            }
-
-        }
-        return list;
-    }
-
-    class CollectAdapter extends SimpleAdapter<ShopGoodInfo, SimpleViewHolder> {
+    class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHolder> {
         Context mContext;
         private boolean isEditor;//收藏列表是否是编辑状态
+        private List<ShopGoodInfo> list=new ArrayList<>();
 
 
         public CollectAdapter(Context context) {
-            super(context);
             mContext = context;
 
         }
-
-        @Override
-        public int getItemViewType(int position) {
-            if (getItem(position).getType() == 1) {
-                return 1;
+        public void setData(List<ShopGoodInfo> data) {
+            if (data != null) {
+                list.clear();
+                list.addAll(data);
+                notifyDataSetChanged();
             }
-            return 0;
         }
+
+
+        public void addData(List<ShopGoodInfo> data) {
+            if (data != null) {
+                list.addAll(data);
+                notifyItemRangeChanged(0, data.size());
+            }
+        }
+
+        public List<ShopGoodInfo> getShop(){
+            return list;
+        }
+
+
+
         @Override
-        public void onBindViewHolder(SimpleViewHolder holder, int position) {
-            final ShopGoodInfo item = getItem(position);
-            if (holder instanceof TimeViewHolder) {
-                TextView time = holder.viewFinder().view(R.id.time);
-                ImageView checkbox = holder.viewFinder().view(R.id.checkbox_time);
-                time.setText(item.getTime());
-                if (isEditor) {
-                    if (checkSelectByTime(item.getTime())) {
-                        item.setSelect(true);
-                    } else {
-                        item.setSelect(false);
-                    }
-                    checkbox.setVisibility(View.VISIBLE);
-                } else {
-                    checkbox.setVisibility(View.GONE);
-                }
-                checkbox.setSelected(item.isSelect());
-                holder.viewFinder().view(R.id.checkbox_time_ll).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        item.setSelect(!item.isSelect());
-                        setSelectOderByTime(item.isSelect(), item.getTime());
-                        if (checkSelect() && isNoMore) {
-                            isAllSelect = true;
-                            mCheckbox.setSelected(true);
-                        } else {
-                            isAllSelect = false;
-                            mCheckbox.setSelected(false);
-                        }
-                        notifyDataSetChanged();
-                    }
-                });
+        public int getItemCount() {
+            return list == null ? 0 : list.size();
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+            final ShopGoodInfo item = list.get(position);
+            LoadImgUtils.loadingCornerBitmap(mContext, holder.goods_bg, item.getItemPicture(), 5);
+
+            if (!StringsUtils.isShowVideo(item.getVideoid())) {
+                holder.video_play.setVisibility(View.GONE);
             } else {
-                TextView title = holder.viewFinder().view(R.id.title);
-                TextView commission = holder.viewFinder().view(R.id.commission);
-                TextView coupon = holder.viewFinder().view(R.id.coupon);
-                TextView discount_price = holder.viewFinder().view(R.id.discount_price);
-                TextView price = holder.viewFinder().view(R.id.price);
-                TextView tv_shop_name = holder.viewFinder().view(R.id.tv_shop_name);
-                TextView sales = holder.viewFinder().view(R.id.sales);
-//                TextView browse_time = holder.viewFinder().view(R.id.browse_time);
-                ImageView goods_bg = holder.viewFinder().view(R.id.goods_bg);
-                ImageView video_play = holder.viewFinder().view(R.id.video_play);
-                ImageView good_mall_tag = holder.viewFinder().view(R.id.good_mall_tag);
-                final ImageView checkbox = holder.viewFinder().view(R.id.checkbox);
-                 View line = holder.viewFinder().view(R.id.line);
-                LinearLayout ll_return_cash = holder.viewFinder().view(R.id.ll_return_cash);
-                TextView subsidiesPriceTv = holder.viewFinder().view(R.id.subsidiesPriceTv);
-                LinearLayout ll_shop_name=holder.viewFinder().view(R.id.ll_shop_name);
+                holder.video_play.setVisibility(View.VISIBLE);
+            }
+            if (StringsUtils.isEmpty(item.getCouponPrice() + "")) {
+                holder.coupon.setVisibility(View.GONE);
+            } else {
+                holder.coupon.setVisibility(View.VISIBLE);
+                holder.coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
+            }
+//
 
-//                if (!TextUtils.isEmpty(item.getItemPicture())) {
-                LoadImgUtils.setImg(mContext, goods_bg, item.getPicture());
-//                } else {
-//                    goods_bg.setImageResource(R.drawable.);
-//                }
-//                browse_time.setText(TimeUtils.millis2String(item.getBrowse_time()));
-                //判断是淘宝还是天猫的商品
-
-
-                if (!TextUtils.isEmpty(item.getTitle())) {
-                    StringsUtils.retractTitle(good_mall_tag,title,item.getTitle());
-                }
-                if (!StringsUtils.isShowVideo(item.getVideoid())) {
-                    video_play.setVisibility(View.GONE);
-                } else {
-                    video_play.setVisibility(View.VISIBLE);
-                }
-                if (StringsUtils.isEmpty(item.getCouponPrice() + "")) {
-                    ll_return_cash.setVisibility(View.GONE);
-                } else {
-                    ll_return_cash.setVisibility(View.VISIBLE);
-                    coupon.setText(getString(R.string.yuan, MathUtils.getnum(item.getCouponPrice())));
-                }
-//                commission.setVisibility(View.GONE);
-                //店铺名称
-                if (!TextUtils.isEmpty(item.getShopName())) {
-                    tv_shop_name.setText(item.getShopName());
-                }
-                if (C.UserType.operator.equals(UserLocalData.getUser(mContext).getPartner()) || C.UserType.vipMember.equals(UserLocalData.getUser(mContext).getPartner())) {
-                    commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
-                } else {
-                    UserInfo userInfo1 =UserLocalData.getUser();
-                    if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
-                        commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission())));
-                    }else{
-                        commission.setText(getString(R.string.commission, MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), item.getCommission())));
-                    }
-//                    commission.setText(getString(R.string.upgrade_commission));
-                }
-                discount_price.setText(getString(R.string.income, MathUtils.getnum(item.getVoucherPrice())));
-                price.setText(getString(R.string.income, MathUtils.getnum(item.getPrice())));
-                price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-                sales.setText(getString(R.string.sales, MathUtils.getSales(item.getSaleMonth())));
-                //平台补贴
-//                if(!TextUtils.isEmpty(item.getSubsidiesPrice())){
-//                    subsidiesPriceTv.setVisibility(View.VISIBLE);
-//                    String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(mContext).getCalculationRate(),item.getSubsidiesPrice());
-//                    subsidiesPriceTv.setText(mContext.getString(R.string.subsidiesPrice, getRatioSubside));
-//                }else{
-//                    subsidiesPriceTv.setVisibility(View.GONE);
-//                    subsidiesPriceTv.setText("");
-//                }
-
-                if(position+1<getItems().size()){
-                    if(TextUtils.isEmpty(getItem(position+1).getCreateTime())&&!TextUtils.isEmpty(getItem(position+1).getTime())){
-                        line.setVisibility(View.GONE);
-                    } else {
-                        line.setVisibility(View.VISIBLE);
-                    }
-                }
-                if (isEditor) {
-                    checkbox.setVisibility(View.VISIBLE);
-                } else {
-                    checkbox.setVisibility(View.GONE);
-                }
-                checkbox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        item.setSelect(!item.isSelect());
-                        if (checkSelect() && isNoMore) {
-                            isAllSelect = true;
-                            checkbox.setSelected(true);
-                        } else {
-                            isAllSelect = false;
-                            checkbox.setSelected(false);
-                        }
-                        notifyDataSetChanged();
-                    }
-                });
-                checkbox.setSelected(item.isSelect());
-                if (item.getShopType()==2) {
-                    good_mall_tag.setImageResource(R.drawable.tianmao);
-                    ll_shop_name.setVisibility(View.VISIBLE);
-                    sales.setVisibility(View.VISIBLE);
-                } else if (item.getShopType() == 1) {
-                    good_mall_tag.setImageResource(R.drawable.taobao);
-                    ll_shop_name.setVisibility(View.VISIBLE);
-                    sales.setVisibility(View.VISIBLE);
-                    //拼多多
-                }else if (item.getShopType() == 3){
-                    good_mall_tag.setImageResource(R.drawable.pdd_icon);
-                    ll_shop_name.setVisibility(View.VISIBLE);
-                    sales.setVisibility(View.VISIBLE);
-                }else if (item.getShopType()==4){//京东
-                    good_mall_tag.setImageResource(R.mipmap.jdong_icon);
-                    ll_shop_name.setVisibility(View.VISIBLE);
-                    sales.setVisibility(View.VISIBLE);
-
-                }else if (item.getShopType()==5){//考拉
-                    good_mall_tag.setImageResource(R.mipmap.kaola);
-                    ll_shop_name.setVisibility(View.INVISIBLE);
-                    sales.setVisibility(View.GONE);
-
-                }else if (item.getShopType()==6){//唯品会
-                    good_mall_tag.setImageResource(R.mipmap.wph_icon);
-                    sales.setVisibility(View.GONE);
-                    tv_shop_name.setText(""+item.getShopName());
-                }
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (isEditor) {
-                            checkbox.performClick();
-                        } else {
-                            ShopGoodInfo shopGoodInfo = (ShopGoodInfo) MyGsonUtils.jsonToBean(MyGsonUtils.beanToJson(item), ShopGoodInfo.class);
-
-                            if (shopGoodInfo == null) return;
-                            if (item.getShopType() == 3){
-                                String itemSourceId = item.getItemSourceId();
-                                shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
-                                shopGoodInfo.setItemSource("2");
-                                shopGoodInfo.setPrice(item.getPrice());
-                                GoodsDetailForPddActivity.start(mContext,shopGoodInfo);
-                            }else if (item.getShopType()==4){
-                                String itemSourceId = item.getItemSourceId();
-                                shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
-                                shopGoodInfo.setItemSource("1");
-                                shopGoodInfo.setPrice(item.getPrice());
-                                GoodsDetailForJdActivity.start(mContext,shopGoodInfo);
-                            } else if (item.getShopType()==5){
-                                GoodsDetailForKoalaActivity.start(getActivity(),shopGoodInfo.getItemSourceId());
-                            } else if (item.getShopType()==6){
-                                GoodsDetailForWphActivity.start(getActivity(),shopGoodInfo.getItemSourceId());
-                            }else{
-                                GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
-                                    @Override
-                                    public void invoke(ShopGoodInfo arg) {
-                                        MyLog.i("test", "arg: " + arg);
-                                        GoodsDetailActivity.start(mContext, arg);
-                                    }
-                                });
-
-                            }
-//                            GoodsDetailActivity.start(mContext, shopGoodInfo);
-                        }
-                    }
-                });
+            if (!TextUtils.isEmpty(item.getCommission())) {
+                holder.commission.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(C.SysConfig.NUMBER_COMMISSION_PERCENT_VALUE, item.getCommission()));
             }
 
+            holder.discount_price.setText(MathUtils.getnum(item.getItemVoucherPrice()));
 
 
+            if (isEditor) {
+                holder.checkbox.setVisibility(View.VISIBLE);
+            } else {
+                holder.checkbox.setVisibility(View.GONE);
+            }
 
+            holder.checkbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    item.setSelect(!item.isSelect());
+                    if (checkSelect() && isNoMore) {
+                        isAllSelect = true;
+                        holder.checkbox.setSelected(true);
+                    } else {
+                        isAllSelect = false;
+                        holder.checkbox.setSelected(false);
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+            holder.checkbox.setSelected(item.isSelect());
+
+            if (!TextUtils.isEmpty(item.getItemTitle())) {
+                holder.title.setText(item.getItemTitle());
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isEditor) {
+                        holder.checkbox.performClick();
+                    } else {
+                        ShopGoodInfo shopGoodInfo = (ShopGoodInfo) MyGsonUtils.jsonToBean(MyGsonUtils.beanToJson(item), ShopGoodInfo.class);
+
+                        if (shopGoodInfo == null) return;
+                        if (item.getShopType() == 3) {
+                            String itemSourceId = item.getItemSourceId();
+                            shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                            shopGoodInfo.setItemSource("2");
+                            shopGoodInfo.setPrice(item.getPrice());
+                            GoodsDetailForPddActivity.start(mContext, shopGoodInfo);
+                        } else if (item.getShopType() == 4) {
+                            String itemSourceId = item.getItemSourceId();
+                            shopGoodInfo.setGoodsId(Long.parseLong(itemSourceId));
+                            shopGoodInfo.setItemSource("1");
+                            shopGoodInfo.setPrice(item.getPrice());
+                            GoodsDetailForJdActivity.start(mContext, shopGoodInfo);
+                        } else if (item.getShopType() == 5) {
+                            GoodsDetailForKoalaActivity.start(getActivity(), shopGoodInfo.getItemSourceId());
+                        } else if (item.getShopType() == 6) {
+                            GoodsDetailForWphActivity.start(getActivity(), shopGoodInfo.getItemSourceId());
+                        } else {
+                            GoodsUtil.checkGoods((RxAppCompatActivity) mContext, shopGoodInfo.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
+                                @Override
+                                public void invoke(ShopGoodInfo arg) {
+                                    MyLog.i("test", "arg: " + arg);
+                                    GoodsDetailActivity.start(mContext, arg);
+                                }
+                            });
+
+                        }
+//                            GoodsDetailActivity.start(mContext, shopGoodInfo);
+                    }
+                }
+            });
         }
 
         private boolean checkSelect() {
             boolean isAllSelect = true;
-            for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
+            for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getShop()) {
                 if (!shopGoodInfo.isSelect()) {
                     isAllSelect = false;
                 }
@@ -618,35 +507,6 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             return isAllSelect;
         }
 
-
-        private boolean checkSelectByTime(String time) {
-            boolean isAllSelect = true;
-
-            for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
-                if (shopGoodInfo.getType() == 0) {
-                    String date = DateTimeUtils.getYMDTime(shopGoodInfo.getCreateTime() + "");
-                    if (DateTimeUtils.IsToday(date)) {
-                        shopGoodInfo.setTime("今日");
-                    } else if (DateTimeUtils.IsYesterday(date)) {
-                        shopGoodInfo.setTime("昨日");
-                    } else {
-                        shopGoodInfo.setTime(date);
-                    }
-                    if (time.equals(shopGoodInfo.getTime())) {
-                        if (!shopGoodInfo.isSelect()) {
-                            isAllSelect = false;
-                        }
-                    }
-                }
-
-            }
-            return isAllSelect;
-        }
-
-        @Override
-        protected View onCreateView(LayoutInflater layoutInflater, ViewGroup parent, int viewType) {
-            return layoutInflater.inflate(R.layout.item_goods_history, parent, false);
-        }
 
         public boolean isEditor() {
             return isEditor;
@@ -656,51 +516,41 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             isEditor = editor;
         }
 
+
+        @NonNull
         @Override
-        public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == 1)
-                return new TimeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_goods_history_time, parent, false));
-            return super.onCreateViewHolder(parent, viewType);
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_goods_history2, parent, false);
+            ViewHolder holder = new ViewHolder(view);
+            return holder;
+
         }
 
-        public class TimeViewHolder extends SimpleViewHolder {
-            public TimeViewHolder(View itemView) {
+
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            private TextView title, commission, coupon, discount_price;
+            private ImageView goods_bg, video_play, checkbox;
+
+            public ViewHolder(View itemView) {
                 super(itemView);
+                title = itemView.findViewById(R.id.tv_title);
+                commission = itemView.findViewById(R.id.tv_zhuan);
+                coupon = itemView.findViewById(R.id.coupon);
+                discount_price = itemView.findViewById(R.id.tv_price);
+
+                goods_bg = itemView.findViewById(R.id.goods_bg);
+                video_play = itemView.findViewById(R.id.video_play);
+
+                checkbox = itemView.findViewById(R.id.checkbox);
             }
         }
     }
 
-
-    /**
-     * 根据时间选择
-     *
-     * @param select
-     */
-
-    private void setSelectOderByTime(boolean select, String time) {
-
-        for (ShopGoodInfo shopGoodInfo : mGuessGoodsAdapter.getItems()) {
-            if (shopGoodInfo.getType() == 0) {
-                String date = DateTimeUtils.getYMDTime(shopGoodInfo.getCreateTime() + "");
-                if (DateTimeUtils.IsToday(date)) {
-                    shopGoodInfo.setTime("今日");
-                } else if (DateTimeUtils.IsYesterday(date)) {
-                    shopGoodInfo.setTime("昨日");
-                } else {
-                    shopGoodInfo.setTime(date);
-                }
-                if (time.equals(shopGoodInfo.getTime())) {
-                    shopGoodInfo.setSelect(select);
-                }
-
-            }
-
-        }
-    }
 
     private boolean checkIsSelect() {
         boolean isSelect = false;
-        for (ShopGoodInfo goodsHistory : mGuessGoodsAdapter.getItems()) {
+        for (ShopGoodInfo goodsHistory : mGuessGoodsAdapter.getShop()) {
             if (goodsHistory.getType() == 0) {
                 if (goodsHistory.isSelect() == true) {
                     isSelect = true;
@@ -711,47 +561,5 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         return isSelect;
     }
 
-    /**
-     * 分享商品
-     *
-     */
-    protected void shareGoods() {
-        List<ShopGoodInfo> shopGoodInfos = new ArrayList<>();
-        int size = mGuessGoodsAdapter.getItems().size();
-        boolean isHavePdd = false;
-        for(int i=0;i<size;i++){
-            ShopGoodInfo info = mGuessGoodsAdapter.getItem(i);
-            if(info.getType()==0){
-                if(info.isSelect()){
-                    shopGoodInfos.add(info);
-//                    if (info.getShopType() == 3 ||info.getShopType()==4 ||info.getShopType()==5){
-//                       isHavePdd = true;
-//                    }else{
-//
-//                    }
-                }
 
-
-            }
-        }
-
-        if(shopGoodInfos.size()>9){
-            ViewShowUtils.showShortToast(getActivity(),"最多可以选9个商品");
-            return;
-        }
-//        if (isHavePdd){
-//            ViewShowUtils.showShortToast(getActivity(),"暂时仅支持分享淘宝系商品");
-//        }
-        GoodsUtil.SharePosterList3(getActivity(), shopGoodInfos, new MyAction.OnResult<String>() {
-            @Override
-            public void invoke(String arg) {
-                LoadingView.dismissDialog();
-            }
-
-            @Override
-            public void onError() {
-                LoadingView.dismissDialog();
-            }
-        });
-    }
 }

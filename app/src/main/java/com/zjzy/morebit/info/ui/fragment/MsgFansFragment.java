@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
@@ -44,6 +46,8 @@ public class MsgFansFragment extends MvpFragment<MsgPresenter> implements MsgCon
     private MsgAdapter mAdapter;
 
     private CommonEmpty mEmptyView;
+    private TextView txt_head_title;
+    private LinearLayout btn_back;
 
     public static MsgFansFragment newInstance() {
         Bundle args = new Bundle();
@@ -61,7 +65,16 @@ public class MsgFansFragment extends MvpFragment<MsgPresenter> implements MsgCon
 
     @Override
     protected void initView(View view) {
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle("粉丝消息");
+        txt_head_title = (TextView) view.findViewById(R.id.txt_head_title);
+        txt_head_title.setText("粉丝消息");
+        txt_head_title.setTextSize(18);
+        btn_back = (LinearLayout) view.findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         mEmptyView = new CommonEmpty(view, getString(R.string.no_msg), R.drawable.image_meiyouxiaoxi);
         mAdapter = new MsgAdapter(getActivity());
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
@@ -96,7 +109,7 @@ public class MsgFansFragment extends MvpFragment<MsgPresenter> implements MsgCon
 
     @Override
     protected int getViewLayout() {
-        return R.layout.fragment_msg_list;
+        return R.layout.fragment_msg_list3;
     }
 
     @Override
@@ -117,9 +130,9 @@ public class MsgFansFragment extends MvpFragment<MsgPresenter> implements MsgCon
     @Override
     public void onMsgSuccessful(List<EarningsMsg> data) {
         if (page == 1) {
-            mAdapter.replace(data );
+            mAdapter.replace(data);
             mAdapter.notifyDataSetChanged();
-            if(data.size()<10){
+            if (data.size() < 10) {
                 mReUseListView.getListView().setFootViewVisibility(View.VISIBLE);
                 mReUseListView.getListView().setNoMore(true);
             }
@@ -173,14 +186,14 @@ public class MsgFansFragment extends MvpFragment<MsgPresenter> implements MsgCon
 //                }
 //
 //            } else {
-                ImageView iv_img = holder.viewFinder().view(R.id.iv_icon);
-                TextView tv_name = holder.viewFinder().view(R.id.tv_name);
-                TextView tv_content = holder.viewFinder().view(R.id.tv_content);
-                TextView tv_time = holder.viewFinder().view(R.id.time);
-                MyLog.i("test", "item.getPicture(): " + item.getPicture());
-                LoadImgUtils.setImgHead(mContext, iv_img, item.getPicture());
+            RoundedImageView iv_img = holder.viewFinder().view(R.id.iv_icon);
+            TextView tv_name = holder.viewFinder().view(R.id.tv_name);
+            TextView tv_content = holder.viewFinder().view(R.id.tv_content);
+            TextView tv_time = holder.viewFinder().view(R.id.time);
+            MyLog.i("test", "item.getPicture(): " + item.getPicture());
+            LoadImgUtils.setImg(mContext, iv_img, item.getPicture());
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tv_time.getLayoutParams();
-            layoutParams.setMargins(DensityUtil.dip2px(mContext,(float)10),DensityUtil.dip2px(mContext,(float)11),0,0);
+            layoutParams.setMargins(DensityUtil.dip2px(mContext, (float) 10), DensityUtil.dip2px(mContext, (float) 11), 0, 0);
             tv_time.setLayoutParams(layoutParams);
 //            if(!TextUtils.isEmpty(item.getPicture())){
 //                LoadImgUtils.setImg(mContext, iv_img,item.getPicture(),R.drawable.logo);
@@ -188,9 +201,9 @@ public class MsgFansFragment extends MvpFragment<MsgPresenter> implements MsgCon
 //                iv_img.setImageResource(R.drawable.logo);
 //            }
 
-                tv_name.setText(item.getTitle());
-                tv_content.setText(item.getDigest());
-                tv_time.setText(item.getCreate_time());
+            tv_name.setText(item.getTitle());
+            tv_content.setText(item.getDigest());
+            tv_time.setText(item.getCreate_time());
 //            }
 
         }

@@ -18,6 +18,7 @@ import com.zjzy.morebit.fragment.GoodsFeedBackFragment;
 import com.zjzy.morebit.fragment.NewcomersFragment;
 import com.zjzy.morebit.fragment.OfficialRecomFragment;
 import com.zjzy.morebit.fragment.PanicBuyFragment;
+import com.zjzy.morebit.fragment.PssChangeFragment;
 import com.zjzy.morebit.fragment.RenameFragment;
 import com.zjzy.morebit.fragment.SystemMsgDetailFragment;
 import com.zjzy.morebit.goods.shopping.ui.LoadComplaintOrderActivity;
@@ -71,7 +72,10 @@ public class OpenFragmentUtils {
         else if ("BindZhiFuBaoFragment".equals(fragmentName)) {
             return new BindZhiFuBaoFragment();
         }
-
+        //修改密码
+        else if ("PssChangeFragment".equals(fragmentName)) {
+            return new PssChangeFragment();
+        }
         //意见反馈-成功页面
         else if ("AppFeedBackSucessFragment".equals(fragmentName)) {
             return new AppFeedBackSucessFragment();
@@ -103,6 +107,10 @@ public class OpenFragmentUtils {
             return new GetMoneySucessFragment();
         }//官方公告
         else if ("OfficialNoticeFragment".equals(fragmentName)) {
+            return new OfficialNoticeFragment();
+        }
+        //粉丝页面
+        else if ("FansListFragment".equals(fragmentName)) {
             return new OfficialNoticeFragment();
         }
 

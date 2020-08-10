@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#00000000"
                 android:orientation="vertical">
 
 
@@ -9,35 +10,51 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_above="@+id/ll_tab"
+        android:layout_marginBottom="55dp"
         />
 
+
+
     <LinearLayout
+        android:id="@+id/ll"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rl_urgency_notifi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-        <TextView style="@style/line"/>
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="1dp"
+            android:background="@color/color_F0F1F5"
+            />
+
+
+
+        <LinearLayout
+
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
             android:background="@color/color_FFFFFF"
             >
+
+
+
 
             <RelativeLayout
                 android:id="@+id/rl_homepage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:paddingBottom="7dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
+                android:padding="0dip"
                 >
 
                 <ImageView
@@ -54,8 +71,9 @@
                     android:layout_below="@+id/iv_home"
                     android:layout_centerHorizontal="true"
                     android:text="首页"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/tv_index_bottom"
-                    android:textSize="10sp"/>
+                    android:textSize="11sp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -65,6 +83,7 @@
                 android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
+                android:paddingBottom="7dp"
                 android:padding="0dip">
 
                 <ImageView
@@ -81,10 +100,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/iv_category"
                     android:layout_centerHorizontal="true"
-
                     android:text="超级导航"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/tv_index_bottom"
-                    android:textSize="10sp"/>
+                    android:textSize="11sp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -92,6 +111,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:paddingBottom="7dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="0dip">
@@ -102,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="1dp"
-                    android:src="@drawable/btn_college"
+                    android:src="@drawable/tabbar_college"
                     />
 
                 <TextView
@@ -111,8 +131,9 @@
                     android:layout_below="@+id/iv_number"
                     android:layout_centerHorizontal="true"
                     android:text="VIP"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/tv_index_bottom"
-                    android:textSize="10sp"/>
+                    android:textSize="11sp"/>
             </RelativeLayout>
 
 
@@ -121,6 +142,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:paddingBottom="7dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="0dip">
@@ -140,8 +162,9 @@
                     android:layout_below="@+id/iv_circle"
                     android:layout_centerHorizontal="true"
                     android:text="发圈"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/tv_index_bottom"
-                    android:textSize="10sp"/>
+                    android:textSize="11sp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -149,6 +172,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:paddingBottom="7dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="0dip">
@@ -168,11 +192,34 @@
                     android:layout_below="@+id/iv_mine"
                     android:layout_centerHorizontal="true"
                     android:text="我的"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/tv_index_bottom"
-                    android:textSize="10sp"/>
+                    android:textSize="11sp"/>
 
             </RelativeLayout>
+
         </LinearLayout>
+
+
+
+
     </LinearLayout>
 
-</LinearLayout>
+
+
+
+
+
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/img_vip"
+        android:layout_centerHorizontal="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/tabbar_college_select"
+
+        />
+</RelativeLayout>

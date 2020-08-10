@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:layout_marginTop="60dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     android:background="@drawable/bg_manage_address_btn">
     <TextView
         android:id="@+id/manage_add_address"
@@ -17,7 +17,7 @@
         android:text="@string/add_goods_address"
         android:gravity="center"
         android:textColor="@color/color_FFFFFF"
-        android:textSize="@dimen/sp_15"
+        android:textSize="@dimen/sp_20"
         android:layout_centerInParent="true"
         />
 </RelativeLayout>

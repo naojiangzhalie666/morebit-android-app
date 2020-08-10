@@ -11,6 +11,7 @@ import android.util.Log;
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zjzy.morebit.Activity.AppletsActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.Activity.MyMaterialActivity;
@@ -42,6 +43,7 @@ import com.zjzy.morebit.main.ui.NoticeActivity;
 import com.zjzy.morebit.main.ui.fragment.ForeshowFragment;
 import com.zjzy.morebit.main.ui.fragment.GoodNewsFramgent;
 import com.zjzy.morebit.main.ui.fragment.JdChildFragment;
+import com.zjzy.morebit.main.ui.fragment.NineFragment;
 import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
 import com.zjzy.morebit.main.ui.fragment.PddFragment;
 import com.zjzy.morebit.main.ui.fragment.RankingFragment;
@@ -66,6 +68,7 @@ import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GlideImageLoader;
+import com.zjzy.morebit.utils.GlideImageLoader2;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
@@ -313,7 +316,8 @@ public class BannerInitiateUtils {
         } else if (type == C.BannerIntentionType.TQG) {
             GoodNewsFramgent.start(activity, info, C.GoodsListType.TAOQIANGGOU);
         } else if (type == C.BannerIntentionType.NINE) {
-            GoodNewsFramgent.start(activity, info, C.GoodsListType.NINEPINKAGE);
+           // GoodNewsFramgent.start(activity, info, C.GoodsListType.NINEPINKAGE);
+           OpenFragmentUtils.goToSimpleFragment(activity, NineFragment.class.getName(), null);
         } else if (type == C.BannerIntentionType.PANICBUY) {
             PanicBuyFragment.start(activity, info);
         } else if (type == C.BannerIntentionType.OFFICIALRECOM) {    //官方推荐
@@ -327,7 +331,9 @@ public class BannerInitiateUtils {
             }
 
         } else if (type == C.BannerIntentionType.TypeActivity) {// 专题列表
-            GoodNewsFramgent.start(activity, info);
+             GoodNewsFramgent.start(activity, info);
+           // OpenFragmentUtils.goToSimpleFragment(activity, NineFragment.class.getName(), null);
+
         } else if (type == C.BannerIntentionType.Newcomers) {// "新人课堂",
             NewcomersFragment.start(activity);
         } else if (type == C.BannerIntentionType.OfficialNotice) {// "官方公告",
@@ -427,7 +433,9 @@ public class BannerInitiateUtils {
             Log.e("ksjs", info.getUrl() + info.getTitle());
             KoalaWebActivity.start(activity, info.getUrl(), info.getTitle());
 
-        } else {
+        } else if (type == C.BannerIntentionType.XCX) {  //小程序
+            activity.startActivity(new Intent(activity, AppletsActivity.class));
+        }else {
             showUptate(activity, type);
         }
     }
@@ -581,7 +589,7 @@ public class BannerInitiateUtils {
     }
 
     public static void setBrandBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView) {
-        setBrandBanner(activity, data, banner, aspectRatioView, BannerConfig.RIGHT);
+        setBrandBanner(activity, data, banner, aspectRatioView, BannerConfig.CENTER);
     }
 
     public static void setJpBanner(final Activity activity, final List<ImageInfo> data, Banner banner, AspectRatioView aspectRatioView) {
@@ -665,7 +673,7 @@ public class BannerInitiateUtils {
         //简单使用
         banner.setImages(imgUrls)
                 .setIndicatorGravity(bannerConfigType)
-                .setImageLoader(new GlideImageLoader())
+                .setImageLoader(new GlideImageLoader2())
                 .setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {

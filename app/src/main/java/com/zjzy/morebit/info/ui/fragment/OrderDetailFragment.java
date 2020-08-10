@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * Created by haipingliu on 2019/12/25.
  */
 
-public class OrderDetailFragment extends BaseFragment {
+public class  OrderDetailFragment extends BaseFragment {
 
     @BindView(R.id.xTablayout)
     SlidingTabLayout mTablayout;
@@ -54,6 +54,7 @@ public class OrderDetailFragment extends BaseFragment {
     RelativeLayout mRlTitle;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+    private int yxTYPE=0;
 
     private OrderAdapter adapter;
 
@@ -64,6 +65,7 @@ public class OrderDetailFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_order_detail, container, false);
     }
+
 
     @OnClick({R.id.search, R.id.back})
     public void Onclick(View v) {
@@ -94,6 +96,7 @@ public class OrderDetailFragment extends BaseFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mTeamType = bundle.getInt(C.Extras.order_type, 1);
+            yxTYPE = bundle.getInt(C.Extras.YXTYPE, 0);
         }
         List<String> columns = new ArrayList<>();
         String[] titles = null ;
@@ -142,6 +145,26 @@ public class OrderDetailFragment extends BaseFragment {
         }
         setupViewPager(columns);
 
+
+        switch (yxTYPE){
+            case 0:
+                mTablayout.setCurrentTab(0);
+                break;
+            case 1:
+                mTablayout.setCurrentTab(1);
+                break;
+            case 2:
+                mTablayout.setCurrentTab(2);
+                break;
+            case 3:
+                mTablayout.setCurrentTab(3);
+                break;
+            case 4:
+                mTablayout.setCurrentTab(4);
+                break;
+
+        }
+
     }
 
     private void setupViewPager(final List<String> homeColumns) {
@@ -166,16 +189,13 @@ public class OrderDetailFragment extends BaseFragment {
                 return OrderListFragment.newInstance(5, mTeamType);
             } else if (getString(R.string.order_wait_pay).equals(homeColumns.get(position))) {
                 return OrderListFragment.newInstance(2, mTeamType);
-            } else if (getString(R.string.order_play).equals(homeColumns.get(position))) {
+            } else if ("待发货".equals(homeColumns.get(position))) {
                 return OrderListFragment.newInstance(1, mTeamType);
             }else if (getString(R.string.order_receive_goods).equals(homeColumns.get(position))){
                 return OrderListFragment.newInstance(6, mTeamType);
-            } else if (getString(R.string.order_close).equals(homeColumns.get(position))) {
-                return OrderListFragment.newInstance(3, mTeamType);
-            } else if (getString(R.string.order_invalid).equals(homeColumns.get(position))
-            || (getString(R.string.order_closed).equals(homeColumns.get(position)))) {
+            } else if ("已完成".equals(homeColumns.get(position))) {
                 return OrderListFragment.newInstance(4, mTeamType);
-            } else {
+            }  else {
                 return new Fragment();
             }
 

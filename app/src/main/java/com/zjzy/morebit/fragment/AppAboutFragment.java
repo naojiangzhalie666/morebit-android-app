@@ -66,30 +66,9 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
         mHandler = new Handler(Looper.getMainLooper(),this);
         inview(view);
         getAppInfo();
-        settingDevelop();
         return view;
     }
 
-    private void settingDevelop() {
-
-
-        mMSearviceIpRl.setOnClickListener(this);
-
-                //显示切换环境设置
-//                if (!showDevlep) {
-//
-//                }
-
-
-//        if (BuildConfig.IS_IP==0){
-//            mMSearviceIpRl.setVisibility(View.VISIBLE);
-//           // SPUtils.getInstance().put(C.Extras.KEY_SHOW_DEVELOPER_SETTING,true);
-//        }else{
-            mMSearviceIpRl.setVisibility(View.GONE);
-//        }
-       // showDevlep = SPUtils.getInstance().getBoolean(C.Extras.KEY_SHOW_DEVELOPER_SETTING, false);
-
-    }
 
     public void inview(View view) {
 //        ActivityStyleUtil.initSystemBar(getActivity(), R.color.color_757575); //设置标题栏颜色值
@@ -98,20 +77,14 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
         item_tv2 = (TextView) view.findViewById(R.id.item_tv2);
         icon_img=view.findViewById(R.id.icon_img);
 
-        //服务器ip环境设置
-        mMSearviceIpRl = view.findViewById(R.id.service_ip_rl);
-        mMSearviceIpRl.setOnClickListener(this);
-        name_ip_tv = view.findViewById(R.id.name_ip_tv);
-        name_ip_tv.setText(C.getInstance().getServerTypeName());
+
         view.findViewById(R.id.item2_rl).setOnClickListener(this);
-        view.findViewById(R.id.item_account_destroy).setOnClickListener(this);
+
         try {
             item_tv1.setText("V" + AppUtil.getVersionName(getActivity()));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        view.findViewById(R.id.item3_rl).setOnClickListener(this);
-        view.findViewById(R.id.item4_rl).setOnClickListener(this);
     }
 
     /**
@@ -182,58 +155,12 @@ public class AppAboutFragment extends BaseFragment implements View.OnClickListen
                     e.printStackTrace();
                 }
                 break;
-            case R.id.item_account_destroy:
-                if (TextUtils.isEmpty(mAccountDestroyHit)) {
-                    getAccountDestroyHint();
-                } else {
-                    openAccountDestroyDialog(mAccountDestroyHit);
-                }
-                break;
-            case R.id.item3_rl:
-                LoginUtil.getUserProtocolForHome((BaseActivity) getActivity());
-                break;
-
-            case R.id.item4_rl:
-                LoginUtil.getPrivateProtocolForHome((BaseActivity) getActivity());
-                break;
-            case R.id.service_ip_rl:
-                //切换ip环境
-            //    DiaLogManager.showDevelopIpSettingDialog(this, getSupportFragmentManager(), this);
-                openDialog();
-                break;
             default:
                 break;
 
         }
     }
 
-    private void openDialog() {
-        DevelopIpSettingDialog developIpSettingDialog=new DevelopIpSettingDialog(getActivity());
-        developIpSettingDialog.setmProdistener(new DevelopIpSettingDialog.OnProdListener() {//正式环境
-            @Override
-            public void onClick(View view) {
-                SPUtils.getInstance().put(C.Extras.KEY_SERVER_TYPE, C.PROD);
-                mHandler.sendEmptyMessageDelayed(SETTING_CODE, 500);
-            }
-        });
-
-        developIpSettingDialog.setmDevListener(new DevelopIpSettingDialog.OnDevListner() {//开发环境
-            @Override
-            public void onClick(View view) {
-                SPUtils.getInstance().put(C.Extras.KEY_SERVER_TYPE, C.DEV);
-                mHandler.sendEmptyMessageDelayed(SETTING_CODE, 500);
-            }
-        });
-
-        developIpSettingDialog.setmTestListener(new DevelopIpSettingDialog.OnTestListner() {//测试环境
-            @Override
-            public void onClick(View view) {
-                SPUtils.getInstance().put(C.Extras.KEY_SERVER_TYPE, C.TEST);
-                mHandler.sendEmptyMessageDelayed(SETTING_CODE, 500);
-            }
-        });
-        developIpSettingDialog.show();
-    }
 
     /**
      * 更新版本

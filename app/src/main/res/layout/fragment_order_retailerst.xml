@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F0F1F5">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/content">
+            <com.zjzy.morebit.Module.common.View.ReUseListView
+                android:id="@+id/mListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </FrameLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/dateNullView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="120dp"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_icon_null"
+                android:src="@drawable/search_no" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="没有相关订单"
+                android:gravity="center_horizontal"
+                android:id="@+id/tv_hint"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/color_999999"/>
+            <TextView
+                android:id="@+id/btn_invite"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/background_f05557_radius_14dp"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="马上去逛逛"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -16,8 +16,11 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.trello.rxlifecycle2.components.support.RxFragmentActivity;
 import com.youth.banner.Banner;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
@@ -30,9 +33,12 @@ import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.Article;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestTwoLevel;
+import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.view.AspectRatioView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -40,14 +46,17 @@ import io.reactivex.Observable;
 public class SkillClassActivity extends BaseActivity {
 
     private TextView txt_head_title;
-    private Banner banner;
-    private AspectRatioView rsv_banner;
+
     private RecyclerView rcy;
     private int page=1;
+    private  String id;
     private SkillClassAdapter skillAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SmartRefreshLayout mSwipeList;
     private LinearLayout btn_back;
+    private List<Article> list=new ArrayList<>();
+    private LinearLayout searchNullTips_ly;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,37 +74,33 @@ public class SkillClassActivity extends BaseActivity {
     }
 
     private void initView() {
-         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
-        txt_head_title.setText("技能课堂");
+
+        Intent intent = getIntent();
+        id = intent.getStringExtra(C.Vip.SKILLID);
+        String name = intent.getStringExtra(C.Vip.SKILLNAME);
+
+        txt_head_title = (TextView) findViewById(R.id.txt_head_title);
+        txt_head_title.setText(name+"");
         txt_head_title.setTextSize(18);
-         banner = (Banner) findViewById(R.id.banner);
-        rsv_banner= (AspectRatioView) findViewById(R.id.rsv_banner);
-        swipeRefreshLayout= (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+
+
         mSwipeList= (SmartRefreshLayout) findViewById(R.id.swipeList);
-        mSwipeList.setEnableRefresh(false);
+        searchNullTips_ly= (LinearLayout) findViewById(R.id.searchNullTips_ly);
+        skillAdapter=new SkillClassAdapter(this);
         rcy= (RecyclerView) findViewById(R.id.rcy);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         rcy.setLayoutManager(manager);
-        swipeRefreshLayout.setEnabled(true);
-        swipeRefreshLayout.setNestedScrollingEnabled(true);
-        //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
-        swipeRefreshLayout.setProgressViewOffset(true, -0, 100);
-        //设置进度View下拉的结束点，scale 是指设置是否需要放大或者缩小动画
-        swipeRefreshLayout.setProgressViewEndTarget(true, 180);
-        //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
-        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
-        //设置触发刷新的距离
-        swipeRefreshLayout.setDistanceToTriggerSync(200);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        rcy.setAdapter(skillAdapter);
+
+
+        mSwipeList.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page=1;
                 initBanner();
-                swipeRefreshLayout.setRefreshing(false);
-
+                mSwipeList.finishRefresh();
             }
         });
-
         mSwipeList.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -104,7 +109,6 @@ public class SkillClassActivity extends BaseActivity {
             }
         });
 
-    rcy.setNestedScrollingEnabled(false);
         btn_back= (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,50 +119,9 @@ public class SkillClassActivity extends BaseActivity {
 
     }
 
-    /**
-     * 获取技能课程
-     *
-     * @param rxActivity
-     * @return
-     */
-    public Observable<BaseResponse<List<Article>>> getSkillClass(SkillClassActivity rxActivity, int page) {
-        RequestBannerBean requestBean = new RequestBannerBean();
-        requestBean.setOs(1);
-        requestBean.setRows(10);
-        requestBean.setPage(page);
 
-        return RxHttp.getInstance().getGoodsService().getVipSkillClass(requestBean)
-                .compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
-                .compose(rxActivity.<BaseResponse<List<Article>>>bindToLifecycle());
-    }
     private void initBanner() {
-        RequestBannerBean requestBean = new RequestBannerBean();
-        requestBean.setType(20);
-        requestBean.setOs(1);
-        RxHttp.getInstance().getCommonService().getBanner(requestBean)//获取banner
-                .compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
-                .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
-                .subscribe(new DataObserver<List<ImageInfo>>() {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-//                        ar_title_banner.setVisibility(View.GONE);
-//                        swipeRefreshLayout.setRefreshing(false);
-                    }
 
-                    @Override
-                    protected void onSuccess(List<ImageInfo> data) {
-                     //   swipeRefreshLayout.setRefreshing(false);
-
-                        if (data!=null){
-                            rsv_banner.setVisibility(View.VISIBLE);
-                            BannerInitiateUtils.setBrandBanner(SkillClassActivity.this, data, banner);
-                        }else{
-                            rsv_banner.setVisibility(View.GONE);
-                        }
-
-                    }
-
-                });
 
         initData();
 
@@ -166,26 +129,73 @@ public class SkillClassActivity extends BaseActivity {
     }
 
     private void initData() {
-        getSkillClass(this,page).compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
-                .compose(this.<BaseResponse<List<Article>>>bindToLifecycle())
+        getArticleList(this,id,page)
                 .subscribe(new DataObserver<List<Article>>() {
+
                     @Override
                     protected void onSuccess(List<Article> data) {
-                        if (data!=null){
-                            if (page==1){
-                                skillAdapter=new SkillClassAdapter(SkillClassActivity.this,data);
-                                if (skillAdapter!=null){
-                                    rcy.setAdapter(skillAdapter);
-                                }
-                            }else{
-                                skillAdapter.setData(data);
-                                mSwipeList.finishLoadMore(true);
-                            }
+                        onTutorialDataSuccessful(data);
+                    }
 
+                    @Override
+                    protected void onDataListEmpty() {
+                        super.onDataListEmpty();
+                        onTutorialDataEmpty();
+                    }
 
-                        }
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        super.onError(errorMsg, errCode);
+                       onTutorialDataEmpty();
                     }
                 });
     }
+
+    private void onTutorialDataEmpty() {
+        mSwipeList.finishLoadMore();
+        if (page==1){
+            searchNullTips_ly.setVisibility(View.VISIBLE);
+            rcy.setVisibility(View.GONE);
+        }else{
+            rcy.setVisibility(View.VISIBLE);
+            searchNullTips_ly.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void onTutorialDataSuccessful(List<Article> data) {
+        if (data == null || (data != null && data.size() == 0)) {
+            searchNullTips_ly.setVisibility(View.VISIBLE);
+            rcy.setVisibility(View.GONE);
+        }else{
+            if (page==1){
+                searchNullTips_ly.setVisibility(View.GONE);
+                rcy.setVisibility(View.VISIBLE);
+                skillAdapter.setRefreshData(data);
+            }else{
+                skillAdapter.setData(data);
+                mSwipeList.finishLoadMore();
+            }
+        }
+
+    }
+
+
+    /**
+     * 获取商学院教程   获取技能课程
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<List<Article>>> getArticleList(RxAppCompatActivity fragment, String mid, int page) {
+        RequestTwoLevel requestTwoLevel=new RequestTwoLevel();
+        requestTwoLevel.setModelId(mid);
+        requestTwoLevel.setTwoLevel(1);
+        requestTwoLevel.setPage(page);
+        return RxHttp.getInstance().getCommonService().getArticleList(requestTwoLevel)
+                .compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<Article>>>bindToLifecycle());
+    }
+
 
 }

@@ -50,6 +50,7 @@ public class ShopGoodInfo implements Serializable {
     private String dyLikeCount="";//抖货点赞数
     private String itemVideoPic="";//视频第一帧
 
+
     public String getDyLikeCount() {
         return dyLikeCount;
     }
@@ -114,6 +115,7 @@ public class ShopGoodInfo implements Serializable {
     private String couponstarttime;//优惠券开始时间
     private String couponendtime;//优惠券结束时间
     private String itemdesc;//推荐语
+
 
     public int getShoptype() {
         return shoptype;

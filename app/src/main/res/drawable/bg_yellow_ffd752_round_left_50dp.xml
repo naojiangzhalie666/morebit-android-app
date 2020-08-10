@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <gradient
+        android:angle="0"
+    android:endColor="#FEAD00"
+    android:startColor="#FFD752" /><!--//开始颜色//结束颜色//从左到友渐变-->
+<!--    <solid android:color="@color/color_FFD800" />&lt;!&ndash;填充色&ndash;&gt;-->
+    <corners
+        android:bottomLeftRadius="50dp"
+        android:topLeftRadius="50dp" />
+
+</shape>
+

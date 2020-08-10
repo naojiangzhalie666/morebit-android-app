@@ -43,7 +43,7 @@ public class UserInfo implements Serializable {
     private String wxNumber;// 微信号
     private String inviteCode = "";//邀请码
     private String userType; // partner  是判断角色字段  0 会员 1：vip会员 2团队长
-    private String calculationRate = "";// 是佣金计算比例
+    private String calculationRate = "60";// 是佣金计算比例
 
 
 
@@ -66,6 +66,42 @@ public class UserInfo implements Serializable {
     private Long indirectCoin;//间接推荐成长值
     private Long settleCoin;//结算成长值
     private Long selfCoin;//自购成长值
+    private String accumulatedAmount;//省赚金额
+    private String collectCount;//用户收藏总数
+    private String balance;//可提现余额
+    private String problemUrl;//常见问题
+
+    public String getProblemUrl() {
+        return problemUrl;
+    }
+
+    public void setProblemUrl(String problemUrl) {
+        this.problemUrl = problemUrl;
+    }
+
+    public String getCollectCount() {
+        return collectCount;
+    }
+
+    public void setCollectCount(String collectCount) {
+        this.collectCount = collectCount;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getAccumulatedAmount() {
+        return accumulatedAmount;
+    }
+
+    public void setAccumulatedAmount(String accumulatedAmount) {
+        this.accumulatedAmount = accumulatedAmount;
+    }
 
     public Long getSelfCoin() {
         return selfCoin;

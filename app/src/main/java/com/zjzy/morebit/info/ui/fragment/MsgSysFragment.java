@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -55,7 +56,8 @@ public class MsgSysFragment extends MvpFragment<MsgPresenter> implements MsgCont
     private MsgAdapter mAdapter;
 
     private CommonEmpty mEmptyView;
-
+    private TextView txt_head_title;
+    private LinearLayout btn_back;
     public static MsgSysFragment newInstance() {
         Bundle args = new Bundle();
         MsgSysFragment fragment = new MsgSysFragment();
@@ -78,7 +80,16 @@ public class MsgSysFragment extends MvpFragment<MsgPresenter> implements MsgCont
 
     @Override
     protected void initView(View view) {
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle("系统通知");
+        txt_head_title = (TextView) view.findViewById(R.id.txt_head_title);
+        txt_head_title.setText("系统通知");
+        txt_head_title.setTextSize(18);
+        btn_back = (LinearLayout) view.findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         mEmptyView = new CommonEmpty(view, getString(R.string.no_msg), R.drawable.image_meiyouxiaoxi);
         mAdapter = new MsgAdapter(getActivity());
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
@@ -120,7 +131,7 @@ public class MsgSysFragment extends MvpFragment<MsgPresenter> implements MsgCont
 
     @Override
     protected int getViewLayout() {
-        return R.layout.fragment_msg_list;
+        return R.layout.fragment_msg_list3;
     }
 
     @Override

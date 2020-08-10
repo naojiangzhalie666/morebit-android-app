@@ -4,23 +4,15 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/color_F8F8F8">
+              android:background="@color/color_F0F1F5">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar_actionbar_no_shadow"/>
-
-        <ImageView
-            android:id="@+id/toolbar_right_img"
-            android:layout_width="wrap_content"
-            android:src="@drawable/icon_shanchu"
-           android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:padding="5dp"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content"/>
+        <include
+            android:id="@+id/top"
+            layout="@layout/top" />
     </RelativeLayout>
 
     <FrameLayout
@@ -46,6 +38,28 @@
 
 
         </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/searchNullTips_ly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/search_no"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="您还没有浏览任何商品喔～"
+                android:textColor="@color/color_999999"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
 
 
     </FrameLayout>

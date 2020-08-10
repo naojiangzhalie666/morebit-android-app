@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -51,6 +52,7 @@ import com.zjzy.morebit.view.helper.ToolbarWebHelper;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
@@ -98,8 +100,8 @@ public class ShowWebActivity extends BaseActivity {
     ImageView mIvBack;
     @BindView(R.id.iv_refresh)
     ImageView mIvRefresh;
-    @BindView(R.id.iv_off)
-    ImageView mIvOff;
+//    @BindView(R.id.iv_off)
+//    ImageView mIvOff;
 
     @Override
     public boolean isShowAllSeek() {
@@ -305,17 +307,19 @@ public class ShowWebActivity extends BaseActivity {
                 mViewBar.setBackgroundColor(color);
                 mViewLine.setBackgroundColor(color);
 
-                if ( mIvOff != null && mIvRefresh != null &&mIvBack != null &&mToolbarTtle != null ){
+                if ( /*mIvOff != null &&*/ mIvRefresh != null &&mIvBack != null &&mToolbarTtle != null ){
                     if (event.getIconType() == 0) {
+                        mToolbarTtle.setTextSize(18);
                         mToolbarTtle.setTextColor(ContextCompat.getColor(this, R.color.white));
                         mIvBack.setImageResource(R.drawable.btn_title_return_icon_white);
                         mIvRefresh.setImageResource(R.drawable.web_refresh_icon_white);
-                        mIvOff.setImageResource(R.drawable.icon_guanbi_off_white);
+                      //  mIvOff.setImageResource(R.drawable.icon_guanbi_off_white);
                     }else {
                         mToolbarTtle.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
                         mIvBack.setImageResource(R.drawable.btn_title_return_icon);
+                        mToolbarTtle.setTextSize(18);
                         mIvRefresh.setImageResource(R.drawable.web_refresh_icon);
-                        mIvOff.setImageResource(R.drawable.icon_guanbi_off);
+                      //  mIvOff.setImageResource(R.drawable.icon_guanbi_off);
 
                     }
                 }
@@ -476,7 +480,11 @@ public class ShowWebActivity extends BaseActivity {
 
         @Override
         public void onCancel(Platform platform, int i) {
-            ViewShowUtils.showShortToast(com.zjzy.morebit.App.getAppContext(), "分享取消");
+            if (i==9){
+                ViewShowUtils.showShortToast(com.zjzy.morebit.App.getAppContext(), "分享成功");
+            }else{
+                ViewShowUtils.showShortToast(com.zjzy.morebit.App.getAppContext(), "分享取消");
+            }
         }
     }
 

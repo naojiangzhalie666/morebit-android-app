@@ -235,8 +235,10 @@ public class C {
         //从订单确认页面跳转
         public static final String SELECTED_ADDRESS_FROM_CONFIRM_ORDER = "SELECT_ADDRESS_FROM_CONFIRM_ORDER";
 
-        //是否显示 切换环境item
-        public static final String KEY_SHOW_DEVELOPER_SETTING = "key_show_developer_setting";
+        //历史数据
+        public static final String KEY_SAVE_SEARCH_HISTORY = "KEY_SAVE_SEARCH_HISTORY";
+
+
 
         /**
          * 切换服务器类型
@@ -244,6 +246,15 @@ public class C {
         public static final  String KEY_SERVER_TYPE = "serverType";
 
         public static final String SEARCH_TYPE = "SEARCH_TYPE";
+        public static final String EARNING = "EARNING";
+        public static final String SEARCHINFO = "SEARCHINFO";
+        public static final String ORDERTYPE = "ORDERTYPE";
+        public static final String ORDERTEAM = "ORDERTEAM";
+        public static final String ORDERSTATUS = "ORDERSTATUS";
+        public static final String ELEORDER = "ELEORDER";
+        public static final String ELETYPE = "ELETYPE";
+        public static final String YXTYPE = "YXTYPE";
+
 
     }
 
@@ -255,6 +266,14 @@ public class C {
 
     }
 
+    /**
+     * 传值 extrar
+     */
+    public static class Vip {
+        public static final String SKILLID = "SKILLID";
+        public static final String SKILLNAME = "SKILLNAME";
+
+    }
     /**
      * 商品列表的type
      */
@@ -322,6 +341,7 @@ public class C {
         public static final int SHOPMALL = 45;//优选商城
         public static final int KOALA = 46;//考拉海购
         public static final int WPH = 47;//唯品会
+        public static final int XCX = 101;//小程序
 
 
     }
@@ -364,6 +384,16 @@ public class C {
         //团队长
         public static final String operator = "2";
 
+        public static final String ORDERTYPE = "ORDERTYPE";
+        public static final String TIMESKILL = "TIMESKILL";
+        public static final String ICONNAME = "ICONNAME";
+        public static final String SKILLITEM = "SKILLITEM";
+        public static final String SKILLTITLE = "SKILLTITLE";
+        public static final String NEWGOODS = "NEWGOODS";
+        public static final String NEWVIP = "NEWVIP";
+        public static final String TIMETITLE = "TIMETITLE";
+
+
     }
 
     /**
@@ -394,6 +424,14 @@ public class C {
         public static final String COMMISSION_PERCENT = "COMMISSION_PERCENT";// 获取普通会员，VIP，运营商佣金比例
 
         public static final String SELF_COMMISSION_PERCENT = "SELF_COMMISSION_PERCENT";// 自营商品的获取普通会员，VIP，运营商佣金比例
+
+        public static final String WEB_COMMSSION_RULE = "COMMISSION_RULES";// 返佣规则
+        public static final String SHARE_COURES = "SHARE_COURES";// 分享三部曲
+        public static final String UPGRADE_H5 = "UPGRADE_H5";// VIP升级地址
+        public static final String LOGOUT_H5 = "LOGOUT_H5";// 注销地址
+        public static final String ORDER_TRACKING = "ORDER_TRACKING";//订单找回
+        public static final String ORDER_COMMON_RULES = "ORDER_COMMON_RULES";//订单问题
+
     }
 
     /**
@@ -409,7 +447,7 @@ public class C {
      * brandsale：品牌特卖，
      * taobao_v2：聚划算v2，
      * 0：首页轮播，1：推广海报，6：启动页，8：官方推荐，11：首页弹窗，12：个人轮播，13：福利津贴，14：标题轮播，16：品牌特卖，17：聚划算v2 18 赚钱计划轮播图
-     * 19:我的工具 20:商学院 ,21：首页ICON配置,22是二级模块,32 首页悬浮窗
+     * 19:我的工具 20:商学院 ,21：首页ICON配置,22是好单预告,32 首页悬浮窗
      */
     public static class UIShowType {
         public static final int HomeBanner = 0;
@@ -666,8 +704,8 @@ public class C {
     }
 
     public static class PHONE {
-        public static final int MIN_LENGTH = 6;
-        public static final int MAX_LENGTH = 12;
+        public static final int MIN_LENGTH = 8;
+        public static final int MAX_LENGTH = 11;
         public static final int DEFAULT_LENGTH = 11;
     }
 
@@ -721,6 +759,18 @@ public class C {
 
         public static final  int E_UPLIMIT_SORT_DOWN=0;//降序
         public static final  int E_UPLIMIT_SORT_UP=1;//升序
+
+    }
+
+    public static class Circle {
+        public static final String CIRCLE_TITLE ="CIRCLE_TITLE";
+        public static final String CIRCLE_ONEID ="CIRCLE_ONEID";
+        public static final String CIRCLE_TWOID ="CIRCLE_TWOID";
+        public static final String CIRCLE_THREEID ="CIRCLE_THREEID";
+        public static final String CIRCLE_TYPE ="CIRCLE_TYPE";
+        public static final String CIRCLE_FUTITLE ="CIRCLE_FUTITLE";
+        public static final String CIRCLEFRAGMENT ="CIRCLEFRAGMENT";
+        public static final String CIRCLE_TWO ="CIRCLE_TWO";
 
     }
 }

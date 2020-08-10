@@ -416,13 +416,13 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
                             SPUtils.getInstance().put("purchaseRule", data.getZeroActivityRule());
                             LoadImgUtils.setImg(getActivity(), img_limted1, data.getFlashSalePic());
                             LoadImgUtils.setImg(getActivity(), img_limted2, data.getNoviceTutorialPic());
-                            img_limted1.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // BannerInitiateUtils.gotoMenu(getActivity(),4,mImageInfo);
-                                    PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-                                }
-                            });
+//                            img_limted1.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    // BannerInitiateUtils.gotoMenu(getActivity(),4,mImageInfo);
+//                                    PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
+//                                }
+//                            });
                             img_limted2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -571,14 +571,14 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
             horizontalSpacing = menuItmeWidth * 0.36;
             itmeWidth = menuItmeWidth * 0.67;
         }
-        menuAdapter = new HomeMenuAdapter(getActivity(), (int) itmeWidth);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
-        mViewpger_category.setLayoutManager(layoutManager);
-        GridSpacingItemDecoration gridSpacingItemDecoration = GridSpacingItemDecoration.newGridItemDecoration(layoutManager, DensityUtil.dip2px(getActivity(), 12.5f), (int) horizontalSpacing, true);
-        if (mViewpger_category.getItemDecorationCount() == 0) {
-            mViewpger_category.addItemDecoration(gridSpacingItemDecoration);
-        }
-        mViewpger_category.setAdapter(menuAdapter);
+//       menuAdapter = new HomeMenuAdapter(getActivity(), (int) itmeWidth,"");
+//        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
+//        mViewpger_category.setLayoutManager(layoutManager);
+//        GridSpacingItemDecoration gridSpacingItemDecoration = GridSpacingItemDecoration.newGridItemDecoration(layoutManager, DensityUtil.dip2px(getActivity(), 12.5f), (int) horizontalSpacing, true);
+//        if (mViewpger_category.getItemDecorationCount() == 0) {
+//            mViewpger_category.addItemDecoration(gridSpacingItemDecoration);
+//        }
+//        mViewpger_category.setAdapter(menuAdapter);
         setScrollBar();
         //精选活动
         LinearLayoutManager activityLinearLayoutManager = new LinearLayoutManager(getActivity());

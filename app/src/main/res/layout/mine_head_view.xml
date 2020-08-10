@@ -17,20 +17,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="77dp"
+            android:layout_marginTop="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="68dp"
-                android:layout_marginLeft="10dp">
+                android:layout_height="60dp"
+                android:layout_marginLeft="12dp"
+               >
 
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_centerInParent="true"
                     android:id="@+id/userIcon"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginRight="12dp"
                     android:scaleType="fitXY"
                     android:src="@color/white"
                     app:riv_border_color="@color/white"
@@ -43,6 +44,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:layout_marginLeft="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -56,10 +58,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:maxEms="8"
+                        android:maxEms="4"
                         android:maxLines="1"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/sp_18"
+                        android:textSize="@dimen/sp_16"
                         tools:text="昵称" />
 
                     <LinearLayout
@@ -67,28 +69,56 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="12dp"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
                         android:layout_toRightOf="@id/userName"
-                        android:background="@drawable/bg_gray_grade_vip"
-                        android:paddingRight="4dp">
+                        android:background="@drawable/bg_e9c8a7_round_9dp"
+                        android:paddingRight="8dp">
 
                         <ImageView
+                            android:id="@+id/icon_tou"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
                             android:scaleType="centerInside"
-                            android:src="@mipmap/icon_grade_prex" />
+                            android:src="@mipmap/vip_icon_right2" />
 
                         <TextView
                             android:id="@+id/tv_user_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="会员"
-                            android:textColor="@color/color_FFFFFF"
+                            android:layout_marginLeft="8dp"
+                            android:text="VIP"
+                            android:textColor="#A8947A"
                             android:textSize="@dimen/sp_12" />
                     </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_wx"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/ll_user_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="填写微信号"
+                        android:layout_marginLeft="8dp"
+                        android:textColor="#ffffebce"
+                        android:textSize="12sp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/img_right"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/mine_right"
+                        android:paddingRight="12dp"
+                        android:paddingLeft="20dp"
+
+                        />
 
 
                 </RelativeLayout>
@@ -106,57 +136,37 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="24dp"
-                            android:layout_marginTop="3dp">
+                            android:layout_marginTop="12dp">
 
                             <TextView
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:background="@drawable/bg_stroke_solid_ffffff_12dp"
                                 android:id="@+id/invitation_code"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="@string/number_invite_code"
                                 android:textColor="@color/color_FFFFFF"
-                                android:textSize="@dimen/sp_12" />
+                                android:textSize="@dimen/sp_14" />
 
                             <TextView
+                                android:layout_centerVertical="true"
                                 android:id="@+id/copy_invitation_code"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="4dp"
                                 android:layout_toRightOf="@+id/invitation_code"
-                                android:background="@drawable/bg_mine_copy"
-                                android:gravity="center"
+                                android:background="@drawable/bg_stroke_f37778"
                                 android:text="复制"
-                                android:textColor="#942E00"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                android:paddingTop="2dp"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/rl_set_weixin"
-                            android:layout_width="95dp"
-                            android:layout_height="23dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/bg_stroke_d1d1d1_solid_ffffff_30dp"
-                            android:gravity="center"
-                            android:visibility="gone">
-
-                            <ImageView
-                                android:id="@+id/icon_weixin"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_marginRight="3dp"
-                                android:src="@drawable/icon_mine_weixin" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/icon_weixin"
-                                android:text="绑定微信"
-                                android:textColor="@color/color_333333"
-                                android:textSize="@dimen/sp_12" />
                         </RelativeLayout>
                     </RelativeLayout>
                 </LinearLayout>
@@ -165,6 +175,70 @@
         </LinearLayout>
 
         <LinearLayout
+            android:background="@drawable/mine_shengji_bg"
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="升级"
+                android:textColor="#ff5f2c06"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VIP"
+                android:textStyle="bold"
+                android:textColor="#ff5f2c06"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="享更多权益"
+                android:textColor="#ff5f2c06"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#ff5f2c06"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="立即升级"
+                android:textStyle="bold"
+                android:textColor="#ff5f2c06"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp"
+                />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -281,15 +355,7 @@
 
 
 
-    <ImageView
-        android:id="@+id/setting"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="13dp"
-        android:layout_marginTop="40dp"
-        android:src="@mipmap/white_setting_icon" />
+
 </RelativeLayout>
 
 

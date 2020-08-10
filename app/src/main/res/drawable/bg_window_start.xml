@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    <item>-->
+<!--        <bitmap-->
+<!--            android:gravity="top|left"-->
+<!--            android:src="@drawable/app_start_top"/>-->
+<!--    </item>-->
+<!--    <item android:top="120.0dip">-->
+<!--        <bitmap-->
+
+<!--            android:gravity="top|center"-->
+<!--            android:src="@drawable/app_start_logo"/>-->
+<!--    </item>-->
+<!--    <item >-->
+<!--        <bitmap-->
+<!--            android:gravity="bottom|center|fill_horizontal"-->
+<!--            android:src="@drawable/app_start_button"/>-->
+<!--    </item>-->
+
     <item>
+
+
         <shape>
-            <solid android:color="@color/color_FF645B"/>
+
+            <solid android:color="@color/color_F05557"/>
         </shape>
     </item>
+    <item  android:top="-50dp" android:left="-50dp" android:right="-50dp">
 
-    <item>
         <bitmap
-            android:gravity="top|left"
-            android:src="@drawable/app_start_top"/>
+            android:src="@drawable/app7"/>
     </item>
-    <item android:top="120.0dip">
-        <bitmap
+<!--    <item>-->
 
-            android:gravity="top|center"
-            android:src="@drawable/app_start_logo"/>
-    </item>
-    <item >
-        <bitmap
-            android:gravity="bottom|center|fill_horizontal"
-            android:src="@drawable/app_start_button"/>
-    </item>
+<!--        <bitmap-->
+<!--            -->
+<!--            android:gravity="center"-->
+<!--            android:src="@drawable/appsrart2"/>-->
+<!--    </item>-->
+<!--    <item >-->
+<!--        <bitmap-->
+<!--                android:gravity="bottom|center"-->
+<!--                android:src="@drawable/appsrarttwo"/>-->
+<!--        </item>-->
+
+<!--    <item>-->
+
+<!--        <bitmap android:src="@drawable/app_start_bg"/>-->
+<!--    </item>-->
 </layer-list>

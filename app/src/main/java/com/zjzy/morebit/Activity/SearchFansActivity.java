@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -53,12 +55,14 @@ public class SearchFansActivity extends BaseActivity {
     RelativeLayout search_rl;
     @BindView(R.id.listview)
     RecyclerView mRecyclerView;
-    private CommonEmpty mEmptyView;
+
     private QrcodeDialog mQrcodeDialog;
     private MyTeamAdapter myTeamAdapter;
     List<TeamInfo> listArray = new ArrayList<>();
     private String mSearchKey;
     private FansRemarkDialog mRemarkDialog;
+    private LinearLayout dateNullView;
+    private ImageView iv_back;
     public static void start(Context context, String search_key) {
         Intent intent = new Intent(context, SearchFansActivity.class);
         intent.putExtra("search_key", search_key);
@@ -95,16 +99,17 @@ public class SearchFansActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_fans);
-        ImmersionBar.with(this).statusBarColor(R.color.white).fitsSystemWindows(true).statusBarDarkFont(true, 0.2f).init();
+        ImmersionBar.with(this).statusBarColor(R.color.transparent).fitsSystemWindows(false).statusBarDarkFont(true, 0.2f).init();
         mSearchKey = getIntent().getStringExtra("search_key");
         initView();
     }
 
     private void initView() {
+        iv_back= (ImageView) findViewById(R.id.iv_back);
         search_rl.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ECECEC));
         search_et.setHintTextColor(ContextCompat.getColor(this, R.color.color_999999));
         search_et.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
-        mEmptyView = new CommonEmpty(this, "未找到相关数据", R.drawable.image_meiyousousuojilu);
+        dateNullView= (LinearLayout) findViewById(R.id.dateNullView);
         myTeamAdapter = new MyTeamAdapter(this, listArray);
         myTeamAdapter.setUserInfo(UserLocalData.getUser(this));
         myTeamAdapter.setOnAdapterClickListener(new MyTeamAdapter.OnAdapterClickListener() {
@@ -133,13 +138,13 @@ public class SearchFansActivity extends BaseActivity {
             }
         });
         search_et.setText(mSearchKey);
-        search_et.setHint("输入粉丝手机号/邀请码/备注");
+        search_et.setHint("输入粉丝手机号/用户名/备注");
 //        searchUser(mSearchKey,true);
     }
 
     private void searchUser(String phoneOrActivationCode,boolean isFrist) {
         if (TextUtils.isEmpty(phoneOrActivationCode)) {
-            ViewShowUtils.showShortToast(this, "输入粉丝手机号/邀请码");
+            ViewShowUtils.showShortToast(this, "输入粉丝手机号/用户名/备注");
             return;
         }
 
@@ -147,14 +152,24 @@ public class SearchFansActivity extends BaseActivity {
         requestFansInfoBean.setPhoneOrActivationCode(phoneOrActivationCode);
         RxHttp.getInstance().getCommonService().searchUser(requestFansInfoBean)
                 .compose(RxUtils.<BaseResponse<List<TeamInfo>>>switchSchedulers())
-                .compose(mEmptyView.<BaseResponse<List<TeamInfo>>>bind())
                 .subscribe(new DataObserver<List<TeamInfo>>() {
                     @Override
                     protected void onSuccess(List<TeamInfo> data) {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        dateNullView.setVisibility(View.GONE);
                         listArray.clear();
                         listArray.addAll(data);
                         myTeamAdapter.setData(listArray);
                         myTeamAdapter.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    protected void onDataListEmpty() {
+                        super.onDataListEmpty();
+                        mRecyclerView.setVisibility(View.GONE);
+                        dateNullView.setVisibility(View.VISIBLE);
+
                     }
                 });
 
@@ -165,10 +180,11 @@ public class SearchFansActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search:
-                searchUser(search_et.getText().toString().trim(),false);
+                searchUser(search_et.getText().toString().trim(),true);
                 break;
             case R.id.iv_back:
                 finish();
+                isMethodManager(iv_back);
                 break;
         }
     }

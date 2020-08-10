@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="86dp"
+    android:layout_height="106dp"
     android:layout_marginTop="12dp">
 
     <android.support.v7.widget.CardView
@@ -21,7 +21,11 @@
         android:background="@color/white">
 
 
-        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/userIcon"
             android:layout_width="44dp"
             android:layout_height="44dp"
@@ -42,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/userIcon"
-            android:gravity="left|center_vertical"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -56,71 +59,87 @@
                     android:layout_height="wrap_content"
                     android:text="我是昵称啊啊"
                     android:textColor="#ff333333"
-                    android:maxEms="6"
+                    android:maxEms="8"
+                    android:maxLines="1"
                     android:ellipsize="end"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     />
-                <TextView
-                    android:id="@+id/phone"
+
+
+
+
+
+            </RelativeLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_vip"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_e9c8a7_round_9dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/vip_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:ellipsize="end"
-                   android:layout_toRightOf="@+id/name"
-                    android:lineSpacingExtra="4dp"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:text="15600716026"
-                    android:textColor="@color/color_999999"
-                    android:layout_marginLeft="12dp"
-                    android:textSize="15sp" />
-
+                    android:src="@mipmap/vip_icon_right2"
+                    android:paddingLeft="8dp"
+                    android:layout_gravity="center_vertical"
+                    />
 
                 <TextView
-                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/userLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="12dp"
-                    android:layout_toRightOf="@+id/phone"
-                    android:background="@drawable/bg_corners_ff645b_30"
                     android:gravity="center"
                     android:paddingBottom="2dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
+                    android:layout_marginLeft="8dp"
+                    android:paddingRight="8dp"
                     android:paddingTop="2dp"
-                    android:text="会员"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
+                    android:text="VIP"
+                    android:textColor="#A8947A"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+
+
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/authorization"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@+id/userLevel"
-                    android:background="@drawable/bg_corners_f8ce77_30"
-                    android:gravity="center"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
-                    android:paddingTop="2dp"
-                    android:text="已授权"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
+                    android:id="@+id/tv_remark"
+                    android:text=""
+                    android:maxEms="7"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_14" />
+                <TextView
+                    android:id="@+id/tv_yao"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="邀请人：大橘子"
+                   android:maxEms="8"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="#ff999999"
+                    android:layout_marginRight="12dp"
+                    android:textSize="14sp"
+                    />
             </RelativeLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
-                android:id="@+id/tv_remark"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/sp_12" />
-            <TextView
+                android:visibility="gone"
                 android:id="@+id/createTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -130,42 +149,44 @@
                 android:gravity="bottom"
                 android:lines="1"
                 android:maxLines="1"
-                android:text=""
+                android:text="ssssss"
                 android:textColor="@color/color_999999"
                 android:textSize="11sp" />
 
 
         </LinearLayout>
+        </LinearLayout>
 
         <TextView
+            android:layout_below="@+id/input_remark"
             android:id="@+id/people_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="6dp"
             android:gravity="center"
             android:drawablePadding="4dp"
-            android:layout_marginBottom="18dp"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="12dp"
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/icon_fans_arrow"
-            android:includeFontPadding="false"
+
             android:singleLine="true"
-            android:text="推荐0人"
+            android:text="粉丝数"
             android:textColor="@color/color_333333"
-            android:textSize="12sp" />
-        >
+            android:textSize="16sp" />
+
+
 
     <TextView
         android:layout_width="62dp"
         android:layout_height="22dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/bg_item_fans_remark"
+        android:background="@mipmap/bg_item_fans_remark"
         android:gravity="center"
         android:text="填写备注"
         android:id="@+id/input_remark"
-        android:textColor="@color/colcor_999999"
-        android:textSize="@dimen/sp_10" />
+        android:textColor="@color/color_F05557"
+        android:textSize="@dimen/sp_12" />
 </RelativeLayout></android.support.v7.widget.CardView><!--<View--><!--android:id="@+id/bottomLine"--><!--android:layout_width="match_parent"--><!--android:layout_height="5dp"--><!--android:layout_below="@+id/item_ly"--><!--android:background="@color/color_F5F5F5"/>-->
 
 

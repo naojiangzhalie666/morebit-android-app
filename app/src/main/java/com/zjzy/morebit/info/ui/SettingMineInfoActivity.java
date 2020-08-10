@@ -23,10 +23,14 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.zjzy.morebit.Activity.ModifyPasswordActivity;
+import com.zjzy.morebit.Activity.ModifyPhoneNumAcitivity;
+import com.zjzy.morebit.Activity.SettingActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.address.ui.ManageGoodsAddressActivity;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
@@ -38,7 +42,9 @@ import com.zjzy.morebit.pojo.request.RequestNickNameBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateHeadPortraitBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.DateTimeUtils;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PageToUtil;
 import com.zjzy.morebit.utils.ReadImgUtils;
@@ -85,8 +91,29 @@ public class SettingMineInfoActivity extends BaseActivity {
     TextView mTvAge;
     @BindView(R.id.rl_age)
     RelativeLayout mRlAge;
+
+    @BindView(R.id.modify_phone_num)
+    RelativeLayout modify_phone_num;
+    @BindView(R.id.modify_password)
+    RelativeLayout modify_password;
+    @BindView(R.id.item8_rl)
+    RelativeLayout item8_rl;
+    @BindView(R.id.my_goods_address)
+    RelativeLayout my_goods_address;
+    @BindView(R.id.item4_rl)
+    RelativeLayout item4_rl;
+    @BindView(R.id.item3_rl)
+    RelativeLayout item3_rl;
+    @BindView(R.id.item_account_destroy)
+    RelativeLayout item_account_destroy;
+    @BindView(R.id.phone)
+    TextView phone;
+    @BindView(R.id.item_tv8)
+    TextView item_tv8;
+
     private TimePickerView mPvTime;
     private OptionsPickerView<String> mPvCustomOptions;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,7 +125,6 @@ public class SettingMineInfoActivity extends BaseActivity {
             ActivityStyleUtil.initSystemBar(this, R.color.color_757575); //设置标题栏颜色值
         }
         EventBus.getDefault().register(this);
-        new ToolbarHelper(this).setToolbarAsUp().setCustomTitle(getString(R.string.mine_info));
         initView();
         initData();
     }
@@ -123,12 +149,25 @@ public class SettingMineInfoActivity extends BaseActivity {
         if (!TextUtils.isEmpty(user.getBirthDate())) {
             mTvAge.setText(user.getBirthDate());
         }
+        if (!TextUtils.isEmpty(user.getPhone())){
+            phone.setText(user.getPhone());
+        }
+
+        if (!TextUtils.isEmpty(user.getAliPayNumber())){
+            item_tv8.setText("已绑定");
+        }else{
+            item_tv8.setText("未绑定");
+        }
     }
 
 
-    @OnClick({R.id.rl_head, R.id.rl_nickname, R.id.rl_sex, R.id.rl_age})
+    @OnClick({R.id.rl_head, R.id.rl_nickname, R.id.rl_sex, R.id.rl_age,R.id.item_account_destroy,R.id.item3_rl,R.id.item4_rl,
+            R.id.my_goods_address,R.id.item8_rl,R.id.modify_password,R.id.modify_phone_num,R.id.btn_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btn_back:
+                finish();
+                break;
             case R.id.rl_head:
                 ReadImgUtils.callPermissionOfEnableCrop(this);
                 break;
@@ -140,6 +179,29 @@ public class SettingMineInfoActivity extends BaseActivity {
                 break;
             case R.id.rl_age:
                 openDialogUserAge();
+                break;
+            case R.id.item_account_destroy://用户注销
+                GoodsUtil.getLogout(this);
+                break;
+            case R.id.item3_rl://隐私协议
+                LoginUtil.getPrivateProtocolForHome(this);
+                break;
+            case R.id.item4_rl://用户协议
+                LoginUtil.getUserProtocolForHome(this);
+                break;
+            case R.id.my_goods_address://我的地址
+                ManageGoodsAddressActivity.start(SettingMineInfoActivity.this);
+                break;
+            case R.id.item8_rl://支付宝绑定
+                PageToUtil.goToUserInfoSimpleFragment(SettingMineInfoActivity.this, "绑定支付宝", "BindZhiFuBaoFragment");
+
+                break;
+            case R.id.modify_password://修改密码
+                //ModifyPasswordActivity.start(this, ModifyPasswordActivity.MODIFY_PASSWORD, UserLocalData.getUser(this).getPhone(), null);
+                PageToUtil.goToUserInfoSimpleFragment(SettingMineInfoActivity.this, "修改密码", "PssChangeFragment");
+                break;
+            case R.id.modify_phone_num://修改手机号
+                ModifyPhoneNumAcitivity.start(this, "", 0);
                 break;
         }
     }

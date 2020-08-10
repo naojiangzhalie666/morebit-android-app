@@ -17,6 +17,33 @@ public class RequestSearchForPddBean implements Serializable {
     private int page;
 
     private String keyword;
+    private String  minPrice;
+    private String  maxPrice;
+    private String coupon;
+
+    public String getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(String coupon) {
+        this.coupon = coupon;
+    }
+
+    public String getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(String minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public String getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(String maxPrice) {
+        this.maxPrice = maxPrice;
+    }
 
     public String getType() {
         return type;

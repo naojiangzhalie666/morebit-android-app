@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F0F1F5">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_lt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+                <android.support.design.widget.CoordinatorLayout
+                    android:id="@+id/super_header_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bg_f04844_1dpline_round_15dp">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/vip_head_bg" />
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/vip_tou"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
+                            android:scaleType="fitXY"
+                            android:src="@color/white"
+                            app:riv_border_color="@color/white"
+                            app:riv_border_width="1dp"
+                            app:riv_corner_radius="0dip"
+                            app:riv_mutate_background="true"
+                            app:riv_oval="true" />
+
+
+                        <TextView
+                            android:id="@+id/vip_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_toRightOf="@+id/vip_tou"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:maxEms="4"
+                            android:text="我是昵称"
+                            android:textColor="#ffffffff"
+                            android:textSize="18sp" />
+
+
+                        <TextView
+                            android:id="@+id/getMorce"
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/bg_e9c8a7_1dpline_round_8dp"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="获取成长值"
+                            android:textColor="#F14E4A"
+                            android:textSize="14sp" />
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_vip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vip_name"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_toRightOf="@+id/vip_tou"
+                            android:background="@drawable/bg_e9c8a7_round_9dp"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="1dp"
+                            android:paddingRight="8dp"
+                            android:paddingBottom="1dp">
+
+                            <ImageView
+                                android:id="@+id/img_vip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:src="@mipmap/vip_icon_right2" />
+
+                            <TextView
+                                android:id="@+id/vip_grade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="8dp"
+                                android:text="VIP"
+                                android:textColor="#A8947A"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/vip_ll"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ll_vip"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_marginLeft="12dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="成长值 "
+                                        android:textColor="#ffffffff"
+                                        android:textSize="16sp"
+                                        />
+                                    <TextView
+                                        android:id="@+id/more_corn_biaozhun"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/sp_16" />
+
+                                    <TextView
+                                        android:id="@+id/tv_coin"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="/360"
+                                        android:textColor="#ffffffff"
+                                        android:textSize="16sp"
+                                        />
+
+                                </LinearLayout>
+
+
+                                <com.zjzy.morebit.view.HorzProgressView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:id="@+id/horzProgressView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="4dp"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="8dp"
+                                    app:liys_progress_line_inDrawable="@drawable/vip_progress_bg"
+                                    app:liys_progress_line_max="100"
+                                    app:liys_progress_line_outColor="@color/color_FFA43E"
+                                    app:liys_progress_line_progress="20" />
+
+
+                                <TextView
+                                    android:id="@+id/vip_zhuan"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="8dp"
+                                    android:text="累计省赚 11.26元"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/upgrade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="12dp"
+                                android:background="@drawable/bg_ffffff_20dp"
+                                android:gravity="center"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="5dp"
+                                android:text="升级掌柜(黄金)"
+                                android:textColor="#fff05557"
+                                android:textSize="14sp"
+
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/group_ll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ll_vip"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="20dp"
+                            android:visibility="gone">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="轻松创业 开启品质生活"
+                                android:textColor="#ffffffff"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/group_quanyi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/getMorce"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="60dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/bg_ffffff_20dp"
+                            android:paddingLeft="15dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="15dp"
+                            android:paddingBottom="5dp"
+                            android:text="查看权益"
+                            android:textColor="#fff05557"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                </android.support.design.widget.CoordinatorLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+                android:id="@+id/xablayout"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                app:xTabIndicatorColor="@color/color_F05557"
+                app:xTabIndicatorHeight="3dp"
+                app:xTabIndicatorWidth="25dp"
+                app:xTabSelectedTextColor="@color/color_F05557"
+                app:xTabSelectedTextSize="@dimen/sp_16"
+                app:xTabTextColor="@color/color_333333"
+                app:xTabTextSize="@dimen/sp_16"
+                android:paddingBottom="2dp"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</android.support.v4.widget.SwipeRefreshLayout>

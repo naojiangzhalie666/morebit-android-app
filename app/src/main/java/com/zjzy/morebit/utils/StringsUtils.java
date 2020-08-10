@@ -1,6 +1,7 @@
 package com.zjzy.morebit.utils;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -323,7 +324,7 @@ public class StringsUtils {
                 }
             });
         }else{
-            retractTitle(tv,title);
+            retractTitles(tv,title,sWidth);
         }
     }
 
@@ -378,10 +379,26 @@ public class StringsUtils {
     /**
      * 接口数据列表返回null或者size为0
      *
-     * @param coupon
+     * @param
      * @return
      */
     public static boolean isDataEmpty(String errCode) {
         return C.requestCode.dataListEmpty.equals(errCode) || C.requestCode.dataNull.equals(errCode);
     }
+    public static void retractTitles2(  TextView tv, final String title,int sWidth){
+        if(TextUtils.isEmpty(title)){
+            return;
+        }
+        Paint paint = new Paint();
+        paint.setTextSize(tv.getTextSize());
+        float size = paint.measureText(tv.getText().toString());
+
+        SpannableString spannableString = new SpannableString(title);
+        LeadingMarginSpan.Standard what = new LeadingMarginSpan.Standard((int)(size)+sWidth, 0);
+        spannableString.setSpan(what, 0, title.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        tv.setText(spannableString);
+
+    }
+
+
 }

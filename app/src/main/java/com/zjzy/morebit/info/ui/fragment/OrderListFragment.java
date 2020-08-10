@@ -66,8 +66,8 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     ReUseListView mReUseListView;
     @BindView(R.id.dateNullView)
     LinearLayout mDateNullView;
-    @BindView(R.id.dateNullView_tips_tv)
-    TextView mDateNullViewRecommend;
+//    @BindView(R.id.dateNullView_tips_tv)
+//    TextView mDateNullViewRecommend;
     private int mOrderType =1;
     private int page = 1;
     private ConsComGoodsDetailAdapter consComGoodsDetailAdapter;
@@ -123,8 +123,8 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
         });
         mReUseListView.setAdapter(consComGoodsDetailAdapter);
 
-        mDateNullViewRecommend.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
-        mDateNullViewRecommend.getPaint().setAntiAlias(true);//抗锯齿
+//        mDateNullViewRecommend.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+//        mDateNullViewRecommend.getPaint().setAntiAlias(true);//抗锯齿
         consComGoodsDetailAdapter.setOnSelfOrderClickListener(new ConsComGoodsDetailAdapter.OnSelfOrderClickListener() {
             @Override
             public void onReceiveGoods(String orderId, int position) {

@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:padding="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="20dp"
@@ -37,15 +38,12 @@
 
         <ImageView
             android:id="@+id/iv_head"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+           />
 
         <LinearLayout
             android:id="@+id/ll"
-            android:layout_marginTop="12dp"
             android:layout_toRightOf="@id/iv_head"
             android:layout_width="match_parent"
             android:gravity="center_vertical"
@@ -80,15 +78,14 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="15dp"
             android:layout_toRightOf="@id/iv_head"
-            android:background="@mipmap/coupon_bg"
             android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingTop="2dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="2dp"
+            android:background="@mipmap/yhj_bg_goods"
+            android:textColor="#ffffffff"
+            android:textSize="12sp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
             tools:text="20元券"
-            android:textColor="#ffdb493e"
-            android:textSize="10sp" />
+            />
 
         <TextView
             android:id="@+id/tv_subsidy"
@@ -99,13 +96,13 @@
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:layout_toRightOf="@id/tv_price"
-            android:background="@mipmap/video_yugu"
-            android:paddingLeft="5dp"
+            android:background="@drawable/video_zhan_bg"
+            android:paddingLeft="12dp"
             android:paddingTop="2dp"
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
-            tools:text="估计收益31.57元"
-            android:textColor="#FA6400"
+            tools:text="赚1.57元"
+            android:textColor="#975400"
             android:textSize="12sp" />
 
         <TextView
@@ -114,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_price"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/iv_head"
             tools:text="销量：23456"
             android:textColor="#ff999999"
@@ -146,43 +143,83 @@
                 android:layout_gravity="bottom"
                 android:textStyle="bold"
                 android:textColor="#DB493E"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-
-            <TextView
-                android:id="@+id/tv_buy"
+            <LinearLayout
+                android:id="@+id/ll_share"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_toLeftOf="@+id/tv_share"
-                android:background="@drawable/bg_yellow_ffd800_round_left_30dp"
-                android:paddingLeft="11dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:paddingRight="11dp"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                android:text="分享赚钱" />
-
-            <TextView
-                android:id="@+id/tv_share"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_10"
-                android:background="@drawable/bg_goods_detail_to_taobao"
                 android:gravity="center"
-                android:text="立即购买"
-                android:paddingLeft="11dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:paddingRight="11dp"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/bg_yellow_ffd752_round_left_50dp"
+                android:layout_height="30dp">
+                <TextView
+                    android:id="@+id/tv_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分享赚钱\n1234"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="#ffffffff"
+                    android:textSize="10sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_buy"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/bg_red_ee403a_round_right_50dp"
+                android:layout_height="30dp">
+                <TextView
+                    android:id="@+id/tv_share"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="立即购买\n123123"
+                    android:gravity="center"
+                    android:textColor="#ffffffff"
+                    android:textSize="10sp"
+                    />
+
+            </LinearLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_buy"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:layout_toLeftOf="@+id/tv_share"-->
+<!--                android:background="@drawable/bg_yellow_ffd752_round_left_50dp"-->
+<!--                android:paddingLeft="11dp"-->
+<!--                android:paddingTop="4dp"-->
+<!--                android:paddingBottom="4dp"-->
+<!--                android:paddingRight="11dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="11sp"-->
+<!--                android:text="分享赚钱" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_share"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginRight="@dimen/dp_10"-->
+<!--                android:background="@drawable/bg_red_ee403a_round_right_50dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="立即购买"-->
+<!--                android:paddingLeft="11dp"-->
+<!--                android:paddingTop="4dp"-->
+<!--                android:paddingBottom="4dp"-->
+<!--                android:paddingRight="11dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="11sp" />-->
             </LinearLayout>
 
     </RelativeLayout>

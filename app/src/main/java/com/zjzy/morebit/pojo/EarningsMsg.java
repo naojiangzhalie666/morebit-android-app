@@ -20,6 +20,7 @@ public class EarningsMsg implements Serializable {
     private String commission = "";   //commission订单收益
     private int readStatus;    //0未读,1已读
 
+    private String replyName;//反馈名称
     private String replyContent;      //反馈回复内容
     private String yearMonthDay;        //回复时间-年月日
     private String hourMinutesSecond;   //回复时间-时分秒
@@ -44,6 +45,51 @@ public class EarningsMsg implements Serializable {
     private  int viewType;   //列表view分类自用
 
     private String subsidy;  //补贴
+
+    private String headImg;//头像
+    private boolean hasEnd;//是否结束 true结束  false不结束
+    private String contentDesc;//内容描述
+    private String goodsId;//商品id
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getReplyName() {
+        return replyName;
+    }
+
+    public void setReplyName(String replyName) {
+        this.replyName = replyName;
+    }
+
+    public String getContentDesc() {
+        return contentDesc;
+    }
+
+    public void setContentDesc(String contentDesc) {
+        this.contentDesc = contentDesc;
+    }
+
+    public boolean isHasEnd() {
+        return hasEnd;
+    }
+
+    public void setHasEnd(boolean hasEnd) {
+        this.hasEnd = hasEnd;
+    }
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
+    }
 
     public String getSubsidy() {
         return subsidy;

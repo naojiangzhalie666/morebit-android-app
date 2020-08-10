@@ -162,7 +162,7 @@ public class ModifyPasswordActivity extends BaseActivity implements TextWatcher 
          mEdtPassword.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         mEdtPassword2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         if (type == MODIFY_PASSWORD) {
-            mTitle.setText(R.string.find_password);
+            mTitle.setText("修改密码");
             areaCodeTv.setVisibility(View.GONE);
             areaCodeBtn.setVisibility(View.GONE);
             mEdtPhone.setVisibility(View.GONE);

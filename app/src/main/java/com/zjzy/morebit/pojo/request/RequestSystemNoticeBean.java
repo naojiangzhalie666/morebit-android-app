@@ -4,6 +4,15 @@ public class RequestSystemNoticeBean extends RequestBaseBean {
 
     private Integer type;
     private int page;
+    private int orderSource;
+
+    public int getOrderSource() {
+        return orderSource;
+    }
+
+    public void setOrderSource(int orderSource) {
+        this.orderSource = orderSource;
+    }
 
     public int getType() {
         return type;

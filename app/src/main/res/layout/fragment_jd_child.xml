@@ -4,7 +4,7 @@
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+  >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFFFF"
             android:orientation="vertical">
 
             <View
@@ -26,24 +25,26 @@
                 android:id="@+id/rl_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="@color/color_F3060D"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp">
 
                 <ImageView
                     android:id="@+id/iv_back"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/btn_title_return_icon" />
+                    android:src="@drawable/zuojiantou_white" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="京东商城"
+                    android:background="@mipmap/jd_titile_name"
                     android:textColor="#333333"
                     android:textSize="18sp" />
 
@@ -54,37 +55,46 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:padding="10dp"
-                    android:src="@mipmap/btn_search_black" />
+                    android:src="@drawable/icon_college_search_white" />
             </RelativeLayout>
         </LinearLayout>
 
         <android.support.design.widget.CoordinatorLayout
+            android:background="#F0F1F5"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/app_bar_lt"
+                android:background="#F0F1F5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#F0F1F5"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
                     <android.support.design.widget.CoordinatorLayout
+
                         android:id="@+id/super_header_cl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusable="true"
+                        android:layout_marginBottom="12dp"
+                        android:background="@mipmap/jd_tou_bg"
                         android:focusableInTouchMode="true"
                         android:orientation="vertical">
 
                         <com.zjzy.morebit.view.AspectRatioView
                             android:id="@+id/ar_title_banner"
                             android:layout_width="match_parent"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
                             android:layout_height="wrap_content"
                             app:aspectRatio="2.5">
 
@@ -92,7 +102,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@color/transparent"
-                                app:cardBackgroundColor="@color/white"
                                 app:cardCornerRadius="5dp"
                                 app:cardElevation="0dp"
                                 app:cardUseCompatPadding="false"
@@ -115,17 +124,17 @@
                 <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
                     android:id="@+id/xTablayout"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="44dp"
                     android:background="#FFFFFFFF"
                     app:tl_tab_padding="20dp"
                     app:xTabDisplayNum="8"
-                    app:xTabIndicatorColor="@color/color_FF645B"
+                    app:xTabIndicatorColor="@color/color_DB493E"
                     app:xTabIndicatorHeight="3dp"
                     app:xTabIndicatorWidth="15dp"
                     app:xTabMode="scrollable"
-                    app:xTabSelectedTextColor="@color/color_FF645B"
-                    app:xTabSelectedTextSize="@dimen/sp_15"
-                    app:xTabTextColor="@color/color_666666"
+                    app:xTabSelectedTextColor="@color/color_DB493E"
+                    app:xTabSelectedTextSize="@dimen/sp_16"
+                    app:xTabTextColor="@color/color_333333"
                     app:xTabTextSize="@dimen/sp_14" />
             </android.support.design.widget.AppBarLayout>
 

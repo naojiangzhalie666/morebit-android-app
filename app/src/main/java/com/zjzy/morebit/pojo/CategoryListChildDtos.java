@@ -21,6 +21,16 @@ public class CategoryListChildDtos implements Serializable {
     private List<ImageInfo> opens;
 
     private boolean isSelect;
+    private List<CategoryListChildDtos> child;
+
+    public List<CategoryListChildDtos> getChild() {
+        return child;
+    }
+
+    public void setChild(List<CategoryListChildDtos> child) {
+        this.child = child;
+    }
+
     public int getId() {
         return id;
     }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,26 +19,36 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
+import com.zjzy.morebit.Module.common.Dialog.ShareDownloadDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ShareMoneyAdapter;
 import com.zjzy.morebit.goods.shopping.ui.ShareMoneyGetImgActivity;
 import com.zjzy.morebit.goods.shopping.ui.dialog.ShareFriendsDialog;
 import com.zjzy.morebit.main.model.ConfigModel;
+import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CallBackObserver;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.CommonShareTemplateBean;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.ShareMoenyPosterEvent;
 import com.zjzy.morebit.pojo.goods.PddShareContent;
+import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.DownloadManage;
 import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
@@ -56,6 +67,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,8 +92,8 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
     private RecyclerView mRecyclerView;
     private ShareMoneyAdapter mAdapter;
     private TextView tv_copy, incomeMoney;
-    private EditText et_copy;
-    private LinearLayout weixinCircle, weixinFriend;
+    private TextView et_copy,et_copy2;
+    private LinearLayout weixinCircle, weixinFriend,plct;
     private ShopGoodInfo goodsInfo;
 
     private String promotionUrl;//推广链接
@@ -93,6 +105,7 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
     private int mPosterPos;
     private ShareFriendsDialog mShareFriendsDialog;
     private int mBitmapPosition = -1;
+    private FileDownloadListener downloadListener;
 
 
 
@@ -132,7 +145,8 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
         //设置页面头顶空出状态栏的高度
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         tv_copy = (TextView) findViewById(R.id.tv_copy);
-        et_copy = (EditText) findViewById(R.id.et_copy);
+        et_copy = (TextView) findViewById(R.id.et_copy);
+        et_copy2= (TextView) findViewById(R.id.et_copy2);
         et_copy.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -154,7 +168,8 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
 
         weixinCircle = (LinearLayout) findViewById(R.id.weixinCircle);
         weixinFriend = (LinearLayout) findViewById(R.id.weixinFriend);
-
+        plct= (LinearLayout) findViewById(R.id.plct);
+        plct.setOnClickListener(this);
         btn_back.setOnClickListener(this);
         tv_copy.setOnClickListener(this);
         weixinCircle.setOnClickListener(this);
@@ -178,7 +193,7 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
                 goodsInfo.getAdImgUrl().get(0).isChecked = true;
             mAdapter = new ShareMoneyAdapter(this, goodsInfo.getAdImgUrl(), false);
             mRecyclerView.setAdapter(mAdapter);
-
+            goodsInfo.setCouponUrl(promotionUrl);
             mAdapter.setOnItemClickListener(new ShareMoneyAdapter.OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position, boolean isChecked) {
@@ -205,7 +220,7 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
             String discountsMoneyStr = MathUtils.getMuRatioComPrice(userInfo.getCalculationRate(), goodsInfo.getCommission());
 //            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(userInfo.getCalculationRate(), goodsInfo.getSubsidiesPrice());
 //            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
-            incomeMoney.setText("您的奖励预计为: " + discountsMoneyStr + "元");
+ //           incomeMoney.setText("您的奖励预计为: " + discountsMoneyStr + "元");
 //        }
         ShareMoneySwitchForKaolaTemplateView viewSwitch = (ShareMoneySwitchForKaolaTemplateView) findViewById(R.id.view_swicht);
         viewSwitch.setAction(new MyAction.One<Integer>() {
@@ -215,6 +230,7 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
             }
         });
         getTemplate();
+        getReturning();
 
     }
 
@@ -244,8 +260,12 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
                 }
                 AppUtil.coayTextPutNative(this, et_copy.getText().toString());
                 ViewShowUtils.showShortToast(this, R.string.coayTextSucceed);
+                //跳转微信
+                PageToUtil.goToWeixin(ShareMoneyForKaolaActivity.this);
                 break;
-
+            case R.id.plct:
+                startSave();
+                break;
             case R.id.weixinFriend:
                 startShare(ShareUtil.WechatType);
                 break;
@@ -274,9 +294,9 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
             case R.id.ll_more:
                 permission(ShareUtil.MoreType);
                 break;
-            case R.id.rule_ly: //奖励规则
-                showRuleDialog();
-                break;
+//            case R.id.rule_ly: //奖励规则
+//                showRuleDialog();
+//                break;
             case R.id.makeGoodsPoster: //更换海报
                 goodsInfo.setCouponUrl(promotionUrl);
                 Log.e("private",promotionUrl+"考拉");
@@ -337,8 +357,108 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
         }
 
     }
+    public void startSave() {
+
+        if (AppUtil.isFastClick(500)) return;
+        if (goodsInfo == null || goodsInfo.getAdImgUrl().size() <= 0) {
+            return;
+        }
+        if (ticknum == 0) {
+            Toast.makeText(ShareMoneyForKaolaActivity.this, "请选择你要保存的图片", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ArrayList<String> arrayList = new ArrayList<>();
+        AppUtil.coayText(this, et_copy.getText().toString());
+        for (int i = 0; i < goodsInfo.getAdImgUrl().size(); i++) {
+            ImageInfo imageInfo = goodsInfo.getAdImgUrl().get(i);
+            if (imageInfo != null && imageInfo.isChecked) {
+                String picture = imageInfo.getPicture();
+                arrayList.add(picture);
+            }
+        }
+        downloadListener =createLis();
+        //DownloadManage.getInstance().start(arrayList, SdDirPath.IMAGE_CACHE_PATH, downloadListener);
+
+        DownloadManage.getInstance().multitaskStart(arrayList,/*SdDirPath.IMAGE_CACHE_PATH+fileName+"."+suffix,*/downloadListener);
+
+        // shareImg(arrayList, type, isDownload);
+    }
+    private FileDownloadListener createLis() {
+        return new FileDownloadListener() {
+
+            @Override
+            protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                // 之所以加这句判断，是因为有些异步任务在pause以后，会持续回调pause回来，而有些任务在pause之前已经完成，
+                // 但是通知消息还在线程池中还未回调回来，这里可以优化
+                // 后面所有在回调中加这句都是这个原因
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+            }
+
+            @Override
+            protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+//                type =DOWNLOADING ;
+//                btn_setting.setVisibility(View.GONE);
+//                MyLog.i("test","progress.getProgress()+1: " +progress.getProgress()+1);
+//                progressPb.setProgress(progressPb.getProgress() + 1);
+//                progressTv.setText("progress: " + progressPb.getProgress());
+//                progressInfoTv.append((int)task.getTag() + " | ");
 
 
+            }
+
+
+
+            @Override
+            protected void completed(BaseDownloadTask task) {
+                //MyLog.i("test","completed: " +mDownloadCount);
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+                // GoodsUtil.updataImgToTK(mContext,new File(task.getPath()),task.getFilename());
+                try {
+                    MediaStore.Images.Media.insertImage(ShareMoneyForKaolaActivity.this.getContentResolver(), task.getPath(), task.getFilename(), null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                ToastUtils.showShort("图片已存到相册");
+                ShareDownloadDialog dialog=new ShareDownloadDialog(ShareMoneyForKaolaActivity.this,R.style.dialog);
+                dialog.show();
+            }
+
+            @Override
+            protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+            }
+
+            @Override
+            protected void error(BaseDownloadTask task, Throwable e) {
+                MyLog.i("test","error: "+e.toString());
+
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+                MyLog.i("test","downloadListener: "+downloadListener);
+
+            }
+
+            @Override
+            protected void warn(BaseDownloadTask task) {
+                MyLog.i("test","warn: ");
+                if (task.getListener() != downloadListener) {
+                    return;
+                }
+
+            }
+        };
+    }
     public void startShare(final int type) {
         startShare(type, false);
     }
@@ -439,13 +559,12 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
     public void getTemplate() {
         setResult(RESULT_OK);
         LoadingView.showDialog(this, "请求中...");
-            GoodsUtil.getGenerateForKaola(this, goodsInfo)
-                    .subscribe(new DataObserver<String>() {
+            GoodsUtil.getGetTkLFinalObservable3(this, goodsInfo,4)
+                    .subscribe(new DataObserver<CommonShareTemplateBean>() {
                         @Override
-                        protected void onSuccess(String data) {
-                            String template = data;
-                            et_copy.setText(template);
-
+                        protected void onSuccess(CommonShareTemplateBean data) {
+                            et_copy2.setText(data.getShareContent());
+                            et_copy.setText(data.getTklVo().getTemplate());
                         }
                     });
     }
@@ -640,5 +759,38 @@ public class ShareMoneyForKaolaActivity extends BaseActivity implements View.OnC
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    public void getReturning() {
+
+//        LoadingView.showDialog(this, "请求中...");
+
+        RxHttp.getInstance().getCommonService().getConfigForKey(new RequestKeyBean().setKey(C.SysConfig.SHARE_COURES))
+                .compose(RxUtils.<BaseResponse<HotKeywords>>switchSchedulers())
+                .compose(this.<BaseResponse<HotKeywords>>bindToLifecycle())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                    }
+                })
+                .subscribe(new DataObserver<HotKeywords>() {
+                    @Override
+                    protected void onSuccess(HotKeywords data) {
+                        final String commssionH5 = data.getSysValue();
+                        if (!TextUtils.isEmpty(commssionH5)){
+                            rule_ly.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowWebActivity.start(ShareMoneyForKaolaActivity.this,commssionH5,"");
+                                }
+                            });
+                        }
+
+                        android.util.Log.e("gggg",commssionH5+"");
+
+
+                    }
+
+                });
     }
 }

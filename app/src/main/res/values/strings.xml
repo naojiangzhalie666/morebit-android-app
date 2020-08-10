@@ -37,7 +37,15 @@
     <string name="main_circle_hotday">每日爆款</string>
     <string name="main_circle_adv">宣传素材</string>
     <string name="goodsShertError">商品优惠券已领完，请重新选择商品</string>
-
+    <string name="ago">前</string>
+    <string name="years">年</string>
+    <string name="month">月</string>
+    <string name="week">周</string>
+    <string name="day">天</string>
+    <string name="hours">小时</string>
+    <string name="minutes">分钟</string>
+    <string name="secknds">秒</string>
+    <string name="just_now">现在</string>
     <string name="coupon">¥%1$s</string>
     <string name="coupon_add_text">券后¥%1$s</string>
     <string name="submit">确认提交</string>
@@ -47,6 +55,7 @@
     <string name="income">¥ %1$s</string>
     <string name="income_yuan">%1$s元</string>
     <string name="commission">预估收益%1$s元</string>
+    <string name="mcommission">赚 ¥ %1$s</string>
     <string name="upgrade_commission">升级收益</string>
     <string name="exclusiveWechat">专属客服微信：%1$s</string>
     <string name="recommend">推荐词</string>
@@ -156,6 +165,7 @@
     <string name="complaint_suggestion">投诉建议</string>
     <string name="find_splendid">发现精彩</string>
     <string name="sales">销量：%1$s</string>
+    <string name="msales">月销%1$s</string>
     <string name="current_taobao">淘宝</string>
     <string name="current_pdd">拼多多</string>
     <string name="current_jd">京东</string>
@@ -178,7 +188,7 @@
     <string name="order_invalid">已失效</string>
     <string name="order_closed">已关闭</string>
     <string name="share_moeny">预估收益:%s元</string>
-    <string name="goods_share_moeny">分享\n（收益%s元）</string>
+    <string name="goods_share_moeny">立即分享\n赚¥%s</string>
     <string name="also_collect">已收藏</string>
     <string name="collect">收藏</string>    <!--<string name="add_qrcode_hint">温馨提示：商务合作请联系官方招商部负责人\n\n\n合作商家后台管理地址：\n%1$s</string>-->
     <string name="collect_succeed">收藏成功</string>
@@ -208,7 +218,7 @@
     <string name="official_recom">官方推荐</string>
     <string name="login_error">登录失败</string>
     <string name="discount_stores">店铺优惠</string>
-    <string name="goods_browsing_history">足迹</string>
+    <string name="goods_browsing_history">我的足迹</string>
     <string name="team_wechat">团队管理微信</string>
     <string name="team_wechat_hint">便于您的粉丝和推荐人联系您</string>
     <string name="service_text">客服</string>
@@ -282,7 +292,8 @@
     <string name="has_been_for_you">已为您</string>
     <string name="capy_tkl">仅复制淘口令</string>
     <string name="goods_poster_hint">长按识别二维码</string>
-    <string name="no_msg">暂无消息</string>
+    <string name="no_msg">还没有任何消息~</string>
+    <string name="no_activity">暂无公告</string>
     <string name="order_team_tb">淘宝订单</string>
     <string name="order_team_sl">苏宁订单</string>
     <string name="order_team_other">其他订单</string>
@@ -298,10 +309,9 @@
     <string-array name="self_order_type">
         <item>全部</item>
         <item>待支付 </item>
-        <item>已付款 </item>
-        <item>待收货 </item>
-        <item>已结算</item>
-        <item>已关闭</item>
+        <item>待发货 </item>
+        <item>待收货</item>
+        <item>已完成</item>
 
     </string-array>
     <string-array name="order_live_type">
@@ -337,7 +347,7 @@
     <string name="estimate">即可获得收益%s元</string>
     <string name="to_update">去升级</string>
     <string name="update_vip">升级VIP</string>
-    <string name="immediately_buy_discounts">立即购买\n(省%s元)</string>
+    <string name="immediately_buy_discounts">立即购买\n省¥%s</string>
     <string name="open_push_head">开启消息通知提醒</string>
     <string name="open_push_com1">收益通知，所有收益尽在手中</string>
     <string name="open_push_com2">每日爆款，帮你找到心仪好物</string>
@@ -356,10 +366,10 @@
     <string name="hot_end_coming_soon">活动开始啦！赶紧去”火热开抢中“抢购吧</string>
 
     <string name="contact_he">联系他</string>
-    <string name="order_sn">订单号 %1$s</string>
-    <string name="order_type">订单类型 %1$s</string>
-    <string name="order_money">订单金额 %1$s</string>
-    <string name="order_earnings">获得收益 %1$s</string>
+    <string name="order_sn">订单号: %1$s</string>
+    <string name="order_type">订单类型: %1$s</string>
+    <string name="order_money">订单金额: %1$s</string>
+    <string name="order_earnings">获得普通收益: %1$s</string>
     <string name="guide_circle">助你变身导购达人，佣金赚不停</string>
     <string name="guide_order">收益、订单看这里</string>
     <string name="guide_circle_sucai">一键转发吸粉素材，粉丝越多赚佣越快</string>
@@ -414,7 +424,7 @@
     <string name="subsidiesPrice">平台补贴%1$s元</string>
     <string name="subsidiesTips">补贴 %1$s元</string>
     <string name="incomeTips">佣金 %1$s元</string>
-    <string name="share_money_phone_line">手机端链接</string>
+    <string name="share_money_phone_line">淘口令</string>
     <string name="share_money_pc_line">PC端链接</string>
     <string name="share_money_download">下载链接</string>
     <string name="invitation_code_text">邀请码</string>
@@ -469,13 +479,15 @@
     <string name="auth_user_private_all"><![CDATA[<font color="#333333">查看完整版《</font><font color="#FF645B">多点用户协议</font><font color="#333333">》</font>]]></string>
     <string name="auth_private_all"><![CDATA[<font color="#333333">和《</font><font color="#FF645B">隐私协议</font><font color="#333333">》</font>]]></string>
     <string name="number_goods_buy_txt">购买立得%1$s成长值</string>
-    <string name="give_growth_value">送%1$s成长值</string>
+    <string name="give_growth_value">成长值%1$s</string>
     <string name="vip_growth_value">您还需要%1$s成长值即可成为团队长</string>
     <string name="number_growth_value">您还需要%1$s成长值即可成为VIP</string>
     <string name="invate_text1">方式一：可以直接复制邀请码给好友下载APP注册填写</string>
     <string name="invate_text2">方式二：专属海报中的二维码和邀请链接已经包含您的邀请信息以直接复制邀请码给好友下载APP注册填写</string>
     <string name="invate_text3">方式三：好友通过您的邀请码或者邀请海报注册会员并下载APP后，Ta将成为您的粉丝</string>
-
+    <string name="month1">*每月24日结算的佣金和积分是确认收货的佣金。</string>
+    <string name="month2">例如：11月预估自购收益1000元,\n其中700元的订单是11月内收货,12月24日结算\n有300元的订单是12月内收货,1月24日结算;\n11月预估积分15000,\n其中10000积分是11月内收货,12月24日结算\n有5000积分的订单是12月内收货,1月24日结算。</string>
+    <string name="month3">*本数据仅供参考,系统于次月生成报表快照。\n*后续产生的售后扣除不更新报表快照,最终收益以实际\n结算为准。</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

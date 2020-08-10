@@ -3,11 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F8F8F8"
+    android:background="@color/color_F0F1F5"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_actionbar_no_shadow" />
 
+    <include
+        android:id="@+id/top"
+        layout="@layout/top" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#FFEBCE">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/shouyi_tishi" />
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="多点收藏夹商品信息每日凌晨更新"
+            android:textColor="#ff975400"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,12 +62,38 @@
 
         </RelativeLayout>
 
-        <com.zjzy.morebit.view.SimpleEmptyView
-            android:id="@+id/empty_view"
+        <LinearLayout
+            android:id="@+id/searchNullTips_ly"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:visibility="gone"
-            tools:visibility="visible" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/collect_no"/>
+
+            <TextView
+                android:layout_marginTop="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收藏夹空空如也"
+                android:textStyle="bold"
+                android:textColor="#ff666666"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收藏一个试试吧"
+                android:textColor="#ff999999"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+
     </FrameLayout>
 
 </LinearLayout>

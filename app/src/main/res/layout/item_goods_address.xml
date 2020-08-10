@@ -40,7 +40,7 @@
                     android:layout_marginLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingLeft="10dp"
-                    android:textColor="@color/color_FD4804"
+                    android:textColor="@color/color_F05557"
                     android:layout_alignTop="@id/txt_user_name"
                     android:layout_toRightOf="@id/txt_user_name"
                     android:background="@drawable/bg_default_address"/>
@@ -78,7 +78,7 @@
                 android:background="@color/color_F8F8F8"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="100dp"/>
+                android:layout_marginRight="50dp"/>
             <LinearLayout
                 android:id="@+id/modify_address"
                 android:layout_width="40dp"

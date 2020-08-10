@@ -1,27 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/ll_super_tab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="35dp"
+        android:orientation="horizontal">
+    </LinearLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nscorll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_vertical">
 
-        <com.zjzy.morebit.Module.common.View.ReEndlessGradListView
-            android:id="@+id/rl_list"
+        <RelativeLayout
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_F8F8F8"/>
+            android:layout_height="match_parent">
 
-        <include layout="@layout/item_go_top"/>
-    </RelativeLayout>
+            <com.zjzy.morebit.view.AspectRatioView
+
+                android:id="@+id/as_iv_banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:aspectRatio="2.27">
+
+                <ImageView
+                    android:id="@+id/iv_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"/>
+            </com.zjzy.morebit.view.AspectRatioView>
+            <TextView
+                android:id="@+id/tv"
+
+                android:layout_below="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="118dp"
+                />
+            <com.zjzy.morebit.Module.common.View.ReEndlessGradListView
+                android:id="@+id/rl_list"
+                android:background="@drawable/bg_ffffff_8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginRight="12dp"/>
+
+
+
+
+
+            <!--            <TextView-->
+            <!--                android:layout_below="@+id/iv_head_bg"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="1000dp"-->
+            <!--                android:background="@color/color_333333"/>-->
+
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
 
     <LinearLayout
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"/>
-</RelativeLayout>
+</LinearLayout>

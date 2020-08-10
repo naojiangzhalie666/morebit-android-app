@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F5F5">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/top" />
+    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+        android:id="@+id/xablayout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        app:xTabDividerGravity="center"
+        app:xTabDisplayNum="3"
+        app:tl_tab_padding="25dp"
+        app:xTabIndicatorColor="@color/color_DB493E"
+        app:xTabIndicatorHeight="3dp"
+        app:xTabIndicatorWidth="15dp"
+        app:xTabMode="scrollable"
+        app:xTabSelectedTextColor="@color/color_DB493E"
+        app:xTabSelectedTextSize="@dimen/sp_16"
+        app:xTabTextColor="@color/color_999999"
+        app:xTabTextSize="@dimen/sp_16" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="70dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_color_ff_top_20"
+    android:paddingBottom="8dp">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/prushchase_bg" />
+
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/newpeople_bg"
+        android:layout_centerHorizontal="true"
+        android:text="新人价"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_12"
+        android:gravity="center"
+        android:layout_marginTop="60dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_below="@+id/rl"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="¥ 0"
+        android:textColor="#fff05557"
+        android:textSize="16sp" />
+</RelativeLayout>

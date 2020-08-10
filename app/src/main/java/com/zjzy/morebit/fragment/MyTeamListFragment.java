@@ -1,5 +1,6 @@
 package com.zjzy.morebit.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,6 +51,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 
 /**
  * 我的团队列表
@@ -81,6 +86,10 @@ public class MyTeamListFragment extends BaseFragment {
     private int mFrom;
     private String mOrder = "";
     private boolean isInit;
+    private String sOrder = "desc";
+    private LinearLayout title_zong_volume_ll;
+    private ImageView title_comprehensive_iv;
+    private boolean isTime=false;
     private Handler handler = new Handler() {
 
         @Override
@@ -136,7 +145,8 @@ public class MyTeamListFragment extends BaseFragment {
         btn_invite = (TextView) view.findViewById(R.id.btn_invite);
         iv_icon_null =  view.findViewById(R.id.iv_icon_null);
         tv_hint = view.findViewById(R.id.tv_hint);
-
+        title_comprehensive_iv=view.findViewById(R.id.title_comprehensive_iv);
+        title_zong_volume_ll=view.findViewById(R.id.title_zong_volume_ll);
         myTeamAdapter = new MyTeamAdapter(getActivity(), listArray);
         myTeamAdapter.setUserInfo(UserLocalData.getUser(getActivity()));
         if (mFrom == MyTeamListFragment.TYPE_DYNAMIC_RANK) {
@@ -171,6 +181,21 @@ public class MyTeamListFragment extends BaseFragment {
             }
         });
 
+        title_zong_volume_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isTime){
+                    sOrder="desc";
+                    isTime=false;
+                    title_comprehensive_iv.setImageResource(R.drawable.icon_jiage_down);
+                }else{
+                    title_comprehensive_iv.setImageResource(R.drawable.icon_jiage_up);
+                    sOrder="asc";
+                    isTime=true;
+                }
+                getFirstData();
+            }
+        });
 
         btn_invite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -381,6 +406,7 @@ public class MyTeamListFragment extends BaseFragment {
         RequestTeanmListBean requestTeanmListBean = new RequestTeanmListBean();
         requestTeanmListBean.setLevel(mType);
         requestTeanmListBean.setPage(pageNum);
+        requestTeanmListBean.setOrder(sOrder);
         return RxHttp.getInstance().getCommonService().getTeanmList(requestTeanmListBean)
                 .compose(RxUtils.<BaseResponse<TeamData>>switchSchedulers())
                 .compose(this.<BaseResponse<TeamData>>bindToLifecycle());
@@ -519,7 +545,10 @@ public class MyTeamListFragment extends BaseFragment {
                 @Override
                 public void onClick(View v, String remark, int position) {
                     updateRemark(remark, position);
+
                     mRemarkDialog.dismiss();
+
+
                 }
             });
         }
@@ -532,6 +561,8 @@ public class MyTeamListFragment extends BaseFragment {
         message.setData(bundle);
         handler.sendMessage(message);
     }
+
+
 
     private void updateRemark(String remark, int position) {
 //        if (TextUtils.isEmpty(remark)) {

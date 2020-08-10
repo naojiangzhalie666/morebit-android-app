@@ -5,7 +5,7 @@ import com.zjzy.morebit.info.contract.EarningsContract;
 import com.zjzy.morebit.info.model.InfoModel;
 import com.zjzy.morebit.mvp.base.frame.MvpPresenter;
 import com.zjzy.morebit.network.observer.DataObserver;
-import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.UserIncomeDetail;
 import com.zjzy.morebit.pojo.EarningExplainBean;
 import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.utils.TaobaoUtil;
@@ -41,45 +41,25 @@ public class EarningsPresenter extends MvpPresenter<InfoModel, EarningsContract.
                 });
     }
 
-    //获取月收益
-    @Override
-    public void getMontMoney(RxFragment rxFragment) {
-        mModel.getMonthIncome(rxFragment)
-                .subscribe(new DataObserver<MonthEarnings>() {
-                    @Override
-                    protected void onSuccess(MonthEarnings data) {
-                        getIView().getMontnSuccess(data);
-                    }
-                });
-    }
+
 
     @Override
-    public void getDayMoney(RxFragment rxFragment) {
-        mModel.getDayIncome(rxFragment)
+    public void getUserIncomeDetail(RxFragment rxFragment) {
+        mModel.getUserIncomeDetail(rxFragment)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
                         getIView().onIncomeFinally();
                     }
-                }).subscribe(new DataObserver<DayEarnings>() {
+                }).subscribe(new DataObserver<UserIncomeDetail>() {
 
             @Override
-            protected void onSuccess(DayEarnings data) {
+            protected void onSuccess(UserIncomeDetail data) {
                 getIView().getDaySuccess(data);
             }
         });
     }
 
-    @Override
-    public void getEarningsExplain(RxFragment rxFragment) {
-        mModel.getEarningsExplain(rxFragment)
-                .subscribe(new DataObserver<EarningExplainBean>() {
-                    @Override
-                    protected void onSuccess(EarningExplainBean data) {
-                        getIView().onExplainSuccess(data);
-                    }
-                });
-    }
 
 
 }

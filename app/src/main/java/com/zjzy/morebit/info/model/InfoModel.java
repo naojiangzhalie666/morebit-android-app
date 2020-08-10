@@ -1,19 +1,19 @@
 package com.zjzy.morebit.info.model;
 
 
-import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.mvp.base.frame.MvpModel;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
-import com.zjzy.morebit.pojo.DayEarnings;
+import com.zjzy.morebit.pojo.UserIncomeDetail;
 import com.zjzy.morebit.pojo.DayHotBean;
 import com.zjzy.morebit.pojo.EarningExplainBean;
 import com.zjzy.morebit.pojo.EarningsMsg;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
+import com.zjzy.morebit.pojo.RequestReadNotice;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UpgradeCarousel;
 import com.zjzy.morebit.pojo.myInfo.ApplyUpgradeBean;
@@ -43,8 +43,17 @@ public class InfoModel extends MvpModel {
     public static final int msgSysType = 1; // 系统
     public static final int msgAwardType = 3;//奖励
     public static final int msgFansType = 2;//粉丝
+    public static final int msgActivityType = 6;//活动
+    public static final int msgGoodsype = 7;//好货
 
-
+    //消息已读
+    public Observable<BaseResponse<String>> getReadNotice(RxFragment fragment,int  type) {
+        RequestReadNotice notice=new RequestReadNotice();
+        notice.setType(type);
+        return RxHttp.getInstance().getSysteService().getReadNotice(notice)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
+    }
     /**
      * 申请升级
      *
@@ -119,25 +128,16 @@ public class InfoModel extends MvpModel {
 
 
     /**
-     * 获取收入明细(日)
+     * 获取收益
      *
      * @param rxFragment
      */
-    public Observable<BaseResponse<DayEarnings>> getDayIncome(RxFragment rxFragment) {
-        return RxHttp.getInstance().getUsersService().getDayIncome()
-                .compose(RxUtils.<BaseResponse<DayEarnings>>switchSchedulers())
-                .compose(rxFragment.<BaseResponse<DayEarnings>>bindToLifecycle());
+    public Observable<BaseResponse<UserIncomeDetail>> getUserIncomeDetail(RxFragment rxFragment) {
+        return RxHttp.getInstance().getUsersService().getUserIncomeDetail()
+                .compose(RxUtils.<BaseResponse<UserIncomeDetail>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<UserIncomeDetail>>bindToLifecycle());
     }
-    /**
-     * 获取收入明细(月)
-     *
-     * @param rxFragment
-     */
-    public Observable<BaseResponse<MonthEarnings>> getMonthIncome(RxFragment rxFragment) {
-        return RxHttp.getInstance().getUsersService().getMonthIncome()
-                .compose(RxUtils.<BaseResponse<MonthEarnings>>switchSchedulers())
-                .compose(rxFragment.<BaseResponse<MonthEarnings>>bindToLifecycle());
-    }
+
     /**
      * 获取分享海报列表
      *
@@ -184,6 +184,28 @@ public class InfoModel extends MvpModel {
         RequestSystemNoticeBean requestBean = new RequestSystemNoticeBean();
         requestBean.setType(type);
         requestBean.setPage(page);
+        return RxHttp.getInstance().getCommonService()
+                .systemNotice(requestBean)
+                .compose(RxUtils.<BaseResponse<List<EarningsMsg>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<EarningsMsg>>>bindToLifecycle());
+
+    }
+
+    /**
+     * 消息
+     *
+     * @param fragment
+     * @param type
+     * @param page
+     * @return
+     */
+
+    public Observable<BaseResponse<List<EarningsMsg>>> getMsg2(RxFragment fragment, int type, int page,int orderSource) {
+
+        RequestSystemNoticeBean requestBean = new RequestSystemNoticeBean();
+        requestBean.setType(type);
+        requestBean.setPage(page);
+        requestBean.setOrderSource(orderSource);
         return RxHttp.getInstance().getCommonService()
                 .systemNotice(requestBean)
                 .compose(RxUtils.<BaseResponse<List<EarningsMsg>>>switchSchedulers())
@@ -276,12 +298,12 @@ public class InfoModel extends MvpModel {
      *
      * @param rxFragment
      */
-    public Observable<BaseResponse<DayEarnings>> getPlatformDayIncome(RxFragment rxFragment,int type) {
+    public Observable<BaseResponse<UserIncomeDetail>> getPlatformDayIncome(RxFragment rxFragment, int type) {
         RequestIncomeBean incomeBean = new RequestIncomeBean();
         incomeBean.setType(type);
         return RxHttp.getInstance().getUsersService().getPlatformDayIncome(incomeBean)
-                .compose(RxUtils.<BaseResponse<DayEarnings>>switchSchedulers())
-                .compose(rxFragment.<BaseResponse<DayEarnings>>bindToLifecycle());
+                .compose(RxUtils.<BaseResponse<UserIncomeDetail>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<UserIncomeDetail>>bindToLifecycle());
     }
 
     /**

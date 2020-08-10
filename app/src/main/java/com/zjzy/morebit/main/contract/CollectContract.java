@@ -22,10 +22,11 @@ public class CollectContract {
         void showCollectFailure(String errorMsg, String errorCode);
         void showCollectSuccess(List<ShopGoodInfo> data);
         void showDeleteSuccess();
+        void showEmity();
     }
 
     public interface Present extends BasePresenter {
-        void getCollectData(CollectFragment2 fragment, int page, CommonEmpty emptyView);
+        void getCollectData(CollectFragment2 fragment, int page);
         void getDeleteCollection(RxFragment fragment, String ids);
     }
 }

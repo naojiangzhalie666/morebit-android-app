@@ -1,72 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_000000"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl1"
+        android:background="@color/color_000000"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="44dp">
 
-        <TextView
+
+
+        <ImageView
             android:id="@+id/closs"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/short_video_close_icon" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+           android:layout_centerVertical="true"
+            android:src="@mipmap/fans_retrurn"
+            android:paddingLeft="12dp"
+            android:paddingRight="10dp"
 
-        <TextView
-            android:layout_width="57dp"
-            android:layout_height="29dp"
-            android:background="@drawable/shor_video_bg_save"
-            android:text="@string/save"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_marginRight="12dp"
-            android:layout_centerVertical="true"
+            />
+        <ImageView
+            android:id="@+id/sp_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:id="@+id/tv_save"
-            android:textSize="@dimen/sp_14" />
+            android:layout_centerVertical="true"
+            android:src="@mipmap/sp_close"
+            android:paddingLeft="16dp"
+            android:paddingRight="12dp"
+
+            />
+
+
     </RelativeLayout>
 
+
     <RelativeLayout
+        android:id="@+id/rl2"
+        android:layout_below="@+id/rl1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        >
 
         <VideoView
             android:id="@+id/videoView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl4"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:background="@drawable/shor_video_bg_save"
+                android:text="@string/save"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_toLeftOf="@+id/ll"
+                android:id="@+id/tv_save"
+                android:textSize="@dimen/sp_14" />
+
+
+
+
+            <LinearLayout
+                android:id="@+id/ll"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:background="@drawable/shor_video_bg_save"
+                android:layout_width="40dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_height="30dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:src="@mipmap/bo_kai"
+                    android:id="@+id/tv_bo"
+                 />
+            </LinearLayout>
+
+
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/color_1E1E1E">
+        android:layout_height="40dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/background_f3f3f3_radius_8dp">
 
         <TextView
             android:id="@+id/playorpause"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/short_video_play_icon" />
+            android:background="@mipmap/comm_bo_bg" />
 
+        <TextView
+            android:layout_toRightOf="@+id/playorpause"
+            android:id="@+id/progress_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+       android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:text="00:10"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_toRightOf="@+id/playorpause"
+            android:layout_toRightOf="@+id/progress_text2"
+            android:layout_toLeftOf="@+id/progress_text"
             android:max="100"
-            android:maxHeight="2dp"
-            android:minHeight="2dp"
+            android:maxHeight="5dp"
+            android:minHeight="5dp"
             android:progress="0"
             android:progressDrawable="@drawable/progressbar_style_shortvideo"
             android:thumb="@drawable/thumb_seekbar"
@@ -77,13 +143,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/seekBar"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="-5dp"
-            android:text="00:02/00:10"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:text="00:02"
             android:textColor="@color/white"
             android:textSize="13sp" />
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

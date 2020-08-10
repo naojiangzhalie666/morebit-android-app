@@ -23,6 +23,7 @@ public class FloorChildInfo implements Serializable {
     private String picture;
     private String splicePid;
 
+
     public String getSplicePid() {
         return splicePid;
     }

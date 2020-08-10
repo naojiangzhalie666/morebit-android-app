@@ -4,7 +4,7 @@
     <item android:state_pressed="false">
         <shape>
             <stroke android:width="0dp" android:color="#88ffffff" /><!--边框颜色-->
-            <solid android:color="#3df9f9f9" /><!--填充色-->
+            <solid android:color="#ffffff" /><!--填充色-->
             <corners
                 android:radius="30dp"
                 />

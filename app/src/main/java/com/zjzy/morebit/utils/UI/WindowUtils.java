@@ -99,6 +99,13 @@ public class WindowUtils {
     public static View setUpView(final Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.broken_net,
                 null);
+        view.findViewById(R.id.net_error).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
+               context.startActivity(intent);
+            }
+        });
 //        view.findViewById(R.id.rl_net).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

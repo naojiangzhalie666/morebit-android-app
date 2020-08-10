@@ -79,9 +79,34 @@
         android:id="@+id/recycler_view"
         android:layout_below="@id/searchLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:overScrollMode="never"
         android:background="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/searchNullTips_ly"
+        android:background="@color/color_F5F5F5"
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_meiyousousuojilu"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="暂无您要找的国家哦"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
 
 
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@color/color_F0F1F5"
+        />
+
+    <LinearLayout
+        android:layout_below="@+id/line"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:id="@+id/search_rl"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_search_bg3">
+
+
+            <ImageView
+                android:id="@+id/img"
+               android:layout_toLeftOf="@+id/searchTv"
+                android:layout_centerVertical="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_sousuo"
+                />
+
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:layout_centerInParent="true"
+                android:id="@+id/searchTv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="搜索"
+                android:textColor="@color/color_999999"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcy_title"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:paddingBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@color/color_F0F1F5"
+            />
+
+    </LinearLayout>
+   </RelativeLayout>

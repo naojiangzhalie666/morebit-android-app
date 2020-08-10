@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -45,6 +46,7 @@ public class AreaCodeActivity extends MvpActivity<AreaCodePresenter> implements 
     RecyclerView recyclerView;
     @BindView(R.id.index_view)
     IndexView indexView;
+    private LinearLayout searchNullTips_ly;
     public  static final int REQ_AREACODE = 1000;
     private AreaCodeAdapter mAreaCodeAdapter;
     private List<AreaCodeBean> mSelectCodeList = new ArrayList<>();
@@ -81,6 +83,7 @@ public class AreaCodeActivity extends MvpActivity<AreaCodePresenter> implements 
     }
 
     private void initView() {
+        searchNullTips_ly= (LinearLayout) findViewById(R.id.searchNullTips_ly);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManagerWithSmoothScroller(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -137,6 +140,12 @@ public class AreaCodeActivity extends MvpActivity<AreaCodePresenter> implements 
                 for (AreaCodeBean country : mAllCodeList) {
                     if (country.getCountry().contains(string.toLowerCase())){
                         mSelectCodeList.add(country);
+                        searchNullTips_ly.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+
+                    }else{
+                        searchNullTips_ly.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                     }
 
                 }
@@ -164,10 +173,16 @@ public class AreaCodeActivity extends MvpActivity<AreaCodePresenter> implements 
 
     @Override
     public void updateAreaCode(List<AreaCodeBean> data) {
-           Gson gson = new Gson();
-           String datajson = gson.toJson(data);
-           App.getACache().put(C.sp.CACHE_AREA_CODE,datajson);
-          initAreaCode(data);
+        if (data!=null){
+            searchNullTips_ly.setVisibility(View.GONE);
+            Gson gson = new Gson();
+            String datajson = gson.toJson(data);
+            App.getACache().put(C.sp.CACHE_AREA_CODE,datajson);
+            initAreaCode(data);
+        }else{
+            searchNullTips_ly.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void initAreaCode(List<AreaCodeBean> data) {

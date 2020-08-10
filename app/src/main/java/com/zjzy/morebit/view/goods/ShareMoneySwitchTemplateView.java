@@ -40,7 +40,6 @@ public class ShareMoneySwitchTemplateView extends LinearLayout {
         mImageViewArrayList = new ArrayList<>();
         ArrayList<String> list = new ArrayList<>();
         list.add(context.getString(R.string.share_money_phone_line));
-        list.add(context.getString(R.string.share_money_pc_line));
         list.add(context.getString(R.string.share_money_download));
         list.add(context.getString(R.string.invitation_code_text));
         if (list != null && list.size() != 0) {
@@ -73,19 +72,19 @@ public class ShareMoneySwitchTemplateView extends LinearLayout {
                     @Override
                     public void onClick(View v) {
                         boolean isSelector = (boolean) imageView.getTag();
-                        if (finalI == 0 || finalI == 1) {
+                        if (finalI == 0) {
                             ImageView imageView1 = mImageViewArrayList.get(0);
                             imageView1.setSelected(!(boolean) imageView1.getTag());
                             imageView1.setTag(!(boolean) imageView1.getTag());
-                            ImageView imageView2 = mImageViewArrayList.get(1);
-                            imageView2.setSelected(!(boolean) imageView2.getTag());
-                            imageView2.setTag(!(boolean) imageView2.getTag());
-                            App.getACache().put(C.sp.isShortLink, (boolean) imageView1.getTag() ? "1" : "2");
-                        } else if (finalI == 2 ){
+//                            ImageView imageView2 = mImageViewArrayList.get(1);
+//                            imageView2.setSelected(!(boolean) imageView2.getTag());
+//                            imageView2.setTag(!(boolean) imageView2.getTag());
+                            App.getACache().put(C.sp.isShortLink, (boolean) imageView1.getTag() ? "0" : "1");
+                        } else if (finalI == 1 ){
                             imageView.setSelected(!isSelector);
                             imageView.setTag(!isSelector);
                             App.getACache().put(C.sp.SHARE_MOENY_IS_DOWNLOAD_URL, (boolean) imageView.getTag() ? "1" : "0");
-                        }else if (finalI == 3 ){
+                        }else if (finalI == 2 ){
                             imageView.setSelected(!isSelector);
                             imageView.setTag(!isSelector);
                             App.getACache().put(C.sp.SHARE_MOENY_IS_INVITECODE, (boolean) imageView.getTag() ? "1" : "0");
@@ -98,28 +97,24 @@ public class ShareMoneySwitchTemplateView extends LinearLayout {
                 linearLayout.setLayoutParams(param);
                 switch (i) {
                     case 0:
-                        if (TextUtils.isEmpty(isShortLink) || "1".equals(isShortLink)) {
-                            imageView.setSelected(!(boolean) imageView.getTag());
+                            imageView.setSelected(true);
                             imageView.setTag(!(boolean) imageView.getTag());
-                        }
                         break;
+//                    case 1:
+//                        if ("2".equals(isShortLink)) {
+//                            imageView.setSelected(!(boolean) imageView.getTag());
+//                            imageView.setTag(!(boolean) imageView.getTag());
+//                        }
+//                        break;
                     case 1:
-                        if ("2".equals(isShortLink)) {
-                            imageView.setSelected(!(boolean) imageView.getTag());
+                            imageView.setSelected(true);
                             imageView.setTag(!(boolean) imageView.getTag());
-                        }
+
                         break;
                     case 2:
-                        if (isDownloadUrl == 1) {
-                            imageView.setSelected(!(boolean) imageView.getTag());
+                            imageView.setSelected(true);
                             imageView.setTag(!(boolean) imageView.getTag());
-                        }
-                        break;
-                    case 3:
-                        if (isInvitecode == 1) {
-                            imageView.setSelected(!(boolean) imageView.getTag());
-                            imageView.setTag(!(boolean) imageView.getTag());
-                        }
+
                         break;
 
                     default:

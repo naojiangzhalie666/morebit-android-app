@@ -2,18 +2,23 @@ package com.zjzy.morebit.main.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.zjzy.morebit.Module.common.View.ReEndlessGradListView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.GoodsAdapter;
 import com.zjzy.morebit.adapter.ShoppingListAdapter;
+import com.zjzy.morebit.adapter.ShoppingListAdapter2;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.main.contract.RankingContract;
 import com.zjzy.morebit.main.presenter.ShoppingListPresenter;
@@ -52,10 +57,9 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
     ReEndlessGradListView rl_list;
     @BindView(R.id.ll_root)
     LinearLayout ll_root;
-    @BindView(R.id.go_top)
-    ImageView mGoTop;
+
     private static final int REQUEST_COUNT = 10;
-    private ShoppingListAdapter mAdapter;
+    private ShoppingListAdapter2 mAdapter;
     private GoodsAdapter mAdapter1;
 
     private int mType;
@@ -68,6 +72,8 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
     private LinearLayout mLl_super_tab;
     private ShoppingTabView mShoppingTabView;
     private ImageInfo mImageInfo;
+    private NestedScrollView nscorll;
+    private TextView  tv;
 
     public static ShoppingListFragment2 newInstance(int loadType) {
         Bundle args = new Bundle();
@@ -110,47 +116,68 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
             mMaterial =  mImageInfo.getUrl();
             mCategoryId = mImageInfo.categoryId + "";
             headView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.view_goods_news_list_head, null);
-            ImageView iv_banner = (ImageView) headView.findViewById(R.id.iv_banner);
-            mLl_super_tab = (LinearLayout) headView.findViewById(R.id.ll_super_tab);
-            AspectRatioView as_iv_banner = (AspectRatioView) headView.findViewById(R.id.as_iv_banner);
+            ImageView iv_banner = (ImageView) view.findViewById(R.id.iv_banner);
+            mLl_super_tab = (LinearLayout) view.findViewById(R.id.ll_super_tab);
+            AspectRatioView as_iv_banner = (AspectRatioView) view.findViewById(R.id.as_iv_banner);
+            tv=view.findViewById(R.id.tv);
             initShoppingTabVIew();
             if (isShowHeadPicture(mImageInfo)) {  // 1图片为纵向，0位横向。只有横向才显示图片
                 LoadImgUtils.setImg(getActivity(), iv_banner, mImageInfo.getBackgroundImage());
                 mLl_super_tab.addView(mShoppingTabView);
+                mLl_super_tab.setVisibility(View.VISIBLE);
+                tv.setVisibility(View.VISIBLE);
             } else {
                 as_iv_banner.setVisibility(View.GONE);
+                mLl_super_tab.setVisibility(View.GONE);
+                tv.setVisibility(View.GONE);
                 ll_root.addView(mShoppingTabView);
             }
             if (C.GoodsListType.DiscountStores == mType || C.GoodsListType.WHAT_LIKE == mType || C.GoodsListType.MATERIAL == mType) {
                 mShoppingTabView.setVisibility(View.GONE);
-                mLl_super_tab.setVisibility(View.GONE);
+                //    mLl_super_tab.setVisibility(View.GONE);
             }
         }
 
 
-        mAdapter = new ShoppingListAdapter(getActivity());
+        nscorll=view.findViewById(R.id.nscorll);
+        mAdapter = new ShoppingListAdapter2(getActivity());
         mAdapter1 = new GoodsAdapter(getActivity());
         mAdapter1.setMaterialID(mMaterial);
         mAdapter.setMaterialID(mMaterial);
         mAdapter.setType(mType);
         mAdapter1.setListType(mType);
-        if (headView == null) {
-            rl_list.setAdapter(mAdapter, mAdapter1);
-        } else {
-            rl_list.setAdapterAndHeadView(headView, mAdapter, mAdapter1);
-        }
+        rl_list.getListView().setNestedScrollingEnabled(false);
+        rl_list.setAdapter(mAdapter, mAdapter1);
+
         rl_list.setOnReLoadListener(this);
-        mGoTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rl_list.getListView().scrollToPosition(0);
-                scrollHeight = 0;
-            }
-        });
+//        mGoTop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                rl_list.getListView().scrollToPosition(0);
+//                scrollHeight = 0;
+//            }
+//        });
         if (mType == C.GoodsListType.WHAT_LIKE) {
             rl_list.switchAdapter(getActivity(), 1);
         }
         rl_list.getListView().addOnScrollListener(new RecyclerViewScrollListener());
+
+
+
+        nscorll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                //判断是否滑到的底部
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    onloadMore();
+                }
+
+
+
+
+
+            }
+        });
     }
 
 
@@ -203,7 +230,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
         if (rl_list == null) return;
         rl_list.getListView().setNoMore(false);
         if (rl_list.getSwipeList() != null)
-            rl_list.getSwipeList().setRefreshing(true);
+            rl_list.getSwipeList().setRefreshing(false);
         if (mShoppingTabView == null) return;
         BaseTitleTabBean baseTitleTabBean = getBaseTitleTabBean();
         mPresenter.getRankings(this, mType, C.requestType.initData, baseTitleTabBean);
@@ -211,7 +238,11 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
 
     @Override
     public void onLoadMore() {
-        if (mShoppingTabView == null) return;
+
+    }
+
+
+    private void onloadMore() {
         BaseTitleTabBean baseTitleTabBean = getBaseTitleTabBean();
         mPresenter.getRankings(this, mType, C.requestType.loadMore, baseTitleTabBean);
     }
@@ -286,11 +317,11 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
             super.onScrolled(recyclerView, dx, dy);
             LinearLayoutManager linearManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             int firstVisibleItemPosition = linearManager.findFirstVisibleItemPosition();
-            if (firstVisibleItemPosition > 3) {
-                mGoTop.setVisibility(View.VISIBLE);
-            } else {
-                mGoTop.setVisibility(View.GONE);
-            }
+//            if (firstVisibleItemPosition > 3) {
+//                mGoTop.setVisibility(View.VISIBLE);
+//            } else {
+//                mGoTop.setVisibility(View.GONE);
+//            }
 
             if (isShowHeadPicture(mImageInfo) && headView != null && mShoppingTabView != null && mLl_super_tab != null && ll_root != null)
                 try {
@@ -315,7 +346,7 @@ public class ShoppingListFragment2 extends MvpFragment<ShoppingListPresenter> im
             boolean b = scrollHeight >= mHeadViewHeight;
             if (b && !mIsAddView) {
                 mIsAddView = true;
-                mLl_super_tab.removeView(mShoppingTabView);
+                //  mLl_super_tab.removeView(mShoppingTabView);
                 ll_root.addView(mShoppingTabView);
             } else if (scrollHeight < mHeadViewHeight && mIsAddView) {
                 mIsAddView = false;

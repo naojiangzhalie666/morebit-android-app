@@ -81,7 +81,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activity.AppletsActivity"></activity>
+        <activity android:name=".Activity.CircleSearchActivity"></activity>
+        <activity android:name=".Activity.CircleActivity" />
+        <activity android:name=".Activity.LifeServiceActivity" />
+        <activity android:name=".Activity.RetailersActivity" />
+        <activity android:name=".Activity.MyOrderActivity" />
+        <activity android:name=".Activity.FansDragonActivity" />
+        <activity android:name=".Activity.MonthAgoActivity" />
+        <activity android:name=".Activity.AppletsActivity" />
         <activity android:name=".Activity.InvateActivity" />
         <activity
             android:name=".Activity.KoalaWebActivity"

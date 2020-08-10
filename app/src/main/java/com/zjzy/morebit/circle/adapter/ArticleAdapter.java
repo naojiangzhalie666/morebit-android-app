@@ -46,6 +46,7 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
     private RxFragment mRxFragment;
     private int mType=0;
     private boolean isStudyView;  //已学Textview是否变色
+    private String sfinalShare,sfinalLike;
     public ArticleAdapter(Context context, RxAppCompatActivity rxAppCompatActivity) {
         super(context);
         this.mContext = context;
@@ -61,7 +62,7 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(mType==TYPE_HOTIZONTAL){
-            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tutorial_course_horizontal, parent, false));
+            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.itme_skill, parent, false));
         } else if(mType == TYPE_RECOMMEND){
             return new SimpleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tutorial_course_recommend_horizontal, parent, false));
         }
@@ -76,10 +77,10 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
             final ViewHolder viewHolder = (ViewHolder) simpleViewHolder;
             //通用都有
             if (!TextUtils.isEmpty(article.getImage())) {
-                LoadImgUtils.setImg(mContext, viewHolder.ivShow, article.getImage());
+                LoadImgUtils.loadingCornerBitmap(mContext, viewHolder.ivShow, article.getImage(),4);
             }
             if (!TextUtils.isEmpty(article.getReleaseTime())) {
-                viewHolder.tvTime.setText("日期："+DateTimeUtils.ymdhmsToymd(article.getReleaseTime()) + "");
+                viewHolder.tvTime.setText(DateTimeUtils.ymdhmsToymd(article.getReleaseTime()) + "");
             } else {
                 viewHolder.tvTime.setText("");
             }
@@ -91,23 +92,37 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
             viewHolder.title.setText(article.getTitle());
 
             int finalStudyNum = article.getStudyNum() + article.getVirtualStudy();
-            if(isStudyView){
-                viewHolder.tvCount.setTextColor(ContextCompat.getColor(mContext,R.color.colcor_999999));
-                if(position<3){
-                    viewHolder. iv_recommend.setVisibility(View.VISIBLE);
-                } else {
-                    viewHolder. iv_recommend.setVisibility(View.GONE);
-                }
-            } else {
-                viewHolder.tvCount.setTextColor(ContextCompat.getColor(mContext,R.color.colcor_999999));
-            }
+//            if(isStudyView){
+//                viewHolder.tvCount.setTextColor(ContextCompat.getColor(mContext,R.color.colcor_999999));
+//                if(position<3){
+//                    viewHolder. iv_recommend.setVisibility(View.VISIBLE);
+//                } else {
+//                    viewHolder. iv_recommend.setVisibility(View.GONE);
+//                }
+//            } else {
+//                viewHolder.tvCount.setTextColor(ContextCompat.getColor(mContext,R.color.colcor_999999));
+//            }
 
-            viewHolder.tvCount.setText(getString(R.string.college_article_already_study, finalStudyNum));
+           // viewHolder.tvCount.setText(getString(R.string.college_article_already_study, finalStudyNum));
 
             int finalShare = article.getVirtualShare() + article.getShareNum();
-            viewHolder.tv_share_sum.setText(finalShare+"");
+          //  viewHolder.tv_share_sum.setText(finalShare+"");
             int finalLike = article.getPraiseNum() + article.getVirtualPraise();
-            viewHolder.tv_like_sum.setText(finalLike+"");
+           // viewHolder.tv_like_sum.setText(finalLike+"");
+
+            if (finalShare > 999) {
+                sfinalShare = 999 + "+";
+            }else{
+                sfinalShare=finalShare+"";
+            }
+
+            if (finalLike > 999) {
+                sfinalLike = 999 + "+";
+            }else{
+                sfinalLike=finalLike+"";
+            }
+
+            viewHolder.tv_dian.setText(sfinalShare + "分享·" + sfinalLike +"点赞");
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -200,7 +215,7 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
         ImageView ivShow;
         ImageView  iv_video;
         //        LinearLayout ll_share;
-        TextView tvTime;
+        TextView tvTime,tv_dian;
         TextView title;
         TextView tv_like_sum;
         TextView tv_share_sum;
@@ -218,6 +233,7 @@ public class ArticleAdapter extends SimpleAdapter<Article, SimpleViewHolder> {
             tv_like_sum = itemView.findViewById(R.id.tv_like_sum);
             iv_video = itemView.findViewById(R.id.iv_video);
             iv_recommend = itemView.findViewById(R.id.iv_recommend);
+            tv_dian=itemView.findViewById(R.id.tv_dian);
 //            iv_recommend = itemView.findViewById(R.id.iv_recommend);
 //            mCardViewArticle = itemView.findViewById(R.id.card_view_article);
 //            ll_count_container = itemView.findViewById(R.id.ll_count_container);

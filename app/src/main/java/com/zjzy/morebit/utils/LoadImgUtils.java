@@ -33,6 +33,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.zjzy.morebit.Module.push.Logger;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.utils.UI.CornerTransform;
+import com.zjzy.morebit.utils.UI.RoundedCornersTransform;
 
 import java.io.File;
 import java.util.concurrent.ExecutionException;
@@ -663,6 +664,40 @@ public class LoadImgUtils {
      * @param url
      * @param placeholderRes
      * @param radius         角度
+
+     */
+    public static void loadingCornerBitmap2(Context context, ImageView iv, String url, int placeholderRes,
+                                           int radius) {
+        if (context == null || url == null || iv == null) return;
+        int i = DensityUtil.dip2px(context, radius);
+        RoundedCornersTransform transformation = new RoundedCornersTransform(context, i);
+        //只是绘制左上角和左下角圆角
+        transformation.setNeedCorner(true, false, true, false);
+        RequestOptions options = new RequestOptions()
+                .placeholder(placeholderRes)
+                .dontAnimate()
+                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(placeholderRes)
+                .transform(transformation);
+        try {
+            Glide.with(context).
+                    load(url).
+                    apply(options).
+                    into(iv);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (OutOfMemoryError outOfMemoryError) {
+            System.gc();
+            Logger.e("Glide 加载图片 OOM");
+        }
+    }
+    /**
+     * @param context
+     * @param iv
+     * @param url
+     * @param placeholderRes
+     * @param radius         角度
      */
     public static void loadingCornerBitmap(Context context, ImageView iv, String url, int placeholderRes, int radius) {
         loadingCornerBitmap(context, iv, url, placeholderRes, radius, false, false, false, false);
@@ -676,6 +711,16 @@ public class LoadImgUtils {
      */
     public static void loadingCornerTop(Context context, ImageView iv, String url, int radius) {
         loadingCornerBitmap(context, iv, url, R.drawable.icon_default, radius, false, false, true, true);
+    }
+
+    /**
+     * @param context
+     * @param iv
+     * @param url
+     * @param radius  角度
+     */
+    public static void loadingCornerTop2(Context context, ImageView iv, String url, int radius) {
+        loadingCornerBitmap2(context, iv, url, R.drawable.icon_default, radius);
     }
 
     /**

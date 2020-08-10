@@ -4,8 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.google.gson.reflect.TypeToken;
+import com.zjzy.morebit.utils.UI.GsonUtil;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -172,5 +177,41 @@ public class SharedPreferencesUtils {
             }
             editor.commit();
         }
+    }
+
+
+    public static boolean putListData(Context context,String key, List<String> list) {
+        SharedPreferences preferences = context.getSharedPreferences(FILE_NAME,
+                Context.MODE_PRIVATE);
+        boolean result;
+        if (list==null){
+            return false;
+        }
+        SharedPreferences.Editor editor = preferences.edit();
+        try {
+            String json = GsonUtil.gsonString(list);
+            editor.putString(key, json);
+            result = editor.commit();
+        } catch (Exception e) {
+            result = false;
+            e.printStackTrace();
+        }
+        return result;
+    }
+    /**
+     * 不能加泛型T，混淆后TypeToken的T取不到
+     * @param key
+     * @return
+     */
+    public static List<String> getListData(Context context,String key) {
+        SharedPreferences preferences = context.getSharedPreferences(FILE_NAME,
+                Context.MODE_PRIVATE);
+        String json = preferences.getString(key, "[]");
+        List<String> list = GsonUtil.gsonToBean(json, new TypeToken<List<String>>() {
+        }.getType());
+        if (list==null){
+            return new ArrayList<>();
+        }
+        return list;
     }
 }

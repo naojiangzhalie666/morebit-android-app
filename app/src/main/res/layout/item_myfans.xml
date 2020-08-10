@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="106dp"
+    android:layout_marginTop="12dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@color/white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false">
+
+    <RelativeLayout
+        android:id="@+id/item_ly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <LinearLayout
+            android:id="@+id/ll4"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/userIcon"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitXY"
+            android:src="@color/color_8ed6fd"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="2dip"
+            app:riv_corner_radius="5dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+
+        <LinearLayout
+            android:id="@+id/name_ly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/userIcon"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_zhuan"
+                    android:paddingRight="4dp"
+                    android:paddingLeft="4dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_fans_ff5b4d_4dp"
+                    android:text="专属"
+                    android:textColor="#ffffffff"
+                    android:textSize="11sp"
+                    />
+
+                <ImageView
+                    android:layout_toRightOf="@+id/tv_zhuan"
+                    android:id="@+id/vip_img2"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/vip_icon_right2"
+                    android:paddingLeft="4dp"
+                    android:layout_gravity="center_vertical"
+                    />
+                <TextView
+                    android:layout_toRightOf="@+id/vip_img2"
+                    android:id="@+id/name"
+                    android:layout_marginLeft="4dp"
+                    android:maxLines="1"
+                    android:maxEms="8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我是昵称啊啊"
+                    android:textColor="#ff333333"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    />
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/createTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="一周前"
+                android:layout_marginTop="7dp"
+                android:textColor="#ff666666"
+                android:textSize="14sp"
+                android:lines="1"
+                android:maxLines="1"
+                />
+
+            <LinearLayout
+                android:id="@+id/ll_la"
+                android:layout_marginTop="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="近7日拉新："
+                    android:textColor="#ff666666"
+                    android:textSize="14sp"
+                    />
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="40人"
+                    android:textColor="#fff05557"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_remark"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:maxEms="7"
+                    android:text=""
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_14" />
+
+
+
+
+        </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_alignBottom="@+id/ll4"
+
+            android:id="@+id/people_count"
+            android:background="@drawable/bg_fans_f05557_16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:gravity="center"
+            android:paddingLeft="26dp"
+            android:paddingRight="26dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="12dp"
+            android:layout_alignParentRight="true"
+            android:text="分享0元商品"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+
+
+    <TextView
+        android:layout_width="62dp"
+        android:layout_height="22dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@mipmap/bg_item_fans_remark"
+        android:gravity="center"
+        android:text="填写备注"
+        android:id="@+id/input_remark"
+        android:textColor="@color/color_F05557"
+        android:textSize="@dimen/sp_12" />
+</RelativeLayout></android.support.v7.widget.CardView><!--<View--><!--android:id="@+id/bottomLine"--><!--android:layout_width="match_parent"--><!--android:layout_height="5dp"--><!--android:layout_below="@+id/item_ly"--><!--android:background="@color/color_F5F5F5"/>-->
+
+
+    </RelativeLayout>

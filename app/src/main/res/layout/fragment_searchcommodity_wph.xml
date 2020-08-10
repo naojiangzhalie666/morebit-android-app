@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
               android:orientation="vertical">
 
     <View
@@ -21,11 +20,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="9dp"
-                android:layout_gravity="bottom"
-                android:background="@color/color_F5F5F5"/>
 
             <com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout
                 android:id="@+id/swipeList"
@@ -33,13 +27,18 @@
                 android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/listview"
-                    android:layout_marginTop="10dp"
+                    android:background="@color/color_F0F1F5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
             </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/emityfragment"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <LinearLayout
             android:id="@+id/searchNullTips_ly"
             android:layout_width="match_parent"

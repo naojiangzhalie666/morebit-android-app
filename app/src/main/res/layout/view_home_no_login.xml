@@ -24,13 +24,13 @@
 
             <ImageView
                 android:layout_marginLeft="12dp"
-                android:src="@drawable/circle_default_head"
-                android:layout_width="28dp"
-                android:layout_height="28dp"/>
+                android:src="@mipmap/login_juan"
+                android:layout_width="16dp"
+                android:layout_height="16dp"/>
 
             <TextView
                 android:layout_width="0dp"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:textColor="@color/white"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_000fff_1dpline_round_30dp"
-                android:text="@string/immediately_login"
+                android:text="登录/注册"
                 android:paddingTop="4dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"

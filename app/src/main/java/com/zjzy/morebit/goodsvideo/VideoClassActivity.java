@@ -156,16 +156,7 @@ public class VideoClassActivity extends MvpActivity<VideoPresenter> implements V
 
         @Override
         public Fragment getItem(int position) {
-            VideoClassBean videoClassBean = mNewsTypes.get(position);
-           // VideoFragment sFragments = (VideoFragment) mFragments.get(position);
-   //         List<Child2> childs = homeColumn.getChild2();
-//                return CategoryListFragment.newInstance(homeColumn.getName(), childs);
-//
-
-//        VideoFragment.newInstance(mNewsTypes.get(position).getTabNo());
-
             return VideoFragment.newInstance(mNewsTypes.get(position).getTabName(),mNewsTypes.get(position).getTabNo());
-        // return VideoFragment.newInstance(mNewsTypes.get(position).getTabNo());
         }
 
         @Override
@@ -179,74 +170,9 @@ public class VideoClassActivity extends MvpActivity<VideoPresenter> implements V
         public CharSequence getPageTitle(int position) {
             return title == null ? "" + position : title.get(position);
         }
-
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //super.destroyItem(container, position, object);
-
         }
-
-
     }
-
-
-//    private class HomeAdapter extends FragmentPagerAdapter {
-//        private List<GoodCategoryInfo> mHomeColumns = new ArrayList<>();
-//
-//        public HomeAdapter(FragmentManager fragmentManager) {
-//            super(fragmentManager);
-//        }
-//
-//
-//        public void setHomeColumns(List<GoodCategoryInfo> homeColumns) {
-//            mHomeColumns.clear();
-//            if (homeColumns == null && homeColumns.size() == 0) {
-//                return;
-//            }
-//            if (mHomeColumns.size() == 1) {
-//                for (GoodCategoryInfo info : homeColumns) {
-//                    GoodCategoryInfo goodCategoryInfo = mHomeColumns.get(0);
-//                    if (goodCategoryInfo.getName().equals(info.getName())) {
-//                        continue;
-//                    }
-//                    mHomeColumns.add(info);
-//                }
-//            } else {
-//                mHomeColumns.addAll(homeColumns);
-//            }
-//        }
-//
-//
-//        @Override
-//        public Fragment getItem(int position) {
-//            GoodCategoryInfo homeColumn = mHomeColumns.get(position);
-//            if (getString(R.string.choiceness).equals(homeColumn.getName())) {
-//                HomeRecommendFragment homeRecommendFragment = HomeRecommendFragment.newInstance();
-//                homeRecommendFragment.setUpdateColorCallback(HomeFragment.this);
-//                fragments.add(homeRecommendFragment);
-//                return homeRecommendFragment;
-//            } else if (getString(R.string.what_like).equals(homeColumn.getName())) {
-//                ShoppingListFragment2 whatLikeFragment = ShoppingListFragment2.newInstance(C.GoodsListType.WHAT_LIKE);
-//                return whatLikeFragment;
-//            } else {
-//                List<Child2> childs = homeColumn.getChild2();
-//                return CategoryListFragment.newInstance(homeColumn.getName(), childs);
-//
-//            }
-//
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return mHomeColumns.size();
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            GoodCategoryInfo homeColumn = mHomeColumns.get(position);
-//            return homeColumn.getName();
-//        }
-//
-//    }
 }
 

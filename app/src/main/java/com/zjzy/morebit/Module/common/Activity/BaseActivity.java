@@ -127,8 +127,16 @@ public abstract class BaseActivity extends SwipeBaseActivity {
         super.onResume();
         MobclickAgent.onPageStart(getClass().getSimpleName());
         MobclickAgent.onResume(this);
+        Log.e("sdfsfdfs","进来1");
         if (isShowAllSeek()) {
-            openCopyTextDialog(); //检查剪切板内容
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    openCopyTextDialog(); //检查剪切板内容
+                }
+            },500);
+
+            Log.e("sdfsfdfs","进来2");
         }
     }
 
@@ -211,7 +219,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
             if (LoginUtil.isSeekMobile(getClipText)) {//判断手机号
                 return;
             }
-
+            Log.e("sdfsfdfs","进来3");
             //判断验证码
             if (getClipText.length() == 6 || getClipText.length() == 10) { //6位的字母和数字组合
 
@@ -267,6 +275,7 @@ public abstract class BaseActivity extends SwipeBaseActivity {
             if (userInfo != null && userInfo.getInviteCode().equals(getClipText)) {
                 return;
             }
+            Log.e("sdfsfdfs","进来4");
             String o = (String) SharedPreferencesUtils.get(BaseActivity.this, C.sp.SearchText, "");
             String replaceClipText = AppUtil.replaceText(getClipText);
             MyLog.i("test", "o: " + o + " replaceClipText: " + replaceClipText + " getClipText: " + getClipText);
@@ -702,7 +711,12 @@ public abstract class BaseActivity extends SwipeBaseActivity {
                     //由于每个activity都监听事件，所以这里判断下。只在最上层的activity弹出dialog
                     if (activity.hashCode() == ActivityLifeHelper.getInstance().getTopActivity().hashCode()) {
                         if (isShowAllSeek()) {
-                            openCopyTextDialog(); //检查剪切板内容
+                            mHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    openCopyTextDialog(); //检查剪切板内容
+                                }
+                            },500);
                         }
                     }
 

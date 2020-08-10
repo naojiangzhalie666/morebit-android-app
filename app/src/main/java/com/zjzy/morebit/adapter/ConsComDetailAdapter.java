@@ -64,7 +64,12 @@ public class ConsComDetailAdapter extends RecyclerView.Adapter {
         if(holder instanceof  TimeViewHolder){
             TimeViewHolder viewHolder = (TimeViewHolder) holder;
             MyLog.i("test","info.getRecordTime(): " +info.getYearMonthDay());
-            viewHolder.time.setText(info.getYearMonthDay());
+            if (position==0){
+                viewHolder.time.setVisibility(View.VISIBLE);
+                viewHolder.time.setText(info.getYearMonthDay());
+            }else{
+                viewHolder.time.setVisibility(View.GONE);
+            }
         } else {
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.record.setText(info.getRemark());

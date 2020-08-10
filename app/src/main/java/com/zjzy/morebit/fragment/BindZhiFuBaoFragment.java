@@ -57,7 +57,7 @@ public class BindZhiFuBaoFragment extends BaseFragment implements View.OnClickLi
     }
 
     public void inview(View view) {
-        ActivityStyleUtil.initSystemBar(getActivity(), R.color.color_757575); //设置标题栏颜色值
+        ActivityStyleUtil.initSystemBar(getActivity(), R.color.white); //设置标题栏颜色值
 
         zhifubaoagin_et = (EditText) view.findViewById(R.id.zhifubaoagin_et);
         zhifubao_et = (EditText) view.findViewById(R.id.zhifubao_et);
@@ -111,8 +111,8 @@ public class BindZhiFuBaoFragment extends BaseFragment implements View.OnClickLi
             try {
                 tv_yanzhengma.setEnabled(true);
                 tv_yanzhengma.setText("重新获取");
-                tv_yanzhengma.setBackgroundResource(R.drawable.bg_000000_1dpline_yellowbg_round_15dp);
-                tv_yanzhengma.setTextColor(getResources().getColor(R.color.color_FFFFFF));
+                tv_yanzhengma.setBackgroundResource(R.drawable.bg_stroke_f05557_15dp);
+                tv_yanzhengma.setTextColor(getResources().getColor(R.color.color_F05557));
             } catch (Exception e) {
                 e.printStackTrace();
             }

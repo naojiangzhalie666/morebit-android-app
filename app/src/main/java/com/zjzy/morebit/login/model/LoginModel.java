@@ -84,7 +84,7 @@ public class LoginModel extends MvpModel {
 
     }
 
-    public Observable<BaseResponse<UserInfo>> getWeixinRegister(RxFragment baseFragment, String phone, String yqm_code, String verifyCode, WeixinInfo weixinInfo) {
+    public Observable<BaseResponse<UserInfo>> getWeixinRegister(RxFragment baseFragment, String phone, String yqm_code, String verifyCode, WeixinInfo weixinInfo,String areaCode) {
 
         RequestRegisterAndBindWeChatBean requestBean = new RequestRegisterAndBindWeChatBean();
         requestBean.setPhone(phone);
@@ -99,6 +99,7 @@ public class LoginModel extends MvpModel {
         requestBean.setCity(weixinInfo.getCity());
         requestBean.setSign(EncryptUtlis.getSign2(requestBean));
         requestBean.setUnionid(weixinInfo.getUnionid());
+        requestBean.setAreaCode(areaCode);
 
 
         return RxHttp.getInstance().getCommonService().registerAndBindWeixin(
@@ -119,7 +120,7 @@ public class LoginModel extends MvpModel {
                 .compose(baseFragment.<BaseResponse<UserInfo>>bindToLifecycle());
     }
 
-    public Observable<BaseResponse<UserInfo>> getWeixinLogin(RxFragment baseFragment, String phone, String verifyCode, WeixinInfo weixinInfo) {
+    public Observable<BaseResponse<UserInfo>> getWeixinLogin(RxFragment baseFragment, String phone, String verifyCode, WeixinInfo weixinInfo,String areaCode) {
 
         RequestRegisterAndBindWeChatBean requestBean = new RequestRegisterAndBindWeChatBean();
         requestBean.setPhone(phone);
@@ -131,7 +132,7 @@ public class LoginModel extends MvpModel {
         requestBean.setCountry(weixinInfo.getCountry());
         requestBean.setProvince(weixinInfo.getProvince());
         requestBean.setCity(weixinInfo.getCity());
-        requestBean.setAreaCode("");
+        requestBean.setAreaCode(areaCode);
         requestBean.setUnionid(weixinInfo.getUnionid());
 
 

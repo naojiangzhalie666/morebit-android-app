@@ -24,7 +24,7 @@ public class ToolbarWebHelper {
     private AppCompatActivity mActivity;
     private Fragment mFragment;
     private TextView mTitle;
-    private ImageView mTextViewOff;
+    private TextView mTextViewOff;
     private ImageView mRefresh;
     private ImageView mIvBackView;
     private ImageView mShare;
@@ -60,7 +60,7 @@ public class ToolbarWebHelper {
             if (mLlToolbar != null) {
                 mTitle = (TextView) mLlToolbar.findViewById(mTitleId);
                 mIvBackView = (ImageView) mLlToolbar.findViewById(mIvBack);
-                mTextViewOff = (ImageView) mLlToolbar.findViewById(mIvOff);
+                mTextViewOff = (TextView) mLlToolbar.findViewById(mIvOff);
                 mRefresh = (ImageView) mLlToolbar.findViewById(mIvRefresh);
                 mShare = (ImageView) mLlToolbar.findViewById(R.id.iv_share);
             }

@@ -585,7 +585,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         txtGoodsRule.setText(mGoodsInfo.getUnit());
         selectedGoodsPrice.setText(" "+MathUtils.getnum(String.valueOf(mGoodsInfo.getRetailPrice())));
 
-        LoadImgUtils.setImg(NumberGoodsDetailsActivity.this, goodsPicView, mGoodsInfo.getPicUrl());
+        LoadImgUtils.setImg(NumberGoodsDetailsActivity.this, goodsPicView, mGoodsInfo.getBuyPicUrl());
 
 
         //设置Popupwindow显示位置（从底部弹出）

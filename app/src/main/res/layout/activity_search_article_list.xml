@@ -5,12 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
-
-    <com.zjzy.morebit.view.SearchViewLayout
+    <include
+        layout="@layout/top" />
+    <com.zjzy.morebit.view.SearchClassLayout
         android:id="@+id/searchViewLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:s_search_hint_text="我想学什么？">
-    </com.zjzy.morebit.view.SearchViewLayout>
+        app:s_search_hint_text="搜你想要的">
+    </com.zjzy.morebit.view.SearchClassLayout>
 
 </LinearLayout>

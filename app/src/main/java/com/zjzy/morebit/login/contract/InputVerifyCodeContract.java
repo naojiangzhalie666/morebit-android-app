@@ -24,7 +24,7 @@ public class InputVerifyCodeContract {
     public interface Present extends LoginBaseSendCodePresent {
         void register(RxFragment baseFragment,String phone, String verifyCode , String invitationCode,String areaCode,String oauthWx);
         void login(RxFragment baseFragment,String phone,String verifyCode);
-        void weixinRegister(RxFragment baseFragment, String s, String phone, String verifyCode, WeixinInfo weixinInfo);
-        void weixinLogin(RxFragment baseFragment, String phone, String verifyCode, WeixinInfo weixinInfo);
+        void weixinRegister(RxFragment baseFragment, String s, String phone, String verifyCode, WeixinInfo weixinInfo,String areaCode);
+        void weixinLogin(RxFragment baseFragment, String phone, String verifyCode, WeixinInfo weixinInfo,String areaCode);
     }
 }

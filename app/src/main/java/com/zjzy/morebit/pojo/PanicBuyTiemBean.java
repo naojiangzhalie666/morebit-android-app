@@ -20,6 +20,11 @@ public class PanicBuyTiemBean  {
     private String endTime;
     private String startTime;
 
+    public PanicBuyTiemBean(String subTitle, String title) {
+        this.subTitle = subTitle;
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }
