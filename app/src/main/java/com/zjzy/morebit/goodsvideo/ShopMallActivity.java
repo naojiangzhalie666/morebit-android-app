@@ -1,6 +1,7 @@
 package com.zjzy.morebit.goodsvideo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
@@ -22,6 +25,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
+import com.zjzy.morebit.Activity.ShopCarActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
@@ -51,13 +55,16 @@ import io.reactivex.functions.Action;
 * 优选商城
 *
 * */
-public class ShopMallActivity extends BaseActivity {
+public class ShopMallActivity extends BaseActivity implements View.OnClickListener {
     SubNumberAdapter mAdapter;
     private RecyclerView rcy_shopmall;
     private List<NumberGoods> list;
     private int page=1;
     private LinearLayout btn_back;
     private SmartRefreshLayout refreshLayout;
+    private RelativeLayout shop_car;
+    private ImageView top_rcy;
+    private   LinearLayoutManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,16 +86,20 @@ public class ShopMallActivity extends BaseActivity {
         TextView txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setTextSize(18);
         txt_head_title.setText("优选商城");
+        shop_car= (RelativeLayout) findViewById(R.id.shop_car);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
+        top_rcy= (ImageView) findViewById(R.id.top_rcy);
+        top_rcy.setOnClickListener(this);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        shop_car.setOnClickListener(this);
         rcy_shopmall= (RecyclerView) findViewById(R.id.rcy_shopmall);
         refreshLayout= (SmartRefreshLayout) findViewById(R.id.refreshLayout);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+          manager = new LinearLayoutManager(this);
         rcy_shopmall.setLayoutManager(manager);
 
 
@@ -182,4 +193,16 @@ public class ShopMallActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.shop_car://购物车
+                startActivity(new Intent(this, ShopCarActivity.class));
+                break;
+            case R.id.top_rcy://一键置顶
+                manager.scrollToPositionWithOffset(0, 0);
+                manager.setStackFromEnd(true);
+                break;
+        }
+    }
 }

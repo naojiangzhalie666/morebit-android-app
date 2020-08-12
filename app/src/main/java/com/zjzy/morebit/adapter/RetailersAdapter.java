@@ -11,18 +11,33 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.VideoPlayerActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.Article;
+import com.zjzy.morebit.pojo.CircleCopyBean;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.request.RequestCircleShareBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
+import com.zjzy.morebit.utils.action.MyAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,13 +81,13 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final ConsComGoodsInfo info = list.get(position);
 
         if (!TextUtils.isEmpty(info.getItemImg())) {
             LoadImgUtils.loadingCornerBitmap(context, holder.img_zhu,info.getItemImg());
         }
-        int orderType =info.getType();
+        final int orderType =info.getType();
         switch (orderType){
             case 1:
                 holder.tv_type.setText("淘宝");
@@ -119,8 +134,30 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtil.coayText((Activity) context, info.getOrderSn());
-                ViewShowUtils.showShortToast(context, "已复制订单号，点击粘贴文案");
+
+//                AppUtil.coayText((Activity) context, info.getOrderSn());
+//                ViewShowUtils.showShortToast(context, "已复制订单号，点击粘贴文案");
+                switch (orderType) {
+                    case 1://淘宝
+                     getTao3(orderType,1,info);
+                        break;
+                    case 2://京东
+                       getTao3(orderType,4,info);
+                        break;
+
+                    case 4://jd
+                      getTao3(orderType,3,info);
+                        break;
+                    case 5://考拉
+                       getTao3(orderType,5,info);
+                        break;
+                    case 6://唯品会
+                       getTao3(orderType,6,info);
+                        break;
+
+                }
+
+
             }
         });
 
@@ -131,6 +168,60 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
             }
         });
 
+    }
+
+
+    private void getTao3(final int i, final int shopType, final ConsComGoodsInfo info) {
+
+        final RequestCircleShareBean bean = new RequestCircleShareBean();
+        bean.setItemId(info.getItemId());
+        bean.setType(shopType);
+        RxHttp.getInstance().getGoodsService()
+                .getGoodsPurchaseLink(bean)
+                .compose(RxUtils.<BaseResponse<CircleCopyBean>>switchSchedulers())
+
+                .subscribe(new DataObserver<CircleCopyBean>() {
+                    @Override
+                    protected void onSuccess(CircleCopyBean data) {
+
+                        switch (i) {
+                            case 1://淘宝
+                                GoodsUtil.checkGoods((RxAppCompatActivity) context, info.getItemId(), new MyAction.One<ShopGoodInfo>() {
+                                    @Override
+                                    public void invoke(ShopGoodInfo arg) {
+                                        MyLog.i("test", "arg: " + arg);
+                                        GoodsDetailActivity.start(context, arg);
+
+                                    }
+                                });
+                                break;
+                            case 2://京东
+                                ShopGoodInfo goodInfo2=new ShopGoodInfo();
+                                goodInfo2.setItemSource("1");
+                                goodInfo2.setItemSourceId(info.getItemId());
+                                goodInfo2.setGoodsId(Long.valueOf(info.getItemId()));
+                                GoodsDetailForJdActivity.start(context, goodInfo2);
+                                break;
+                            case 4://jd
+                                ShopGoodInfo goodInfo=new ShopGoodInfo();
+                                goodInfo.setItemSource("2");
+                                goodInfo.setItemSourceId(info.getItemId());
+                                goodInfo.setGoodsId(Long.valueOf(info.getItemId()));
+                                GoodsDetailForPddActivity.start(context, goodInfo);
+                                break;
+                            case 5://考拉
+                                GoodsDetailForKoalaActivity.start(context,info.getItemId());
+                                break;
+                            case 6://唯品会
+                                GoodsDetailForWphActivity.start(context,info.getItemId());
+                                break;
+
+                        }
+
+
+
+                    }
+                });
     }
 
 

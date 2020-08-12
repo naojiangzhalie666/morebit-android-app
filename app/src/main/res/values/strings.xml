@@ -478,7 +478,7 @@
 4.点击“同意”，即表示您已阅读并同意《多点用户协议》和《隐私政策》</string>
     <string name="auth_user_private_all"><![CDATA[<font color="#333333">查看完整版《</font><font color="#FF645B">多点用户协议</font><font color="#333333">》</font>]]></string>
     <string name="auth_private_all"><![CDATA[<font color="#333333">和《</font><font color="#FF645B">隐私协议</font><font color="#333333">》</font>]]></string>
-    <string name="number_goods_buy_txt">购买立得%1$s成长值</string>
+    <string name="number_goods_buy_txt">得%1$s成长值</string>
     <string name="give_growth_value">成长值%1$s</string>
     <string name="vip_growth_value">您还需要%1$s成长值即可成为团队长</string>
     <string name="number_growth_value">您还需要%1$s成长值即可成为VIP</string>
@@ -488,6 +488,10 @@
     <string name="month1">*每月24日结算的佣金和积分是确认收货的佣金。</string>
     <string name="month2">例如：11月预估自购收益1000元,\n其中700元的订单是11月内收货,12月24日结算\n有300元的订单是12月内收货,1月24日结算;\n11月预估积分15000,\n其中10000积分是11月内收货,12月24日结算\n有5000积分的订单是12月内收货,1月24日结算。</string>
     <string name="month3">*本数据仅供参考,系统于次月生成报表快照。\n*后续产生的售后扣除不更新报表快照,最终收益以实际\n结算为准。</string>
+    <string name="company">copyright@2020 杭州之江之约科技有限公司</string>
+    <string name="yx_goods">多点优选客服不会以任何名义主动联系用户处理售后赔偿其余以多点优选、厂家、快递名义联系您均有可能为诈骗电话，请您提高警惕，谨防诈骗，并拒接点击链接、扫码 转账、提供卡号、申请贷款等诈骗行为。有问题请联系多点优选官方客服。</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

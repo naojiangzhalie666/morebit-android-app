@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -27,6 +28,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.ShopCarActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
@@ -81,6 +83,8 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
     private ImageView img;
     private SubNumberAdapter mAdapter;
     private SmartRefreshLayout swipeList;
+    private RelativeLayout shop_car;
+    private ImageView top_rcy;
 
 
     public static ShoppingMallFragment newInstance() {
@@ -167,11 +171,12 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         if (arguments != null) {
         }
 
+        top_rcy=view.findViewById(R.id.top_rcy);
         mAdapter = new SubNumberAdapter(getActivity());
         swipeList=view.findViewById(R.id.swipeList);
         rcy_goods = view.findViewById(R.id.rcy_goods);
 
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rcy_goods.setLayoutManager(manager);
         rcy_goods.setAdapter(mAdapter);
         swipeList.setEnableRefresh(false);
@@ -182,6 +187,20 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 page++;
                 getData();
+            }
+        });
+        shop_car=view.findViewById(R.id.shop_car);
+        shop_car.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ShopCarActivity.class));
+            }
+        });
+        top_rcy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manager.scrollToPositionWithOffset(0, 0);
+                manager.setStackFromEnd(true);
             }
         });
 

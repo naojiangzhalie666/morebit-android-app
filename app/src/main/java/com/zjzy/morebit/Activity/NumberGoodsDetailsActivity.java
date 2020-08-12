@@ -2,6 +2,7 @@ package com.zjzy.morebit.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -26,12 +27,14 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsDetailContract;
 import com.zjzy.morebit.goods.shopping.presenter.NumberGoodsDetailPresenter;
 import com.zjzy.morebit.goods.shopping.ui.fragment.NumberGoodsDetailImgFragment;
@@ -42,6 +45,7 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.order.ui.ConfirmOrderActivity;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
@@ -56,8 +60,10 @@ import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
+import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.view.goods.GoodSizePopupwindow;
 
 import org.greenrobot.eventbus.EventBus;
@@ -119,8 +125,9 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     @BindView(R.id.number_goods_title)
     TextView numberGoodsTitle;
 
-    @BindView(R.id.tv_give_growth_value)
-    TextView tvGiveGrowthValue;
+    @BindView(R.id.iv_taobao)
+    TextView iv_taobao;
+
 
     /**
      * 会员商品Id
@@ -423,17 +430,26 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
 
-    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action})
+    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action,R.id.ll_home,R.id.goods_car,R.id.shop_car})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
+                showPopupwindow();
                 break;
             case R.id.btn_back:
             case R.id.btn_tltle_back:
                 finish();
                 break;
             case R.id.btn_goods_buy_action:
-                showPopupwindow();
+                break;
+            case R.id.ll_home://跳转首页
+                ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_HOME));
+                break;
+            case R.id.goods_car://添加购物车
+                break;
+            case R.id.shop_car://进入购物车
+                startActivity(new Intent(this,ShopCarActivity.class));
                 break;
             default:
                 break;
@@ -492,9 +508,16 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         double price = mGoodsInfo.getRetailPrice();
         String priceStr = String.valueOf(price);
         goodsPrice.setText(MathUtils.getnum(priceStr));
-        numberGoodsTitle.setText(goodsInfo.getName());
+
+        if (!StringsUtils.isEmpty(goodsInfo.getName())) {
+            Paint paint = new Paint();
+            paint.setTextSize(iv_taobao.getTextSize());
+            float size = paint.measureText(iv_taobao.getText().toString());
+            StringsUtils.retractTitles(numberGoodsTitle, goodsInfo.getName(), (int) (size) + 35);
+        }
+      //  numberGoodsTitle.setText(goodsInfo.getName());
         srl_view.setRefreshing(false);
-        tvGiveGrowthValue.setText(getResources().getString(R.string.give_growth_value,MathUtils.getnum(priceStr)));
+      //  tvGiveGrowthValue.setText(getResources().getString(R.string.give_growth_value,MathUtils.getnum(priceStr)));
         btnBuy.setText(getResources().getString(R.string.number_goods_buy_txt,MathUtils.getnum(priceStr)));
     }
 

@@ -42,6 +42,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
+import com.zjzy.morebit.Activity.ShopCarActivity;
 import com.zjzy.morebit.Activity.SkillClassActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
@@ -182,6 +183,7 @@ public class NumberSubFragment extends BaseFragment {
     private TextView tv_coin;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,7 +197,7 @@ public class NumberSubFragment extends BaseFragment {
         if (headView == null) {
             headView = inflater.inflate(R.layout.fragment_vip_header, container, false);
             //  headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number2_header, null);
-            initHeadView(headView);
+
             initView(headView);
 
 //            initTan();
@@ -235,6 +237,7 @@ public class NumberSubFragment extends BaseFragment {
     }
 
     public void initView(View view) {
+
         mAppBarLt = view.findViewById(R.id.app_bar_lt);
         xablayout = view.findViewById(R.id.xablayout);
         viewPager = view.findViewById(R.id.viewPager);
@@ -285,6 +288,7 @@ public class NumberSubFragment extends BaseFragment {
                 EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_REFRSH));
             }
         });
+
 
 
     }
@@ -383,6 +387,7 @@ public class NumberSubFragment extends BaseFragment {
         }
     }
 
+
     private class PagerAdapter extends FragmentPagerAdapter {
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -421,138 +426,7 @@ public class NumberSubFragment extends BaseFragment {
 
     }
 
-    private void initHeadView(View headView) {
-//        go_top = headView.findViewById(R.id.go_top);
-//        mReUseGridView = (RecyclerView) headView.findViewById(R.id.mReUseGridView);
 
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                page = 1;
-//                refreshData();
-//                initData();
-//                swipeRefreshLayout.setRefreshing(false);
-//
-//            }
-//        });
-//
-//
-//        netscrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                //判断是否滑到的底部
-//                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-//                    page++;
-//                    getData();
-//
-//                }
-//
-//
-//
-//                if (scrollY > 1000) {
-//                    Log.e("=====", "下滑");
-//                    go_top.setVisibility(View.VISIBLE);
-//                }
-//                if (scrollY < oldScrollY) {
-//                    Log.e("=====", "上滑");
-//                }
-//
-//                if (scrollY == 0) {
-//                    Log.e("=====", "滑倒顶部");
-//                    go_top.setVisibility(View.GONE);
-//                }
-//
-//
-//            }
-//        });
-//
-//
-//        final GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
-//        //设置图标的间距
-//        // SpaceItemDecorationUtils spaceItemDecorationUtils = new SpaceItemDecorationUtils(10, 2);
-//        mReUseGridView.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 2)));
-//        mReUseGridView.setLayoutManager(manager);
-//
-//
-//        mReUseGridView.setNestedScrollingEnabled(false);
-//        userName = (TextView) headView.findViewById(R.id.user_name);
-//        mUserIcon = (RoundedImageView) headView.findViewById(R.id.userIcon);
-//        moreCoinBiaozhun = (TextView) headView.findViewById(R.id.more_corn_biaozhun);
-//        mHorzProgressView = (HorzProgressView) headView.findViewById(R.id.horzProgressView);
-////
-//        updateVip = (TextView) headView.findViewById(R.id.btn_number_update_vip);
-//        tvGrowthValue = (TextView) headView.findViewById(R.id.tv_growth_value);
-//        grade = (ImageView) headView.findViewById(R.id.grade);
-//        vip_reward = headView.findViewById(R.id.vip_reward);
-//        vip_rl1 = headView.findViewById(R.id.vip_rl1);
-//        vip_rl3 = headView.findViewById(R.id.vip_rl3);
-//        get_operator_growth = headView.findViewById(R.id.get_operator_growth);
-//
-//
-//        tv_huiyuan2 = headView.findViewById(R.id.tv_huiyuan2);
-//        tv_vip2 = headView.findViewById(R.id.tv_vip2);
-//        ll3 = headView.findViewById(R.id.ll3);
-//        ll4 = headView.findViewById(R.id.ll4);
-//        ll5 = headView.findViewById(R.id.ll5);
-//        rl3 = headView.findViewById(R.id.rl3);
-//        rl4 = headView.findViewById(R.id.rl4);
-//        skill_rcy = headView.findViewById(R.id.skill_rcy);
-//        LinearLayoutManager manager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        skill_rcy.setLayoutManager(manager2);
-//        PagerSnapHelper snapHelper = new PagerSnapHelper();
-//        snapHelper.attachToRecyclerView(skill_rcy);
-//        skill_rcy.setNestedScrollingEnabled(false);
-//        huiyuan1 = headView.findViewById(R.id.huiyuan1);
-//        vip_optional = headView.findViewById(R.id.vip_optional);//自选商品
-//        vip_settlement = headView.findViewById(R.id.vip_settlement);//结算
-//        vip_directly = headView.findViewById(R.id.vip_directly);//直属
-//        vip_intermedium = headView.findViewById(R.id.vip_intermedium);//间属
-//        activity_rcy = headView.findViewById(R.id.activity_rcy);//活动专区
-//        GridLayoutManager manager3 = new GridLayoutManager(getActivity(), 2);
-//        activity_rcy.setLayoutManager(manager3);
-//        activity_rcy.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(getActivity(), 3)));
-//        tv_more = headView.findViewById(R.id.tv_more);
-//        getMorce = headView.findViewById(R.id.getMorce);
-//        vip_kefu = headView.findViewById(R.id.vip_kefu);//专属客服
-//        hy = headView.findViewById(R.id.hy);
-//        vip = headView.findViewById(R.id.vip);
-//        tdz = headView.findViewById(R.id.tdz);
-//        tv_operator = headView.findViewById(R.id.tv_operator);
-//        tv_huo = headView.findViewById(R.id.tv_huo);
-//        tv_skill = headView.findViewById(R.id.tv_skill);
-//        tv_bao = headView.findViewById(R.id.tv_bao);
-//        ll6 = headView.findViewById(R.id.ll6);
-//
-//        userName.getPaint().setFakeBoldText(true);
-//        updateVip.getPaint().setFakeBoldText(true);
-//        tv_operator.getPaint().setFakeBoldText(true);
-//        tv_huo.getPaint().setFakeBoldText(true);
-//        tv_skill.getPaint().setFakeBoldText(true);
-//        tv_bao.getPaint().setFakeBoldText(true);
-//        tv_more.setOnClickListener(new View.OnClickListener() {//跳转技能课堂
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), SkillClassActivity.class));
-//            }
-//        });
-//        getMorce.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                netscrollview.smoothScrollTo(0, ll6.getTop());
-//            }
-//
-//
-//        });
-//
-//        go_top.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                netscrollview.scrollTo(0,0);
-//            }
-//        });
-
-
-    }
 
     private void updataUser() {
 

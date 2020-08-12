@@ -328,8 +328,12 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
         mGoodsInfo.setItemSource(Info.getItemSource());
         if (!StringsUtils.isEmpty(Info.getTitle())) {
                 iv_taobao.setText("京东");
-            StringsUtils.retractTitles(title,Info.getTitle(),iv_taobao.getWidth()+10);
+            Paint paint = new Paint();
+            paint.setTextSize(iv_taobao.getTextSize());
+            float size = paint.measureText(iv_taobao.getText().toString());
+            StringsUtils.retractTitles(title, Info.getTitle(), (int) (size) + 35);
         }
+
 
         if (!TextUtils.isEmpty(Info.getCommission())) {
             tv_zhaun.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), Info.getCommission() + "") + "元");

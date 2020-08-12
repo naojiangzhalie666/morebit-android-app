@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F0F1F5"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".goodsvideo.ShopMallActivity">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/top" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top"
+      >
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcy_shopcar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="Translate" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/dateNullView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+
+        >
+
+        <ImageView
+            android:id="@+id/iv_icon_null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/shop_car_no" />
+
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="购物车空空如也"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/btn_invite"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/background_f05557_radius_20dp"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="5dp"
+            android:text="去逛逛吧"
+            android:textColor="@color/color_F05557"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/ll_di"
+        android:background="@color/color_F0F1F5"/>
+    <LinearLayout
+        android:id="@+id/ll_di"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/checkbox"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/selector_checkbox"
+            tools:layout_height="wrap_content"
+            tools:layout_width="wrap_content" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="全选"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="right"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="(运费0元)"
+            android:gravity="center"
+            android:textColor="#ffd3d3d3"
+            android:textSize="12sp"
+            />
+        <TextView
+            android:layout_marginLeft="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="合计："
+            android:gravity="center"
+            android:textColor="#ff333333"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="¥0"
+            android:gravity="center"
+            android:textColor="@color/color_F05557"
+            android:textSize="16sp"
+            android:layout_marginRight="12dp"
+            />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_F05557"
+            android:text="结算(0)"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="20sp"
+            />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
