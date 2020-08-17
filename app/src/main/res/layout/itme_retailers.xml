@@ -107,7 +107,7 @@
 
             <LinearLayout
                 android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -141,8 +141,9 @@
                     android:id="@+id/tv_fanyong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="bottom|right"
                     tools:text="赚 0.07元"
+
                     android:background="@drawable/background_ffebce_radius_2dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
