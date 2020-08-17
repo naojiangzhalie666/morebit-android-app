@@ -147,9 +147,12 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
 
         if (isAllCheck) {
             holder.checkbox.setSelected(true);
+            Log.e("kkkk","opop2");
         } else {
             holder.checkbox.setSelected(false);
+            Log.e("kkkk","opop");
         }
+
 
 
         holder.goodsRule_minusRelative.setOnClickListener(new View.OnClickListener() {
@@ -236,9 +239,10 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
                     protected void onDataNull() {
                         ToastUtils.showShort("删除成功");
                         list.remove(position);
-                        notifyDataSetChanged();
                       //  onItemAddClick.onShareClick(position,list.get(position).isChecked());
+                       notifyItemChanged(position,list.size()+1);
                         onItemAddClick.onShareClick(position);
+
 
                     }
 

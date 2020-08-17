@@ -70,6 +70,7 @@ public class ShopCarActivity extends BaseActivity {
     private BigDecimal result3;
     private String getnum="0";
     private List<ShopCarGoodsBean.CartListBean> cartList2=new ArrayList<>();
+    private LinearLayout ll_di;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,7 @@ public class ShopCarActivity extends BaseActivity {
         rl_check = (RelativeLayout) findViewById(R.id.rl_check);
         ll_botton = (LinearLayout) findViewById(R.id.ll_botton);
         shop_count= (TextView) findViewById(R.id.shop_count);
+        ll_di= (LinearLayout) findViewById(R.id.ll_di);
         getData();
 
 
@@ -188,6 +190,13 @@ public class ShopCarActivity extends BaseActivity {
                 }else{
                     checkbox.setSelected(false);
                 }
+                if (cartList.size()==0||cartList==null){
+                    ll_di.setVisibility(View.GONE);
+                    dateNullView.setVisibility(View.VISIBLE);
+                }else{
+                    ll_di.setVisibility(View.VISIBLE);
+                    dateNullView.setVisibility(View.GONE);
+                }
 
             }
 
@@ -247,9 +256,12 @@ public class ShopCarActivity extends BaseActivity {
 
 
     private void reSect(){//刷新重置
+        shopCarAdapter.isAll(false);
         shop_count.setText("结算"+"(0)");
         shop_price.setText("¥0");
         checkbox.setSelected(false);
+        isAll=false;
+
     }
     private void getCheck(){//选中商品
         cartList2.clear();
@@ -318,8 +330,8 @@ private void getZong(){//得到总价
                             refreshLayout.setVisibility(View.VISIBLE);
                             dateNullView.setVisibility(View.GONE);
                             ll_botton.setVisibility(View.VISIBLE);
-                            shopCarAdapter.addData(cartList);
-                            reSect();
+                            shopCarAdapter.addData(data.getCartList());
+                           reSect();
                         } else {
                             refreshLayout.setVisibility(View.GONE);
                             dateNullView.setVisibility(View.VISIBLE);
