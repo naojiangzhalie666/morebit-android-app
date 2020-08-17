@@ -163,40 +163,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
         consComGoodsDetailAdapter.setOnAdapterClickListener(new ConsComGoodsDetailAdapter.OnAdapterClickListener() {
             @Override
             public void onItem(final int position) {
-                if (mTeamType == 1){
-                    mPresenter.onCheckGoods(OrderListFragment.this, mListArray.get(position).getItemId());
-                }else if(mTeamType == 4) {
-                    ShopGoodInfo info = new ShopGoodInfo();
-                    info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
-                    mPresenter.getDetailDataForPdd(OrderListFragment.this, info);
 
-                }else if (mTeamType == 2){
-                    ShopGoodInfo info = new ShopGoodInfo();
-                    info.setGoodsId(Long.parseLong(mListArray.get(position).getItemId()));
-                    mPresenter.getDetailDataForJd(OrderListFragment.this, info);
-                }else if (mTeamType == 5){
-                    getBaseResponseObservableForKaoLa(OrderListFragment.this, mListArray.get(position).getItemId(), UserLocalData.getUser(getActivity()).getId())
-                            .doFinally(new Action() {
-                                @Override
-                                public void run() throws Exception {
-                                }
-                            })
-                            .subscribe(new DataObserver<ShopGoodInfo>() {
-                                @Override
-                                protected void onSuccess(final ShopGoodInfo data) {
-                                    if (data.getCommission() != null && !MathUtils.getnum(data.getCommission()).equals("0")) {
-                                        GoodsDetailForKoalaActivity.start(getActivity(),mListArray.get(position).getItemId());//分佣商品跳转考拉详情
-                                    } else {
-                                        KoalaWebActivity.start(getActivity(), data.getGoodsDetail(), "考拉");
-                                    }
-                                }
-
-                            });
-                }else if (mTeamType == 6){
-                    GoodsDetailForWphActivity.start(getActivity(),mListArray.get(position).getItemId());
-
-                }else{
-//                    ViewShowUtils.showShortToast(getActivity(),getString(R.string.order_no_look));
                     if (mListArray.get(position).isSelf()){
                         NumberOrderDetailActivity.startOrderDetailActivity(getActivity(), String.valueOf(mListArray.get(position).isOnSale()),
                                 mListArray.get(position).getOrderSn());
@@ -204,7 +171,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
                         NumberGoodsDetailsActivity.start(getActivity(), mListArray.get(position).getItemId());
                     }
 
-                }
+
             }
 
 
@@ -265,10 +232,13 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
             return;
         }
         if (page == 1) {
+            mListArray.clear();
+            mListArray.addAll(datas);
             consComGoodsDetailAdapter.setData(datas);
             mDateNullView.setVisibility(View.GONE);
             mReUseListView.setVisibility(View.VISIBLE);
         } else {
+            mListArray.addAll(datas);
             consComGoodsDetailAdapter.addData(datas);
             refreshLayout.finishLoadMore();
         }

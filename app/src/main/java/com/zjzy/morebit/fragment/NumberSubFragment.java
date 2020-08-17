@@ -726,7 +726,7 @@ public class NumberSubFragment extends BaseFragment {
     //获取用户详情
     private void showDetailsView(UserInfo data) {
         if (!TextUtils.isEmpty(data.getAccumulatedAmount())) {
-            vip_zhuan.setText("累计省赚" + data.getAccumulatedAmount() + "元");
+            vip_zhuan.setText("累计省赚" + MathUtils.getnum(data.getAccumulatedAmount())+ "元");
 
         }
 
