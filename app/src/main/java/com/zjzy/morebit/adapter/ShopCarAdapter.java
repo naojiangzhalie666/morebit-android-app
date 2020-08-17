@@ -117,7 +117,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NumberGoodsDetailsActivity.start((Activity) mContext, listBean.getGoodsSn());
+                NumberGoodsDetailsActivity.start((Activity) mContext, listBean.getGoodsId());
             }
         });
 

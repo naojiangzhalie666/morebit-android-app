@@ -286,6 +286,30 @@
             android:background="@color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+
+        <RelativeLayout
+            android:id="@+id/shop_car"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@mipmap/shop_car_icon"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="60dp"
+            android:layout_marginRight="12dp">
+
+            <TextView
+                android:id="@+id/shopnum"
+                android:text="0"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:textSize="12sp"
+                android:background="@drawable/background_f05557_radius_yuan"
+                />
+
+        </RelativeLayout>
+
     </android.support.design.widget.CoordinatorLayout>
 
 

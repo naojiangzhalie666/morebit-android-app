@@ -30,29 +30,7 @@
             android:layout_height="wrap_content"
             app:srlClassicsSpinnerStyle="Translate"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-        <RelativeLayout
-            android:id="@+id/shop_car"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:background="@mipmap/shop_car_icon"
-            android:layout_alignParentRight="true"
-            android:layout_above="@+id/top_rcy"
-            android:layout_marginBottom="12dp"
-            android:layout_marginRight="12dp">
 
-                <TextView
-                    android:id="@+id/shopnum"
-                    android:text="0"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:textSize="12sp"
-                    android:background="@drawable/background_f05557_radius_yuan"
-                    />
-
-        </RelativeLayout>
 
         <ImageView
             android:id="@+id/top_rcy"

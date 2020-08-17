@@ -669,6 +669,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     @Override
     public void onResume() {
         super.onResume();
+        initNew();
         getLoginView();
         getNotice();
 
@@ -854,29 +855,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         initLimit();
 
+        initNew();
 
-        getUserZeroInfo(this)
-                .subscribe(new DataObserver<UserZeroInfoBean>(false) {
-                    @Override
-                    protected void onDataListEmpty() {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onDataNull() {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onSuccess(UserZeroInfoBean data) {
-                        onGetUserZeroInfo(data);
-                    }
-                });
 
         getDoorGodCategory(this)
                 .subscribe(new DataObserver<DoorGodCategoryBean>(false) {
@@ -986,7 +966,30 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     }
 
+    private void initNew() {
+        getUserZeroInfo(this)
+                .subscribe(new DataObserver<UserZeroInfoBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
 
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(UserZeroInfoBean data) {
+                        onGetUserZeroInfo(data);
+                    }
+                });
+    }
 
 
     private void getNotice() {

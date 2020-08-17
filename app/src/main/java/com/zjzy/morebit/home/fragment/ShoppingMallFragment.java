@@ -86,9 +86,9 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
     private ImageView img;
     private SubNumberAdapter mAdapter;
     private SmartRefreshLayout swipeList;
-    private RelativeLayout shop_car;
+
     private ImageView top_rcy;
-    private TextView shopnum;
+
 
 
     public static ShoppingMallFragment newInstance() {
@@ -118,7 +118,6 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
     @Override
     public void onResume() {
         super.onResume();
-        getShopCarNum();
     }
     private void getData() {
         getNumberGoodsList(this, page)
@@ -178,7 +177,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         Bundle arguments = getArguments();
         if (arguments != null) {
         }
-        shopnum=view.findViewById(R.id.shopnum);
+
         top_rcy=view.findViewById(R.id.top_rcy);
         mAdapter = new SubNumberAdapter(getActivity());
         swipeList=view.findViewById(R.id.swipeList);
@@ -197,13 +196,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
                 getData();
             }
         });
-        shop_car=view.findViewById(R.id.shop_car);
-        shop_car.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ShopCarActivity.class));
-            }
-        });
+
         top_rcy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,38 +209,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
 
     }
 
-    private void getShopCarNum() {
 
-        shopCarNum(this)
-                .subscribe(new DataObserver<ShopCarNumBean>(false) {
-                    @Override
-                    protected void onDataListEmpty() {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onDataNull() {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onSuccess(ShopCarNumBean data) {
-                        int goodsNum = data.getGoodsNum();
-                        if (goodsNum!=0){
-                            shopnum.setVisibility(View.VISIBLE);
-                            shopnum.setText(goodsNum+"");
-                        }else{
-                            shopnum.setVisibility(View.GONE);
-                        }
-
-                    }
-                });
-    }
 
     private void onActivityFailure() {
 
@@ -267,7 +229,6 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
     public void onEventMainThread(MessageEvent event) {
         if (event.getAction().equals(EventBusAction.ACTION_REFRSH)) {
             getData();
-            getShopCarNum();
 
         }
     }
@@ -280,13 +241,6 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
 
 
 
-    //购物车数量
-    public Observable<BaseResponse<ShopCarNumBean>> shopCarNum(RxFragment fragment) {
-
-        return RxHttp.getInstance().getSysteService().getShopCarNum()
-                .compose(RxUtils.<BaseResponse<ShopCarNumBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<ShopCarNumBean>>bindToLifecycle());
-    }
 
 
 

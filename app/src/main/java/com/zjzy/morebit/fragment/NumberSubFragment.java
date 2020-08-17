@@ -74,6 +74,7 @@ import com.zjzy.morebit.pojo.Article;
 import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.TeamInfo;
 import com.zjzy.morebit.pojo.UserInfo;
@@ -181,6 +182,8 @@ public class NumberSubFragment extends BaseFragment {
     private LinearLayout group_ll, vip_ll, ll_vip;
     private ImageView img_vip;
     private TextView tv_coin;
+    private RelativeLayout shop_car;
+    private TextView shopnum;
 
 
 
@@ -237,7 +240,8 @@ public class NumberSubFragment extends BaseFragment {
     }
 
     public void initView(View view) {
-
+        shopnum=view.findViewById(R.id.shopnum);
+        shop_car=view.findViewById(R.id.shop_car);
         mAppBarLt = view.findViewById(R.id.app_bar_lt);
         xablayout = view.findViewById(R.id.xablayout);
         viewPager = view.findViewById(R.id.viewPager);
@@ -289,7 +293,33 @@ public class NumberSubFragment extends BaseFragment {
             }
         });
 
+        shop_car.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ShopCarActivity.class));
+            }
+        });
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position==0){
+                    shop_car.setVisibility(View.VISIBLE);
+                }else{
+                    shop_car.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
@@ -568,9 +598,54 @@ public class NumberSubFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         initTou();
+        getShopCarNum();
 
     }
 
+    private void getShopCarNum() {
+        shopCarNum(this)
+                .subscribe(new DataObserver<ShopCarNumBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(ShopCarNumBean data) {
+                        int goodsNum = data.getGoodsNum();
+                        if (goodsNum!=0){
+                            shopnum.setVisibility(View.VISIBLE);
+                            shopnum.setText(goodsNum+"");
+                        }else{
+                            shopnum.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+    }
+
+    private void onActivityFailure() {
+
+    }
+
+
+    //购物车数量
+    public Observable<BaseResponse<ShopCarNumBean>> shopCarNum(RxFragment fragment) {
+
+        return RxHttp.getInstance().getSysteService().getShopCarNum()
+                .compose(RxUtils.<BaseResponse<ShopCarNumBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<ShopCarNumBean>>bindToLifecycle());
+    }
     private void initTan() {
         UserInfo mUserInfo = UserLocalData.getUser(getActivity());
         if (mUserInfo == null) {

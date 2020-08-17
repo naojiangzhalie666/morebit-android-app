@@ -125,7 +125,7 @@
                                     android:id="@+id/number_goods_title"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="商品标题"
+                                    tools:text="商品标题"
                                     android:textColor="@color/color_333333"
                                     android:textSize="@dimen/sp_16"></TextView>
                             </RelativeLayout>
@@ -288,6 +288,7 @@
             android:background="@mipmap/shop_car_icon">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/shopnum"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
