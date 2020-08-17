@@ -34,10 +34,12 @@ import static com.blankj.utilcode.util.StringUtils.getString;
 public class SubNumberAdapter extends RecyclerView.Adapter<SubNumberAdapter.ViewHolder> {
     private Context mContext;
     private List<NumberGoods> list = new ArrayList<>();
+    private int num;
 
 
-    public SubNumberAdapter(Context context) {
+    public SubNumberAdapter(Context context,int num) {
         this.mContext = context;
+        this.num=num;
 
     }
 
@@ -77,11 +79,13 @@ public class SubNumberAdapter extends RecyclerView.Adapter<SubNumberAdapter.View
             }
         });
 
-        if (position==0&&list.size()!=0){
+        if (position==0&&list.size()!=0&& num!=0){
             holder.rl_tou.setVisibility(View.VISIBLE);
         }else{
             holder.rl_tou.setVisibility(View.GONE);
         }
+
+
     }
 
 

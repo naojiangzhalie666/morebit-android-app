@@ -103,7 +103,6 @@ public class RetailersActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
 
-        txt_head_title.getPaint().setFakeBoldText(true);
         txt_head_title.setTextSize(18);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);

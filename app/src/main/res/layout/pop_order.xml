@@ -28,7 +28,6 @@
             android:text="查看全部订单"
             android:textColor="#fff05557"
             android:textSize="18sp"
-            android:textStyle="bold"
             />
         <TextView
             android:id="@+id/tv_tao"
@@ -38,7 +37,7 @@
             android:text="只看淘宝订单"
             android:textColor="#333333"
             android:textSize="18sp"
-            android:textStyle="bold"
+
             />
         <TextView
             android:id="@+id/tv_jd"
@@ -48,7 +47,7 @@
             android:text="只看京东订单"
             android:textColor="#333333"
             android:textSize="18sp"
-            android:textStyle="bold"
+
             />
         <TextView
             android:id="@+id/tv_pdd"
@@ -58,7 +57,7 @@
             android:text="只看拼多多订单"
             android:textColor="#333333"
             android:textSize="18sp"
-            android:textStyle="bold"
+
             />
         <TextView
             android:id="@+id/tv_wph"
@@ -68,7 +67,7 @@
             android:text="只看唯品会订单"
             android:textColor="#333333"
             android:textSize="18sp"
-            android:textStyle="bold"
+
             />
         <TextView
             android:id="@+id/tv_kl"
@@ -78,7 +77,7 @@
             android:text="只看考拉订单"
             android:textColor="#333333"
             android:textSize="18sp"
-            android:textStyle="bold"
+
             />
     </LinearLayout>
 

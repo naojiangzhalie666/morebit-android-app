@@ -40,6 +40,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
@@ -242,6 +243,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private RelativeLayout msg_rl;
     private ConsecutiveScrollerLayout sroller;
     private boolean isTime=true;
+    private Space space1;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -377,7 +379,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //        IntentFilter intentFilter = new IntentFilter();
 //        intentFilter.addAction("0");//名字
 //        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
-
+        space1=mView.findViewById(R.id.space1);
         sroller=mView.findViewById(R.id.sroller);
         swipeList=mView.findViewById(R.id.swipeList);
         msg_rl = mView.findViewById(R.id.msg_rl);
@@ -1132,11 +1134,14 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         UserInfo userInfo1 = UserLocalData.getUser(getActivity());
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             new_goods.setVisibility(View.VISIBLE);
+            space1.setVisibility(View.VISIBLE);
         }else{
             if (data.isIsNewUser()) {
                 new_goods.setVisibility(View.VISIBLE);
+                space1.setVisibility(View.VISIBLE);
             } else {
                 new_goods.setVisibility(View.GONE);
+                space1.setVisibility(View.GONE);
             }
 
             Log.e("gyui",data.getTime());

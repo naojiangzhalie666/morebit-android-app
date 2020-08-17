@@ -81,11 +81,11 @@
                 android:layout_toRightOf="@+id/icon"
                 android:ellipsize="end"
                 android:lineSpacingExtra="4dp"
-                android:maxWidth="150dp"
-                android:maxLines="2"
+                android:maxWidth="154dp"
+                android:lines="2"
                 android:text="商品题目一二三四五六七八九十一二三四五六七八"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_14" />
 
             <LinearLayout
                 android:id="@+id/ll_goods_price"
@@ -124,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_goods_price"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="2dp"
                 android:text="@string/number_goods_count"
                 android:textColor="@color/color_999999" />
 
@@ -133,35 +134,42 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/order_goods_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll"
                 android:layout_below="@id/title"
                 android:layout_alignLeft="@id/title"
-                android:layout_marginTop="5dp"
-                android:text="232"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/sp_12" />
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/order_goods_unit"
-                android:layout_marginLeft="13dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/icon"
-                android:background="@mipmap/czz_bg"
-                android:gravity="center"
-                android:paddingLeft="8dp"
-                android:paddingTop="2dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="2dp"
-                android:text="送30成长值"
-                android:textColor="@color/color_F05557"
-                android:textSize="10sp"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/order_goods_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="232"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@id/icon"
+                    android:background="@mipmap/czz_bg"
+                    android:gravity="center"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="2dp"
+                    android:text="送30成长值"
+                    android:textColor="@color/color_F05557"
+                    android:textSize="10sp"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
+
             <!--    <TextView
                     android:visibility="gone"
                     android:id="@+id/number_yongjin_tv"
@@ -188,7 +196,7 @@
                 android:id="@+id/rl_receiver_goods_ship"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_below="@+id/tv_num"
+                android:layout_below="@+id/ll"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp">
 

@@ -21,9 +21,13 @@ import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.Activity.MyOrderActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ShopCarOrderAdapter;
 import com.zjzy.morebit.address.ui.ManageGoodsAddressActivity;
+import com.zjzy.morebit.contact.EventBusAction;
+import com.zjzy.morebit.info.ui.fragment.OrderDetailFragment;
+import com.zjzy.morebit.main.ui.CollectFragment2;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
 import com.zjzy.morebit.network.BaseResponse;
@@ -35,6 +39,7 @@ import com.zjzy.morebit.order.presenter.ConfirmOrderPresenter;
 import com.zjzy.morebit.order.ui.NumberOrderDetailActivity;
 import com.zjzy.morebit.order.ui.PayOrderSuccessActivity;
 import com.zjzy.morebit.payment.PayResult;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.RequestIscheckShopcarBean;
 import com.zjzy.morebit.pojo.RequestOrderShopcarBean;
 import com.zjzy.morebit.pojo.ShopCarGoodsBean;
@@ -48,7 +53,10 @@ import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -208,6 +216,11 @@ public class ConfirmOrderActivity2 extends MvpActivity<ConfirmOrderPresenter> im
                     payAction.setEnabled(true);
                     payAction.setTextColor(Color.parseColor("#FFFFFF"));
                     payAction.setBackgroundResource(R.drawable.bg_confirm_order_buy_corner);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(C.Extras.order_type, C.OrderType.YUXUAN);
+                    bundle.putInt(C.Extras.YXTYPE,0);
+                    OpenFragmentUtils.goToSimpleFragment(ConfirmOrderActivity2.this, OrderDetailFragment.class.getName(), bundle);
+                    EventBus.getDefault().post(new MessageEvent(EventBusAction.SHOPCAR_REFRSH));
                     break;
                 }
             }
@@ -518,11 +531,11 @@ public class ConfirmOrderActivity2 extends MvpActivity<ConfirmOrderPresenter> im
             MyLog.e(TAG,"同步结果成功，返回结果为空");
             return;
         }
-        if (result.getPayStatus() == 0){
-            PayOrderSuccessActivity.start(ConfirmOrderActivity2.this,result.getOrderId());
-        }else{
-            NumberOrderDetailActivity.startOrderDetailActivity(ConfirmOrderActivity2.this,"",result.getOrderId());
-        }
+//        if (result.getPayStatus() == 0){
+//            PayOrderSuccessActivity.start(ConfirmOrderActivity2.this,result.getOrderId());
+//        }else{
+//            NumberOrderDetailActivity.startOrderDetailActivity(ConfirmOrderActivity2.this,"",result.getOrderId());
+//        }
         finish();
     }
 

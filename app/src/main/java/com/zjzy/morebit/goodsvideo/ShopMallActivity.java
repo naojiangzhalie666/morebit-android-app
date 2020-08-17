@@ -113,7 +113,7 @@ public class ShopMallActivity extends BaseActivity implements View.OnClickListen
 
 
 
-        mAdapter=new SubNumberAdapter(ShopMallActivity.this);
+        mAdapter=new SubNumberAdapter(ShopMallActivity.this,0);
         rcy_shopmall.setAdapter(mAdapter);
 
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {

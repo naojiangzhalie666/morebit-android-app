@@ -27,7 +27,6 @@
 
         <android.support.v7.widget.RecyclerView
         android:id="@+id/rcy_shopmall"
-        android:layout_marginTop="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
         android:layout_width="match_parent"

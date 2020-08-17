@@ -179,7 +179,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         }
 
         top_rcy=view.findViewById(R.id.top_rcy);
-        mAdapter = new SubNumberAdapter(getActivity());
+        mAdapter = new SubNumberAdapter(getActivity(),1);
         swipeList=view.findViewById(R.id.swipeList);
         rcy_goods = view.findViewById(R.id.rcy_goods);
 

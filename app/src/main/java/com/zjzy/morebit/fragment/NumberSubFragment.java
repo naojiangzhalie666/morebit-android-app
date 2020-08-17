@@ -739,7 +739,7 @@ public class NumberSubFragment extends BaseFragment {
             return;
         }
         if (page == 1) {
-            mAdapter = new SubNumberAdapter(getActivity());
+            mAdapter = new SubNumberAdapter(getActivity(),1);
             mReUseGridView.setAdapter(mAdapter);
         } else {
             mAdapter.setData(list);

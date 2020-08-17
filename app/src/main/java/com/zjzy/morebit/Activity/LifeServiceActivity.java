@@ -3,6 +3,7 @@ package com.zjzy.morebit.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -79,6 +80,8 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
         mReUseListView= (RecyclerView) findViewById(R.id.mListView);
         refreshLayout= (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         dateNullView= (LinearLayout) findViewById(R.id.dateNullView);
+        LinearLayoutManager manager=new LinearLayoutManager(this);
+        mReUseListView.setLayoutManager(manager);
         mAdapter = new LifeAdapter(this,teamType);
         mReUseListView.setAdapter(mAdapter);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {

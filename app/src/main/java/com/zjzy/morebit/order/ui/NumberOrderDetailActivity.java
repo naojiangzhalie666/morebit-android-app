@@ -11,6 +11,7 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -348,6 +349,8 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         }
         mInfo = info;
             int status = info.getOrderStatus();
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
+                DateTimeUtils.getYmdhhmmss(info.getCreateTime())));
             switch (status){
                 case C.OrderStatus.WAIT_PAY_ORDER_STATUS:
                     initOrderStatusUnPay(info);
@@ -439,8 +442,11 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
         //支付宝交易号
         orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
+        Log.e("kkkk",info.getCreateTime()+"1");
         //创建时间
         orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
+                info.getCreateTime()));
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
                 info.getCreateTime()));
         //支付时间
         String payTime = info.getPayTime();
@@ -519,11 +525,12 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
         //支付宝交易号
         orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
-
+        Log.e("kkkk",info.getCreateTime()+"12");
         //创建时间
         orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
                 info.getCreateTime()));
-
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
+                info.getCreateTime()));
         //支付时间
         String payTime = info.getPayTime();
         if (TextUtils.isEmpty(payTime)){
@@ -597,10 +604,12 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         });
         //支付宝交易号
         orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
+        Log.e("kkkk",info.getCreateTime()+"13");
         //创建时间
         orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
                 info.getCreateTime()));
-
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
+                info.getCreateTime()));
         String payTime = info.getPayTime();
         if (TextUtils.isEmpty(payTime)){
             orderSuccessPayTime.setText("");
@@ -643,7 +652,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         cardOrderSuccess.setVisibility(View.GONE);
         orderInfoOrderSnView.setText(getResources().getString(R.string.number_order_number,info.getOrderId()));
         orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,info.getCreateTime()));
-
+        orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,info.getCreateTime()));
         llOrderCancelRePay.setVisibility(View.GONE);
         orderFinishRebuyLlView.setVisibility(View.VISIBLE);
         btnTotalPayPrice.setText(getResources().getString(R.string.number_order_total_price,
@@ -691,8 +700,10 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
                 ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,getResources().getString(R.string.coayTextSucceed));
             }
         });
+
         orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
-                DateTimeUtils.getYmdhhmmss(info.getCreateTime())));
+                info.getCreateTime()));
+
 
         llOrderCancelRePay.setVisibility(View.VISIBLE);
         orderFinishRebuyLlView.setVisibility(View.GONE);

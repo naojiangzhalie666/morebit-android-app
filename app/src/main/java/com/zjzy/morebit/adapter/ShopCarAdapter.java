@@ -140,9 +140,11 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
         if (listBean.isOnSale()) {
             holder.tv_shi.setVisibility(View.GONE);
             holder.checkbox.setVisibility(View.VISIBLE);
+            holder.ll_jia.setVisibility(View.VISIBLE);
         } else {
             holder.checkbox.setVisibility(View.GONE);
             holder.tv_shi.setVisibility(View.VISIBLE);
+            holder.ll_jia.setVisibility(View.GONE);
         }
 
         if (isAllCheck) {
@@ -326,6 +328,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
         private RelativeLayout goodsRule_minusRelative, goodsRule_addRelative;
         private ImageView checkbox;
         private LinearLayout ll_check;
+        private LinearLayout ll_jia;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -341,6 +344,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
             goodsRule_addRelative = itemView.findViewById(R.id.goodsRule_addRelative);//加
             checkbox = itemView.findViewById(R.id.checkbox);
             tv_shi = itemView.findViewById(R.id.tv_shi);
+            ll_jia=itemView.findViewById(R.id.ll_jia);
 
         }
     }

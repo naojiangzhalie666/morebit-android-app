@@ -122,6 +122,7 @@ public class ShopCarActivity extends BaseActivity {
         shop_count= (TextView) findViewById(R.id.shop_count);
         ll_di= (LinearLayout) findViewById(R.id.ll_di);
         getData();
+        shop_price.getPaint().setFakeBoldText(true);
 
 
 
