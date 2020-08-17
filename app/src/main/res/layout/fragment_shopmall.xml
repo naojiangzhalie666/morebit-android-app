@@ -41,7 +41,8 @@
             android:layout_marginRight="12dp">
 
                 <TextView
-                    android:text="8"
+                    android:id="@+id/shopnum"
+                    android:text="0"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:layout_alignParentRight="true"

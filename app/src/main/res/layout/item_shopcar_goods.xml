@@ -7,55 +7,51 @@
     android:layout_marginTop="12dp"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/toDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="12dp"
-        android:paddingTop="12dp"
-        android:paddingLeft="12dp">
+        android:paddingTop="12dp">
 
         <ImageView
+            android:layout_marginLeft="12dp"
             android:id="@+id/checkbox"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="12dp"
             android:src="@drawable/selector_checkbox"
             tools:layout_height="wrap_content"
             tools:layout_width="wrap_content" />
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_shi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/submit_buttom_999999"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginRight="6dp"
+            android:layout_gravity="center_vertical"
+            android:paddingRight="6dp"
+            android:layout_marginLeft="6dp"
+            android:paddingLeft="6dp"
+            android:text="失效"/>
+
         <RelativeLayout
             android:id="@+id/img_rl"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_toRightOf="@id/checkbox">
-
-            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/goods_bg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@color/transparent"
-                app:riv_border_color="@color/white"
-                app:riv_border_width="0dip"
-                app:riv_corner_radius="5dip"
-                app:riv_mutate_background="true"
-                app:riv_oval="false" />
-
-
-
-
-
-
+          >
 
             <ImageView
                 android:id="@+id/iv_shoppingaole_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@color/color_60EDEDED"
-                android:visibility="invisible" />
+                android:scaleType="fitXY" />
         </RelativeLayout>
 
         <LinearLayout
@@ -86,6 +82,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_guige"
                 android:layout_marginLeft="11dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,7 +140,7 @@
                             android:id="@+id/goodsRule_minusRelative"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/color_F2F2F2"
+                            android:background="@drawable/background_yx_jj_2dp"
                             android:padding="6dp">
 
                             <ImageView
@@ -154,10 +151,10 @@
                         </RelativeLayout>
 
                         <TextView
+                            android:background="@drawable/background_yx_whie_2dp"
                             android:id="@+id/goodsRule_numTv"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:background="@color/white"
                             android:paddingLeft="12dp"
                             android:paddingRight="12dp"
                             android:gravity="center"
@@ -169,7 +166,7 @@
                             android:id="@+id/goodsRule_addRelative"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/color_F8F8F8"
+                            android:background="@drawable/background_yx_f8_2dp"
                             android:padding="6dp">
 
                             <ImageView
@@ -181,6 +178,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/shopcar_delete"
                         android:layout_gravity="center"
                         android:paddingLeft="12dp"
                         android:paddingTop="5dp"
@@ -201,10 +199,11 @@
 
             </RelativeLayout>
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="12dp"
         android:background="@color/color_F0F1F5"

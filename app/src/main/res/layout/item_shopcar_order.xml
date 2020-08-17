@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_F0F1F5"
+   >
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:id="@+id/rl_confirm_goods_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        >
+
+        <ImageView
+            android:id="@+id/img_confirm_order_goods"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_default_750" />
+
+        <TextView
+            android:id="@+id/txt_confirm_order_goods_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/img_confirm_order_goods"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img_confirm_order_goods"
+            android:maxWidth="150dp"
+            android:textColor="@color/color_333333"
+            android:maxLines="4"
+            android:text="商品题目商品题目商品题目商品题目商品题目商品题目商品题目" />
+
+        <LinearLayout
+            android:layout_below="@id/txt_confirm_order_goods_title"
+            android:layout_alignLeft="@id/txt_confirm_order_goods_title"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_confirm_order_goods_spec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="169G"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/txt_confirm_order_goods_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:text="@string/number_goods_count"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_txt_confirm_order_goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/img_confirm_order_goods"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical|right"
+                android:text="¥"
+                android:textColor="@color/color_F05557"
+                android:textSize="@dimen/sp_10" />
+
+            <TextView
+                android:id="@+id/txt_confirm_order_goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="0.00"
+                android:textColor="@color/color_F05557"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

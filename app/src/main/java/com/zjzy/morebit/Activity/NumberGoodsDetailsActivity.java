@@ -20,9 +20,12 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -46,12 +49,14 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.order.ui.ConfirmOrderActivity;
 import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.request.RequestAddShopcarBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.AppUtil;
@@ -128,6 +133,8 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     @BindView(R.id.iv_taobao)
     TextView iv_taobao;
 
+    private boolean isAdd;
+
 
     /**
      * 会员商品Id
@@ -142,7 +149,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     private TextView txtGoodsRule;
 
-    private TextView txtGoodsName;
+    private TextView txtGoodsName,shopnum;
     private TextView txtGoodsAction;
 
     private NumberGoodsInfo mGoodsInfo;
@@ -181,6 +188,11 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getShopCarNum();
+    }
 
     @Override
     protected int getViewLayout() {
@@ -266,7 +278,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     }
 
     private void initView() {
-
+        shopnum= (TextView) findViewById(R.id.shopnum);
         initTab();
 
         srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -434,6 +446,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
+                isAdd=false;
                 showPopupwindow();
                 break;
             case R.id.btn_back:
@@ -447,6 +460,8 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                 EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_HOME));
                 break;
             case R.id.goods_car://添加购物车
+                isAdd=true;
+                showPopupwindow();
                 break;
             case R.id.shop_car://进入购物车
                 startActivity(new Intent(this,ShopCarActivity.class));
@@ -595,12 +610,22 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         txtGoodsAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createGoodsOrderObj();
-
+                if (isAdd){
+                    getShopGoods(mGoodsId,mGoodsInfo.getProductId(),addCartNumTv.getText().toString());
+                }else{
+                    createGoodsOrderObj();
+                    ConfirmOrderActivity.start(NumberGoodsDetailsActivity.this,mGoodsOrderInfo);
+                }
                 sizePopWin.dismiss();
-                ConfirmOrderActivity.start(NumberGoodsDetailsActivity.this,mGoodsOrderInfo);
 
 
+            }
+        });
+     ImageView   pop_diss=contentView.findViewById(R.id.pop_diss);
+        pop_diss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sizePopWin.dismiss();
             }
         });
 
@@ -625,6 +650,38 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
 
+    }
+    private void getShopCarNum() {
+
+        shopCarNum(this)
+                .subscribe(new DataObserver<ShopCarNumBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(ShopCarNumBean data) {
+                        int goodsNum = data.getGoodsNum();
+                        if (goodsNum!=0){
+                            shopnum.setVisibility(View.VISIBLE);
+                            shopnum.setText(goodsNum+"");
+                        }else{
+                            shopnum.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
     }
 
     private void createGoodsOrderObj(){
@@ -665,44 +722,55 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     }
 
-//    public void onGradeSuccess(UpdateInfoBean info) {
-//        if (info != null){
-//            UserInfo userInfo = UserLocalData.getUser();
-//            userInfo.setUserType(String.valueOf(info.getUserType()));
-//            userInfo.setMoreCoin(info.getMoreCoin());
-//            UserLocalData.setUser(NumberGoodsDetailsActivity.this,userInfo);
-//            if (C.UserType.vipMember.equals(info.getUserType())){
-//                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"Vip升级成功");
-//            }else if (C.UserType.operator.equals(info.getUserType())){
-//                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"团队长升级成功");
-//            }
-//
-//        }else{
-//            MyLog.d("test","用户信息为空");
-//        }
-//
-//    }
+    private void getShopGoods( String  goodsId,String productId,String number) {
+        addShopCar(this, goodsId,productId,number)
+                .subscribe(new DataObserver<String>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(String data) {
+                        ToastUtils.showShort("加入成功");
+                        getShopCarNum();
+                    }
+                });
+    }
+
+    private void onActivityFailure() {
+        ToastUtils.showShort("加入失败，请稍后再试");
+    }
 
 
-//    public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(BaseActivity fragment, int page) {
-//        RequestNumberGoodsList bean = new RequestNumberGoodsList();
-//        bean.setLimit(10);
-//        bean.setPage(page);
-//        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
-//                .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
-//                .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
-//    }
-//    /**
-//     * 用户等级升级
-//     *
-//     * @param fragment
-//     * @return
-//     */
-//    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(BaseActivity fragment,int userGrade) {
-//        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
-//        updateUserBean.setType(userGrade);
-//        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
-//                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
-//                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
-//    }
+    //添加购物车
+    public Observable<BaseResponse<String>> addShopCar(RxAppCompatActivity fragment, String  goodsId,String productId,String number) {
+        RequestAddShopcarBean requestAddShopcarBean=new RequestAddShopcarBean();
+        requestAddShopcarBean.setGoodsId(goodsId);
+        requestAddShopcarBean.setProductId(productId);
+        requestAddShopcarBean.setNumber(number);
+        return RxHttp.getInstance().getSysteService().getAddShopCar(requestAddShopcarBean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
+    }
+
+    //购物车数量
+    public Observable<BaseResponse<ShopCarNumBean>> shopCarNum(RxAppCompatActivity fragment) {
+
+        return RxHttp.getInstance().getSysteService().getShopCarNum()
+                .compose(RxUtils.<BaseResponse<ShopCarNumBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<ShopCarNumBean>>bindToLifecycle());
+    }
+
+
 }

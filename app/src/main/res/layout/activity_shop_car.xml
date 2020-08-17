@@ -82,6 +82,13 @@
 
 
 
+    <LinearLayout
+        android:id="@+id/ll_botton"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -91,20 +98,27 @@
         android:id="@+id/ll_di"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
         android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/rl_check"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/checkbox"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/selector_checkbox"
-            tools:layout_height="wrap_content"
-            tools:layout_width="wrap_content" />
+            <ImageView
+                android:id="@+id/checkbox"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/selector_checkbox"
+                tools:layout_height="wrap_content"
+                tools:layout_width="wrap_content" />
+
+        </RelativeLayout>
+
+
 
 
         <TextView
@@ -141,6 +155,7 @@
             android:textSize="16sp"
             />
         <TextView
+            android:id="@+id/shop_price"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="¥0"
@@ -152,6 +167,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/shop_count"
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:background="@color/color_F05557"
@@ -165,4 +181,5 @@
     </LinearLayout>
 
 
+    </LinearLayout>
 </RelativeLayout>

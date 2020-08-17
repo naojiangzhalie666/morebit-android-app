@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <LinearLayout
             android:id="@+id/goodsRule_msgLinear"
             android:layout_width="match_parent"
@@ -106,7 +107,17 @@
                 app:riv_oval="false" />
         </RelativeLayout>
 
-
+        <ImageView
+            android:id="@+id/pop_diss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/yx_pop_diss"
+            android:layout_alignParentRight="true"
+            android:paddingTop="40dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -189,7 +200,7 @@
                     android:layout_marginLeft="@dimen/toolbar_padLeft"
                     android:layout_marginRight="30dp"
                     android:layout_marginBottom="@dimen/toolbar_padLeft"
-                    android:background="@color/color_F2F2F2"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -197,7 +208,7 @@
                         android:id="@+id/goodsRule_minusRelative"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/color_F2F2F2"
+                        android:background="@drawable/background_yx_jj_2dp"
                         android:padding="6dp">
 
                         <ImageView
@@ -211,9 +222,10 @@
                         android:id="@+id/goodsRule_numTv"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@color/white"
+                        android:background="@drawable/background_yx_whie_2dp"
                         android:paddingLeft="12dp"
                         android:paddingRight="12dp"
+
                         android:gravity="center"
                         android:text="1"
                         android:textColor="@color/color_666666"
@@ -223,7 +235,7 @@
                         android:id="@+id/goodsRule_addRelative"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/color_F8F8F8"
+                        android:background="@drawable/background_yx_f8_2dp"
                         android:padding="6dp">
 
                         <ImageView

@@ -1,7 +1,9 @@
 package com.zjzy.morebit.Activity;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,6 +11,9 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.gyf.barlibrary.ImmersionBar;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.MainActivity;
@@ -38,7 +43,8 @@ import io.reactivex.functions.Action;
 public class LifeServiceActivity extends BaseActivity implements View.OnClickListener {
     private TextView txt_head_title;
     private LinearLayout btn_back;
-    private ReUseListView mReUseListView;
+    private RecyclerView mReUseListView;
+    private SmartRefreshLayout refreshLayout;
     private int page = 1;
     private LifeAdapter mAdapter;
     private int order_type=5;//全部  1待返佣  2已到账
@@ -70,27 +76,26 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
         btn_back.setOnClickListener(this);
 
 
-        mReUseListView= (ReUseListView) findViewById(R.id.mListView);
+        mReUseListView= (RecyclerView) findViewById(R.id.mListView);
+        refreshLayout= (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         dateNullView= (LinearLayout) findViewById(R.id.dateNullView);
         mAdapter = new LifeAdapter(this,teamType);
         mReUseListView.setAdapter(mAdapter);
-        mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
                 refreshData();
             }
         });
-        mReUseListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (!mReUseListView.getSwipeList().isRefreshing()) {
-                    page++;
-                    getData(teamType);
-                }
+       refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+           @Override
+           public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+               page++;
+               getData(teamType);
+           }
+       });
 
-            }
-        });
         getData(teamType);
         btn_invite= (TextView) findViewById(R.id.btn_invite);
         btn_invite.setOnClickListener(this);
@@ -99,19 +104,10 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void refreshData() {
-        mReUseListView.getSwipeList().post(new Runnable() {
 
-            @Override
-            public void run() {
-                mReUseListView.getSwipeList().setRefreshing(true);
-            }
-        });
         page = 1;
-        mReUseListView.getListView().setNoMore(false);
-        mReUseListView.getListView().setMarkermallNoMore(true);
-        mReUseListView.getListView().setFootViewVisibility(View.VISIBLE);
-        mReUseListView.getListView().setFooterViewHint("","到底了～","");
         getData(teamType);
+        refreshLayout.finishRefresh();
     }
 
     private void getData(int teamType) {
@@ -128,7 +124,7 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
                     mReUseListView.setVisibility(View.GONE);
                     dateNullView.setVisibility(View.VISIBLE);
                 }
-                mReUseListView.getListView().setNoMore(true);
+                refreshLayout.finishLoadMore();
             }
 
             @Override
@@ -141,13 +137,13 @@ public class LifeServiceActivity extends BaseActivity implements View.OnClickLis
                         mAdapter.setData(data);
                     }else{
                         mAdapter.addData(data);
-                        mReUseListView.getListView().setNoMore(true);
+                       refreshLayout.finishLoadMore();
                     }
 
                 }else{
                     dateNullView.setVisibility(View.VISIBLE);
                     mReUseListView.setVisibility(View.GONE);
-                    mReUseListView.getListView().setNoMore(true);
+                   refreshLayout.finishLoadMore();
                 }
 
 

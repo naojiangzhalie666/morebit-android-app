@@ -59,9 +59,15 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         mDatas.clear();
         if (datas != null && datas.size() > 0) {
             mDatas.addAll(datas);
+            notifyDataSetChanged();
         }
     }
-
+    public void addData(List<ConsComGoodsInfo> datas) {
+        if (datas != null && datas.size() > 0) {
+            mDatas.addAll(datas);
+            notifyItemChanged(0,datas.size());
+        }
+    }
 
     @Override
     public int getItemViewType(int position) {

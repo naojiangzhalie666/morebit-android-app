@@ -1,6 +1,9 @@
 package com.zjzy.morebit.home.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
@@ -40,19 +46,17 @@ import io.reactivex.functions.Action;
 public class OrderRetailersFragment extends BaseMainFragmeng {
 
 
-    ReUseListView mReUseListView;
+    RecyclerView mReUseListView;
     private int page = 1;
     private RetailersAdapter mAdapter;
-    private int order_type=5;//全部  1待返佣  2已到账
-    private int teamType=0;//全部订单
+    private int order_type = 5;//全部  1待返佣  2已到账
+    private int teamType = 0;//全部订单
     private LinearLayout dateNullView;
     private TextView btn_invite;
+    private SmartRefreshLayout refreshLayout;
 
 
-
-
-
-    public static OrderRetailersFragment newInstance(int order_type,int orderstatus) {
+    public static OrderRetailersFragment newInstance(int order_type, int orderstatus) {
         OrderRetailersFragment fragment = new OrderRetailersFragment();
         Bundle args = new Bundle();
         args.putInt(C.Extras.ORDERTEAM, order_type);
@@ -77,33 +81,32 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
     }
 
 
-
-
     @Subscribe  //订阅事件
     public void onEventMainThread(MessageEvent event) {
-        page=1;
+        page = 1;
         if (event.getAction().equals(EventBusAction.ORDERTYPE_ALL)) {
-            teamType=0;
+            teamType = 0;
             getData(0);
-        }else if (event.getAction().equals(EventBusAction.ORDERTYPE_JD)){
-            teamType=2;
+        } else if (event.getAction().equals(EventBusAction.ORDERTYPE_JD)) {
+            teamType = 2;
             getData(2);
-        }else if (event.getAction().equals(EventBusAction.ORDERTYPE_PDD)){
-            teamType=4;
+        } else if (event.getAction().equals(EventBusAction.ORDERTYPE_PDD)) {
+            teamType = 4;
             getData(4);
-        }else if (event.getAction().equals(EventBusAction.ORDERTYPE_TAO)){
-            teamType=1;
+        } else if (event.getAction().equals(EventBusAction.ORDERTYPE_TAO)) {
+            teamType = 1;
             getData(1);
-        }else if (event.getAction().equals(EventBusAction.ORDERTYPE_WPH)){
-            teamType=6;
+        } else if (event.getAction().equals(EventBusAction.ORDERTYPE_WPH)) {
+            teamType = 6;
             getData(6);
-        }else if (event.getAction().equals(EventBusAction.ORDERTYPE_KAOLA)){
-            teamType=5;
+        } else if (event.getAction().equals(EventBusAction.ORDERTYPE_KAOLA)) {
+            teamType = 5;
             getData(5);
         }
     }
+
     private void getData(int teamType) {
-        getGoodsOrder(this, order_type,  teamType,page)
+        getGoodsOrder(this, order_type, teamType, page)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -112,39 +115,36 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
                 }).subscribe(new DataObserver<List<ConsComGoodsInfo>>() {
             @Override
             protected void onDataListEmpty() {
-                if (page==1){
+                if (page == 1) {
                     mReUseListView.setVisibility(View.GONE);
                     dateNullView.setVisibility(View.VISIBLE);
                 }
-                mReUseListView.getListView().setNoMore(true);
+                refreshLayout.finishLoadMore(true);
             }
 
             @Override
             protected void onSuccess(List<ConsComGoodsInfo> data) {
 
-                if (data!=null&&data.size()!=0){
+                if (data != null && data.size() != 0) {
                     dateNullView.setVisibility(View.GONE);
                     mReUseListView.setVisibility(View.VISIBLE);
-                    if (page==1){
+                    if (page == 1) {
                         mAdapter.setData(data);
-                    }else{
+                    } else {
                         mAdapter.addData(data);
-                        mReUseListView.getListView().setNoMore(false);
+                        refreshLayout.finishLoadMore(true);
                     }
 
-                    page++;
-
-                }else{
+                } else {
                     dateNullView.setVisibility(View.VISIBLE);
                     mReUseListView.setVisibility(View.GONE);
-                    mReUseListView.getListView().setNoMore(true);
+                    refreshLayout.finishRefresh();
                 }
 
 
             }
         });
     }
-
 
 
     private void showError(String errCode, String errorMsg) {
@@ -158,54 +158,80 @@ public class OrderRetailersFragment extends BaseMainFragmeng {
         Bundle arguments = getArguments();
         if (arguments != null) {
             order_type = arguments.getInt(C.Extras.ORDERTEAM);
-            teamType=arguments.getInt(C.Extras.ORDERSTATUS);
+            teamType = arguments.getInt(C.Extras.ORDERSTATUS);
         }
-        mReUseListView=view.findViewById(R.id.mListView);
-        dateNullView=view.findViewById(R.id.dateNullView);
-        mAdapter = new RetailersAdapter(getActivity(),order_type);
-        mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                page = 1;
-                refreshData();
-            }
-        });
-        mReUseListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-//                if (!mReUseListView.getSwipeList().isRefreshing()) {
-//
-//                }
-                getData(teamType);
-
-            }
-        });
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+        mReUseListView = view.findViewById(R.id.mListView);
+        dateNullView = view.findViewById(R.id.dateNullView);
+        btn_invite = view.findViewById(R.id.btn_invite);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        mReUseListView.setLayoutManager(manager);
+        mAdapter = new RetailersAdapter(getActivity(), order_type);
         mReUseListView.setAdapter(mAdapter);
         getTime();
-        btn_invite=view.findViewById(R.id.btn_invite);
+
         btn_invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
-               EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_HOME));
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_HOME));
             }
         });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                getData(teamType);
+                refreshLayout.finishRefresh(true);//刷新完成
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                getData(teamType);
+            }
+        });
+
+
+        mReUseListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int minLeftItemCount = 5;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int itemCount = layoutManager.getItemCount();
+                    int lastPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+                    Log.i("minLeftItemCount", "【总数】" + itemCount + "【位置】" + lastPosition);
+                    if (lastPosition == layoutManager.getItemCount() - 5) {
+                        loadMore();//加载更多
+                    } else {
+                        if (itemCount > minLeftItemCount) {
+                            if (lastPosition == itemCount - minLeftItemCount) {
+                                loadMore();//加载更多
+                            }
+                        } else {
+                            loadMore();//加载更多
+                        }
+                    }
+                }
+            }
+
+
+        });
+
 
     }
 
-    private void refreshData() {
-        mReUseListView.getSwipeList().post(new Runnable() {
+    private void loadMore() {
+        page++;
+        getData(teamType);
+    }
 
-            @Override
-            public void run() {
-                mReUseListView.getSwipeList().setRefreshing(true);
-            }
-        });
-        page = 1;
-        mReUseListView.getListView().setNoMore(false);
-        mReUseListView.getListView().setMarkermallNoMore(true);
-        mReUseListView.getListView().setFootViewVisibility(View.GONE);
-        mReUseListView.getListView().setFooterViewHint("","仅支持查看近3个月订单","");
+    private void refreshData() {
+
         getData(teamType);
     }
 

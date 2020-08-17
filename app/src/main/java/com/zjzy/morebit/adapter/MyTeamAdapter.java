@@ -66,6 +66,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
         if (data != null) {
             mDatas.clear();
             mDatas.addAll(data);
+            notifyDataSetChanged();
         }
     }
 

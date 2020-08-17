@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -41,6 +43,7 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
@@ -85,6 +88,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
     private SmartRefreshLayout swipeList;
     private RelativeLayout shop_car;
     private ImageView top_rcy;
+    private TextView shopnum;
 
 
     public static ShoppingMallFragment newInstance() {
@@ -111,7 +115,11 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getShopCarNum();
+    }
     private void getData() {
         getNumberGoodsList(this, page)
                 .doFinally(new Action() {
@@ -170,7 +178,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         Bundle arguments = getArguments();
         if (arguments != null) {
         }
-
+        shopnum=view.findViewById(R.id.shopnum);
         top_rcy=view.findViewById(R.id.top_rcy);
         mAdapter = new SubNumberAdapter(getActivity());
         swipeList=view.findViewById(R.id.swipeList);
@@ -204,7 +212,47 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
             }
         });
 
+
+
     }
+
+    private void getShopCarNum() {
+
+        shopCarNum(this)
+                .subscribe(new DataObserver<ShopCarNumBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(ShopCarNumBean data) {
+                        int goodsNum = data.getGoodsNum();
+                        if (goodsNum!=0){
+                            shopnum.setVisibility(View.VISIBLE);
+                            shopnum.setText(goodsNum+"");
+                        }else{
+                            shopnum.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+    }
+
+    private void onActivityFailure() {
+
+    }
+
 
     //获取优选商品
     public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(RxFragment fragment, int page) {
@@ -219,6 +267,7 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
     public void onEventMainThread(MessageEvent event) {
         if (event.getAction().equals(EventBusAction.ACTION_REFRSH)) {
             getData();
+            getShopCarNum();
 
         }
     }
@@ -228,5 +277,18 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+
+
+    //购物车数量
+    public Observable<BaseResponse<ShopCarNumBean>> shopCarNum(RxFragment fragment) {
+
+        return RxHttp.getInstance().getSysteService().getShopCarNum()
+                .compose(RxUtils.<BaseResponse<ShopCarNumBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<ShopCarNumBean>>bindToLifecycle());
+    }
+
+
+
 
 }

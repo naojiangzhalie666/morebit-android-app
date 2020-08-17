@@ -288,12 +288,13 @@
             android:background="@mipmap/shop_car_icon">
 
             <TextView
+                android:id="@+id/shopnum"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/background_f05557_radius_yuan"
                 android:gravity="center"
-                android:text="8"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 

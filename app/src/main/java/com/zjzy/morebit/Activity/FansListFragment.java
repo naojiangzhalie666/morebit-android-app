@@ -213,7 +213,7 @@ public class FansListFragment extends BaseFragment implements View.OnClickListen
         appbar.setExpanded(true);
         MyLog.i("test","mAdapter.getItem(viewpager.getCurrentItem()): " + mAdapter.getmCurrentFragment());
         if(mAdapter.getmCurrentFragment()!=null){
-            mAdapter.getmCurrentFragment().stick();
+           // mAdapter.getmCurrentFragment().stick();
         }
 
     }

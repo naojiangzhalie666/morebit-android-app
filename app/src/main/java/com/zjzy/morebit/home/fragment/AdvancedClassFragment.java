@@ -104,6 +104,8 @@ public class AdvancedClassFragment extends BaseMainFragmeng {
     }
 
 
+
+
     private void getData() {
         getStudyRankTitle(this)
                 .subscribe(new DataObserver<List<StudyRank>>() {
