@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
@@ -21,6 +22,7 @@ import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.VideoPlayerActivity;
 import com.zjzy.morebit.network.BaseResponse;
@@ -30,19 +32,25 @@ import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.Article;
 import com.zjzy.morebit.pojo.CircleCopyBean;
 import com.zjzy.morebit.pojo.ConsComGoodsInfo;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.request.RequestCircleShareBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 
 /*
  * 订单列表
@@ -163,7 +171,8 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 //                ViewShowUtils.showShortToast(context, "已复制订单号，点击粘贴文案");
                 switch (orderType) {
                     case 1://淘宝
-                        getTao3(orderType, 1, info);
+                        getTao(info.getItemId());
+                      //  getTao3(orderType, 1, info);
                         break;
                     case 2://京东
                         getTao3(orderType, 4, info);
@@ -200,6 +209,31 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 
     }
 
+    private void getTao(String itemId) {
+        getBaseResponseObservable((BaseActivity) context, itemId)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                      if (data!=null){
+                        if (TextUtils.isEmpty(data.getItemPrice())||TextUtils.isEmpty(data.getItemVoucherPrice())){
+                            ToastUtils.showShort("商品已下架");
+                        }else{
+                            GoodsDetailActivity.start(context, data);
+                        }
+                      }else{
+                          ToastUtils.showShort("商品已下架");
+                      }
+
+                    }
+                });
+    }
+
 
     private void getTao3(final int i, final int shopType, final ConsComGoodsInfo info) {
 
@@ -216,14 +250,14 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 
                         switch (i) {
                             case 1://淘宝
-                                GoodsUtil.checkGoods((RxAppCompatActivity) context, info.getItemId(), new MyAction.One<ShopGoodInfo>() {
-                                    @Override
-                                    public void invoke(ShopGoodInfo arg) {
-                                        MyLog.i("test", "arg: " + arg);
-                                        GoodsDetailActivity.start(context, arg);
-
-                                    }
-                                });
+//                                GoodsUtil.checkGoods((RxAppCompatActivity) context, info.getItemId(), new MyAction.One<ShopGoodInfo>() {
+//                                    @Override
+//                                    public void invoke(ShopGoodInfo arg) {
+//                                        MyLog.i("test", "arg: " + arg);
+//
+//
+//                                    }
+//                                });
                                 break;
                             case 2://京东
                                 ShopGoodInfo goodInfo2 = new ShopGoodInfo();
@@ -293,5 +327,13 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 
     public void setOnAddClickListener(OnAddClickListener onItemAddClick) {
         this.onItemAddClick = onItemAddClick;
+    }
+
+
+    //淘宝详情
+    private Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservable(BaseActivity rxActivity, String itemId) {
+        return RxHttp.getInstance().getCommonService().getDetailData(new RequestItemSourceId().setItemSourceId(itemId).setItemFrom("1"))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
 }

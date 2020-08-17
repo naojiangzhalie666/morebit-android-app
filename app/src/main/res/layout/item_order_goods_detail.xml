@@ -292,7 +292,7 @@
                 android:maxLines="1"
                 android:text="@string/number_order_no"
                 android:textColor="@color/color_999999"
-                android:textSize="@dimen/sp_11" />
+                android:textSize="@dimen/sp_14" />
 
             <TextView
                 android:id="@+id/tv_copy"
@@ -305,7 +305,7 @@
                 android:paddingBottom="5dp"
                 android:text="@string/copy"
                 android:textColor="@color/color_F05557"
-                android:textSize="@dimen/sp_11" />
+                android:textSize="@dimen/sp_14" />
         </RelativeLayout>
 
         <TextView
