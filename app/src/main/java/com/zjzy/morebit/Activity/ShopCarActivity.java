@@ -37,6 +37,7 @@ import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 
 import java.io.Serializable;
@@ -67,6 +68,7 @@ public class ShopCarActivity extends BaseActivity {
     private String zong="0";
     private int count=0;
     private BigDecimal result3;
+    private String getnum="0";
     private List<ShopCarGoodsBean.CartListBean> cartList2=new ArrayList<>();
 
     @Override
@@ -119,8 +121,11 @@ public class ShopCarActivity extends BaseActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 getData();
+
+
             }
         });
+
 
 
 
@@ -231,7 +236,7 @@ public class ShopCarActivity extends BaseActivity {
                 if (cartList2==null||cartList2.size()==0){
                     ToastUtils.showShort("请先勾选一个商品");
                 }else{
-                    ConfirmOrderActivity2.start(ShopCarActivity.this,result3+"",cartList2);
+                    ConfirmOrderActivity2.start(ShopCarActivity.this,getnum+"",cartList2);
                 }
 
             }
@@ -240,6 +245,12 @@ public class ShopCarActivity extends BaseActivity {
     }
 
 
+
+    private void reSect(){//刷新重置
+        shop_count.setText("结算"+"(0)");
+        shop_price.setText("¥0");
+        checkbox.setSelected(false);
+    }
     private void getCheck(){//选中商品
         cartList2.clear();
         for (int i=0;i<cartList.size();i++){
@@ -270,9 +281,12 @@ private void getZong(){//得到总价
         }
 
     if (result3!=null){
-        shop_price.setText("¥"+result3);
+        String s = String.valueOf(result3);
+          getnum = MathUtils.getnum(s);
+        shop_price.setText("¥"+ getnum);
+
     }
-    result3=result3;
+
     shop_count.setText("结算"+"("+count+")");
 }
 
@@ -305,6 +319,7 @@ private void getZong(){//得到总价
                             dateNullView.setVisibility(View.GONE);
                             ll_botton.setVisibility(View.VISIBLE);
                             shopCarAdapter.addData(cartList);
+                            reSect();
                         } else {
                             refreshLayout.setVisibility(View.GONE);
                             dateNullView.setVisibility(View.VISIBLE);

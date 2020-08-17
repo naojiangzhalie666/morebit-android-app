@@ -63,7 +63,7 @@ public class ShopCarOrderAdapter extends RecyclerView.Adapter<ShopCarOrderAdapte
         LoadImgUtils.loadingCornerBitmap(mContext, holder.img_confirm_order_goods, listBean.getPicUrl(),5);
         holder.txt_confirm_order_goods_title.setText(listBean.getGoodsName());
         if (!TextUtils.isEmpty(listBean.getPrice())) {
-            holder.txt_confirm_order_goods_price.setText(listBean.getPrice() + "");
+            holder.txt_confirm_order_goods_price.setText(MathUtils.getnum(listBean.getPrice()));
         }
 
         if (!TextUtils.isEmpty(listBean.getNumber())) {

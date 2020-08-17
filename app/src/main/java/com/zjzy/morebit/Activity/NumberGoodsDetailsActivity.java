@@ -99,18 +99,14 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     @BindView(R.id.nsv_view)
     NestedScrollView nsv_view;
-    @BindView(R.id.srl_view)
-    SwipeRefreshLayout srl_view;
-    @BindView(R.id.view_bar)
-    View view_bar;
+
+
 
     @BindView(R.id.fl_img)
     FrameLayout fl_img;
-    @BindView(R.id.tablayout)
-    CommonTabLayout tablayout;
 
-    @BindView(R.id.re_tab)
-    RelativeLayout re_tab;
+
+
     @BindView(R.id.search_statusbar_rl)
     LinearLayout search_statusbar_rl;
 
@@ -169,6 +165,8 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     private int mListHeight;
     private Handler mHandler;
     private int mTitleHeight;
+    private TextView txt_head_title;
+    private LinearLayout btn_back;
 
 
     private String[] mTitles;
@@ -244,16 +242,13 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGoodsId = getIntent().getStringExtra("id");
-        mTitles = new String[]{getString(R.string.goods_detail_baby),  getString(R.string.goods_detail_det)};
-        int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.margin_small);
-        mConsumerPadding = getResources().getDimensionPixelSize(R.dimen.goods_consumer_itme_padding);
-        mTitleHeight = getResources().getDimensionPixelSize(R.dimen.goods_detail_title_height);
-        mWidth = AppUtil.getTaobaoIconWidth() + dimensionPixelSize;
-        duration = getWindowManager().getDefaultDisplay().getWidth() - mTitleHeight + 0.0F;
+
         EventBus.getDefault().register(this);
         ImmersionBar.with(this)
                 .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .titleBar(view_bar)    //解决状态栏和布局重叠问题，任选其一
+              //解决状态栏和布局重叠问题，任选其一
+                .fitsSystemWindows(false)
+                .statusBarColor(R.color.white)
                 .init();
         initBundle();
         initView();
@@ -278,13 +273,17 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     }
 
     private void initView() {
+        btn_back= (LinearLayout) findViewById(R.id.btn_back);
+        txt_head_title= (TextView) findViewById(R.id.txt_head_title);
+        txt_head_title.setText("商品详情");
         shopnum= (TextView) findViewById(R.id.shopnum);
-        initTab();
 
-        srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                initData(true);
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -294,8 +293,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                 scrollViewToLocation(0);
             }
         });
-        re_tab.setAlpha(0);
-        view_bar.setAlpha(0);
+
         nsv_view.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
 
             @Override
@@ -311,91 +309,15 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
             private void scrollTitleChange(int scrollY) {
-                float alpha = (float) (scrollY / duration);
-                if (duration > scrollY) {
-                    if (scrollY < 5) {
-                        getViewLocationOnScreen();
-                        re_tab.setVisibility(View.GONE);
-                        re_tab.setAlpha(0);
-                        view_bar.setAlpha(0);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(NumberGoodsDetailsActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(NumberGoodsDetailsActivity.this, R.color.white));
-                    } else {
-                        if (re_tab.getVisibility() == View.GONE) {
-                            re_tab.setVisibility(View.VISIBLE);
-                        }
-                        re_tab.setAlpha(alpha);
-                        view_bar.setAlpha(alpha);
-                        isTitleBarSetBg = false;
-                    }
-                } else {
 
-                    if (re_tab.getVisibility() == View.GONE) {
-                        re_tab.setVisibility(View.VISIBLE);
-                    }
-                    if (!isTitleBarSetBg) {
-                        re_tab.setAlpha(1);
-                        view_bar.setAlpha(1);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(NumberGoodsDetailsActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(NumberGoodsDetailsActivity.this, R.color.white));
-                    }
-                }
             }
 
             private void scrollTabChange(int scrollY) {
 
-
-                MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
-                if (tablayout == null || mListHeight == 0 ||  isContinueScrollTabChange) {
-                    return;
-                }
-
-                int currentTab = tablayout.getCurrentTab();
-                if (scrollY <= mListHeight) {
-                    if (currentTab != 0)
-                        tablayout.setCurrentTab(0);
-                } else if (scrollY > mListHeight ) {
-                    if (currentTab != 1)
-                        tablayout.setCurrentTab(1);
-                }
             }
         });
     }
 
-    private void initTab() {
-        for (int i = 0; i < mTitles.length; i++) {
-            mTabArrayList.add(new BaseCustomTabEntity(mTitles[i], 0, 0));
-        }
-        tablayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                isContinueScrollTabChange = true;
-                switch (position) {
-                    case 0:
-                        scrollViewToLocation(0);
-                        break;
-                    case 1:
-                        scrollViewToLocation(mListHeight);
-                        break;
-
-                    default:
-                        break;
-                }
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        isContinueScrollTabChange = false;
-                    }
-                }, 500);
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
-        tablayout.setTabData(mTabArrayList);
-    }
 
     private void scrollViewToLocation(int location) {
         nsv_view.fling(location);
@@ -442,16 +364,12 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
 
-    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action,R.id.ll_home,R.id.goods_car,R.id.shop_car})
+    @OnClick({R.id.bottomLy,R.id.btn_goods_buy_action,R.id.ll_home,R.id.goods_car,R.id.shop_car})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
                 isAdd=false;
                 showPopupwindow();
-                break;
-            case R.id.btn_back:
-            case R.id.btn_tltle_back:
-                finish();
                 break;
             case R.id.btn_goods_buy_action:
                 break;
@@ -531,7 +449,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
             StringsUtils.retractTitles(numberGoodsTitle, goodsInfo.getName(), (int) (size) + 35);
         }
       //  numberGoodsTitle.setText(goodsInfo.getName());
-        srl_view.setRefreshing(false);
+
       //  tvGiveGrowthValue.setText(getResources().getString(R.string.give_growth_value,MathUtils.getnum(priceStr)));
         btnBuy.setText(getResources().getString(R.string.number_goods_buy_txt,MathUtils.getnum(priceStr)));
     }
@@ -539,7 +457,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     @Override
     public void onError() {
         MyLog.e(TAG,"获取商品详情失败");
-        srl_view.setRefreshing(false);
+
     }
 
     @Override
@@ -675,7 +593,12 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                         int goodsNum = data.getGoodsNum();
                         if (goodsNum!=0){
                             shopnum.setVisibility(View.VISIBLE);
-                            shopnum.setText(goodsNum+"");
+                            if (goodsNum>99){
+                                shopnum.setText("99+");
+                            }else{
+                                shopnum.setText(goodsNum+"");
+                            }
+
                         }else{
                             shopnum.setVisibility(View.GONE);
                         }
@@ -737,7 +660,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
                     @Override
                     protected void onError(String errorMsg, String errCode) {
-                        onActivityFailure();
+                        onActivityFailure(errorMsg);
                     }
 
                     @Override
@@ -748,8 +671,12 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                 });
     }
 
+    private void onActivityFailure(String errorMsg) {
+        ToastUtils.showShort(""+errorMsg);
+    }
+
     private void onActivityFailure() {
-        ToastUtils.showShort("加入失败，请稍后再试");
+
     }
 
 

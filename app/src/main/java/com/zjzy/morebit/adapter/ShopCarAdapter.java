@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -84,7 +85,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
         }
 
         if (!TextUtils.isEmpty(listBean.getPrice())) {
-            holder.tv_price.setText(listBean.getPrice() + "");
+            holder.tv_price.setText(MathUtils.getnum(listBean.getPrice()));
         }
 
         if (!TextUtils.isEmpty(listBean.getNumber())) {
@@ -94,7 +95,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
         if (specifications != null && specifications.size() > 0) {
             holder.tv_guige.setText("规格：" + specifications.get(0));
         }
-        holder.checkbox.setOnClickListener(new View.OnClickListener() {
+        holder.ll_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listBean.isChecked()) {//已勾选
@@ -311,9 +312,11 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
         private View view;
         private RelativeLayout goodsRule_minusRelative, goodsRule_addRelative;
         private ImageView checkbox;
+        private LinearLayout ll_check;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            ll_check=itemView.findViewById(R.id.ll_check);
             shopcar_delete = itemView.findViewById(R.id.shopcar_delete);//删除商品
             view = itemView.findViewById(R.id.view);
             iv_shoppingaole_bg = itemView.findViewById(R.id.iv_shoppingaole_bg);//主图

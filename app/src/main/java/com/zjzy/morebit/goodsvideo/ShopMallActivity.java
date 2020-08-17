@@ -162,7 +162,11 @@ public class ShopMallActivity extends BaseActivity implements View.OnClickListen
                         int goodsNum = data.getGoodsNum();
                         if (goodsNum!=0){
                             shopnum.setVisibility(View.VISIBLE);
-                            shopnum.setText(goodsNum+"");
+                            if (goodsNum>99){
+                                shopnum.setText("99+");
+                            }else{
+                                shopnum.setText(goodsNum+"");
+                            }
                         }else{
                             shopnum.setVisibility(View.GONE);
                         }
