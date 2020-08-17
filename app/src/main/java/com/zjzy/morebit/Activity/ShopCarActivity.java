@@ -255,6 +255,8 @@ public class ShopCarActivity extends BaseActivity {
 
 
 
+
+
     private void reSect(){//刷新重置
         shopCarAdapter.isAll(false);
         shop_count.setText("结算"+"(0)");
@@ -301,6 +303,12 @@ private void getZong(){//得到总价
 
     shop_count.setText("结算"+"("+count+")");
 }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
 
     private void getData() {
         shopCarNGoods(this)
