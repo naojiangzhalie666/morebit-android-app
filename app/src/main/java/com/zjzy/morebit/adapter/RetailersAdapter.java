@@ -142,7 +142,7 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
         } else if (status == 5) {
             holder.tv_fanyong.setBackgroundResource(R.drawable.background_ffebce_radius_2dp);
             holder.tv_fanyong.setTextColor(Color.parseColor("#975400"));
-            holder.tv_content.setText("已维权");
+            holder.tv_content.setText("维权订单");
             holder.tv_content.setTextColor(Color.parseColor("#F05557"));
         } else if (status == 3) {
             holder.tv_fanyong.setBackgroundResource(R.drawable.background_ffebce_radius_2dp);
