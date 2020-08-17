@@ -97,7 +97,13 @@ public class LimitSkillAdapter extends RecyclerView.Adapter<LimitSkillAdapter.Vi
         }else{
             holder.tv_qiang.setVisibility(View.GONE);
             holder.tv_qiang2.setVisibility(View.VISIBLE);
-            holder.tv_qiang2.setText(time+"点\n开抢");
+            if (Integer.parseInt(time)>24){
+                int str=Integer.parseInt(time)-24;
+                holder.tv_qiang2.setText(str+"点\n开抢");
+            }else{
+                holder.tv_qiang2.setText(time+"点\n开抢");
+            }
+
         }
 
 
