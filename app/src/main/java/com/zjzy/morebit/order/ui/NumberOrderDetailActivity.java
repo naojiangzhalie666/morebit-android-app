@@ -11,6 +11,7 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,10 +23,12 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.LocalData.CommonLocalData;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.BindZhiFuBaoFragment;
 import com.zjzy.morebit.info.ui.fragment.OrderListFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
 import com.zjzy.morebit.pojo.order.OrderSyncResult;
 import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
@@ -41,6 +44,8 @@ import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
@@ -780,9 +785,20 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
             @Override
             public void onClick(View v) {
                 finish();
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.SHOPCAR_REFRSH));
             }
         });
 
+
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            EventBus.getDefault().post(new MessageEvent(EventBusAction.SHOPCAR_REFRSH));
+            return false;
+        }else {
+            return super.onKeyDown(keyCode, event);
+        }
 
     }
 

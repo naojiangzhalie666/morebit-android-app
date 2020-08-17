@@ -131,7 +131,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
                 goodsDeteleDialog.setmOkListener(new GoodsDeteleDialog.OnOkListener() {
                     @Override
                     public void onClick(View view) {
-                        getDelete(listBean.getProductId(), position);
+                        getDelete(listBean.getProductId(), holder.getAdapterPosition());
                     }
                 });
             }
@@ -238,9 +238,10 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
                     @Override
                     protected void onDataNull() {
                         ToastUtils.showShort("删除成功");
-                        list.remove(position);
+                        remove(position);
+
                       //  onItemAddClick.onShareClick(position,list.get(position).isChecked());
-                       notifyItemChanged(position,list.size()+1);
+
                         onItemAddClick.onShareClick(position);
 
 
@@ -256,6 +257,14 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
 
                     }
                 });
+    }
+
+    private void remove(int position){
+
+        if (!list.isEmpty()){
+            list.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     private void getUpdata(String goodsId, String productId, String number, String cartid) {

@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
@@ -34,6 +35,7 @@ import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
+import com.zjzy.morebit.Module.common.Dialog.LoadingDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
@@ -169,6 +171,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
     //京东领劵领劵
     private String mPromotionJdUrl;
+
 
     public static void start(Context context, String id) {
         Intent intent = new Intent((Activity) context, GoodsDetailForKoalaActivity.class);
@@ -695,6 +698,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         float size = paint.measureText(iv_taobao.getText().toString());
         StringsUtils.retractTitles(title,data.getGoodsTitle(), (int) (size) + 35);
         getViewLocationOnScreen();
+      //  dialog.dismiss();
     }
 
     @Override

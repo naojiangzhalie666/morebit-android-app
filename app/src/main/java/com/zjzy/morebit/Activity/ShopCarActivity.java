@@ -26,12 +26,14 @@ import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ShopCarAdapter;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.order.ConfirmOrderActivity2;
 import com.zjzy.morebit.order.ui.ConfirmOrderActivity;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopCarGoodsBean;
 import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
@@ -39,6 +41,9 @@ import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -82,6 +87,7 @@ public class ShopCarActivity extends BaseActivity {
                 .statusBarColor(R.color.white)
                 .init();
         initView();
+        EventBus.getDefault().register(this);
     }
 
     private void initView() {
@@ -198,6 +204,8 @@ public class ShopCarActivity extends BaseActivity {
                     dateNullView.setVisibility(View.GONE);
                 }
 
+
+
             }
 
             @Override
@@ -304,11 +312,7 @@ private void getZong(){//得到总价
     shop_count.setText("结算"+"("+count+")");
 }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getData();
-    }
+
 
     private void getData() {
         shopCarNGoods(this)
@@ -351,6 +355,13 @@ private void getZong(){//得到总价
                 });
     }
 
+    @Subscribe  //订阅事件
+    public void onEventMainThread(MessageEvent event) {
+        if (event.getAction().equals(EventBusAction.SHOPCAR_REFRSH)) {
+            getData();
+
+        }
+    }
 
     //购物车商品
     public Observable<BaseResponse<ShopCarGoodsBean>> shopCarNGoods(RxAppCompatActivity fragment) {
@@ -358,5 +369,12 @@ private void getZong(){//得到总价
         return RxHttp.getInstance().getSysteService().getShopCarIndex()
                 .compose(RxUtils.<BaseResponse<ShopCarGoodsBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<ShopCarGoodsBean>>bindToLifecycle());
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -22,5 +22,6 @@ public class EventBusAction {
     public final static String ORDERTYPE_KAOLA = "ORDERTYPE_KAOLA";  //订单类型  考拉
     public final static String ACTION_HOME = "ACTION_HOME"; //首页
     public final static String ACTION_REFRSH = "ACTION_REFRSH"; //刷新
+    public final static String SHOPCAR_REFRSH = "SHOPCAR_REFRSH"; //购物车刷新
 
 }
