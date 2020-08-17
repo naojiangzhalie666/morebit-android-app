@@ -165,7 +165,6 @@
                     android:text="送30成长值"
                     android:textColor="@color/color_F05557"
                     android:textSize="10sp"
-                    android:visibility="gone"
                     />
 
             </LinearLayout>
