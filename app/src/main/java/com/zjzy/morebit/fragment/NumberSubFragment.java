@@ -13,7 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v4.widget.SwipeRefreshLayout;
+
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -39,6 +39,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
@@ -114,7 +115,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
-
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 /**
  * 每日爆款
@@ -167,7 +168,7 @@ public class NumberSubFragment extends BaseFragment {
     private SkillAdapter skillAdapter;
     private ActivityFloorAdapter floorAdapter;
     private TextView vip_kefu;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private SmartRefreshLayout swipeList;
     private NestedScrollView netscrollview;
 
     private XTabLayout xablayout;
@@ -240,23 +241,13 @@ public class NumberSubFragment extends BaseFragment {
     }
 
     public void initView(View view) {
+        swipeList=view.findViewById(R.id.swipeRefreshLayout);
         shopnum=view.findViewById(R.id.shopnum);
         shop_car=view.findViewById(R.id.shop_car);
         mAppBarLt = view.findViewById(R.id.app_bar_lt);
         xablayout = view.findViewById(R.id.xablayout);
         viewPager = view.findViewById(R.id.viewPager);
         initViewPager();
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setEnabled(true);
-        swipeRefreshLayout.setNestedScrollingEnabled(true);
-        //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
-        swipeRefreshLayout.setProgressViewOffset(true, -0, 100);
-        //设置进度View下拉的结束点，scale 是指设置是否需要放大或者缩小动画
-        swipeRefreshLayout.setProgressViewEndTarget(true, 180);
-        //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
-        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
-        //设置触发刷新的距离
-        swipeRefreshLayout.setDistanceToTriggerSync(200);
         tv_coin = view.findViewById(R.id.tv_coin);//成长值
         vip_tou = view.findViewById(R.id.vip_tou);//头像
         vip_name = view.findViewById(R.id.vip_name);//昵称
@@ -284,14 +275,6 @@ public class NumberSubFragment extends BaseFragment {
             }
         });
         initTou();
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initTou();
-                EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_REFRSH));
-            }
-        });
 
         shop_car.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -321,6 +304,15 @@ public class NumberSubFragment extends BaseFragment {
             }
         });
 
+
+        swipeList.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initTou();
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_REFRSH));
+            }
+        });
+
     }
 
     private void initTou() {
@@ -337,7 +329,7 @@ public class NumberSubFragment extends BaseFragment {
                     @Override
                     protected void onSuccess(UserInfo data) {
                         showDetailsView(data);
-                        swipeRefreshLayout.setRefreshing(false);
+                        swipeList.finishRefresh();
 
                     }
                 });
@@ -382,9 +374,9 @@ public class NumberSubFragment extends BaseFragment {
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
                 if (state == 1) {
-                    swipeRefreshLayout.setEnabled(false);//设置不可触发
+                swipeList.setEnableRefresh(false);
                 } else if (state == 2 && canRefresh) {
-                    swipeRefreshLayout.setEnabled(true);//设置可触发
+                    swipeList.setEnableRefresh(true);//设置可触发
                 }
             }
         });
@@ -392,11 +384,11 @@ public class NumberSubFragment extends BaseFragment {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
                 if (i < -150 && canRefresh) {
-                    swipeRefreshLayout.setEnabled(false);//设置可触发
+                    swipeList.setEnableRefresh(false);//设置可触发
                     canRefresh = false;
                 } else if (i > -150 && !canRefresh) {
                     canRefresh = true;
-                    swipeRefreshLayout.setEnabled(true);
+                    swipeList.setEnableRefresh(true);
                 }
             }
         });
@@ -468,9 +460,9 @@ public class NumberSubFragment extends BaseFragment {
 
     }
 
-    private void getData() {
-        getNumberGoodsListPresenter(this, page);
-    }
+//    private void getData() {
+//        getNumberGoodsListPresenter(this, page);
+//    }
 
 
     /**
@@ -582,7 +574,7 @@ public class NumberSubFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     xablayout.getTabAt(0).select();
-                    scrollToTop();
+                     scrollToTop();
                 }
             });
         }
@@ -720,7 +712,7 @@ public class NumberSubFragment extends BaseFragment {
                         }
                     }
                 });
-        getData();
+
     }
 
     //获取用户详情
@@ -734,16 +726,7 @@ public class NumberSubFragment extends BaseFragment {
 
 
     public void showSuccessful(NumberGoodsList datas) {
-        List<NumberGoods> list = datas.getList();
-        if (list == null || (list != null && list.size() == 0)) {
-            return;
-        }
-        if (page == 1) {
-            mAdapter = new SubNumberAdapter(getActivity(),1);
-            mReUseGridView.setAdapter(mAdapter);
-        } else {
-            mAdapter.setData(list);
-        }
+
 
     }
 
@@ -783,43 +766,6 @@ public class NumberSubFragment extends BaseFragment {
     }
 
 
-    /**
-     * 商品列表
-     *
-     * @param fragment
-     * @param page
-     */
-    public void getNumberGoodsListPresenter(RxFragment fragment, int page) {
-        getNumberGoodsList(fragment, page)
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-
-                        showFinally();
-
-                    }
-                })
-                .subscribe(new DataObserver<NumberGoodsList>() {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-//                        super.onError(errorMsg, errCode);
-                        showError(errCode, errorMsg);
-                    }
-
-                    @Override
-                    protected void onDataListEmpty() {
-                        //                if (mReUseListView.getSwipeList() != null) {
-                        //                    mReUseListView.getSwipeList().setRefreshing(false);
-                        //                }
-
-                    }
-
-                    @Override
-                    protected void onSuccess(NumberGoodsList data) {
-                        showSuccessful(data);
-                    }
-                });
-    }
 
     /**
      * 升级
@@ -958,55 +904,4 @@ public class NumberSubFragment extends BaseFragment {
 
 
 
- /*   class SubNumberAdapter extends RecyclerView<NumberGoods, SimpleViewHolder> {
-
-        private Activity mContext;
-
-        public SubNumberAdapter(Activity context) {
-            super(context);
-            mContext = context;
-        }
-
-        @Override
-        public void onBindViewHolder(SimpleViewHolder holder, int position) {
-           final NumberGoods goods = getItem(position);
-            RoundedImageView pic = holder.viewFinder().view(R.id.number_goods_pic);
-            TextView desc = holder.viewFinder().view(R.id.number_goods_desc);
-            TextView tvPrice = holder.viewFinder().view(R.id.number_goods_price);
-            TextView morebitCorn = holder.viewFinder().view(R.id.txt_morebit_corn);
-
-
-
-            String img = goods.getPicUrl();
-            if (!TextUtils.isEmpty(img)) {
-                LoadImgUtils.loadingCornerTop(mContext, pic, img,4);
-            }
-            desc.setText(goods.getName());
-            String price = goods.getRetailPrice();
-
-
-
-            if (TextUtils.isEmpty(price)){
-                tvPrice.setText("0");
-            }else{
-                tvPrice.setText(MathUtils.getnum(price));
-            }
-            String moreCoin = MathUtils.getMorebitCorn(price);
-            morebitCorn.setText(mContext.getResources().getString(R.string.give_growth_value,moreCoin));
-            holder.itemView.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    NumberGoodsDetailsActivity.start(mContext,String.valueOf(goods.getId()));
-                }
-            });
-
-        }
-
-        @Override
-        protected View onCreateView(LayoutInflater layoutInflater, ViewGroup parent, int viewType) {
-            return layoutInflater.inflate(R.layout.item_number_goods, parent, false);
-        }
-
-    }*/
 }

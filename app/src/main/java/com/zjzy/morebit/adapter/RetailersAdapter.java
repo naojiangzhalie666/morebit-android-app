@@ -283,6 +283,7 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
                                 goodInfo2.setItemSourceId(info.getItemId());
                                 goodInfo2.setGoodsId(Long.valueOf(info.getItemId()));
                                 GoodsDetailForJdActivity.start(context, goodInfo2);
+                                dialog.dismiss();
                                 break;
                             case 4://jd
                                 ShopGoodInfo goodInfo = new ShopGoodInfo();
@@ -290,6 +291,7 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
                                 goodInfo.setItemSourceId(info.getItemId());
                                 goodInfo.setGoodsId(Long.valueOf(info.getItemId()));
                                 GoodsDetailForPddActivity.start(context, goodInfo);
+                                dialog.dismiss();
                                 break;
                             case 5://考拉
                                 GoodsDetailForKoalaActivity.start(context, info.getItemId());
@@ -300,7 +302,7 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 
                         }
 
-                        dialog.dismiss();
+
                     }
                 });
     }
