@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
@@ -63,7 +69,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     private static final int REQUEST_COUNT = 10;
 
     @BindView(R.id.mListView)
-    ReUseListView mReUseListView;
+    RecyclerView mReUseListView;
     @BindView(R.id.dateNullView)
     LinearLayout mDateNullView;
 //    @BindView(R.id.dateNullView_tips_tv)
@@ -73,6 +79,7 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     private ConsComGoodsDetailAdapter consComGoodsDetailAdapter;
     List<ConsComGoodsInfo> mListArray = new ArrayList<>();
     private int mTeamType;
+    private SmartRefreshLayout refreshLayout;
 
     public static OrderListFragment newInstance(int order_type, int team_type) {
         Bundle args = new Bundle();
@@ -106,21 +113,24 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
 
     @Override
     protected void initView(View view) {
+        refreshLayout=view.findViewById(R.id.refreshLayout);
+        LinearLayoutManager manager=new LinearLayoutManager(getActivity());
+        mReUseListView.setLayoutManager(manager);
         consComGoodsDetailAdapter = new ConsComGoodsDetailAdapter(getActivity(), mListArray);
-        mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshData();
             }
         });
-        mReUseListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
             @Override
-            public void onLoadMore() {
-                if (!mReUseListView.getSwipeList().isRefreshing()) {
-                    getData();
-                }
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getData();
             }
         });
+
         mReUseListView.setAdapter(consComGoodsDetailAdapter);
 
 //        mDateNullViewRecommend.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
@@ -216,8 +226,8 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
     }
     public void refreshData() {
         page = 1;
-        mReUseListView.getListView().setNoMore(false);
-        mReUseListView.getSwipeList().setRefreshing(true);
+        refreshLayout.finishLoadMore();
+        refreshLayout.finishRefresh();
         getData();
     }
 
@@ -257,19 +267,17 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
         if (page == 1) {
             mListArray.clear();
             mListArray.addAll(datas);
+            consComGoodsDetailAdapter.setData(datas);
             mDateNullView.setVisibility(View.GONE);
             mReUseListView.setVisibility(View.VISIBLE);
         } else {
-            if (datas.size() == 0) {
-                mReUseListView.getListView().setNoMore(true);
-            } else {
-                mListArray.addAll(datas);
-            }
-
+            mListArray.addAll(datas);
+            consComGoodsDetailAdapter.addData(datas);
+            refreshLayout.finishLoadMore();
         }
         page++;
-        consComGoodsDetailAdapter.setData(mListArray);
-        mReUseListView.notifyDataSetChanged();
+
+//        mReUseListView.notifyDataSetChanged();
     }
 
     @Override
@@ -292,13 +300,13 @@ public class OrderListFragment extends MvpFragment<OrderListPresenter> implement
             mDateNullView.setVisibility(View.GONE);
             mReUseListView.setVisibility(View.VISIBLE);
         }
-        mReUseListView.getListView().setNoMore(true);
+        refreshLayout.finishLoadMore();
     }
 
     @Override
     public void onFinally() {
-        mReUseListView.getSwipeList().setRefreshing(false);
-        mReUseListView.getListView().refreshComplete(REQUEST_COUNT);
+        refreshLayout.finishRefresh();
+//        mReUseListView.getListView().refreshComplete(REQUEST_COUNT);
 
     }
 

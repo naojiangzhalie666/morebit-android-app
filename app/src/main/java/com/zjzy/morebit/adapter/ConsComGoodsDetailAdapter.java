@@ -59,9 +59,15 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
         mDatas.clear();
         if (datas != null && datas.size() > 0) {
             mDatas.addAll(datas);
+            notifyDataSetChanged();
         }
     }
-
+    public void addData(List<ConsComGoodsInfo> datas) {
+        if (datas != null && datas.size() > 0) {
+            mDatas.addAll(datas);
+            notifyItemChanged(0,datas.size());
+        }
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -131,7 +137,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                     ViewShowUtils.showShortToast(mContext, mContext.getString(R.string.coayTextSucceed));
                 }
             });
-
+            viewHolder.tv_num.setText("送"+goodsPrice+"成长值");
 
             if ("4".equals(info.getStatus())) {//已关闭
                 viewHolder.tv_order_status.setText("已关闭");
@@ -152,7 +158,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 });
                 viewHolder.receiverGoodsTv.setVisibility(View.GONE);
                 viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
-                viewHolder.tv_num.setVisibility(View.GONE);
+
                 viewHolder.tv_date.setVisibility(View.GONE);
 
             } else if ("3".equals(info.getStatus())) {//已结算
@@ -184,8 +190,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                 viewHolder.receiverGoodsTv.setVisibility(View.GONE);
                 viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
 
-                viewHolder.tv_num.setVisibility(View.VISIBLE);
-                viewHolder.tv_num.setText("送"+goodsPrice+"成长值");
+
+
                 if(!TextUtils.isEmpty(info.getSettlementTime())){
                     viewHolder.tv_date.setVisibility(View.VISIBLE);
                     viewHolder.tv_date.setText("结算日期 :  "+info.getSettlementTime());
@@ -209,7 +215,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                         }
                     }
                 });
-                viewHolder.tv_num.setVisibility(View.GONE);
+
                 viewHolder.tv_date.setVisibility(View.GONE);
 
             } else if ("2".equals(info.getStatus())) {//待支付
@@ -226,7 +232,7 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
                         onSelfOrderClickListener.onPay(info.getOrderSn(), position);
                     }
                 });
-                viewHolder.tv_num.setVisibility(View.GONE);
+
                 viewHolder.tv_date.setVisibility(View.GONE);
             }else if ("1".equals(info.getStatus())){
                 viewHolder.tv_order_status.setText("待发货");
@@ -241,6 +247,8 @@ public class ConsComGoodsDetailAdapter extends RecyclerView.Adapter {
             viewHolder.go_goods_detail_tv.setVisibility(View.GONE);
             viewHolder.tv_num.setVisibility(View.GONE);
             viewHolder.go_goods_pay_tv.setVisibility(View.GONE);
+        }else{
+            viewHolder.tv_num.setVisibility(View.VISIBLE);
         }
         viewHolder.iten_rl.setOnClickListener(new View.OnClickListener() {
             @Override

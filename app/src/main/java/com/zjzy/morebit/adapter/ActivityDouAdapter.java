@@ -64,26 +64,9 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
 
         final List<ShopGoodInfo> list=new ArrayList<>();
 
-        for (int i=0;i<dhList.size();i++){
-           ShopGoodInfo dhBean = new ShopGoodInfo();
-            dhBean.setItemTitle(dhList.get(i).getItemTitle());
-            dhBean.setItemSourceId(dhList.get(i).getItemId()+"");
-            dhBean.setGoodsId(Long.valueOf(dhList.get(i).getItemId()));
-            dhBean.setItemPic(dhList.get(i).getItemPic());
-            dhBean.setCouponMoney(dhList.get(i).getCouponMoney()+"");
-            dhBean.setGoodsId(Long.valueOf(gyList.get(i).getItemid()));
-            dhBean.setPrice(dhList.get(i).getItemPrice());
-            dhBean.setItemVideo(dhList.get(i).getItemVideo());
-            dhBean.setCouponUrl(dhList.get(i).getCouponUrl());
-            dhBean.setCouponMoney(dhList.get(i).getCouponMoney());
-            dhBean.setTkMoney(dhList.get(i).getTkMoney());
-            dhBean.setItemSale(dhList.get(i).getItemSale());
-            dhBean.setItemVideoPic(dhList.get(i).getItemVideoPic());
-            list.add(dhBean);
-
-        }
         Log.e("kkkk",list.size()+"");
         if (position == 0) {
+            if (gyList==null||gyList.size()==0)return;
             final ShopGoodInfo gyBean = new ShopGoodInfo();
             gyBean.setItemSourceId(gyList.get(0).getItemid()+"");
             gyBean.setGoodsId(Long.valueOf(gyList.get(0).getItemid()));
@@ -130,6 +113,25 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 }
             });
         } else {
+            if (dhList.size()==0||dhList==null)return;
+            for (int i=0;i<dhList.size();i++){
+                ShopGoodInfo dhBean = new ShopGoodInfo();
+                dhBean.setItemTitle(dhList.get(i).getItemTitle());
+                dhBean.setItemSourceId(dhList.get(i).getItemId()+"");
+                dhBean.setGoodsId(Long.valueOf(dhList.get(i).getItemId()));
+                dhBean.setItemPic(dhList.get(i).getItemPic());
+                dhBean.setCouponMoney(dhList.get(i).getCouponMoney()+"");
+                dhBean.setGoodsId(Long.valueOf(gyList.get(i).getItemid()));
+                dhBean.setPrice(dhList.get(i).getItemPrice());
+                dhBean.setItemVideo(dhList.get(i).getItemVideo());
+                dhBean.setCouponUrl(dhList.get(i).getCouponUrl());
+                dhBean.setCouponMoney(dhList.get(i).getCouponMoney());
+                dhBean.setTkMoney(dhList.get(i).getTkMoney());
+                dhBean.setItemSale(dhList.get(i).getItemSale());
+                dhBean.setItemVideoPic(dhList.get(i).getItemVideoPic());
+                list.add(dhBean);
+
+            }
             holder.title1.setText("抖货爆款");
             holder.title1.setTextColor(Color.parseColor("#CC2498"));
             if (dhList.size() == 0) return;

@@ -1,6 +1,7 @@
 package com.zjzy.morebit.goodsvideo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
@@ -21,7 +24,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
+import com.zjzy.morebit.Activity.ShopCarActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.SimpleAdapter;
@@ -33,6 +38,7 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.number.NumberGoods;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
@@ -51,13 +57,17 @@ import io.reactivex.functions.Action;
 * 优选商城
 *
 * */
-public class ShopMallActivity extends BaseActivity {
+public class ShopMallActivity extends BaseActivity implements View.OnClickListener {
     SubNumberAdapter mAdapter;
     private RecyclerView rcy_shopmall;
     private List<NumberGoods> list;
     private int page=1;
     private LinearLayout btn_back;
     private SmartRefreshLayout refreshLayout;
+    private RelativeLayout shop_car;
+    private ImageView top_rcy;
+    private   LinearLayoutManager manager;
+    private TextView shopnum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,25 +85,35 @@ public class ShopMallActivity extends BaseActivity {
         getNumberGoodsListPresenter(this, page);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getShopCarNum();
+    }
     private void initView() {
         TextView txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setTextSize(18);
         txt_head_title.setText("优选商城");
+        shop_car= (RelativeLayout) findViewById(R.id.shop_car);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
+        top_rcy= (ImageView) findViewById(R.id.top_rcy);
+        top_rcy.setOnClickListener(this);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        shop_car.setOnClickListener(this);
         rcy_shopmall= (RecyclerView) findViewById(R.id.rcy_shopmall);
         refreshLayout= (SmartRefreshLayout) findViewById(R.id.refreshLayout);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+          manager = new LinearLayoutManager(this);
         rcy_shopmall.setLayoutManager(manager);
+        shopnum= (TextView) findViewById(R.id.shopnum);
 
 
 
-        mAdapter=new SubNumberAdapter(ShopMallActivity.this);
+        mAdapter=new SubNumberAdapter(ShopMallActivity.this,0);
         rcy_shopmall.setAdapter(mAdapter);
 
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -117,6 +137,48 @@ public class ShopMallActivity extends BaseActivity {
         });
 
     }
+
+    private void getShopCarNum() {
+
+        shopCarNum(this)
+                .subscribe(new DataObserver<ShopCarNumBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(ShopCarNumBean data) {
+                        int goodsNum = data.getGoodsNum();
+                        if (goodsNum!=0){
+                            shopnum.setVisibility(View.VISIBLE);
+                            if (goodsNum>99){
+                                shopnum.setText("99+");
+                            }else{
+                                shopnum.setText(goodsNum+"");
+                            }
+                        }else{
+                            shopnum.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+    }
+
+    private void onActivityFailure() {
+
+    }
+
     public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(BaseActivity activity, int page) {
         RequestNumberGoodsList bean = new RequestNumberGoodsList();
         bean.setPage(page);
@@ -182,4 +244,24 @@ public class ShopMallActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.shop_car://购物车
+                startActivity(new Intent(this, ShopCarActivity.class));
+                break;
+            case R.id.top_rcy://一键置顶
+                manager.scrollToPositionWithOffset(0, 0);
+                manager.setStackFromEnd(true);
+                break;
+        }
+    }
+
+    //购物车数量
+    public Observable<BaseResponse<ShopCarNumBean>> shopCarNum(RxAppCompatActivity fragment) {
+
+        return RxHttp.getInstance().getSysteService().getShopCarNum()
+                .compose(RxUtils.<BaseResponse<ShopCarNumBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<ShopCarNumBean>>bindToLifecycle());
+    }
 }

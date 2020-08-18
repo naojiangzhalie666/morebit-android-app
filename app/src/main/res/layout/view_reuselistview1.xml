@@ -21,6 +21,8 @@
                  android:layout_height="fill_parent"
                  android:overScrollMode="never"
                  />
+
+
          </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
          <include layout="@layout/item_go_top"/>
      </RelativeLayout>

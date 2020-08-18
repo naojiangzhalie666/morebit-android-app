@@ -7,8 +7,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -19,6 +22,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
@@ -68,7 +75,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
     private static final int PAGE_LIMT = 10; //一页的个数
     private int page = 0;
     @BindView(R.id.mListView)
-    ReUseGridView mRecyclerView;
+    RecyclerView mRecyclerView;
     @BindView(R.id.ll_remove)
     View ll_remove;
     @BindView(android.R.id.checkbox)
@@ -83,6 +90,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
     private boolean isNoMore;
     private TextView txt_head_title,txt_head_title2;
     private LinearLayout btn_back;
+    private SmartRefreshLayout refreshLayout;
 
 
     public static void start(Activity activity) {
@@ -108,20 +116,22 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
         txt_head_title.setText("我的足迹");
         txt_head_title2.setText("删除");
         txt_head_title2.setTextColor(ContextCompat.getColor(this, R.color.color_333333));
+        refreshLayout= (SmartRefreshLayout) findViewById(R.id.refreshLayout);
 
-        mRecyclerView.setOnReLoadListener(new ReUseGridView.OnReLoadListener() {
-
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onReload() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 getFirstData();
-
             }
+        });
 
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore() {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 getMoreData();
             }
         });
+
 
         initData();
     }
@@ -136,19 +146,23 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
             mAdapter.replace(listArray);
             setItemStatus(isAllSelect);
             mAdapter.notifyDataSetChanged();
+            refreshLayout.finishLoadMore();
 
         } else {
             MyLog.i("test", "setNoMore: ");
             isNoMore = true;
-            mRecyclerView.getListView().setNoMore(true);
+           refreshLayout.finishLoadMore();
 
         }
 
 
-        mRecyclerView.getListView().refreshComplete(PAGE_LIMT);
+        //mRecyclerView.getListView().refreshComplete(PAGE_LIMT);
     }
 
     private void initData() {
+
+        LinearLayoutManager manager=new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(manager);
         mAdapter = new GoodsHistoryAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         getFirstData();
@@ -157,7 +171,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 
     private void getFirstData() {
         page = 0;
-        mRecyclerView.getListView().setNoMore(false);
+     refreshLayout.finishLoadMore();
         List<GoodsBrowsHistory> list = DBManager.getInstance().queryGoodsHistoryListByTime(page);
         MyLog.i("test", "list: " + list);
         if (list != null && list.size() > 0) {
@@ -165,7 +179,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
             listArray.addAll(handlerData(list));
             page++;
             mAdapter.replace(listArray);
-            mRecyclerView.removeNetworkError();
+           // mRecyclerView.removeNetworkError();
             searchNullTips_ly.setVisibility(View.GONE);
             txt_head_title2.setVisibility(View.VISIBLE);
         } else {
@@ -176,7 +190,7 @@ public class GoodsBrowsingHistoryActivity extends BaseActivity {
 
         }
         setItemStatus(isAllSelect);
-        mRecyclerView.getSwipeList().setRefreshing(false);
+        refreshLayout.finishRefresh();
         mAdapter.notifyDataSetChanged();
     }
 

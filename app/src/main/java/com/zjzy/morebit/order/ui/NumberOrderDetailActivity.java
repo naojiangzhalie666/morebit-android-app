@@ -11,6 +11,8 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,10 +24,12 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.LocalData.CommonLocalData;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.BindZhiFuBaoFragment;
 import com.zjzy.morebit.info.ui.fragment.OrderListFragment;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.order.OrderDetailInfo;
 import com.zjzy.morebit.pojo.order.OrderSyncResult;
 import com.zjzy.morebit.pojo.order.ResponseOrderInfo;
@@ -41,6 +45,8 @@ import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ViewShowUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
@@ -343,6 +349,8 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         }
         mInfo = info;
             int status = info.getOrderStatus();
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
+                DateTimeUtils.getYmdhhmmss(info.getCreateTime())));
             switch (status){
                 case C.OrderStatus.WAIT_PAY_ORDER_STATUS:
                     initOrderStatusUnPay(info);
@@ -434,8 +442,11 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
         //支付宝交易号
         orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
+        Log.e("kkkk",info.getCreateTime()+"1");
         //创建时间
         orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
+                info.getCreateTime()));
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
                 info.getCreateTime()));
         //支付时间
         String payTime = info.getPayTime();
@@ -514,11 +525,12 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
 
         //支付宝交易号
         orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
-
+        Log.e("kkkk",info.getCreateTime()+"12");
         //创建时间
         orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
                 info.getCreateTime()));
-
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
+                info.getCreateTime()));
         //支付时间
         String payTime = info.getPayTime();
         if (TextUtils.isEmpty(payTime)){
@@ -592,10 +604,12 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         });
         //支付宝交易号
         orderAlipayId.setText(getResources().getString(R.string.number_alipay_order_number,info.getPayId()));
+        Log.e("kkkk",info.getCreateTime()+"13");
         //创建时间
         orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,
                 info.getCreateTime()));
-
+        orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
+                info.getCreateTime()));
         String payTime = info.getPayTime();
         if (TextUtils.isEmpty(payTime)){
             orderSuccessPayTime.setText("");
@@ -638,7 +652,7 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
         cardOrderSuccess.setVisibility(View.GONE);
         orderInfoOrderSnView.setText(getResources().getString(R.string.number_order_number,info.getOrderId()));
         orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,info.getCreateTime()));
-
+        orderSuccessCreateTime.setText(getResources().getString(R.string.number_order_create_time,info.getCreateTime()));
         llOrderCancelRePay.setVisibility(View.GONE);
         orderFinishRebuyLlView.setVisibility(View.VISIBLE);
         btnTotalPayPrice.setText(getResources().getString(R.string.number_order_total_price,
@@ -686,8 +700,10 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
                 ViewShowUtils.showShortToast(NumberOrderDetailActivity.this,getResources().getString(R.string.coayTextSucceed));
             }
         });
+
         orderCreateTimeView.setText(getResources().getString(R.string.number_order_create_time,
-                DateTimeUtils.getYmdhhmmss(info.getCreateTime())));
+                info.getCreateTime()));
+
 
         llOrderCancelRePay.setVisibility(View.VISIBLE);
         orderFinishRebuyLlView.setVisibility(View.GONE);
@@ -780,9 +796,20 @@ public class NumberOrderDetailActivity extends MvpActivity<OrderDetailPresenter>
             @Override
             public void onClick(View v) {
                 finish();
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.SHOPCAR_REFRSH));
             }
         });
 
+
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            EventBus.getDefault().post(new MessageEvent(EventBusAction.SHOPCAR_REFRSH));
+            return false;
+        }else {
+            return super.onKeyDown(keyCode, event);
+        }
 
     }
 

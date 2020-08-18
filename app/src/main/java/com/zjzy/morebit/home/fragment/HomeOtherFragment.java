@@ -40,6 +40,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
@@ -152,6 +153,8 @@ import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.UI.SpaceItemRightUtils;
 import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.view.AspectRatioView;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -242,6 +245,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private RelativeLayout msg_rl;
     private ConsecutiveScrollerLayout sroller;
     private boolean isTime=true;
+    private Space space1;
+    private   ZLoadingDialog dialog;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -315,6 +320,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //            }
 //        }
 //    };
+
+
+
+
+
     public static HomeOtherFragment newInstance(String param1, String param2) {
         HomeOtherFragment fragment = new HomeOtherFragment();
         Bundle args = new Bundle();
@@ -352,6 +362,18 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         if (parent != null) {
             parent.removeView(mView);
         }
+        dialog = new ZLoadingDialog(getActivity());
+        dialog.setLoadingBuilder(Z_TYPE.SINGLE_CIRCLE)//设置类型
+                .setLoadingColor(Color.parseColor("#F05557"))//颜色
+                .setHintText("Loading...")
+                .show();
+        Handler handler2 = new Handler();
+        handler2.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               dialog.dismiss();
+            }
+        },3000);
         return mView;
     }
 
@@ -377,7 +399,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //        IntentFilter intentFilter = new IntentFilter();
 //        intentFilter.addAction("0");//名字
 //        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
-
+        space1=mView.findViewById(R.id.space1);
         sroller=mView.findViewById(R.id.sroller);
         swipeList=mView.findViewById(R.id.swipeList);
         msg_rl = mView.findViewById(R.id.msg_rl);
@@ -411,8 +433,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         img_go = mView.findViewById(R.id.img_go);
         Glide.with(this).asGif().load(R.drawable.must_go).into(img_go);
-        Glide.with(this).asGif().load(R.drawable.new_hongbao).into(shareImageView);
-
         home_msg = mView.findViewById(R.id.home_msg);
         home_msg.setOnClickListener(this);
         msg_rl.setOnClickListener(this);
@@ -671,6 +691,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     @Override
     public void onResume() {
         super.onResume();
+        initNew();
         getLoginView();
         getNotice();
 
@@ -856,29 +877,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
         initLimit();
 
+        initNew();
 
-        getUserZeroInfo(this)
-                .subscribe(new DataObserver<UserZeroInfoBean>(false) {
-                    @Override
-                    protected void onDataListEmpty() {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onDataNull() {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onSuccess(UserZeroInfoBean data) {
-                        onGetUserZeroInfo(data);
-                    }
-                });
 
         getDoorGodCategory(this)
                 .subscribe(new DataObserver<DoorGodCategoryBean>(false) {
@@ -955,10 +955,65 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         getNotice();//消息
 
 
+        getBanner(this, 32)
+                .subscribe(new DataObserver<List<ImageInfo>>(false) {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onBannerFailure(errorMsg, 32);
 
+                    }
+
+
+                    @Override
+                    protected void onSuccess(List<ImageInfo> data) {
+                        if (null != data && data.size() > 0) {
+                            final ImageInfo adInfo = data.get(0);
+                            if (!TextUtils.isEmpty(adInfo.getPicture())) {
+                                shareImageView.setVisibility(View.VISIBLE);
+                                LoadImgUtils.setImg(getActivity(), shareImageView, adInfo.getPicture(), false);
+                                shareImageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        BannerInitiateUtils.gotoAction(getActivity(), adInfo);
+                                    }
+                                });
+
+                            } else {
+                                shareImageView.setVisibility(View.GONE);
+                            }
+                        }
+
+                    }
+                });
 
 
     }
+
+    private void initNew() {
+        getUserZeroInfo(this)
+                .subscribe(new DataObserver<UserZeroInfoBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(UserZeroInfoBean data) {
+                        onGetUserZeroInfo(data);
+                    }
+                });
+    }
+
 
     private void getNotice() {
 
@@ -1025,6 +1080,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         List<FloorBean2.ListDataBean> listData = data.getListData();
         ActivityFloorAdapter1 floorAdapter1 = new ActivityFloorAdapter1(getActivity(), listData, data.getExt());
         activity_rcy1.setAdapter(floorAdapter1);
+
     }
 
     private void onGetQueryDhAndGy(QueryDhAndGyBean data) {
@@ -1100,14 +1156,14 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         UserInfo userInfo1 = UserLocalData.getUser(getActivity());
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             new_goods.setVisibility(View.VISIBLE);
-            shareImageView.setVisibility(View.VISIBLE);
+            space1.setVisibility(View.VISIBLE);
         }else{
             if (data.isIsNewUser()) {
                 new_goods.setVisibility(View.VISIBLE);
-                shareImageView.setVisibility(View.VISIBLE);
+                space1.setVisibility(View.VISIBLE);
             } else {
                 new_goods.setVisibility(View.GONE);
-                shareImageView.setVisibility(View.GONE);
+                space1.setVisibility(View.GONE);
             }
 
             Log.e("gyui",data.getTime());
@@ -1121,15 +1177,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 }
             }
         });
-        shareImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (LoginUtil.checkIsLogin(getActivity())) {
-                    ShowWebActivity.start(getActivity(), data.getLinkUrl(), "");
-                }
-            }
-        });
-
     }
 
     private void initTime(long mss) {
@@ -1286,6 +1333,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             case C.UIShowType.HomeBanner:         //顶部
                 // BannerInitiateUtils.setBrandBanner(getActivity(), datas, mTitleBanner, mAsTitleBanner);
                 putBannerData((ArrayList) data, back);
+
 
                 break;
             case C.UIShowType.HomeIcon:         // 首页ICON配置
@@ -1547,7 +1595,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private void showShareImage() {
         float translationX = shareImageView.getTranslationX();
         ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 0);
-        animator.setDuration(0);
+        animator.setDuration(1000);
         if (!isAnimatorEnd) {
             animator.setStartDelay(1200);
         }
@@ -1557,7 +1605,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private void hideShareImage() {
         isAnimatorEnd = false;
         float translationX = shareImageView.getTranslationX();
-        ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 100);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 120);
         animator.setDuration(0);
         animator.addListener(new Animator.AnimatorListener() {
             @Override

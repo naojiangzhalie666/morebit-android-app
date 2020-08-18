@@ -237,6 +237,9 @@ public class C {
 
         //历史数据
         public static final String KEY_SAVE_SEARCH_HISTORY = "KEY_SAVE_SEARCH_HISTORY";
+        public static final String GOODS_ORDER_ZONG = "GOODS_ORDER_ZONG";
+        public static final String GOODS_ORDER_GOODS = "GOODS_ORDER_GOODS";
+        public static final String GOODS_ORDER_NUM = "GOODS_ORDER_NUM";
 
 
 

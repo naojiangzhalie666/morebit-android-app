@@ -8,7 +8,7 @@
     android:layout_marginTop="12dp"
     android:layout_marginRight="12dp"
     android:background="@color/white"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="8dp"
     app:cardElevation="0dp"
     app:cardUseCompatPadding="false">
 
@@ -26,12 +26,6 @@
             android:layout_marginTop="11dp"
           >
 
-            <ImageView
-                android:id="@+id/iv_icon"
-                android:layout_width="37dp"
-                android:layout_height="37dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/msg_earnings_icon" />
 
 
             <LinearLayout
@@ -43,13 +37,59 @@
                 android:layout_marginRight="2dp"
                 android:orientation="vertical"
                 >
-                <TextView
-                    android:id="@+id/tv_name"
+
+                <RelativeLayout
+
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_333333"
+                        android:textSize="14sp"
+                        tools:text="恭喜你有一笔新的收益" />
+
+
+                    <TextView
+                        android:id="@+id/tv_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="11:07:32"
+                        android:layout_alignParentRight="true"
+                        android:textColor="#ff999999"
+                        android:textSize="14sp"
+                        />
+
+                </RelativeLayout>
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_F0F1F5"
+                    android:layout_marginTop="7dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_order_money"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_333333"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_F05557"
                     android:textSize="14sp"
-                    tools:text="您在2020-06-13 19:38:10推广成功，预估普 通收益：0.65元，预计结算时间：收货后次月 24日结算" />
+                    tools:text=" fdasdasdas" />
+
+                <TextView
+                    android:id="@+id/earnings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_F05557"
+                    android:textSize="14sp"
+                    tools:text=" fdasdasdas"
+
+                    />
 
                 <TextView
                     android:id="@+id/tv_order_sn"
@@ -69,25 +109,7 @@
                     android:textSize="14sp"
                     tools:text=" fdasdasdas" />
 
-                <TextView
-                    android:id="@+id/tv_order_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/color_999999"
-                    android:textSize="14sp"
-                    tools:text=" fdasdasdas" />
 
-                <TextView
-                    android:id="@+id/earnings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/color_999999"
-                    android:textSize="14sp"
-                    tools:text=" fdasdasdas"
-
-                    />
             </LinearLayout>
 
 

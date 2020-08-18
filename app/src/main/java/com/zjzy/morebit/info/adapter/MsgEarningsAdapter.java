@@ -45,8 +45,7 @@ public class MsgEarningsAdapter extends SimpleAdapter<EarningsMsg, SimpleViewHol
         TextView tv_order_type = holder.viewFinder().view(R.id.tv_order_type);
         TextView tv_order_money = holder.viewFinder().view(R.id.tv_order_money);
         TextView earnings = holder.viewFinder().view(R.id.earnings);
-        ImageView iv_icon = holder.viewFinder().view(R.id.iv_icon);
-        LoadImgUtils.setImgCircle(mContext, iv_icon, item.getHeadImg(), R.drawable.head_icon);
+        TextView tv_data = holder.viewFinder().view(R.id.tv_data);
         if (TextUtils.isEmpty(item.getCommission()) || TextUtils.isEmpty(item.getOrderSource()) || TextUtils.isEmpty(item.getPayPrice())) {
             earnings.setVisibility(View.GONE);
             tv_order_type.setVisibility(View.GONE);
@@ -58,18 +57,24 @@ public class MsgEarningsAdapter extends SimpleAdapter<EarningsMsg, SimpleViewHol
             tv_order_type.setText(getString(R.string.order_type, item.getOrderSource()));
             String totalIncome = MathUtils.getTotleSubSidies(item.getCommission(), item.getSubsidy());
             if (type==3){
-                tv_order_money.setText("失效金额："+item.getPayPrice());
+                tv_order_money.setText("失效金额："+item.getPayPrice()+"元");
 
-                earnings.setText("失效佣金："+totalIncome);
+                earnings.setText("失效佣金："+totalIncome+"元");
             }else{
-                tv_order_money.setText(getString(R.string.order_money, item.getPayPrice()));
-
-                earnings.setText(getString(R.string.order_earnings, totalIncome));
+                if (type==2){
+                    tv_order_money.setText("付款金额："+item.getPayPrice()+"元");
+                    earnings.setVisibility(View.GONE);
+                }else{
+                    earnings.setVisibility(View.VISIBLE);
+                    tv_order_money.setText("付款金额："+item.getPayPrice()+"元");
+                    earnings.setText("赚："+totalIncome+"元");
+                }
             }
 
         }
         tv_order_sn.setText(getString(R.string.order_sn, item.getOrderId()));
-        tv_name.setText(item.getMessage());
+        tv_name.setText(item.getTitle());
+        tv_data.setText(item.getCreateTime());
     }
 
 

@@ -1,6 +1,7 @@
 package com.zjzy.morebit.fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +12,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.gyf.barlibrary.ImmersionBar;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
@@ -35,6 +39,7 @@ import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.zjzy.morebit.utils.StatusBarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +56,8 @@ public class CircleFragment extends BaseMainFragmeng {
     XTabLayout tab;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @BindView(R.id.status_bar)
-    View status_bar;
+//    @BindView(R.id.status_bar)
+//    View status_bar;
 
 
     List<BaseFragment> mFragments = new ArrayList<>();
@@ -60,6 +65,10 @@ public class CircleFragment extends BaseMainFragmeng {
     private View mView;
     private boolean isVisible;
     private boolean isLoadTitleData;
+
+
+
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -84,10 +93,16 @@ public class CircleFragment extends BaseMainFragmeng {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        StatusBarUtils.addTranslucentColorView(getActivity(), Color.WHITE, 0);
+        ImmersionBar.with(CircleFragment.this)
+                .navigationBarColorInt(Color.WHITE)
+                .navigationBarDarkIcon(true)
+                .keyboardEnable(true)
+                .statusBarDarkFont(true)
+                .statusBarColorInt(Color.TRANSPARENT)
+                .init();
         mView = inflater.inflate(R.layout.fragment_circle, container, false);
         ButterKnife.bind(this, mView);
-
-
         initView(mView);
         return mView;
     }
@@ -170,13 +185,30 @@ public class CircleFragment extends BaseMainFragmeng {
      * 初始化界面
      */
     private void initView(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //处理全屏显示
-            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
-            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
-            status_bar.setLayoutParams(viewParams);
-            status_bar.setBackgroundResource(R.color.white);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            //获取窗口区域
+//            Window window = getActivity().getWindow();
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//
+//                window.setStatusBarColor(Color.WHITE);
+//
+//                //设置显示为白色背景，黑色字体
+//                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//            }
+
+
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            //处理全屏显示
+//            ViewGroup.LayoutParams viewParams = status_bar.getLayoutParams();
+//            viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
+//            status_bar.setLayoutParams(viewParams);
+//
+//        }
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            getActivity().getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//        }
         //避免滑动切换界面卡顿
 //        viewPager .setOffscreenPageLimit(3);
 

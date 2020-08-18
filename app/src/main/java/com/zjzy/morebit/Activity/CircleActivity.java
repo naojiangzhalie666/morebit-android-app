@@ -1,7 +1,9 @@
 package com.zjzy.morebit.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,6 +11,9 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.gyf.barlibrary.ImmersionBar;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
@@ -31,12 +36,13 @@ public class CircleActivity extends BaseActivity implements View.OnClickListener
     private TextView txt_head_title;
     private LinearLayout btn_back;
     private  String oneLevelId,type,title,twoLevelId;
-    private ReUseListView mListView;
+    private RecyclerView mListView;
     private int page=1;
     private GoodsDialyAdapter goodsDialyAdapter;
     private LinearLayout dateNullView;
     private String circletype;
     private String threeLevelId;
+    private SmartRefreshLayout refreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,37 +70,29 @@ public class CircleActivity extends BaseActivity implements View.OnClickListener
         }
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);
-        mListView= (ReUseListView) findViewById(R.id.mListView);
+        mListView= (RecyclerView) findViewById(R.id.listview);
+        refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         dateNullView= (LinearLayout) findViewById(R.id.dateNullView);
           goodsDialyAdapter=new GoodsDialyAdapter(this, Integer.parseInt(circletype));
         LinearLayoutManager manager=new LinearLayoutManager(this);
         mListView.setLayoutManager(manager);
         mListView.setAdapter(goodsDialyAdapter);
-
-        mListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                mListView.getSwipeList().post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mListView.getSwipeList().setRefreshing(true);
-                    }
-                });
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
+                initData();
+                refreshLayout.finishRefresh();
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
                 initData();
             }
         });
-        mListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (!mListView.getSwipeList().isRefreshing()) {
-                    page++;
-                    initData();
-                }
 
-            }
-        });
 
     }
 
@@ -121,7 +119,7 @@ public class CircleActivity extends BaseActivity implements View.OnClickListener
                             mListView.setVisibility(View.GONE);
                             dateNullView.setVisibility(View.VISIBLE);
                         }
-                        mListView.getListView().setNoMore(true);
+                       refreshLayout.finishLoadMore();
                     }
 
                     @Override
@@ -140,13 +138,13 @@ public class CircleActivity extends BaseActivity implements View.OnClickListener
                 goodsDialyAdapter.setData(data);
             }else{
                 goodsDialyAdapter.addData(data);
-                mListView.getListView().setNoMore(true);
+               refreshLayout.finishLoadMore();
             }
 
         }else{
             dateNullView.setVisibility(View.VISIBLE);
             mListView.setVisibility(View.GONE);
-            mListView.getListView().setNoMore(true);
+            refreshLayout.finishLoadMore();
         }
 
 

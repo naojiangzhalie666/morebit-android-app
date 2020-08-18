@@ -5,17 +5,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import com.zjzy.morebit.Module.common.View.LoadingView;
+
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.utils.LoadingView;
 
 /**
  * Created by Administrator on 2017/10/23.
  */
 
-public class LoadingDialog extends Dialog implements View.OnClickListener{
+public class LoadingDialog extends Dialog {
 
     private Context mContext;
-    private LoadingView loadView;
+    private LoadingView logingView;
     private String text;
 
     public LoadingDialog(Context context) {
@@ -29,30 +30,26 @@ public class LoadingDialog extends Dialog implements View.OnClickListener{
         this.text = text;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_loading);
+        logingView=findViewById(R.id.logingView);
         setCanceledOnTouchOutside(false);
-        initView();
+
     }
 
 
-    private void initView(){
-        loadView = (LoadingView)findViewById(R.id.loadView);
-        if(text!=null && !"".equals(text)){
-            loadView.setLoadingText(text);
-        }
+    @Override
+    public void show() {
+        super.show();
+        logingView.start();
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.ok:
-                break;
-            case R.id.cancel:
-                break;
-        }
+    public void dismiss() {
+        super.dismiss();
+        logingView.stop();
     }
-
 }

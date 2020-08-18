@@ -137,6 +137,13 @@ public class ShoppingListAdapter3 extends RecyclerView.Adapter {
 
 
         if (C.GoodsListType.ForeShow_1 == mType) {//即将开抢
+//            if (Integer.parseInt(info.getCountDownStr())>24){
+//              int str=  Integer.parseInt(info.getCountDownStr());
+//                viewHolder.tv_qiang2.setText(str+"点\n开抢");
+//            }else{
+//                viewHolder.tv_qiang2.setText(info.getCountDownStr()+"\n开抢");
+//            }
+
             viewHolder.tv_qiang2.setText(info.getCountDownStr()+"\n开抢");
             viewHolder.tv_qiang2.setVisibility(View.VISIBLE);
         } else {

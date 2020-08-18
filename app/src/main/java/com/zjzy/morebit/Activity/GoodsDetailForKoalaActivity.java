@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
@@ -34,6 +36,7 @@ import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
+import com.zjzy.morebit.Module.common.Dialog.LoadingDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
@@ -82,6 +85,9 @@ import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.main.SysNotificationView;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
+import com.zyao89.view.zloading.clock.CircleBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -160,6 +166,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
     private TextView iv_taobao;
     private TextView tv_zhaun;
     private LinearLayout ll_shen,tv_fan;
+    private   ZLoadingDialog dialog;
 
 
     private String[] mTitles;
@@ -169,6 +176,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
     //京东领劵领劵
     private String mPromotionJdUrl;
+
 
     public static void start(Context context, String id) {
         Intent intent = new Intent((Activity) context, GoodsDetailForKoalaActivity.class);
@@ -247,7 +255,11 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.Grade");//名字
         this.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
-
+        dialog = new ZLoadingDialog(this);
+        dialog.setLoadingBuilder(Z_TYPE.SINGLE_CIRCLE)//设置类型
+                .setLoadingColor(Color.parseColor("#F05557"))//颜色
+                .setHintText("Loading...")
+                .show();
 
     }
 
@@ -695,6 +707,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
         float size = paint.measureText(iv_taobao.getText().toString());
         StringsUtils.retractTitles(title,data.getGoodsTitle(), (int) (size) + 35);
         getViewLocationOnScreen();
+        dialog.dismiss();
     }
 
     @Override

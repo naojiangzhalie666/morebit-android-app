@@ -81,7 +81,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activity.CircleSearchActivity"></activity>
+        <activity android:name=".Activity.ShopCarActivity"></activity>
+        <activity android:name=".Activity.CircleSearchActivity" />
         <activity android:name=".Activity.CircleActivity" />
         <activity android:name=".Activity.LifeServiceActivity" />
         <activity android:name=".Activity.RetailersActivity" />
@@ -292,6 +293,10 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".order.ui.ConfirmOrderActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".order.ConfirmOrderActivity2"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity

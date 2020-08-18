@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,6 +76,8 @@ import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.view.main.SysNotificationView;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -154,6 +157,7 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
 
 
     private String[] mTitles;
+    private ZLoadingDialog dialog;
     ArrayList mTabArrayList = new ArrayList<BaseCustomTabEntity>();
 
     private GoodsDetailForPdd mGoodsDetailForPdd;
@@ -213,6 +217,11 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialog = new ZLoadingDialog(this);
+        dialog.setLoadingBuilder(Z_TYPE.SINGLE_CIRCLE)//设置类型
+                .setLoadingColor(Color.parseColor("#F05557"))//颜色
+                .setHintText("Loading...")
+                .show();
 //        mTitles = new String[]{getString(R.string.goods_detail_baby), getString(R.string.goods_detail_det)};
 //        int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.margin_small);
 //        mConsumerPadding = getResources().getDimensionPixelSize(R.dimen.goods_consumer_itme_padding);
@@ -234,6 +243,8 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.Grade");//名字
         this.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+
+
 
 
     }
@@ -605,6 +616,7 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
         }
        StringsUtils.retractTitles(title,data.getGoodsName(),iv_taobao.getWidth()+10);
         getViewLocationOnScreen();
+        dialog.dismiss();
     }
 
     private void setSysNotificationView() {

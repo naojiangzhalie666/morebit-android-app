@@ -27,7 +27,8 @@
             android:paddingBottom="10dp">
 
             <ImageView
-                style="@style/TopSizeBack"
+                android:background="@drawable/btn_title_return_icon"
+                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true" />
         </LinearLayout>

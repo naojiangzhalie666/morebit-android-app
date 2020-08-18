@@ -44,6 +44,16 @@ public class NumberGoodsInfo implements Serializable {
     private int inventory;
     private String  buyPicUrl;//商品主图
 
+    private String productId;//商品货品id
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
     public String getBuyPicUrl() {
         return buyPicUrl;
     }

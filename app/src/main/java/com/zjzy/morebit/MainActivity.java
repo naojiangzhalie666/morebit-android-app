@@ -159,9 +159,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ImmersionBar.with(this)
-                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .init();
+//        ImmersionBar.with(this)
+//                .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+//                .init();
         EventBus.getDefault().register(this);
 
         initView();
@@ -846,6 +846,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_homepage: //首页
+                ImmersionBar.with(this)
+                .statusBarDarkFont(false, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .init();
                 mViewPager.setCurrentItem(0, false);
                 if (homePageFragment != null) {
                     if (mViewPager.getCurrentItem() == curPosition) {
@@ -859,6 +862,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
 
                 break;
             case R.id.rl_shop: //分类
+                ImmersionBar.with(this)
+                        .statusBarDarkFont(false, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                        .init();
                 img_vip.setVisibility(View.GONE);
                 iv_number.setVisibility(View.VISIBLE);
                 mViewPager.setCurrentItem(1, false);
@@ -867,6 +873,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 setSysNotificationView();
                 break;
             case R.id.rl_number:
+                ImmersionBar.with(this)
+                        .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                        .init();
                 if (!LoginUtil.checkIsLogin(MainActivity.this)) {
                     return;
                 }
@@ -880,6 +889,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 setSysNotificationView();
                 break;
             case R.id.rl_community: //发圈
+                ImmersionBar.with(this)
+                        .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                        .init();
                 img_vip.setVisibility(View.GONE);
                 iv_number.setVisibility(View.VISIBLE);
 
@@ -888,6 +900,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements View.OnC
                 setSysNotificationView();
                 break;
             case R.id.rl_mine: //我的
+                ImmersionBar.with(this)
+                        .statusBarDarkFont(false, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                        .init();
                 img_vip.setVisibility(View.GONE);
                 iv_number.setVisibility(View.VISIBLE);
                 mViewPager.setCurrentItem(4, false);

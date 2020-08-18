@@ -2,6 +2,7 @@ package com.zjzy.morebit.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -19,19 +20,24 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.goods.shopping.contract.NumberGoodsDetailContract;
 import com.zjzy.morebit.goods.shopping.presenter.NumberGoodsDetailPresenter;
 import com.zjzy.morebit.goods.shopping.ui.fragment.NumberGoodsDetailImgFragment;
@@ -42,12 +48,15 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.order.ui.ConfirmOrderActivity;
+import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.number.GoodsOrderInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsInfo;
 import com.zjzy.morebit.pojo.number.NumberGoodsList;
+import com.zjzy.morebit.pojo.request.RequestAddShopcarBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestNumberGoodsList;
 import com.zjzy.morebit.utils.AppUtil;
@@ -56,8 +65,10 @@ import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
+import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
+import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.zjzy.morebit.view.goods.GoodSizePopupwindow;
 
 import org.greenrobot.eventbus.EventBus;
@@ -88,18 +99,14 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     @BindView(R.id.nsv_view)
     NestedScrollView nsv_view;
-    @BindView(R.id.srl_view)
-    SwipeRefreshLayout srl_view;
-    @BindView(R.id.view_bar)
-    View view_bar;
+
+
 
     @BindView(R.id.fl_img)
     FrameLayout fl_img;
-    @BindView(R.id.tablayout)
-    CommonTabLayout tablayout;
 
-    @BindView(R.id.re_tab)
-    RelativeLayout re_tab;
+
+
     @BindView(R.id.search_statusbar_rl)
     LinearLayout search_statusbar_rl;
 
@@ -119,8 +126,11 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     @BindView(R.id.number_goods_title)
     TextView numberGoodsTitle;
 
-    @BindView(R.id.tv_give_growth_value)
-    TextView tvGiveGrowthValue;
+    @BindView(R.id.iv_taobao)
+    TextView iv_taobao;
+
+    private boolean isAdd;
+
 
     /**
      * 会员商品Id
@@ -135,7 +145,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     private TextView txtGoodsRule;
 
-    private TextView txtGoodsName;
+    private TextView txtGoodsName,shopnum;
     private TextView txtGoodsAction;
 
     private NumberGoodsInfo mGoodsInfo;
@@ -155,6 +165,8 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     private int mListHeight;
     private Handler mHandler;
     private int mTitleHeight;
+    private TextView txt_head_title;
+    private LinearLayout btn_back;
 
 
     private String[] mTitles;
@@ -174,6 +186,11 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getShopCarNum();
+    }
 
     @Override
     protected int getViewLayout() {
@@ -225,16 +242,13 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGoodsId = getIntent().getStringExtra("id");
-        mTitles = new String[]{getString(R.string.goods_detail_baby),  getString(R.string.goods_detail_det)};
-        int dimensionPixelSize = getResources().getDimensionPixelSize(R.dimen.margin_small);
-        mConsumerPadding = getResources().getDimensionPixelSize(R.dimen.goods_consumer_itme_padding);
-        mTitleHeight = getResources().getDimensionPixelSize(R.dimen.goods_detail_title_height);
-        mWidth = AppUtil.getTaobaoIconWidth() + dimensionPixelSize;
-        duration = getWindowManager().getDefaultDisplay().getWidth() - mTitleHeight + 0.0F;
+
         EventBus.getDefault().register(this);
         ImmersionBar.with(this)
                 .statusBarDarkFont(true, 0.2f) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .titleBar(view_bar)    //解决状态栏和布局重叠问题，任选其一
+              //解决状态栏和布局重叠问题，任选其一
+                .fitsSystemWindows(false)
+                .statusBarColor(R.color.white)
                 .init();
         initBundle();
         initView();
@@ -259,13 +273,17 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
     }
 
     private void initView() {
+        btn_back= (LinearLayout) findViewById(R.id.btn_back);
+        txt_head_title= (TextView) findViewById(R.id.txt_head_title);
+        txt_head_title.setText("商品详情");
+        shopnum= (TextView) findViewById(R.id.shopnum);
 
-        initTab();
 
-        srl_view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                initData(true);
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -275,8 +293,7 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
                 scrollViewToLocation(0);
             }
         });
-        re_tab.setAlpha(0);
-        view_bar.setAlpha(0);
+
         nsv_view.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
 
             @Override
@@ -292,91 +309,15 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
             private void scrollTitleChange(int scrollY) {
-                float alpha = (float) (scrollY / duration);
-                if (duration > scrollY) {
-                    if (scrollY < 5) {
-                        getViewLocationOnScreen();
-                        re_tab.setVisibility(View.GONE);
-                        re_tab.setAlpha(0);
-                        view_bar.setAlpha(0);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(NumberGoodsDetailsActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(NumberGoodsDetailsActivity.this, R.color.white));
-                    } else {
-                        if (re_tab.getVisibility() == View.GONE) {
-                            re_tab.setVisibility(View.VISIBLE);
-                        }
-                        re_tab.setAlpha(alpha);
-                        view_bar.setAlpha(alpha);
-                        isTitleBarSetBg = false;
-                    }
-                } else {
 
-                    if (re_tab.getVisibility() == View.GONE) {
-                        re_tab.setVisibility(View.VISIBLE);
-                    }
-                    if (!isTitleBarSetBg) {
-                        re_tab.setAlpha(1);
-                        view_bar.setAlpha(1);
-                        re_tab.setBackgroundColor(ContextCompat.getColor(NumberGoodsDetailsActivity.this, R.color.white));
-                        view_bar.setBackgroundColor(ContextCompat.getColor(NumberGoodsDetailsActivity.this, R.color.white));
-                    }
-                }
             }
 
             private void scrollTabChange(int scrollY) {
 
-
-                MyLog.d("setOnScrollChangeListener  ", "mListHeight " + mListHeight);
-                if (tablayout == null || mListHeight == 0 ||  isContinueScrollTabChange) {
-                    return;
-                }
-
-                int currentTab = tablayout.getCurrentTab();
-                if (scrollY <= mListHeight) {
-                    if (currentTab != 0)
-                        tablayout.setCurrentTab(0);
-                } else if (scrollY > mListHeight ) {
-                    if (currentTab != 1)
-                        tablayout.setCurrentTab(1);
-                }
             }
         });
     }
 
-    private void initTab() {
-        for (int i = 0; i < mTitles.length; i++) {
-            mTabArrayList.add(new BaseCustomTabEntity(mTitles[i], 0, 0));
-        }
-        tablayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                isContinueScrollTabChange = true;
-                switch (position) {
-                    case 0:
-                        scrollViewToLocation(0);
-                        break;
-                    case 1:
-                        scrollViewToLocation(mListHeight);
-                        break;
-
-                    default:
-                        break;
-                }
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        isContinueScrollTabChange = false;
-                    }
-                }, 500);
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
-        tablayout.setTabData(mTabArrayList);
-    }
 
     private void scrollViewToLocation(int location) {
         nsv_view.fling(location);
@@ -423,17 +364,25 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
 
-    @OnClick({R.id.btn_back,  R.id.bottomLy,   R.id.btn_tltle_back,R.id.btn_goods_buy_action})
+    @OnClick({R.id.bottomLy,R.id.btn_goods_buy_action,R.id.ll_home,R.id.goods_car,R.id.shop_car})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottomLy:
-                break;
-            case R.id.btn_back:
-            case R.id.btn_tltle_back:
-                finish();
+                isAdd=false;
+                showPopupwindow();
                 break;
             case R.id.btn_goods_buy_action:
+                break;
+            case R.id.ll_home://跳转首页
+                ActivityLifeHelper.getInstance().finishActivity(MainActivity.class);
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.ACTION_HOME));
+                break;
+            case R.id.goods_car://添加购物车
+                isAdd=true;
                 showPopupwindow();
+                break;
+            case R.id.shop_car://进入购物车
+                startActivity(new Intent(this,ShopCarActivity.class));
                 break;
             default:
                 break;
@@ -492,16 +441,23 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         double price = mGoodsInfo.getRetailPrice();
         String priceStr = String.valueOf(price);
         goodsPrice.setText(MathUtils.getnum(priceStr));
-        numberGoodsTitle.setText(goodsInfo.getName());
-        srl_view.setRefreshing(false);
-        tvGiveGrowthValue.setText(getResources().getString(R.string.give_growth_value,MathUtils.getnum(priceStr)));
+
+        if (!StringsUtils.isEmpty(goodsInfo.getName())) {
+            Paint paint = new Paint();
+            paint.setTextSize(iv_taobao.getTextSize());
+            float size = paint.measureText(iv_taobao.getText().toString());
+            StringsUtils.retractTitles(numberGoodsTitle, goodsInfo.getName(), (int) (size) + 35);
+        }
+      //  numberGoodsTitle.setText(goodsInfo.getName());
+
+      //  tvGiveGrowthValue.setText(getResources().getString(R.string.give_growth_value,MathUtils.getnum(priceStr)));
         btnBuy.setText(getResources().getString(R.string.number_goods_buy_txt,MathUtils.getnum(priceStr)));
     }
 
     @Override
     public void onError() {
         MyLog.e(TAG,"获取商品详情失败");
-        srl_view.setRefreshing(false);
+
     }
 
     @Override
@@ -572,12 +528,22 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
         txtGoodsAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createGoodsOrderObj();
-
+                if (isAdd){
+                    getShopGoods(mGoodsId,mGoodsInfo.getProductId(),addCartNumTv.getText().toString());
+                }else{
+                    createGoodsOrderObj();
+                    ConfirmOrderActivity.start(NumberGoodsDetailsActivity.this,mGoodsOrderInfo);
+                }
                 sizePopWin.dismiss();
-                ConfirmOrderActivity.start(NumberGoodsDetailsActivity.this,mGoodsOrderInfo);
 
 
+            }
+        });
+     ImageView   pop_diss=contentView.findViewById(R.id.pop_diss);
+        pop_diss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sizePopWin.dismiss();
             }
         });
 
@@ -602,6 +568,43 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
 
 
+    }
+    private void getShopCarNum() {
+
+        shopCarNum(this)
+                .subscribe(new DataObserver<ShopCarNumBean>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onSuccess(ShopCarNumBean data) {
+                        int goodsNum = data.getGoodsNum();
+                        if (goodsNum!=0){
+                            shopnum.setVisibility(View.VISIBLE);
+                            if (goodsNum>99){
+                                shopnum.setText("99+");
+                            }else{
+                                shopnum.setText(goodsNum+"");
+                            }
+
+                        }else{
+                            shopnum.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
     }
 
     private void createGoodsOrderObj(){
@@ -642,44 +645,59 @@ public class NumberGoodsDetailsActivity extends MvpActivity<NumberGoodsDetailPre
 
     }
 
-//    public void onGradeSuccess(UpdateInfoBean info) {
-//        if (info != null){
-//            UserInfo userInfo = UserLocalData.getUser();
-//            userInfo.setUserType(String.valueOf(info.getUserType()));
-//            userInfo.setMoreCoin(info.getMoreCoin());
-//            UserLocalData.setUser(NumberGoodsDetailsActivity.this,userInfo);
-//            if (C.UserType.vipMember.equals(info.getUserType())){
-//                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"Vip升级成功");
-//            }else if (C.UserType.operator.equals(info.getUserType())){
-//                ViewShowUtils.showShortToast(NumberGoodsDetailsActivity.this,"团队长升级成功");
-//            }
-//
-//        }else{
-//            MyLog.d("test","用户信息为空");
-//        }
-//
-//    }
+    private void getShopGoods( String  goodsId,String productId,String number) {
+        addShopCar(this, goodsId,productId,number)
+                .subscribe(new DataObserver<String>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+                        onActivityFailure();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure(errorMsg);
+                    }
+
+                    @Override
+                    protected void onSuccess(String data) {
+                        ToastUtils.showShort("加入成功");
+                        getShopCarNum();
+                    }
+                });
+    }
+
+    private void onActivityFailure(String errorMsg) {
+        ToastUtils.showShort(""+errorMsg);
+    }
+
+    private void onActivityFailure() {
+
+    }
 
 
-//    public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(BaseActivity fragment, int page) {
-//        RequestNumberGoodsList bean = new RequestNumberGoodsList();
-//        bean.setLimit(10);
-//        bean.setPage(page);
-//        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
-//                .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
-//                .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
-//    }
-//    /**
-//     * 用户等级升级
-//     *
-//     * @param fragment
-//     * @return
-//     */
-//    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(BaseActivity fragment,int userGrade) {
-//        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
-//        updateUserBean.setType(userGrade);
-//        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
-//                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
-//                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
-//    }
+    //添加购物车
+    public Observable<BaseResponse<String>> addShopCar(RxAppCompatActivity fragment, String  goodsId,String productId,String number) {
+        RequestAddShopcarBean requestAddShopcarBean=new RequestAddShopcarBean();
+        requestAddShopcarBean.setGoodsId(goodsId);
+        requestAddShopcarBean.setProductId(productId);
+        requestAddShopcarBean.setNumber(number);
+        return RxHttp.getInstance().getSysteService().getAddShopCar(requestAddShopcarBean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
+    }
+
+    //购物车数量
+    public Observable<BaseResponse<ShopCarNumBean>> shopCarNum(RxAppCompatActivity fragment) {
+
+        return RxHttp.getInstance().getSysteService().getShopCarNum()
+                .compose(RxUtils.<BaseResponse<ShopCarNumBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<ShopCarNumBean>>bindToLifecycle());
+    }
+
+
 }

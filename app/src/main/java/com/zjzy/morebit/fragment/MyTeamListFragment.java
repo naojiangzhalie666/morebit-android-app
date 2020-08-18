@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,6 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.FansRemarkDialog;
@@ -64,7 +68,7 @@ public class MyTeamListFragment extends BaseFragment {
     public static final String TYPE_DYNAMIC_RANK_ACTIVITY = "1"; //动态排行下活跃tab
     public static final String TYPE_DYNAMIC_RANK_COMMISSION = "2"; //动态排行下近七天预估佣金tab
     public static final String TYPE_DYNAMIC_RANK_NEW = "3"; //动态排行下近七天拉新tab
-    private ReUseListView mRecyclerView;
+    private RecyclerView mRecyclerView;
     private MyTeamAdapter myTeamAdapter;
     private static final int REQUEST_COUNT = 10;
     List<TeamInfo> listArray = new ArrayList<>();
@@ -90,6 +94,7 @@ public class MyTeamListFragment extends BaseFragment {
     private LinearLayout title_zong_volume_ll;
     private ImageView title_comprehensive_iv;
     private boolean isTime=false;
+    private SmartRefreshLayout refreshLayout;
     private Handler handler = new Handler() {
 
         @Override
@@ -139,7 +144,8 @@ public class MyTeamListFragment extends BaseFragment {
         isInit = true;
         initBundle();
         MyLog.i("test", "this: " + mType + "  " + this.hashCode());
-        mRecyclerView = (ReUseListView) view.findViewById(R.id.listview_aole);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.listview_aole);
+        refreshLayout = view.findViewById(R.id.refreshLayout);
         //数据为空的
         dateNullView = (LinearLayout) view.findViewById(R.id.dateNullView);
         btn_invite = (TextView) view.findViewById(R.id.btn_invite);
@@ -161,25 +167,27 @@ public class MyTeamListFragment extends BaseFragment {
                 btn_invite.setVisibility(View.GONE);
             }
         }
+        LinearLayoutManager manager=new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(myTeamAdapter);
-        mRecyclerView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 initData();
             }
         });
 
-        mRecyclerView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
             @Override
-            public void onLoadMore() {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (mFrom == TYPE_NORMAL) {
                     getMoreData();
                 } else {
                     getRankMoreData();
                 }
-
             }
         });
+
 
         title_zong_volume_ll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,31 +226,13 @@ public class MyTeamListFragment extends BaseFragment {
                 openRemarkDialog(listArray.get(position).getRemark(), position);
             }
         });
-        mRecyclerView.setShowStick(false);
-        mRecyclerView.setOnExternalScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager linearManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int firstVisibleItemPosition = linearManager.findFirstVisibleItemPosition();
-//                if (firstVisibleItemPosition > 3) {
-//                    ((FansListFragment)getActivity()).isShowStick(true);
-//                } else {
-//                    ((FansListFragment)getActivity()).isShowStick(false);
-//                }
-            }
-        });
         loadData();
     }
 
 
     private void loadData() {
-        mRecyclerView.getSwipeList().setRefreshing(true);
+        refreshLayout.finishRefresh();
         initData();
     }
 
@@ -286,7 +276,6 @@ public class MyTeamListFragment extends BaseFragment {
      */
     public void getFirstData() { //获取我的团队A级数据
         MyLog.i("test", "getFirstData");
-        mRecyclerView.getListView().setNoMore(false);
         pageNum = 1;
 
         getCompose()
@@ -294,7 +283,7 @@ public class MyTeamListFragment extends BaseFragment {
                     @Override
                     public void run() throws Exception {
                         LoadingView.dismissDialog();
-                        mRecyclerView.getSwipeList().setRefreshing(false);
+                        refreshLayout.finishRefresh();
                     }
                 })
                 .subscribe(new DataObserver<TeamData>() {
@@ -304,29 +293,26 @@ public class MyTeamListFragment extends BaseFragment {
                         mRecyclerView.setVisibility(View.GONE);
                         listArray.clear();
                         myTeamAdapter.setData(listArray);
-                        mRecyclerView.notifyDataSetChanged();
+
                     }
 
 
                     @Override
                     protected void onSuccess(TeamData data) {
-                        mRecyclerView.getSwipeList().setRefreshing(false);
                         listArray.clear();
                         myTeamAdapter.setData(listArray);
-                        mRecyclerView.notifyDataSetChanged();
+
                         List<TeamInfo> teamList = data.getChild();
                         if (teamList != null && teamList.size() > 0) {
                             listArray.clear();
                             listArray.addAll(teamList);
                             myTeamAdapter.setData(listArray);
-                            mRecyclerView.notifyDataSetChanged();
                             pageNum = pageNum + 1;
                         } else {
                             dateNullView.setVisibility(View.VISIBLE);
                             mRecyclerView.setVisibility(View.GONE);
                             listArray.clear();
                             myTeamAdapter.setData(listArray);
-                            mRecyclerView.notifyDataSetChanged();
                             return;
                         }
                         MyFansEvent myFansEvent = new MyFansEvent();
@@ -352,7 +338,7 @@ public class MyTeamListFragment extends BaseFragment {
         if (!isInit) {
             return;
         }
-        mRecyclerView.getListView().setNoMore(false);
+        refreshLayout.finishRefresh();
         pageNum = 1;
         mOrder = order;
 
@@ -361,7 +347,7 @@ public class MyTeamListFragment extends BaseFragment {
                     @Override
                     public void run() throws Exception {
                         LoadingView.dismissDialog();
-                        mRecyclerView.getSwipeList().setRefreshing(false);
+                        refreshLayout.finishRefresh();
                     }
                 })
                 .subscribe(new DataObserver<List<TeamInfo>>() {
@@ -371,28 +357,25 @@ public class MyTeamListFragment extends BaseFragment {
                         mRecyclerView.setVisibility(View.GONE);
                         listArray.clear();
                         myTeamAdapter.setData(listArray);
-                        mRecyclerView.notifyDataSetChanged();
                     }
 
                     @Override
                     protected void onSuccess(List<TeamInfo> data) {
-                        mRecyclerView.getSwipeList().setRefreshing(false);
+                        refreshLayout.finishRefresh();
                         listArray.clear();
                         myTeamAdapter.setData(listArray);
-                        mRecyclerView.notifyDataSetChanged();
+
 
                         if (data != null && data.size() > 0) {
                             listArray.clear();
                             listArray.addAll(data);
                             myTeamAdapter.setData(listArray);
-                            mRecyclerView.notifyDataSetChanged();
                             pageNum = pageNum + 1;
                         } else {
                             dateNullView.setVisibility(View.VISIBLE);
                             mRecyclerView.setVisibility(View.GONE);
                             listArray.clear();
                             myTeamAdapter.setData(listArray);
-                            mRecyclerView.notifyDataSetChanged();
                             return;
                         }
 
@@ -438,30 +421,30 @@ public class MyTeamListFragment extends BaseFragment {
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
-                        mRecyclerView.getSwipeList().setRefreshing(false);
+                        refreshLayout.finishRefresh();
                     }
                 })
                 .subscribe(new DataObserver<TeamData>() {
                     @Override
                     protected void onError(String errorMsg, String errCode) {
                         if(StringsUtils.isDataEmpty(errCode)){
-                            mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
-                            mRecyclerView.getListView().setNoMore(true);
+                            refreshLayout.finishRefresh();
+                            refreshLayout.finishLoadMore();
                         }
                     }
 
                     @Override
                     protected void onSuccess(TeamData response) {
-                        mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
+
                         List<TeamInfo> teamList = response.getChild();
                         if (teamList != null && teamList.size() > 0) {
                             listArray.addAll(teamList);
                             myTeamAdapter.setData(listArray);
-                            mRecyclerView.notifyDataSetChanged();
+
                             //                            myTeamAdapter.notifyItemRangeChanged(listArray.size() - teamList.size(), listArray.size());
                             pageNum = pageNum + 1;
                         } else {
-                            mRecyclerView.getListView().setNoMore(true);
+                            refreshLayout.finishLoadMore();
                             //                            ViewShowUtils.showLongToast(getActivity(),"已经没有更多数据了");
                         }
                     }
@@ -475,39 +458,39 @@ public class MyTeamListFragment extends BaseFragment {
      */
     public void getRankMoreData() {
 
-        getRankCompose()
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        mRecyclerView.getSwipeList().setRefreshing(false);
-                    }
-                })
-                .subscribe(new DataObserver<List<TeamInfo>>() {
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        if(StringsUtils.isDataEmpty(errCode)){
-                            mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
-                            mRecyclerView.getListView().setNoMore(true);
-                        }
-                    }
-
-                    @Override
-                    protected void onSuccess(List<TeamInfo> teamInfos) {
-                        mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
-
-                        if (teamInfos != null && teamInfos.size() > 0) {
-                            listArray.addAll(teamInfos);
-                            myTeamAdapter.setData(listArray);
-                            mRecyclerView.notifyDataSetChanged();
-                            //                            myTeamAdapter.notifyItemRangeChanged(listArray.size() - teamList.size(), listArray.size());
-                            pageNum = pageNum + 1;
-                        } else {
-                            mRecyclerView.getListView().setNoMore(true);
-                            //                            ViewShowUtils.showLongToast(getActivity(),"已经没有更多数据了");
-                        }
-                    }
-
-                });
+//        getRankCompose()
+//                .doFinally(new Action() {
+//                    @Override
+//                    public void run() throws Exception {
+//                        mRecyclerView.getSwipeList().setRefreshing(false);
+//                    }
+//                })
+//                .subscribe(new DataObserver<List<TeamInfo>>() {
+//                    @Override
+//                    protected void onError(String errorMsg, String errCode) {
+//                        if(StringsUtils.isDataEmpty(errCode)){
+//                            mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
+//                            mRecyclerView.getListView().setNoMore(true);
+//                        }
+//                    }
+//
+//                    @Override
+//                    protected void onSuccess(List<TeamInfo> teamInfos) {
+//                        mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
+//
+//                        if (teamInfos != null && teamInfos.size() > 0) {
+//                            listArray.addAll(teamInfos);
+//                            myTeamAdapter.setData(listArray);
+//                            mRecyclerView.notifyDataSetChanged();
+//                            //                            myTeamAdapter.notifyItemRangeChanged(listArray.size() - teamList.size(), listArray.size());
+//                            pageNum = pageNum + 1;
+//                        } else {
+//                            mRecyclerView.getListView().setNoMore(true);
+//                            //                            ViewShowUtils.showLongToast(getActivity(),"已经没有更多数据了");
+//                        }
+//                    }
+//
+//                });
 
     }
 
@@ -530,12 +513,12 @@ public class MyTeamListFragment extends BaseFragment {
         handler.sendMessage(message);
     }
 
-    public void stick() {
-        MyLog.i("test", "this: " + mType);
-        if (mRecyclerView != null && mRecyclerView.getListView() != null) {
-            mRecyclerView.getListView().scrollToPosition(0);
-        }
-    }
+//    public void stick() {
+//        MyLog.i("test", "this: " + mType);
+//        if (mRecyclerView != null && mRecyclerView.getListView() != null) {
+//            mRecyclerView.getListView().scrollToPosition(0);
+//        }
+//    }
 
 
     private void openRemarkDialog(String remark, final int position) {  //退出确认弹窗

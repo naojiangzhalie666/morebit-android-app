@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -21,6 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
@@ -70,7 +74,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     //    @BindView(R.id.zhiding_tv)
 //    ImageView zhiding_tv;
     @BindView(R.id.mListView)
-    ReUseListView mRecyclerView;
+    RecyclerView mRecyclerView;
 
     @BindView(R.id.ll_remove)
     View ll_remove;
@@ -99,6 +103,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     private boolean isNoMore;
     private LinearLayout searchNullTips_ly;
     private TextView txt_head_title,txt_head_title2;
+    private SmartRefreshLayout refreshLayout;
 
 //    public void onResume() {
 //        super.onResume();
@@ -121,6 +126,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     @Override
     protected void initView(View view) {
+        refreshLayout=view.findViewById(R.id.refreshLayout);
         txt_head_title2= view.findViewById(R.id.txt_head_title2);
         txt_head_title= view.findViewById(R.id.txt_head_title);
         txt_head_title2.setText("管理");
@@ -130,27 +136,27 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         txt_head_title.setTextColor(Color.parseColor("#333333"));
         txt_head_title2.setTextColor(Color.parseColor("#F05557"));
         searchNullTips_ly = view.findViewById(R.id.searchNullTips_ly);
+        LinearLayoutManager manager=new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(manager);
         mGuessGoodsAdapter = new CollectAdapter(getActivity());
         mRecyclerView.setAdapter(mGuessGoodsAdapter);
         //    mEmptyView = new CommonEmpty(view, "",0);
-
-        mRecyclerView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 scrollHeight = 0; //重置滚动高度为0
                 MyLog.i("test", "getData");
                 getData(true);
             }
         });
 
-        mRecyclerView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
             @Override
-            public void onLoadMore() {
-                if (!mRecyclerView.getSwipeList().isRefreshing())
-                    MyLog.i("test", "getData");
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 getData(false);
             }
         });
+
         ll_check_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +189,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
     private void getData(boolean isRefresh) {
         if (isRefresh) {
             mPage = 1;
-            mRecyclerView.getListView().setNoMore(false);
+            refreshLayout.finishRefresh();
             //   mEmptyView.setmFirstComplete(false);
         }
 
@@ -269,7 +275,6 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
         if (mPage == 1) {
             if (C.requestCode.dataListEmpty.equals(errorCode) || C.requestCode.dataNull.equals(errorCode)) {
                 collectArray.clear();
-                mRecyclerView.notifyDataSetChanged();
                 reset();
             }
 
@@ -277,7 +282,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
             if (C.requestCode.dataListEmpty.equals(errorCode) || C.requestCode.dataNull.equals(errorCode)) {
                 isNoMore = true;
             }
-            mRecyclerView.getListView().setNoMore(true);
+            refreshLayout.finishLoadMore();
         }
     }
 
@@ -290,6 +295,7 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
                 mGuessGoodsAdapter.setData(data);
             } else {
                 mGuessGoodsAdapter.addData(data);
+                refreshLayout.finishLoadMore();
             }
         } else {
             searchNullTips_ly.setVisibility(View.VISIBLE);
@@ -318,8 +324,8 @@ public class CollectFragment2 extends MvpFragment<CollectPresenter> implements C
 
     @Override
     public void showFinally() {
-        mRecyclerView.getListView().refreshComplete(REQUEST_COUNT);
-        mRecyclerView.getSwipeList().setRefreshing(false);
+
+        refreshLayout.finishRefresh();
     }
 
     @Override

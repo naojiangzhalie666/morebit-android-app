@@ -84,19 +84,19 @@ public class MsgGoodsFragment extends MvpFragment<MsgPresenter> implements MsgCo
         mReUseListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 1;
+             //   page = 1;
                 refreshData();
             }
         });
-        mReUseListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (!mReUseListView.getSwipeList().isRefreshing()) {
-                    mPresenter.getMsg(MsgGoodsFragment.this, InfoModel.msgGoodsype, page, mEmptyView);
-                }
-
-            }
-        });
+//        mReUseListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                if (!mReUseListView.getSwipeList().isRefreshing()) {
+//                    mPresenter.getMsg(MsgGoodsFragment.this, InfoModel.msgGoodsype, page, mEmptyView);
+//                }
+//
+//            }
+//        });
         mReUseListView.getListView().setMarkermallNoMore(true);
         mReUseListView.setAdapter(mAdapter);
 
@@ -105,7 +105,7 @@ public class MsgGoodsFragment extends MvpFragment<MsgPresenter> implements MsgCo
 
     private void refreshData() {
         mReUseListView.getSwipeList().setRefreshing(true);
-        page = 1;
+     //   page = 1;
         mReUseListView.getListView().setNoMore(false);
         mReUseListView.getListView().setFootViewVisibility(View.GONE);
         mPresenter.getMsg(this, InfoModel.msgGoodsype, page, mEmptyView);
@@ -133,26 +133,27 @@ public class MsgGoodsFragment extends MvpFragment<MsgPresenter> implements MsgCo
 
     @Override
     public void onMsgSuccessful(List<EarningsMsg> data) {
-        if (page == 1) {
-            mAdapter.replace(data );
-            mAdapter.notifyDataSetChanged();
-            if(data.size()<10){
-                mReUseListView.getListView().setFootViewVisibility(View.VISIBLE);
-                mReUseListView.getListView().setNoMore(true);
-            }
-        } else {
-
-            mAdapter.add(data);
-            mAdapter.notifyDataSetChanged();
-        }
-        page++;
+        mAdapter.replace(data );
+        mAdapter.notifyDataSetChanged();
+//        if (page == 1) {
+//
+//            if(data.size()<10){
+//                mReUseListView.getListView().setFootViewVisibility(View.VISIBLE);
+//                mReUseListView.getListView().setNoMore(true);
+//            }
+//        } else {
+//
+//            mAdapter.add(data);
+//            mAdapter.notifyDataSetChanged();
+//        }
+//        page++;
     }
 
     @Override
     public void onMsgfailure() {
-        if (page != 1) {
-            mReUseListView.getListView().setNoMore(true);
-        }
+//        if (page != 1) {
+//            mReUseListView.getListView().setNoMore(true);
+//        }
 
     }
 

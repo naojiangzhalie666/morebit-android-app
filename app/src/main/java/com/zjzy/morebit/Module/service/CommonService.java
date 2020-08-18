@@ -12,8 +12,13 @@ import com.zjzy.morebit.pojo.ProgramGetGoodsDetailBean;
 import com.zjzy.morebit.pojo.ProgramSearchKeywordBean;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
 import com.zjzy.morebit.pojo.RankTimeBean;
+import com.zjzy.morebit.pojo.RequestIscheckShopcarBean;
 import com.zjzy.morebit.pojo.RequestNineBean;
+import com.zjzy.morebit.pojo.RequestOrderShopcarBean;
 import com.zjzy.morebit.pojo.RequestReadNotice;
+import com.zjzy.morebit.pojo.ShopCarGoodsBean;
+import com.zjzy.morebit.pojo.ShopCarNumBean;
+import com.zjzy.morebit.pojo.ShopCarOrderBean;
 import com.zjzy.morebit.pojo.TkBean;
 import com.zjzy.morebit.pojo.UnreadInforBean;
 import com.zjzy.morebit.pojo.UserIncomeDetail2;
@@ -105,6 +110,7 @@ import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.pojo.request.RequestALiCodeBean;
 import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestAddAddressBean;
+import com.zjzy.morebit.pojo.request.RequestAddShopcarBean;
 import com.zjzy.morebit.pojo.request.RequestAppFeedBackBean;
 import com.zjzy.morebit.pojo.request.RequestAppletsBean;
 import com.zjzy.morebit.pojo.request.RequestArticleBean;
@@ -128,6 +134,7 @@ import com.zjzy.morebit.pojo.request.RequestConfigKeyBean;
 import com.zjzy.morebit.pojo.request.RequestCouponUrlBean;
 import com.zjzy.morebit.pojo.request.RequestCreateOrderBean;
 import com.zjzy.morebit.pojo.request.RequestDeleteAddressIdBean;
+import com.zjzy.morebit.pojo.request.RequestDeleteShopcarBean;
 import com.zjzy.morebit.pojo.request.RequestFansInfoBean;
 import com.zjzy.morebit.pojo.request.RequestFeedBackTypeBean;
 import com.zjzy.morebit.pojo.request.RequestGoodsCollectBean;
@@ -2708,11 +2715,71 @@ public interface CommonService {
     public Observable<BaseResponse<List<VipBean>>> getVipRights(@Body RequestBaseOs body);
 
     /**
-     * 获取会员特权
+     * 获取复制文案
      *
      * @return
      */
     @POST("/api/goods/getGoodsPurchaseLink")
     public Observable<BaseResponse<CircleCopyBean>> getGoodsPurchaseLink(@Body RequestCircleShareBean body);
+
+
+    /**
+     * 添加购物车
+     *
+     * @return
+     */
+    @POST("/api/goods/cart/add")
+    public Observable<BaseResponse<String>> getAddShopCar(@Body RequestAddShopcarBean body);
+
+
+    /**
+     * 购物车数量
+     *
+     * @return
+     */
+    @POST("/api/goods/cart/goodsCount")
+    public Observable<BaseResponse<ShopCarNumBean>> getShopCarNum();
+
+    /**
+     * 购物车商品
+     *
+     * @return
+     */
+    @POST("/api/goods/cart/index")
+    public Observable<BaseResponse<ShopCarGoodsBean>> getShopCarIndex();
+
+    /**
+     * 购物车修改
+     *
+     * @return
+     */
+    @POST("/api/goods/cart/update")
+    public Observable<BaseResponse<String>> getShopCarUpdate(@Body RequestAddShopcarBean body);
+    /**
+     * 购物车删除
+     *
+     * @return
+     */
+    @POST("/api/goods/cart/delete")
+    public Observable<BaseResponse<String>> getShopCarDelete(@Body RequestDeleteShopcarBean body);
+
+    /**
+     * 购物车勾选
+     *
+     * @return
+     */
+    @POST("/api/goods/cart/checked")
+    public Observable<BaseResponse<String>> getShopCarChecked(@Body RequestIscheckShopcarBean body);
+
+
+    /**
+     * 购物车支付订单
+     *
+     * @return
+     */
+    @POST("/api/order/cart/submit")
+    public Observable<BaseResponse<ShopCarOrderBean>> getShopCarSubmit(@Body RequestOrderShopcarBean body);
+
+
 
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_ffffff_12dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="18dp"
+        android:text="确认删除该宝贝？"
+        android:textSize="18sp"
+        android:textColor="@color/color_333333" />
+
+
+    <View
+        android:layout_marginTop="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_F2F2F2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/yes"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="是"
+            android:textColor="#ff333333"
+            android:textSize="20sp"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_F2F2F2"/>
+        <TextView
+            android:id="@+id/btn_ok"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="否"
+            android:textColor="#fff05557"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

@@ -14,19 +14,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.ShopCarActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.R;
@@ -39,6 +43,7 @@ import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
@@ -82,6 +87,9 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
     private SubNumberAdapter mAdapter;
     private SmartRefreshLayout swipeList;
 
+    private ImageView top_rcy;
+
+
 
     public static ShoppingMallFragment newInstance() {
         ShoppingMallFragment fragment = new ShoppingMallFragment();
@@ -107,7 +115,10 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
     private void getData() {
         getNumberGoodsList(this, page)
                 .doFinally(new Action() {
@@ -167,11 +178,12 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         if (arguments != null) {
         }
 
-        mAdapter = new SubNumberAdapter(getActivity());
+        top_rcy=view.findViewById(R.id.top_rcy);
+        mAdapter = new SubNumberAdapter(getActivity(),1);
         swipeList=view.findViewById(R.id.swipeList);
         rcy_goods = view.findViewById(R.id.rcy_goods);
 
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rcy_goods.setLayoutManager(manager);
         rcy_goods.setAdapter(mAdapter);
         swipeList.setEnableRefresh(false);
@@ -185,7 +197,24 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
             }
         });
 
+        top_rcy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manager.scrollToPositionWithOffset(0, 0);
+                manager.setStackFromEnd(true);
+            }
+        });
+
+
+
     }
+
+
+
+    private void onActivityFailure() {
+
+    }
+
 
     //获取优选商品
     public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(RxFragment fragment, int page) {
@@ -209,5 +238,11 @@ public class ShoppingMallFragment extends BaseMainFragmeng {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+
+
+
+
+
 
 }

@@ -388,7 +388,10 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         mGoodsInfo.setItemSource(Info.getItemSource());
         if (!StringsUtils.isEmpty(Info.getTitle())) {
             iv_taobao.setText("拼多多");
-            StringsUtils.retractTitles(title,Info.getTitle(),iv_taobao.getWidth()+10);
+            Paint paint = new Paint();
+            paint.setTextSize(iv_taobao.getTextSize());
+            float size = paint.measureText(iv_taobao.getText().toString());
+            StringsUtils.retractTitles(title, Info.getTitle(), (int) (size) + 35);
         }
 
 

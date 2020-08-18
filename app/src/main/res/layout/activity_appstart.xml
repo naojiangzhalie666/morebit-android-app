@@ -3,8 +3,16 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                android:background="@color/white"
                 android:orientation="vertical">
+
+    <com.zjzy.morebit.view.AspectRatioView
+        android:id="@+id/ar_title_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:aspectRatio="0.75"
+        >
+
 
     <ImageView
         android:id="@+id/imgBg"
@@ -12,6 +20,33 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         />
+    </com.zjzy.morebit.view.AspectRatioView>
+
+    <RelativeLayout
+
+        android:orientation="vertical"
+        android:layout_below="@+id/ar_title_banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_duodian"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/company"
+            android:textColor="#ff333333"
+            android:textSize="14sp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            />
+
+    </RelativeLayout>
 
 
 <!--        <RelativeLayout-->

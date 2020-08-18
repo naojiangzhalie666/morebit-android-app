@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,6 +30,7 @@ import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.SharedPreferencesUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zjzy.morebit.view.AspectRatioView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class AppStartActivity extends RxAppCompatActivity {
 
     VideoView mVideoView;
     private Uri h5Uri;
+    private AspectRatioView ar_title_banner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,9 +115,11 @@ public class AppStartActivity extends RxAppCompatActivity {
         } else {
             mBgAd = (ImageView) findViewById(R.id.imgBg);
             mSkip = (TextView) findViewById(R.id.skip);
+            ar_title_banner=findViewById(R.id.ar_title_banner);
             mSkip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     statrMain(null);
                 }
             });
@@ -144,10 +149,10 @@ public class AppStartActivity extends RxAppCompatActivity {
             if (!IsToday) {
                 App.getACache().put(C.sp.APPSTART_POPUPTYPE + imageInfo.getId(), System.currentTimeMillis() + "");
                 if (imageInfo.getMediaType() == 1) {
-                    mBgAd.setVisibility(View.GONE);
+                    ar_title_banner.setVisibility(View.GONE);
                     playerVideo(imageInfo);
                 } else {
-                    mBgAd.setVisibility(View.VISIBLE);
+                    ar_title_banner.setVisibility(View.VISIBLE);
                     showLocalPicture(imageInfo);
                 }
             } else {
@@ -199,12 +204,12 @@ public class AppStartActivity extends RxAppCompatActivity {
         MyLog.i("test", "读秒");
         mSkip.setVisibility(View.VISIBLE);
         //从0开始发射61个数字为：0-60依次输出，延时0s执行，每1s发射一次。
-        mdDisposable = Flowable.intervalRange(0, 5, 0, 1, TimeUnit.SECONDS)
+        mdDisposable = Flowable.intervalRange(0, 3, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        int seconds = (int) (5 - aLong);
+                        int seconds = (int) (3 - aLong);
                         mSkip.setText(getString(R.string.start_skip, " " + seconds));
                     }
                 })
@@ -225,7 +230,7 @@ public class AppStartActivity extends RxAppCompatActivity {
             public void run() {
                 initViews();
             }
-        }, 500);
+        }, 300);
     }
 
     /**
@@ -236,7 +241,7 @@ public class AppStartActivity extends RxAppCompatActivity {
     private void showLocalPicture(final ImageInfo imageInfo) {
         if (imageInfo != null && !TextUtils.isEmpty(imageInfo.getPicture())) {
             MyLog.i("test", "asString: " + imageInfo.getPicture());
-            mBgAd.setScaleType(ImageView.ScaleType.CENTER_CROP);
+           // mBgAd.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //                LoadImgUtils.setImg(this, mBgAd, imageInfo.getPicture(), false);
             if(imageInfo.getPicture().startsWith("http")){
                 LoadImgUtils.getImgToFileObservable(this, imageInfo.getPicture())
@@ -245,11 +250,13 @@ public class AppStartActivity extends RxAppCompatActivity {
                             public void onNext(File file) {
                                 imageInfo.setPicture(file.getAbsolutePath());
                                 showLocalPicture(imageInfo);
+
                             }
 
                             @Override
                             public void onError(Throwable e) {
                                 statrMain(null);
+
                             }
                         });
             }else{
@@ -263,7 +270,8 @@ public class AppStartActivity extends RxAppCompatActivity {
 
                         @Override
                         public void loadSuccess() {
-                            mBgAd.setOnClickListener(new View.OnClickListener() {
+
+                            ar_title_banner.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     statrMain(imageInfo);
@@ -353,17 +361,20 @@ public class AppStartActivity extends RxAppCompatActivity {
 
 
     private void statrMain(ImageInfo imageInfo) {
-
+        Log.e("hhhh","1");
         Intent intent = new Intent(AppStartActivity.this, MainActivity.class);
         if (mdDisposable != null) {
             mdDisposable.dispose();
         }
+        Log.e("hhhh","2"+mdDisposable);
         if (imageInfo != null) {
             intent.putExtra("imageInfo", imageInfo);
         }
+        Log.e("hhhh","3"+imageInfo);
         if (null != h5Uri) {
             intent.setData(h5Uri);
         }
+        Log.e("hhhh","4"+h5Uri);
         startActivity(intent);
         finish();
     }

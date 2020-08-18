@@ -11,6 +11,9 @@
 
    <android.support.v7.widget.RecyclerView
        android:id="@+id/rcy1"
+       android:layout_marginLeft="9dp"
+       android:layout_marginRight="9dp"
+       android:layout_marginTop="9dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"/>
 

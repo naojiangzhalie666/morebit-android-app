@@ -27,6 +27,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.R;
@@ -77,7 +78,7 @@ public class GoodDailyFragment extends BaseMainFragmeng {
     private int oneLevelId;
     private int twoLevelId;
 
-    private ReUseListView mListView;
+    private RecyclerView mListView;
     private int page=1;
     private LinearLayout dateNullView;
     private GoodsDialyAdapter goodsDialyAdapter;
@@ -85,6 +86,7 @@ public class GoodDailyFragment extends BaseMainFragmeng {
     private int  circletype;
     private  int stype;
     private RelativeLayout rl_title;
+    private SmartRefreshLayout refreshLayout;
 
 
 
@@ -150,9 +152,9 @@ public class GoodDailyFragment extends BaseMainFragmeng {
                         if (page==1){
                             mListView.setVisibility(View.GONE);
                             dateNullView.setVisibility(View.VISIBLE);
-                            mListView.getListView().setNoMore(true);
+                            refreshLayout.finishRefresh();
                         }else{
-                            mListView.getListView().setNoMore(true);
+                            refreshLayout.finishLoadMore();
                         }
 
                     }
@@ -170,16 +172,17 @@ public class GoodDailyFragment extends BaseMainFragmeng {
             mListView.setVisibility(View.VISIBLE);
             if (page==1){
                 goodsDialyAdapter.setData(data);
+                refreshLayout.finishRefresh();
             }else{
                 goodsDialyAdapter.addData(data);
-                mListView.getListView().setNoMore(false);
+               refreshLayout.finishLoadMore();
             }
 
 
         }else{
             dateNullView.setVisibility(View.VISIBLE);
             mListView.setVisibility(View.GONE);
-            mListView.getListView().setNoMore(true);
+            refreshLayout.finishLoadMore();
         }
     }
 
@@ -202,6 +205,7 @@ public class GoodDailyFragment extends BaseMainFragmeng {
             stype=arguments.getInt(C.Circle.CIRCLE_TWO);
             Log.e("sfsdfsdf",twoLevelId+"");
         }
+        refreshLayout = view.findViewById(R.id.refreshLayout);
         rl_title=view.findViewById(R.id.rl_title);
         rcy_title=view.findViewById(R.id.rcy_title);
         Log.e("mbbmbmbm",mchild+"");
@@ -233,28 +237,19 @@ public class GoodDailyFragment extends BaseMainFragmeng {
         mListView.setLayoutManager(manager);
         mListView.setAdapter(goodsDialyAdapter);
 
-        mListView.getSwipeList().setOnRefreshListener(new com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                mListView.getSwipeList().post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mListView.getSwipeList().setRefreshing(true);
-                    }
-                });
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
                 getData();
             }
         });
-        mListView.getListView().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (!mListView.getSwipeList().isRefreshing()) {
-                    page++;
-                    getData();
-                }
 
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                getData();
             }
         });
 
