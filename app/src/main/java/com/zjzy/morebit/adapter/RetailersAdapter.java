@@ -45,6 +45,8 @@ import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,7 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
     private Context context;
     private List<ConsComGoodsInfo> list = new ArrayList<>();
     private int ordertype;
+    private   ZLoadingDialog dialog;
 
     public RetailersAdapter(Context context, int order_type) {
         this.context = context;
@@ -171,14 +174,18 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 //                ViewShowUtils.showShortToast(context, "已复制订单号，点击粘贴文案");
                 switch (orderType) {
                     case 1://淘宝
+                        loading();
                         getTao(info.getItemId());
                       //  getTao3(orderType, 1, info);
+
                         break;
                     case 2://京东
+                        loading();
                         getTao3(orderType, 4, info);
                         break;
 
                     case 4://jd
+                        loading();
                         getTao3(orderType, 3, info);
                         break;
                     case 5://考拉
@@ -189,6 +196,8 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
                         break;
 
                 }
+
+
 
 
             }
@@ -208,6 +217,13 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
         }
 
     }
+    private void loading(){
+        dialog = new ZLoadingDialog(context);
+        dialog.setLoadingBuilder(Z_TYPE.SINGLE_CIRCLE)//设置类型
+                .setLoadingColor(Color.parseColor("#F05557"))//颜色
+                .setHintText("Loading...")
+                .show();
+    }
 
     private void getTao(String itemId) {
         getBaseResponseObservable((BaseActivity) context, itemId)
@@ -226,8 +242,10 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
                         }else{
                             GoodsDetailActivity.start(context, data);
                         }
+                          dialog.dismiss();
                       }else{
                           ToastUtils.showShort("商品已下架");
+                          dialog.dismiss();
                       }
 
                     }
@@ -282,7 +300,7 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 
                         }
 
-
+                        dialog.dismiss();
                     }
                 });
     }

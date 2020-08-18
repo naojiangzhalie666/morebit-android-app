@@ -153,6 +153,8 @@ import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.UI.SpaceItemRightUtils;
 import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.view.AspectRatioView;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -244,6 +246,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private ConsecutiveScrollerLayout sroller;
     private boolean isTime=true;
     private Space space1;
+    private   ZLoadingDialog dialog;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -317,6 +320,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //            }
 //        }
 //    };
+
+
+
+
+
     public static HomeOtherFragment newInstance(String param1, String param2) {
         HomeOtherFragment fragment = new HomeOtherFragment();
         Bundle args = new Bundle();
@@ -354,6 +362,18 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         if (parent != null) {
             parent.removeView(mView);
         }
+        dialog = new ZLoadingDialog(getActivity());
+        dialog.setLoadingBuilder(Z_TYPE.SINGLE_CIRCLE)//设置类型
+                .setLoadingColor(Color.parseColor("#F05557"))//颜色
+                .setHintText("Loading...")
+                .show();
+        Handler handler2 = new Handler();
+        handler2.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               dialog.dismiss();
+            }
+        },3000);
         return mView;
     }
 
@@ -957,6 +977,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                                         BannerInitiateUtils.gotoAction(getActivity(), adInfo);
                                     }
                                 });
+
                             } else {
                                 shareImageView.setVisibility(View.GONE);
                             }
@@ -1059,6 +1080,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         List<FloorBean2.ListDataBean> listData = data.getListData();
         ActivityFloorAdapter1 floorAdapter1 = new ActivityFloorAdapter1(getActivity(), listData, data.getExt());
         activity_rcy1.setAdapter(floorAdapter1);
+
     }
 
     private void onGetQueryDhAndGy(QueryDhAndGyBean data) {
@@ -1311,6 +1333,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             case C.UIShowType.HomeBanner:         //顶部
                 // BannerInitiateUtils.setBrandBanner(getActivity(), datas, mTitleBanner, mAsTitleBanner);
                 putBannerData((ArrayList) data, back);
+
 
                 break;
             case C.UIShowType.HomeIcon:         // 首页ICON配置
