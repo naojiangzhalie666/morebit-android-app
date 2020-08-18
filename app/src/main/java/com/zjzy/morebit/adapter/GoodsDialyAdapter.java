@@ -299,7 +299,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                             picture.add(shareRangItems.get(i).getPicture());//取出图片
                         }
                         showChoosePicDialog((Activity) context, circleInfo, position,picture);
-                        AppUtil.coayTextPutNative((Activity) context, holder.tv_comment.getText().toString());
+                        AppUtil.coayTextPutNative((Activity) context, holder.content.getText().toString());
                         ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
                     }
 
@@ -381,7 +381,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                                     Log.e("sfdf",shareEWMBitmap+"");
                                     getPoster(position,shareEWMBitmap);//第一张图生成海报
                                 }
-                                AppUtil.coayTextPutNative((Activity) context, replace);
+                                AppUtil.coayTextPutNative((Activity) context,list.get(position).getContent() );
                                 ViewShowUtils.showShortToast(context, context.getString(R.string.coayTextSucceed));
 
 

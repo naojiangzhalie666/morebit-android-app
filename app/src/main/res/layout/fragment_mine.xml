@@ -11,11 +11,13 @@
     android:orientation="vertical">
 
 
-    <com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/swipeList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -713,7 +715,7 @@
                 <!--                <include layout="@layout/item_gridview_category" />-->
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
-    </com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <LinearLayout
         android:id="@+id/tab_title"

@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -23,6 +25,8 @@ import android.widget.Toast;
 import com.blankj.utilcode.util.ToastUtils;
 import com.github.jdsjlzx.ItemDecoration.SpaceItemDecoration;
 import com.gyf.barlibrary.ImmersionBar;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.AppletsActivity;
 import com.zjzy.morebit.Activity.FansDragonActivity;
@@ -40,7 +44,8 @@ import com.zjzy.morebit.Module.common.Dialog.UpgradeUserDialog;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
 import com.zjzy.morebit.Module.common.Dialog.WxBindDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
-import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.adapter.ToolsAdapter2;
 import com.zjzy.morebit.contact.EventBusAction;
@@ -118,8 +123,7 @@ import static org.greenrobot.eventbus.EventBus.*;
 public class MineFragment extends BaseMainFragmeng {
     @BindView(R.id.userIcon)
     RoundedImageView mUserIcon;
-    @BindView(R.id.swipeList)
-    SwipeRefreshLayout mSwipeList;
+
     @BindView(R.id.invitation_code)
     TextView mInvitationCode;
     @BindView(R.id.tv_remainder)
@@ -248,6 +252,7 @@ public class MineFragment extends BaseMainFragmeng {
     private ToolsAdapter2 adapter2;
     private LinearLayout ll_tools;
     private View view;
+    private SmartRefreshLayout mSwipeList;
 
 
     @Override
@@ -275,6 +280,7 @@ public class MineFragment extends BaseMainFragmeng {
         rl_myhead = mView.findViewById(R.id.rl_myhead);
         ll_tools = mView.findViewById(R.id.ll_tools);
         view = mView.findViewById(R.id.view);
+        mSwipeList=mView.findViewById(R.id.swipeList);
         return mView;
     }
 
@@ -325,13 +331,13 @@ public class MineFragment extends BaseMainFragmeng {
 
 
         tv_mine.getPaint().setFakeBoldText(true);
-        mSwipeList.setRefreshing(false);
-        mSwipeList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeList.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshData();
             }
         });
+
 //        mLLFindSplendid.setVisibility(View.GONE);
 //        mAdapter = new ToolsAdapter(getActivity());
 //        mRecyclerview.setAdapter(mAdapter);
@@ -500,7 +506,7 @@ public class MineFragment extends BaseMainFragmeng {
         getBannerData(C.UIShowType.myTool);   //福利津贴
         getBannerData(C.UIShowType.PERSONAL_FUNCTION);   //功能区
         getMonthIncome();
-        mSwipeList.setRefreshing(false);
+        mSwipeList.finishRefresh();
 
     }
 
