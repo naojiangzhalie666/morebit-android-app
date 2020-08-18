@@ -101,9 +101,11 @@ public class NumberFragment extends BaseMainFragmeng {
         tv.getPaint().setFakeBoldText(true);
         if (fanhui == 1) {
             back.setVisibility(View.VISIBLE);
+            status_bar.setVisibility(View.GONE);
 
         } else {
             back.setVisibility(View.GONE);
+            status_bar.setVisibility(View.VISIBLE);
         }
 
         viewPager.setAdapter(new NumbersGoodsAdapter(getChildFragmentManager()));
