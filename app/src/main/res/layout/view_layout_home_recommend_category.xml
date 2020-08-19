@@ -22,7 +22,7 @@
         android:id="@+id/scrollbarLayout"
         android:paddingBottom="12dp"
         android:layout_marginTop="-5dp"
-        android:visibility="gone"
+
         >
         <View
             android:layout_width="30dp"

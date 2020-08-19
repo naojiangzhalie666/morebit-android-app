@@ -196,7 +196,7 @@
                 app:layout_isConsecutive="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                <com.zjzy.morebit.view.refresh.MarkermallHeadRefresh
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 <!--            <RelativeLayout-->
@@ -268,45 +268,78 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="12dp" />
-                <LinearLayout
-                    android:id="@+id/litmit_ll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_F8F8F8"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
-                        android:id="@+id/xTablayout"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rcy_icon"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_40"
-                        app:xTabDividerColor="#D8D8D8"
-                        app:xTabDividerGravity="center"
-                        app:xTabDividerHeight="17dp"
-                        app:xTabDividerWidth="1dp"
-                        app:xTabIndicatorHeight="0dp"
-                        app:xTabIndicatorWidth="0dp"
-                        app:xTabMode="fixed"
-                        app:xTabSelectedTextColor="@color/white"
-                        app:xTabSelectedTextSize="@dimen/sp_15"
-                        app:xTabTextColor="#999999"
-                        app:xTabTextSize="@dimen/sp_12" />
-
-                    <com.zjzy.morebit.utils.AutoHeightViewPager
-                        android:id="@+id/icon_pager"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:paddingBottom="12dp"
+                        android:layout_marginTop="-5dp"
+                        android:gravity="center"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/color_F8F8F8" />
+                        android:layout_height="wrap_content">
+                        <FrameLayout
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/scrollbarLayout"
+                            >
+                            <View
+                                android:id="@+id/icon_bg"
+                                android:layout_width="40dp"
+                                android:layout_height="3dp"
+                                android:background="@drawable/bg_home_scrollbar"/>
+                            <View
+                                android:id="@+id/main_line"
+                                android:layout_width="15dp"
+                                android:layout_height="3dp"
+                                android:background="@drawable/bg_home_scrollbar_og"
+                                android:layout_gravity="center_vertical"/>
+                        </FrameLayout>
+                    </LinearLayout>
 
-                    <me.relex.circleindicator.CircleIndicator
-                        android:id="@+id/circle_indicator_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="12dp"
-                        android:background="@color/color_F8F8F8"
-                        app:ci_drawable="@drawable/icon_huangdian"
-                        app:ci_drawable_unselected="@drawable/icon_huidian" />
-                </LinearLayout>
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/litmit_ll"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/color_F8F8F8"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout-->
+<!--                        android:id="@+id/xTablayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/dp_40"-->
+<!--                        app:xTabDividerColor="#D8D8D8"-->
+<!--                        app:xTabDividerGravity="center"-->
+<!--                        app:xTabDividerHeight="17dp"-->
+<!--                        app:xTabDividerWidth="1dp"-->
+<!--                        app:xTabIndicatorHeight="0dp"-->
+<!--                        app:xTabIndicatorWidth="0dp"-->
+<!--                        app:xTabMode="fixed"-->
+<!--                        app:xTabSelectedTextColor="@color/white"-->
+<!--                        app:xTabSelectedTextSize="@dimen/sp_15"-->
+<!--                        app:xTabTextColor="#999999"-->
+<!--                        app:xTabTextSize="@dimen/sp_12" />-->
+
+<!--                    <com.zjzy.morebit.utils.AutoHeightViewPager-->
+<!--                        android:id="@+id/icon_pager"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@color/color_F8F8F8" />-->
+
+
+
+<!--                    <me.relex.circleindicator.CircleIndicator-->
+<!--                        android:id="@+id/circle_indicator_view"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:paddingTop="12dp"-->
+<!--                        android:background="@color/color_F8F8F8"-->
+<!--                        app:ci_drawable="@drawable/icon_huangdian"-->
+<!--                        app:ci_drawable_unselected="@drawable/icon_huidian" />-->
+<!--                </LinearLayout>-->
             <Space
                 android:id="@+id/space1"
                 android:layout_width="0dp"

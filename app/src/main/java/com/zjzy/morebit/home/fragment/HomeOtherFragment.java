@@ -56,6 +56,7 @@ import com.app.hubert.guide.listener.OnPageChangedListener;
 import com.app.hubert.guide.model.GuidePage;
 import com.app.hubert.guide.model.HighLight;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -90,6 +91,7 @@ import com.zjzy.morebit.adapter.HomeGoodsAdapter;
 import com.zjzy.morebit.adapter.HomeHaoAdapter;
 import com.zjzy.morebit.adapter.HomeIconAdapter;
 import com.zjzy.morebit.adapter.HomeLimiteAdapter;
+import com.zjzy.morebit.adapter.HomeMenuAdapter;
 import com.zjzy.morebit.adapter.HomeNewAdapter;
 import com.zjzy.morebit.adapter.HomeOtherAdapter;
 import com.zjzy.morebit.adapter.HomeSelectedAdapter;
@@ -153,6 +155,7 @@ import com.zjzy.morebit.utils.UI.BannerInitiateUtils;
 import com.zjzy.morebit.utils.UI.SpaceItemRightUtils;
 import com.zjzy.morebit.utils.UI.TimeUtils;
 import com.zjzy.morebit.view.AspectRatioView;
+import com.zjzy.morebit.view.GridSpacingItemDecoration;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
@@ -180,7 +183,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String newtime="608761808";
+    private String newtime = "608761808";
 
     private RecyclerView home_rcy;
     private List<DoorGodCategoryBean.ResultListBean> resultList;
@@ -189,7 +192,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private View mView;
     private Banner banner;
     private AspectRatioView mAsTitleBanner;
-  //  private SwipeRefreshLayout swipeRefreshLayout;
+    //  private SwipeRefreshLayout swipeRefreshLayout;
     private List<String> title = new ArrayList<>();
 
     private List<IconFragment> mFragments = new ArrayList<>();
@@ -244,9 +247,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private String ischeck;
     private RelativeLayout msg_rl;
     private ConsecutiveScrollerLayout sroller;
-    private boolean isTime=true;
+    private boolean isTime = true;
     private Space space1;
-    private   ZLoadingDialog dialog;
+    private ZLoadingDialog dialog;
+    private RecyclerView rcy_icon;
+    private HomeMenuAdapter menuAdapter;
+    private View bar_line,icon_bg;
+    private float endX = 0;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -266,7 +273,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 daysTv.setText("剩余" + days + "天");
                 hoursTv.setText(String.valueOf(hours).length() == 1 ? "0" + hours + ":" : hours + ":");
                 minutesTv.setText(String.valueOf(minutes).length() == 1 ? "0" + minutes + ":" : minutes + ":");
-                secondsTv.setText(String.valueOf(seconds).length() == 1 ? "0" + seconds + "" : seconds+"");
+                secondsTv.setText(String.valueOf(seconds).length() == 1 ? "0" + seconds + "" : seconds + "");
 //                if (mDay==0&&mHour==0&&mMin==0&&mSecond==0) {
 //                    countDown.setVisibility(View.GONE);
 //                }
@@ -322,9 +329,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //    };
 
 
-
-
-
     public static HomeOtherFragment newInstance(String param1, String param2) {
         HomeOtherFragment fragment = new HomeOtherFragment();
         Bundle args = new Bundle();
@@ -371,9 +375,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         handler2.postDelayed(new Runnable() {
             @Override
             public void run() {
-               dialog.dismiss();
+                dialog.dismiss();
             }
-        },3000);
+        }, 3000);
         return mView;
     }
 
@@ -395,22 +399,17 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     @SuppressLint("ClickableViewAccessibility")
     private void initOtherView() {
-        // home_rcy = mView.findViewById(R.id.home_rcy);
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction("0");//名字
-//        getActivity().registerReceiver(mRefreshBroadcastReceiver, intentFilter);
-        space1=mView.findViewById(R.id.space1);
-        sroller=mView.findViewById(R.id.sroller);
-        swipeList=mView.findViewById(R.id.swipeList);
+        space1 = mView.findViewById(R.id.space1);
+        sroller = mView.findViewById(R.id.sroller);
+        swipeList = mView.findViewById(R.id.swipeList);
         msg_rl = mView.findViewById(R.id.msg_rl);
         ll_new = mView.findViewById(R.id.ll_new);
         img_bao = mView.findViewById(R.id.img_bao);
-     //   swipeRefreshLayout = mView.findViewById(R.id.swipeRefreshLayout);
         status_bar = mView.findViewById(R.id.status_bar);
         mViewPager = mView.findViewById(R.id.viewPager);
         xablayout = mView.findViewById(R.id.xablayout);
         shareImageView = mView.findViewById(R.id.shareImageView);
-        litmit_ll = mView.findViewById(R.id.litmit_ll);
+//        litmit_ll = mView.findViewById(R.id.litmit_ll);
         litmited_pager = mView.findViewById(R.id.litmited_pager);
         limited = mView.findViewById(R.id.limited);
         limited.setOnClickListener(this);
@@ -456,13 +455,12 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         getCategoryData();
 
 
-
-
         banner = mView.findViewById(R.id.roll_view_pager);
         mAsTitleBanner = mView.findViewById(R.id.ar_title_banner);
-        xTablayout = mView.findViewById(R.id.xTablayout);
-        icon_pager = mView.findViewById(R.id.icon_pager);
-        circle_indicator_view = mView.findViewById(R.id.circle_indicator_view);
+//        以后可能会用
+//        xTablayout = mView.findViewById(R.id.xTablayout);
+//        icon_pager = mView.findViewById(R.id.icon_pager);
+//        circle_indicator_view = mView.findViewById(R.id.circle_indicator_view);
         swipeDirectionDetector = new SwipeDirectionDetector();
 
         new_rcy = mView.findViewById(R.id.new_rcy);
@@ -507,12 +505,25 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         }
         activity_rcy.setLayoutManager(manager6);
 
+        //金刚位
+        icon_bg=mView.findViewById(R.id.icon_bg);
+        bar_line = mView.findViewById(R.id.main_line);
+        int defpadding = DensityUtil.dip2px(getActivity(), 24);
+        double horizontalSpacing = defpadding;
+        rcy_icon = mView.findViewById(R.id.rcy_icon);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
+        rcy_icon.setLayoutManager(layoutManager);
+        GridSpacingItemDecoration gridSpacingItemDecoration = GridSpacingItemDecoration.newGridItemDecoration(layoutManager, DensityUtil.dip2px(getActivity(), 12f), (int) horizontalSpacing, true);
+        if (rcy_icon.getItemDecorationCount() == 0) {
+            rcy_icon.addItemDecoration(gridSpacingItemDecoration);
+        }
+        menuAdapter = new HomeMenuAdapter(getActivity());
+        rcy_icon.setAdapter(menuAdapter);
+
+        setScrollBar();
 
 
-
-
-       // initTime(Long.parseLong(newtime));
-
+        // initTime(Long.parseLong(newtime));
 
 
 //        limited.setOnClickListener(new View.OnClickListener() {
@@ -550,6 +561,47 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //        });
 
 
+    }
+
+    //金刚位底部滚动条
+    private void setScrollBar() {
+
+        rcy_icon.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                //当前RcyclerView显示区域的高度。水平列表屏幕从左侧到右侧显示范围
+                int extent = recyclerView.computeHorizontalScrollExtent();
+                //整体的高度，注意是整体，包括在显示区域之外的。
+                int range = recyclerView.computeHorizontalScrollRange();
+
+                //已经滚动的距离，为0时表示已处于顶部。
+                int offset = recyclerView.computeHorizontalScrollOffset();
+                if (extent==range){
+                    bar_line.setVisibility(View.GONE);
+                }else {
+                    bar_line.setVisibility(View.VISIBLE);
+                    //计算出溢出部分的宽度，即屏幕外剩下的宽度
+                    float maxEndX = range - extent;
+                    //计算比例
+                    float proportion = offset / maxEndX;
+                    int layoutWidth = icon_bg.getWidth();
+                    int indicatorViewWidth = bar_line.getWidth();
+                    //可滑动的距离
+                    int scrollableDistance = layoutWidth - indicatorViewWidth;
+                    //设置滚动条移动
+                    bar_line.setTranslationX(scrollableDistance * proportion);
+                }
+            }
+
+        });
     }
 
     private void initOnresh() {
@@ -596,10 +648,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 }
 
 
-
-
-
-                icon_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//以后可能会用
+              /*  icon_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                         swipeDirectionDetector.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -619,11 +669,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                         swipeDirectionDetector.onPageScrollStateChanged(state);
                         MyLog.d("addOnPageChangeListener", " onPageScrollStateChanged  state = " + state);
                     }
-                });
-
-
-
-
+                });*/
 
 
                 mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -654,17 +700,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         });
 
 
-
-
-
-
         sroller.setOnPermanentStickyChangeListener(new ConsecutiveScrollerLayout.OnPermanentStickyChangeListener() {
             @Override
             public void onStickyChange(@NonNull List<View> mCurrentStickyViews) {//监听tablayout背景颜色
-                Log.e("lllll",mCurrentStickyViews.size()+"");
-                if (mCurrentStickyViews.size()==0){
+                Log.e("lllll", mCurrentStickyViews.size() + "");
+                if (mCurrentStickyViews.size() == 0) {
                     xablayout.setBackgroundColor(Color.parseColor("#F8F8F8"));
-                }else{
+                } else {
                     xablayout.setBackgroundColor(Color.WHITE);
                 }
             }
@@ -683,7 +725,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 }
             }
         });
-
 
 
     }
@@ -725,7 +766,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             viewParams.height = ActivityStyleUtil.getStatusBarHeight(getActivity());
             status_bar.setLayoutParams(viewParams);
 
-           getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
             // 设置状态栏颜色
             //   getActivity().getWindow().setStatusBarColor(Color.parseColor("#F05557"));
 
@@ -780,8 +821,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 Intent intent = new Intent();
-                Log.e("rtyt",mViewPager.getCurrentItem()+"");
-                intent.setAction(mViewPager.getCurrentItem()+"");//要通知的广播名称
+                Log.e("rtyt", mViewPager.getCurrentItem() + "");
+                intent.setAction(mViewPager.getCurrentItem() + "");//要通知的广播名称
                 getActivity().sendBroadcast(intent);
                 // 模拟加载5秒钟
                 swipeList.postDelayed(new Runnable() {
@@ -790,7 +831,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                         // 加载完成
                         swipeList.finishLoadMore();
                     }
-                },1000);
+                }, 1000);
 //                if (mViewPager.getCurrentItem()==0){
 //                    SelectGoodsFragment goodsFragment= (SelectGoodsFragment) mHomeAdapter.getItem(mViewPager.getCurrentItem());
 //                    goodsFragment.onLoadMore(swipeList);
@@ -799,7 +840,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         });
     }
 
-    public void finisResh(){
+    public void finisResh() {
         swipeList.finishLoadMore(false);
     }
 
@@ -837,9 +878,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     @Override
                     protected void onSuccess(List<ImageInfo> data) {
                         if (data != null && data.size() != 0) {
-                            if (data.size()<2){
+                            if (data.size() < 2) {
                                 activity_hao.setVisibility(View.GONE);
-                            }else{
+                            } else {
                                 activity_hao.setVisibility(View.VISIBLE);
                                 onBrandBannerSuccess(data, 22);
                                 ActivityFloorAdapter3 floorAdapter = new ActivityFloorAdapter3(getActivity(), data);
@@ -951,7 +992,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 });
 
 
-
         getNotice();//消息
 
 
@@ -1044,7 +1084,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private void onUnreadInformation(UnreadInforBean data) {
         if (!data.isActivity() && !data.isFeedback() && !data.isIncome() && !data.isFs() && !data.isSystem()) {
             home_msg.setImageResource(R.mipmap.notice_icon);
-        }else{
+        } else {
             home_msg.setImageResource(R.drawable.notice_icon_bg);
         }
     }
@@ -1090,7 +1130,15 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     private void onGetDoorGodCategory(DoorGodCategoryBean data) {
         if (data != null) {
-            mFragments.clear();
+            Log.e("pppppp", data.getResultList().size() + "");
+            Log.e("pppppp", data.getResultList().get(0).getWheelChartDisplayVo().size() + "");
+            if (data.getResultList().size() != 0) {
+                Log.e("pppppp", "1111");
+                menuAdapter.setData(data.getResultList().get(0).getWheelChartDisplayVo());
+            }
+
+            //以后可能会用
+           /* mFragments.clear();
             for (int i = 0; i < data.getResultList().size(); i++) {
                 IconFragment fragment = null;
                 fragment = new IconFragment();
@@ -1140,7 +1188,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 public void onTabReselected(XTabLayout.Tab tab) {
 
                 }
-            });
+            });*/
         }
 
 
@@ -1151,13 +1199,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         NewItemAdapter newItemAdapter = new NewItemAdapter(getActivity(), itemList);//新人
         new_rcy.setAdapter(newItemAdapter);
 //        timeHandler.removeMessages(1);
-        newtime=data.getTime();
+        newtime = data.getTime();
         initTime(Long.parseLong(data.getTime()));
         UserInfo userInfo1 = UserLocalData.getUser(getActivity());
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             new_goods.setVisibility(View.VISIBLE);
             space1.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             if (data.isIsNewUser()) {
                 new_goods.setVisibility(View.VISIBLE);
                 space1.setVisibility(View.VISIBLE);
@@ -1166,7 +1214,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 space1.setVisibility(View.GONE);
             }
 
-            Log.e("gyui",data.getTime());
+            Log.e("gyui", data.getTime());
 
         }
         new_goods.setOnClickListener(new View.OnClickListener() {
@@ -1193,8 +1241,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
      */
     private void startRun() {
         //timeHandler.removeMessages(1);
-     //   timeHandler.sendEmptyMessageDelayed(1, 1000);
-        if (isTime){
+        //   timeHandler.sendEmptyMessageDelayed(1, 1000);
+        if (isTime) {
             new Thread(new Runnable() {
 
                 @Override
@@ -1212,7 +1260,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     }
                 }
             }).start();
-            isTime=false;
+            isTime = false;
         }
 
     }
@@ -1232,7 +1280,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         for (int i = 0; i < timeList.size(); i++) {
             LimiteFragment fragment = null;
             fragment = new LimiteFragment();
-            mfragment.add(fragment.newInstance(timeList.get(i).getItemList(),timeList.get(i).getTitle()));
+            mfragment.add(fragment.newInstance(timeList.get(i).getItemList(), timeList.get(i).getTitle()));
             if (timeList.get(i).getType() == 0) {
                 title = timeList.get(i).getTitle();
             }
@@ -1795,7 +1843,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         @Override
         public Fragment getItem(int position) {
             int mpostion = position % timeList.size();
-            return LimiteFragment.newInstance(timeList.get(mpostion).getItemList(),timeList.get(mpostion).getTitle());
+            return LimiteFragment.newInstance(timeList.get(mpostion).getItemList(), timeList.get(mpostion).getTitle());
         }
 
         @Override
@@ -1814,10 +1862,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         public void restoreState(Parcelable state, ClassLoader loader) {
 
         }
-
-
-
-
 
 
     }
@@ -1864,7 +1908,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 return whatLikeFragment;
             } else {
                 List<Child2> childs = homeColumn.getChild2();
-                return CategoryListFragment2.newInstance(homeColumn.getName(), childs,position);
+                return CategoryListFragment2.newInstance(homeColumn.getName(), childs, position);
 
             }
 
@@ -1936,13 +1980,14 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
     //消息已读
-    public Observable<BaseResponse<String>> getReadNotice(RxFragment fragment,int  type) {
-        RequestReadNotice notice=new RequestReadNotice();
+    public Observable<BaseResponse<String>> getReadNotice(RxFragment fragment, int type) {
+        RequestReadNotice notice = new RequestReadNotice();
         notice.setType(type);
         return RxHttp.getInstance().getSysteService().getReadNotice(notice)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(fragment.<BaseResponse<String>>bindToLifecycle());
     }
+
     private void getReadNoticed(int type) {
         getReadNotice(this, type)
                 .subscribe(new DataObserver<String>(false) {
@@ -1979,7 +2024,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     @Override
     public void onDestroy() {
         super.onDestroy();
-     //   getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
+        //   getActivity().unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
     public void getLoginView() {
@@ -2026,7 +2071,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 if (rl_urgency_notifi != null) {
                     rl_urgency_notifi.removeAllViews();
                 }
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 intent.setAction("system");//要通知的广播名称
                 getActivity().sendBroadcast(intent);
 
@@ -2191,7 +2236,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
 
     }
-
 
 
     private void addRecommendGoodsView(final ImageInfo imageInfo, final int index) {

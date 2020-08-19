@@ -1021,7 +1021,7 @@ public class HomeRecommendFragment extends MvpFragment<HomeRecommendPresenter> i
         if (datas == null || datas.size() == 0) {
             return;
         }
-        menuAdapter.setData(datas);
+        //menuAdapter.setData(datas);
         mViewpger_category.scrollToPosition(0);
         endX = 0.0f;
         bar_line.setTranslationX(0);

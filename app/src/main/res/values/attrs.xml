@@ -336,4 +336,8 @@
         <attr name="s_search_hint_text" format="string" />
         <!--<attr name="s_search_btn_bg" format="color" />-->
     </declare-styleable>
+
+    <declare-styleable name="IconIndicatorView">
+        <attr name="regularWidth" format="dimension"/>
+    </declare-styleable>
 </resources>

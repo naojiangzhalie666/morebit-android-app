@@ -264,42 +264,51 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
 
                 .subscribe(new DataObserver<CircleCopyBean>() {
                     @Override
+                    protected void onDataNull() {
+                        super.onDataNull();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        super.onError(errorMsg, errCode);
+                        dialog.dismiss();
+                    }
+
+                    @Override
                     protected void onSuccess(CircleCopyBean data) {
 
-                        switch (i) {
-                            case 1://淘宝
-//                                GoodsUtil.checkGoods((RxAppCompatActivity) context, info.getItemId(), new MyAction.One<ShopGoodInfo>() {
-//                                    @Override
-//                                    public void invoke(ShopGoodInfo arg) {
-//                                        MyLog.i("test", "arg: " + arg);
-//
-//
-//                                    }
-//                                });
-                                break;
-                            case 2://京东
-                                ShopGoodInfo goodInfo2 = new ShopGoodInfo();
-                                goodInfo2.setItemSource("1");
-                                goodInfo2.setItemSourceId(info.getItemId());
-                                goodInfo2.setGoodsId(Long.valueOf(info.getItemId()));
-                                GoodsDetailForJdActivity.start(context, goodInfo2);
-                                dialog.dismiss();
-                                break;
-                            case 4://jd
-                                ShopGoodInfo goodInfo = new ShopGoodInfo();
-                                goodInfo.setItemSource("2");
-                                goodInfo.setItemSourceId(info.getItemId());
-                                goodInfo.setGoodsId(Long.valueOf(info.getItemId()));
-                                GoodsDetailForPddActivity.start(context, goodInfo);
-                                dialog.dismiss();
-                                break;
-                            case 5://考拉
-                                GoodsDetailForKoalaActivity.start(context, info.getItemId());
-                                break;
-                            case 6://唯品会
-                                GoodsDetailForWphActivity.start(context, info.getItemId());
-                                break;
+                        if (data!=null){
+                            switch (i) {
+                                case 1://淘宝
+                                    break;
+                                case 2://京东
+                                    ShopGoodInfo goodInfo2 = new ShopGoodInfo();
+                                    goodInfo2.setItemSource("1");
+                                    goodInfo2.setItemSourceId(info.getItemId());
+                                    goodInfo2.setGoodsId(Long.valueOf(info.getItemId()));
+                                    GoodsDetailForJdActivity.start(context, goodInfo2);
+                                    dialog.dismiss();
+                                    break;
+                                case 4://jd
+                                    ShopGoodInfo goodInfo = new ShopGoodInfo();
+                                    goodInfo.setItemSource("2");
+                                    goodInfo.setItemSourceId(info.getItemId());
+                                    goodInfo.setGoodsId(Long.valueOf(info.getItemId()));
+                                    GoodsDetailForPddActivity.start(context, goodInfo);
+                                    dialog.dismiss();
+                                    break;
+                                case 5://考拉
+                                    GoodsDetailForKoalaActivity.start(context, info.getItemId());
+                                    break;
+                                case 6://唯品会
+                                    GoodsDetailForWphActivity.start(context, info.getItemId());
+                                    break;
 
+                            }
+
+                        }else{
+                            dialog.dismiss();
                         }
 
 

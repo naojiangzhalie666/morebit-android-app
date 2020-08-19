@@ -30,17 +30,17 @@ import java.util.List;
 public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHolder> {
     private int mItmeWidth;
     private LayoutInflater mInflater;
-    private List<ImageInfo> mDatas = new ArrayList<>();
+    private List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> mDatas = new ArrayList<>();
     private Context mContext;
     private FragmentManager fm;
     private int screenWidth = 0;
     private List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> list;
 
-    public HomeMenuAdapter(Context mContext,/* int itmeWidth,*/List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> wheelChartDisplayVo) {
+    public HomeMenuAdapter(Context mContext/*, int itmeWidth,List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> wheelChartDisplayVo*/) {
         mInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
        // mItmeWidth = itmeWidth;
-        this.list=wheelChartDisplayVo;
+      //  this.list=wheelChartDisplayVo;
     }
 
 
@@ -49,7 +49,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void setData(List<ImageInfo> data) {
+    public void setData(List<DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean> data) {
 
         if (data != null) {
             mDatas.clear();
@@ -73,7 +73,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final HomeMenuAdapter.ViewHolder holder, int position) {
         final ImageInfo imageInfo = new ImageInfo();
-        final   DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean wheelChartDisplayVoBean = list.get(position);
+        final   DoorGodCategoryBean.ResultListBean.WheelChartDisplayVoBean wheelChartDisplayVoBean = mDatas.get(position);
         imageInfo.setId(wheelChartDisplayVoBean.getId());
         imageInfo.setMediaType(wheelChartDisplayVoBean.getMediaType());
         imageInfo.setClassId(wheelChartDisplayVoBean.getClassId());
@@ -110,11 +110,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        if (list.size()>10){
-            return 10;
-        }else{
-            return list.size();
-        }
+        return mDatas == null ? 0 : mDatas.size();
     }
 
 

@@ -22,6 +22,8 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.view.refresh.MarkermallHeadRefresh;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -33,6 +35,8 @@ public class SwipeRefreshLayout extends SmartRefreshLayout {
     MarkermallHeadRefresh headRefresh;
     OnRefreshListener mOnRefreshListener;
     boolean isFirst = true;
+    ClassicsHeader header;
+
 
 
     public SwipeRefreshLayout(Context context) {
@@ -51,9 +55,13 @@ public class SwipeRefreshLayout extends SmartRefreshLayout {
         }
 
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        headRefresh = new MarkermallHeadRefresh(context);
-        headRefresh.setLayoutParams(layoutParams);
-        addView(headRefresh, 0);
+     //自定义刷新头部用这个
+      //  headRefresh = new MarkermallHeadRefresh(context);
+        // headRefresh.setLayoutParams(layoutParams);
+        //   addView(headRefresh, 0);
+        header=  new ClassicsHeader(context);
+        header.setLayoutParams(layoutParams);
+        addView(header,0);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs,  R.styleable.SwipeRefresh);
         isAutoRefresh = typedArray.getBoolean( R.styleable.SwipeRefresh_is_auto_refresh, true);
