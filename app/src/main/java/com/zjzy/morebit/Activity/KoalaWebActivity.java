@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -77,7 +78,7 @@ public class KoalaWebActivity extends BaseActivity {
     private ToolbarWebHelper mToolbarWebHelper;
     private boolean mIsStop;
     private String url = "";
-    private String title = "";
+    private String stitle = "";
     private Bundle bundle;
     private WebView web;
     private LinearLayout rl_bottom_view;
@@ -137,7 +138,7 @@ public class KoalaWebActivity extends BaseActivity {
 
         webSettings.setDomStorageEnabled(true);//设置适应Html5 //重点是这个设置
         web.loadUrl(url);
-        mToolbarWebHelper = new ToolbarWebHelper(this).setCustomTitle(title).setCustomOff(new View.OnClickListener() {
+        mToolbarWebHelper = new ToolbarWebHelper(this).setCustomOff(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -187,6 +188,22 @@ public class KoalaWebActivity extends BaseActivity {
                 }
             }
         });
+
+
+        WebChromeClient wvcc = new WebChromeClient() {
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                if (!TextUtils.isEmpty(title)){
+                    mToolbarTtle.setText(title);
+                }else{
+                    mToolbarTtle.setText(stitle);
+                }
+
+            }
+        };
+        // 设置setWebChromeClient对象
+        web.setWebChromeClient(wvcc);
         //如果不设置WebViewClient，请求会跳转系统浏览器
         web.setWebViewClient(new WebViewClient() {
 
@@ -206,7 +223,9 @@ public class KoalaWebActivity extends BaseActivity {
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, final String newurl) {
                 try {
-
+                    if (newurl.startsWith("kaola://")||newurl.startsWith("vip://")){
+                        return true;
+                    }
                     if (!TextUtils.isEmpty(newurl)) {
                         Log.e("uuuu",newurl+"列表");
                         if (newurl.contains("https://m-goods.kaola.com/product/")) {
@@ -353,7 +372,7 @@ public class KoalaWebActivity extends BaseActivity {
     private void initBundle() {
         bundle = getIntent().getExtras();
         if (bundle != null) {
-            title = bundle.getString("title");
+            stitle = bundle.getString("title");
             url = bundle.getString("url");
         }
     }

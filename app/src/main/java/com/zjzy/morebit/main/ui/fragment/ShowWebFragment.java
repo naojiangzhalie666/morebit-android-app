@@ -9,7 +9,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +25,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Activity.GoodsDetailForKoalaActivity;
+import com.zjzy.morebit.Activity.GoodsDetailForWphActivity;
+import com.zjzy.morebit.Activity.KoalaWebActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
+import com.zjzy.morebit.network.BaseResponse;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.LoginSucceedEvent;
 import com.zjzy.morebit.pojo.event.WebViewEvent;
+import com.zjzy.morebit.pojo.request.RequesKoalaBean;
+import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LogUtils;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.ReadImgUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
@@ -53,6 +69,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 
 /**
  * Created by fengrs on 2018/9/12.
@@ -144,7 +162,6 @@ public class ShowWebFragment extends BaseFragment {
                 try {
                     if (!newurl.contains("activityLink=https://s.click.ele.me")&&!newurl.contains("activityLink=https://s.click.koubei.com")) {
                         if (!newurl.contains("https://activity.morebit.com.cn/#/ele?") && !newurl.contains("https://activity.morebit.com.cn/#/resta?")) {
-
                             if (null != mTaobaoLink && mTaobaoLink.size() > 0) {
                                 boolean isFind = false;
                                 for (String url : mTaobaoLink) {
@@ -213,6 +230,8 @@ public class ShowWebFragment extends BaseFragment {
 
         });
     }
+
+
 
     private void initBundle() {
 
@@ -497,4 +516,5 @@ public class ShowWebFragment extends BaseFragment {
     public interface MYWebChromeClient {
         void onPageCommitVisible(boolean canGoBack);
     }
+
 }

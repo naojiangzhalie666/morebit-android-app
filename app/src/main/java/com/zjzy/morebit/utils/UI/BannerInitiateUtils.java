@@ -149,7 +149,12 @@ public class BannerInitiateUtils {
                     TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
                 } else {
                     //跳转到网页
-                    showWebIntent(activity, imageInfo);
+                    if(imageInfo.getUrl().contains("vip.com")||imageInfo.getUrl().contains("kaola.com")){//外链 针对考拉和唯品会活动
+                        KoalaWebActivity.start(activity,imageInfo.getUrl(),imageInfo.getTitle());
+                    } else{
+                        showWebIntent(activity, imageInfo);
+                    }
+
 
                 }
 //                }else{

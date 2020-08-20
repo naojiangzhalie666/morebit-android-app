@@ -80,7 +80,7 @@
                 android:background="@drawable/bg_input_fcdf0a_ffed68_round_right30dp"
                 android:gravity="center"
                 android:text="搜索"
-                android:textColor="@color/color_2B0900"
+                android:textColor="@color/white"
                 android:textSize="14sp"/>
         </LinearLayout>
 
@@ -203,10 +203,10 @@
                 android:id="@+id/poster_share"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/color_FCEE8B"
+                android:background="#FEAD00"
                 android:gravity="center"
                 android:text="海报分享"
-                android:textColor="@color/color_2B0900"
+                android:textColor="@color/white"
                 android:textSize="13dp"/>
 
         </LinearLayout>
@@ -220,10 +220,10 @@
                 android:id="@+id/web_list_share"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/color_FCDF0A"
+                android:background="@color/color_F05557"
                 android:gravity="center"
                 android:text="Web集合页"
-                android:textColor="@color/color_2B0900"
+                android:textColor="@color/white"
                 android:textSize="13dp"/>
 
         </LinearLayout>

@@ -318,16 +318,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         }
 
     };
-//    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            String action = intent.getAction();
-//            if (action.equals("0")) {  //接收到广播通知的名字，在当前页面应与注册名称一致
-//                finisResh();
-//            }
-//        }
-//    };
+
 
 
     public static HomeOtherFragment newInstance(String param1, String param2) {
@@ -345,14 +336,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         handler.sendEmptyMessageDelayed(1001, 3000);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -524,42 +507,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         setScrollBar();
 
 
-        // initTime(Long.parseLong(newtime));
-
-
-//        limited.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-//                Log.e("gggg", "不要点我1");
-//            }
-//        });
-
-
-//        autoView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-//                Log.e("gggg", "不要点我");
-//
-//            }
-//        });
-
-//        autoView.setOnsClickListener(new AutoInterceptViewGroup.OnClickListener() {
-//            @Override
-//            public void paly() {
-//                isAutoPlay = true;
-//                handler.removeMessages(1001);
-//                handler.sendEmptyMessageDelayed(1001, 3000);
-//            }
-//
-//            @Override
-//            public void stop() {
-//                isAutoPlay = false;
-//                handler.removeMessages(1001);
-//                PanicBuyFragment.start(getActivity(), mImageInfo);//跳限时秒杀
-//            }
-//        });
 
 
     }
@@ -773,28 +720,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
     private void initRefresh() {
-//        swipeRefreshLayout.setEnabled(true);
-//        swipeRefreshLayout.setNestedScrollingEnabled(true);
-//        //设置进度View下拉的起始点和结束点，scale 是指设置是否需要放大或者缩小动画
-//        swipeRefreshLayout.setProgressViewOffset(true, -0, 100);
-//        //设置进度View下拉的结束点，scale 是指设置是否需要放大或者缩小动画
-//        swipeRefreshLayout.setProgressViewEndTarget(true, 180);
-//        //设置进度View的组合颜色，在手指上下滑时使用第一个颜色，在刷新中，会一个个颜色进行切换
-//        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#FF645B"));
-//        //设置触发刷新的距离
-//        swipeRefreshLayout.setDistanceToTriggerSync(200);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//                refreshData();
-//                initData();
-//                initBanner();
-//                swipeRefreshLayout.setRefreshing(false);
-//
-//            }
-//        });
-
         swipeList.setEnableRefresh(true);
         swipeList.setOnRefreshListener(new OnRefreshListener() {
             @Override
