@@ -17,11 +17,17 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.App;
 import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.CallBackObserver;
+import com.zjzy.morebit.network.RxHttp;
+import com.zjzy.morebit.network.RxUtils;
+import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.RequestReadNotice;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -39,6 +45,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
@@ -125,6 +132,34 @@ public class AppStartActivity extends RxAppCompatActivity {
             });
             showBanner();
         }
+        //记录用户活跃
+        getActivity();
+
+    }
+
+    private void getActivity() {
+        getReadActivity(this)
+         .subscribe(new DataObserver<String>(false) {
+            @Override
+            protected void onDataListEmpty() {
+
+            }
+
+            @Override
+            protected void onDataNull() {
+
+            }
+
+            @Override
+            protected void onError(String errorMsg, String errCode) {
+
+            }
+
+            @Override
+            protected void onSuccess(String data) {
+
+            }
+        });
     }
 
 
@@ -392,6 +427,16 @@ public class AppStartActivity extends RxAppCompatActivity {
             mVideoView.setOnPreparedListener(null);
             mVideoView = null;
         }
+    }
+
+
+
+    //获取用户日活
+    public Observable<BaseResponse<String>> getReadActivity(RxAppCompatActivity fragment) {
+
+        return RxHttp.getInstance().getSysteService().getRecordUserActive()
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
     }
 
 }

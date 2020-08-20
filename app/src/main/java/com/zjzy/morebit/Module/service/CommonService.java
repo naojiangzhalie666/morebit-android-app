@@ -2779,6 +2779,13 @@ public interface CommonService {
      */
     @POST("/api/order/cart/submit")
     public Observable<BaseResponse<ShopCarOrderBean>> getShopCarSubmit(@Body RequestOrderShopcarBean body);
+    /**
+     * 用户活跃记录
+     *
+     * @return
+     */
+    @POST("/api/system/recordUserActive")
+    public Observable<BaseResponse<String>> getRecordUserActive();
 
 
 
