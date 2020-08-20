@@ -237,7 +237,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private long seconds;
     private boolean isRun = true;
     private TextView daysTv, hoursTv, minutesTv, secondsTv;
-    private LinearLayout ll_new, litmit_ll;
+    private LinearLayout ll_new;
     private LinearLayout new_goods;
     private RelativeLayout rl_limit, rl_urgency_notifi;
     ;
@@ -254,6 +254,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private HomeMenuAdapter menuAdapter;
     private View bar_line,icon_bg;
     private float endX = 0;
+    private RelativeLayout search_rl;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -399,6 +400,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     @SuppressLint("ClickableViewAccessibility")
     private void initOtherView() {
+        search_rl = mView.findViewById(R.id.search_rl);
         space1 = mView.findViewById(R.id.space1);
         sroller = mView.findViewById(R.id.sroller);
         swipeList = mView.findViewById(R.id.swipeList);
@@ -409,7 +411,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         mViewPager = mView.findViewById(R.id.viewPager);
         xablayout = mView.findViewById(R.id.xablayout);
         shareImageView = mView.findViewById(R.id.shareImageView);
-//        litmit_ll = mView.findViewById(R.id.litmit_ll);
         litmited_pager = mView.findViewById(R.id.litmited_pager);
         limited = mView.findViewById(R.id.limited);
         limited.setOnClickListener(this);
@@ -735,8 +736,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         initNew();
         getLoginView();
         getNotice();
-
-
         if (LoginUtil.checkIsLogin(getActivity(), false) && UserLocalData.isShowGuide() && !isShowGuide) {
             isShowGuide = true;
             new Handler().postDelayed(new Runnable() {
@@ -2111,6 +2110,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 .setShowCounts(1)
                 .addGuidePage(//添加一页引导页
                         GuidePage.newInstance()//创建一个实例
+                                .addHighLight(search_rl,HighLight.Shape.ROUND_RECTANGLE, 30, 0, null)
                                 .setLayoutRes(R.layout.view_search_guide)//设置引导页布局
                                 .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
                                     @Override
@@ -2162,7 +2162,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 .addGuidePage(
                         GuidePage.newInstance()
 
-                                .addHighLight(litmit_ll, HighLight.Shape.ROUND_RECTANGLE, 35, 0, null)
+                                .addHighLight(rcy_icon, HighLight.Shape.ROUND_RECTANGLE, 35, 0, null)
                                 .setLayoutRes(R.layout.view_icon_guide)//引导页布局，点击跳转下一页或者消失引导层的控件id
                                 .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
                                     @Override
