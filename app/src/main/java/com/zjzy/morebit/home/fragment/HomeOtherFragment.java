@@ -133,7 +133,7 @@ import com.zjzy.morebit.pojo.goods.GoodCategoryInfo;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.goods.NewRecommendBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
-import com.zjzy.morebit.purchase.PurchaseActivity;
+
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AutoHeightViewPager;
 import com.zjzy.morebit.utils.AutoInterceptViewGroup;

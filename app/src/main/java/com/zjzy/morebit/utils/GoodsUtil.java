@@ -75,8 +75,6 @@ import com.zjzy.morebit.pojo.request.RequestTKLBean;
 import com.zjzy.morebit.pojo.request.WxCodeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestUploadCouponInfo;
-import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
-import com.zjzy.morebit.purchase.adapter.PurchsePosterAdapter;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.fire.BuglyUtils;
 import com.zjzy.morebit.utils.share.ShareMore;
@@ -658,26 +656,6 @@ public class GoodsUtil {
     }
 
 
-    /**
-     * 生成虚拟页面数据并保存为图片
-     *
-     * @param activity
-     * @param goodsInfo
-     * @throws Exception
-     */
-    public static String savePruchaseGoodsImg(Activity activity, List<ShopGoodInfo> goodsInfo) throws Exception {
-        //设置布局数据
-        View view = getPurchasePoster(activity, goodsInfo);
-        Bitmap vBitmap = getViewBitmap(view);
-        //保存图片到本地
-        String saveMakePath = SdDirPath.IMAGE_CACHE_PATH + "goodqr_" + System.currentTimeMillis() + ".jpg";
-        File file = new File(saveMakePath);
-
-        vBitmap.compress(Bitmap.CompressFormat.JPEG, 80, new FileOutputStream(file));
-        vBitmap.recycle();
-        vBitmap = null;
-        return saveMakePath;
-    }
 
     /**
      * 生成虚拟页面数据并保存为图片
@@ -749,14 +727,6 @@ public class GoodsUtil {
 
         return view;
     }
-
-    //    public static Bitmap getViewBitmap(View view) {
-//        int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-//        view.measure(me, me);
-//        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-//        view.buildDrawingCache();
-//        return view.getDrawingCache();
-//    }
     public static Bitmap getViewBitmap(View v) {
         if (v == null) {
             return null;
@@ -836,110 +806,6 @@ public class GoodsUtil {
         if (ewmBitmap != null)
             qrcode_img.setImageBitmap(ewmBitmap);
         return view;
-    }
-
-    @NonNull
-    public static View getPurchasePoster(Activity activity, List<ShopGoodInfo> goodsInfo) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.view_new_pruchase_goods_poster, null);
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        layoutParams.setMargins(0,0,0,50);
-
-   /*    RecyclerView rcy_pruchase=view.findViewById(R.id.rcy_pruchase);
-      PurchsePosterAdapter  adapter=new PurchsePosterAdapter(activity,goodsInfo);
-        LinearLayoutManager manager = new LinearLayoutManager(activity);
-        rcy_pruchase.setLayoutManager(manager);
-        rcy_pruchase.setAdapter(adapter);*/
-        // Bitmap bitmap = getRecycleViewBitmap(rcy_pruchase);
-//        ImageView qrcode_img = (ImageView) view.findViewById(R.id.qrcode_img);
-//
-        TextView tv_code = (TextView) view.findViewById(R.id.tv_code);
-        //  tv_code.setLayoutParams(layoutParams);
-        //  ImageView img_recycleview = view.findViewById(R.id.img_recycleview);
-        //   img_recycleview.setImageBitmap(bitmap);
-
-        tv_code.setText(activity.getString(R.string.invitation_code, UserLocalData.getUser().getInviteCode()));
-
-
-        //if (ewmBitmap != null)
-        //  qrcode_img.setImageBitmap(ewmBitmap);
-        return view;
-    }
-
-    /**
-     * RecyclerView截屏
-     *
-     * @param view 要截图的RecyclerView
-     * @return Bitmap
-     */
-    public static Bitmap shotRecyclerView(RecyclerView view) {
-        RecyclerView.Adapter adapter = view.getAdapter();
-        Bitmap bigBitmap = null;
-        if (adapter != null) {
-            int size = adapter.getItemCount();
-            int height = 0;
-            Paint paint = new Paint();
-            int iHeight = 0;
-            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-
-            // Use 1/8th of the available memory for this memory cache.
-            final int cacheSize = maxMemory / 8;
-            LruCache<String, Bitmap> bitmaCache = new LruCache<>(cacheSize);
-            for (int i = 0; i < size; i++) {
-                RecyclerView.ViewHolder holder = adapter.createViewHolder(view, adapter.getItemViewType(i));
-                adapter.onBindViewHolder(holder, i);
-                holder.itemView.measure(
-                        View.MeasureSpec.makeMeasureSpec(view.getWidth(), View.MeasureSpec.EXACTLY),
-                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-                holder.itemView.layout(0, 0, holder.itemView.getMeasuredWidth(),
-                        holder.itemView.getMeasuredHeight());
-                holder.itemView.setDrawingCacheEnabled(true);
-                holder.itemView.buildDrawingCache();
-                Bitmap drawingCache = holder.itemView.getDrawingCache();
-                if (drawingCache != null) {
-
-                    bitmaCache.put(String.valueOf(i), drawingCache);
-                }
-                height += holder.itemView.getMeasuredHeight();
-            }
-
-            bigBitmap = Bitmap.createBitmap(view.getMeasuredWidth(), height, Bitmap.Config.ARGB_8888);
-            Canvas bigCanvas = new Canvas(bigBitmap);
-            Drawable lBackground = view.getBackground();
-            if (lBackground instanceof ColorDrawable) {
-                ColorDrawable lColorDrawable = (ColorDrawable) lBackground;
-                int lColor = lColorDrawable.getColor();
-                bigCanvas.drawColor(lColor);
-            }
-
-            for (int i = 0; i < size; i++) {
-                Bitmap bitmap = bitmaCache.get(String.valueOf(i));
-                bigCanvas.drawBitmap(bitmap, 0f, iHeight, paint);
-                iHeight += bitmap.getHeight();
-                bitmap.recycle();
-            }
-        }
-        return bigBitmap;
-    }
-
-    /**
-     * 截图RecycleView
-     **/
-    public static Bitmap getRecycleViewBitmap(RecyclerView recycleView) {
-        int h = 0;
-        Bitmap bitmap;
-        // 获取listView实际高度
-        for (int i = 0; i < recycleView.getChildCount(); i++) {
-            h += recycleView.getChildAt(i).getHeight();
-        }
-        //Log.d(TAG, "实际高度:" + h);
-        //  Log.i("TAG", "getListViewBitmap: ");
-        // Log.d("TAG", "list 高度:" + recycleView.getHeight());
-        // 创建对应大小的bitmap
-        bitmap = Bitmap.createBitmap(recycleView.getWidth(), h,
-                Bitmap.Config.RGB_565);
-        final Canvas canvas = new Canvas(bitmap);
-        recycleView.draw(canvas);
-        return bitmap;
     }
 
     /**

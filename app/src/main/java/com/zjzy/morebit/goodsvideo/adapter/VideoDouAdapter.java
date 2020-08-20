@@ -41,7 +41,7 @@ import com.zjzy.morebit.pojo.MarkermallCircleItemInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.TKLBean;
-import com.zjzy.morebit.purchase.PurchaseActivity;
+
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DownloadManage;

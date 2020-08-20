@@ -33,7 +33,7 @@ import com.zjzy.morebit.pojo.ActivityLinkBean;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.WxCodeBean;
-import com.zjzy.morebit.purchase.PurchaseActivity;
+
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.FileUtils;
 import com.zjzy.morebit.utils.GoodsUtil;

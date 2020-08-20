@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.zjzy.morebit.purchase.adapter.PurchseAdapter;
+
 
 /**
  * Created by Administrator on 2017/10/16.

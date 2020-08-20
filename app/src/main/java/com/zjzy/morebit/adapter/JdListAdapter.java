@@ -31,7 +31,6 @@ import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
-import com.zjzy.morebit.purchase.PurchaseActivity;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.KaipuleUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;

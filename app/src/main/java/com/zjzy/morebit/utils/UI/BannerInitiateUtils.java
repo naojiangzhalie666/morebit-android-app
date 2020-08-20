@@ -64,7 +64,7 @@ import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestJpLinkBean;
 import com.zjzy.morebit.pojo.request.RequestSplashStatistics;
 import com.zjzy.morebit.pojo.request.RequestTmallActivityLinkBean;
-import com.zjzy.morebit.purchase.PurchaseActivity;
+
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GlideImageLoader;
@@ -402,10 +402,10 @@ public class BannerInitiateUtils {
             bundle.putBoolean(C.Extras.openFragment_isSysBar, true);
             OpenFragmentUtils.goToSimpleFragment(activity, PddChildFragment.class.getName(), bundle);
         } else if (type == C.BannerIntentionType.NEW_PERSONAL) {//新人免单
-            if (LoginUtil.checkIsLogin(activity)) {
-                activity.startActivity(new Intent(activity, PurchaseActivity.class));
-
-            }
+//            if (LoginUtil.checkIsLogin(activity)) {
+//                activity.startActivity(new Intent(activity, PurchaseActivity.class));
+//
+//            }
         } else if (type == C.BannerIntentionType.HUNGRY) {//饿了么
             if (LoginUtil.checkIsLogin(activity)) {
                 if (TaobaoUtil.isAuth()) {//淘宝授权
