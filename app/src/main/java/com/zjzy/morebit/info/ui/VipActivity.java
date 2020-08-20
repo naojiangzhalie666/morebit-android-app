@@ -538,8 +538,8 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
         //条件:
         List<VipUseInfoBean.ConditionOneBean> oneList = vipUseInfoBean.getConditionOne();
 //        String progressStr = "%d/%d(人)";
-        mCommonMember.findViewById(R.id.query_failure).setVisibility(View.GONE);
-        mCommonMember.findViewById(R.id.term).setVisibility(View.VISIBLE);
+     //   mCommonMember.findViewById(R.id.query_failure).setVisibility(View.GONE);
+    //    mCommonMember.findViewById(R.id.term).setVisibility(View.VISIBLE);
         if (oneList != null && oneList.size() != 0) { //只有一个条件
             VipUseInfoBean.ConditionOneBean oneBean = oneList.get(0);
             mConditions[0].setText(oneBean.getMessage());
@@ -556,7 +556,7 @@ public class VipActivity extends BaseActivity implements View.OnClickListener {
         }
 
         mUpgrade.findViewById(R.id.ll_content).setVisibility(View.VISIBLE);
-        mUpgrade.findViewById(R.id.query_failure1).setVisibility(View.GONE);
+       // mUpgrade.findViewById(R.id.query_failure1).setVisibility(View.GONE);
         //条件1:
         List<VipUseInfoBean.ConditionOneBean> oneList = vipUseInfoBean.getConditionOne();
         if (oneList != null) {
