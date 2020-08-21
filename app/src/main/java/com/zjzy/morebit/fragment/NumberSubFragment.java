@@ -200,14 +200,10 @@ public class NumberSubFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         if (headView == null) {
             headView = inflater.inflate(R.layout.fragment_vip_header, container, false);
-            //  headView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_number2_header, null);
 
             initView(headView);
 
-//            initTan();
-//             initData();
-//            initPush();
-//            refreshData();
+
 
 
         }
@@ -215,28 +211,12 @@ public class NumberSubFragment extends BaseFragment {
     }
 
 
-    private void initPush() {
 
-        String growth = SPUtils.getInstance().getString("growth");
-        if (growth != null) {
-            if (growth.equals("360")) {
-                updateGrade();
-                SPUtils.getInstance().remove("growth");
-            }
-
-            if (growth.equals("50000")) {
-                updateGradeForLeader();
-                SPUtils.getInstance().remove("growth");
-            }
-        }
-    }
 
 
     public static NumberSubFragment newInstance() {
         NumberSubFragment fragment = new NumberSubFragment();
-//        Bundle args = new Bundle();
-//        args.putString("extra", extra);
-//        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -460,9 +440,7 @@ public class NumberSubFragment extends BaseFragment {
 
     }
 
-//    private void getData() {
-//        getNumberGoodsListPresenter(this, page);
-//    }
+
 
 
     /**
@@ -642,78 +620,8 @@ public class NumberSubFragment extends BaseFragment {
                 .compose(RxUtils.<BaseResponse<ShopCarNumBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<ShopCarNumBean>>bindToLifecycle());
     }
-    private void initTan() {
-        UserInfo mUserInfo = UserLocalData.getUser(getActivity());
-        if (mUserInfo == null) {
-            return;
-        }
-        Long moreCoin = mUserInfo.getMoreCoin();
-        if (moreCoin != null) {
-            if (moreCoin > 360) {
-                if (C.UserType.member.equals(mUserInfo.getUserType())) {
-                    updateGrade();
-                }
-
-            }
-            if (moreCoin > 50000) {
-                if (C.UserType.vipMember.equals(mUserInfo.getUserType())) {
-                    updateGradeForLeader();
-                }
-
-            }
-        }
 
 
-    }
-
-    private void refreshData() {
-        LoginUtil.getUserInfo((RxAppCompatActivity) getActivity(), false, new MyAction.OnResultFinally<UserInfo>() {
-            /**
-             * 结束
-             */
-            @Override
-            public void onFinally() {
-
-            }
-
-            @Override
-            public void invoke(UserInfo arg) {
-                updataUser();
-            }
-
-            @Override
-            public void onError() {
-            }
-        });
-
-
-        getVipFloor(this).compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
-                .compose(this.<BaseResponse<List<ImageInfo>>>bindToLifecycle())
-                .subscribe(new DataObserver<List<ImageInfo>>() {
-                    @Override
-                    protected void onDataListEmpty() {
-                        rl3.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    protected void onSuccess(List<ImageInfo> data) {
-                        if (data != null) {
-                            if (data.size() < 2) {
-                                rl3.setVisibility(View.GONE);
-                            } else {
-                                rl3.setVisibility(View.VISIBLE);
-                                floorAdapter = new ActivityFloorAdapter(getActivity(), data);
-                                if (floorAdapter != null) {
-                                    activity_rcy.setAdapter(floorAdapter);
-                                }
-                            }
-                        } else {
-                            rl3.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
-    }
 
     //获取用户详情
     private void showDetailsView(UserInfo data) {

@@ -1617,42 +1617,55 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     @Override
     public void onClick(View v) {
+        final ImageInfo mImageInfo = new ImageInfo();
+        mImageInfo.setClassId(4);
+        mImageInfo.setId(363);
+        mImageInfo.setSplicePid("0");
+        mImageInfo.setType("4");
+        mImageInfo.setTitle("限时抢购");
         switch (v.getId()) {
             case R.id.linear1:
+                if (timeList.size()>0){
+                    PanicBuyFragment.start(getActivity(), mImageInfo,timeList.get(0).getTitle());//跳限时秒杀
+                }
 
-                tv_title1.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
-                tv_title1.setTextColor(Color.parseColor("#FFFFFF"));
-
-                tv_title2.setTextColor(Color.parseColor("#FF999999"));
-                tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-
-                tv_title3.setTextColor(Color.parseColor("#FF999999"));
-                tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-                litmited_pager.setCurrentItem(auplay(0));
+//                tv_title1.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
+//                tv_title1.setTextColor(Color.parseColor("#FFFFFF"));
+//
+//                tv_title2.setTextColor(Color.parseColor("#FF999999"));
+//                tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
+//
+//                tv_title3.setTextColor(Color.parseColor("#FF999999"));
+//                tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
+//                litmited_pager.setCurrentItem(auplay(0));
                 break;
             case R.id.linear2:
-
-                tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-                tv_title1.setTextColor(Color.parseColor("#FF999999"));
-
-                tv_title2.setTextColor(Color.parseColor("#FFFFFF"));
-                tv_title2.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
-
-                tv_title3.setTextColor(Color.parseColor("#FF999999"));
-                tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-                litmited_pager.setCurrentItem(auplay(1));
+                if (timeList.size()>1){
+                    PanicBuyFragment.start(getActivity(), mImageInfo,timeList.get(1).getTitle());//跳限时秒杀
+                }
+//                tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
+//                tv_title1.setTextColor(Color.parseColor("#FF999999"));
+//
+//                tv_title2.setTextColor(Color.parseColor("#FFFFFF"));
+//                tv_title2.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
+//
+//                tv_title3.setTextColor(Color.parseColor("#FF999999"));
+//                tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
+//                litmited_pager.setCurrentItem(auplay(1));
                 break;
             case R.id.linear3:
-
-                tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-                tv_title1.setTextColor(Color.parseColor("#FF999999"));
-
-                tv_title2.setTextColor(Color.parseColor("#FF999999"));
-                tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-
-                tv_title3.setTextColor(Color.parseColor("#FFFFFF"));
-                tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
-                litmited_pager.setCurrentItem(auplay(2));
+                if (timeList.size()>2){
+                    PanicBuyFragment.start(getActivity(), mImageInfo,timeList.get(2).getTitle());//跳限时秒杀
+                }
+//                tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
+//                tv_title1.setTextColor(Color.parseColor("#FF999999"));
+//
+//                tv_title2.setTextColor(Color.parseColor("#FF999999"));
+//                tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
+//
+//                tv_title3.setTextColor(Color.parseColor("#FFFFFF"));
+//                tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
+//                litmited_pager.setCurrentItem(auplay(2));
                 break;
             case R.id.searchTv:
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
