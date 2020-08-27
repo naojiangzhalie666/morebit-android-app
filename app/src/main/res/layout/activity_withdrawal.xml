@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/color_F0F1F5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.WithdrawalActivity">
+    <include layout="@layout/top" />
+
+    <TextView
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.2"
+        android:text="提示：1、订单预估返利及活动商品返利在确认收货次月25～31可提现余额2、活动奖励详细结算规则见活动说明"
+        android:textColor="#ff999999"
+        android:textSize="12sp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_fan"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:paddingLeft="12dp"
+        android:background="@drawable/bg_ffffff_4dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+            android:layout_marginTop="17dp"
+            android:id="@+id/zg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自购返利"
+            android:textColor="#ff333333"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_marginTop="4dp"
+            android:id="@+id/zg_qian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="剩余 ¥ 0"
+            android:layout_below="@+id/zg_title"
+            android:textColor="#ff999999"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:background="@drawable/background_f05557_radius_15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="立即提现"
+            android:paddingLeft="12dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"
+            />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_yx"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:paddingLeft="12dp"
+        android:background="@drawable/bg_ffffff_4dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+            android:layout_marginTop="17dp"
+            android:id="@+id/yx_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="优选商品积分兑换"
+            android:textColor="#ff333333"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_marginTop="4dp"
+            android:id="@+id/yx_qian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="剩余 ¥ 0"
+            android:layout_below="@+id/yx_title"
+            android:textColor="#ff999999"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:background="@drawable/background_f05557_radius_15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="立即提现"
+            android:paddingLeft="12dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"
+            />
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_activity"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:paddingLeft="12dp"
+        android:background="@drawable/bg_ffffff_4dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+            android:layout_marginTop="17dp"
+            android:id="@+id/activity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="活动奖励"
+            android:textColor="#ff333333"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_marginTop="4dp"
+            android:id="@+id/activity_qian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="剩余 ¥ 0"
+            android:layout_below="@+id/activity_title"
+            android:textColor="#ff999999"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:background="@drawable/background_f05557_radius_15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="立即提现"
+            android:paddingLeft="12dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

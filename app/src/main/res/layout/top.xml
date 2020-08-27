@@ -26,17 +26,29 @@
             android:paddingBottom="10dp">
 
             <ImageView
+                android:id="@+id/img_back"
                 android:src="@drawable/btn_title_return_icon"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true" />
         </LinearLayout>
-        <!--<ImageView-->
-        <!--android:id="@+id/btn_back"-->
-        <!--style="@style/TopSizeBack"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerVertical="true" />-->
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/btn_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingTop="10dp"
+            android:paddingLeft="35dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:src="@mipmap/time_icon"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true" />
+        </LinearLayout>
 
         <TextView
             android:visibility="gone"

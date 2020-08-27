@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F0F1F5"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".goodsvideo.ShopMallActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/top3" />
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_F05557"
+                        android:paddingBottom="12dp">
+
+
+                        <LinearLayout
+                            android:id="@+id/ll2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:gravity="center_vertical">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/vip_tou"
+                                android:layout_width="52dp"
+                                android:layout_height="52dp"
+                                android:scaleType="fitXY"
+                                android:src="@color/white"
+                                app:riv_border_color="@color/white"
+                                app:riv_border_width="1dp"
+                                app:riv_corner_radius="0dip"
+                                app:riv_mutate_background="true"
+                                app:riv_oval="true" />
+
+
+                            <TextView
+                                android:id="@+id/vip_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+
+                                android:layout_toRightOf="@+id/vip_tou"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:maxEms="4"
+                                android:text="我是昵称"
+                                android:textColor="#ffffffff"
+                                android:textSize="18sp" />
+
+
+                            <LinearLayout
+                                android:id="@+id/ll_vip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_toRightOf="@+id/vip_name"
+                                android:background="@drawable/bg_e9c8a7_round_9dp"
+                                android:paddingLeft="8dp"
+                                android:paddingTop="1dp"
+                                android:paddingRight="8dp"
+                                android:paddingBottom="1dp">
+
+                                <ImageView
+                                    android:id="@+id/img_vip"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@mipmap/vip_icon_right2" />
+
+                                <TextView
+                                    android:id="@+id/vip_grade"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="8dp"
+                                    android:text="VIP"
+                                    android:textColor="#A8947A"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/vip_ll"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ll2"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginRight="12dp">
+
+                                    <TextView
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="成长值 "
+                                        android:textColor="#ffffffff"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:id="@+id/tv_coin"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0/360"
+                                        android:textColor="#ffffffff"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1" />
+
+                                    <TextView
+                                        android:id="@+id/tv_morcion"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="您还需360成长值才能升级掌柜"
+                                        android:textColor="#ffffffff"
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
+
+
+                                <com.zjzy.morebit.view.HorzProgressView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:id="@+id/horzProgressView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="15dp"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="12dp"
+                                    app:liys_progress_line_inDrawable="@mipmap/progress_bg_vip"
+                                    app:liys_progress_line_max="100"
+                                    app:liys_progress_line_outColor="#FFDBDB"
+                                    app:liys_progress_line_progress="20" />
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+
+                    <com.zjzy.morebit.view.AspectRatioView
+                        android:id="@+id/ar_title_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="12dp"
+                        app:aspectRatio="1.9">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/vip_bg_quanyi" />
+
+                    </com.zjzy.morebit.view.AspectRatioView>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rcy_shopmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:nestedScrollingEnabled="false" />
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="Translate" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/shop_car"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_above="@+id/top_rcy"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@mipmap/shop_car_icon">
+
+        <TextView
+            android:id="@+id/shopnum"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/background_f05557_radius_yuan"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/top_rcy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="50dp"
+        android:src="@mipmap/yx_top_icon" />
+
+</RelativeLayout>

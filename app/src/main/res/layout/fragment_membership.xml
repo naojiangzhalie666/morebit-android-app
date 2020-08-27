@@ -2,40 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/net_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/color_F0F1F5"
     android:orientation="vertical">
 
 
-
-    <View
+    <com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout
+        android:id="@+id/sroller"
         android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:background="@color/color_F0F1F5"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcy_title"
-        android:layout_width="0dp"
-        android:background="@color/color_F8F8F8"
         android:layout_height="match_parent"
-        android:layout_weight="2" />
+        android:scrollbars="vertical"
+        app:isPermanent="true">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:paddingLeft="12dp"
-        android:id="@+id/rcy_icon"
-        android:layout_width="0dp"
-        android:layout_weight="8"
-        android:layout_marginBottom="20dp"
-        android:layout_height="match_parent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@color/color_F0F1F5" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp">
+
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/vip_quanyi1" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/vip_quanyi2" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@color/color_F0F1F5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_isConsecutive="false"
+            app:layout_isSticky="true">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcy_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/color_F8F8F8" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcy_icon"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingBottom="20dp" />
+
+        </LinearLayout>
+
+    </com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout>
 </LinearLayout>

@@ -192,24 +192,22 @@
                 android:textColor="#ff5f2c06"
                 android:textSize="16sp"
                 />
+            <ImageView
+                android:id="@+id/img1"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/vip_icon_right2"
+                android:layout_marginRight="12dp"
+                />
 
             <TextView
                 android:id="@+id/tv2"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VIP"
-                android:textStyle="bold"
-                android:textColor="#ff5f2c06"
-                android:textSize="16sp"
-                />
-
-            <TextView
-                android:id="@+id/tv3"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="享更多权益"
+                android:text="掌柜享更多权益"
                 android:textColor="#ff5f2c06"
                 android:textSize="16sp"
                 />

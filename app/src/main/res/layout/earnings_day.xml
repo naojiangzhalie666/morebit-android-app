@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_marginBottom="20dp"
     android:paddingLeft="12dp"
@@ -70,7 +71,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="预估收益"
+                    android:text="预估自购收益"
                     android:textColor="#ff999999"
                     android:textSize="14sp"
                     />
@@ -80,13 +81,31 @@
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="54.75"
+                    android:text="0"
                     android:textStyle="bold"
                     android:textColor="#ff333333"
                     android:textSize="16sp"
                     />
 
+                <TextView
+                    android:layout_marginTop="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="预估活动奖励"
+                    android:textColor="#ff999999"
+                    android:textSize="14sp"
+                    />
 
+                <TextView
+                    android:id="@+id/earningsactivity_yesterday"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp"
+                    />
                 <TextView
                     android:layout_marginTop="24dp"
                     android:layout_width="wrap_content"
@@ -101,7 +120,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="54.75"
+                    android:text="0"
                     android:textStyle="bold"
                     android:textColor="#ff333333"
                     android:textSize="16sp"
@@ -131,13 +150,30 @@
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="54.75"
+                    android:text="0"
                     android:textStyle="bold"
                     android:textColor="#ff333333"
                     android:textSize="16sp"
                     />
 
+                <TextView
+                    android:layout_marginTop="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text=""
+                    android:textColor="#ff999999"
+                    android:textSize="14sp"
+                    />
 
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text=""
+                    android:textStyle="bold"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp"
+                    />
                 <TextView
                     android:layout_marginTop="24dp"
                     android:layout_width="wrap_content"
@@ -152,7 +188,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="54.75"
+                    android:text="0"
                     android:textStyle="bold"
                     android:textColor="#ff333333"
                     android:textSize="16sp"
@@ -330,7 +366,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="上月月报"
+            android:text="历史月报"
             android:textColor="#fffd5f59"
             android:textSize="14sp"
             android:layout_centerVertical="true"
@@ -358,7 +394,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="预估收益"
+                android:text="预估自购收益"
                 android:textColor="#ff999999"
                 android:textSize="14sp"
                 />
@@ -368,13 +404,31 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54.75"
+                android:text="0"
                 android:textStyle="bold"
                 android:textColor="#ff333333"
                 android:textSize="16sp"
                 />
 
+            <TextView
+                android:layout_marginTop="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预估活动奖励"
+                android:textColor="#ff999999"
+                android:textSize="14sp"
+                />
 
+            <TextView
+                android:id="@+id/earningsactivity_month"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textStyle="bold"
+                android:textColor="#ff333333"
+                android:textSize="16sp"
+                />
             <TextView
                 android:layout_marginTop="24dp"
                 android:layout_width="wrap_content"
@@ -389,7 +443,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54.75"
+                android:text="0"
                 android:textStyle="bold"
                 android:textColor="#ff333333"
                 android:textSize="16sp"
@@ -419,13 +473,30 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54.75"
+                android:text="0"
                 android:textStyle="bold"
                 android:textColor="#ff333333"
                 android:textSize="16sp"
                 />
 
+            <TextView
+                android:layout_marginTop="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text=""
+                android:textColor="#ff999999"
+                android:textSize="14sp"
+                />
 
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text=""
+                android:textStyle="bold"
+                android:textColor="#ff333333"
+                android:textSize="16sp"
+                />
             <TextView
                 android:layout_marginTop="24dp"
                 android:layout_width="wrap_content"
@@ -440,7 +511,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54.75"
+                android:text="0"
                 android:textStyle="bold"
                 android:textColor="#ff333333"
                 android:textSize="16sp"

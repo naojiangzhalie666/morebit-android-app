@@ -1,9 +1,12 @@
 package com.zjzy.morebit.home.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,6 +44,7 @@ import com.zjzy.morebit.pojo.request.RequestListBody;
 import com.zjzy.morebit.pojo.request.base.RequestBaseOs;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
+import com.zjzy.morebit.utils.TimeUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,6 +65,7 @@ public class MembershipFragment extends BaseMainFragmeng {
     private MembershipAdapter1 adapter1;
     private MembershipAdapter2 adapter2;
     private  LinearLayoutManager manager;
+    private Handler handler=new Handler();
     /**
      * 是否来自点击
      */
@@ -151,7 +156,6 @@ public class MembershipFragment extends BaseMainFragmeng {
         Bundle arguments = getArguments();
         if (arguments != null) {
         }
-
         rcy_title = view.findViewById(R.id.rcy_title);
         rcy_icon=view.findViewById(R.id.rcy_icon);
         LinearLayoutManager layoutManager1=new LinearLayoutManager(getActivity());
@@ -188,17 +192,19 @@ public class MembershipFragment extends BaseMainFragmeng {
         adapter1.setOnAddClickListener(new MembershipAdapter1.OnAddClickListener() {
             @Override
             public void onShareClick(int postion) {
+                Log.e("kkkk",postion+"");
+                adapter1.mCheckedPosition = postion;
                 adapter1.setmPosition(postion);
-
-                mIsFromClick = true;//不走onScrolled，防止来回调
-                manager.scrollToPositionWithOffset(postion,0);
-
-                mIsFromClick = false;//放开
+                adapter1.notifyDataSetChanged();
 
 
-                /*
-                *
-                *    LinearSmoothScroller topScroller = new LinearSmoothScroller(getActivity()) {
+              mIsFromClick = true;//不走onScrolled，防止来回调
+//                manager.scrollToPositionWithOffset(postion,0);
+//
+//                mIsFromClick = false;//放开
+
+
+                LinearSmoothScroller topScroller = new LinearSmoothScroller(getActivity()) {
 
                     @Override
                     protected int getHorizontalSnapPreference() {
@@ -215,7 +221,7 @@ public class MembershipFragment extends BaseMainFragmeng {
                         super.onStop();
                         //发送一个延时handler
                         //因为onStop时还有惯性动画
-                        TimeUtil.mHandler.postDelayed(new Runnable() {
+                        handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 mIsFromClick = false;
@@ -225,11 +231,11 @@ public class MembershipFragment extends BaseMainFragmeng {
                 };
                 topScroller.setTargetPosition(postion);
                 manager.startSmoothScroll(topScroller);
-*/
-
+                Log.e("kkkk",postion+"00000");
 
             }
         });
+
 
 
     }
@@ -237,10 +243,12 @@ public class MembershipFragment extends BaseMainFragmeng {
     private void changePosition() {
 
         int firstPosition = manager.findFirstVisibleItemPosition();
+        Log.e("kkkk",firstPosition+"无奈");
+        Log.e("kkkk",adapter1.mCheckedPosition +"无奈2");
         if (adapter1.mCheckedPosition != firstPosition) {
             adapter1.mCheckedPosition = firstPosition;
             adapter1.notifyDataSetChanged();
-
+            Log.e("kkkk","无奈3");
             //此方法无置顶效果
             rcy_title.scrollToPosition(adapter1.mCheckedPosition);
         }

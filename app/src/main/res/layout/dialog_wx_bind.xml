@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.2"
             android:gravity="center"
-            android:text="请填写正确的微信号，方便您的直属上下级联系您"
+            android:text="请填写正确的微信号，已便粉丝与您联系"
             android:textColor="#ff999999"
             android:textSize="14sp"
             />

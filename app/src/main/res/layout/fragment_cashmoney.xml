@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F0F1F5"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_margin="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+   >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:minWidth="90dp"
+                android:text="真实姓名"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/zhifubaoagin_et"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:ellipsize="end"
+                android:gravity="left|center_vertical"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:hint="请输入简体汉字"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/color_999999"
+                android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tv_xiu1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改"
+                android:layout_marginRight="12dp"
+                android:textColor="#fff05557"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@color/color_F0F1F5" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:minWidth="90dp"
+                android:text="支付账号"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/zhifubao_et"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:ellipsize="end"
+                android:gravity="left|center_vertical"
+                android:hint="请输入邮箱、手机号格式账号"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/color_999999"
+                android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_xiu2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改"
+                android:layout_marginRight="12dp"
+                android:textColor="#fff05557"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@color/color_F0F1F5" />
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:minWidth="90dp"
+                android:text="提现金额"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/withdraw_qian_icon"
+                    android:layout_gravity="center_vertical"
+                    />
+
+
+                <EditText
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/inputMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/money_symbol"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:gravity="left|center_vertical"
+                    android:hint=""
+                    android:maxLength="10"
+                    android:text=""
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/color_999999"
+                    android:textCursorDrawable="@drawable/cursordrawable_009688_inputbox"
+                    android:textSize="36sp" />
+
+            </LinearLayout>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_F2F2F2"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/tv_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="可提现 0"
+                    android:textColor="#ff999999"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/all_ti"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全部提现"
+                    android:textColor="#fff05557"
+                    android:textSize="16sp"
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/commit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="26dp"
+        android:background="@drawable/selector_next_button"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="提现"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+       />
+
+    <TextView
+        android:id="@+id/withdrawTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="36dp"
+        android:text=""
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/sp_13"
+        android:visibility="gone" />
+</LinearLayout>

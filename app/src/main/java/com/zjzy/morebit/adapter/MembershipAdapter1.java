@@ -38,6 +38,7 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
 
     public void setmPosition(int mPosition) {
         this.mCheckedPosition = mPosition;
+        Log.e("kkkk",mCheckedPosition+"   sssssss");
     }
 
 
@@ -80,17 +81,19 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
             @Override
             public void onClick(View v) {
               onItemAddClick.onShareClick(position);
-              notifyDataSetChanged();
+               notifyDataSetChanged();
             }
         });
 
-
+        Log.e("kkkk",mCheckedPosition+"   sssssss");
 
         if (position== mCheckedPosition){
+            Log.e("kkkk",mCheckedPosition+"   66999966"+position+"    8888");
             holder.title.setTextColor(Color.parseColor("#F05557"));
-            holder.tv.setBackgroundColor( Color.parseColor("#FFFFFF"));//选中灰色，不选择白色
+            holder.tv.setBackgroundColor( Color.parseColor("#FFFFFF"));//选中白色，不选择灰色
             holder.line.setVisibility(View.VISIBLE);
         }else{
+            Log.e("kkkk",mCheckedPosition+"   6666"+position+"   7777");
             holder.tv.setBackgroundColor( Color.parseColor("#F8F8F8"));//选中灰色，不选择白色
             holder.line.setVisibility(View.GONE);
             holder.title.setTextColor(Color.parseColor("#333333"));

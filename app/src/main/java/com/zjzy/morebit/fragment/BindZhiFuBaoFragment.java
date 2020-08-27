@@ -2,7 +2,9 @@ package com.zjzy.morebit.fragment;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,7 @@ import io.reactivex.functions.Action;
 public class BindZhiFuBaoFragment extends BaseFragment implements View.OnClickListener {
 
     private EditText zhifubaoagin_et, zhifubao_et, edt_yanzhengma;
-    private TextView tv_yanzhengma, phone;
+    private TextView tv_yanzhengma, phone, submit;
     private long first = 0;
     private static final int SECONDS = 60; // 秒数
     private UserInfo mUsInfo;
@@ -76,7 +78,41 @@ public class BindZhiFuBaoFragment extends BaseFragment implements View.OnClickLi
                 }
             }
         });
-        view.findViewById(R.id.submit).setOnClickListener(this);
+        submit = view.findViewById(R.id.submit);
+        submit.setOnClickListener(this);
+        initListener();
+    }
+
+    private void initListener() {
+        TextChange textChange = new TextChange();
+        edt_yanzhengma.addTextChangedListener(textChange);
+        zhifubao_et.addTextChangedListener(textChange);
+        zhifubaoagin_et.addTextChangedListener(textChange);
+    }
+
+
+    private class TextChange implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (zhifubaoagin_et.getText().toString().length() > 0 && zhifubao_et.getText().toString().length() > 0 && edt_yanzhengma.getText().toString().length() > 0) {
+                submit.setBackgroundResource(R.drawable.background_f05557_radius_30dp);
+                submit.setEnabled(true);
+            } else {
+                submit.setBackgroundResource(R.drawable.background_d3d3d3_radius_30dp);
+                submit.setEnabled(false);
+            }
+        }
     }
 
     /**
@@ -166,6 +202,7 @@ public class BindZhiFuBaoFragment extends BaseFragment implements View.OnClickLi
                     protected void onDataNull() {
                         onSuccess("");
                     }
+
                     /**
                      * 成功回调
                      *
@@ -179,7 +216,7 @@ public class BindZhiFuBaoFragment extends BaseFragment implements View.OnClickLi
                         ViewShowUtils.showLongToast(getActivity(), "验证码发送成功");
 
                     }
-                }) ;
+                });
 
     }
 
@@ -207,7 +244,6 @@ public class BindZhiFuBaoFragment extends BaseFragment implements View.OnClickLi
         String alipayNumber = zhifubao_et.getText().toString().trim();
         String realName = zhifubaoagin_et.getText().toString().trim();
         String verCode = edt_yanzhengma.getText().toString().trim();
-
 
 
         RequestSetAlipayBean requestBean = new RequestSetAlipayBean();

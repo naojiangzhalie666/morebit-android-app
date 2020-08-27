@@ -259,6 +259,14 @@ public class C {
         public static final String YXTYPE = "YXTYPE";
 
 
+        //账单收益
+        public static final String BILL_ORDER_TYPE = "BILL_ORDER_TYPE";//账单类型
+        public static final String WITHDRAW_TYPE = "WITHDRAW_TYPE";//提现类型
+        public static final String WITHDRAW_MONEY= "WITHDRAW_MONEY";//提现金额
+        public static final String WITHDRAW_ALLMONEY= "WITHDRAW_ALLMONEY";//提现全部金额
+
+
+
     }
 
     /**

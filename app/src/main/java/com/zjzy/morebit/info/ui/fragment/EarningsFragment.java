@@ -15,8 +15,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.zjzy.morebit.Activity.BillDetailsActivity;
 import com.zjzy.morebit.Activity.ConsComGoodsDeailListActivity;
 import com.zjzy.morebit.Activity.MonthAgoActivity;
+import com.zjzy.morebit.Activity.WithdrawalActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
@@ -34,6 +36,7 @@ import com.zjzy.morebit.pojo.MonthEarnings;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AppUtil;
+import com.zjzy.morebit.utils.BirthdayUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.PageToUtil;
@@ -58,13 +61,13 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     TextView withDrawTimeTv;
     @BindView(R.id.month_ago)
     TextView month_ago;
-    private  String receiveAmount;
+    private String receiveAmount;
 
     private String mTotalMoney = "";
 
-    private TextView withdrawable,cumulativereceipt,withdrawn,unassignedintegral,unsettledearnings,earningsforecasty,estimatedpointsy
-            ,exclusivefansaddedy,newordinaryfansy,estimatedearningsm,estimatedpointsm,exclusivefansaddedm
-            ,newordinaryfansm,tv_title,tv_dialy,tv_month;
+    private TextView withdrawable, cumulativereceipt, withdrawn, unassignedintegral, unsettledearnings, earningsforecasty,
+            estimatedpointsy, exclusivefansaddedy, newordinaryfansy, estimatedearningsm, estimatedpointsm, exclusivefansaddedm,
+            newordinaryfansm, tv_title, tv_dialy, tv_month,earningsactivity_month,earningsactivity_yesterday;
     private UserIncomeDetail mdata;
 
 
@@ -85,8 +88,6 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
     @Override
     protected void initView(View view) {
-
-
 
 
 //        EarningDetailFragment otherFragment = EarningDetailFragment.newInstance(C.OrderType.OTHER);
@@ -121,30 +122,30 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         }
 
 
-        withdrawable=view.findViewById(R.id.withdrawable);//可提现
-        cumulativereceipt=view.findViewById(R.id.cumulativereceipt);//累计到账
-        withdrawn=view.findViewById(R.id.withdrawn);//已提现
-        unsettledearnings=view.findViewById(R.id.unsettledearnings);//未结算收益
-        unassignedintegral=view.findViewById(R.id.unassignedintegral);//未归属积分
-        earningsforecasty=view.findViewById(R.id.earningsforecasty);//昨日预估收益
-        estimatedpointsy=view.findViewById(R.id.estimatedpointsy);//昨日预估积分
-        exclusivefansaddedy=view.findViewById(R.id.exclusivefansaddedy);//昨日专属粉丝新增
-        newordinaryfansy=view.findViewById(R.id.newordinaryfansy);//昨日普通粉丝新增
-        estimatedearningsm=view.findViewById(R.id.estimatedearningsm);//本月预估收益
-        estimatedpointsm=view.findViewById(R.id.estimatedpointsm);//本月预估积分
-        exclusivefansaddedm=view.findViewById(R.id.exclusivefansaddedm);//本月专属粉丝新增
-        newordinaryfansm=view.findViewById(R.id.newordinaryfansm);//本月普通粉丝新增
+        withdrawable = view.findViewById(R.id.withdrawable);//可提现
+        cumulativereceipt = view.findViewById(R.id.cumulativereceipt);//累计到账
+        withdrawn = view.findViewById(R.id.withdrawn);//已提现
+        unsettledearnings = view.findViewById(R.id.unsettledearnings);//未结算收益
+        unassignedintegral = view.findViewById(R.id.unassignedintegral);//未归属积分
+        earningsforecasty = view.findViewById(R.id.earningsforecasty);//昨日预估收益
+        estimatedpointsy = view.findViewById(R.id.estimatedpointsy);//昨日预估积分
+        exclusivefansaddedy = view.findViewById(R.id.exclusivefansaddedy);//昨日专属粉丝新增
+        newordinaryfansy = view.findViewById(R.id.newordinaryfansy);//昨日普通粉丝新增
+        earningsactivity_yesterday=view.findViewById(R.id.earningsactivity_yesterday);//昨日活动奖励
+        estimatedearningsm = view.findViewById(R.id.estimatedearningsm);//本月预估收益
+        estimatedpointsm = view.findViewById(R.id.estimatedpointsm);//本月预估积分
+        exclusivefansaddedm = view.findViewById(R.id.exclusivefansaddedm);//本月专属粉丝新增
+        newordinaryfansm = view.findViewById(R.id.newordinaryfansm);//本月普通粉丝新增
+        earningsactivity_month=view.findViewById(R.id.earningsactivity_month);//本月活动奖励
 
-         tv_title = view.findViewById(R.id.tv_title);
-        tv_dialy=view.findViewById(R.id.tv_dialy);
+        tv_title = view.findViewById(R.id.tv_title);
+        tv_dialy = view.findViewById(R.id.tv_dialy);
         tv_dialy.getPaint().setFakeBoldText(true);
-        tv_month=view.findViewById(R.id.tv_month);
+        tv_month = view.findViewById(R.id.tv_month);
         tv_month.getPaint().setFakeBoldText(true);
 
 
     }
-
-
 
 
     @Override
@@ -156,8 +157,6 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     public BaseView getBaseView() {
         return this;
     }
-
-
 
 
     @Override
@@ -182,22 +181,24 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
 
     @Override
     public void getDaySuccess(UserIncomeDetail data) {//我的收益
-        if (data!=null){
-            mdata=data;
-            withdrawable.setText(data.getBalance()+"");
-            cumulativereceipt.setText(data.getTotalIncome()+"");
-            withdrawn.setText(data.getReceiveAmount()+"");
+        if (data != null) {
+            mdata = data;
+            withdrawable.setText(data.getBalance() + "");
+            cumulativereceipt.setText(data.getTotalIncome() + "");
+            withdrawn.setText(data.getReceiveAmount() + "");
             receiveAmount = data.getBalance();
-            unsettledearnings.setText(data.getUnsettleAmount()+"");
-            unassignedintegral.setText(data.getUnsettleIntegral()+"");
-            earningsforecasty.setText(data.getYesterdayEstimateMoney()+"");
-            estimatedpointsy.setText(data.getYesterdayIntegral()+"");
-            exclusivefansaddedy.setText(data.getYesterdayDirectUser()+"");
-            newordinaryfansy.setText(data.getYesterdayIndirectUser()+"");
-            estimatedearningsm.setText(data.getThisMonthEstimateMoney()+"");
-            estimatedpointsm.setText(data.getThisMonthIntegral()+"");
-            exclusivefansaddedm.setText(data.getThisMonthDirectUser()+"");
-            newordinaryfansm.setText(data.getThisMonthIndirectUser()+"");
+            unsettledearnings.setText(data.getUnsettleAmount() + "");
+            unassignedintegral.setText(data.getUnsettleIntegral() + "");
+            earningsforecasty.setText(data.getYesterdayEstimateZgMoney() + "");
+            estimatedpointsy.setText(data.getYesterdayIntegral() + "");
+            exclusivefansaddedy.setText(data.getYesterdayDirectUser() + "");
+            newordinaryfansy.setText(data.getYesterdayIndirectUser() + "");
+            estimatedearningsm.setText(data.getThisMonthEstimateZgMoney() + "");
+            estimatedpointsm.setText(data.getThisMonthIntegral() + "");
+            exclusivefansaddedm.setText(data.getThisMonthDirectUser() + "");
+            newordinaryfansm.setText(data.getThisMonthIndirectUser() + "");
+            earningsactivity_yesterday.setText(data.getYesterdayEstimateRewardMoney()+"");
+            earningsactivity_month.setText(data.getThisMonthEstimateRewardMoney()+"");
         }
 
     }
@@ -213,23 +214,25 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
     }
 
 
-    @OnClick({R.id.bill_details, R.id.withdraw, R.id.btn_back,R.id.month_ago})
+    @OnClick({R.id.bill_details, R.id.withdraw, R.id.btn_back, R.id.month_ago})
     public void onCLick(View v) {
         switch (v.getId()) {
-            case R.id.bill_details:   //账单详情
-                Intent communityIt = new Intent(getActivity(), ConsComGoodsDeailListActivity.class);
-                Bundle communityBundle = new Bundle();
-                communityBundle.putString("title", "账单明细");
-                communityBundle.putString("fragmentName", "ConsComDetailListFragment");
-                communityIt.putExtras(communityBundle);
-                startActivity(communityIt);
+            case R.id.bill_details:   //账单明细
+//                Intent communityIt = new Intent(getActivity(), ConsComGoodsDeailListActivity.class);
+//                Bundle communityBundle = new Bundle();
+//                communityBundle.putString("title", "账单明细");
+//                communityBundle.putString("fragmentName", "ConsComDetailListFragment");
+//                communityIt.putExtras(communityBundle);
+//                startActivity(communityIt);
+                startActivity(new Intent(getActivity(), BillDetailsActivity.class));
                 break;
             case R.id.withdraw:   //提现
-                InfoModel   mInfoModel = new InfoModel();
-                getTiXian(mInfoModel);
+//                InfoModel   mInfoModel = new InfoModel();
+//                getTiXian(mInfoModel);
 
 
-
+               startActivity(new Intent(getActivity(), WithdrawalActivity.class));//跳转可提现页面
+              //  BirthdayUtil.getInstance(getActivity()).showBirthdayDate(getActivity(), month_ago, "选择月份", 1);
 
                 break;
             case R.id.btn_back:   //箭头退出
@@ -237,7 +240,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
                 break;
             case R.id.month_ago:    //上月月报
                 Intent intent = new Intent(getActivity(), MonthAgoActivity.class);
-                intent.putExtra(C.Extras.EARNING,mdata);
+                intent.putExtra(C.Extras.EARNING, mdata);
                 startActivity(intent);
                 break;
 
@@ -307,14 +310,6 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
         }
 
     }
-
-
-
-
-
-
-
-
 
 
 }

@@ -89,7 +89,11 @@ public class ShopMallActivity extends BaseActivity implements View.OnClickListen
     protected void onResume() {
         super.onResume();
         getShopCarNum();
+
     }
+
+
+
     private void initView() {
         TextView txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         txt_head_title.setTextSize(18);

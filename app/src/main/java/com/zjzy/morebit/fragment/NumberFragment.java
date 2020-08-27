@@ -7,15 +7,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
+import com.zjzy.morebit.pojo.MessageEvent;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.MyLog;
@@ -50,6 +55,8 @@ public class NumberFragment extends BaseMainFragmeng {
 
 
     List<BaseFragment> mFragments = new ArrayList<>();
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,11 +74,24 @@ public class NumberFragment extends BaseMainFragmeng {
         super.onCreateView(inflater, container, savedInstanceState);
         mView = inflater.inflate(R.layout.fragment_number, container, false);
         ButterKnife.bind(this, mView);
-
         initView(mView);
+
+
         return mView;
     }
 
+
+    @Override
+    protected void onVisible() {//fragment可见时操作 防止预加载提前触发
+        super.onVisible();
+        UserInfo mUserInfo = UserLocalData.getUser(getActivity());
+        if (mUserInfo != null) {
+            Long coin = mUserInfo.getMoreCoin();
+            if (C.UserType.member.equals(mUserInfo.getUserType()) && coin >= 360) {
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_POP));
+            }
+        }
+    }
 
     @Override
     public void onResume() {

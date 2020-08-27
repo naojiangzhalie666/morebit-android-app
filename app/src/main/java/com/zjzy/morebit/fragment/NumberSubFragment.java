@@ -1,6 +1,7 @@
 package com.zjzy.morebit.fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -30,6 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.wireless.security.open.middletier.fc.IFCActionCallback;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout;
@@ -48,6 +50,7 @@ import com.zjzy.morebit.Activity.SkillClassActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
+import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.NumberReUseGridView;
@@ -58,6 +61,7 @@ import com.zjzy.morebit.adapter.SkillAdapter;
 import com.zjzy.morebit.adapter.SubNumberAdapter;
 import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.contact.EventBusAction;
+import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment2;
 import com.zjzy.morebit.home.fragment.AdvancedClassFragment;
 import com.zjzy.morebit.home.fragment.MembershipFragment;
@@ -115,12 +119,13 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 /**
  * 每日爆款
  */
-public class NumberSubFragment extends BaseFragment {
+public class NumberSubFragment extends BaseMainFragmeng {
 
     private static final int REQUEST_COUNT = 10;
     View mView;
@@ -185,7 +190,8 @@ public class NumberSubFragment extends BaseFragment {
     private TextView tv_coin;
     private RelativeLayout shop_car;
     private TextView shopnum;
-
+    private boolean isUserHint=false;
+    private ShopkeeperUpgradeDialog upgradeDialog;
 
 
     @Override
@@ -204,14 +210,9 @@ public class NumberSubFragment extends BaseFragment {
             initView(headView);
 
 
-
-
         }
         return headView;
     }
-
-
-
 
 
     public static NumberSubFragment newInstance() {
@@ -220,10 +221,11 @@ public class NumberSubFragment extends BaseFragment {
         return fragment;
     }
 
+
     public void initView(View view) {
-        swipeList=view.findViewById(R.id.swipeRefreshLayout);
-        shopnum=view.findViewById(R.id.shopnum);
-        shop_car=view.findViewById(R.id.shop_car);
+        swipeList = view.findViewById(R.id.swipeRefreshLayout);
+        shopnum = view.findViewById(R.id.shopnum);
+        shop_car = view.findViewById(R.id.shop_car);
         mAppBarLt = view.findViewById(R.id.app_bar_lt);
         xablayout = view.findViewById(R.id.xablayout);
         viewPager = view.findViewById(R.id.viewPager);
@@ -242,19 +244,13 @@ public class NumberSubFragment extends BaseFragment {
         vip_ll = view.findViewById(R.id.vip_ll);//VIP模块
         img_vip = view.findViewById(R.id.img_vip);//vip icon
         ll_vip = view.findViewById(R.id.ll_vip);
-        upgrade.setOnClickListener(new View.OnClickListener() {//升级VIP
-            @Override
-            public void onClick(View v) {
-                GoodsUtil.getVipH5(getActivity());
-            }
-        });
+
         group_quanyi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GoodsUtil.getVipH5(getActivity());
             }
         });
-        initTou();
 
         shop_car.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,9 +267,9 @@ public class NumberSubFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                if (position==0){
+                if (position == 0) {
                     shop_car.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     shop_car.setVisibility(View.GONE);
                 }
             }
@@ -354,7 +350,7 @@ public class NumberSubFragment extends BaseFragment {
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
                 if (state == 1) {
-                swipeList.setEnableRefresh(false);
+                    swipeList.setEnableRefresh(false);
                 } else if (state == 2 && canRefresh) {
                     swipeList.setEnableRefresh(true);//设置可触发
                 }
@@ -429,7 +425,6 @@ public class NumberSubFragment extends BaseFragment {
     }
 
 
-
     private void updataUser() {
 
         UserInfo mUserInfo = UserLocalData.getUser(getActivity());
@@ -441,50 +436,39 @@ public class NumberSubFragment extends BaseFragment {
     }
 
 
-
-
     /**
-     * 升级vip的弹框
+     * 升级掌柜的弹框
      */
     private void updateGrade() {
+        upgradeDialog = new ShopkeeperUpgradeDialog(getActivity());
 
-        NumberVipUpgradeDialog leaderUpgradeDialog = new NumberVipUpgradeDialog(getActivity(), R.style.dialog);
-        leaderUpgradeDialog.setOnListner(new NumberVipUpgradeDialog.OnListener() {
-
+        upgradeDialog.setmOkListener(new ShopkeeperUpgradeDialog.OnOkListener() {
             @Override
-            public void onClick() {
+            public void onClick(View view) {
                 if (mUserInfo.getMoreCoin() < 360) {
                     ToastUtils.showLong("成长值不足");
                 } else {
                     updateGradePresenter(NumberSubFragment.this, Integer.parseInt(C.UserType.vipMember));
                 }
-
             }
-
         });
-        leaderUpgradeDialog.show();
-    }
 
-    /**
-     * 升级团队长的弹框
-     */
-    private void updateGradeForLeader() {
-        NumberLeaderUpgradeDialog vipUpgradeDialog = new NumberLeaderUpgradeDialog(getActivity(), R.style.dialog);
-        vipUpgradeDialog.setOnListner(new NumberLeaderUpgradeDialog.OnListener() {
-
+        if (!isUserHint){
+            upgradeDialog.show();
+            isUserHint=true;
+        }
+        upgradeDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onClick() {
-                if (mUserInfo.getMoreCoin() < 50000) {
-                    ToastUtils.showLong("成长值不足");
-                } else {
-                    updateGradePresenter(NumberSubFragment.this, Integer.parseInt(C.UserType.operator));
-                }
+            public void onDismiss(DialogInterface dialog) {
+                isUserHint=false;
             }
-
         });
-        vipUpgradeDialog.show();
+
+
+
 
     }
+
 
     private void initViewData(UserInfo info) {
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
@@ -499,11 +483,15 @@ public class NumberSubFragment extends BaseFragment {
             img_vip.setImageResource(R.mipmap.group_bg_icon);
             vip_ll.setVisibility(View.GONE);
             group_ll.setVisibility(View.VISIBLE);
-            vip_grade.setText("掌柜(黑金)");
-            vip_grade.setTextColor(Color.parseColor("#222222"));
-            ll_vip.setBackgroundResource(R.drawable.bg_opertoater_round_9dp);
+            vip_grade.setText("掌柜");
             getMorce.setText("成长值：" + info.getMoreCoin());
             group_quanyi.setVisibility(View.VISIBLE);
+            upgrade.setOnClickListener(new View.OnClickListener() {//升级VIP
+                @Override
+                public void onClick(View v) {
+                    GoodsUtil.getVipH5(getActivity());
+                }
+            });
         } else {
             getMorce.setText("获取成长值");
             vip_ll.setVisibility(View.VISIBLE);
@@ -513,9 +501,7 @@ public class NumberSubFragment extends BaseFragment {
                 if (C.UserType.member.equals(info.getUserType())) {
                     img_vip.setImageResource(R.mipmap.vip_icon_right2);
                     vip_grade.setText("VIP");
-                    upgrade.setText("升级掌柜(黄金)");
-                    vip_grade.setTextColor(Color.parseColor("#A8947A"));
-                    ll_vip.setBackgroundResource(R.drawable.bg_e9c8a7_round_9dp);
+                    upgrade.setText("升级掌柜");
                     horzProgressView.setMax(360.00);
                     Long coin = info.getMoreCoin();
                     String coin1;
@@ -529,12 +515,18 @@ public class NumberSubFragment extends BaseFragment {
                     }
                     more_corn_biaozhun.setText(coin1);
                     tv_coin.setText("/360");
+                    upgrade.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            updateGrade();
+                        }
+                    });
+
+
                 } else if (C.UserType.vipMember.equals(info.getUserType())) {
                     img_vip.setImageResource(R.mipmap.vip_bg_icon);
-                    upgrade.setText("升级掌柜(黑金)");
-                    ll_vip.setBackgroundResource(R.drawable.bg_vip_round_9dp);
-                    vip_grade.setText("掌柜(黄金)");
-                    vip_grade.setTextColor(Color.parseColor("#FCAF00"));
+                    upgrade.setText("查看权益");
+                    vip_grade.setText("掌柜");
                     horzProgressView.setMax(50000.00);
                     horzProgressView.setCurrentNum(info.getMoreCoin());
                     Long moreCoin = info.getMoreCoin();
@@ -546,13 +538,19 @@ public class NumberSubFragment extends BaseFragment {
                     }
                     more_corn_biaozhun.setText(coin1);
                     tv_coin.setText("/50000");
+                    upgrade.setOnClickListener(new View.OnClickListener() {//升级VIP
+                        @Override
+                        public void onClick(View v) {
+                            GoodsUtil.getVipH5(getActivity());
+                        }
+                    });
                 }
             }
             getMorce.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     xablayout.getTabAt(0).select();
-                     scrollToTop();
+                    scrollToTop();
                 }
             });
         }
@@ -593,14 +591,14 @@ public class NumberSubFragment extends BaseFragment {
                     @Override
                     protected void onSuccess(ShopCarNumBean data) {
                         int goodsNum = data.getGoodsNum();
-                        if (goodsNum!=0){
+                        if (goodsNum != 0) {
                             shopnum.setVisibility(View.VISIBLE);
-                            if (goodsNum>99){
+                            if (goodsNum > 99) {
                                 shopnum.setText("99+");
-                            }else{
-                                shopnum.setText(goodsNum+"");
+                            } else {
+                                shopnum.setText(goodsNum + "");
                             }
-                        }else{
+                        } else {
                             shopnum.setVisibility(View.GONE);
                         }
 
@@ -622,11 +620,10 @@ public class NumberSubFragment extends BaseFragment {
     }
 
 
-
     //获取用户详情
     private void showDetailsView(UserInfo data) {
         if (!TextUtils.isEmpty(data.getAccumulatedAmount())) {
-            vip_zhuan.setText("累计省赚" + MathUtils.getnum(data.getAccumulatedAmount())+ "元");
+            vip_zhuan.setText("累计省赚" + MathUtils.getnum(data.getAccumulatedAmount()) + "元");
 
         }
 
@@ -667,12 +664,12 @@ public class NumberSubFragment extends BaseFragment {
             UserLocalData.setUser(getActivity(), userInfo);
             EventBus.getDefault().post(new RefreshUserInfoEvent());
 //            refreshUserInfo(userInfo);
+            ToastUtils.showShort("升级成功");
         } else {
             MyLog.d("test", "用户信息为空");
         }
 
     }
-
 
 
     /**
@@ -710,45 +707,6 @@ public class NumberSubFragment extends BaseFragment {
                 });
     }
 
-    public Observable<BaseResponse<NumberGoodsList>> getNumberGoodsList(RxFragment fragment, int page) {
-        RequestNumberGoodsList bean = new RequestNumberGoodsList();
-        bean.setPage(page);
-        bean.setLimit(10);
-        return RxHttp.getInstance().getGoodsService().getNumberGoodsList(bean)
-                .compose(RxUtils.<BaseResponse<NumberGoodsList>>switchSchedulers())
-                .compose(fragment.<BaseResponse<NumberGoodsList>>bindToLifecycle());
-    }
-
-
-    /**
-     * 获取楼层
-     *
-     * @param fragment
-     * @return
-     */
-    public Observable<BaseResponse<List<ImageInfo>>> getVipFloor(RxFragment fragment) {
-        RequestBannerBean requestBean = new RequestBannerBean();
-        requestBean.setOs(1);
-
-        return RxHttp.getInstance().getGoodsService().getVipFloor(requestBean)
-                .compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
-                .compose(fragment.<BaseResponse<List<ImageInfo>>>bindToLifecycle());
-    }
-
-    /**
-     * 获取技能课程
-     *
-     * @param fragment
-     * @return
-     */
-    public Observable<BaseResponse<List<Article>>> getSkillClass(RxFragment fragment) {
-        RequestBannerBean requestBean = new RequestBannerBean();
-        requestBean.setOs(1);
-
-        return RxHttp.getInstance().getGoodsService().getVipSkillClass(requestBean)
-                .compose(RxUtils.<BaseResponse<List<Article>>>switchSchedulers())
-                .compose(fragment.<BaseResponse<List<Article>>>bindToLifecycle());
-    }
 
     /**
      * 用户详情
@@ -794,6 +752,9 @@ public class NumberSubFragment extends BaseFragment {
                     LoadImgUtils.setImgCircle(getActivity(), mUserIcon, mUserInfo.getHeadImg(), R.drawable.head_icon);
                 }
                 break;
+            case EventBusAction.UPGRADE_POP:
+                updateGrade();
+                break;
         }
     }
 
@@ -808,8 +769,6 @@ public class NumberSubFragment extends BaseFragment {
         super.onDestroy();
         EventBus.getDefault().unregister(NumberSubFragment.this);
     }
-
-
 
 
 }

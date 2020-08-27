@@ -16,15 +16,20 @@ import com.zjzy.morebit.pojo.RequestIscheckShopcarBean;
 import com.zjzy.morebit.pojo.RequestNineBean;
 import com.zjzy.morebit.pojo.RequestOrderShopcarBean;
 import com.zjzy.morebit.pojo.RequestReadNotice;
+import com.zjzy.morebit.pojo.RequestWithdrawBean2;
+import com.zjzy.morebit.pojo.RequestWithdrawDetailBean;
 import com.zjzy.morebit.pojo.ShopCarGoodsBean;
 import com.zjzy.morebit.pojo.ShopCarNumBean;
 import com.zjzy.morebit.pojo.ShopCarOrderBean;
 import com.zjzy.morebit.pojo.TkBean;
 import com.zjzy.morebit.pojo.UnreadInforBean;
+import com.zjzy.morebit.pojo.UserBalanceBean;
+import com.zjzy.morebit.pojo.UserIncomeByTime;
 import com.zjzy.morebit.pojo.UserIncomeDetail2;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.VideoClassBean;
 import com.zjzy.morebit.pojo.VipBean;
+import com.zjzy.morebit.pojo.WithdrawDetailBean;
 import com.zjzy.morebit.pojo.address.AddressInfo;
 import com.zjzy.morebit.pojo.address.AddressInfoList;
 import com.zjzy.morebit.pojo.address.AllRegionInfoList;
@@ -209,6 +214,7 @@ import com.zjzy.morebit.pojo.requestbodybean.RequestGetNinepinkageGoods;
 import com.zjzy.morebit.pojo.requestbodybean.RequestGetRankings;
 import com.zjzy.morebit.pojo.requestbodybean.RequestGetTimedSpikeList;
 import com.zjzy.morebit.pojo.requestbodybean.RequestGoodsLike;
+import com.zjzy.morebit.pojo.requestbodybean.RequestIncomeByTimeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestInviteCodeBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
 import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
@@ -2786,7 +2792,42 @@ public interface CommonService {
      */
     @POST("/api/system/recordUserActive")
     public Observable<BaseResponse<String>> getRecordUserActive();
+    /**
+     * 账单明细
+     *
+     * @return
+     */
+    @POST("/api/user/userScore/getUserBillDetail")
+    public Observable<BaseResponse<List<WithdrawDetailBean>>> getUserBillDetail(@Body RequestWithdrawDetailBean body);
 
+    /**
+     * 获取用户余额
+     *
+     * @return
+     */
+    @POST("/api/user/getUserBalance")
+    public Observable<BaseResponse<UserBalanceBean>> getUserBalance();
+    /**
+     * 提现接口
+     *
+     * @return
+     */
+    @POST("/api/user/userWithdrawApplyNew")
+    public Observable<BaseResponse<String>> getUserWithdrawApplyNew(@Body RequestWithdrawBean2 body);
 
+    /**
+     * 提现明细
+     *
+     * @return
+     */
+    @POST("/api/user/userScore/getWithdrawalDetail")
+    public Observable<BaseResponse<List<WithdrawDetailBean>>> getWithdrawalDetail(@Body RequestWithdrawDetailBean body);
+    /**
+     * 我的收益-历史月报
+     *
+     * @return
+     */
+    @POST("/api/user/getUserIncomeByTime")
+    public Observable<BaseResponse<UserIncomeByTime>> getUserIncomeByTime(@Body RequestIncomeByTimeBean body);
 
 }

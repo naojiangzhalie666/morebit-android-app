@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F5F5F5"
+    android:background="@color/color_F0F1F5"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <include layout="@layout/top" />
 
-    <View
+
+    <com.zjzy.morebit.main.ui.myview.xtablayout.XTabLayout
+        android:id="@+id/xTablayout"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/color_E6E6E6" />
+        android:layout_height="44dp"
+        android:background="@color/white"
+        app:xTabDividerColor="#D8D8D8"
+        app:xTabDividerGravity="center"
+        app:xTabDividerHeight="10dp"
+        app:xTabDividerWidth="1dp"
+        app:xTabIndicatorHeight="2dp"
+        app:xTabIndicatorWidth="20dp"
+        app:xTabMode="fixed"
+        android:paddingBottom="4dp"
+        app:xTabIndicatorColor="@color/color_F05557"
+        app:xTabSelectedTextColor="@color/color_F05557"
+        app:xTabSelectedTextSize="@dimen/sp_16"
+        app:xTabTextColor="@color/color_666666"
+        app:xTabTextSize="@dimen/sp_16" />
+
+
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +44,8 @@
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -191,24 +216,25 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="26dp"
-        android:layout_marginRight="26dp"
         android:layout_marginTop="100dp"
+        android:layout_marginRight="26dp"
         android:background="@drawable/selector_next_button"
-        android:gravity="center"
-        android:text="提现申请"
         android:enabled="false"
-        android:textColor="@color/color_333333"
-        android:textSize="16sp"/>
-     <TextView
-         android:id="@+id/withdrawTv"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text=""
-         android:layout_marginLeft="36dp"
-         android:layout_marginRight="36dp"
-         android:textSize="@dimen/sp_13"
-         android:layout_marginTop="18dp"
-         android:textColor="@color/color_666666"
-         android:visibility="gone"
-         />
+        android:gravity="center"
+        android:text="提现"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/withdrawTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="36dp"
+        android:text=""
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/sp_13"
+        android:visibility="gone" />
 </LinearLayout>

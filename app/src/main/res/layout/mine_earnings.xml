@@ -61,9 +61,9 @@
                         android:layout_marginLeft="4dp"
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
-                        android:text="累计收益"
+                        android:text="累计自购返利"
                         android:textColor="@color/color_F05557"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/sp_12" />
 
                     <TextView
 
@@ -127,7 +127,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="累计预估积分"
                     android:textColor="@color/color_F05557"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
 
@@ -170,13 +170,14 @@
 
 
             <LinearLayout
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
 
                 <LinearLayout
-                    android:gravity="center"
+                    android:gravity="left"
                     android:layout_width="0dp"
                     android:orientation="vertical"
                     android:layout_height="wrap_content"
@@ -184,34 +185,26 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="今日预估收益（元）"
+                        android:text="今日\n预估自购返利"
                         android:textColor="#ff999999"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/sp_12"
                         />
 
                     <TextView
                         android:id="@+id/today_yugu"
-                        android:layout_marginTop="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0.42"
-                        android:textStyle="bold"
                         android:textColor="#fff05557"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/sp_14"
                         />
 
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:background="#5F2C06"
-                    android:layout_gravity="center_vertical"
-                    />
 
                 <LinearLayout
-                    android:gravity="center"
+                    android:gravity="left"
                     android:layout_width="0dp"
                     android:orientation="vertical"
                     android:layout_height="wrap_content"
@@ -219,20 +212,45 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="今日预估获积分"
+                        android:text="今日\n预估获积分"
                         android:textColor="#ff999999"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/sp_12"
                         />
 
                     <TextView
                         android:id="@+id/today_jifen"
-                        android:textStyle="bold"
-                        android:layout_marginTop="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0.42"
                         android:textColor="#fff05557"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/sp_14"
+                        />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:gravity="left"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="今日\n预估活动奖励"
+                        android:textColor="#ff999999"
+                        android:textSize="@dimen/sp_12"
+                        />
+
+                    <TextView
+                        android:id="@+id/today_activity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.42"
+                        android:textColor="#fff05557"
+                        android:textSize="@dimen/sp_14"
                         />
 
 

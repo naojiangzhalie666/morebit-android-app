@@ -34,6 +34,7 @@ import com.zjzy.morebit.Activity.FansListFragment;
 import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.MyOrderActivity;
 import com.zjzy.morebit.Activity.SettingActivity;
+import com.zjzy.morebit.Activity.ShopVipActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
@@ -144,8 +145,8 @@ public class MineFragment extends BaseMainFragmeng {
     TextView tv1;
     @BindView(R.id.tv2)
     TextView tv2;
-    @BindView(R.id.tv3)
-    TextView tv3;
+    @BindView(R.id.img1)
+    ImageView img1;
     @BindView(R.id.tv4)
     TextView tv4;
     @BindView(R.id.tv_wx)
@@ -157,6 +158,8 @@ public class MineFragment extends BaseMainFragmeng {
 
     @BindView(R.id.tv_user_type)
     TextView tvUserType;
+    @BindView(R.id.today_activity)
+    TextView today_activity;
 
     @BindView(R.id.as_banner)
     AspectRatioView mAsBanner;
@@ -423,29 +426,27 @@ public class MineFragment extends BaseMainFragmeng {
             icon_tou.setImageResource(R.mipmap.vip_icon_right2);
             tv1.setVisibility(View.VISIBLE);
             tv1.setText("升级");
-            tv2.setText("掌柜(黄金)");
-            tv3.setText("享更多权益");
+            img1.setVisibility(View.GONE);
+            img1.setImageResource(R.mipmap.vip_icon_right2);
+            tv2.setText("掌柜享更多权益");
             tv4.setText("立即升级");
 
         } else if (C.UserType.vipMember.equals(info.getPartner())) {
-            tvUserType.setText("掌柜(黄金)");
-            llUserGrade.setBackgroundResource(R.drawable.bg_vip_round_9dp);
-            tvUserType.setTextColor(Color.parseColor("#FCAF00"));
+            tvUserType.setText("掌柜");
             icon_tou.setImageResource(R.mipmap.vip_bg_icon);
-            tv1.setVisibility(View.VISIBLE);
-            tv1.setText("升级");
-            tv2.setText("掌柜(黑金)");
-            tv3.setText("享更多权益");
-            tv4.setText("立即升级");
+            tv1.setVisibility(View.GONE);
+            img1.setVisibility(View.VISIBLE);
+            img1.setImageResource(R.mipmap.vip_bg_icon);
+            tv2.setText("掌柜权益享不停");
+            tv4.setText("查看权益");
 
         } else if (C.UserType.operator.equals(info.getPartner())) {
-            tvUserType.setText("掌柜(黑金)");
-            llUserGrade.setBackgroundResource(R.drawable.bg_opertoater_round_9dp);
-            tvUserType.setTextColor(Color.parseColor("#222222"));
+            tvUserType.setText("掌柜");
             icon_tou.setImageResource(R.mipmap.group_bg_icon);
+            img1.setImageResource(R.mipmap.group_bg_icon);
             tv1.setVisibility(View.GONE);
-            tv2.setText("掌柜(黑金)");
-            tv3.setText("权益享不停");
+            img1.setVisibility(View.VISIBLE);
+            tv2.setText("掌柜权益享不停");
             tv4.setText("查看权益");
         }
         if (!TextUtils.isEmpty(info.getBalance())) {
@@ -529,7 +530,7 @@ public class MineFragment extends BaseMainFragmeng {
             R.id.tv4, R.id.ll_myhead})
     public void onClick(View v) {
         if (LoginUtil.checkIsLogin(getActivity())) {
-
+            UserInfo usInfo = UserLocalData.getUser(getActivity());
 
             switch (v.getId()) {
                 case R.id.ll_myhead:
@@ -594,7 +595,7 @@ public class MineFragment extends BaseMainFragmeng {
                     OpenFragmentUtils.goToSimpleFragment(getActivity(), CollectFragment2.class.getName(), null);
                     break;
                 case R.id.iv_wenhao:
-                    UserInfo usInfo = UserLocalData.getUser(getActivity());
+
                     if (!TextUtils.isEmpty(usInfo.getProblemUrl())) {
                         ShowWebActivity.start(getActivity(), usInfo.getProblemUrl(), "常见问题");
                     }
@@ -688,7 +689,14 @@ public class MineFragment extends BaseMainFragmeng {
                     iconDialog.show();
                     break;
                 case R.id.tv4://升级页面
-                    GoodsUtil.getVipH5(getActivity());
+                    if (usInfo!=null){
+                        if (C.UserType.member.equals(usInfo.getUserType())){
+                            startActivity(new Intent(getActivity(), ShopVipActivity.class));
+                        }else{
+                            GoodsUtil.getVipH5(getActivity());
+                        }
+                    }
+
                     break;
 
                 default:
@@ -857,8 +865,9 @@ public class MineFragment extends BaseMainFragmeng {
         if (data != null) {
             tv_remainder.setText(data.getTotalIncome() + "");
             jifen.setText(data.getTotalIntegral() + "");
-            today_yugu.setText(data.getTodayEstimateMoney() + "");
+            today_yugu.setText(data.getTodayEstimateZgMoney() + "");
             today_jifen.setText(data.getTotalEstimateIntegral() + "");
+            today_activity.setText(data.getTodayEstimateRewardMoney()+"");
         }
 
 
