@@ -56,7 +56,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="支付账户"
+                android:text="支付宝账户"
                 android:minWidth="90dp"
                 android:textSize="16sp"
                 android:layout_marginLeft="10dp"
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:maxLength="100"
                 android:background="@color/white"
-                android:hint="请输入支付宝账号"
+                android:hint="请输入支付宝账户"
                 android:textSize="14sp"
                 android:singleLine="true"
                 android:gravity="left|center_vertical"
