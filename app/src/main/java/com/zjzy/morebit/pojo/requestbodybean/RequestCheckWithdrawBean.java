@@ -8,7 +8,7 @@ import com.zjzy.morebit.pojo.request.RequestBaseBean;
  */
 public class RequestCheckWithdrawBean extends RequestBaseBean {
 
-    private int type;
+    private int type=1;
 
     public RequestCheckWithdrawBean(int type) {
         this.type = type;

@@ -37,6 +37,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -253,6 +254,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private RecyclerView rcy_icon;
     private HomeMenuAdapter menuAdapter;
     private View bar_line,icon_bg;
+    private LinearLayout progress;
     private float endX = 0;
     private RelativeLayout search_rl;
     private DataSetObserver mObserver = new DataSetObserver() {
@@ -383,6 +385,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     @SuppressLint("ClickableViewAccessibility")
     private void initOtherView() {
+        progress=mView.findViewById(R.id.progress);
         search_rl = mView.findViewById(R.id.search_rl);
         space1 = mView.findViewById(R.id.space1);
         sroller = mView.findViewById(R.id.sroller);
@@ -533,9 +536,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 //已经滚动的距离，为0时表示已处于顶部。
                 int offset = recyclerView.computeHorizontalScrollOffset();
                 if (extent==range){
-                    bar_line.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
                 }else {
-                    bar_line.setVisibility(View.VISIBLE);
+                    progress.setVisibility(View.VISIBLE);
                     //计算出溢出部分的宽度，即屏幕外剩下的宽度
                     float maxEndX = range - extent;
                     //计算比例

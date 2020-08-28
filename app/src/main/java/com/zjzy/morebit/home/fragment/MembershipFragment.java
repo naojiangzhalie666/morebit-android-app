@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -38,6 +39,7 @@ import com.zjzy.morebit.pojo.Article;
 import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.StudyRank;
+import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.VipBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestListBody;
@@ -55,7 +57,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
 /**
- *会员权益
+ * 会员权益
  */
 public class MembershipFragment extends BaseMainFragmeng {
 
@@ -64,8 +66,10 @@ public class MembershipFragment extends BaseMainFragmeng {
     private RecyclerView rcy_icon;
     private MembershipAdapter1 adapter1;
     private MembershipAdapter2 adapter2;
-    private  LinearLayoutManager manager;
-    private Handler handler=new Handler();
+    private LinearLayoutManager manager;
+    private Handler handler = new Handler();
+    private View view1;
+    private LinearLayout ll1;
     /**
      * 是否来自点击
      */
@@ -140,14 +144,10 @@ public class MembershipFragment extends BaseMainFragmeng {
     }
 
 
-
-
     private void getVipRightsData(VipBean data) {
 
 
     }
-
-
 
 
     private void initView(View view) {
@@ -156,25 +156,28 @@ public class MembershipFragment extends BaseMainFragmeng {
         Bundle arguments = getArguments();
         if (arguments != null) {
         }
+        view1 = view.findViewById(R.id.view1);
+        ll1 = view.findViewById(R.id.ll1);
         rcy_title = view.findViewById(R.id.rcy_title);
-        rcy_icon=view.findViewById(R.id.rcy_icon);
-        LinearLayoutManager layoutManager1=new LinearLayoutManager(getActivity());
-        adapter1=new MembershipAdapter1(getActivity());
+        rcy_icon = view.findViewById(R.id.rcy_icon);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
+        adapter1 = new MembershipAdapter1(getActivity());
         rcy_title.setLayoutManager(layoutManager1);
         rcy_title.setAdapter(adapter1);
 
+        initViewData();
 
 
-        adapter2=new MembershipAdapter2(getActivity());
+
+        adapter2 = new MembershipAdapter2(getActivity());
 //        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(adapter2);
         rcy_icon.setAdapter(adapter2);
-         manager = new LinearLayoutManager(getActivity());
+        manager = new LinearLayoutManager(getActivity());
         rcy_icon.setLayoutManager(manager);
 //        View header = LayoutInflater.from(getActivity()).inflate(R.layout.item_vip_head_ship,null, false);
 //        mLRecyclerViewAdapter.addHeaderView(header);
 //        TextView title = header.findViewById(R.id.title);
 //        title.getPaint().setFakeBoldText(true);
-
 
 
         rcy_icon.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -192,13 +195,13 @@ public class MembershipFragment extends BaseMainFragmeng {
         adapter1.setOnAddClickListener(new MembershipAdapter1.OnAddClickListener() {
             @Override
             public void onShareClick(int postion) {
-                Log.e("kkkk",postion+"");
+                Log.e("kkkk", postion + "");
                 adapter1.mCheckedPosition = postion;
                 adapter1.setmPosition(postion);
                 adapter1.notifyDataSetChanged();
 
 
-              mIsFromClick = true;//不走onScrolled，防止来回调
+                mIsFromClick = true;//不走onScrolled，防止来回调
 //                manager.scrollToPositionWithOffset(postion,0);
 //
 //                mIsFromClick = false;//放开
@@ -231,24 +234,36 @@ public class MembershipFragment extends BaseMainFragmeng {
                 };
                 topScroller.setTargetPosition(postion);
                 manager.startSmoothScroll(topScroller);
-                Log.e("kkkk",postion+"00000");
+                Log.e("kkkk", postion + "00000");
 
             }
         });
 
 
+    }
 
+    private void initViewData() {
+        UserInfo mUserInfo = UserLocalData.getUser(getActivity());
+        if (mUserInfo != null) {
+            if (C.UserType.member.equals(mUserInfo.getUserType())) {
+                view1.setVisibility(View.VISIBLE);
+                ll1.setVisibility(View.VISIBLE);
+            } else {
+                view1.setVisibility(View.GONE);
+                ll1.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void changePosition() {
 
         int firstPosition = manager.findFirstVisibleItemPosition();
-        Log.e("kkkk",firstPosition+"无奈");
-        Log.e("kkkk",adapter1.mCheckedPosition +"无奈2");
+        Log.e("kkkk", firstPosition + "无奈");
+        Log.e("kkkk", adapter1.mCheckedPosition + "无奈2");
         if (adapter1.mCheckedPosition != firstPosition) {
             adapter1.mCheckedPosition = firstPosition;
             adapter1.notifyDataSetChanged();
-            Log.e("kkkk","无奈3");
+            Log.e("kkkk", "无奈3");
             //此方法无置顶效果
             rcy_title.scrollToPosition(adapter1.mCheckedPosition);
         }
@@ -264,11 +279,13 @@ public class MembershipFragment extends BaseMainFragmeng {
                 .compose(RxUtils.<BaseResponse<List<VipBean>>>switchSchedulers())
                 .compose(fragment.<BaseResponse<List<VipBean>>>bindToLifecycle());
     }
+
     @Subscribe  //订阅事件
     public void onEventMainThread(MessageEvent event) {
         if (event.getAction().equals(EventBusAction.ACTION_REFRSH)) {
             getData();
-
+        }else if (event.getAction().equals(EventBusAction.UPGRADE_SEHNGJI)){
+            initViewData();
         }
     }
 

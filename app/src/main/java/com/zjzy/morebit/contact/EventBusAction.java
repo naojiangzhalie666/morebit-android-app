@@ -24,6 +24,6 @@ public class EventBusAction {
     public final static String ACTION_REFRSH = "ACTION_REFRSH"; //刷新
     public final static String SHOPCAR_REFRSH = "SHOPCAR_REFRSH"; //购物车刷新
     public final static String UPGRADE_POP = "UPGRADE_POP"; //升级弹框
-    public final static String WITHDRAW_TYPE = "WITHDRAW_TYPE"; //提现类型
+    public final static String UPGRADE_SEHNGJI = "UPGRADE_SEHNGJI"; //升级
 
 }

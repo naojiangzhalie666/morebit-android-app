@@ -663,6 +663,7 @@ public class NumberSubFragment extends BaseMainFragmeng {
             userInfo.setMoreCoin(info.getMoreCoin());
             UserLocalData.setUser(getActivity(), userInfo);
             EventBus.getDefault().post(new RefreshUserInfoEvent());
+            EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_SEHNGJI));
 //            refreshUserInfo(userInfo);
             ToastUtils.showShort("升级成功");
         } else {

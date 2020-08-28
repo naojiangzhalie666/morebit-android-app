@@ -33,6 +33,7 @@ import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.CheckWithDrawBean;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.RequestWithdrawBean2;
 import com.zjzy.morebit.pojo.RequestWithdrawDetailBean;
@@ -40,7 +41,9 @@ import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.VipBean;
 import com.zjzy.morebit.pojo.WithdrawDetailBean;
 import com.zjzy.morebit.pojo.request.base.RequestBaseOs;
+import com.zjzy.morebit.pojo.requestbodybean.RequestCheckWithdrawBean;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.PageToUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,13 +59,14 @@ import io.reactivex.Observable;
 public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClickListener {
 
     private EditText etUserName;
-    private TextView zhifubaoagin_et, zhifubao_et, tv_xiu1, tv_xiu2, commit,tv_all,all_ti;
+    private TextView zhifubaoagin_et, zhifubao_et, tv_xiu1, tv_xiu2, commit, tv_all, all_ti, withdrawTv;
     private Runnable runnable;
     Handler handler = new Handler();
     private String allMoney;
-    private int type=1;
+    private int type = 1;
+    private int mtype;
 
-    public static WithdrawalFragment newInstance(String allMoney,int type) {
+    public static WithdrawalFragment newInstance(String allMoney, int type) {
         WithdrawalFragment fragment = new WithdrawalFragment();
         Bundle args = new Bundle();
         args.putString(C.Extras.WITHDRAW_MONEY, allMoney);
@@ -75,18 +79,47 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cashmoney, container, false);
         initView(view);
-
+        checkData();
 
         return view;
     }
 
-
-    private void getData() {
-        getUserWithdrawApplyNew(this,etUserName.getText().toString(),type)
-                .subscribe(new DataObserver<String>(false) {
+    private void checkData() {
+        checkWithdrawalRecord(this)
+                .subscribe(new DataObserver<CheckWithDrawBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
 
+
+                    }
+
+                    @Override
+                    protected void onDataNull() {
+
+                    }
+
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        onActivityFailure(errorMsg);
+
+                    }
+
+                    @Override
+                    protected void onSuccess(CheckWithDrawBean data) {
+                        withdrawTv.setText(data.getMsg() + "");
+                        commit.setBackgroundResource(R.drawable.background_d3d3d3_radius_30dp);
+                        commit.setEnabled(false);
+                        mtype = data.getStatus();
+                    }
+                });
+    }
+
+
+    private void getData() {
+        getUserWithdrawApplyNew(this, etUserName.getText().toString(), type)
+                .subscribe(new DataObserver<String>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
 
 
                     }
@@ -104,14 +137,16 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
 
                     @Override
                     protected void onSuccess(String data) {
-                        ToastUtils.showShort( data+"");
+                        ToastUtils.showShort(data + "");
+                        checkData();
+                        etUserName.setText("");
                     }
                 });
 
     }
 
     private void onActivityFailure(String errorMsg) {
-        ToastUtils.showShort(errorMsg+"");
+        ToastUtils.showShort(errorMsg + "");
     }
 
 
@@ -121,12 +156,12 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
         Bundle arguments = getArguments();
         if (arguments != null) {
             allMoney = arguments.getString(C.Extras.WITHDRAW_MONEY);
-            type=arguments.getInt(C.Extras.WITHDRAW_TYPE);
+            type = arguments.getInt(C.Extras.WITHDRAW_TYPE);
         }
-
-        all_ti=view.findViewById(R.id.all_ti);
-        tv_all=view.findViewById(R.id.tv_all);
-        tv_all.setText("可提现"+allMoney);
+        withdrawTv = view.findViewById(R.id.withdrawTv);
+        all_ti = view.findViewById(R.id.all_ti);
+        tv_all = view.findViewById(R.id.tv_all);
+        tv_all.setText("可提现" + MathUtils.getnum(allMoney));
         zhifubaoagin_et = view.findViewById(R.id.zhifubaoagin_et);
         zhifubao_et = view.findViewById(R.id.zhifubao_et);
         tv_xiu1 = view.findViewById(R.id.tv_xiu1);
@@ -134,10 +169,10 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
         tv_xiu1.setOnClickListener(this);
         tv_xiu2.setOnClickListener(this);
         commit = view.findViewById(R.id.commit);
-        all_ti.setOnClickListener(new View.OnClickListener() {
+        all_ti.setOnClickListener(new View.OnClickListener() {//全部提现
             @Override
             public void onClick(View v) {
-                etUserName.setText(allMoney);
+                etUserName.setText(MathUtils.getnum(String.valueOf(Math.floor(Double.valueOf(allMoney)))));
             }
         });
         //设置"用户名"提示文字的大小
@@ -160,7 +195,7 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
                 } else {
                     //加粗
                     etUserName.getPaint().setFakeBoldText(true);
-                    if (zhifubaoagin_et.getText().toString().length() > 0 && zhifubao_et.getText().toString().length() > 0) {
+                    if (zhifubaoagin_et.getText().toString().length() > 0 && zhifubao_et.getText().toString().length() > 0 && mtype != 0) {
                         commit.setBackgroundResource(R.drawable.background_f05557_radius_30dp);
                         commit.setEnabled(true);
                     } else {
@@ -266,14 +301,31 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
      * @return
      */
 
-    public Observable<BaseResponse<String>> getUserWithdrawApplyNew(RxFragment fragment,String allMoney,int type) {
-        RequestWithdrawBean2 withdrawBean2=new RequestWithdrawBean2();
+    public Observable<BaseResponse<String>> getUserWithdrawApplyNew(RxFragment fragment, String allMoney, int type) {
+        RequestWithdrawBean2 withdrawBean2 = new RequestWithdrawBean2();
         withdrawBean2.setAmount(allMoney);
-        withdrawBean2.setType(type+"");
+        withdrawBean2.setType(type + "");
         return RxHttp.getInstance().getCommonService()
                 .getUserWithdrawApplyNew(withdrawBean2)
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(fragment.<BaseResponse<String>>bindToLifecycle());
+
+    }
+
+
+    /**
+     * 检测是否存在提现记录
+     *
+     * @param fragment
+     * @return
+     */
+
+    public Observable<BaseResponse<CheckWithDrawBean>> checkWithdrawalRecord(RxFragment fragment) {
+        RequestCheckWithdrawBean requestCheckWithdrawBean = new RequestCheckWithdrawBean(1);
+        return RxHttp.getInstance().getCommonService()
+                .checkWithdrawalRecord(requestCheckWithdrawBean)
+                .compose(RxUtils.<BaseResponse<CheckWithDrawBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<CheckWithDrawBean>>bindToLifecycle());
 
     }
 }

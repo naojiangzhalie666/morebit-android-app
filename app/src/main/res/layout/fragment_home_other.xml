@@ -273,6 +273,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <LinearLayout
+                        android:id="@+id/progress"
                         android:paddingBottom="12dp"
                         android:layout_marginTop="-5dp"
                         android:gravity="center"
@@ -287,12 +288,12 @@
                             <View
                                 android:id="@+id/icon_bg"
                                 android:layout_width="40dp"
-                                android:layout_height="3dp"
+                                android:layout_height="2dp"
                                 android:background="@drawable/bg_home_scrollbar"/>
                             <View
                                 android:id="@+id/main_line"
-                                android:layout_width="15dp"
-                                android:layout_height="3dp"
+                                android:layout_width="20dp"
+                                android:layout_height="2dp"
                                 android:background="@drawable/bg_home_scrollbar_og"
                                 android:layout_gravity="center_vertical"/>
                         </FrameLayout>
