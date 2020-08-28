@@ -48,6 +48,7 @@ import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.ShareUrlListBaen;
 import com.zjzy.morebit.pojo.request.RequestCircleShareBean;
 import com.zjzy.morebit.pojo.request.RequestCircleShareCountBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.DensityUtil;
@@ -208,7 +209,23 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                 for (ShopGoodInfo info : goods) {
                     shopType = info.getShopType();
                     info.setGoodsId(Long.parseLong(info.getItemSourceId()));
-                    getTao3(shopType, info, position);
+                    switch (shopType){
+                        case 1://淘宝
+                            getTao(info.getItemSourceId());
+                            break;
+                        case 2://天猫
+                            getTao(info.getItemSourceId());
+                            break;
+                        case 3://pdd
+                            getTao3(shopType, info, position);
+                            break;
+                        case 4://jd
+                            getTao3(shopType, info, position);
+                            break;
+                        default:
+                            break;
+                    }
+
 
                 }
             }
@@ -414,25 +431,6 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                     protected void onSuccess(CircleCopyBean data) {
 
                         switch (shopType) {
-                            case 1://淘宝
-                                GoodsUtil.checkGoods((RxAppCompatActivity) context, info.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
-                                    @Override
-                                    public void invoke(ShopGoodInfo arg) {
-                                        MyLog.i("test", "arg: " + arg);
-                                        GoodsDetailActivity.start(context, arg);
-
-                                    }
-                                });
-                                break;
-                            case 2://天猫
-                                GoodsUtil.checkGoods((RxAppCompatActivity) context, info.getItemSourceId(), new MyAction.One<ShopGoodInfo>() {
-                                    @Override
-                                    public void invoke(ShopGoodInfo arg) {
-                                        MyLog.i("test", "arg: " + arg);
-                                        GoodsDetailActivity.start(context, arg);
-                                    }
-                                });
-                                break;
                             case 3://pdd
                                 info.setItemSource("2");
                                 GoodsDetailForPddActivity.start(context, info);
@@ -449,7 +447,31 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                     }
                 });
     }
+    private void getTao(String itemId) {
+        getBaseResponseObservable((BaseActivity) context, itemId)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
 
+                    }
+                })
+                .subscribe(new DataObserver<ShopGoodInfo>() {
+                    @Override
+                    protected void onSuccess(final ShopGoodInfo data) {
+                        if (data!=null){
+                            if (TextUtils.isEmpty(data.getItemPrice())||TextUtils.isEmpty(data.getItemVoucherPrice())){
+                                ToastUtils.showShort("商品已下架");
+                            }else{
+                                GoodsDetailActivity.start(context, data);
+                            }
+
+                        }else{
+                            ToastUtils.showShort("商品已下架");
+                        }
+
+                    }
+                });
+    }
 
     /**
      * 回去分享海报二维码
@@ -796,6 +818,11 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
         this.onItemAddClick = onItemAddClick;
     }
 
-
+    //淘宝详情
+    private Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservable(BaseActivity rxActivity, String itemId) {
+        return RxHttp.getInstance().getCommonService().getDetailData(new RequestItemSourceId().setItemSourceId(itemId).setItemFrom("1"))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
 
 }
