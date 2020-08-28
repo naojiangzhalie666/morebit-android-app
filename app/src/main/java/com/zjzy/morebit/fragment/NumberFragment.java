@@ -88,6 +88,7 @@ public class NumberFragment extends BaseMainFragmeng {
         if (mUserInfo != null) {
             Long coin = mUserInfo.getMoreCoin();
             if (C.UserType.member.equals(mUserInfo.getUserType()) && coin >= 360) {
+                Log.e("sfsfsf","coin"+coin);
                 EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_POP));
             }
         }

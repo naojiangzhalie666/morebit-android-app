@@ -290,7 +290,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="12dp"
-                                android:text="返佣"
+                                android:text="返利"
                                 android:textColor="#ff999999"
                                 android:textSize="14sp" />
 
@@ -298,7 +298,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="26dp"
-                                android:text="查看详细返佣规则"
+                                android:text="查看详细返利规则"
                                 android:textColor="#ff333333"
                                 android:textSize="14sp" />
 

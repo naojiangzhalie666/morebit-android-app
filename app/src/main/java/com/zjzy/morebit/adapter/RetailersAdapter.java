@@ -163,7 +163,7 @@ public class RetailersAdapter extends RecyclerView.Adapter<RetailersAdapter.View
         } else {
             holder.tv_fanyong.setBackgroundResource(R.drawable.background_ffebce_radius_2dp);
             holder.tv_fanyong.setTextColor(Color.parseColor("#975400"));
-            holder.tv_content.setText("待返佣");
+            holder.tv_content.setText("待返利");
             holder.tv_content.setTextColor(Color.parseColor("#F05557"));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {

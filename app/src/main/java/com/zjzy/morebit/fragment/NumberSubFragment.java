@@ -46,6 +46,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.NumberGoodsDetailsActivity;
 import com.zjzy.morebit.Activity.ShopCarActivity;
+import com.zjzy.morebit.Activity.ShopVipActivity;
 import com.zjzy.morebit.Activity.SkillClassActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
@@ -441,7 +442,6 @@ public class NumberSubFragment extends BaseMainFragmeng {
      */
     private void updateGrade() {
         upgradeDialog = new ShopkeeperUpgradeDialog(getActivity());
-
         upgradeDialog.setmOkListener(new ShopkeeperUpgradeDialog.OnOkListener() {
             @Override
             public void onClick(View view) {
@@ -503,7 +503,7 @@ public class NumberSubFragment extends BaseMainFragmeng {
                     vip_grade.setText("VIP");
                     upgrade.setText("升级掌柜");
                     horzProgressView.setMax(360.00);
-                    Long coin = info.getMoreCoin();
+                    final Long coin = info.getMoreCoin();
                     String coin1;
                     if (coin != null) {
                         horzProgressView.setCurrentNum(info.getMoreCoin());
@@ -518,7 +518,12 @@ public class NumberSubFragment extends BaseMainFragmeng {
                     upgrade.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            updateGrade();
+                            if (coin>=360){
+                                updateGrade();
+                            }else{
+                                startActivity(new Intent(getActivity(), ShopVipActivity.class));
+                            }
+
                         }
                     });
 

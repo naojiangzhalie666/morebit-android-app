@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.AbsoluteSizeSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,7 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
     private String allMoney;
     private int type = 1;
     private int mtype;
-
+    private    String s="";
     public static WithdrawalFragment newInstance(String allMoney, int type) {
         WithdrawalFragment fragment = new WithdrawalFragment();
         Bundle args = new Bundle();
@@ -270,7 +271,13 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
             } else {
                 tv_xiu2.setVisibility(View.VISIBLE);
             }
-            zhifubao_et.setText(userInfo.getAliPayNumber());
+            String aliPayNumber = userInfo.getAliPayNumber();
+            String substring = aliPayNumber.substring(0, 3);
+            String substring1 = aliPayNumber.replace(substring, "");
+            for (int i=0;i<substring1.length();i++){
+               s= s+"*";
+            }
+            zhifubao_et.setText(substring+s);
             zhifubaoagin_et.setText(userInfo.getTealName());
 
         } catch (Exception e) {

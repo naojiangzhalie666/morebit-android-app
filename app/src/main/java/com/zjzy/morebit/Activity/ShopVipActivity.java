@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -61,6 +62,7 @@ public class ShopVipActivity extends BaseActivity implements View.OnClickListene
     private RoundedImageView vip_tou;
     private TextView vip_name,tv_coin,tv_morcion;
     private HorzProgressView horzProgressView;
+    private NestedScrollView netscroll;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +145,7 @@ public class ShopVipActivity extends BaseActivity implements View.OnClickListene
           manager = new LinearLayoutManager(this);
         rcy_shopmall.setLayoutManager(manager);
         shopnum= (TextView) findViewById(R.id.shopnum);
+        netscroll= (NestedScrollView) findViewById(R.id.netscroll);
 
 
 
@@ -284,8 +287,7 @@ public class ShopVipActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(this, ShopCarActivity.class));
                 break;
             case R.id.top_rcy://一键置顶
-                manager.scrollToPositionWithOffset(0, 0);
-                manager.setStackFromEnd(true);
+                netscroll.smoothScrollTo(0, 0);
                 break;
         }
     }

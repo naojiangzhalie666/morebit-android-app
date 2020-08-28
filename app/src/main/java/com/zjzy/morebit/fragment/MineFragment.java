@@ -31,6 +31,7 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.Activity.AppletsActivity;
 import com.zjzy.morebit.Activity.FansDragonActivity;
 import com.zjzy.morebit.Activity.FansListFragment;
+import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.MyOrderActivity;
 import com.zjzy.morebit.Activity.SettingActivity;
@@ -42,6 +43,7 @@ import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.EarningsHintDialog;
 import com.zjzy.morebit.Module.common.Dialog.InterIconDialog;
+import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.UpgradeUserDialog;
 import com.zjzy.morebit.Module.common.Dialog.WithdrawErrorDialog;
 import com.zjzy.morebit.Module.common.Dialog.WxBindDialog;
@@ -649,9 +651,15 @@ public class MineFragment extends BaseMainFragmeng {
                     iconDialog.show();
                     break;
                 case R.id.tv4://升级页面
+                    Long coin = usInfo.getMoreCoin();
                     if (usInfo!=null){
                         if (C.UserType.member.equals(usInfo.getUserType())){
-                            startActivity(new Intent(getActivity(), ShopVipActivity.class));
+                            if (coin>=360){
+                                updateGrade();
+                            }else{
+                                startActivity(new Intent(getActivity(), ShopVipActivity.class));
+                            }
+
                         }else{
                             GoodsUtil.getVipH5(getActivity());
                         }
@@ -664,6 +672,89 @@ public class MineFragment extends BaseMainFragmeng {
 
             }
         }
+    }
+
+    private void updateGrade() {
+        ShopkeeperUpgradeDialog upgradeDialog = new ShopkeeperUpgradeDialog(getActivity());
+        upgradeDialog.setmOkListener(new ShopkeeperUpgradeDialog.OnOkListener() {
+            @Override
+            public void onClick(View view) {
+
+                    updateGradePresenter(MineFragment.this, Integer.parseInt(C.UserType.vipMember));
+
+            }
+        });
+        upgradeDialog.show();
+    }
+
+
+    public void updateGradePresenter(RxFragment fragment, int userType) {
+        updateUserGrade(fragment, userType)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+
+                    }
+                })
+                .subscribe(new DataObserver<UpdateInfoBean>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+//                        super.onError(errorMsg, errCode);
+                        showError(errCode, errorMsg);
+                    }
+
+                    @Override
+                    protected void onDataListEmpty() {
+
+                    }
+
+                    @Override
+                    protected void onSuccess(UpdateInfoBean data) {
+                        onGradeSuccess(data);
+                    }
+                });
+    }
+    public void showError(String errorNo, String msg) {
+        MyLog.i("test", "onFailure: " + this);
+        if ("B1100007".equals(errorNo)
+                || "B1100008".equals(errorNo)
+                || "B1100009".equals(errorNo)
+                || "B1100010".equals(errorNo)) {
+            ViewShowUtils.showShortToast(getActivity(), msg);
+        }
+
+
+    }
+
+    public void onGradeSuccess(UpdateInfoBean info) {
+        if (info != null) {
+            UserInfo userInfo = UserLocalData.getUser();
+            userInfo.setUserType(String.valueOf(info.getUserType()));
+            userInfo.setMoreCoin(info.getMoreCoin());
+            UserLocalData.setUser(getActivity(), userInfo);
+            EventBus.getDefault().post(new RefreshUserInfoEvent());
+            EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_SEHNGJI));
+//            refreshUserInfo(userInfo);
+            ToastUtils.showShort("升级成功");
+        } else {
+            MyLog.d("test", "用户信息为空");
+        }
+
+    }
+
+    /**
+     * 用户等级升级
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxFragment fragment, int userGrade) {
+        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
+        updateUserBean.setType(userGrade);
+        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
+                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
     }
 
     /**

@@ -112,7 +112,7 @@ public class RetailersActivity extends BaseActivity implements View.OnClickListe
         xTablayout = (XTabLayout) findViewById(R.id.xTablayout);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         list.add("全部");
-        list.add("待返佣");
+        list.add("待返利");
         list.add("已到账");
 
         initViewpager();
