@@ -175,7 +175,6 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(pagerAdapter);
         xablayout.setupWithViewPager(viewpager);
-        viewpager.setOffscreenPageLimit(3);
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

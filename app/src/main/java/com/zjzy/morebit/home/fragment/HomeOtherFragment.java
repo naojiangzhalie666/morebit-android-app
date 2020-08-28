@@ -139,6 +139,7 @@ import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.AutoHeightViewPager;
 import com.zjzy.morebit.utils.AutoInterceptViewGroup;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.CountTimeView;
 import com.zjzy.morebit.utils.CountTimeView2;
 import com.zjzy.morebit.utils.DateTimeUtils;
@@ -819,7 +820,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
                     }
                 });
-        getActivities(this)
+        CommInterface.getActivities(this)
                 .subscribe(new DataObserver<List<HandpickBean>>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -848,7 +849,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         initNew();
 
 
-        getDoorGodCategory(this)
+        CommInterface.getDoorGodCategory(this)
                 .subscribe(new DataObserver<DoorGodCategoryBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -871,7 +872,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     }
                 });
 
-        getQueryDhAndGy(this)
+        CommInterface.getQueryDhAndGy(this)
                 .subscribe(new DataObserver<QueryDhAndGyBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -895,7 +896,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 });
 
 
-        getListGraphicInfoSorting(this)
+       CommInterface.getListGraphicInfoSorting(this)
                 .subscribe(new DataObserver<FloorBean2>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -957,7 +958,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
     private void initNew() {
-        getUserZeroInfo(this)
+        CommInterface.getUserZeroInfo(this)
                 .subscribe(new DataObserver<UserZeroInfoBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -984,7 +985,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     private void getNotice() {
 
-        getUnreadInformation(this)
+        CommInterface.getUnreadInformation(this)
                 .subscribe(new DataObserver<UnreadInforBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -1017,7 +1018,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
     private void initLimit() {
-        getpainBuyinglist(this)
+        CommInterface.getpainBuyinglist(this)
                 .subscribe(new DataObserver<PanicBuyingListBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -1866,92 +1867,14 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     }
 
-    //爆款热销
-    public Observable<BaseResponse<List<HandpickBean>>> getActivities(RxFragment fragment) {
-        return RxHttp.getInstance().getSysteService().getActivities()
-                .compose(RxUtils.<BaseResponse<List<HandpickBean>>>switchSchedulers())
-                .compose(fragment.<BaseResponse<List<HandpickBean>>>bindToLifecycle());
-    }
-
-    //限时秒杀
-    public Observable<BaseResponse<PanicBuyingListBean>> getpainBuyinglist(RxFragment fragment) {
-        return RxHttp.getInstance().getSysteService().getpanicBuyingList()
-                .compose(RxUtils.<BaseResponse<PanicBuyingListBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<PanicBuyingListBean>>bindToLifecycle());
-    }
-
-    //0元购信息
-    public Observable<BaseResponse<UserZeroInfoBean>> getUserZeroInfo(RxFragment fragment) {
-        return RxHttp.getInstance().getSysteService().getUserZeroInfo()
-                .compose(RxUtils.<BaseResponse<UserZeroInfoBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<UserZeroInfoBean>>bindToLifecycle());
-    }
-
-    //获取金刚位
-    public Observable<BaseResponse<DoorGodCategoryBean>> getDoorGodCategory(RxFragment fragment) {
-        RequestBannerBean requestBannerBean = new RequestBannerBean();
-        requestBannerBean.setType(C.UIShowType.HomeIcon);
-        return RxHttp.getInstance().getSysteService().getDoorGodCategory(requestBannerBean)
-                .compose(RxUtils.<BaseResponse<DoorGodCategoryBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<DoorGodCategoryBean>>bindToLifecycle());
-    }
 
 
-    //查询抖货和高佣专区接口
-    public Observable<BaseResponse<QueryDhAndGyBean>> getQueryDhAndGy(RxFragment fragment) {
-        return RxHttp.getInstance().getSysteService().getQueryDhAndGy()
-                .compose(RxUtils.<BaseResponse<QueryDhAndGyBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<QueryDhAndGyBean>>bindToLifecycle());
-    }
-
-    //新楼层查询
-    public Observable<BaseResponse<FloorBean2>> getListGraphicInfoSorting(RxFragment fragment) {
-        return RxHttp.getInstance().getSysteService().getListGraphicInfoSorting()
-                .compose(RxUtils.<BaseResponse<FloorBean2>>switchSchedulers())
-                .compose(fragment.<BaseResponse<FloorBean2>>bindToLifecycle());
-    }
 
 
-    //消息是否已读
-    public Observable<BaseResponse<UnreadInforBean>> getUnreadInformation(RxFragment fragment) {
-        return RxHttp.getInstance().getSysteService().getUnreadInformation()
-                .compose(RxUtils.<BaseResponse<UnreadInforBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<UnreadInforBean>>bindToLifecycle());
-    }
 
-    //消息已读
-    public Observable<BaseResponse<String>> getReadNotice(RxFragment fragment, int type) {
-        RequestReadNotice notice = new RequestReadNotice();
-        notice.setType(type);
-        return RxHttp.getInstance().getSysteService().getReadNotice(notice)
-                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
-                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
-    }
 
-    private void getReadNoticed(int type) {
-        getReadNotice(this, type)
-                .subscribe(new DataObserver<String>(false) {
-                    @Override
-                    protected void onDataListEmpty() {
-                        onActivityFailure();
-                    }
 
-                    @Override
-                    protected void onDataNull() {
-                        onActivityFailure();
-                    }
 
-                    @Override
-                    protected void onError(String errorMsg, String errCode) {
-                        onActivityFailure();
-                    }
-
-                    @Override
-                    protected void onSuccess(String data) {
-
-                    }
-                });
-    }
 
     @Override
     public void onDestroyView() {

@@ -27,8 +27,6 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
     private Context context;
     private List<VipBean> list = new ArrayList<>();
     public int mCheckedPosition = 0;
-    private ViewHolder holder;
-    private List<Boolean> isClicks;
 
     public MembershipAdapter1(Context context) {
         this.context = context;
@@ -48,10 +46,6 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
         if (data != null) {
             list.clear();
             list.addAll(data);
-            isClicks = new ArrayList<>();
-            for(int i = 0;i<data.size();i++){
-                isClicks.add(false);
-            }
             notifyDataSetChanged();
         }
     }
@@ -69,7 +63,7 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(context).inflate(R.layout.itme_membership1, parent, false);
-        holder = new ViewHolder(inflate);
+        ViewHolder holder = new ViewHolder(inflate);
         return holder;
     }
 
@@ -90,16 +84,12 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
             }
         });
 
-        Log.e("kkkk",mCheckedPosition+"   sssssss");
-
 
         if (position== mCheckedPosition){
-            Log.e("kkkk",mCheckedPosition+"   66999966"+position+"    8888");
             holder.title.setTextColor(Color.parseColor("#F05557"));
             holder.tv.setBackgroundColor( Color.parseColor("#FFFFFF"));//选中白色，不选择灰色
             holder.line.setVisibility(View.VISIBLE);
         }else{
-            Log.e("kkkk",mCheckedPosition+"   6666"+position+"   7777");
             holder.tv.setBackgroundColor( Color.parseColor("#F8F8F8"));//选中灰色，不选择白色
             holder.line.setVisibility(View.GONE);
             holder.title.setTextColor(Color.parseColor("#333333"));

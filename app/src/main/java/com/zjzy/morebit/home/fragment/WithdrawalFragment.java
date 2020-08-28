@@ -43,6 +43,7 @@ import com.zjzy.morebit.pojo.WithdrawDetailBean;
 import com.zjzy.morebit.pojo.request.base.RequestBaseOs;
 import com.zjzy.morebit.pojo.requestbodybean.RequestCheckWithdrawBean;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.PageToUtil;
 
@@ -84,8 +85,14 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
         return view;
     }
 
+    @Override
+    protected void onVisible() {
+        super.onVisible();
+        checkData();
+    }
+
     private void checkData() {
-        checkWithdrawalRecord(this)
+        CommInterface.checkWithdrawalRecord(this)
                 .subscribe(new DataObserver<CheckWithDrawBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -116,7 +123,7 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
 
 
     private void getData() {
-        getUserWithdrawApplyNew(this, etUserName.getText().toString(), type)
+        CommInterface.getUserWithdrawApplyNew(this, etUserName.getText().toString(), type)
                 .subscribe(new DataObserver<String>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -291,41 +298,6 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
                 PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝账号", "BindZhiFuBaoFragment");
                 break;
         }
-
-    }
-
-    /**
-     * 账单明细
-     *
-     * @param fragment
-     * @return
-     */
-
-    public Observable<BaseResponse<String>> getUserWithdrawApplyNew(RxFragment fragment, String allMoney, int type) {
-        RequestWithdrawBean2 withdrawBean2 = new RequestWithdrawBean2();
-        withdrawBean2.setAmount(allMoney);
-        withdrawBean2.setType(type + "");
-        return RxHttp.getInstance().getCommonService()
-                .getUserWithdrawApplyNew(withdrawBean2)
-                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
-                .compose(fragment.<BaseResponse<String>>bindToLifecycle());
-
-    }
-
-
-    /**
-     * 检测是否存在提现记录
-     *
-     * @param fragment
-     * @return
-     */
-
-    public Observable<BaseResponse<CheckWithDrawBean>> checkWithdrawalRecord(RxFragment fragment) {
-        RequestCheckWithdrawBean requestCheckWithdrawBean = new RequestCheckWithdrawBean(1);
-        return RxHttp.getInstance().getCommonService()
-                .checkWithdrawalRecord(requestCheckWithdrawBean)
-                .compose(RxUtils.<BaseResponse<CheckWithDrawBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<CheckWithDrawBean>>bindToLifecycle());
 
     }
 }
