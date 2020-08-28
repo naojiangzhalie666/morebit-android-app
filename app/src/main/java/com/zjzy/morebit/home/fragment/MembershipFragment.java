@@ -201,6 +201,7 @@ public class MembershipFragment extends BaseMainFragmeng {
                 adapter1.notifyDataSetChanged();
 
 
+
                 mIsFromClick = true;//不走onScrolled，防止来回调
 //                manager.scrollToPositionWithOffset(postion,0);
 //

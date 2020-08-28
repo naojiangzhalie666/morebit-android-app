@@ -27,6 +27,8 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
     private Context context;
     private List<VipBean> list = new ArrayList<>();
     public int mCheckedPosition = 0;
+    private ViewHolder holder;
+    private List<Boolean> isClicks;
 
     public MembershipAdapter1(Context context) {
         this.context = context;
@@ -46,6 +48,10 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
         if (data != null) {
             list.clear();
             list.addAll(data);
+            isClicks = new ArrayList<>();
+            for(int i = 0;i<data.size();i++){
+                isClicks.add(false);
+            }
             notifyDataSetChanged();
         }
     }
@@ -63,7 +69,7 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(context).inflate(R.layout.itme_membership1, parent, false);
-        ViewHolder holder = new ViewHolder(inflate);
+        holder = new ViewHolder(inflate);
         return holder;
     }
 
@@ -81,11 +87,11 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
             @Override
             public void onClick(View v) {
               onItemAddClick.onShareClick(position);
-               notifyDataSetChanged();
             }
         });
 
         Log.e("kkkk",mCheckedPosition+"   sssssss");
+
 
         if (position== mCheckedPosition){
             Log.e("kkkk",mCheckedPosition+"   66999966"+position+"    8888");
@@ -99,8 +105,8 @@ public class MembershipAdapter1 extends RecyclerView.Adapter<MembershipAdapter1.
             holder.title.setTextColor(Color.parseColor("#333333"));
         }
 
-
     }
+
 
 
     @Override
