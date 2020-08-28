@@ -62,7 +62,7 @@ public class MonthAgoActivity extends BaseActivity {
         txt_head_title = (TextView) findViewById(R.id.txt_head_title);
         LinearLayout btn_right = (LinearLayout) findViewById(R.id.btn_right);
         btn_right.setVisibility(View.VISIBLE);
-        txt_head_title.setText("上月月报");
+        txt_head_title.setText("历史月报");
         txt_head_title.setTextSize(18);
         btn_back = (LinearLayout) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +85,6 @@ public class MonthAgoActivity extends BaseActivity {
         fans_huo.setText(mdata.getPrevMonthIndirectUser()+"");
         yugu_activity.setText(mdata.getPrevMonthEstimateRewardMoney()+"");
         time_title.getPaint().setFakeBoldText(true);
-
-        getData();
 
         btn_right.setOnClickListener(new View.OnClickListener() {
             @Override
