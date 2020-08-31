@@ -82,6 +82,7 @@ import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
@@ -991,7 +992,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
      * @param userType
      */
     public void updateGradePresenter(RxAppCompatActivity fragment, int userType) {
-        updateUserGrade(fragment, userType)
+        CommInterface.updateUserGrade(fragment, userType)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -1046,19 +1047,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
     }
 
-    /**
-     * 用户等级升级
-     *
-     * @param fragment
-     * @return
-     */
-    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxAppCompatActivity fragment, int userGrade) {
-        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
-        updateUserBean.setType(userGrade);
-        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
-                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
-    }
+
 
     /**
      * 权益

@@ -274,8 +274,9 @@ public class WithdrawalFragment extends BaseMainFragmeng implements View.OnClick
             String aliPayNumber = userInfo.getAliPayNumber();
             String substring = aliPayNumber.substring(0, 3);
             String substring1 = aliPayNumber.replace(substring, "");
+            s="";
             for (int i=0;i<substring1.length();i++){
-               s= s+"*";
+                s= s+"*";
             }
             zhifubao_et.setText(substring+s);
             zhifubaoagin_et.setText(userInfo.getTealName());

@@ -72,7 +72,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/getComMoney"
                     android:text="恭喜！佣金已打款至支付宝"
+                    android:singleLine="true"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/color_999999"
                     android:textSize="14sp" />

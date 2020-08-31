@@ -1,5 +1,6 @@
 package com.zjzy.morebit.utils;
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
@@ -13,7 +14,9 @@ import com.zjzy.morebit.pojo.RequestWithdrawBean2;
 import com.zjzy.morebit.pojo.UnreadInforBean;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
+import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
+import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestCheckWithdrawBean;
 
 import java.util.List;
@@ -110,6 +113,20 @@ public class CommInterface {
         return RxHttp.getInstance().getSysteService().getQueryDhAndGy()
                 .compose(RxUtils.<BaseResponse<QueryDhAndGyBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<QueryDhAndGyBean>>bindToLifecycle());
+    }
+
+    /**
+     * 用户等级升级
+     *
+     * @param fragment
+     * @return
+     */
+    public static Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxAppCompatActivity fragment, int userGrade) {
+        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
+        updateUserBean.setType(userGrade);
+        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
+                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
     }
 
 }
