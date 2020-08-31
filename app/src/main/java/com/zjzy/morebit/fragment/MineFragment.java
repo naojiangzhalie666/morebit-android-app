@@ -932,67 +932,11 @@ public class MineFragment extends BaseMainFragmeng {
 
     }
 
-    private void openDialog(String title, String content) {  //收益说明dialog
-        if (mDialog == null) {
-            mDialog = new EarningsHintDialog(getActivity(), R.style.dialog, title, content);
-            mDialog.setGravity(true);
-            mDialog.setmOkListener(new EarningsHintDialog.OnOkListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            });
-        }
-
-        if (!mDialog.isShowing()) {
-            mDialog.show();
-        }
-    }
-
-    private void openUpgradeUserDialog() {  //收益说明dialog
-        if (mUpgradeUserDialog == null) {
-            mUpgradeUserDialog = new UpgradeUserDialog(getActivity());
-
-            mUpgradeUserDialog.setmOkListener(new UpgradeUserDialog.OnOkListener() {
-                @Override
-                public void onClick(View view) {
-                    VipActivity.start(getActivity());
-                }
-            });
-            mUpgradeUserDialog.setCancelListener(new UpgradeUserDialog.OnCancelListner() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
-        }
 
 
-        if (!mUpgradeUserDialog.isShowing() && !isLogin) {
-//            SharedPreferencesUtils.put(App.getAppContext(),C.sp.DIALOG_USER_IS_UPGRADE,true);
-            mUpgradeUserDialog.show();
 
 
-        }
-    }
 
-
-    WithdrawErrorDialog withdrawErrorDialog;
-
-    private void withdrawErrorDialog(String title) {  //淘宝取消授权弹框
-        if (withdrawErrorDialog == null) {
-            withdrawErrorDialog = new WithdrawErrorDialog(getActivity(), R.style.dialog, "温馨提示", title);
-            withdrawErrorDialog.setmOkListener(new WithdrawErrorDialog.OnOkListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            });
-        }
-
-        if (!withdrawErrorDialog.isShowing()) {
-            withdrawErrorDialog.show();
-        }
-
-    }
 
 
     @Override
@@ -1030,7 +974,7 @@ public class MineFragment extends BaseMainFragmeng {
                     protected void onError(String errorMsg, String errCode) {
                         MyLog.i("test", "errCode: " + errCode);
                         if (C.requestCode.B10301.equals(errCode)) {//因为成功的话data会为空，所以判断下
-                            ToastUtils.showLong("提现时间为每月25,26,27,28,29,30,31号");
+                          ToastUtils.showShort(errorMsg+"");
                         }
 
                     }

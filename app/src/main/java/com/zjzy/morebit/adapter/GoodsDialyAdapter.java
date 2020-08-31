@@ -50,6 +50,7 @@ import com.zjzy.morebit.pojo.request.RequestCircleShareBean;
 import com.zjzy.morebit.pojo.request.RequestCircleShareCountBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
 import com.zjzy.morebit.utils.AppUtil;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.DownloadManage;
@@ -448,7 +449,7 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
                 });
     }
     private void getTao(String itemId) {
-        getBaseResponseObservable((BaseActivity) context, itemId)
+        CommInterface.getBaseResponseObservable((BaseActivity) context, itemId)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -818,11 +819,6 @@ public class GoodsDialyAdapter extends RecyclerView.Adapter<GoodsDialyAdapter.Vi
         this.onItemAddClick = onItemAddClick;
     }
 
-    //淘宝详情
-    private Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservable(BaseActivity rxActivity, String itemId) {
-        return RxHttp.getInstance().getCommonService().getDetailData(new RequestItemSourceId().setItemSourceId(itemId).setItemFrom("1"))
-                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
-                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
-    }
+
 
 }

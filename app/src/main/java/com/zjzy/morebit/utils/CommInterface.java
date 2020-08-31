@@ -2,6 +2,7 @@ package com.zjzy.morebit.utils;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
@@ -12,6 +13,7 @@ import com.zjzy.morebit.pojo.NoticemBean;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
 import com.zjzy.morebit.pojo.RequestWithdrawBean2;
+import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UnreadInforBean;
 import com.zjzy.morebit.pojo.UserIncomeDetail2;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
@@ -20,6 +22,7 @@ import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestCheckWithdrawBean;
+import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
 
 import java.util.List;
 
@@ -163,6 +166,12 @@ public class CommInterface {
         return RxHttp.getInstance().getUsersService().getUserIncome()
                 .compose(RxUtils.<BaseResponse<UserIncomeDetail2>>switchSchedulers())
                 .compose(rxFragment.<BaseResponse<UserIncomeDetail2>>bindToLifecycle());
+    }
+    //淘宝详情
+    public static Observable<BaseResponse<ShopGoodInfo>> getBaseResponseObservable(BaseActivity rxActivity, String itemId) {
+        return RxHttp.getInstance().getCommonService().getDetailData(new RequestItemSourceId().setItemSourceId(itemId).setItemFrom("1"))
+                .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
     }
 
 }

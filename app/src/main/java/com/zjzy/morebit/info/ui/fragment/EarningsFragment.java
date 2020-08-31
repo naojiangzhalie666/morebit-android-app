@@ -259,7 +259,7 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
                     protected void onError(String errorMsg, String errCode) {
                         MyLog.i("test", "errCode: " + errCode);
                         if (C.requestCode.B10301.equals(errCode)) {//因为成功的话data会为空，所以判断下
-                            ToastUtils.showLong("提现时间为每月25,26,27,28,29,30,31号");
+                            ToastUtils.showShort(errorMsg+"");
                         }
 
                     }
