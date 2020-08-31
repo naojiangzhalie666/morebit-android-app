@@ -347,6 +347,7 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
                         <View
+                            android:id="@+id/view1"
                             android:layout_width="match_parent"
                             android:layout_height="12dp"
                             android:background="@color/color_F0F1F5" />

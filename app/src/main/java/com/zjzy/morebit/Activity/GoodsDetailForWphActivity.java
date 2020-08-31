@@ -21,10 +21,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
 import com.tencent.mm.opensdk.utils.Log;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -33,6 +35,7 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
+import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
@@ -60,12 +63,16 @@ import com.zjzy.morebit.pojo.ReleaseManage;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
+import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.goods.TKLBean;
+import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
+import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
+import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
@@ -87,6 +94,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
 /**
@@ -135,6 +143,12 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
     GoodsDetailUpdateView gduv_view;
     @BindView(R.id.tv_buy)
     TextView tv_buy;
+    @BindView(R.id.details_img)
+    ImageView details_img;
+    @BindView(R.id.tv_viprice)
+    TextView tv_viprice;
+    @BindView(R.id.tv_sheng)
+    TextView tv_sheng;
 
 
     private String shopid;
@@ -290,6 +304,7 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
         });
 
         view_bar.setAlpha(0);
+        initSheng();
 
 
 
@@ -638,8 +653,21 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
         switch (v.getId()) {
             case R.id.ll_shen:
                 if (LoginUtil.checkIsLogin(this)) {
-                    OpenFragmentUtils.goToSimpleFragment(this, NumberFragment.class.getName(), null);
+                    UserInfo usInfo = UserLocalData.getUser(this);
+                    Long coin = usInfo.getMoreCoin();
+                    if (usInfo!=null){
+                        if (C.UserType.member.equals(usInfo.getUserType())){
+                            if (coin>=360){
+                                updateGrade();
+                            }else{
+                                startActivity(new Intent(this, ShopVipActivity.class));
+                            }
+                        }else{
+                            GoodsUtil.getVipH5(this);
+                        }
+                    }
                 }
+
                 break;
             case R.id.btn_back:
                 finish();
@@ -706,7 +734,115 @@ public class GoodsDetailForWphActivity extends MvpActivity<GoodsDetailForPddPres
                 break;
         }
     }
+    private void initSheng() {
+        UserInfo mUserInfo = UserLocalData.getUser(this);
+        if (mUserInfo != null) {
+            if (C.UserType.member.equals(mUserInfo.getUserType())) {
+                details_img.setImageResource(R.mipmap.details_img_member);
+                tv_viprice.setText("6800");
+                tv_sheng.setText("去升级");
+            }else if (C.UserType.vipMember.equals(mUserInfo.getUserType())){
+                details_img.setImageResource(R.mipmap.details_img_vip);
+                tv_viprice.setText("16800");
+                tv_sheng.setText("查看权益");
+            }else{
+                details_img.setImageResource(R.mipmap.details_img_opetor);
+                tv_viprice.setText("26800");
+                tv_sheng.setText("查看权益");
+            }
+        }
+    }
+    /**
+     * 升级掌柜的弹框
+     */
+    private void updateGrade() {
+        ShopkeeperUpgradeDialog upgradeDialog = new ShopkeeperUpgradeDialog(this);
+        upgradeDialog.setmOkListener(new ShopkeeperUpgradeDialog.OnOkListener() {
+            @Override
+            public void onClick(View view) {
 
+                updateGradePresenter(GoodsDetailForWphActivity.this, Integer.parseInt(C.UserType.vipMember));
+
+            }
+        });
+        upgradeDialog.show();
+    }
+
+    /**
+     * 升级
+     *
+     * @param fragment
+     * @param userType
+     */
+    public void updateGradePresenter(RxAppCompatActivity fragment, int userType) {
+        updateUserGrade(fragment, userType)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+
+                    }
+                })
+                .subscribe(new DataObserver<UpdateInfoBean>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+//                        super.onError(errorMsg, errCode);
+                        showError(errCode, errorMsg);
+                    }
+
+                    @Override
+                    protected void onDataListEmpty() {
+
+                    }
+
+                    @Override
+                    protected void onSuccess(UpdateInfoBean data) {
+                        onGradeSuccess(data);
+                    }
+                });
+    }
+    public void showError(String errorNo, String msg) {
+        MyLog.i("test", "onFailure: " + this);
+        if ("B1100007".equals(errorNo)
+                || "B1100008".equals(errorNo)
+                || "B1100009".equals(errorNo)
+                || "B1100010".equals(errorNo)) {
+            ViewShowUtils.showShortToast(this, msg);
+        }
+
+
+    }
+
+    public void onGradeSuccess(UpdateInfoBean info) {
+        if (info != null) {
+            UserInfo userInfo = UserLocalData.getUser();
+            userInfo.setUserType(String.valueOf(info.getUserType()));
+            userInfo.setMoreCoin(info.getMoreCoin());
+            UserLocalData.setUser(this, userInfo);
+            EventBus.getDefault().post(new RefreshUserInfoEvent());
+            EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_SEHNGJI));
+//            refreshUserInfo(userInfo);
+            initSheng();
+            ToastUtils.showShort("升级成功");
+        } else {
+            MyLog.d("test", "用户信息为空");
+        }
+
+    }
+
+    /**
+     * 用户等级升级
+     *
+     * @param fragment
+     * @return
+     */
+    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxAppCompatActivity fragment, int userGrade) {
+        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
+        updateUserBean.setType(userGrade);
+        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
+                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
+    }
 
     /**
      * 收藏或取消收藏

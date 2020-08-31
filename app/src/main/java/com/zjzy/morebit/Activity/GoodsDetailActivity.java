@@ -223,6 +223,8 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
     TextView tv_viprice;
     @BindView(R.id.tv_sheng)
     TextView tv_sheng;
+    @BindView(R.id.view1)
+    View view1;
 
 
     private ShopGoodInfo mGoodsInfo;
@@ -581,9 +583,11 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
         //  mGoodsInfo.setItemDesc(Info.getItemDesc());
         if (TextUtils.isEmpty(Info.getItemDesc())) {
             rl_desc.setVisibility(View.GONE);
+            view1.setVisibility(View.GONE);
         } else {
             rl_desc.setVisibility(View.VISIBLE);
             tv_desc.setText(Info.getItemDesc());
+            view1.setVisibility(View.VISIBLE);
         }
 
         if (!TextUtils.isEmpty(Info.getCommission())) {

@@ -230,11 +230,12 @@
                             android:background="@color/white">
 
                             <ImageView
+                                android:id="@+id/details_img"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="12dp"
-                                android:src="@drawable/details_vip_bg" />
+                                android:src="@mipmap/details_img_member" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -246,10 +247,11 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/tv_viprice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="36888"
+                                android:text="6800"
                                 android:textColor="#F05557"
                                 android:textSize="14sp" />
 
@@ -262,6 +264,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/tv_sheng"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
