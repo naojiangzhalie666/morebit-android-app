@@ -74,12 +74,22 @@
 
                     </RelativeLayout>
 
-                    <LinearLayout
-                        android:background="@drawable/bg_ffffff_8dp"
-                        android:orientation="vertical"
+                    <com.zyp.cardview.YcCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        app:cardBackgroundColor="@color/transparent"
+                        app:cardUseCompatPadding="true"
+                        app:ycCardCornerRadius="8dp"
+                        app:ycCardElevation="2dp"
                         android:layout_marginRight="12dp"
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="12dp"
+                        app:ycCardPreventCornerOverlap="false"
+                        app:ycStartShadowColor="#33ff615b">
+                    <LinearLayout
+                        android:background="@drawable/bg_ffffff_8dp"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -273,6 +283,7 @@
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+                    </com.zyp.cardview.YcCardView>
                 </RelativeLayout>
 
                 <!--预估收入-->
