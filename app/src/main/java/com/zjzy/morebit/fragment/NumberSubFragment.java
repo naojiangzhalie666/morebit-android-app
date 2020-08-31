@@ -64,6 +64,7 @@ import com.zjzy.morebit.adapter.holder.SimpleViewHolder;
 import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.goods.shopping.ui.fragment.CategoryListFragment2;
+import com.zjzy.morebit.goodsvideo.ShopMallActivity;
 import com.zjzy.morebit.home.fragment.AdvancedClassFragment;
 import com.zjzy.morebit.home.fragment.MembershipFragment;
 import com.zjzy.morebit.home.fragment.SelectGoodsFragment;
@@ -521,7 +522,7 @@ public class NumberSubFragment extends BaseMainFragmeng {
                             if (coin>=360){
                                 updateGrade();
                             }else{
-                                startActivity(new Intent(getActivity(), ShopVipActivity.class));
+                                startActivity(new Intent(getActivity(), ShopMallActivity.class));
                             }
 
                         }

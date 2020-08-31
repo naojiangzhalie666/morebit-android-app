@@ -287,6 +287,7 @@ public class ShopVipActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(this, ShopCarActivity.class));
                 break;
             case R.id.top_rcy://一键置顶
+                manager.scrollToPosition(0);
                 netscroll.smoothScrollTo(0, 0);
                 break;
         }
