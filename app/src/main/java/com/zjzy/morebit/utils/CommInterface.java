@@ -8,10 +8,12 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.pojo.CheckWithDrawBean;
 import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.FloorBean2;
+import com.zjzy.morebit.pojo.NoticemBean;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
 import com.zjzy.morebit.pojo.RequestWithdrawBean2;
 import com.zjzy.morebit.pojo.UnreadInforBean;
+import com.zjzy.morebit.pojo.UserIncomeDetail2;
 import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
@@ -127,6 +129,40 @@ public class CommInterface {
         return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
                 .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
+    }
+
+    /**
+     * 用户等级升级
+     *
+     * @param fragment
+     * @return
+     */
+    public static Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxFragment fragment, int userGrade) {
+        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
+        updateUserBean.setType(userGrade);
+        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
+                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
+    }
+
+
+    //消息列表
+    public static Observable<BaseResponse<NoticemBean>> getUserNoticeList(RxFragment fragment) {
+        return RxHttp.getInstance().getSysteService().getUserNoticeList()
+                .compose(RxUtils.<BaseResponse<NoticemBean>>switchSchedulers())
+                .compose(fragment.<BaseResponse<NoticemBean>>bindToLifecycle());
+    }
+
+
+    /**
+     * 获取收益
+     *
+     * @param rxFragment
+     */
+    public static Observable<BaseResponse<UserIncomeDetail2>> getUserIncomeDetail(RxFragment rxFragment) {
+        return RxHttp.getInstance().getUsersService().getUserIncome()
+                .compose(RxUtils.<BaseResponse<UserIncomeDetail2>>switchSchedulers())
+                .compose(rxFragment.<BaseResponse<UserIncomeDetail2>>bindToLifecycle());
     }
 
 }

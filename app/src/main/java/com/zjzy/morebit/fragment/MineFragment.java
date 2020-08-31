@@ -83,6 +83,7 @@ import com.zjzy.morebit.pojo.request.RequestBannerBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
@@ -606,7 +607,8 @@ public class MineFragment extends BaseMainFragmeng {
                     break;
                 case R.id.tv_withdraw: //提现
 
-                    startActivity(new Intent(getActivity(), WithdrawalActivity.class));//跳转可提现页面
+                    InfoModel   mInfoModel = new InfoModel();
+                    getTiXian(mInfoModel);
 
                     break;
                 case R.id.my_little://小程序入口
@@ -689,7 +691,7 @@ public class MineFragment extends BaseMainFragmeng {
 
 
     public void updateGradePresenter(RxFragment fragment, int userType) {
-        updateUserGrade(fragment, userType)
+        CommInterface.updateUserGrade(fragment, userType)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -743,19 +745,7 @@ public class MineFragment extends BaseMainFragmeng {
 
     }
 
-    /**
-     * 用户等级升级
-     *
-     * @param fragment
-     * @return
-     */
-    public Observable<BaseResponse<UpdateInfoBean>> updateUserGrade(RxFragment fragment, int userGrade) {
-        RequestUpdateUserBean updateUserBean = new RequestUpdateUserBean();
-        updateUserBean.setType(userGrade);
-        return RxHttp.getInstance().getUsersService().updateUserGrade(updateUserBean)
-                .compose(RxUtils.<BaseResponse<UpdateInfoBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<UpdateInfoBean>>bindToLifecycle());
-    }
+
 
     /**
      * 获取轮播图数据
@@ -897,7 +887,7 @@ public class MineFragment extends BaseMainFragmeng {
 
 
     public void getMonthIncome() {
-        getUserIncomeDetail(this)
+        CommInterface.getUserIncomeDetail(this)
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -1023,18 +1013,30 @@ public class MineFragment extends BaseMainFragmeng {
 
         updataUser();
     }
+    private void getTiXian(InfoModel mInfoModel) {
+        mInfoModel.checkWithdrawTime(this)
+                .subscribe(new DataObserver<String>(false) {
+                    @Override
+                    protected void onSuccess(String data) {
+                        if (TaobaoUtil.isAuth()) {   //淘宝授权
+                            TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
+                        } else {
+                            startActivity(new Intent(getActivity(), WithdrawalActivity.class));//跳转可提现页面
+                        }
 
+                    }
 
-    /**
-     * 获取收益
-     *
-     * @param rxFragment
-     */
-    public Observable<BaseResponse<UserIncomeDetail2>> getUserIncomeDetail(RxFragment rxFragment) {
-        return RxHttp.getInstance().getUsersService().getUserIncome()
-                .compose(RxUtils.<BaseResponse<UserIncomeDetail2>>switchSchedulers())
-                .compose(rxFragment.<BaseResponse<UserIncomeDetail2>>bindToLifecycle());
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+                        MyLog.i("test", "errCode: " + errCode);
+                        if (C.requestCode.B10301.equals(errCode)) {//因为成功的话data会为空，所以判断下
+                            ToastUtils.showLong("提现时间为每月25,26,27,28,29,30,31号");
+                        }
+
+                    }
+                });
     }
+
 
 
 }

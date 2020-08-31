@@ -227,13 +227,8 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
                 startActivity(new Intent(getActivity(), BillDetailsActivity.class));
                 break;
             case R.id.withdraw:   //提现
-//                InfoModel   mInfoModel = new InfoModel();
-//                getTiXian(mInfoModel);
-
-
-               startActivity(new Intent(getActivity(), WithdrawalActivity.class));//跳转可提现页面
-              //  BirthdayUtil.getInstance(getActivity()).showBirthdayDate(getActivity(), month_ago, "选择月份", 1);
-
+                InfoModel   mInfoModel = new InfoModel();
+                getTiXian(mInfoModel);
                 break;
             case R.id.btn_back:   //箭头退出
                 getActivity().finish();
@@ -252,24 +247,10 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
                 .subscribe(new DataObserver<String>(false) {
                     @Override
                     protected void onSuccess(String data) {
-                        UserInfo info = UserLocalData.getUser(getActivity());
-                        if (TextUtils.isEmpty(receiveAmount)) {
-                            mTotalMoney = "0";
-                        }
-                        if (Double.parseDouble(receiveAmount) < 1) {
-                            ViewShowUtils.showShortToast(getActivity(), "不足1元，无法提现");
-                        } else {
                             if (TaobaoUtil.isAuth()) {   //淘宝授权
                                 TaobaoUtil.getAllianceAppKey((BaseActivity) getActivity());
                             } else {
-                                if (info.getAliPayNumber() != null && !"".equals(info.getAliPayNumber())) {
-                                    AppUtil.gotoCashMoney(getActivity(), receiveAmount);
-                                } else {
-                                    PageToUtil.goToUserInfoSimpleFragment(getActivity(), "绑定支付宝", "BindZhiFuBaoFragment");
-                                    ToastUtils.showLong("请先绑定支付宝!");
-                                }
-
-                            }
+                                startActivity(new Intent(getActivity(), WithdrawalActivity.class));//跳转可提现页面
                         }
 
                     }
@@ -277,13 +258,6 @@ public class EarningsFragment extends MvpFragment<EarningsPresenter> implements 
                     @Override
                     protected void onError(String errorMsg, String errCode) {
                         MyLog.i("test", "errCode: " + errCode);
-                        double money = 0;
-                        try {
-                            money = Double.parseDouble(receiveAmount);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
                         if (C.requestCode.B10301.equals(errCode)) {//因为成功的话data会为空，所以判断下
                             ToastUtils.showLong("提现时间为每月25,26,27,28,29,30,31号");
                         }

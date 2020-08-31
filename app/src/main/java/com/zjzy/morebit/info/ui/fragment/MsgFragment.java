@@ -40,6 +40,7 @@ import com.zjzy.morebit.pojo.UnreadInforBean;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.NotificationsUtils;
@@ -100,7 +101,7 @@ public class MsgFragment extends BaseFragment {
 
     private void  initData(){
 
-        getUserNoticeList(this)
+        CommInterface.getUserNoticeList(this)
                 .subscribe(new DataObserver<NoticemBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -203,7 +204,7 @@ public class MsgFragment extends BaseFragment {
 
     private void getNotice() {
 
-        getUnreadInformation(this)
+        CommInterface.getUnreadInformation(this)
                 .subscribe(new DataObserver<UnreadInforBean>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -291,39 +292,7 @@ public class MsgFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-   /* public List<DayHotBean> handlerData(List<DayHotBean> data) {
-        List<DayHotBean> dayHotBeans = new ArrayList<>();
-        String lastTime = "";
-        if (null != data && data.size() > 0) {
-            //通过时间判断是今天的商品不显示时间分线
-            for (int i = 0; i < data.size(); i++) {
-                DayHotBean item = data.get(i);
-                if (!lastTime.equals(DateTimeUtils.getYMDTime(item.getSendTime()))) {
-                    //lastTime = DateTimeUtils.getDatetoString(item.getSendTime());
-                    String isTodayTime = DateTimeUtils.getDatetoString(item.getSendTime());
-                    if (!isTodayTime.equals("今天")) {
-                        String currentTime = DateTimeUtils.getYMDTime(item.getSendTime());
-                        if (!currentTime.equals(lastTime)) {
-                            lastTime = currentTime;
-                            DayHotBean timeLineBean = new DayHotBean();
-                            timeLineBean.setGoodsId("-1");
-                            timeLineBean.setSendTime(item.getSendTime());
-                            dayHotBeans.add(timeLineBean);
-                        }
 
-                    }
-
-                }
-                dayHotBeans.add(item);
-            }
-        }
-//        DayHotBean timeLineBean = new DayHotBean();
-//        timeLineBean.setGoodsId("-2");
-//        dayHotBeans.add(timeLineBean);
-
-        return dayHotBeans;
-    }
-*/
     @Override
     public void onResume() {
         super.onResume();
@@ -345,18 +314,5 @@ public class MsgFragment extends BaseFragment {
         }
     }
 
-    //消息列表
-    public Observable<BaseResponse<NoticemBean>> getUserNoticeList(RxFragment fragment) {
-        return RxHttp.getInstance().getSysteService().getUserNoticeList()
-                .compose(RxUtils.<BaseResponse<NoticemBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<NoticemBean>>bindToLifecycle());
-    }
-
-    //消息是否已读
-    public Observable<BaseResponse<UnreadInforBean>> getUnreadInformation(RxFragment fragment) {
-        return RxHttp.getInstance().getSysteService().getUnreadInformation()
-                .compose(RxUtils.<BaseResponse<UnreadInforBean>>switchSchedulers())
-                .compose(fragment.<BaseResponse<UnreadInforBean>>bindToLifecycle());
-    }
 
 }
