@@ -70,6 +70,7 @@ public class MembershipFragment extends BaseMainFragmeng {
     private Handler handler = new Handler();
     private View view1;
     private LinearLayout ll1;
+    private TextView tv1,tv3;
     /**
      * 是否来自点击
      */
@@ -160,6 +161,10 @@ public class MembershipFragment extends BaseMainFragmeng {
         ll1 = view.findViewById(R.id.ll1);
         rcy_title = view.findViewById(R.id.rcy_title);
         rcy_icon = view.findViewById(R.id.rcy_icon);
+        tv1=view.findViewById(R.id.tv1);
+        tv3=view.findViewById(R.id.tv3);
+        tv1.getPaint().setFakeBoldText(true);
+        tv3.getPaint().setFakeBoldText(true);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
         adapter1 = new MembershipAdapter1(getActivity());
         rcy_title.setLayoutManager(layoutManager1);

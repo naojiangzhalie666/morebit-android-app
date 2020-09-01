@@ -122,9 +122,11 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
 
                     if (info.getIsExpire() == 0) {
                         holder2.tv_qiang.setVisibility(View.GONE);
+                        holder2.img_qiang.setVisibility(View.GONE);
                     } else {
 
                         holder2.tv_qiang.setVisibility(View.VISIBLE);
+                        holder2.img_qiang.setVisibility(View.VISIBLE);
                     }
 
 
@@ -141,10 +143,13 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
 
                 if (info.getIsExpire() == 0) {
 
+
                     holder3.tv_qiang.setVisibility(View.GONE);
+                    holder3.img_qiang.setVisibility(View.GONE);
                 } else {
 
                     holder3.tv_qiang.setVisibility(View.VISIBLE);
+                    holder3.img_qiang.setVisibility(View.VISIBLE);
                 }
 
 
@@ -160,9 +165,11 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
                 if (info.getIsExpire() == 0) {
 
                     holder1.tv_qiang.setVisibility(View.GONE);
+                    holder1.img_qiang.setVisibility(View.GONE);
                 } else {
 
                     holder1.tv_qiang.setVisibility(View.VISIBLE);
+                    holder1.img_qiang.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -207,7 +214,7 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView img,img_bo;
+        private ImageView img,img_bo,img_qiang;
         private TextView tv_qiang;
 
 
@@ -217,6 +224,7 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
             img = itemView.findViewById(R.id.img);//
             tv_qiang = itemView.findViewById(R.id.tv_qiang);
             img_bo=itemView.findViewById(R.id.img_bo);
+            img_qiang=itemView.findViewById(R.id.img_qiang);
 
         }
     }
@@ -224,7 +232,7 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
 
     public class ViewHolder2 extends RecyclerView.ViewHolder {
 
-        private ImageView img2,img_bo;
+        private ImageView img2,img_bo,img_qiang;
         private TextView tv_qiang;
 
 
@@ -234,14 +242,14 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
             img2 = itemView.findViewById(R.id.img2);//
             tv_qiang = itemView.findViewById(R.id.tv_qiang);
             img_bo=itemView.findViewById(R.id.img_bo);
-
+            img_qiang=itemView.findViewById(R.id.img_qiang);
         }
     }
 
 
     public class ViewHolder3 extends RecyclerView.ViewHolder {
 
-        private ImageView img3,img_bo;
+        private ImageView img3,img_bo,img_qiang;
         private TextView tv_qiang;
 
 
@@ -251,6 +259,7 @@ public class PhotoDialyAdapter extends RecyclerView.Adapter {
             img3 = itemView.findViewById(R.id.img3);//
             tv_qiang = itemView.findViewById(R.id.tv_qiang);
             img_bo=itemView.findViewById(R.id.img_bo);
+            img_qiang=itemView.findViewById(R.id.img_qiang);
 
 
         }
