@@ -274,8 +274,8 @@
                         android:layout_height="wrap_content"/>
                     <LinearLayout
                         android:id="@+id/progress"
-                        android:paddingBottom="12dp"
-                        android:layout_marginTop="-5dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -341,10 +341,7 @@
 <!--                        app:ci_drawable="@drawable/icon_huangdian"-->
 <!--                        app:ci_drawable_unselected="@drawable/icon_huidian" />-->
 <!--                </LinearLayout>-->
-            <Space
-                android:id="@+id/space1"
-                android:layout_width="0dp"
-                android:layout_height="12dp" />
+
                 <LinearLayout
                     android:id="@+id/new_goods"
                     android:layout_width="match_parent"

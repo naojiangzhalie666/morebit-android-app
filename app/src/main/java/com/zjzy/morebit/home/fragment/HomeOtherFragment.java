@@ -250,7 +250,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private RelativeLayout msg_rl;
     private ConsecutiveScrollerLayout sroller;
     private boolean isTime = true;
-    private Space space1;
     private ZLoadingDialog dialog;
     private RecyclerView rcy_icon;
     private HomeMenuAdapter menuAdapter;
@@ -388,7 +387,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private void initOtherView() {
         progress=mView.findViewById(R.id.progress);
         search_rl = mView.findViewById(R.id.search_rl);
-        space1 = mView.findViewById(R.id.space1);
         sroller = mView.findViewById(R.id.sroller);
         swipeList = mView.findViewById(R.id.swipeList);
         msg_rl = mView.findViewById(R.id.msg_rl);
@@ -1132,14 +1130,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         UserInfo userInfo1 = UserLocalData.getUser(getActivity());
         if (userInfo1 == null || TextUtils.isEmpty(UserLocalData.getToken())) {
             new_goods.setVisibility(View.VISIBLE);
-            space1.setVisibility(View.VISIBLE);
         } else {
             if (data.isIsNewUser()) {
                 new_goods.setVisibility(View.VISIBLE);
-                space1.setVisibility(View.VISIBLE);
             } else {
                 new_goods.setVisibility(View.GONE);
-                space1.setVisibility(View.GONE);
             }
 
             Log.e("gyui", data.getTime());

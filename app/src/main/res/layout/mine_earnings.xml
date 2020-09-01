@@ -196,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:text="0.42"
                         android:textColor="#fff05557"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_16"
                         />
 
 
@@ -223,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:text="0.42"
                         android:textColor="#fff05557"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_16"
                         />
 
 
@@ -250,7 +250,7 @@
                         android:layout_height="wrap_content"
                         android:text="0.42"
                         android:textColor="#fff05557"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_16"
                         />
 
 

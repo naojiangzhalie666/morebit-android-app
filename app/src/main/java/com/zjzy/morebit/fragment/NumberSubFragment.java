@@ -453,7 +453,7 @@ public class NumberSubFragment extends BaseMainFragmeng {
                 }
             }
         });
-
+        upgradeDialog.getWindow().setDimAmount(0.7f);
         if (!isUserHint){
             upgradeDialog.show();
             isUserHint=true;

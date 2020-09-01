@@ -103,13 +103,11 @@ public class QrcodeDialog extends AlertDialog {
             if (teamIfo.getUserType() == 0) {//vip
                 vip_img.setImageResource(R.mipmap.vip_icon_right2);
                 userLevel.setText("VIP");
-                ll_vip.setBackgroundResource(R.drawable.bg_e9c8a7_round_9dp);
-                userLevel.setTextColor(Color.parseColor("#A8947A"));
+
             } else {//掌柜黄金
                 vip_img.setImageResource(R.mipmap.vip_bg_icon);
-                userLevel.setText("掌柜(黄金)");
-                ll_vip.setBackgroundResource(R.drawable.bg_vip_round_9dp);
-                userLevel.setTextColor(Color.parseColor("#FCAF00"));
+                userLevel.setText("掌柜");
+
             }
 
 

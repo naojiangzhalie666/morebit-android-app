@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:text="最高返现奖励"
                     android:layout_marginTop="8dp"
-                    android:textColor="#ffc4b2a1"
+                    android:textColor="#D58D3D"
                     android:layout_centerHorizontal="true"
                     android:textSize="12sp"
                     />
@@ -246,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="预计每年省赚"
-                        android:textColor="#ffc4b2a1"
+                        android:textColor="#D58D3D"
                         android:textSize="12sp"
                         />
                     <TextView

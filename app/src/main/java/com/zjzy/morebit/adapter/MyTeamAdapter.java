@@ -102,13 +102,10 @@ public class MyTeamAdapter extends RecyclerView.Adapter {
         if(C.UserType.member.equals(info.getUserType()+"")){
             viewHolder.vip_img.setImageResource(R.mipmap.vip_icon_right2);
             viewHolder.userLevel.setText("VIP");
-            viewHolder.ll_vip.setBackgroundResource(R.drawable.bg_e9c8a7_round_9dp);
-            viewHolder.userLevel.setTextColor(Color.parseColor("#A8947A"));
         } else {
             viewHolder.vip_img.setImageResource(R.mipmap.vip_bg_icon);
-            viewHolder.userLevel.setText("掌柜(黄金)");
-            viewHolder.ll_vip.setBackgroundResource(R.drawable.bg_vip_round_9dp);
-            viewHolder.userLevel.setTextColor(Color.parseColor("#FCAF00"));
+            viewHolder.userLevel.setText("掌柜");
+
         }
         viewHolder.people_count.setText("粉丝数"+info.getChildCount());
         viewHolder.item_ly.setOnClickListener(new View.OnClickListener() {
