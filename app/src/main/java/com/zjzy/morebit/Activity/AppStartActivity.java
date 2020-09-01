@@ -72,7 +72,7 @@ public class AppStartActivity extends RxAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppStart);
-      //设置用户信息，作为展示的 name
+        //设置用户信息，作为展示的 name
 //        OneApmConfig.setLoginUserName(UserLocalData.getUser().getPhone());
         // 避免从桌面启动程序后，会重新实例化入口类的activity
         try {
@@ -122,7 +122,7 @@ public class AppStartActivity extends RxAppCompatActivity {
         } else {
             mBgAd = (ImageView) findViewById(R.id.imgBg);
             mSkip = (TextView) findViewById(R.id.skip);
-            ar_title_banner=findViewById(R.id.ar_title_banner);
+            //   ar_title_banner=findViewById(R.id.ar_title_banner);
             mSkip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -139,27 +139,27 @@ public class AppStartActivity extends RxAppCompatActivity {
 
     private void getActivity() {
         getReadActivity(this)
-         .subscribe(new DataObserver<String>(false) {
-            @Override
-            protected void onDataListEmpty() {
+                .subscribe(new DataObserver<String>(false) {
+                    @Override
+                    protected void onDataListEmpty() {
 
-            }
+                    }
 
-            @Override
-            protected void onDataNull() {
+                    @Override
+                    protected void onDataNull() {
 
-            }
+                    }
 
-            @Override
-            protected void onError(String errorMsg, String errCode) {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
 
-            }
+                    }
 
-            @Override
-            protected void onSuccess(String data) {
+                    @Override
+                    protected void onSuccess(String data) {
 
-            }
-        });
+                    }
+                });
     }
 
 
@@ -184,10 +184,10 @@ public class AppStartActivity extends RxAppCompatActivity {
             if (!IsToday) {
                 App.getACache().put(C.sp.APPSTART_POPUPTYPE + imageInfo.getId(), System.currentTimeMillis() + "");
                 if (imageInfo.getMediaType() == 1) {
-                    ar_title_banner.setVisibility(View.GONE);
+                    mBgAd.setVisibility(View.GONE);
                     playerVideo(imageInfo);
                 } else {
-                    ar_title_banner.setVisibility(View.VISIBLE);
+                    mBgAd.setVisibility(View.VISIBLE);
                     showLocalPicture(imageInfo);
                 }
             } else {
@@ -205,18 +205,15 @@ public class AppStartActivity extends RxAppCompatActivity {
      */
     private void playerVideo(ImageInfo imageInfo) {
         String videoPath = imageInfo.videoPath;
-        if (TextUtils.isEmpty(videoPath) ) {
+        if (TextUtils.isEmpty(videoPath)) {
             statrMain(null);
             return;
         }
 
 
-
         mVideoView = (VideoView) findViewById(R.id.videoView);
         RelativeLayout rl_videoView = (RelativeLayout) findViewById(R.id.rl_videoView);
         rl_videoView.setVisibility(View.VISIBLE);
-
-
 
 
         try {
@@ -276,9 +273,9 @@ public class AppStartActivity extends RxAppCompatActivity {
     private void showLocalPicture(final ImageInfo imageInfo) {
         if (imageInfo != null && !TextUtils.isEmpty(imageInfo.getPicture())) {
             MyLog.i("test", "asString: " + imageInfo.getPicture());
-           // mBgAd.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            // mBgAd.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //                LoadImgUtils.setImg(this, mBgAd, imageInfo.getPicture(), false);
-            if(imageInfo.getPicture().startsWith("http")){
+            if (imageInfo.getPicture().startsWith("http")) {
                 LoadImgUtils.getImgToFileObservable(this, imageInfo.getPicture())
                         .subscribe(new CallBackObserver<File>() {
                             @Override
@@ -294,9 +291,9 @@ public class AppStartActivity extends RxAppCompatActivity {
 
                             }
                         });
-            }else{
+            } else {
                 try {
-                    LoadImgUtils.setImg(this, mBgAd, imageInfo.getPicture() , false, new LoadImgUtils.GlideLoadListener() {
+                    LoadImgUtils.setImg(this, mBgAd, imageInfo.getPicture(), false, new LoadImgUtils.GlideLoadListener() {
                         @Override
                         public void loadError() {
                             mBgAd.setVisibility(View.GONE);
@@ -306,7 +303,7 @@ public class AppStartActivity extends RxAppCompatActivity {
                         @Override
                         public void loadSuccess() {
 
-                            ar_title_banner.setOnClickListener(new View.OnClickListener() {
+                            mBgAd.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     statrMain(imageInfo);
@@ -315,7 +312,7 @@ public class AppStartActivity extends RxAppCompatActivity {
                             countDown();
                         }
                     });
-                }catch (Exception e) {
+                } catch (Exception e) {
                     statrMain(null);
                 } catch (OutOfMemoryError outOfMemoryError) {
                     statrMain(null);
@@ -396,20 +393,20 @@ public class AppStartActivity extends RxAppCompatActivity {
 
 
     private void statrMain(ImageInfo imageInfo) {
-        Log.e("hhhh","1");
+        Log.e("hhhh", "1");
         Intent intent = new Intent(AppStartActivity.this, MainActivity.class);
         if (mdDisposable != null) {
             mdDisposable.dispose();
         }
-        Log.e("hhhh","2"+mdDisposable);
+        Log.e("hhhh", "2" + mdDisposable);
         if (imageInfo != null) {
             intent.putExtra("imageInfo", imageInfo);
         }
-        Log.e("hhhh","3"+imageInfo);
+        Log.e("hhhh", "3" + imageInfo);
         if (null != h5Uri) {
             intent.setData(h5Uri);
         }
-        Log.e("hhhh","4"+h5Uri);
+        Log.e("hhhh", "4" + h5Uri);
         startActivity(intent);
         finish();
     }
@@ -428,7 +425,6 @@ public class AppStartActivity extends RxAppCompatActivity {
             mVideoView = null;
         }
     }
-
 
 
     //获取用户日活
