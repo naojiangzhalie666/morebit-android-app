@@ -52,6 +52,8 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Dialog.NumberLeaderUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.NumberVipUpgradeDialog;
 import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog;
+import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog2;
+import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog3;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.NumberReUseGridView;
@@ -192,7 +194,7 @@ public class NumberSubFragment extends BaseMainFragmeng {
     private TextView tv_coin;
     private RelativeLayout shop_car;
     private TextView shopnum;
-    private boolean isUserHint=false;
+    private boolean isUserHint = false;
     private ShopkeeperUpgradeDialog upgradeDialog;
 
 
@@ -439,7 +441,7 @@ public class NumberSubFragment extends BaseMainFragmeng {
 
 
     /**
-     * 升级掌柜的弹框
+     * 升级掌柜黄金的弹框
      */
     private void updateGrade() {
         upgradeDialog = new ShopkeeperUpgradeDialog(getActivity());
@@ -454,22 +456,49 @@ public class NumberSubFragment extends BaseMainFragmeng {
             }
         });
         upgradeDialog.getWindow().setDimAmount(0.7f);
-        if (!isUserHint){
+        if (!isUserHint) {
             upgradeDialog.show();
-            isUserHint=true;
+            isUserHint = true;
         }
         upgradeDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                isUserHint=false;
+                isUserHint = true;
+            }
+        });
+
+    }
+
+    /**
+     * 升级掌柜黑金的弹框
+     */
+    private void updateGrade2() {
+        ShopkeeperUpgradeDialog2 upgradeDialog = new ShopkeeperUpgradeDialog2(getActivity());
+        upgradeDialog.setmOkListener(new ShopkeeperUpgradeDialog2.OnOkListener() {
+            @Override
+            public void onClick(View view) {
+                if (mUserInfo.getMoreCoin() < 50000) {
+                    ToastUtils.showLong("成长值不足");
+                } else {
+                    updateGradePresenter(NumberSubFragment.this, Integer.parseInt(C.UserType.operator));
+                }
+            }
+        });
+        upgradeDialog.getWindow().setDimAmount(0.7f);
+        if (!isUserHint) {
+            upgradeDialog.show();
+            isUserHint = true;
+        }
+        upgradeDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                isUserHint = true;
             }
         });
 
 
 
-
     }
-
 
     private void initViewData(UserInfo info) {
         if ("null".equals(info.getHeadImg()) || "NULL".equals(info.getHeadImg()) || TextUtils.isEmpty(info.getHeadImg())) {
@@ -519,9 +548,10 @@ public class NumberSubFragment extends BaseMainFragmeng {
                     upgrade.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (coin>=360){
+                            if (coin >= 360) {
+                                isUserHint=false;
                                 updateGrade();
-                            }else{
+                            } else {
                                 startActivity(new Intent(getActivity(), ShopMallActivity.class));
                             }
 
@@ -535,7 +565,7 @@ public class NumberSubFragment extends BaseMainFragmeng {
                     vip_grade.setText("掌柜");
                     horzProgressView.setMax(50000.00);
                     horzProgressView.setCurrentNum(info.getMoreCoin());
-                    Long moreCoin = info.getMoreCoin();
+                    final Long moreCoin = info.getMoreCoin();
                     String coin1;
                     if (moreCoin == null) {
                         coin1 = "0";
@@ -547,7 +577,7 @@ public class NumberSubFragment extends BaseMainFragmeng {
                     upgrade.setOnClickListener(new View.OnClickListener() {//升级VIP
                         @Override
                         public void onClick(View v) {
-                            GoodsUtil.getVipH5(getActivity());
+                                GoodsUtil.getVipH5(getActivity());
                         }
                     });
                 }
@@ -671,7 +701,15 @@ public class NumberSubFragment extends BaseMainFragmeng {
             EventBus.getDefault().post(new RefreshUserInfoEvent());
             EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_SEHNGJI));
 //            refreshUserInfo(userInfo);
-            ToastUtils.showShort("升级成功");
+            if (1 == info.getUserType()) {
+                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(getActivity(), 1);
+                shopkeeperUpgradeDialog3.getWindow().setDimAmount(0.7f);
+                shopkeeperUpgradeDialog3.show();
+            } else if (2 == info.getUserType()) {
+                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(getActivity(), 2);
+                shopkeeperUpgradeDialog3.getWindow().setDimAmount(0.7f);
+                shopkeeperUpgradeDialog3.show();
+            }
         } else {
             MyLog.d("test", "用户信息为空");
         }
@@ -761,6 +799,9 @@ public class NumberSubFragment extends BaseMainFragmeng {
                 break;
             case EventBusAction.UPGRADE_POP:
                 updateGrade();
+                break;
+            case EventBusAction.UPGRADE_POP2:
+                updateGrade2();
                 break;
         }
     }

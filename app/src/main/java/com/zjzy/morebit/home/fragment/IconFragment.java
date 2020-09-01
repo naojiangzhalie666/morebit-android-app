@@ -100,7 +100,7 @@ public class IconFragment extends MvpFragment<VideoPresenter> implements VideoCo
 //            itmeWidth = menuItmeWidth * 0.67;
 //        }
         HomeMenuAdapter menuAdapter = new HomeMenuAdapter(getActivity()/*,(int) itmeWidthwheelChartDisplayVo,*/);
-        menuAdapter.setData(wheelChartDisplayVo);
+      //  menuAdapter.setData(wheelChartDisplayVo);
         rcy_icon.setAdapter(menuAdapter);
 
 

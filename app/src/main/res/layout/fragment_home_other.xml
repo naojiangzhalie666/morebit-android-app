@@ -649,10 +649,12 @@
 
                 </LinearLayout>
             <Space
+                android:id="@+id/space_bao"
                 android:layout_width="0dp"
                 android:layout_height="12dp" />
 <!--                <include layout="@layout/item_home_dou" />-->
                 <RelativeLayout
+                    android:id="@+id/rl_bao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                    android:paddingRight="12dp"

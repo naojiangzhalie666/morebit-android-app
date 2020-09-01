@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_ffffff_12dp"
+        android:layout_width="270dp"
+        android:paddingBottom="20dp"
+        android:layout_height="wrap_content">
+
+
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="恭喜您升级成功"
+            android:textStyle="bold"
+            android:textColor="@color/color_F05557"
+            android:layout_marginTop="124dp"
+            android:textSize="20sp"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:text="将获得掌柜"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"
+                />
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/vip_bg_icon"
+                />
+
+            <TextView
+                android:layout_toRightOf="@+id/tv2"
+                android:layout_below="@+id/title"
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_height="20dp"
+                android:text="尊享权益"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"
+                />
+
+
+        </LinearLayout>
+
+
+
+
+
+        <TextView
+            android:layout_below="@+id/ll"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/background_radius_haibao_25dp"
+            android:gravity="center"
+            android:text="查看当前权益"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ffffffff"
+            android:textSize="16sp" />
+
+
+
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_above="@+id/rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/upgrade_d"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-140dp"
+        />
+    <ImageView
+        android:layout_above="@+id/rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/upgrade_jb"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-180dp"
+        />
+</RelativeLayout>

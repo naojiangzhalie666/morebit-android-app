@@ -25,5 +25,6 @@ public class EventBusAction {
     public final static String SHOPCAR_REFRSH = "SHOPCAR_REFRSH"; //购物车刷新
     public final static String UPGRADE_POP = "UPGRADE_POP"; //升级弹框
     public final static String UPGRADE_SEHNGJI = "UPGRADE_SEHNGJI"; //升级
+    public final static String UPGRADE_POP2 = "UPGRADE_POP2"; //升级弹框
 
 }

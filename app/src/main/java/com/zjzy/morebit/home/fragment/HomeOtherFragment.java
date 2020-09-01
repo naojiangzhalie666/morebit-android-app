@@ -253,10 +253,11 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     private ZLoadingDialog dialog;
     private RecyclerView rcy_icon;
     private HomeMenuAdapter menuAdapter;
-    private View bar_line,icon_bg;
+    private View bar_line, icon_bg;
     private LinearLayout progress;
     private float endX = 0;
-    private RelativeLayout search_rl;
+    private RelativeLayout search_rl,rl_bao;
+    private Space space_bao;
     private DataSetObserver mObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -322,7 +323,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     };
 
 
-
     public static HomeOtherFragment newInstance(String param1, String param2) {
         HomeOtherFragment fragment = new HomeOtherFragment();
         Bundle args = new Bundle();
@@ -385,7 +385,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
     @SuppressLint("ClickableViewAccessibility")
     private void initOtherView() {
-        progress=mView.findViewById(R.id.progress);
+        rl_bao=mView.findViewById(R.id.rl_bao);
+        space_bao=mView.findViewById(R.id.space_bao);
+        progress = mView.findViewById(R.id.progress);
         search_rl = mView.findViewById(R.id.search_rl);
         sroller = mView.findViewById(R.id.sroller);
         swipeList = mView.findViewById(R.id.swipeList);
@@ -492,7 +494,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         activity_rcy.setLayoutManager(manager6);
 
         //金刚位
-        icon_bg=mView.findViewById(R.id.icon_bg);
+        icon_bg = mView.findViewById(R.id.icon_bg);
         bar_line = mView.findViewById(R.id.main_line);
         int defpadding = DensityUtil.dip2px(getActivity(), 24);
         double horizontalSpacing = defpadding;
@@ -507,8 +509,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         rcy_icon.setAdapter(menuAdapter);
 
         setScrollBar();
-
-
 
 
     }
@@ -534,9 +534,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 
                 //已经滚动的距离，为0时表示已处于顶部。
                 int offset = recyclerView.computeHorizontalScrollOffset();
-                if (extent==range){
+                if (extent == range) {
                     progress.setVisibility(View.GONE);
-                }else {
+                } else {
                     progress.setVisibility(View.VISIBLE);
                     //计算出溢出部分的宽度，即屏幕外剩下的宽度
                     float maxEndX = range - extent;
@@ -823,16 +823,21 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     @Override
                     protected void onDataListEmpty() {
                         onActivityFailure();
+                        space_bao.setVisibility(View.GONE);
+                        rl_bao.setVisibility(View.GONE);
                     }
 
                     @Override
                     protected void onDataNull() {
                         onActivityFailure();
+                        space_bao.setVisibility(View.GONE);
+                        rl_bao.setVisibility(View.GONE);
                     }
 
                     @Override
                     protected void onError(String errorMsg, String errCode) {
                         onActivityFailure();
+
                     }
 
                     @Override
@@ -847,8 +852,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         initNew();
 
 
-        CommInterface.getDoorGodCategory(this)
-                .subscribe(new DataObserver<DoorGodCategoryBean>(false) {
+        CommInterface.getDoorGodCategory2(this)
+                .subscribe(new DataObserver<List<ImageInfo>>(false) {
                     @Override
                     protected void onDataListEmpty() {
                         onActivityFailure();
@@ -865,7 +870,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                     }
 
                     @Override
-                    protected void onSuccess(DoorGodCategoryBean data) {
+                    protected void onSuccess(List<ImageInfo> data) {
                         onGetDoorGodCategory(data);
                     }
                 });
@@ -894,7 +899,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 });
 
 
-       CommInterface.getListGraphicInfoSorting(this)
+        CommInterface.getListGraphicInfoSorting(this)
                 .subscribe(new DataObserver<FloorBean2>(false) {
                     @Override
                     protected void onDataListEmpty() {
@@ -1054,14 +1059,13 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         dou_rcy.setAdapter(douAdapter);
     }
 
-    private void onGetDoorGodCategory(DoorGodCategoryBean data) {
-        if (data != null) {
-            Log.e("pppppp", data.getResultList().size() + "");
-            Log.e("pppppp", data.getResultList().get(0).getWheelChartDisplayVo().size() + "");
-            if (data.getResultList().size() != 0) {
+    private void onGetDoorGodCategory(List<ImageInfo> data) {
+        if (data != null && data.size() != 0) {
+
+
                 Log.e("pppppp", "1111");
-                menuAdapter.setData(data.getResultList().get(0).getWheelChartDisplayVo());
-            }
+                menuAdapter.setData2(data);
+
 
             //以后可能会用
            /* mFragments.clear();
@@ -1495,30 +1499,38 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     public void onActivitySuccessFul(List<HandpickBean> data) {
         if (data != null && data.size() != 0) {
             final HandpickBean handpickBean = data.get(0);
-            ActivityBaoAdapter activityBaoAdapter = new ActivityBaoAdapter(getActivity(), handpickBean.getItems());
-            activity_rcy.setAdapter(activityBaoAdapter);
-            if (!TextUtils.isEmpty(handpickBean.getPicture())) {
-                LoadImgUtils.loadingCornerTop(getActivity(), img_bao, handpickBean.getPicture(), 5);
+            Log.e("kloi",handpickBean+"");
+            if (handpickBean!=null){
+                space_bao.setVisibility(View.VISIBLE);
+                rl_bao.setVisibility(View.VISIBLE);
+                ActivityBaoAdapter activityBaoAdapter = new ActivityBaoAdapter(getActivity(), handpickBean.getItems());
+                activity_rcy.setAdapter(activityBaoAdapter);
+                if (!TextUtils.isEmpty(handpickBean.getPicture())) {
+                    LoadImgUtils.loadingCornerTop(getActivity(), img_bao, handpickBean.getPicture(), 5);
+                }
+
+                img_bao.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ImageInfo imageInfo = new ImageInfo();
+                        imageInfo.setId(handpickBean.getId());
+                        imageInfo.setTitle(handpickBean.getTitle());
+                        imageInfo.setPicture(handpickBean.getPicture());
+                        if (!TextUtils.isEmpty(handpickBean.getBackgroundImage())) {
+                            imageInfo.setBackgroundImage(handpickBean.getBackgroundImage());
+                        } else {
+                            imageInfo.setBackgroundImage(handpickBean.getPicture());
+                        }
+                        SensorsDataUtil.getInstance().setAcitivityClickTrack("", +handpickBean.getId() + "");
+                        GoodNewsFramgent.start(getActivity(), imageInfo);
+//                BannerInitiateUtils.gotoAction((Activity) mContext, activityBean);
+                    }
+                });
             }
 
-
-            img_bao.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ImageInfo imageInfo = new ImageInfo();
-                    imageInfo.setId(handpickBean.getId());
-                    imageInfo.setTitle(handpickBean.getTitle());
-                    imageInfo.setPicture(handpickBean.getPicture());
-                    if (!TextUtils.isEmpty(handpickBean.getBackgroundImage())) {
-                        imageInfo.setBackgroundImage(handpickBean.getBackgroundImage());
-                    } else {
-                        imageInfo.setBackgroundImage(handpickBean.getPicture());
-                    }
-                    SensorsDataUtil.getInstance().setAcitivityClickTrack("", +handpickBean.getId() + "");
-                    GoodNewsFramgent.start(getActivity(), imageInfo);
-//                BannerInitiateUtils.gotoAction((Activity) mContext, activityBean);
-                }
-            });
+        }else{
+            space_bao.setVisibility(View.GONE);
+            rl_bao.setVisibility(View.GONE);
         }
 
     }
@@ -1624,8 +1636,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         mImageInfo.setTitle("限时抢购");
         switch (v.getId()) {
             case R.id.linear1:
-                if (timeList.size()>0){
-                    PanicBuyFragment.start(getActivity(), mImageInfo,timeList.get(0).getTitle());//跳限时秒杀
+                if (timeList.size() > 0) {
+                    PanicBuyFragment.start(getActivity(), mImageInfo, timeList.get(0).getTitle());//跳限时秒杀
                 }
 
 //                tv_title1.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
@@ -1639,8 +1651,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //                litmited_pager.setCurrentItem(auplay(0));
                 break;
             case R.id.linear2:
-                if (timeList.size()>1){
-                    PanicBuyFragment.start(getActivity(), mImageInfo,timeList.get(1).getTitle());//跳限时秒杀
+                if (timeList.size() > 1) {
+                    PanicBuyFragment.start(getActivity(), mImageInfo, timeList.get(1).getTitle());//跳限时秒杀
                 }
 //                tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
 //                tv_title1.setTextColor(Color.parseColor("#FF999999"));
@@ -1653,8 +1665,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
 //                litmited_pager.setCurrentItem(auplay(1));
                 break;
             case R.id.linear3:
-                if (timeList.size()>2){
-                    PanicBuyFragment.start(getActivity(), mImageInfo,timeList.get(2).getTitle());//跳限时秒杀
+                if (timeList.size() > 2) {
+                    PanicBuyFragment.start(getActivity(), mImageInfo, timeList.get(2).getTitle());//跳限时秒杀
                 }
 //                tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
 //                tv_title1.setTextColor(Color.parseColor("#FF999999"));
@@ -1863,14 +1875,6 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
 
-
-
-
-
-
-
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -1969,7 +1973,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 .setShowCounts(1)
                 .addGuidePage(//添加一页引导页
                         GuidePage.newInstance()//创建一个实例
-                                .addHighLight(search_rl,HighLight.Shape.ROUND_RECTANGLE, 30, 0, null)
+                                .addHighLight(search_rl, HighLight.Shape.ROUND_RECTANGLE, 30, 0, null)
                                 .setLayoutRes(R.layout.view_search_guide)//设置引导页布局
                                 .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
                                     @Override

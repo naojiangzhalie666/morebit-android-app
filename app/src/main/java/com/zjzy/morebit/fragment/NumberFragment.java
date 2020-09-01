@@ -90,6 +90,8 @@ public class NumberFragment extends BaseMainFragmeng {
             if (C.UserType.member.equals(mUserInfo.getUserType()) && coin >= 360) {
                 Log.e("sfsfsf","coin"+coin);
                 EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_POP));
+            }else if (C.UserType.vipMember.equals(mUserInfo.getUserType()) && coin >= 50000){
+                EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_POP2));
             }
         }
     }

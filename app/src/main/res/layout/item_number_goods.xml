@@ -3,58 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:attr="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
-<RelativeLayout
-    android:id="@+id/rl_tou"
-android:visibility="gone"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_marginTop="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/shop_left_icon"
-            />
-
-        <TextView
-
-            android:shadowDx="0"
-            android:shadowDy="1"
-            android:shadowRadius="3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="爆款热销"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:textColor="#fff05557"
-            android:textSize="16sp"
-            android:shadowColor="#80f05557"
-            android:textStyle="bold"
-
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/shop_right_icon"
-            />
-
-
-    </LinearLayout>
-
-
-</RelativeLayout>
-    <com.zyp.cardview.YcCardView
-        android:layout_marginTop="6dp"
+    <RelativeLayout
+        android:id="@+id/rl_tou"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/shop_left_icon" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:shadowColor="#80f05557"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="3"
+                android:text="爆款热销"
+                android:textColor="#fff05557"
+                android:textSize="16sp"
+                android:textStyle="bold"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/shop_right_icon" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <com.zyp.cardview.YcCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         app:cardBackgroundColor="@color/color_FFFFFF"
         app:cardUseCompatPadding="false"
@@ -84,16 +85,15 @@ android:visibility="gone"
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
                     android:background="@drawable/bg_vip_goods"
                     android:paddingLeft="22dp"
-                    android:paddingRight="22dp"
                     android:paddingTop="2dp"
+                    android:paddingRight="22dp"
                     android:paddingBottom="2dp"
                     android:text="新品首发"
                     android:textColor="#ffffffff"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="12dp"
-                    />
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
@@ -119,7 +119,6 @@ android:visibility="gone"
                 android:layout_below="@id/number_goods_desc"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="5dp">
-
 
 
                 <LinearLayout
@@ -152,15 +151,15 @@ android:visibility="gone"
                     android:id="@+id/txt_morebit_corn"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:background="@drawable/bg_youxuan_number"
                     android:layout_alignParentRight="true"
-                    android:gravity="center"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/bg_youxuan_number"
+                    android:drawableLeft="@mipmap/growth_icon"
+                    android:drawablePadding="4dp"
+                    android:gravity="center"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp"
-                    android:drawablePadding="4dp"
-                    android:layout_marginRight="12dp"
-                    android:drawableLeft="@mipmap/growth_icon"
                     android:text="@string/give_growth_value"
                     android:textColor="@color/color_F05557"
                     android:textSize="@dimen/sp_12" />

@@ -9,6 +9,7 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.pojo.CheckWithDrawBean;
 import com.zjzy.morebit.pojo.DoorGodCategoryBean;
 import com.zjzy.morebit.pojo.FloorBean2;
+import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.NoticemBean;
 import com.zjzy.morebit.pojo.PanicBuyingListBean;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
@@ -110,6 +111,14 @@ public class CommInterface {
         return RxHttp.getInstance().getSysteService().getDoorGodCategory(requestBannerBean)
                 .compose(RxUtils.<BaseResponse<DoorGodCategoryBean>>switchSchedulers())
                 .compose(fragment.<BaseResponse<DoorGodCategoryBean>>bindToLifecycle());
+    }
+    //获取金刚位
+    public static Observable<BaseResponse<List<ImageInfo>>> getDoorGodCategory2(RxFragment fragment) {
+        RequestBannerBean requestBannerBean = new RequestBannerBean();
+        requestBannerBean.setType(C.UIShowType.HomeIcon);
+        return RxHttp.getInstance().getSysteService().getBanner(requestBannerBean)
+                .compose(RxUtils.<BaseResponse<List<ImageInfo>>>switchSchedulers())
+                .compose(fragment.<BaseResponse<List<ImageInfo>>>bindToLifecycle());
     }
 
 
