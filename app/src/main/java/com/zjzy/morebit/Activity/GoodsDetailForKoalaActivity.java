@@ -854,6 +854,7 @@ public class GoodsDetailForKoalaActivity extends MvpActivity<GoodsDetailForPddPr
 
             }
         });
+        upgradeDialog.getWindow().setDimAmount(0.7f);
         upgradeDialog.show();
     }
 

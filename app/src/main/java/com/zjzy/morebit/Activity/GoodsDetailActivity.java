@@ -982,6 +982,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailPresenter> imple
 
             }
         });
+        upgradeDialog.getWindow().setDimAmount(0.7f);
         upgradeDialog.show();
     }
 

@@ -937,6 +937,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 
             }
         });
+        upgradeDialog.getWindow().setDimAmount(0.7f);
         upgradeDialog.show();
     }
 

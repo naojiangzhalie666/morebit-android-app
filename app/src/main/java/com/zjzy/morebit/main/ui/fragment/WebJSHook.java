@@ -1,12 +1,14 @@
 package com.zjzy.morebit.main.ui.fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -16,6 +18,8 @@ import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.trello.rxlifecycle2.components.support.RxFragmentActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.InvateActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
@@ -26,9 +30,13 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
 import com.zjzy.morebit.Module.common.Dialog.InputVerificationCodeDialog;
+import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog2;
+import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog3;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.OpinionpReplyFragment;
+import com.zjzy.morebit.contact.EventBusAction;
+import com.zjzy.morebit.fragment.NumberSubFragment;
 import com.zjzy.morebit.info.ui.AppFeedActivity;
 import com.zjzy.morebit.login.ui.LoginMainFragment;
 import com.zjzy.morebit.network.BaseResponse;
@@ -39,11 +47,17 @@ import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.AppUpgradeInfo;
 import com.zjzy.morebit.pojo.HotKeywords;
 import com.zjzy.morebit.pojo.ImageInfo;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
+import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
 import com.zjzy.morebit.pojo.event.WebViewUpdataColorEvent;
+import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.request.RequestCircleFeedBackBean;
+import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.utils.AppUtil;
+import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.GoodsUtil;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -61,6 +75,9 @@ import com.zjzy.morebit.view.SharePopwindow;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 
 /**
  * Created by fengrs on 2018/10/22.
@@ -119,11 +136,16 @@ public class WebJSHook {
      */
     @JavascriptInterface
     public void RegularOpreate(int type,String content) {
-        if (TextUtils.isEmpty(mAccountDestroyHit)) {
-            getAccountDestroyHint();
-        } else {
-            openAccountDestroyDialog(mAccountDestroyHit);
+        if(type==0){
+            if (TextUtils.isEmpty(mAccountDestroyHit)) {
+                getAccountDestroyHint();
+            } else {
+                openAccountDestroyDialog(mAccountDestroyHit);
+            }
+        }else if (type==1){
+            updateGrade2();
         }
+
     }
 
 
@@ -837,5 +859,86 @@ type: Int/// 0是网络图片、1是base64图片
         mInputVerificationCodeDialog.show();
 
     }
+    /**
+     * 升级掌柜黑金的弹框
+     */
+    private void updateGrade2() {
+        ShopkeeperUpgradeDialog2 upgradeDialog = new ShopkeeperUpgradeDialog2(mFragment.getActivity());
+        upgradeDialog.setmOkListener(new ShopkeeperUpgradeDialog2.OnOkListener() {
+            @Override
+            public void onClick(View view) {
+                    updateGradePresenter(mFragment, Integer.parseInt(C.UserType.operator));
+            }
+        });
+        upgradeDialog.getWindow().setDimAmount(0.7f);
+        upgradeDialog.show();
+
+    }
+
+    /**
+     * 升级
+     *  @param fragment
+     * @param userType*/
+    public void updateGradePresenter(Fragment fragment, int userType) {
+        CommInterface.updateUserGrade((RxFragment) fragment, userType)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+
+                    }
+                })
+                .subscribe(new DataObserver<UpdateInfoBean>() {
+                    @Override
+                    protected void onError(String errorMsg, String errCode) {
+//                        super.onError(errorMsg, errCode);
+                        showError(errCode, errorMsg);
+                    }
+
+                    @Override
+                    protected void onDataListEmpty() {
+
+                    }
+
+                    @Override
+                    protected void onSuccess(UpdateInfoBean data) {
+                        onGradeSuccess(data);
+                    }
+                });
+    }
+    public void showError(String errorNo, String msg) {
+        MyLog.i("test", "onFailure: " + this);
+        if ("B1100007".equals(errorNo)
+                || "B1100008".equals(errorNo)
+                || "B1100009".equals(errorNo)
+                || "B1100010".equals(errorNo)) {
+            ViewShowUtils.showShortToast(mFragment.getActivity(), msg);
+        }
+
+
+    }
+    public void onGradeSuccess(UpdateInfoBean info) {
+        if (info != null) {
+            UserInfo userInfo = UserLocalData.getUser();
+            userInfo.setUserType(String.valueOf(info.getUserType()));
+            userInfo.setMoreCoin(info.getMoreCoin());
+            UserLocalData.setUser(mFragment.getActivity(), userInfo);
+            EventBus.getDefault().post(new RefreshUserInfoEvent());
+            EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_SEHNGJI));
+//            refreshUserInfo(userInfo);
+            if (1 == info.getUserType()) {
+                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(mFragment.getActivity(), 2);
+                shopkeeperUpgradeDialog3.getWindow().setDimAmount(0.7f);
+                shopkeeperUpgradeDialog3.show();
+
+            } else {
+                MyLog.d("test", "用户信息为空");
+            }
+
+        }
+
+    }
+
+
 
 }
