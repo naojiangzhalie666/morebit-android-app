@@ -133,7 +133,8 @@ public class ActivityFloorAdapter1 extends RecyclerView.Adapter{
                if (holder2.rcy1.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
                    holder2.rcy1.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(mContext, 3)));
                }
-               if (ext.length()<=6){
+
+               if (ext.length()<=7){
                    holder2.ll1.setBackgroundColor(Color.parseColor(ext));
                }
                FloorAdapter2 adapter2=new FloorAdapter2(mContext,mDatas.get(position).getChild());
@@ -153,7 +154,7 @@ public class ActivityFloorAdapter1 extends RecyclerView.Adapter{
                if (holder3.rcy2.getItemDecorationCount() == 0) {//防止每一次刷新recyclerview都会使间隔增大一倍 重复调用addItemDecoration方法
                    holder3.rcy2.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(mContext, 3)));
                }
-               if (ext.length()<=6){
+               if (ext.length()<=7){
                    holder3.ll2.setBackgroundColor(Color.parseColor(ext));
                }
                FloorAdapter3 adapter3 = new FloorAdapter3(mContext, mDatas.get(position).getChild());

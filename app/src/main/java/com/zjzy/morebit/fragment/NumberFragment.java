@@ -55,8 +55,7 @@ public class NumberFragment extends BaseMainFragmeng {
 
 
     List<BaseFragment> mFragments = new ArrayList<>();
-    // 标志位，标志已经初始化完成。
-    private boolean isPrepared;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
