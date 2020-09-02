@@ -34,11 +34,14 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.contact.EventBusAction;
+import com.zjzy.morebit.fragment.NumberSubFragment;
 import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.LoginSucceedEvent;
@@ -47,6 +50,7 @@ import com.zjzy.morebit.pojo.request.RequesKoalaBean;
 import com.zjzy.morebit.pojo.request.RequesWeiBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LogUtils;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.MyLog;
@@ -108,7 +112,6 @@ public class ShowWebFragment extends BaseFragment {
 
         ImageView ivError = view.findViewById(R.id.iv_error);
         ivError.setImageResource(R.drawable.image_meiyouwangluo);
-
         return view;
     }
 
@@ -516,5 +519,17 @@ public class ShowWebFragment extends BaseFragment {
     public interface MYWebChromeClient {
         void onPageCommitVisible(boolean canGoBack);
     }
+
+    @Subscribe  //订阅事件
+    public void onEventMainThread(MessageEvent event) {
+        switch (event.getAction()) {
+
+            case EventBusAction.UPGRADE_REFRSH:
+                webview.reload();
+                break;
+        }
+    }
+
+
 
 }

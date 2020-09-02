@@ -9,7 +9,11 @@ import android.widget.TextView;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.contact.EventBusAction;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.utils.GoodsUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 /*
 *
@@ -42,14 +46,7 @@ public class ShopkeeperUpgradeDialog3 extends Dialog {
         tv2=findViewById(R.id.tv2);
         title=findViewById(R.id.title);
         btn_ok = findViewById(R.id.btn_ok);
-        btn_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GoodsUtil.getVipH5(mContext);
-                    dismiss();
 
-            }
-        });
 
 
         if (type==1){
@@ -57,11 +54,27 @@ public class ShopkeeperUpgradeDialog3 extends Dialog {
             title.setText("恭喜您升级成功");
             tv2.setText("将获得掌柜");
             tv3.setText("尊享权益");
+            btn_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GoodsUtil.getVipH5(mContext);
+                    dismiss();
+
+                }
+            });
         }else{
             img.setImageResource(R.mipmap.group_bg_icon);
             title.setText("领取成功");
             tv2.setText("您将尊享掌柜");
             tv3.setText("权益");
+            btn_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_REFRSH));
+                    dismiss();
+
+                }
+            });
         }
 
 

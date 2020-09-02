@@ -423,7 +423,9 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             mGoodsInfo.setCouponPrice(Info.getCouponPrice());
             rl_prise.setVisibility(View.VISIBLE);
             coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice()) + "");
-            setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
+            tv_Share_the_money.setText(getString(R.string.goods_share_moeny,  MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), Info.getCommission() + "")));
+            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(Info.getCouponPrice(),  MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), Info.getCommission() + ""));
+            tv_buy.setText(getString(R.string.immediately_buy_discounts, allDiscountsMoneyStr));
         }else{
             rl_prise.setVisibility(View.GONE);
         }
@@ -437,7 +439,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             mGoodsInfo.setCommission(Info.getCommission());
         }
 
-        if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForJdActivity.this).getPartner())) {
+       /* if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForJdActivity.this).getPartner())) {
             tv_Share_the_money.setText(getString(R.string.now_share));
 //            setEstimateData();
 //            setUPdateData();
@@ -460,7 +462,7 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 //                setEstimateData();
 //                setUPdateData();
             }
-        }
+        }*/
     }
 
     /**

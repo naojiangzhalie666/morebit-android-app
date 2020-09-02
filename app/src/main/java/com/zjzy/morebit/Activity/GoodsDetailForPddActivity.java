@@ -441,6 +441,9 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
         }
         if (!TextUtils.isEmpty(Info.getCommission())) {
             tv_zhaun.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), Info.getCommission() + "") + "元");
+            tv_Share_the_money.setText(getString(R.string.goods_share_moeny,  MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), Info.getCommission() + "")));
+            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(Info.getCouponPrice(),  MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), Info.getCommission() + ""));
+            tv_buy.setText(getString(R.string.immediately_buy_discounts, allDiscountsMoneyStr));
         }
 
 
@@ -488,44 +491,44 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
             mGoodsInfo.setCouponPrice(Info.getCouponPrice());
             rl_prise.setVisibility(View.VISIBLE);
             coupon_prise.setText(MathUtils.getnum(Info.getCouponPrice()) + "");
-            setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
+            //setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
         } else {
             rl_prise.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
-            mGoodsInfo.setSubsidiesPrice(Info.getSubsidiesPrice());
-            tv_Share_the_money.setText(getString(R.string.now_share));
-        }
-
-        if (!TextUtils.isEmpty(Info.getCommission())) {
-            mGoodsInfo.setCommission(Info.getCommission());
-        }
-
-        if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForPddActivity.this).getPartner())) {
-            tv_Share_the_money.setText(getString(R.string.now_share));
-//            setEstimateData();
-//            setUPdateData();
-        } else {
-            if (!StringsUtils.isEmpty(Info.getCommission())) {
-                if (getString(R.string.now_share).equals(tv_Share_the_money.getText())) {
-                    mGoodsInfo.setCommission(Info.getCommission());
-                    String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(GoodsDetailForPddActivity.this).getCalculationRate(), Info.getCommission());
-                    setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
-                    if (!TextUtils.isEmpty(muRatioComPrice)) {
-                        String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(GoodsDetailForPddActivity.this).getCalculationRate(), Info.getSubsidiesPrice());
-                        String totalSubside = MathUtils.getTotleSubSidies(muRatioComPrice, getRatioSubside);
-                        tv_Share_the_money.setText(getString(R.string.goods_share_moeny, totalSubside));
-                        setAllIncomeData(muRatioComPrice, getRatioSubside);
-                    }
+//        if (!TextUtils.isEmpty(Info.getSubsidiesPrice())) {
+//            mGoodsInfo.setSubsidiesPrice(Info.getSubsidiesPrice());
+//            tv_Share_the_money.setText(getString(R.string.now_share));
+//        }
+//
+//        if (!TextUtils.isEmpty(Info.getCommission())) {
+//            mGoodsInfo.setCommission(Info.getCommission());
+//        }
+//
+//        if (TextUtils.isEmpty(UserLocalData.getUser(GoodsDetailForPddActivity.this).getPartner())) {
+//            tv_Share_the_money.setText(getString(R.string.now_share));
+////            setEstimateData();
+////            setUPdateData();
+//        } else {
+//            if (!StringsUtils.isEmpty(Info.getCommission())) {
+//                if (getString(R.string.now_share).equals(tv_Share_the_money.getText())) {
+//                    mGoodsInfo.setCommission(Info.getCommission());
+//                    String muRatioComPrice = MathUtils.getMuRatioComPrice(UserLocalData.getUser(GoodsDetailForPddActivity.this).getCalculationRate(), Info.getCommission());
+//                    setBuyText(Info.getCommission(), Info.getCouponPrice(), Info.getSubsidiesPrice());
+//                    if (!TextUtils.isEmpty(muRatioComPrice)) {
+//                        String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(UserLocalData.getUser(GoodsDetailForPddActivity.this).getCalculationRate(), Info.getSubsidiesPrice());
+//                        String totalSubside = MathUtils.getTotleSubSidies(muRatioComPrice, getRatioSubside);
+//                        tv_Share_the_money.setText(getString(R.string.goods_share_moeny,  MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), Info.getCommission() + "")));
+//                        setAllIncomeData(muRatioComPrice, getRatioSubside);
+//                    }
 //                    setEstimateData();
 //                    setUPdateData();
-                }
-            } else {
-//                setEstimateData();
-//                setUPdateData();
-            }
-        }
+//                }
+//            } else {
+////                setEstimateData();
+////                setUPdateData();
+//            }
+//        }
     }
 
     /**
@@ -567,22 +570,19 @@ public class GoodsDetailForPddActivity extends MvpActivity<GoodsDetailForPddPres
      * @param commission  总佣金
      * @param couponPrice 优惠券金额
      */
-    private void setBuyText(String commission, String couponPrice, String subsidiesPrice) {
-        UserInfo user = UserLocalData.getUser();
-        boolean isLogin = LoginUtil.checkIsLogin(this, false);
-        boolean invalidMoney = MathUtils.checkoutInvalidMoney(couponPrice);// 是否有券
-        if (!isLogin && !invalidMoney) {//（1）未登录，商品没券：立即购买
-            tv_buy.setText(getString(R.string.immediately_buy));
-        } else if (isLogin && !invalidMoney && C.UserType.member.equals(user.getPartner())) {//（6）已登录，普通会员，商品没券：立即购买
-            tv_buy.setText(getString(R.string.immediately_buy));
-        } else {
-            double allDiscountsMoney = MathUtils.allDiscountsMoney(user.getCalculationRate(), commission, couponPrice);
-            String discountsMoneyStr = MathUtils.formatTo2Decimals(allDiscountsMoney + "");
-            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(user.getCalculationRate(), subsidiesPrice);
-            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(discountsMoneyStr, getRatioSubside);
-            tv_buy.setText(getString(R.string.immediately_buy_discounts, allDiscountsMoneyStr));
-        }
-    }
+//    private void setBuyText(String commission, String couponPrice, String subsidiesPrice) {
+//        UserInfo user = UserLocalData.getUser();
+//        boolean isLogin = LoginUtil.checkIsLogin(this, false);
+//        boolean invalidMoney = MathUtils.checkoutInvalidMoney(couponPrice);// 是否有券
+//
+////            double allDiscountsMoney = MathUtils.allDiscountsMoney(user.getCalculationRate(), commission, couponPrice);
+////            String discountsMoneyStr = MathUtils.formatTo2Decimals(allDiscountsMoney + "");
+////            String getRatioSubside = MathUtils.getMuRatioSubSidiesPrice(user.getCalculationRate(), subsidiesPrice);
+//            Log.e("pppp",couponPrice+"");
+//            String allDiscountsMoneyStr = MathUtils.getTotleSubSidies(couponPrice,  MathUtils.getMuRatioComPrice(UserLocalData.getUser(this).getCalculationRate(), commission + ""));
+//            tv_buy.setText(getString(R.string.immediately_buy_discounts, allDiscountsMoneyStr));
+//
+//    }
 
     /**
      * 显示详情页数据
