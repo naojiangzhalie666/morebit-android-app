@@ -702,11 +702,11 @@ public class NumberSubFragment extends BaseMainFragmeng {
             EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_SEHNGJI));
 //            refreshUserInfo(userInfo);
             if (1 == info.getUserType()) {
-                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(getActivity(), 1);
+                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(getActivity(), 1,1);
                 shopkeeperUpgradeDialog3.getWindow().setDimAmount(0.7f);
                 shopkeeperUpgradeDialog3.show();
             } else if (2 == info.getUserType()) {
-                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(getActivity(), 2);
+                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(getActivity(), 2,1);
                 shopkeeperUpgradeDialog3.getWindow().setDimAmount(0.7f);
                 shopkeeperUpgradeDialog3.show();
             }

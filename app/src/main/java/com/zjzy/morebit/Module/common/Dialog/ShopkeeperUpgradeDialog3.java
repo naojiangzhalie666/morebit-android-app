@@ -24,10 +24,12 @@ public class ShopkeeperUpgradeDialog3 extends Dialog {
     private Context mContext;
     private ImageView img;
     private int type=1;
-    public ShopkeeperUpgradeDialog3(Context context,int type) {
+    private int h5=1;
+    public ShopkeeperUpgradeDialog3(Context context,int type,int h5) {
         super(context, R.style.dialog);
         this.mContext = context;
         this.type=type;
+        this.h5=h5;
 
     }
 
@@ -46,7 +48,19 @@ public class ShopkeeperUpgradeDialog3 extends Dialog {
         tv2=findViewById(R.id.tv2);
         title=findViewById(R.id.title);
         btn_ok = findViewById(R.id.btn_ok);
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (h5==1){
+                    GoodsUtil.getVipH5(mContext);
+                }else{
+                    EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_REFRSH));
+                }
 
+                dismiss();
+
+            }
+        });
 
 
         if (type==1){
@@ -54,27 +68,13 @@ public class ShopkeeperUpgradeDialog3 extends Dialog {
             title.setText("恭喜您升级成功");
             tv2.setText("将获得掌柜");
             tv3.setText("尊享权益");
-            btn_ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    GoodsUtil.getVipH5(mContext);
-                    dismiss();
 
-                }
-            });
         }else{
             img.setImageResource(R.mipmap.group_bg_icon);
             title.setText("领取成功");
             tv2.setText("您将尊享掌柜");
             tv3.setText("权益");
-            btn_ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_REFRSH));
-                    dismiss();
 
-                }
-            });
         }
 
 

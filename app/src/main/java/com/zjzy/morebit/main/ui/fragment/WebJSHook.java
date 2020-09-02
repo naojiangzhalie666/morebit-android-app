@@ -927,7 +927,7 @@ type: Int/// 0是网络图片、1是base64图片
             EventBus.getDefault().post(new MessageEvent(EventBusAction.UPGRADE_SEHNGJI));
 //            refreshUserInfo(userInfo);
 
-                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(mFragment.getActivity(), 2);
+                ShopkeeperUpgradeDialog3 shopkeeperUpgradeDialog3 = new ShopkeeperUpgradeDialog3(mFragment.getActivity(), 2,2);
                 shopkeeperUpgradeDialog3.getWindow().setDimAmount(0.7f);
                 shopkeeperUpgradeDialog3.show();
 
