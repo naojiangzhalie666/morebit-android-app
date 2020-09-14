@@ -1544,9 +1544,9 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
         isAnimatorEnd = false;
         float translationX = shareImageView.getTranslationX();
         ObjectAnimator animator = ObjectAnimator.ofFloat(shareImageView, "translationX", 120);
-        animator.setDuration(300);
-        animator.setStartDelay(300);
-        animator.start();
+        animator.setDuration(100);
+        animator.setStartDelay(100);
+
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
