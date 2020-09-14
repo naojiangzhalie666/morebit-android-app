@@ -1596,44 +1596,16 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
                 if (timeList.size() > 0) {
                     PanicBuyFragment.start(getActivity(), mImageInfo, timeList.get(0).getTitle());//跳限时秒杀
                 }
-
-//                tv_title1.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
-//                tv_title1.setTextColor(Color.parseColor("#FFFFFF"));
-//
-//                tv_title2.setTextColor(Color.parseColor("#FF999999"));
-//                tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-//
-//                tv_title3.setTextColor(Color.parseColor("#FF999999"));
-//                tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-//                litmited_pager.setCurrentItem(auplay(0));
                 break;
             case R.id.linear2:
                 if (timeList.size() > 1) {
                     PanicBuyFragment.start(getActivity(), mImageInfo, timeList.get(1).getTitle());//跳限时秒杀
                 }
-//                tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-//                tv_title1.setTextColor(Color.parseColor("#FF999999"));
-//
-//                tv_title2.setTextColor(Color.parseColor("#FFFFFF"));
-//                tv_title2.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
-//
-//                tv_title3.setTextColor(Color.parseColor("#FF999999"));
-//                tv_title3.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-//                litmited_pager.setCurrentItem(auplay(1));
                 break;
             case R.id.linear3:
                 if (timeList.size() > 2) {
                     PanicBuyFragment.start(getActivity(), mImageInfo, timeList.get(2).getTitle());//跳限时秒杀
                 }
-//                tv_title1.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-//                tv_title1.setTextColor(Color.parseColor("#FF999999"));
-//
-//                tv_title2.setTextColor(Color.parseColor("#FF999999"));
-//                tv_title2.setBackgroundResource(R.drawable.bg_ffffff_8dp);
-//
-//                tv_title3.setTextColor(Color.parseColor("#FFFFFF"));
-//                tv_title3.setBackgroundResource(R.drawable.background_f05557_radius_14dp);
-//                litmited_pager.setCurrentItem(auplay(2));
                 break;
             case R.id.searchTv:
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
@@ -1654,37 +1626,7 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
 
-    public int auplay(int currt) {
-        int index = litmited_pager.getCurrentItem() % 3;
 
-        if (currt == 1) {
-            if (index == 1) {
-                return litmited_pager.getCurrentItem();
-            } else if (index == 2) {
-                return litmited_pager.getCurrentItem() - 1;
-            } else {
-                return litmited_pager.getCurrentItem() + 1;
-            }
-
-        } else if (currt == 2) {
-            if (index == 1) {
-                return litmited_pager.getCurrentItem() + 1;
-            } else if (index == 2) {
-                return litmited_pager.getCurrentItem();
-            } else {
-                return litmited_pager.getCurrentItem() + 2;
-            }
-        } else {
-            if (index == 1) {
-                return litmited_pager.getCurrentItem() - 1;
-            } else if (index == 2) {
-                return litmited_pager.getCurrentItem() - 2;
-            } else {
-                return litmited_pager.getCurrentItem();
-            }
-        }
-
-    }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -2058,58 +2000,8 @@ public class HomeOtherFragment extends MvpFragment<HomeRecommendPresenter> imple
     }
 
 
-    private void addRecommendGoodsView(final ImageInfo imageInfo, final int index) {
-        if (getActivity() == null) {
-            return;
-        }
-        View recommendGoodsView = LayoutInflater.from(getActivity()).inflate(R.layout.view_home_recommend_goods, null);
-        rl_urgency_notifi.removeAllViews();
-        rl_urgency_notifi.addView(recommendGoodsView);
 
-        ImageView iv_picture = recommendGoodsView.findViewById(R.id.iv_picture);
-        ImageView iv_icon = recommendGoodsView.findViewById(R.id.iv_icon);
-        TextView tv_desc = recommendGoodsView.findViewById(R.id.tv_desc);
-        TextView tv_title = recommendGoodsView.findViewById(R.id.tv_title);
-        tv_desc.setText(imageInfo.getDesc());
-        tv_title.setText(imageInfo.getTitle());
-        LoadImgUtils.setImg(getActivity(), iv_picture, imageInfo.getPicture());
-        LoadImgUtils.setImg(getActivity(), iv_icon, imageInfo.getIcon(), R.drawable.home_recommend_goods_dz);
-        recommendGoodsView.findViewById(R.id.iv_to_below).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cleseRecommendGoodsView(imageInfo, index);
-            }
-        });
-        recommendGoodsView.findViewById(R.id.tv_clese).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cleseRecommendGoodsView(imageInfo, 2);
-            }
-        });
-        recommendGoodsView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BannerInitiateUtils.gotoAction(getActivity(), imageInfo);
-            }
-        });
-        if (mHandler == null) {
-            mHandler = new Handler();
-        }
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                cleseRecommendGoodsView(imageInfo, index);
-            }
-        }, 5000);
-    }
 
-    private void cleseRecommendGoodsView(ImageInfo imageInfo, int index) {
-        int id = imageInfo.getId();
-        index++;
-        App.getACache().put(C.sp.CLESE_RECOMMEND_GOODS + UserLocalData.getUser().getPhone() + id, index);
-        if (rl_urgency_notifi != null)
-            rl_urgency_notifi.removeAllViews();
 
-    }
 
 }

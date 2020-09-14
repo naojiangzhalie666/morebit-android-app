@@ -1,6 +1,5 @@
 package com.zjzy.morebit.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,7 +23,6 @@ import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.QueryDhAndGyBean;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.utils.LoadImgUtils;
-import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
 
 import java.util.ArrayList;
@@ -100,14 +98,14 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 holder.tv_coupon.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), gyList.get(0).getTkmoney() + ""));
             }
 
-            holder.tv_jump.setOnClickListener(new View.OnClickListener() {
+            holder.ll_dou.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mContext.startActivity(new Intent(mContext, CommissionClassActivity.class));
                 }
             });
 
-            holder.ll_dou.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GoodsDetailActivity.start(mContext, gyBean);
@@ -162,10 +160,8 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (LoginUtil.checkIsLogin((Activity) mContext)) {
-                        Log.e("sfsdfsd",list.size()+"");
                         VideoActivity.start(mContext,(List<ShopGoodInfo>)list,0,"0",1);
-                    }
+
                 }
             });
         }

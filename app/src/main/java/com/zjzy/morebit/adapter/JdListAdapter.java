@@ -116,6 +116,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {//点击购买
                 @Override
                 public void onClick(View v) {
+                    if (LoginUtil.checkIsLogin((Activity) mContext)) {
                     CommInterface.generatePromotionUrlForJd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
                             .doFinally(new Action() {
                                 @Override
@@ -125,7 +126,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
                             .subscribe(new DataObserver<String>() {
                                 @Override
                                 protected void onSuccess(final String data) {
-                                    if (LoginUtil.checkIsLogin((Activity) mContext)) {
+
 
                                         if (data != null) {
 
@@ -140,8 +141,9 @@ public class JdListAdapter extends RecyclerView.Adapter {
 
 
                                     }
-                                }
+
                             });
+                    }
                 }
             });
 

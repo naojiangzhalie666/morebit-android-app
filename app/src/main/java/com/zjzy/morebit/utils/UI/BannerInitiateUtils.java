@@ -11,6 +11,9 @@ import android.util.Log;
 import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
 import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
 import com.blankj.utilcode.util.ToastUtils;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 import com.zjzy.morebit.Activity.AppletsActivity;
 import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.KoalaWebActivity;
@@ -18,7 +21,6 @@ import com.zjzy.morebit.Activity.MyMaterialActivity;
 import com.zjzy.morebit.Activity.OneFragmentDefaultActivity;
 import com.zjzy.morebit.Activity.SearchActivity;
 import com.zjzy.morebit.Activity.ShowWebActivity;
-import com.zjzy.morebit.Activity.StartAdActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Activity.SinglePaneActivity;
@@ -45,7 +47,6 @@ import com.zjzy.morebit.main.ui.fragment.GoodNewsFramgent;
 import com.zjzy.morebit.main.ui.fragment.JdChildFragment;
 import com.zjzy.morebit.main.ui.fragment.NineFragment;
 import com.zjzy.morebit.main.ui.fragment.PddChildFragment;
-import com.zjzy.morebit.main.ui.fragment.PddFragment;
 import com.zjzy.morebit.main.ui.fragment.RankingFragment;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
@@ -53,7 +54,6 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ActivityLinkBean;
 import com.zjzy.morebit.pojo.ImageInfo;
-import com.zjzy.morebit.pojo.JpBannerBean;
 import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
@@ -64,7 +64,6 @@ import com.zjzy.morebit.pojo.request.RequestActivityLinkBean;
 import com.zjzy.morebit.pojo.request.RequestJpLinkBean;
 import com.zjzy.morebit.pojo.request.RequestSplashStatistics;
 import com.zjzy.morebit.pojo.request.RequestTmallActivityLinkBean;
-
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.GlideImageLoader;
@@ -79,9 +78,6 @@ import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.WechatUtil;
 import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.FliggyDialog;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -145,18 +141,22 @@ public class BannerInitiateUtils {
                 gotoMenu(activity, imageInfo.getClassId(), imageInfo);  //如果是2类型，class_id就是分类ID
             } else if (open == 3) {   //跳到网页
 //                if (imageInfo.getSuperType()==1){
-                if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
-                } else {
-                    //跳转到网页
-                    if(imageInfo.getUrl().contains("vip.com")||imageInfo.getUrl().contains("kaola.com")){//外链 针对考拉和唯品会活动
-                        KoalaWebActivity.start(activity,imageInfo.getUrl(),imageInfo.getTitle());
-                    } else{
-                        showWebIntent(activity, imageInfo);
+
+                if (LoginUtil.checkIsLogin(activity)){
+                    if (TaobaoUtil.isAuth()) {//淘宝授权
+                        TaobaoUtil.getAllianceAppKey((BaseActivity) activity, false);
+                    } else {
+                        //跳转到网页
+                        if(imageInfo.getUrl().contains("vip.com")||imageInfo.getUrl().contains("kaola.com")){//外链 针对考拉和唯品会活动
+                            KoalaWebActivity.start(activity,imageInfo.getUrl(),imageInfo.getTitle());
+                        } else{
+                            showWebIntent(activity, imageInfo);
+                        }
+
+
                     }
-
-
                 }
+
 //                }else{
 //                    //跳转到网页
 //                    showWebIntent(activity, imageInfo);

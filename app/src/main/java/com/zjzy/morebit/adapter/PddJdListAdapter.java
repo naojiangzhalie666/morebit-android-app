@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.LeadingMarginSpan;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,25 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lovejjfg.powertext.LabelTextView;
-import com.zjzy.morebit.Activity.GoodsDetailActivity;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
-import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
-import com.zjzy.morebit.network.BaseResponse;
-import com.zjzy.morebit.network.RxHttp;
-import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
-import com.zjzy.morebit.pojo.UserInfo;
-import com.zjzy.morebit.pojo.pddjd.JdPddProgramItem;
-import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
 import com.zjzy.morebit.utils.AppUtil;
-import com.zjzy.morebit.utils.C;
-import com.zjzy.morebit.utils.KaipuleUtils;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
@@ -47,10 +35,8 @@ import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.VerticalImageSpan;
 import com.zjzy.morebit.view.CommNewShareDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
 
@@ -132,7 +118,8 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {//点击购买
                     @Override
                     public void onClick(View v) {
-                        generatePromotionUrlForPdd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
+                        if (LoginUtil.checkIsLogin((Activity) mContext)) {
+                        CommInterface.generatePromotionUrlForPdd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
                                 .doFinally(new Action() {
                                     @Override
                                     public void run() throws Exception {
@@ -141,7 +128,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
                                 .subscribe(new DataObserver<String>() {
                                     @Override
                                     protected void onSuccess(final String data) {
-                                        if (LoginUtil.checkIsLogin((Activity) mContext)) {
+
 
                                             if (data != null) {
                                                 if (isHasInstalledPdd() && data.contains("https://mobile.yangkeduo.com")) {
@@ -156,8 +143,9 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
 
 
                                         }
-                                    }
+
                                 });
+                        }
                     }
                 });
 
@@ -168,7 +156,7 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
                         if (!LoginUtil.checkIsLogin((Activity) mContext)) {
                             return;
                         }
-                        generatePromotionUrlForPdd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
+                        CommInterface.generatePromotionUrlForPdd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
                                 .doFinally(new Action() {
                                     @Override
                                     public void run() throws Exception {
@@ -296,22 +284,6 @@ public class PddJdListAdapter extends RecyclerView.Adapter {
         isEditor = editor;
     }
 
-    /**
-     * 拼多多
-     * @param rxActivity
-     * @param
-     * @return
-     */
-    public Observable<BaseResponse<String>> generatePromotionUrlForPdd(BaseActivity rxActivity,
-                                                                       Long goodsId,String couponUrl) {
-        RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
-        bean.setType(2);
-        bean.setGoodsId(goodsId);
-        bean.setCouponUrl(couponUrl);
-        return RxHttp.getInstance().getCommonService().generatePromotionUrlForPdd(bean)
-                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
-                .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
-    }
 
     /**
      * 判断是否安装拼多多

@@ -3,31 +3,18 @@ package com.zjzy.morebit.goodsvideo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-
-import com.blankj.utilcode.util.ToastUtils;
-import com.trello.rxlifecycle2.components.RxActivity;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-import com.trello.rxlifecycle2.components.support.RxFragment;
-import com.zjzy.morebit.Activity.GoodsDetailActivity;
-import com.zjzy.morebit.Activity.ShareMoneyActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
@@ -41,7 +28,6 @@ import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ImageInfo;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
-import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.request.RequestVideoGoodsBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
@@ -340,11 +326,14 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener 
         ll_buy.setOnClickListener(new View.OnClickListener() {//分享
             @Override
             public void onClick(View v) {
-                if (TaobaoUtil.isAuth()) {//淘宝授权
-                    TaobaoUtil.getAllianceAppKey(VideoActivity.this);
-                } else {
-                    GoodsUtil.getCouponInfo(VideoActivity.this, mGoodsInfo);
+                if(LoginUtil.checkIsLogin(VideoActivity.this)){
+                    if (TaobaoUtil.isAuth()) {//淘宝授权
+                        TaobaoUtil.getAllianceAppKey(VideoActivity.this);
+                    } else {
+                        GoodsUtil.getCouponInfo(VideoActivity.this, mGoodsInfo);
+                    }
                 }
+
 
             }
         });

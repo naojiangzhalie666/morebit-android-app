@@ -201,5 +201,22 @@ public class CommInterface {
                 .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
     }
+    /**
+     * 拼多多
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public static Observable<BaseResponse<String>> generatePromotionUrlForPdd(BaseActivity rxActivity,
+                                                                       Long goodsId,String couponUrl) {
+        RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
+        bean.setType(2);
+        bean.setGoodsId(goodsId);
+        bean.setCouponUrl(couponUrl);
+        return RxHttp.getInstance().getCommonService().generatePromotionUrlForPdd(bean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
+    }
+
 
 }
