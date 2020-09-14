@@ -19,8 +19,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
-import com.kepler.jd.Listener.LoginListener;
-import com.kepler.jd.login.KeplerApiManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -65,6 +63,7 @@ import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
+import com.zjzy.morebit.utils.KaipuleUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
@@ -844,47 +843,16 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             case R.id.rl_prise: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
 
-//                        if (mPromotionJdUrl != null) {
+                        if (mPromotionJdUrl != null) {
 
-                            KeplerApiManager.getWebViewService().login(this, new LoginListener() {
-                                @Override
-                                public void authSuccess() {
-                                    ToastUtils.showShort("登录成功");
-                                    Log.e("ssss","登录成功");
-                                }
-
-                                @Override
-                                public void authFailed(int errorCode) {
-                                    switch (errorCode) {
-                                        case KeplerApiManager.KeplerApiManagerLoginErr_Init:// 初始化失败
-                                            break;
-                                        case KeplerApiManager.KeplerApiManagerLoginErr_InitIng:// 初始化没有完成
-                                            break;
-                                        case KeplerApiManager.KeplerApiManagerLoginErr_openH5authPageURLSettingNull:// 跳转url
-                                            break;
-                                        case KeplerApiManager.KeplerApiManagerLoginErr_getTokenErr:// 获取失败(oath授权之后，获取cookie过程出错)
-                                            break;
-                                        case KeplerApiManager.KeplerApiManagerLoginErr_User_Cancel:// 用户取消
-                                            break;
-                                        case KeplerApiManager.KeplerApiManagerLoginErr_AuthErr_ActivityOpen:// 打开授权页面失败
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ToastUtils.showShort("登录失败");
-                                    Log.e("ssss","登录失败"+errorCode);
-
-                                }
-                            });
-
-//                     if (isHasInstalledjd()){
-//                         KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
-//                     }else{
-//                         ShowWebActivity.start(GoodsDetailForJdActivity.this,mPromotionJdUrl,"");
-//                     }
+                     if (isHasInstalledjd()){
+                         KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
+                     }else{
+                         ShowWebActivity.start(GoodsDetailForJdActivity.this,mPromotionJdUrl,"");
+                     }
 
 
-//                        }
+                      }
 
 
                 }

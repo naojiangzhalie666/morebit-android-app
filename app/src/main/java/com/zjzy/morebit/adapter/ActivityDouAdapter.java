@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zjzy.morebit.Activity.CommissionClassActivity;
@@ -106,7 +107,7 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 }
             });
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.ll_dou.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GoodsDetailActivity.start(mContext, gyBean);
@@ -151,7 +152,7 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
             if (!TextUtils.isEmpty(dhList.get(0).getTkMoney())) {
                 holder.tv_coupon.setText("赚 ¥ " + MathUtils.getMuRatioComPrice(UserLocalData.getUser(mContext).getCalculationRate(), dhList.get(0).getTkMoney() + ""));
             }
-            holder.tv_jump.setOnClickListener(new View.OnClickListener() {
+            holder.ll_dou.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mContext.startActivity(new Intent(mContext, VideoClassActivity.class));
@@ -163,7 +164,7 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
                 public void onClick(View v) {
                     if (LoginUtil.checkIsLogin((Activity) mContext)) {
                         Log.e("sfsdfsd",list.size()+"");
-                        VideoActivity.start(mContext,(List<ShopGoodInfo>)list,position,"0",1);
+                        VideoActivity.start(mContext,(List<ShopGoodInfo>)list,0,"0",1);
                     }
                 }
             });
@@ -180,9 +181,11 @@ public class ActivityDouAdapter extends RecyclerView.Adapter<ActivityDouAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView img_zhu;
         private TextView title1, tv_coupon, coupon, title2, price, tv_jump;
+        private LinearLayout ll_dou;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            ll_dou=itemView.findViewById(R.id.ll_dou);
             tv_jump = itemView.findViewById(R.id.tv_jump);//立即抢购
             title1 = itemView.findViewById(R.id.title1);//头部标题
             img_zhu = itemView.findViewById(R.id.img_zhu);//主图

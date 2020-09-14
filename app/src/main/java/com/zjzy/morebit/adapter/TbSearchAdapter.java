@@ -1,13 +1,8 @@
 package com.zjzy.morebit.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.LeadingMarginSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +18,10 @@ import com.zjzy.morebit.goods.shopping.ui.view.ForeshowItemTiemView;
 import com.zjzy.morebit.goods.shopping.ui.view.RecommendIndexView;
 import com.zjzy.morebit.pojo.SelectFlag;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
-import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.utils.C;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.MathUtils;
 import com.zjzy.morebit.utils.StringsUtils;
-import com.zjzy.morebit.utils.ViewShowUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +87,21 @@ public class TbSearchAdapter extends RecyclerView.Adapter {
         }
     }
 
-
+    public void addData(List<ShopGoodInfo> data) {
+        if (data != null) {
+            mDatas.addAll(data);
+            notifyItemRangeChanged(0,data.size());
+            //处理官方推荐
+            if (C.GoodsListType.officialrecomList == mType) {
+                slFlag.clear();
+                for (int i = 0; i < mDatas.size(); i++) {
+                    SelectFlag selectFlag = new SelectFlag();
+                    selectFlag.setCheck("0");
+                    slFlag.add(selectFlag);
+                }
+            }
+        }
+    }
 
 
 

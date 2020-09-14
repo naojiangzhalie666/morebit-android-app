@@ -4,21 +4,27 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.fragment.AppFeedBackFragment;
 import com.zjzy.morebit.fragment.CircleFeedBackFragment;
 import com.zjzy.morebit.fragment.GoodsFeedBackFragment;
 import com.zjzy.morebit.main.model.ConfigModel;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.view.ToolbarHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -86,8 +92,22 @@ public class AppFeedActivity extends BaseActivity {
             });
         }
         showFragment();
+        Toolbar toolbar = toolbarHelper.getToolbar();
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            EventBus.getDefault().post(new MessageEvent(EventBusAction.DISS_RUANJIANPAN));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onDestroy() {

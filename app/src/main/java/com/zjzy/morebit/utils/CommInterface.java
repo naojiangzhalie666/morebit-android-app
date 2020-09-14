@@ -21,6 +21,7 @@ import com.zjzy.morebit.pojo.UserZeroInfoBean;
 import com.zjzy.morebit.pojo.goods.HandpickBean;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
 import com.zjzy.morebit.pojo.request.RequestBannerBean;
+import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
 import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestCheckWithdrawBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestItemSourceId;
@@ -181,6 +182,24 @@ public class CommInterface {
         return RxHttp.getInstance().getCommonService().getDetailData(new RequestItemSourceId().setItemSourceId(itemId).setItemFrom("1"))
                 .compose(RxUtils.<BaseResponse<ShopGoodInfo>>switchSchedulers())
                 .compose(rxActivity.<BaseResponse<ShopGoodInfo>>bindToLifecycle());
+    }
+
+
+    /**
+     * 京东
+     *
+     * @param rxActivity
+     * @param
+     * @return
+     */
+    public static Observable<BaseResponse<String>> generatePromotionUrlForJd(BaseActivity rxActivity,
+                                                                      Long goodsId, String couponUrl) {
+        RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
+        bean.setGoodsId(goodsId);
+        bean.setCouponUrl(couponUrl);
+        return RxHttp.getInstance().getCommonService().generatePromotionUrlForJd(bean)
+                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
+                .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
     }
 
 }

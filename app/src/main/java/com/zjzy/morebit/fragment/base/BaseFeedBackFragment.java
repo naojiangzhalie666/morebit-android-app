@@ -17,6 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.zjzy.morebit.Activity.OneFragmentDefaultActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
@@ -24,10 +28,12 @@ import com.zjzy.morebit.Module.common.Fragment.BaseFragment;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.push.Logger;
 import com.zjzy.morebit.R;
+import com.zjzy.morebit.contact.EventBusAction;
 import com.zjzy.morebit.network.BaseResponse;
 import com.zjzy.morebit.network.RxHttp;
 import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
+import com.zjzy.morebit.pojo.MessageEvent;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.request.RequestAppFeedBackBean;
 import com.zjzy.morebit.pojo.request.RequestCircleFeedBackBean;
@@ -40,10 +46,9 @@ import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.action.MyAction;
 import com.zjzy.morebit.utils.encrypt.EncryptUtlis;
 import com.zjzy.morebit.utils.fire.OssManage;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.makeramen.roundedimageview.RoundedImageView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +90,7 @@ public class BaseFeedBackFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_base_feedback, container, false);
         initView(view);
         OssManage.newInstance().initOss(null);
+        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -537,4 +543,21 @@ public class BaseFeedBackFragment extends BaseFragment {
             tv_residue_all.setText("" + num);
         }
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe  //订阅事件
+    public void onEventMainThread(MessageEvent event) {
+        switch (event.getAction()) {
+            case EventBusAction.DISS_RUANJIANPAN:
+                isMethodManager(et_statistics);
+                break;
+        }
+    }
+
 }

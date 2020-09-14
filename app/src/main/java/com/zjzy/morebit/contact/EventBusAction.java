@@ -27,5 +27,6 @@ public class EventBusAction {
     public final static String UPGRADE_SEHNGJI = "UPGRADE_SEHNGJI"; //升级
     public final static String UPGRADE_POP2 = "UPGRADE_POP2"; //升级弹框
     public final static String UPGRADE_REFRSH = "UPGRADE_REFRSH"; //H5升级刷新
+    public final static String DISS_RUANJIANPAN = "DISS_RUANJIANPAN"; //关闭软键盘
 
 }

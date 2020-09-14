@@ -43,6 +43,8 @@ public class ToolbarHelper {
         mActivity.setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.btn_title_return_icon);
         mToolbar.setNavigationOnClickListener(clickListener);
+
+
         return this;
     }
 
@@ -163,6 +165,10 @@ public class ToolbarHelper {
     public TextView getTitleView() {
         return mTitle;
     }
+
+
+
+
 
 
 }

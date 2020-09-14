@@ -5,11 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.SimpleItemAnimator;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +26,6 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.View.ReUseListView;
 import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.adapter.ShoppingListAdapter;
 import com.zjzy.morebit.adapter.TbSearchAdapter;
 import com.zjzy.morebit.fragment.base.BaseMainFragmeng;
 import com.zjzy.morebit.main.ui.fragment.GuessSearchLikeFragment;
@@ -46,7 +41,6 @@ import com.zjzy.morebit.pojo.event.SearchGoodsForTaobaoEvent;
 import com.zjzy.morebit.pojo.request.RequestSearchBean;
 import com.zjzy.morebit.utils.ActivityStyleUtil;
 import com.zjzy.morebit.utils.C;
-import com.zjzy.morebit.utils.DensityUtil;
 import com.zjzy.morebit.utils.MyLog;
 import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
@@ -58,8 +52,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
@@ -411,9 +403,9 @@ public class SearchResultForTaobaoFragment extends BaseMainFragmeng implements V
                                 mPage = data.getPage();
                                 mSearchType = data.getSearchType();
                                 List<ShopGoodInfo> shopGoodInfos = partList(goodsList);
-                                mAdapter.setData(shopGoodInfos);
+                                mAdapter.addData(shopGoodInfos);
                                 //设置是否是代理商
-                                mRecyclerView.notifyDataSetChanged();
+                              //  mRecyclerView.notifyDataSetChanged();
                             } else {
                                 mRecyclerView.getListView().setNoMore(true);
                             }

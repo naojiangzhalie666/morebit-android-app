@@ -8,30 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.LeadingMarginSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lovejjfg.powertext.LabelTextView;
 import com.zjzy.morebit.Activity.GoodsDetailForJdActivity;
-import com.zjzy.morebit.Activity.GoodsDetailForPddActivity;
+import com.zjzy.morebit.Activity.ShowWebActivity;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.Module.common.Activity.BaseActivity;
 import com.zjzy.morebit.R;
-import com.zjzy.morebit.network.BaseResponse;
-import com.zjzy.morebit.network.RxHttp;
-import com.zjzy.morebit.network.RxUtils;
 import com.zjzy.morebit.network.observer.DataObserver;
 import com.zjzy.morebit.pojo.ShopGoodInfo;
-import com.zjzy.morebit.pojo.UserInfo;
-import com.zjzy.morebit.pojo.request.RequestPromotionUrlBean;
-import com.zjzy.morebit.utils.C;
+import com.zjzy.morebit.utils.AppUtil;
+import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.KaipuleUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
@@ -40,11 +31,9 @@ import com.zjzy.morebit.utils.ShareUtil;
 import com.zjzy.morebit.utils.StringsUtils;
 import com.zjzy.morebit.utils.VerticalImageSpan;
 import com.zjzy.morebit.view.CommNewShareDialog;
-import com.zjzy.morebit.view.CommercialShareDialog;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
 
@@ -127,7 +116,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {//点击购买
                 @Override
                 public void onClick(View v) {
-                    generatePromotionUrlForJd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
+                    CommInterface.generatePromotionUrlForJd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
                             .doFinally(new Action() {
                                 @Override
                                 public void run() throws Exception {
@@ -139,7 +128,14 @@ public class JdListAdapter extends RecyclerView.Adapter {
                                     if (LoginUtil.checkIsLogin((Activity) mContext)) {
 
                                         if (data != null) {
-                                            KaipuleUtils.getInstance(mContext).openUrlToApp(data);
+
+                                            if (isHasInstalledjd()){
+                                                KaipuleUtils.getInstance(mContext).openUrlToApp(data);
+                                            }else{
+                                                ShowWebActivity.start((Activity) mContext,data,"");
+                                            }
+
+
                                         }
 
 
@@ -156,7 +152,7 @@ public class JdListAdapter extends RecyclerView.Adapter {
                     if (!LoginUtil.checkIsLogin((Activity) mContext)) {
                         return;
                     }
-                    generatePromotionUrlForJd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
+                    CommInterface.generatePromotionUrlForJd((BaseActivity) mContext, info.getGoodsId(), info.getCouponUrl())
                             .doFinally(new Action() {
                                 @Override
                                 public void run() throws Exception {
@@ -246,22 +242,13 @@ public class JdListAdapter extends RecyclerView.Adapter {
         }
     }
 
-
     /**
-     * 京东
+     * 判断是否安装jd
      *
-     * @param rxActivity
-     * @param
      * @return
      */
-    public Observable<BaseResponse<String>> generatePromotionUrlForJd(BaseActivity rxActivity,
-                                                                      Long goodsId, String couponUrl) {
-        RequestPromotionUrlBean bean = new RequestPromotionUrlBean();
-        bean.setGoodsId(goodsId);
-        bean.setCouponUrl(couponUrl);
-        return RxHttp.getInstance().getCommonService().generatePromotionUrlForJd(bean)
-                .compose(RxUtils.<BaseResponse<String>>switchSchedulers())
-                .compose(rxActivity.<BaseResponse<String>>bindToLifecycle());
+    private boolean isHasInstalledjd() {
+        return AppUtil.checkHasInstalledApp(mContext, "com.jingdong.app.mall");
     }
 
 }

@@ -62,4 +62,7 @@ public class AppFeedBackFragment extends BaseFragment {
             mInfoFragment.onActivityResult(requestCode,resultCode,data);
         }
     }
+
+
+
 }
