@@ -6,26 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.flyco.tablayout.CommonTabLayout;
-import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.barlibrary.ImmersionBar;
+import com.kepler.jd.Listener.LoginListener;
+import com.kepler.jd.login.KeplerApiManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -35,21 +30,16 @@ import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.MainActivity;
 import com.zjzy.morebit.Module.common.Activity.ImagePagerActivity;
 import com.zjzy.morebit.Module.common.Dialog.ClearSDdataDialog;
-import com.zjzy.morebit.Module.common.Dialog.DownloadDialog;
 import com.zjzy.morebit.Module.common.Dialog.ShopkeeperUpgradeDialog;
 import com.zjzy.morebit.Module.common.Utils.LoadingView;
 import com.zjzy.morebit.Module.common.View.BaseCustomTabEntity;
-import com.zjzy.morebit.Module.common.widget.SwipeRefreshLayout;
 import com.zjzy.morebit.R;
 import com.zjzy.morebit.circle.ui.ReleaseGoodsActivity;
 import com.zjzy.morebit.contact.EventBusAction;
-import com.zjzy.morebit.fragment.NumberFragment;
 import com.zjzy.morebit.goods.shopping.contract.GoodsDetailForPddContract;
 import com.zjzy.morebit.goods.shopping.presenter.GoodsDetailForPddPresenter;
-import com.zjzy.morebit.goods.shopping.ui.PddWebActivity;
 import com.zjzy.morebit.goods.shopping.ui.fragment.GoodsDetailImgForPddFragment;
 import com.zjzy.morebit.goods.shopping.ui.view.GoodsDetailUpdateView;
-import com.zjzy.morebit.info.ui.AppFeedActivity;
 import com.zjzy.morebit.mvp.base.base.BaseView;
 import com.zjzy.morebit.mvp.base.frame.MvpActivity;
 import com.zjzy.morebit.network.BaseResponse;
@@ -66,10 +56,8 @@ import com.zjzy.morebit.pojo.ShopGoodInfo;
 import com.zjzy.morebit.pojo.UserInfo;
 import com.zjzy.morebit.pojo.event.GoodsHeightUpdateEvent;
 import com.zjzy.morebit.pojo.event.RefreshUserInfoEvent;
-import com.zjzy.morebit.pojo.goods.ConsumerProtectionBean;
 import com.zjzy.morebit.pojo.goods.TKLBean;
 import com.zjzy.morebit.pojo.myInfo.UpdateInfoBean;
-import com.zjzy.morebit.pojo.request.RequestUpdateUserBean;
 import com.zjzy.morebit.pojo.requestbodybean.RequestKeyBean;
 import com.zjzy.morebit.utils.AppUtil;
 import com.zjzy.morebit.utils.C;
@@ -77,19 +65,14 @@ import com.zjzy.morebit.utils.CommInterface;
 import com.zjzy.morebit.utils.DateTimeUtils;
 import com.zjzy.morebit.utils.GlideImageLoader;
 import com.zjzy.morebit.utils.GoodsUtil;
-import com.zjzy.morebit.utils.KaipuleUtils;
 import com.zjzy.morebit.utils.LoadImgUtils;
 import com.zjzy.morebit.utils.LoginUtil;
 import com.zjzy.morebit.utils.MathUtils;
-import com.zjzy.morebit.utils.MyGsonUtils;
 import com.zjzy.morebit.utils.MyLog;
-import com.zjzy.morebit.utils.OpenFragmentUtils;
 import com.zjzy.morebit.utils.SensorsDataUtil;
 import com.zjzy.morebit.utils.StringsUtils;
-import com.zjzy.morebit.utils.UI.ActivityUtils;
 import com.zjzy.morebit.utils.ViewShowUtils;
 import com.zjzy.morebit.utils.helper.ActivityLifeHelper;
-import com.zjzy.morebit.view.AspectRatioView;
 import com.zjzy.morebit.view.main.SysNotificationView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -100,7 +83,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 
 /**
@@ -862,9 +844,47 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
             case R.id.rl_prise: //立即购买
                 if (LoginUtil.checkIsLogin(this)) {
 
-                        if (mPromotionJdUrl != null) {
-                            KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
-                        }
+//                        if (mPromotionJdUrl != null) {
+
+                            KeplerApiManager.getWebViewService().login(this, new LoginListener() {
+                                @Override
+                                public void authSuccess() {
+                                    ToastUtils.showShort("登录成功");
+                                    Log.e("ssss","登录成功");
+                                }
+
+                                @Override
+                                public void authFailed(int errorCode) {
+                                    switch (errorCode) {
+                                        case KeplerApiManager.KeplerApiManagerLoginErr_Init:// 初始化失败
+                                            break;
+                                        case KeplerApiManager.KeplerApiManagerLoginErr_InitIng:// 初始化没有完成
+                                            break;
+                                        case KeplerApiManager.KeplerApiManagerLoginErr_openH5authPageURLSettingNull:// 跳转url
+                                            break;
+                                        case KeplerApiManager.KeplerApiManagerLoginErr_getTokenErr:// 获取失败(oath授权之后，获取cookie过程出错)
+                                            break;
+                                        case KeplerApiManager.KeplerApiManagerLoginErr_User_Cancel:// 用户取消
+                                            break;
+                                        case KeplerApiManager.KeplerApiManagerLoginErr_AuthErr_ActivityOpen:// 打开授权页面失败
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    ToastUtils.showShort("登录失败");
+                                    Log.e("ssss","登录失败"+errorCode);
+
+                                }
+                            });
+
+//                     if (isHasInstalledjd()){
+//                         KaipuleUtils.getInstance(this).openUrlToApp(mPromotionJdUrl);
+//                     }else{
+//                         ShowWebActivity.start(GoodsDetailForJdActivity.this,mPromotionJdUrl,"");
+//                     }
+
+
+//                        }
 
 
                 }
@@ -1139,6 +1159,13 @@ public class GoodsDetailForJdActivity extends MvpActivity<GoodsDetailForPddPrese
 
                 });
     }
-
+    /**
+     * 判断是否安装jd
+     *
+     * @return
+     */
+    private boolean isHasInstalledjd() {
+        return AppUtil.checkHasInstalledApp(this, "com.jingdong.app.mall");
+    }
 
 }

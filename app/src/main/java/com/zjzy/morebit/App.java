@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -15,13 +13,18 @@ import android.util.Log;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
-
 import com.blankj.utilcode.util.SPUtils;
 import com.facebook.stetho.Stetho;
-//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-
 import com.kepler.jd.Listener.AsyncInitListener;
 import com.kepler.jd.login.KeplerApiManager;
+import com.mob.tools.proguard.ProtectedMemberKeeper;
+import com.shuyu.gsyvideoplayer.player.PlayerFactory;
+import com.shuyu.gsyvideoplayer.player.SystemPlayerManager;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.interfaces.BetaPatchListener;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.zjzy.morebit.LocalData.UserLocalData;
 import com.zjzy.morebit.adapter.MarkermallCircleAdapter;
 import com.zjzy.morebit.network.BaseResponse;
@@ -36,26 +39,18 @@ import com.zjzy.morebit.utils.action.ACache;
 import com.zjzy.morebit.utils.encrypt.EncryptUtlis;
 import com.zjzy.morebit.utils.fire.BuglyUtils;
 import com.zjzy.morebit.utils.fire.DeviceIDUtils;
-import com.mob.tools.proguard.ProtectedMemberKeeper;
-//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-import com.shuyu.gsyvideoplayer.player.PlayerFactory;
-import com.shuyu.gsyvideoplayer.player.SystemPlayerManager;
-import com.tencent.bugly.Bugly;
-import com.tencent.bugly.beta.Beta;
-import com.tencent.bugly.beta.interfaces.BetaPatchListener;
-import com.tencent.bugly.crashreport.CrashReport;
-import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.plugins.RxJavaPlugins;
+
+//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+//import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 
 
 public class App extends Application implements ProtectedMemberKeeper {
@@ -146,6 +141,9 @@ public class App extends Application implements ProtectedMemberKeeper {
             @Override
             public void onSuccess() {
                 Log.e("Kepler", "Kepler asyncInitSdk onSuccess ");
+
+
+
             }
 
 
@@ -158,6 +156,7 @@ public class App extends Application implements ProtectedMemberKeeper {
 
         String keplerVersion = KeplerApiManager.getKeplerVersion();
         Log.e("Kepler", "Kepler asyncInitSdk onSuccess "+keplerVersion);
+
     }
 
     private void initBaiDuStat() {
